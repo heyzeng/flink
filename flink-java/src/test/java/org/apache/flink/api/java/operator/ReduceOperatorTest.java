@@ -44,16 +44,16 @@ import static org.junit.Assert.assertTrue;
 public class ReduceOperatorTest {
 
 	private final List<Tuple5<Integer, Long, String, Long, Integer>> emptyTupleData =
-			new ArrayList<Tuple5<Integer, Long, String, Long, Integer>>();
+		new ArrayList<Tuple5<Integer, Long, String, Long, Integer>>();
 
 	private final TupleTypeInfo<Tuple5<Integer, Long, String, Long, Integer>> tupleTypeInfo = new
-			TupleTypeInfo<Tuple5<Integer, Long, String, Long, Integer>>(
-					BasicTypeInfo.INT_TYPE_INFO,
-					BasicTypeInfo.LONG_TYPE_INFO,
-					BasicTypeInfo.STRING_TYPE_INFO,
-					BasicTypeInfo.LONG_TYPE_INFO,
-					BasicTypeInfo.INT_TYPE_INFO
-			);
+		TupleTypeInfo<Tuple5<Integer, Long, String, Long, Integer>>(
+		BasicTypeInfo.INT_TYPE_INFO,
+		BasicTypeInfo.LONG_TYPE_INFO,
+		BasicTypeInfo.STRING_TYPE_INFO,
+		BasicTypeInfo.LONG_TYPE_INFO,
+		BasicTypeInfo.INT_TYPE_INFO
+	);
 
 	@Test
 	public void testSemanticPropsWithKeySelector1() {
@@ -62,8 +62,8 @@ public class ReduceOperatorTest {
 		DataSet<Tuple5<Integer, Long, String, Long, Integer>> tupleDs = env.fromCollection(emptyTupleData, tupleTypeInfo);
 
 		ReduceOperator<Tuple5<Integer, Long, String, Long, Integer>> reduceOp =
-				tupleDs.groupBy(new DummyTestKeySelector())
-						.reduce(new DummyReduceFunction1());
+			tupleDs.groupBy(new DummyTestKeySelector())
+				.reduce(new DummyReduceFunction1());
 
 		SemanticProperties semProps = reduceOp.getSemanticProperties();
 
@@ -98,9 +98,9 @@ public class ReduceOperatorTest {
 		DataSet<Tuple5<Integer, Long, String, Long, Integer>> tupleDs = env.fromCollection(emptyTupleData, tupleTypeInfo);
 
 		ReduceOperator<Tuple5<Integer, Long, String, Long, Integer>> reduceOp =
-				tupleDs.groupBy(new DummyTestKeySelector())
-						.reduce(new DummyReduceFunction2())
-							.withForwardedFields("0->4;1;1->3;2");
+			tupleDs.groupBy(new DummyTestKeySelector())
+				.reduce(new DummyReduceFunction2())
+				.withForwardedFields("0->4;1;1->3;2");
 
 		SemanticProperties semProps = reduceOp.getSemanticProperties();
 
@@ -135,9 +135,9 @@ public class ReduceOperatorTest {
 		DataSet<Tuple5<Integer, Long, String, Long, Integer>> tupleDs = env.fromCollection(emptyTupleData, tupleTypeInfo);
 
 		ReduceOperator<Tuple5<Integer, Long, String, Long, Integer>> reduceOp =
-				tupleDs.groupBy(new DummyTestKeySelector())
-						.reduce(new DummyReduceFunction3())
-						.withForwardedFields("4->0;3;3->1;2");
+			tupleDs.groupBy(new DummyTestKeySelector())
+				.reduce(new DummyReduceFunction3())
+				.withForwardedFields("4->0;3;3->1;2");
 
 		SemanticProperties semProps = reduceOp.getSemanticProperties();
 
@@ -169,8 +169,8 @@ public class ReduceOperatorTest {
 		DataSet<Tuple5<Integer, Long, String, Long, Integer>> tupleDs = env.fromCollection(emptyTupleData, tupleTypeInfo);
 
 		ReduceOperator<Tuple5<Integer, Long, String, Long, Integer>> reduceOp =
-				tupleDs.groupBy(new DummyTestKeySelector())
-						.reduce(new DummyReduceFunction4());
+			tupleDs.groupBy(new DummyTestKeySelector())
+				.reduce(new DummyReduceFunction4());
 
 		SemanticProperties semProps = reduceOp.getSemanticProperties();
 
@@ -206,7 +206,7 @@ public class ReduceOperatorTest {
 	private static class DummyReduceFunction1 implements ReduceFunction<Tuple5<Integer, Long, String, Long, Integer>> {
 		@Override
 		public Tuple5<Integer, Long, String, Long, Integer> reduce(Tuple5<Integer, Long, String, Long, Integer> v1,
-																	Tuple5<Integer, Long, String, Long, Integer> v2) throws Exception {
+																   Tuple5<Integer, Long, String, Long, Integer> v2) throws Exception {
 			return new Tuple5<Integer, Long, String, Long, Integer>();
 		}
 	}
@@ -215,7 +215,7 @@ public class ReduceOperatorTest {
 	private static class DummyReduceFunction2 implements ReduceFunction<Tuple5<Integer, Long, String, Long, Integer>> {
 		@Override
 		public Tuple5<Integer, Long, String, Long, Integer> reduce(Tuple5<Integer, Long, String, Long, Integer> v1,
-																	Tuple5<Integer, Long, String, Long, Integer> v2) throws Exception {
+																   Tuple5<Integer, Long, String, Long, Integer> v2) throws Exception {
 			return new Tuple5<Integer, Long, String, Long, Integer>();
 		}
 	}
@@ -223,7 +223,7 @@ public class ReduceOperatorTest {
 	private static class DummyReduceFunction3 implements ReduceFunction<Tuple5<Integer, Long, String, Long, Integer>> {
 		@Override
 		public Tuple5<Integer, Long, String, Long, Integer> reduce(Tuple5<Integer, Long, String, Long, Integer> v1,
-																	Tuple5<Integer, Long, String, Long, Integer> v2) throws Exception {
+																   Tuple5<Integer, Long, String, Long, Integer> v2) throws Exception {
 			return new Tuple5<Integer, Long, String, Long, Integer>();
 		}
 	}
@@ -232,7 +232,7 @@ public class ReduceOperatorTest {
 	private static class DummyReduceFunction4 implements ReduceFunction<Tuple5<Integer, Long, String, Long, Integer>> {
 		@Override
 		public Tuple5<Integer, Long, String, Long, Integer> reduce(Tuple5<Integer, Long, String, Long, Integer> v1,
-																	Tuple5<Integer, Long, String, Long, Integer> v2) throws Exception {
+																   Tuple5<Integer, Long, String, Long, Integer> v2) throws Exception {
 			return new Tuple5<Integer, Long, String, Long, Integer>();
 		}
 	}

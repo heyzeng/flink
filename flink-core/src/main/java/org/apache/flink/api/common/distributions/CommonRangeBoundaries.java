@@ -67,7 +67,7 @@ public class CommonRangeBoundaries<T> implements RangeBoundaries<T> {
 			throw new RuntimeException("Can not compare keys with boundary due to mismatched length.");
 		}
 
-		for (int i=0; i<flatComparators.length; i++) {
+		for (int i = 0; i < flatComparators.length; i++) {
 			int result = flatComparators[i].compare(keys[i], boundary[i]);
 			if (result != 0) {
 				return result;

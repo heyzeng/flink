@@ -69,9 +69,9 @@ public class SqlDescribeDatabase extends SqlCall {
 
 	@Override
 	public void unparse(
-			SqlWriter writer,
-			int leftPrec,
-			int rightPrec) {
+		SqlWriter writer,
+		int leftPrec,
+		int rightPrec) {
 		writer.keyword("DESCRIBE DATABASE");
 		if (isExtended) {
 			writer.keyword("EXTENDED");

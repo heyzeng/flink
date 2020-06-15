@@ -19,6 +19,7 @@
 package org.apache.flink.api.common.typeutils.base;
 
 import java.sql.Time;
+
 import org.apache.flink.api.common.typeutils.ComparatorTestBase;
 import org.apache.flink.api.common.typeutils.TypeComparator;
 import org.apache.flink.api.common.typeutils.TypeSerializer;
@@ -38,7 +39,7 @@ public class SqlTimeComparatorTest extends ComparatorTestBase<Time> {
 
 	@Override
 	protected Time[] getSortedTestData() {
-		return new Time[] {
+		return new Time[]{
 			Time.valueOf("00:00:00"),
 			Time.valueOf("02:42:25"),
 			Time.valueOf("14:15:59"),

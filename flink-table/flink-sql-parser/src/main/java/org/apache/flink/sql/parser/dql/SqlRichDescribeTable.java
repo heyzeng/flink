@@ -66,9 +66,9 @@ public class SqlRichDescribeTable extends SqlCall {
 
 	@Override
 	public void unparse(
-			SqlWriter writer,
-			int leftPrec,
-			int rightPrec) {
+		SqlWriter writer,
+		int leftPrec,
+		int rightPrec) {
 		writer.keyword("DESCRIBE");
 		if (isExtended) {
 			writer.keyword("EXTENDED");

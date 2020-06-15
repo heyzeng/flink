@@ -34,7 +34,7 @@ public class LocalBlockLocation implements BlockLocation {
 	private final String[] hosts;
 
 	public LocalBlockLocation(final String host, final long length) {
-		this.hosts = new String[] { host };
+		this.hosts = new String[]{host};
 		this.length = length;
 	}
 

@@ -42,7 +42,7 @@ public final class WrappingProxyUtil {
 	 * Expects a proxy, and returns the unproxied delegate.
 	 *
 	 * @param wrappingProxy The initial proxy.
-	 * @param <T> The type of the delegate. Note that all proxies in the chain must be assignable to T.
+	 * @param <T>           The type of the delegate. Note that all proxies in the chain must be assignable to T.
 	 * @return The unproxied delegate.
 	 */
 	@SuppressWarnings("unchecked")

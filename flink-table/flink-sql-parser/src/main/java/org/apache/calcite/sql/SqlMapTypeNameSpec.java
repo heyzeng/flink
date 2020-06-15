@@ -43,9 +43,9 @@ public class SqlMapTypeNameSpec extends SqlTypeNameSpec {
 	 * @param pos     the parser position
 	 */
 	public SqlMapTypeNameSpec(
-			SqlDataTypeSpec keyType,
-			SqlDataTypeSpec valType,
-			SqlParserPos pos) {
+		SqlDataTypeSpec keyType,
+		SqlDataTypeSpec valType,
+		SqlParserPos pos) {
 		super(new SqlIdentifier(SqlTypeName.MAP.getName(), pos), pos);
 		this.keyType = keyType;
 		this.valType = valType;

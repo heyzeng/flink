@@ -32,7 +32,7 @@ import org.apache.flink.core.memory.MemorySegment;
 @Public
 public final class NullValue implements NormalizableKey<NullValue>, CopyableValue<NullValue> {
 	private static final long serialVersionUID = 1L;
-	
+
 	/**
 	 * The singleton NullValue instance.
 	 */
@@ -40,7 +40,7 @@ public final class NullValue implements NormalizableKey<NullValue>, CopyableValu
 
 	/**
 	 * Returns the NullValue singleton instance.
-	 *  
+	 *
 	 * @return The NullValue singleton instance.
 	 */
 	public static NullValue getInstance() {
@@ -48,21 +48,22 @@ public final class NullValue implements NormalizableKey<NullValue>, CopyableValu
 	}
 
 	// --------------------------------------------------------------------------------------------
-	
+
 	/**
 	 * Creates a NullValue object.
 	 */
-	public NullValue() {}
-	
+	public NullValue() {
+	}
+
 	// --------------------------------------------------------------------------------------------
 
 	@Override
 	public String toString() {
 		return "(null)";
 	}
-	
+
 	// --------------------------------------------------------------------------------------------
-	
+
 	@Override
 	public void read(DataInputView in) throws IOException {
 		in.readBoolean();
@@ -72,7 +73,7 @@ public final class NullValue implements NormalizableKey<NullValue>, CopyableValu
 	public void write(DataOutputView out) throws IOException {
 		out.writeBoolean(false);
 	}
-	
+
 	// --------------------------------------------------------------------------------------------
 
 	@Override
@@ -89,7 +90,7 @@ public final class NullValue implements NormalizableKey<NullValue>, CopyableValu
 	public int hashCode() {
 		return 53;
 	}
-	
+
 	// --------------------------------------------------------------------------------------------
 
 	@Override
@@ -103,9 +104,9 @@ public final class NullValue implements NormalizableKey<NullValue>, CopyableValu
 			target.put(i, (byte) 0);
 		}
 	}
-	
+
 	// --------------------------------------------------------------------------------------------
-	
+
 	@Override
 	public int getBinaryLength() {
 		return 1;

@@ -27,7 +27,7 @@ public class MissingTypeInfoTest extends TypeInformationTestBase<MissingTypeInfo
 
 	@Override
 	protected MissingTypeInfo[] getTestData() {
-		return new MissingTypeInfo[] {
+		return new MissingTypeInfo[]{
 			new MissingTypeInfo(functionName, testException),
 			new MissingTypeInfo("alt" + functionName, testException)
 		};

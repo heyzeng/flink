@@ -42,7 +42,7 @@ public class ByteValueComparator extends TypeComparator<ByteValue> {
 
 	private final ByteValue tempReference = new ByteValue();
 
-	private final TypeComparator<?>[] comparators = new TypeComparator[] {this};
+	private final TypeComparator<?>[] comparators = new TypeComparator[]{this};
 
 	public ByteValueComparator(boolean ascending) {
 		this.ascendingComparison = ascending;

@@ -26,18 +26,18 @@ public class DoubleValueParserTest extends ParserTestBase<DoubleValue> {
 
 	@Override
 	public String[] getValidTestValues() {
-		return new String[] {
-			"0", "0.0", "123.4", "0.124", ".623", "1234", "-12.34", 
+		return new String[]{
+			"0", "0.0", "123.4", "0.124", ".623", "1234", "-12.34",
 			String.valueOf(Double.MAX_VALUE), String.valueOf(Double.MIN_VALUE),
 			String.valueOf(Double.NEGATIVE_INFINITY), String.valueOf(Double.POSITIVE_INFINITY),
 			String.valueOf(Double.NaN),
 			"1.234E2", "1.234e3", "1.234E-2", "1239"
 		};
 	}
-	
+
 	@Override
 	public DoubleValue[] getValidTestResults() {
-		return new DoubleValue[] {
+		return new DoubleValue[]{
 			new DoubleValue(0d), new DoubleValue(0.0d), new DoubleValue(123.4d), new DoubleValue(0.124d),
 			new DoubleValue(.623d), new DoubleValue(1234d), new DoubleValue(-12.34d),
 			new DoubleValue(Double.MAX_VALUE), new DoubleValue(Double.MIN_VALUE),
@@ -49,7 +49,7 @@ public class DoubleValueParserTest extends ParserTestBase<DoubleValue> {
 
 	@Override
 	public String[] getInvalidTestValues() {
-		return new String[] {
+		return new String[]{
 			"a", "123abc4", "-57-6", "7-877678", " 1", "2 ", " ", "\t"
 		};
 	}

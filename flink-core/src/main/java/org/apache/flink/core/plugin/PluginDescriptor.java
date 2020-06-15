@@ -26,10 +26,14 @@ import java.util.Arrays;
  */
 public class PluginDescriptor {
 
-	/** Unique identifier of the plugin. */
+	/**
+	 * Unique identifier of the plugin.
+	 */
 	private final String pluginId;
 
-	/** URLs to the plugin resources code. Usually this contains URLs of the jars that will be loaded for the plugin. */
+	/**
+	 * URLs to the plugin resources code. Usually this contains URLs of the jars that will be loaded for the plugin.
+	 */
 	private final URL[] pluginResourceURLs;
 
 	/**

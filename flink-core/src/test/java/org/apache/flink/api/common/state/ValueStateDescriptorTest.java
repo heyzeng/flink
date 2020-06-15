@@ -77,7 +77,7 @@ public class ValueStateDescriptorTest extends TestLogger {
 		String defaultValue = new String(data, ConfigConstants.DEFAULT_CHARSET);
 
 		ValueStateDescriptor<String> descr =
-				new ValueStateDescriptor<>("testName", serializer, defaultValue);
+			new ValueStateDescriptor<>("testName", serializer, defaultValue);
 
 		assertEquals("testName", descr.getName());
 		assertEquals(defaultValue, descr.getDefaultValue());

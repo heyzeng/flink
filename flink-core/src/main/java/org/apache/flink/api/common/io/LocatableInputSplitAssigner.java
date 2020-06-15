@@ -52,21 +52,21 @@ public final class LocatableInputSplitAssigner implements InputSplitAssigner {
 	// unassigned splits for remote assignment
 	private final LocatableInputSplitChooser remoteSplitChooser;
 
-	private int localAssignments;		// lock protected by the unassigned set lock
+	private int localAssignments;        // lock protected by the unassigned set lock
 
-	private int remoteAssignments;		// lock protected by the unassigned set lock
+	private int remoteAssignments;        // lock protected by the unassigned set lock
 
 	// --------------------------------------------------------------------------------------------
 
 	public LocatableInputSplitAssigner(Collection<LocatableInputSplit> splits) {
-		for(LocatableInputSplit split : splits) {
+		for (LocatableInputSplit split : splits) {
 			this.unassigned.add(new LocatableInputSplitWithCount(split));
 		}
 		this.remoteSplitChooser = new LocatableInputSplitChooser(unassigned);
 	}
 
 	public LocatableInputSplitAssigner(LocatableInputSplit[] splits) {
-		for(LocatableInputSplit split : splits) {
+		for (LocatableInputSplit split : splits) {
 			this.unassigned.add(new LocatableInputSplitWithCount(split));
 		}
 		this.remoteSplitChooser = new LocatableInputSplitChooser(unassigned);
@@ -137,13 +137,12 @@ public final class LocatableInputSplitAssigner implements InputSplitAssigner {
 							// Split is local on host.
 							// Increment local count
 							isw.incrementLocalCount();
-                            // and add to local split list
+							// and add to local split list
 							localSplits.addInputSplit(isw);
 						}
 					}
 
-				}
-				else {
+				} else {
 					// someone else was faster
 					localSplits = prior;
 				}
@@ -268,7 +267,7 @@ public final class LocatableInputSplitAssigner implements InputSplitAssigner {
 	 * Holds a list of LocatableInputSplits and returns the split with the lowest local count.
 	 * The rational is that splits which are local on few hosts should be preferred over others which
 	 * have more degrees of freedom for local assignment.
-	 *
+	 * <p>
 	 * Internally, the splits are stored in a linked list. Sorting the list is not a good solution,
 	 * as local counts are updated whenever a previously unseen host requests a split.
 	 * Instead, we track the minimum local count and iteratively look for splits with that minimum count.
@@ -291,7 +290,7 @@ public final class LocatableInputSplitAssigner implements InputSplitAssigner {
 
 		public LocatableInputSplitChooser(Collection<LocatableInputSplitWithCount> splits) {
 			this.splits = new LinkedList<LocatableInputSplitWithCount>();
-			for(LocatableInputSplitWithCount isw : splits) {
+			for (LocatableInputSplitWithCount isw : splits) {
 				this.addInputSplit(isw);
 			}
 		}
@@ -316,7 +315,7 @@ public final class LocatableInputSplitAssigner implements InputSplitAssigner {
 				// all other splits have more local host than this one
 				this.elementCycleCount = 1;
 				splits.offerFirst(split);
-			} else if (localCount == minLocalCount ) {
+			} else if (localCount == minLocalCount) {
 				this.elementCycleCount++;
 				this.splits.offerFirst(split);
 			} else {
@@ -337,7 +336,7 @@ public final class LocatableInputSplitAssigner implements InputSplitAssigner {
 		 */
 		public LocatableInputSplitWithCount getNextUnassignedMinLocalCountSplit(Set<LocatableInputSplitWithCount> unassignedSplits) {
 
-			if(splits.size() == 0) {
+			if (splits.size() == 0) {
 				return null;
 			}
 
@@ -361,7 +360,7 @@ public final class LocatableInputSplitAssigner implements InputSplitAssigner {
 					// split was already assigned
 					split = null;
 				}
-				if(elementCycleCount == 0) {
+				if (elementCycleCount == 0) {
 					// one full cycle, but no split with min local count found
 					// update minLocalCnt and element cycle count for next pass over the splits
 					minLocalCount = nextMinLocalCount;

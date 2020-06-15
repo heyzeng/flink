@@ -29,7 +29,7 @@ public final class BooleanComparator extends BasicTypeComparator<Boolean> {
 
 	private static final long serialVersionUID = 1L;
 
-	
+
 	public BooleanComparator(boolean ascending) {
 		super(ascending);
 	}
@@ -38,8 +38,8 @@ public final class BooleanComparator extends BasicTypeComparator<Boolean> {
 	public int compareSerialized(DataInputView firstSource, DataInputView secondSource) throws IOException {
 		final int fs = firstSource.readBoolean() ? 1 : 0;
 		final int ss = secondSource.readBoolean() ? 1 : 0;
-		int comp = fs - ss; 
-		return ascendingComparison ? comp : -comp; 
+		int comp = fs - ss;
+		return ascendingComparison ? comp : -comp;
 	}
 
 

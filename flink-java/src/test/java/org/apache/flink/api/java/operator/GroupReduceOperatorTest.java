@@ -46,16 +46,16 @@ import static org.junit.Assert.assertTrue;
 public class GroupReduceOperatorTest {
 
 	private final List<Tuple5<Integer, Long, String, Long, Integer>> emptyTupleData =
-			new ArrayList<Tuple5<Integer, Long, String, Long, Integer>>();
+		new ArrayList<Tuple5<Integer, Long, String, Long, Integer>>();
 
 	private final TupleTypeInfo<Tuple5<Integer, Long, String, Long, Integer>> tupleTypeInfo = new
-			TupleTypeInfo<Tuple5<Integer, Long, String, Long, Integer>>(
-					BasicTypeInfo.INT_TYPE_INFO,
-					BasicTypeInfo.LONG_TYPE_INFO,
-					BasicTypeInfo.STRING_TYPE_INFO,
-					BasicTypeInfo.LONG_TYPE_INFO,
-					BasicTypeInfo.INT_TYPE_INFO
-			);
+		TupleTypeInfo<Tuple5<Integer, Long, String, Long, Integer>>(
+		BasicTypeInfo.INT_TYPE_INFO,
+		BasicTypeInfo.LONG_TYPE_INFO,
+		BasicTypeInfo.STRING_TYPE_INFO,
+		BasicTypeInfo.LONG_TYPE_INFO,
+		BasicTypeInfo.INT_TYPE_INFO
+	);
 
 	@Test
 	public void testSemanticPropsWithKeySelector1() {
@@ -64,8 +64,8 @@ public class GroupReduceOperatorTest {
 		DataSet<Tuple5<Integer, Long, String, Long, Integer>> tupleDs = env.fromCollection(emptyTupleData, tupleTypeInfo);
 
 		GroupReduceOperator<Tuple5<Integer, Long, String, Long, Integer>, Tuple5<Integer, Long, String, Long, Integer>> reduceOp =
-				tupleDs.groupBy(new DummyTestKeySelector())
-						.reduceGroup(new DummyGroupReduceFunction1());
+			tupleDs.groupBy(new DummyTestKeySelector())
+				.reduceGroup(new DummyGroupReduceFunction1());
 
 		SemanticProperties semProps = reduceOp.getSemanticProperties();
 
@@ -100,9 +100,9 @@ public class GroupReduceOperatorTest {
 		DataSet<Tuple5<Integer, Long, String, Long, Integer>> tupleDs = env.fromCollection(emptyTupleData, tupleTypeInfo);
 
 		GroupReduceOperator<Tuple5<Integer, Long, String, Long, Integer>, Tuple5<Integer, Long, String, Long, Integer>> reduceOp =
-				tupleDs.groupBy(new DummyTestKeySelector())
-						.sortGroup(new DummyTestKeySelector(), Order.ASCENDING)
-						.reduceGroup(new DummyGroupReduceFunction1());
+			tupleDs.groupBy(new DummyTestKeySelector())
+				.sortGroup(new DummyTestKeySelector(), Order.ASCENDING)
+				.reduceGroup(new DummyGroupReduceFunction1());
 
 		SemanticProperties semProps = reduceOp.getSemanticProperties();
 
@@ -139,9 +139,9 @@ public class GroupReduceOperatorTest {
 		DataSet<Tuple5<Integer, Long, String, Long, Integer>> tupleDs = env.fromCollection(emptyTupleData, tupleTypeInfo);
 
 		GroupReduceOperator<Tuple5<Integer, Long, String, Long, Integer>, Tuple5<Integer, Long, String, Long, Integer>> reduceOp =
-				tupleDs.groupBy(new DummyTestKeySelector())
-						.reduceGroup(new DummyGroupReduceFunction2())
-							.withForwardedFields("0->4;1;1->3;2");
+			tupleDs.groupBy(new DummyTestKeySelector())
+				.reduceGroup(new DummyGroupReduceFunction2())
+				.withForwardedFields("0->4;1;1->3;2");
 
 		SemanticProperties semProps = reduceOp.getSemanticProperties();
 
@@ -176,10 +176,10 @@ public class GroupReduceOperatorTest {
 		DataSet<Tuple5<Integer, Long, String, Long, Integer>> tupleDs = env.fromCollection(emptyTupleData, tupleTypeInfo);
 
 		GroupReduceOperator<Tuple5<Integer, Long, String, Long, Integer>, Tuple5<Integer, Long, String, Long, Integer>> reduceOp =
-				tupleDs.groupBy(new DummyTestKeySelector())
-						.sortGroup(new DummyTestKeySelector(), Order.ASCENDING)
-						.reduceGroup(new DummyGroupReduceFunction2())
-							.withForwardedFields("0->4;1;1->3;2");
+			tupleDs.groupBy(new DummyTestKeySelector())
+				.sortGroup(new DummyTestKeySelector(), Order.ASCENDING)
+				.reduceGroup(new DummyGroupReduceFunction2())
+				.withForwardedFields("0->4;1;1->3;2");
 
 		SemanticProperties semProps = reduceOp.getSemanticProperties();
 
@@ -216,9 +216,9 @@ public class GroupReduceOperatorTest {
 		DataSet<Tuple5<Integer, Long, String, Long, Integer>> tupleDs = env.fromCollection(emptyTupleData, tupleTypeInfo);
 
 		GroupReduceOperator<Tuple5<Integer, Long, String, Long, Integer>, Tuple5<Integer, Long, String, Long, Integer>> reduceOp =
-				tupleDs.groupBy(new DummyTestKeySelector())
-						.reduceGroup(new DummyGroupReduceFunction3())
-						.withForwardedFields("4->0;3;3->1;2");
+			tupleDs.groupBy(new DummyTestKeySelector())
+				.reduceGroup(new DummyGroupReduceFunction3())
+				.withForwardedFields("4->0;3;3->1;2");
 
 		SemanticProperties semProps = reduceOp.getSemanticProperties();
 
@@ -250,10 +250,10 @@ public class GroupReduceOperatorTest {
 		DataSet<Tuple5<Integer, Long, String, Long, Integer>> tupleDs = env.fromCollection(emptyTupleData, tupleTypeInfo);
 
 		GroupReduceOperator<Tuple5<Integer, Long, String, Long, Integer>, Tuple5<Integer, Long, String, Long, Integer>> reduceOp =
-				tupleDs.groupBy(new DummyTestKeySelector())
-						.sortGroup(new DummyTestKeySelector(), Order.ASCENDING)
-						.reduceGroup(new DummyGroupReduceFunction3())
-						.withForwardedFields("4->0;3;3->1;2");
+			tupleDs.groupBy(new DummyTestKeySelector())
+				.sortGroup(new DummyTestKeySelector(), Order.ASCENDING)
+				.reduceGroup(new DummyGroupReduceFunction3())
+				.withForwardedFields("4->0;3;3->1;2");
 
 		SemanticProperties semProps = reduceOp.getSemanticProperties();
 
@@ -287,8 +287,8 @@ public class GroupReduceOperatorTest {
 		DataSet<Tuple5<Integer, Long, String, Long, Integer>> tupleDs = env.fromCollection(emptyTupleData, tupleTypeInfo);
 
 		GroupReduceOperator<Tuple5<Integer, Long, String, Long, Integer>, Tuple5<Integer, Long, String, Long, Integer>> reduceOp =
-				tupleDs.groupBy(new DummyTestKeySelector())
-						.reduceGroup(new DummyGroupReduceFunction4());
+			tupleDs.groupBy(new DummyTestKeySelector())
+				.reduceGroup(new DummyGroupReduceFunction4());
 
 		SemanticProperties semProps = reduceOp.getSemanticProperties();
 

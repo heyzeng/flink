@@ -40,6 +40,7 @@ import org.apache.flink.util.Preconditions;
 
 /**
  * A {@link Grouping} that is unsorted.
+ *
  * @param <T> type of elements
  */
 @Public
@@ -72,13 +73,12 @@ public class UnsortedGrouping<T> extends Grouping<T> {
 	 *
 	 * <p><b>Note: Only Tuple DataSets can be aggregated.</b>
 	 * The transformation applies a built-in {@link Aggregations Aggregation} on a specified field
-	 *   of a Tuple group. Additional aggregation functions can be added to the resulting
-	 *   {@link AggregateOperator} by calling {@link AggregateOperator#and(Aggregations, int)}.
+	 * of a Tuple group. Additional aggregation functions can be added to the resulting
+	 * {@link AggregateOperator} by calling {@link AggregateOperator#and(Aggregations, int)}.
 	 *
-	 * @param agg The built-in aggregation function that is computed.
+	 * @param agg   The built-in aggregation function that is computed.
 	 * @param field The index of the Tuple field on which the aggregation function is applied.
 	 * @return An AggregateOperator that represents the aggregated DataSet.
-	 *
 	 * @see org.apache.flink.api.java.tuple.Tuple
 	 * @see Aggregations
 	 * @see AggregateOperator
@@ -95,47 +95,46 @@ public class UnsortedGrouping<T> extends Grouping<T> {
 
 	/**
 	 * Syntactic sugar for aggregate (SUM, field).
+	 *
 	 * @param field The index of the Tuple field on which the aggregation function is applied.
 	 * @return An AggregateOperator that represents the summed DataSet.
-	 *
 	 * @see org.apache.flink.api.java.operators.AggregateOperator
 	 */
-	public AggregateOperator<T> sum (int field) {
-		return this.aggregate (Aggregations.SUM, field, Utils.getCallLocationName());
+	public AggregateOperator<T> sum(int field) {
+		return this.aggregate(Aggregations.SUM, field, Utils.getCallLocationName());
 	}
 
 	/**
 	 * Syntactic sugar for aggregate (MAX, field).
+	 *
 	 * @param field The index of the Tuple field on which the aggregation function is applied.
 	 * @return An AggregateOperator that represents the max'ed DataSet.
-	 *
 	 * @see org.apache.flink.api.java.operators.AggregateOperator
 	 */
-	public AggregateOperator<T> max (int field) {
-		return this.aggregate (Aggregations.MAX, field, Utils.getCallLocationName());
+	public AggregateOperator<T> max(int field) {
+		return this.aggregate(Aggregations.MAX, field, Utils.getCallLocationName());
 	}
 
 	/**
 	 * Syntactic sugar for aggregate (MIN, field).
+	 *
 	 * @param field The index of the Tuple field on which the aggregation function is applied.
 	 * @return An AggregateOperator that represents the min'ed DataSet.
-	 *
 	 * @see org.apache.flink.api.java.operators.AggregateOperator
 	 */
-	public AggregateOperator<T> min (int field) {
-		return this.aggregate (Aggregations.MIN, field, Utils.getCallLocationName());
+	public AggregateOperator<T> min(int field) {
+		return this.aggregate(Aggregations.MIN, field, Utils.getCallLocationName());
 	}
 
 	/**
 	 * Applies a Reduce transformation on a grouped {@link DataSet}.
 	 *
 	 * <p>For each group, the transformation consecutively calls a {@link org.apache.flink.api.common.functions.RichReduceFunction}
-	 *   until only a single element for each group remains.
+	 * until only a single element for each group remains.
 	 * A ReduceFunction combines two elements into one new element of the same type.
 	 *
 	 * @param reducer The ReduceFunction that is applied on each group of the DataSet.
 	 * @return A ReduceOperator that represents the reduced DataSet.
-	 *
 	 * @see org.apache.flink.api.common.functions.RichReduceFunction
 	 * @see ReduceOperator
 	 * @see DataSet
@@ -152,11 +151,10 @@ public class UnsortedGrouping<T> extends Grouping<T> {
 	 *
 	 * <p>The transformation calls a {@link org.apache.flink.api.common.functions.RichGroupReduceFunction} for each group of the DataSet.
 	 * A GroupReduceFunction can iterate over all elements of a group and emit any
-	 *   number of output elements including none.
+	 * number of output elements including none.
 	 *
 	 * @param reducer The GroupReduceFunction that is applied on each group of the DataSet.
 	 * @return A GroupReduceOperator that represents the reduced DataSet.
-	 *
 	 * @see org.apache.flink.api.common.functions.RichGroupReduceFunction
 	 * @see GroupReduceOperator
 	 * @see DataSet
@@ -166,7 +164,7 @@ public class UnsortedGrouping<T> extends Grouping<T> {
 			throw new NullPointerException("GroupReduce function must not be null.");
 		}
 		TypeInformation<R> resultType = TypeExtractor.getGroupReduceReturnTypes(reducer,
-				this.getInputDataSet().getType(), Utils.getCallLocationName(), true);
+			this.getInputDataSet().getType(), Utils.getCallLocationName(), true);
 
 		return new GroupReduceOperator<T, R>(this, resultType, inputDataSet.clean(reducer), Utils.getCallLocationName());
 	}
@@ -180,6 +178,7 @@ public class UnsortedGrouping<T> extends Grouping<T> {
 	 * a combiner by implementing the RichGroupReduce function. The combine method of the RichGroupReduce function
 	 * demands input and output type to be the same. The CombineFunction, on the other side, can have an arbitrary
 	 * output type.
+	 *
 	 * @param combiner The GroupCombineFunction that is applied on the DataSet.
 	 * @return A GroupCombineOperator which represents the combined DataSet.
 	 */
@@ -188,7 +187,7 @@ public class UnsortedGrouping<T> extends Grouping<T> {
 			throw new NullPointerException("GroupCombine function must not be null.");
 		}
 		TypeInformation<R> resultType = TypeExtractor.getGroupCombineReturnTypes(combiner,
-				this.getInputDataSet().getType(), Utils.getCallLocationName(), true);
+			this.getInputDataSet().getType(), Utils.getCallLocationName(), true);
 
 		return new GroupCombineOperator<T, R>(this, resultType, inputDataSet.clean(combiner), Utils.getCallLocationName());
 	}
@@ -198,7 +197,7 @@ public class UnsortedGrouping<T> extends Grouping<T> {
 	 *
 	 * @param n The desired number of elements for each group.
 	 * @return A GroupReduceOperator that represents the DataSet containing the elements.
-	*/
+	 */
 	public GroupReduceOperator<T, T> first(int n) {
 		if (n < 1) {
 			throw new InvalidProgramException("Parameter n of first(n) must be at least 1.");
@@ -217,8 +216,8 @@ public class UnsortedGrouping<T> extends Grouping<T> {
 	 * @param fields Keys taken into account for finding the minimum.
 	 * @return A {@link ReduceOperator} representing the minimum.
 	 */
-	@SuppressWarnings({ "unchecked", "rawtypes" })
-	public ReduceOperator<T> minBy(int... fields)  {
+	@SuppressWarnings({"unchecked", "rawtypes"})
+	public ReduceOperator<T> minBy(int... fields) {
 
 		// Check for using a tuple
 		if (!this.inputDataSet.getType().isTupleType() || !(this.inputDataSet.getType() instanceof TupleTypeInfo)) {
@@ -226,7 +225,7 @@ public class UnsortedGrouping<T> extends Grouping<T> {
 		}
 
 		return new ReduceOperator<T>(this, new SelectByMinFunction(
-				(TupleTypeInfo) this.inputDataSet.getType(), fields), Utils.getCallLocationName());
+			(TupleTypeInfo) this.inputDataSet.getType(), fields), Utils.getCallLocationName());
 	}
 
 	/**
@@ -239,8 +238,8 @@ public class UnsortedGrouping<T> extends Grouping<T> {
 	 * @param fields Keys taken into account for finding the minimum.
 	 * @return A {@link ReduceOperator} representing the minimum.
 	 */
-	@SuppressWarnings({ "unchecked", "rawtypes" })
-	public ReduceOperator<T> maxBy(int... fields)  {
+	@SuppressWarnings({"unchecked", "rawtypes"})
+	public ReduceOperator<T> maxBy(int... fields) {
 
 		// Check for using a tuple
 		if (!this.inputDataSet.getType().isTupleType() || !(this.inputDataSet.getType() instanceof TupleTypeInfo)) {
@@ -248,7 +247,7 @@ public class UnsortedGrouping<T> extends Grouping<T> {
 		}
 
 		return new ReduceOperator<T>(this, new SelectByMaxFunction(
-				(TupleTypeInfo) this.inputDataSet.getType(), fields), Utils.getCallLocationName());
+			(TupleTypeInfo) this.inputDataSet.getType(), fields), Utils.getCallLocationName());
 	}
 	// --------------------------------------------------------------------------------------------
 	//  Group Operations
@@ -264,7 +263,6 @@ public class UnsortedGrouping<T> extends Grouping<T> {
 	 * @param field The Tuple field on which the group is sorted.
 	 * @param order The Order in which the specified Tuple field is sorted.
 	 * @return A SortedGrouping with specified order of group element.
-	 *
 	 * @see org.apache.flink.api.java.tuple.Tuple
 	 * @see Order
 	 */
@@ -288,7 +286,6 @@ public class UnsortedGrouping<T> extends Grouping<T> {
 	 * @param field The Tuple or Pojo field on which the group is sorted.
 	 * @param order The Order in which the specified field is sorted.
 	 * @return A SortedGrouping with specified order of group element.
-	 *
 	 * @see Order
 	 */
 	public SortedGrouping<T> sortGroup(String field, Order order) {
@@ -308,9 +305,8 @@ public class UnsortedGrouping<T> extends Grouping<T> {
 	 * <p>Chaining {@link #sortGroup(KeySelector, Order)} calls is not supported.
 	 *
 	 * @param keySelector The KeySelector with which the group is sorted.
-	 * @param order The Order in which the extracted key is sorted.
+	 * @param order       The Order in which the extracted key is sorted.
 	 * @return A SortedGrouping with specified order of group element.
-	 *
 	 * @see Order
 	 */
 	public <K> SortedGrouping<T> sortGroup(KeySelector<T, K> keySelector, Order order) {

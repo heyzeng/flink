@@ -53,7 +53,7 @@ public class DynamicCodeLoadingException extends FlinkException {
 	 * Creates a new exception with the given message and cause.
 	 *
 	 * @param message The exception message
-	 * @param cause The exception that caused this exception
+	 * @param cause   The exception that caused this exception
 	 */
 	public DynamicCodeLoadingException(String message, Throwable cause) {
 		super(message, cause);

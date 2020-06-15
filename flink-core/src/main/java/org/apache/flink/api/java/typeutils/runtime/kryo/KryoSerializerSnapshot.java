@@ -55,9 +55,9 @@ public class KryoSerializerSnapshot<T> implements TypeSerializerSnapshot<T> {
 	}
 
 	KryoSerializerSnapshot(Class<T> typeClass,
-			LinkedHashMap<Class<?>, SerializableSerializer<?>> defaultKryoSerializers,
-			LinkedHashMap<Class<?>, Class<? extends Serializer<?>>> defaultKryoSerializerClasses,
-			LinkedHashMap<String, KryoRegistration> kryoRegistrations) {
+						   LinkedHashMap<Class<?>, SerializableSerializer<?>> defaultKryoSerializers,
+						   LinkedHashMap<Class<?>, Class<? extends Serializer<?>>> defaultKryoSerializerClasses,
+						   LinkedHashMap<String, KryoRegistration> kryoRegistrations) {
 
 		this.snapshotData = createFrom(typeClass, defaultKryoSerializers, defaultKryoSerializerClasses, kryoRegistrations);
 	}

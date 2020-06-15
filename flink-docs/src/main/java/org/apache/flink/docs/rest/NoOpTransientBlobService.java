@@ -73,5 +73,6 @@ enum NoOpTransientBlobService implements TransientBlobService {
 	}
 
 	@Override
-	public void close() throws IOException {}
+	public void close() throws IOException {
+	}
 }

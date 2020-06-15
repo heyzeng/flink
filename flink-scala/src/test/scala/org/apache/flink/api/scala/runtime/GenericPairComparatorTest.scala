@@ -29,7 +29,7 @@ class GenericPairComparatorTest
 
   override protected def createComparator(ascending: Boolean):
   GenericPairComparator[(Int, String, Double), (Int, Float, Long, Double)] = {
-    val fields1  = Array[Int](0, 2)
+    val fields1 = Array[Int](0, 2)
     val fields2 = Array[Int](0, 3)
 
     val comps1 =
@@ -61,7 +61,7 @@ class GenericPairComparatorTest
     (6, "hello", 16.0),
     (6, "world", 17.2),
     (7, "hello", 14.0),
-    (7,"world", 15.2))
+    (7, "world", 15.2))
 
   private val dataIDL = Array(
     (4, 0.11f, 14L, 20.0),

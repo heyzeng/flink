@@ -26,17 +26,17 @@ import java.io.FileWriter;
 import java.io.IOException;
 
 public class TestFileUtils {
-	
+
 	private static final String FILE_PREFIX = "flink_test_";
-	
+
 	private static final String FILE_SUFFIX = ".tmp";
 
 	public static String createTempFile(long bytes) throws IOException {
 		File f = File.createTempFile(FILE_PREFIX, FILE_SUFFIX);
 		f.deleteOnExit();
-		
+
 		BufferedOutputStream out = new BufferedOutputStream(new FileOutputStream(f));
-		try { 
+		try {
 			for (; bytes > 0; bytes--) {
 				out.write(0);
 			}
@@ -45,7 +45,7 @@ public class TestFileUtils {
 		}
 		return f.toURI().toString();
 	}
-	
+
 	public static String createTempFileInDirectory(String dir, String contents) throws IOException {
 		File f;
 		do {
@@ -87,17 +87,17 @@ public class TestFileUtils {
 		}
 		return f.toURI().toString();
 	}
-	
+
 	// ------------------------------------------------------------------------
 
-	public static String createTempFileDir(File tempDir, long ... bytes) throws IOException {
+	public static String createTempFileDir(File tempDir, long... bytes) throws IOException {
 		File f = null;
 		do {
 			f = new File(tempDir, randomFileName());
 		} while (f.exists());
 		f.mkdirs();
 		f.deleteOnExit();
-		
+
 		for (long l : bytes) {
 			File child = new File(f, randomFileName());
 			child.deleteOnExit();
@@ -110,19 +110,19 @@ public class TestFileUtils {
 		}
 		return f.toURI().toString();
 	}
-	
-	public static String createTempFileDir(File tempDir, String ... contents) throws IOException {
+
+	public static String createTempFileDir(File tempDir, String... contents) throws IOException {
 		return createTempFileDirExtension(tempDir, FILE_SUFFIX, contents);
 	}
-	
-	public static String createTempFileDirExtension(File tempDir, String fileExtension, String ... contents ) throws IOException {
+
+	public static String createTempFileDirExtension(File tempDir, String fileExtension, String... contents) throws IOException {
 		File f = null;
 		do {
 			f = new File(tempDir, randomFileName(FILE_SUFFIX));
 		} while (f.exists());
 		f.mkdirs();
 		f.deleteOnExit();
-		
+
 		for (String s : contents) {
 			File child = new File(f, randomFileName(fileExtension));
 			child.deleteOnExit();
@@ -133,15 +133,17 @@ public class TestFileUtils {
 		}
 		return f.toURI().toString();
 	}
-	
+
 	public static String randomFileName() {
 		return randomFileName(FILE_SUFFIX);
 	}
+
 	public static String randomFileName(String fileSuffix) {
 		return FILE_PREFIX + ((int) (Math.random() * Integer.MAX_VALUE)) + fileSuffix;
 	}
 
 	// ------------------------------------------------------------------------
-	
-	private TestFileUtils() {}
+
+	private TestFileUtils() {
+	}
 }

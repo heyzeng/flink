@@ -36,9 +36,9 @@ public final class LambdaUtil {
 	 * suppressed until all elements are processed. If exceptions happened for one or more of the inputs, they are
 	 * reported in a combining suppressed exception.
 	 *
-	 * @param inputs iterator for all inputs to the throwingConsumer.
+	 * @param inputs           iterator for all inputs to the throwingConsumer.
 	 * @param throwingConsumer this consumer will be called for all elements delivered by the input iterator.
-	 * @param <T> the type of input.
+	 * @param <T>              the type of input.
 	 * @throws Exception collected exceptions that happened during the invocation of the consumer on the input elements.
 	 */
 	public static <T> void applyToAllWhileSuppressingExceptions(
@@ -73,8 +73,8 @@ public final class LambdaUtil {
 	 * back to what it was before after the runnable completed.
 	 */
 	public static <E extends Throwable> void withContextClassLoader(
-			final ClassLoader cl,
-			final ThrowingRunnable<E> r) throws E {
+		final ClassLoader cl,
+		final ThrowingRunnable<E> r) throws E {
 
 		try (TemporaryClassLoaderContext ignored = TemporaryClassLoaderContext.of(cl)) {
 			r.run();
@@ -89,8 +89,8 @@ public final class LambdaUtil {
 	 * back to what it was before after the runnable completed.
 	 */
 	public static <R, E extends Throwable> R withContextClassLoader(
-			final ClassLoader cl,
-			final SupplierWithException<R, E> s) throws E {
+		final ClassLoader cl,
+		final SupplierWithException<R, E> s) throws E {
 
 		try (TemporaryClassLoaderContext ignored = TemporaryClassLoaderContext.of(cl)) {
 			return s.get();

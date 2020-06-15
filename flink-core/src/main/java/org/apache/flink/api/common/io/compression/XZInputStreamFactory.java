@@ -33,7 +33,7 @@ import java.util.Collections;
 @Internal
 public class XZInputStreamFactory implements InflaterInputStreamFactory<XZCompressorInputStream> {
 
-	private static final  XZInputStreamFactory INSTANCE = new XZInputStreamFactory();
+	private static final XZInputStreamFactory INSTANCE = new XZInputStreamFactory();
 
 	public static XZInputStreamFactory getInstance() {
 		return INSTANCE;

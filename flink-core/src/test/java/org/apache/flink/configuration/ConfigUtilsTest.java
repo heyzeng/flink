@@ -37,10 +37,10 @@ import static org.junit.Assert.assertThat;
 public class ConfigUtilsTest {
 
 	private static final ConfigOption<List<String>> TEST_OPTION =
-			key("test.option.key")
-					.stringType()
-					.asList()
-					.noDefaultValue();
+		key("test.option.key")
+			.stringType()
+			.asList()
+			.noDefaultValue();
 
 	private static final Integer[] intArray = {1, 3, 2, 4};
 	private static final List<Integer> intList = Arrays.asList(intArray);

@@ -33,11 +33,11 @@ import org.apache.flink.annotation.PublicEvolving;
  * key of the current element. That way, the system can handle stream and state partitioning
  * consistently together.
  *
- * @param <T> Type of the values folded into the state
+ * @param <T>   Type of the values folded into the state
  * @param <ACC> Type of the value in the state
- *
  * @deprecated will be removed in a future version in favor of {@link AggregatingState}
  */
 @PublicEvolving
 @Deprecated
-public interface FoldingState<T, ACC> extends AppendingState<T, ACC> {}
+public interface FoldingState<T, ACC> extends AppendingState<T, ACC> {
+}

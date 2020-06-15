@@ -46,8 +46,8 @@ public class SimpleVersionedSerialization {
 	 * The resulting array will hence be eight bytes larger than the serialized datum.
 	 *
 	 * @param serializer The serializer to serialize the datum with.
-	 * @param datum The datum to serialize.
-	 * @param out The stream to serialize to.
+	 * @param datum      The datum to serialize.
+	 * @param out        The stream to serialize to.
 	 */
 	public static <T> void writeVersionAndSerialize(SimpleVersionedSerializer<T> serializer, T datum, DataOutputView out) throws IOException {
 		checkNotNull(serializer, "serializer");
@@ -73,7 +73,7 @@ public class SimpleVersionedSerialization {
 	 * method.
 	 *
 	 * @param serializer The serializer to serialize the datum with.
-	 * @param in The stream to deserialize from.
+	 * @param in         The stream to deserialize from.
 	 */
 	public static <T> T readVersionAndDeSerialize(SimpleVersionedSerializer<T> serializer, DataInputView in) throws IOException {
 		checkNotNull(serializer, "serializer");
@@ -98,10 +98,8 @@ public class SimpleVersionedSerialization {
 	 * {@link #readVersionAndDeSerialize(SimpleVersionedSerializer, byte[])}.
 	 *
 	 * @param serializer The serializer to serialize the datum with.
-	 * @param datum The datum to serialize.
-	 *
+	 * @param datum      The datum to serialize.
 	 * @return A byte array containing the serialized version and serialized datum.
-	 *
 	 * @throws IOException Exceptions from the {@link SimpleVersionedSerializer#serialize(Object)}
 	 *                     method are forwarded.
 	 */
@@ -115,14 +113,14 @@ public class SimpleVersionedSerialization {
 		final int version = serializer.getVersion();
 		versionAndData[0] = (byte) (version >> 24);
 		versionAndData[1] = (byte) (version >> 16);
-		versionAndData[2] = (byte) (version >>  8);
-		versionAndData[3] = (byte)  version;
+		versionAndData[2] = (byte) (version >> 8);
+		versionAndData[3] = (byte) version;
 
 		final int length = data.length;
 		versionAndData[4] = (byte) (length >> 24);
 		versionAndData[5] = (byte) (length >> 16);
-		versionAndData[6] = (byte) (length >>  8);
-		versionAndData[7] = (byte)  length;
+		versionAndData[6] = (byte) (length >> 8);
+		versionAndData[7] = (byte) length;
 
 		// move the data to the array
 		System.arraycopy(data, 0, versionAndData, 8, data.length);
@@ -136,10 +134,8 @@ public class SimpleVersionedSerialization {
 	 * for deserialization, via {@link SimpleVersionedSerializer#deserialize(int, byte[])}.
 	 *
 	 * @param serializer The serializer to deserialize the datum with.
-	 * @param bytes The bytes to deserialize from.
-	 *
+	 * @param bytes      The bytes to deserialize from.
 	 * @return The deserialized datum.
-	 *
 	 * @throws IOException Exceptions from the {@link SimpleVersionedSerializer#deserialize(int, byte[])}
 	 *                     method are forwarded.
 	 */
@@ -150,27 +146,29 @@ public class SimpleVersionedSerialization {
 
 		final byte[] dataOnly = Arrays.copyOfRange(bytes, 8, bytes.length);
 		final int version =
-				((bytes[0] & 0xff) << 24) |
+			((bytes[0] & 0xff) << 24) |
 				((bytes[1] & 0xff) << 16) |
-				((bytes[2] & 0xff) <<  8) |
+				((bytes[2] & 0xff) << 8) |
 				(bytes[3] & 0xff);
 
 		final int length =
-				((bytes[4] & 0xff) << 24) |
+			((bytes[4] & 0xff) << 24) |
 				((bytes[5] & 0xff) << 16) |
-				((bytes[6] & 0xff) <<  8) |
+				((bytes[6] & 0xff) << 8) |
 				(bytes[7] & 0xff);
 
 		if (length == dataOnly.length) {
 			return serializer.deserialize(version, dataOnly);
-		}
-		else {
+		} else {
 			throw new IOException("Corrupt data, conflicting lengths. Length fields: " + length + ", data: " + dataOnly.length);
 		}
 	}
 
 	// ------------------------------------------------------------------------
 
-	/** Utility class, not meant to be instantiated. */
-	private SimpleVersionedSerialization() {}
+	/**
+	 * Utility class, not meant to be instantiated.
+	 */
+	private SimpleVersionedSerialization() {
+	}
 }

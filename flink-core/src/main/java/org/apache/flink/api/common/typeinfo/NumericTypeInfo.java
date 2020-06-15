@@ -36,20 +36,20 @@ public abstract class NumericTypeInfo<T> extends BasicTypeInfo<T> {
 	private static final long serialVersionUID = -5937777910658986986L;
 
 	private static final HashSet<Class<?>> numericalTypes = new HashSet<>(
-			Arrays.asList(
-				Integer.class,
-				Long.class,
-				Double.class,
-				Byte.class,
-				Short.class,
-				Float.class,
-				Character.class));
+		Arrays.asList(
+			Integer.class,
+			Long.class,
+			Double.class,
+			Byte.class,
+			Short.class,
+			Float.class,
+			Character.class));
 
 	protected NumericTypeInfo(Class<T> clazz, Class<?>[] possibleCastTargetTypes, TypeSerializer<T> serializer, Class<? extends
-			TypeComparator<T>> comparatorClass) {
+		TypeComparator<T>> comparatorClass) {
 		super(clazz, possibleCastTargetTypes, serializer, comparatorClass);
 
 		checkArgument(numericalTypes.contains(clazz),
-				"The given class %s is not a numerical type", clazz.getSimpleName());
+			"The given class %s is not a numerical type", clazz.getSimpleName());
 	}
 }

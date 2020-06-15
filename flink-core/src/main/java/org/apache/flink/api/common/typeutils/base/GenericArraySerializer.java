@@ -31,7 +31,7 @@ import static org.apache.flink.util.Preconditions.checkNotNull;
 
 /**
  * A serializer for arrays of objects.
- * 
+ *
  * @param <C> The component type.
  */
 @Internal
@@ -40,12 +40,12 @@ public final class GenericArraySerializer<C> extends TypeSerializer<C[]> {
 	private static final long serialVersionUID = 1L;
 
 	private final Class<C> componentClass;
-	
+
 	private final TypeSerializer<C> componentSerializer;
-	
+
 	private transient C[] EMPTY;
-	
-	
+
+
 	public GenericArraySerializer(Class<C> componentClass, TypeSerializer<C> componentSerializer) {
 		this.componentClass = checkNotNull(componentClass);
 		this.componentSerializer = checkNotNull(componentSerializer);
@@ -75,7 +75,7 @@ public final class GenericArraySerializer<C> extends TypeSerializer<C[]> {
 		}
 	}
 
-	
+
 	@Override
 	public C[] createInstance() {
 		if (EMPTY == null) {
@@ -103,7 +103,7 @@ public final class GenericArraySerializer<C> extends TypeSerializer<C[]> {
 			return copy;
 		}
 	}
-	
+
 	@Override
 	public C[] copy(C[] from, C[] reuse) {
 		return copy(from);
@@ -131,9 +131,9 @@ public final class GenericArraySerializer<C> extends TypeSerializer<C[]> {
 	@Override
 	public C[] deserialize(DataInputView source) throws IOException {
 		int len = source.readInt();
-		
+
 		C[] array = create(len);
-		
+
 		for (int i = 0; i < len; i++) {
 			boolean isNonNull = source.readBoolean();
 			if (isNonNull) {
@@ -142,10 +142,10 @@ public final class GenericArraySerializer<C> extends TypeSerializer<C[]> {
 				array[i] = null;
 			}
 		}
-		
+
 		return array;
 	}
-	
+
 	@Override
 	public C[] deserialize(C[] reuse, DataInputView source) throws IOException {
 		return deserialize(source);
@@ -155,33 +155,33 @@ public final class GenericArraySerializer<C> extends TypeSerializer<C[]> {
 	public void copy(DataInputView source, DataOutputView target) throws IOException {
 		int len = source.readInt();
 		target.writeInt(len);
-		
+
 		for (int i = 0; i < len; i++) {
 			boolean isNonNull = source.readBoolean();
 			target.writeBoolean(isNonNull);
-			
+
 			if (isNonNull) {
 				componentSerializer.copy(source, target);
 			}
 		}
 	}
-	
+
 	@SuppressWarnings("unchecked")
 	private final C[] create(int len) {
 		return (C[]) Array.newInstance(componentClass, len);
 	}
-	
+
 	// --------------------------------------------------------------------------------------------
-	
+
 	@Override
 	public int hashCode() {
 		return 31 * componentClass.hashCode() + componentSerializer.hashCode();
 	}
-	
+
 	@Override
 	public boolean equals(Object obj) {
 		if (obj instanceof GenericArraySerializer) {
-			GenericArraySerializer<?> other = (GenericArraySerializer<?>)obj;
+			GenericArraySerializer<?> other = (GenericArraySerializer<?>) obj;
 
 			return componentClass == other.componentClass &&
 				componentSerializer.equals(other.componentSerializer);

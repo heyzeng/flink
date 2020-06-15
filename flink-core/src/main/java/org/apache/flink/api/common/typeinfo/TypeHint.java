@@ -39,7 +39,9 @@ import org.apache.flink.util.FlinkRuntimeException;
 @Public
 public abstract class TypeHint<T> {
 
-	/** The type information described by the hint. */
+	/**
+	 * The type information described by the hint.
+	 */
 	private final TypeInformation<T> typeInfo;
 
 	/**
@@ -48,11 +50,10 @@ public abstract class TypeHint<T> {
 	public TypeHint() {
 		try {
 			this.typeInfo = TypeExtractor.createTypeInfo(
-					this, TypeHint.class, getClass(), 0);
-		}
-		catch (InvalidTypesException e) {
+				this, TypeHint.class, getClass(), 0);
+		} catch (InvalidTypesException e) {
 			throw new FlinkRuntimeException("The TypeHint is using a generic variable." +
-					"This is not supported, generic types must be fully specified for the TypeHint.");
+				"This is not supported, generic types must be fully specified for the TypeHint.");
 		}
 	}
 
@@ -60,6 +61,7 @@ public abstract class TypeHint<T> {
 
 	/**
 	 * Gets the type information described by this TypeHint.
+	 *
 	 * @return The type information described by this TypeHint.
 	 */
 	public TypeInformation<T> getTypeInfo() {

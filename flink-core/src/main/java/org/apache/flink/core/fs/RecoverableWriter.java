@@ -100,7 +100,6 @@ public interface RecoverableWriter {
 	 *
 	 * @param path The path of the file/object to write to.
 	 * @return A new RecoverableFsDataOutputStream writing a new file/object.
-	 *
 	 * @throws IOException Thrown if the stream could not be opened/initialized.
 	 */
 	RecoverableFsDataOutputStream open(Path path) throws IOException;
@@ -114,9 +113,8 @@ public interface RecoverableWriter {
 	 *
 	 * @param resumable The opaque handle with the recovery information.
 	 * @return A recoverable stream writing to the file/object as it was at the point when the
-	 *         ResumeRecoverable was created.
-	 *
-	 * @throws IOException Thrown, if resuming fails.
+	 * ResumeRecoverable was created.
+	 * @throws IOException                   Thrown, if resuming fails.
 	 * @throws UnsupportedOperationException Thrown if this optional method is not supported.
 	 */
 	RecoverableFsDataOutputStream recover(ResumeRecoverable resumable) throws IOException;
@@ -156,7 +154,6 @@ public interface RecoverableWriter {
 	 *
 	 * @param resumable The opaque handle with the recovery information.
 	 * @return A committer that publishes the target file.
-	 *
 	 * @throws IOException Thrown, if recovery fails.
 	 */
 	RecoverableFsDataOutputStream.Committer recoverForCommit(CommitRecoverable resumable) throws IOException;
@@ -192,12 +189,14 @@ public interface RecoverableWriter {
 	 * The handle can be used to recover the stream as of exactly that point and
 	 * publish the result file.
 	 */
-	interface CommitRecoverable {}
+	interface CommitRecoverable {
+	}
 
 	/**
 	 * A handle to an in-progress stream with a defined and persistent amount of data.
 	 * The handle can be used to recover the stream exactly as of that point and either
 	 * publish the result file or keep appending data to the stream.
 	 */
-	interface ResumeRecoverable extends CommitRecoverable {}
+	interface ResumeRecoverable extends CommitRecoverable {
+	}
 }

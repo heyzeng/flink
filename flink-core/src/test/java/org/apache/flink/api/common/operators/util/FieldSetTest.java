@@ -30,7 +30,7 @@ import org.apache.flink.api.common.operators.util.FieldSet;
 import org.junit.Test;
 
 public class FieldSetTest {
-	
+
 	@Test
 	public void testFieldSetConstructors() {
 		check(new FieldSet());
@@ -40,7 +40,7 @@ public class FieldSetTest {
 		check(new FieldSet(7, 4, 1), 1, 4, 7);
 		check(new FieldSet(7, 4, 1, 4, 7, 1, 4, 2), 1, 4, 2, 7);
 	}
-	
+
 	@Test
 	public void testFieldSetAdds() {
 		check(new FieldSet().addField(1).addField(2), 1, 2);
@@ -52,58 +52,58 @@ public class FieldSetTest {
 		check(new FieldSet().addFields(new FieldSet(3, 4)), 4, 3);
 		check(new FieldSet(5, 1).addFields(new FieldSet()), 5, 1);
 	}
-	
+
 	@Test
 	public void testImmutability() {
 		FieldSet s1 = new FieldSet();
 		FieldSet s2 = new FieldSet(5);
 		FieldSet s3 = new FieldSet(Integer.valueOf(7));
 		FieldSet s4 = new FieldSet(5, 4, 7, 6);
-		
+
 		s1.addFields(s2).addFields(s3);
 		s2.addFields(s4);
 		s4.addFields(s1);
-		
+
 		s1.addField(Integer.valueOf(14));
 		s2.addFields(78, 13, 66, 3);
-		
+
 		assertEquals(0, s1.size());
 		assertEquals(1, s2.size());
 		assertEquals(1, s3.size());
 		assertEquals(4, s4.size());
 	}
-	
+
 	@Test
 	public void testAddListToSet() {
 		check(new FieldSet().addField(1).addFields(new FieldList(14, 3, 1)), 1, 3, 14);
 	}
-	
+
 	private static void check(FieldSet set, int... elements) {
 		if (elements == null) {
 			assertEquals(0, set.size());
 			return;
 		}
-		
+
 		assertEquals(elements.length, set.size());
-		
+
 		// test contains
 		for (int i : elements) {
 			set.contains(i);
 		}
-		
+
 		Arrays.sort(elements);
-		
+
 		// test to array
 		{
 			int[] arr = set.toArray();
 			Arrays.sort(arr);
 			assertTrue(Arrays.equals(arr, elements));
 		}
-		
+
 		{
 			int[] fromIter = new int[set.size()];
 			Iterator<Integer> iter = set.iterator();
-			
+
 			for (int i = 0; i < fromIter.length; i++) {
 				fromIter[i] = iter.next();
 			}

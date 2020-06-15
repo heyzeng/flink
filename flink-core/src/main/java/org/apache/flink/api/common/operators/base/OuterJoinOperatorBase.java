@@ -54,19 +54,19 @@ public class OuterJoinOperatorBase<IN1, IN2, OUT, FT extends FlatJoinFunction<IN
 	private OuterJoinType outerJoinType;
 
 	public OuterJoinOperatorBase(UserCodeWrapper<FT> udf, BinaryOperatorInformation<IN1, IN2, OUT> operatorInfo,
-			int[] keyPositions1, int[] keyPositions2, String name, OuterJoinType outerJoinType) {
+								 int[] keyPositions1, int[] keyPositions2, String name, OuterJoinType outerJoinType) {
 		super(udf, operatorInfo, keyPositions1, keyPositions2, name);
 		this.outerJoinType = outerJoinType;
 	}
 
 	public OuterJoinOperatorBase(FT udf, BinaryOperatorInformation<IN1, IN2, OUT> operatorInfo,
-			int[] keyPositions1, int[] keyPositions2, String name, OuterJoinType outerJoinType) {
+								 int[] keyPositions1, int[] keyPositions2, String name, OuterJoinType outerJoinType) {
 		super(new UserCodeObjectWrapper<FT>(udf), operatorInfo, keyPositions1, keyPositions2, name);
 		this.outerJoinType = outerJoinType;
 	}
 
 	public OuterJoinOperatorBase(Class<? extends FT> udf, BinaryOperatorInformation<IN1, IN2, OUT> operatorInfo,
-			int[] keyPositions1, int[] keyPositions2, String name, OuterJoinType outerJoinType) {
+								 int[] keyPositions1, int[] keyPositions2, String name, OuterJoinType outerJoinType) {
 		super(new UserCodeClassWrapper<FT>(udf), operatorInfo, keyPositions1, keyPositions2, name);
 		this.outerJoinType = outerJoinType;
 	}
@@ -92,8 +92,8 @@ public class OuterJoinOperatorBase<IN1, IN2, OUT, FT extends FlatJoinFunction<IN
 		TypeSerializer<IN2> rightSerializer = rightInformation.createSerializer(executionConfig);
 
 		OuterJoinListIterator<IN1, IN2> outerJoinIterator =
-				new OuterJoinListIterator<>(leftInput, leftSerializer, leftComparator,
-						rightInput, rightSerializer, rightComparator, outerJoinType);
+			new OuterJoinListIterator<>(leftInput, leftSerializer, leftComparator,
+				rightInput, rightSerializer, rightComparator, outerJoinType);
 
 		// --------------------------------------------------------------------
 		// Run UDF
@@ -130,7 +130,7 @@ public class OuterJoinOperatorBase<IN1, IN2, OUT, FT extends FlatJoinFunction<IN
 			comparator = ((CompositeType<T>) typeInformation).createComparator(keyPositions, orders, 0, executionConfig);
 		} else {
 			throw new RuntimeException("Type information for input of type " + typeInformation.getClass()
-					.getCanonicalName() + " is not supported. Could not generate a comparator.");
+				.getCanonicalName() + " is not supported. Could not generate a comparator.");
 		}
 		return comparator;
 	}
@@ -158,8 +158,8 @@ public class OuterJoinOperatorBase<IN1, IN2, OUT, FT extends FlatJoinFunction<IN
 		private IN2 rightReturn;
 
 		public OuterJoinListIterator(List<IN1> leftInput, TypeSerializer<IN1> leftSerializer, final TypeComparator<IN1> leftComparator,
-				List<IN2> rightInput, TypeSerializer<IN2> rightSerializer, final TypeComparator<IN2> rightComparator,
-				OuterJoinType outerJoinType) {
+									 List<IN2> rightInput, TypeSerializer<IN2> rightSerializer, final TypeComparator<IN2> rightComparator,
+									 OuterJoinType outerJoinType) {
 			this.outerJoinType = outerJoinType;
 			pairComparator = new GenericPairComparator<>(leftComparator, rightComparator);
 			leftGroupedIterator = new ListKeyGroupedIterator<>(leftInput, leftSerializer, leftComparator);

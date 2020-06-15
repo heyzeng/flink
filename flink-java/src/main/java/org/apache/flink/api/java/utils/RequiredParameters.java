@@ -28,7 +28,7 @@ import java.util.Objects;
  * Facility to manage required parameters in user defined functions.
  *
  * @deprecated These classes will be dropped in the next version. Use {@link ParameterTool} or a third-party
- *             command line parsing library instead.
+ * command line parsing library instead.
  */
 @Deprecated
 public class RequiredParameters {
@@ -77,7 +77,7 @@ public class RequiredParameters {
 	/**
 	 * Check for all required parameters defined:
 	 * - has a value been passed
-	 *   - if not, does the parameter have an associated default value
+	 * - if not, does the parameter have an associated default value
 	 * - does the type of the parameter match the one defined in RequiredParameters
 	 * - does the value provided in the parameterTool adhere to the choices defined in the option.
 	 *
@@ -130,7 +130,7 @@ public class RequiredParameters {
 	private void checkIsCastableToDefinedType(Option o, Map<String, String> data) throws RequiredParametersException {
 		if (o.hasType() && !o.isCastableToDefinedType(data.get(o.getName()))) {
 			throw new RequiredParametersException("Value for parameter " + o.getName() +
-					" cannot be cast to type " + o.getType());
+				" cannot be cast to type " + o.getType());
 		}
 	}
 
@@ -139,14 +139,14 @@ public class RequiredParameters {
 	private void checkChoices(Option o, Map<String, String> data) throws RequiredParametersException {
 		if (o.getChoices().size() > 0 && !o.getChoices().contains(data.get(o.getName()))) {
 			throw new RequiredParametersException("Value " + data.get(o.getName()) +
-					" is not in the list of valid choices for key " + o.getName());
+				" is not in the list of valid choices for key " + o.getName());
 		}
 	}
 
 	// move value passed on alternative name to standard name or apply default value if any defined
 	// else return true to indicate parameter is 'really' missing
 	private boolean hasNoDefaultValueAndNoValuePassedOnAlternativeName(Option o, Map<String, String> data)
-			throws RequiredParametersException {
+		throws RequiredParametersException {
 		if (o.hasAlt() && data.containsKey(o.getAlt())) {
 			data.put(o.getName(), data.get(o.getAlt()));
 		} else {
@@ -164,10 +164,10 @@ public class RequiredParameters {
 
 	// given that the map contains a value for the name of the option passed
 	// check if it also contains a value for the shortName in option (if any is defined)
-	private void checkAmbiguousValues(Option o, Map<String, String> data) throws RequiredParametersException{
+	private void checkAmbiguousValues(Option o, Map<String, String> data) throws RequiredParametersException {
 		if (data.containsKey(o.getAlt()) && !Objects.equals(data.get(o.getAlt()), ParameterTool.NO_VALUE_KEY)) {
 			throw new RequiredParametersException("Value passed for parameter " + o.getName() +
-					" is ambiguous. Value passed for short and long name.");
+				" is ambiguous. Value passed for short and long name.");
 		}
 	}
 

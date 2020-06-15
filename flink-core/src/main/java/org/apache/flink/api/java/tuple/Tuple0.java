@@ -56,11 +56,12 @@ public class Tuple0 extends Tuple {
 
 	/**
 	 * Shallow tuple copy.
+	 *
 	 * @return A new Tuple with the same fields as this.
 	 */
 	@Override
 	@SuppressWarnings("unchecked")
-	public Tuple0 copy(){
+	public Tuple0 copy() {
 		return new Tuple0();
 	}
 
@@ -81,8 +82,7 @@ public class Tuple0 extends Tuple {
 	/**
 	 * Deep equality for tuples by calling equals() on the tuple members.
 	 *
-	 * @param o
-	 *            the object checked for equality
+	 * @param o the object checked for equality
 	 * @return true if this is equal to o.
 	 */
 	@Override

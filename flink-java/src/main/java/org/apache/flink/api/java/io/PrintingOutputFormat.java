@@ -28,10 +28,10 @@ import org.apache.flink.configuration.Configuration;
  *
  * <p>
  * Four possible format options:
- *	{@code sinkIdentifier}:taskId> output  <- {@code sinkIdentifier} provided, parallelism > 1
- *	{@code sinkIdentifier}> output         <- {@code sinkIdentifier} provided, parallelism == 1
- *  taskId> output         				   <- no {@code sinkIdentifier} provided, parallelism > 1
- *  output                 				   <- no {@code sinkIdentifier} provided, parallelism == 1
+ * {@code sinkIdentifier}:taskId> output  <- {@code sinkIdentifier} provided, parallelism > 1
+ * {@code sinkIdentifier}> output         <- {@code sinkIdentifier} provided, parallelism == 1
+ * taskId> output         				   <- no {@code sinkIdentifier} provided, parallelism > 1
+ * output                 				   <- no {@code sinkIdentifier} provided, parallelism == 1
  * </p>
  *
  * @param <T> Input record type
@@ -63,15 +63,17 @@ public class PrintingOutputFormat<T> extends RichOutputFormat<T> {
 
 	/**
 	 * Instantiates a printing output format that prints to standard out with a prefixed message.
+	 *
 	 * @param sinkIdentifier Message that is prefixed to the output of the value.
-	 * @param stdErr True, if the format should print to standard error instead of standard out.
+	 * @param stdErr         True, if the format should print to standard error instead of standard out.
 	 */
 	public PrintingOutputFormat(final String sinkIdentifier, final boolean stdErr) {
 		writer = new PrintSinkOutputWriter<>(sinkIdentifier, stdErr);
 	}
 
 	@Override
-	public void configure(Configuration parameters) {}
+	public void configure(Configuration parameters) {
+	}
 
 	@Override
 	public void open(int taskNumber, int numTasks) {

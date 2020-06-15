@@ -68,8 +68,8 @@ public class RequiredParametersTest extends TestLogger {
 
 		expectedException.expect(RequiredParametersException.class);
 		expectedException.expectMessage(CoreMatchers.allOf(
-				containsString("Missing arguments for:"),
-				containsString("munich ")));
+			containsString("Missing arguments for:"),
+			containsString("munich ")));
 
 		ParameterTool parameter = ParameterTool.fromArgs(new String[]{});
 		RequiredParameters required = new RequiredParameters();
@@ -109,7 +109,7 @@ public class RequiredParametersTest extends TestLogger {
 
 		expectedException.expect(RequiredParametersException.class);
 		expectedException.expectMessage("Value passed for parameter berlin is ambiguous. " +
-				"Value passed for short and long name.");
+			"Value passed for short and long name.");
 
 		ParameterTool parameter = ParameterTool.fromArgs(new String[]{"--berlin", "value", "--b", "another"});
 		RequiredParameters required = new RequiredParameters();
@@ -246,12 +246,12 @@ public class RequiredParametersTest extends TestLogger {
 
 			String helpText = required.getHelp();
 			Assert.assertThat(helpText, CoreMatchers.allOf(
-					containsString("Required Parameters:"),
-					containsString("-o, --option"),
-					containsString("default: some"),
-					containsString("choices: "),
-					containsString("some"),
-					containsString("options")));
+				containsString("Required Parameters:"),
+				containsString("-o, --option"),
+				containsString("default: some"),
+				containsString("choices: "),
+				containsString("some"),
+				containsString("options")));
 
 		} catch (RequiredParametersException e) {
 			fail("Exception thrown " + e.getMessage());
@@ -268,15 +268,15 @@ public class RequiredParametersTest extends TestLogger {
 
 			String helpText = required.getHelp();
 			Assert.assertThat(helpText, CoreMatchers.allOf(
-					containsString("Required Parameters:"),
-					containsString("--input"),
-					containsString("--output"),
-					containsString("-p, --parallelism"),
-					containsString("Set the parallelism for all operators")));
+				containsString("Required Parameters:"),
+				containsString("--input"),
+				containsString("--output"),
+				containsString("-p, --parallelism"),
+				containsString("Set the parallelism for all operators")));
 
 			Assert.assertThat(helpText, CoreMatchers.allOf(
-					not(containsString("choices")),
-					not(containsString("default"))));
+				not(containsString("choices")),
+				not(containsString("default"))));
 		} catch (RequiredParametersException e) {
 			fail("Exception thrown " + e.getMessage());
 		}
@@ -288,9 +288,9 @@ public class RequiredParametersTest extends TestLogger {
 
 		String helpText = required.getHelp(Arrays.asList("param1", "param2", "paramN"));
 		Assert.assertThat(helpText, CoreMatchers.allOf(
-				containsString("Missing arguments for:"),
-				containsString("param1 "),
-				containsString("param2 "),
-				containsString("paramN ")));
+			containsString("Missing arguments for:"),
+			containsString("param1 "),
+			containsString("param2 "),
+			containsString("paramN ")));
 	}
 }

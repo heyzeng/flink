@@ -31,7 +31,7 @@ import org.apache.flink.api.common.typeutils.base.array.LongPrimitiveArraySerial
 public class BytePrimitiveArraySerializerTest extends SerializerTestBase<byte[]> {
 
 	private final Random rnd = new Random(346283764872L);
-	
+
 	@Override
 	protected TypeSerializer<byte[]> createSerializer() {
 		return new BytePrimitiveArraySerializer();
@@ -41,7 +41,7 @@ public class BytePrimitiveArraySerializerTest extends SerializerTestBase<byte[]>
 	protected Class<byte[]> getTypeClass() {
 		return byte[].class;
 	}
-	
+
 	@Override
 	protected int getLength() {
 		return -1;
@@ -49,21 +49,21 @@ public class BytePrimitiveArraySerializerTest extends SerializerTestBase<byte[]>
 
 	@Override
 	protected byte[][] getTestData() {
-		return new byte[][] {
+		return new byte[][]{
 			randomByteArray(),
 			randomByteArray(),
-			new byte[] {},
-			randomByteArray(),
-			randomByteArray(),
-			randomByteArray(),
-			new byte[] {},
+			new byte[]{},
 			randomByteArray(),
 			randomByteArray(),
 			randomByteArray(),
-			new byte[] {}
+			new byte[]{},
+			randomByteArray(),
+			randomByteArray(),
+			randomByteArray(),
+			new byte[]{}
 		};
 	}
-	
+
 	private final byte[] randomByteArray() {
 		int len = rnd.nextInt(1024 * 1024);
 		byte[] data = new byte[len];

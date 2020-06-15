@@ -34,7 +34,9 @@ public final class IntSerializer extends TypeSerializerSingleton<Integer> {
 
 	private static final long serialVersionUID = 1L;
 
-	/** Sharable instance of the IntSerializer. */
+	/**
+	 * Sharable instance of the IntSerializer.
+	 */
 	public static final IntSerializer INSTANCE = new IntSerializer();
 
 	private static final Integer ZERO = 0;

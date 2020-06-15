@@ -122,16 +122,16 @@ object TypeInfoFactoryTest {
   class MyScalaOptionTypeInfoFactory extends TypeInfoFactory[MyOption[_]] {
 
     override def createTypeInfo(
-        t: Type,
-        genericParameters: util.Map[String, TypeInformation[_]])
-      : TypeInformation[MyOption[_]] = {
+                                 t: Type,
+                                 genericParameters: util.Map[String, TypeInformation[_]])
+    : TypeInformation[MyOption[_]] = {
       new MyScalaOptionTypeInfo(genericParameters.get("Z"))
     }
   }
 
   class MyScalaOptionTypeInfo(val elementType: TypeInformation[_])
     extends TypeInformation[MyOption[_]] {
-    
+
     override def isBasicType: Boolean = ???
 
     override def isTupleType: Boolean = ???
@@ -154,4 +154,5 @@ object TypeInfoFactoryTest {
 
     override def equals(obj: scala.Any): Boolean = ???
   }
+
 }

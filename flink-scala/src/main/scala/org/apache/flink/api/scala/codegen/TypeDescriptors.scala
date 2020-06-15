@@ -26,7 +26,9 @@ import scala.reflect.macros.Context
 // These are only used internally while analyzing Scala types in TypeAnalyzer and TypeInformationGen
 
 @Internal
-private[flink] trait TypeDescriptors[C <: Context] { this: MacroContextHolder[C] =>
+private[flink] trait TypeDescriptors[C <: Context] {
+  this: MacroContextHolder[C] =>
+
   import c.universe._
 
   abstract sealed class UDTDescriptor {
@@ -55,21 +57,21 @@ private[flink] trait TypeDescriptors[C <: Context] { this: MacroContextHolder[C]
   case class TryDescriptor(id: Int, tpe: Type, elem: UDTDescriptor) extends UDTDescriptor
 
   case class FactoryTypeDescriptor(
-      id: Int,
-      tpe: Type,
-      baseType: Type,
-      params: Seq[UDTDescriptor])
+                                    id: Int,
+                                    tpe: Type,
+                                    baseType: Type,
+                                    params: Seq[UDTDescriptor])
     extends UDTDescriptor
 
   case class OptionDescriptor(id: Int, tpe: Type, elem: UDTDescriptor) extends UDTDescriptor
 
   case class BoxedPrimitiveDescriptor(
-      id: Int,
-      tpe: Type,
-      default: Literal,
-      wrapper: Type,
-      box: Tree => Tree,
-      unbox: Tree => Tree) extends UDTDescriptor {
+                                       id: Int,
+                                       tpe: Type,
+                                       default: Literal,
+                                       wrapper: Type,
+                                       box: Tree => Tree,
+                                       unbox: Tree => Tree) extends UDTDescriptor {
 
     override def hashCode() = (id, tpe, default, wrapper, "BoxedPrimitiveDescriptor").hashCode()
 
@@ -85,7 +87,7 @@ private[flink] trait TypeDescriptors[C <: Context] { this: MacroContextHolder[C]
     override def hashCode() = (id, tpe, elem).hashCode()
 
     override def equals(that: Any) = that match {
-      case that @ ArrayDescriptor(thatId, thatTpe, thatElem) =>
+      case that@ArrayDescriptor(thatId, thatTpe, thatElem) =>
         (id, tpe, elem).equals((thatId, thatTpe, thatElem))
       case _ => false
     }
@@ -93,15 +95,15 @@ private[flink] trait TypeDescriptors[C <: Context] { this: MacroContextHolder[C]
 
   case class TraversableDescriptor(id: Int, tpe: Type, elem: UDTDescriptor) extends UDTDescriptor {
 
-//    def getInnermostElem: UDTDescriptor = elem match {
-//      case list: TraversableDescriptor => list.getInnermostElem
-//      case _                    => elem
-//    }
+    //    def getInnermostElem: UDTDescriptor = elem match {
+    //      case list: TraversableDescriptor => list.getInnermostElem
+    //      case _                    => elem
+    //    }
 
     override def hashCode() = (id, tpe, elem).hashCode()
 
     override def equals(that: Any) = that match {
-      case that @ TraversableDescriptor(thatId, thatTpe, thatElem) =>
+      case that@TraversableDescriptor(thatId, thatTpe, thatElem) =>
         (id, tpe, elem).equals((thatId, thatTpe, thatElem))
       case _ => false
     }
@@ -125,14 +127,14 @@ private[flink] trait TypeDescriptors[C <: Context] { this: MacroContextHolder[C]
   }
 
   case class CaseClassDescriptor(
-      id: Int,
-      tpe: Type,
-      mutable: Boolean,
-      ctor: Symbol,
-      getters: Seq[FieldDescriptor]) extends UDTDescriptor {
+                                  id: Int,
+                                  tpe: Type,
+                                  mutable: Boolean,
+                                  ctor: Symbol,
+                                  getters: Seq[FieldDescriptor]) extends UDTDescriptor {
 
     // Hack: ignore the ctorTpe, since two Type instances representing
-    // the same ctor function type don't appear to be considered equal. 
+    // the same ctor function type don't appear to be considered equal.
     // Equality of the tpe and ctor fields implies equality of ctorTpe anyway.
     override def hashCode = (id, tpe, ctor, getters).hashCode
 
@@ -146,11 +148,11 @@ private[flink] trait TypeDescriptors[C <: Context] { this: MacroContextHolder[C]
   }
 
   case class FieldDescriptor(
-      name: String,
-      getter: Symbol,
-      setter: Symbol,
-      tpe: Type,
-      desc: UDTDescriptor)
+                              name: String,
+                              getter: Symbol,
+                              setter: Symbol,
+                              tpe: Type,
+                              desc: UDTDescriptor)
 
   case class RecursiveDescriptor(id: Int, tpe: Type, refId: Int) extends UDTDescriptor
 
@@ -159,9 +161,9 @@ private[flink] trait TypeDescriptors[C <: Context] { this: MacroContextHolder[C]
   case class WritableDescriptor(id: Int, tpe: Type) extends UDTDescriptor
 
   case class JavaTupleDescriptor(
-      id: Int,
-      tpe: Type,
-      fields: Seq[UDTDescriptor])
+                                  id: Int,
+                                  tpe: Type,
+                                  fields: Seq[UDTDescriptor])
     extends UDTDescriptor {
 
     // Hack: ignore the ctorTpe, since two Type instances representing
@@ -177,5 +179,6 @@ private[flink] trait TypeDescriptors[C <: Context] { this: MacroContextHolder[C]
     }
 
   }
+
 }
 

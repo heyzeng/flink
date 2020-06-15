@@ -53,7 +53,6 @@ public interface Visitable<T extends Visitable<T>> {
 	 * }</pre>
 	 *
 	 * @param visitor The visitor to be called with this object as the parameter.
-	 *
 	 * @see Visitor#preVisit(Visitable)
 	 * @see Visitor#postVisit(Visitable)
 	 */

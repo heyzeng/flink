@@ -41,18 +41,15 @@ import static org.apache.flink.util.Preconditions.checkNotNull;
 @PublicEvolving
 public final class StringUtils {
 
-	private static final char[] HEX_CHARS = { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f' };
+	private static final char[] HEX_CHARS = {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f'};
 
 	/**
 	 * Given an array of bytes it will convert the bytes to a hex string
 	 * representation of the bytes.
 	 *
-	 * @param bytes
-	 *        the bytes to convert in a hex string
-	 * @param start
-	 *        start index, inclusively
-	 * @param end
-	 *        end index, exclusively
+	 * @param bytes the bytes to convert in a hex string
+	 * @param start start index, inclusively
+	 * @param end   end index, exclusively
 	 * @return hex string representation of the byte array
 	 */
 	public static String byteToHexString(final byte[] bytes, final int start, final int end) {
@@ -75,8 +72,7 @@ public final class StringUtils {
 	 * Given an array of bytes it will convert the bytes to a hex string
 	 * representation of the bytes.
 	 *
-	 * @param bytes
-	 *        the bytes to convert in a hex string
+	 * @param bytes the bytes to convert in a hex string
 	 * @return hex string representation of the byte array
 	 */
 	public static String byteToHexString(final byte[] bytes) {
@@ -87,10 +83,9 @@ public final class StringUtils {
 	 * Given a hex string this will return the byte array corresponding to the
 	 * string .
 	 *
-	 * @param hex
-	 *        the hex String array
+	 * @param hex the hex String array
 	 * @return a byte array that is a hex string representation of the given
-	 *         string. The size of the byte array is therefore hex.length/2
+	 * string. The size of the byte array is therefore hex.length/2
 	 */
 	public static byte[] hexStringToByte(final String hex) {
 		final byte[] bts = new byte[hex.length() / 2];
@@ -184,23 +179,23 @@ public final class StringUtils {
 		for (int i = 0; i < len; i += 1) {
 			char c = str.charAt(i);
 			switch (c) {
-			case '\b':
-				sb.append("\\b");
-				break;
-			case '\t':
-				sb.append("\\t");
-				break;
-			case '\n':
-				sb.append("\\n");
-				break;
-			case '\f':
-				sb.append("\\f");
-				break;
-			case '\r':
-				sb.append("\\r");
-				break;
-			default:
-				sb.append(c);
+				case '\b':
+					sb.append("\\b");
+					break;
+				case '\t':
+					sb.append("\\t");
+					break;
+				case '\n':
+					sb.append("\\n");
+					break;
+				case '\f':
+					sb.append("\\f");
+					break;
+				case '\r':
+					sb.append("\\r");
+					break;
+				default:
+					sb.append(c);
 			}
 		}
 
@@ -211,7 +206,7 @@ public final class StringUtils {
 	 * Creates a random string with a length within the given interval. The string contains only characters that
 	 * can be represented as a single code point.
 	 *
-	 * @param rnd The random used to create the strings.
+	 * @param rnd       The random used to create the strings.
 	 * @param minLength The minimum string length.
 	 * @param maxLength The maximum string length (inclusive).
 	 * @return A random String.
@@ -230,11 +225,11 @@ public final class StringUtils {
 	 * Creates a random string with a length within the given interval. The string contains only characters that
 	 * can be represented as a single code point.
 	 *
-	 * @param rnd The random used to create the strings.
+	 * @param rnd       The random used to create the strings.
 	 * @param minLength The minimum string length.
 	 * @param maxLength The maximum string length (inclusive).
-	 * @param minValue The minimum character value to occur.
-	 * @param maxValue The maximum character value to occur.
+	 * @param minValue  The minimum character value to occur.
+	 * @param maxValue  The maximum character value to occur.
 	 * @return A random String.
 	 */
 	public static String getRandomString(Random rnd, int minLength, int maxLength, char minValue, char maxValue) {
@@ -252,7 +247,7 @@ public final class StringUtils {
 	/**
 	 * Creates a random alphanumeric string of given length.
 	 *
-	 * @param rnd The random number generator to use.
+	 * @param rnd    The random number generator to use.
 	 * @param length The number of alphanumeric characters to append.
 	 */
 	public static String generateRandomAlphanumericString(Random rnd, int length) {
@@ -271,11 +266,9 @@ public final class StringUtils {
 		char c;
 		if (which < 10) {
 			c = (char) ('0' + which);
-		}
-		else if (which < 36) {
+		} else if (which < 36) {
 			c = (char) ('A' - 10 + which);
-		}
-		else {
+		} else {
 			c = (char) ('a' - 36 + which);
 		}
 		return c;
@@ -287,7 +280,6 @@ public final class StringUtils {
 	 *
 	 * @param str The string to write
 	 * @param out The output to write to
-	 *
 	 * @throws IOException Thrown, if the writing or the serialization fails.
 	 */
 	public static void writeString(@Nonnull String str, DataOutputView out) throws IOException {
@@ -300,7 +292,6 @@ public final class StringUtils {
 	 *
 	 * @param in The input to read from
 	 * @return The deserialized String
-	 *
 	 * @throws IOException Thrown, if the reading or the deserialization fails.
 	 */
 	public static String readString(DataInputView in) throws IOException {
@@ -313,7 +304,6 @@ public final class StringUtils {
 	 *
 	 * @param str The string to write, or null.
 	 * @param out The output to write to.
-	 *
 	 * @throws IOException Thrown, if the writing or the serialization fails.
 	 */
 	public static void writeNullableString(@Nullable String str, DataOutputView out) throws IOException {
@@ -331,10 +321,10 @@ public final class StringUtils {
 	 *
 	 * @param in The input to read from.
 	 * @return The deserialized string, or null.
-	 *
 	 * @throws IOException Thrown, if the reading or the deserialization fails.
 	 */
-	public static @Nullable String readNullableString(DataInputView in) throws IOException {
+	public static @Nullable
+	String readNullableString(DataInputView in) throws IOException {
 		if (in.readBoolean()) {
 			return readString(in);
 		} else {
@@ -370,15 +360,13 @@ public final class StringUtils {
 	 *
 	 * @param s1 The first string argument
 	 * @param s2 The second string argument
-	 *
 	 * @return The concatenated string, or non-null argument, or null
 	 */
 	@Nullable
 	public static String concatenateWithAnd(@Nullable String s1, @Nullable String s2) {
 		if (s1 != null) {
 			return s2 == null ? s1 : s1 + " and " + s2;
-		}
-		else {
+		} else {
 			return s2;
 		}
 	}
@@ -389,7 +377,6 @@ public final class StringUtils {
 	 * Null values are skipped.
 	 *
 	 * @param values array of elements for the list
-	 *
 	 * @return The string with quoted list of elements
 	 */
 	public static String toQuotedListString(Object[] values) {
@@ -400,6 +387,9 @@ public final class StringUtils {
 
 	// ------------------------------------------------------------------------
 
-	/** Prevent instantiation of this utility class. */
-	private StringUtils() {}
+	/**
+	 * Prevent instantiation of this utility class.
+	 */
+	private StringUtils() {
+	}
 }

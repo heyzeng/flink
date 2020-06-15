@@ -111,8 +111,7 @@ public class TypeExtractionUtils {
 						serializedLambda = (SerializedLambda) serialVersion;
 						break;
 					}
-				}
-				catch (NoSuchMethodException e) {
+				} catch (NoSuchMethodException e) {
 					// thrown if the method is not there. fall through the loop
 				}
 			}
@@ -148,8 +147,7 @@ public class TypeExtractionUtils {
 				}
 			}
 			throw new TypeExtractionException("No lambda method found.");
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			throw new TypeExtractionException("Could not extract lambda method out of function: " +
 				e.getClass().getSimpleName() + " - " + e.getMessage(), e);
 		}
@@ -158,11 +156,11 @@ public class TypeExtractionUtils {
 	/**
 	 * Extracts type from given index from lambda. It supports nested types.
 	 *
-	 * @param baseClass SAM function that the lambda implements
-	 * @param exec lambda function to extract the type from
+	 * @param baseClass                 SAM function that the lambda implements
+	 * @param exec                      lambda function to extract the type from
 	 * @param lambdaTypeArgumentIndices position of type to extract in type hierarchy
-	 * @param paramLen count of total parameters of the lambda (including closure parameters)
-	 * @param baseParametersLen count of lambda interface parameters (without closure parameters)
+	 * @param paramLen                  count of total parameters of the lambda (including closure parameters)
+	 * @param baseParametersLen         count of lambda interface parameters (without closure parameters)
 	 * @return extracted type
 	 */
 	public static Type extractTypeFromLambda(
@@ -185,11 +183,11 @@ public class TypeExtractionUtils {
 	 * is thrown if the type does not have any type arguments or if the index exceeds the number
 	 * of type arguments.
 	 *
-	 * @param t Type to extract the type arguments from
+	 * @param t     Type to extract the type arguments from
 	 * @param index Index of the type argument to extract
 	 * @return The extracted type argument
 	 * @throws InvalidTypesException if the given type does not have any type arguments or if the
-	 * index exceeds the number of type arguments.
+	 *                               index exceeds the number of type arguments.
 	 */
 	public static Type extractTypeArgument(Type t, int index) throws InvalidTypesException {
 		if (t instanceof ParameterizedType) {
@@ -197,8 +195,8 @@ public class TypeExtractionUtils {
 
 			if (index < 0 || index >= actualTypeArguments.length) {
 				throw new InvalidTypesException("Cannot extract the type argument with index " +
-												index + " because the type has only " + actualTypeArguments.length +
-												" type arguments.");
+					index + " because the type has only " + actualTypeArguments.length +
+					" type arguments.");
 			} else {
 				return actualTypeArguments[index];
 			}
@@ -212,8 +210,8 @@ public class TypeExtractionUtils {
 	 * 9.8 Functional Interfaces, 9.4.3 Interface Method Body) from given class.
 	 *
 	 * @param baseClass a class that is a FunctionalInterface to retrieve a SAM from
-	 * @throws InvalidTypesException if the given class does not implement FunctionalInterface
 	 * @return single abstract method of the given class
+	 * @throws InvalidTypesException if the given class does not implement FunctionalInterface
 	 */
 	public static Method getSingleAbstractMethod(Class<?> baseClass) {
 
@@ -259,9 +257,8 @@ public class TypeExtractionUtils {
 	 */
 	public static Class<?> typeToClass(Type t) {
 		if (t instanceof Class) {
-			return (Class<?>)t;
-		}
-		else if (t instanceof ParameterizedType) {
+			return (Class<?>) t;
+		} else if (t instanceof ParameterizedType) {
 			return ((Class<?>) ((ParameterizedType) t).getRawType());
 		}
 		throw new IllegalArgumentException("Cannot convert type to class");
@@ -305,7 +302,7 @@ public class TypeExtractionUtils {
 	/**
 	 * Returns true if the given class has a superclass of given name.
 	 *
-	 * @param clazz class to be analyzed
+	 * @param clazz          class to be analyzed
 	 * @param superClassName class name of the super class
 	 */
 	public static boolean hasSuperclass(Class<?> clazz, String superClassName) {

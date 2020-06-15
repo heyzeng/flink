@@ -32,14 +32,14 @@ import static org.apache.flink.util.Preconditions.checkNotNull;
 
 /**
  * Base type information class for Tuple and Pojo types
- * 
+ * <p>
  * The class is taking care of serialization and comparators for Tuples as well.
  */
 @Public
 public abstract class CompositeType<T> extends TypeInformation<T> {
-	
+
 	private static final long serialVersionUID = 1L;
-	
+
 	private final Class<T> typeClass;
 
 	@PublicEvolving
@@ -56,7 +56,7 @@ public abstract class CompositeType<T> extends TypeInformation<T> {
 	public Class<T> getTypeClass() {
 		return typeClass;
 	}
-	
+
 	/**
 	 * Returns the flat field descriptors for the given field expression.
 	 *
@@ -74,8 +74,8 @@ public abstract class CompositeType<T> extends TypeInformation<T> {
 	 * Computes the flat field descriptors for the given field expression with the given offset.
 	 *
 	 * @param fieldExpression The field expression for which the FlatFieldDescriptors are computed.
-	 * @param offset The offset to use when computing the positions of the flat fields.
-	 * @param result The list into which all flat field descriptors are inserted.
+	 * @param offset          The offset to use when computing the positions of the flat fields.
+	 * @param result          The list into which all flat field descriptors are inserted.
 	 */
 	@PublicEvolving
 	public abstract void getFlatFields(String fieldExpression, int offset, List<FlatFieldDescriptor> result);
@@ -101,10 +101,11 @@ public abstract class CompositeType<T> extends TypeInformation<T> {
 
 	@PublicEvolving
 	protected abstract TypeComparatorBuilder<T> createTypeComparatorBuilder();
-	
+
 	/**
 	 * Generic implementation of the comparator creation. Composite types are supplying the infrastructure
 	 * to create the actual comparators
+	 *
 	 * @return The comparator
 	 */
 	@PublicEvolving
@@ -121,7 +122,7 @@ public abstract class CompositeType<T> extends TypeInformation<T> {
 
 			for (int localFieldId = 0; localFieldId < this.getArity() && logicalField <= logicalKeyField && !comparatorAdded; localFieldId++) {
 				TypeInformation<?> localFieldType = this.getTypeAt(localFieldId);
-				
+
 				if (localFieldType instanceof AtomicType && logicalField == logicalKeyField) {
 					// we found an atomic key --> create comparator
 					builder.addComparatorField(
@@ -154,7 +155,7 @@ public abstract class CompositeType<T> extends TypeInformation<T> {
 					// we need to subtract 1 because we are not accounting for the local field (not accessible for the user)
 					logicalField += localFieldType.getTotalFields() - 1;
 				}
-				
+
 				logicalField++;
 			}
 
@@ -182,9 +183,9 @@ public abstract class CompositeType<T> extends TypeInformation<T> {
 	public static class FlatFieldDescriptor {
 		private int keyPosition;
 		private TypeInformation<?> type;
-		
+
 		public FlatFieldDescriptor(int keyPosition, TypeInformation<?> type) {
-			if(type instanceof CompositeType) {
+			if (type instanceof CompositeType) {
 				throw new IllegalArgumentException("A flattened field can not be a composite type");
 			}
 			this.keyPosition = keyPosition;
@@ -199,10 +200,10 @@ public abstract class CompositeType<T> extends TypeInformation<T> {
 		public TypeInformation<?> getType() {
 			return type;
 		}
-		
+
 		@Override
 		public String toString() {
-			return "FlatFieldDescriptor [position="+keyPosition+" typeInfo="+type+"]";
+			return "FlatFieldDescriptor [position=" + keyPosition + " typeInfo=" + type + "]";
 		}
 	}
 
@@ -217,7 +218,7 @@ public abstract class CompositeType<T> extends TypeInformation<T> {
 	@Override
 	@PublicEvolving
 	public boolean isKeyType() {
-		for(int i=0;i<this.getArity();i++) {
+		for (int i = 0; i < this.getArity(); i++) {
 			if (!this.getTypeAt(i).isKeyType()) {
 				return false;
 			}
@@ -228,7 +229,7 @@ public abstract class CompositeType<T> extends TypeInformation<T> {
 	@Override
 	@PublicEvolving
 	public boolean isSortKeyType() {
-		for(int i=0;i<this.getArity();i++) {
+		for (int i = 0; i < this.getArity(); i++) {
 			if (!this.getTypeAt(i).isSortKeyType()) {
 				return false;
 			}
@@ -248,7 +249,7 @@ public abstract class CompositeType<T> extends TypeInformation<T> {
 	 * always be sure in which order the fields will be in. This is true for Tuples and
 	 * Case Classes. It is not true for Regular Java Objects, since there, the ordering of
 	 * the fields can be arbitrary.
-	 *
+	 * <p>
 	 * This is used when translating a DataSet or DataStream to an Expression Table, when
 	 * initially renaming the fields of the underlying type.
 	 */
@@ -279,7 +280,7 @@ public abstract class CompositeType<T> extends TypeInformation<T> {
 	public boolean equals(Object obj) {
 		if (obj instanceof CompositeType) {
 			@SuppressWarnings("unchecked")
-			CompositeType<T> compositeType = (CompositeType<T>)obj;
+			CompositeType<T> compositeType = (CompositeType<T>) obj;
 
 			return compositeType.canEqual(this) && typeClass == compositeType.typeClass;
 		} else {

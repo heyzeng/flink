@@ -46,11 +46,10 @@ import java.util.Map;
 /**
  * Base data flow operator for Reduce user-defined functions. Accepts reduce functions
  * and key positions. The key positions are expected in the flattened common data model.
- * 
- * @see org.apache.flink.api.common.functions.ReduceFunction
  *
- * @param <T> The type (parameters and return type) of the reduce function.
+ * @param <T>  The type (parameters and return type) of the reduce function.
  * @param <FT> The type of the reduce function.
+ * @see org.apache.flink.api.common.functions.ReduceFunction
  */
 @Internal
 public class ReduceOperatorBase<T, FT extends ReduceFunction<T>> extends SingleInputOperator<T, T, FT> {
@@ -87,54 +86,54 @@ public class ReduceOperatorBase<T, FT extends ReduceFunction<T>> extends SingleI
 	private CombineHint hint;
 
 	private Partitioner<?> customPartitioner;
-	
-	
+
+
 	/**
 	 * Creates a grouped reduce data flow operator.
-	 * 
-	 * @param udf The user-defined function, contained in the UserCodeWrapper.
+	 *
+	 * @param udf          The user-defined function, contained in the UserCodeWrapper.
 	 * @param operatorInfo The type information, describing input and output types of the reduce function.
 	 * @param keyPositions The positions of the key fields, in the common data model (flattened).
-	 * @param name The name of the operator (for logging and messages).
+	 * @param name         The name of the operator (for logging and messages).
 	 */
 	public ReduceOperatorBase(UserCodeWrapper<FT> udf, UnaryOperatorInformation<T, T> operatorInfo, int[] keyPositions, String name) {
 		super(udf, operatorInfo, keyPositions, name);
 	}
-	
+
 	/**
 	 * Creates a grouped reduce data flow operator.
-	 * 
-	 * @param udf The user-defined function, as a function object.
+	 *
+	 * @param udf          The user-defined function, as a function object.
 	 * @param operatorInfo The type information, describing input and output types of the reduce function.
 	 * @param keyPositions The positions of the key fields, in the common data model (flattened).
-	 * @param name The name of the operator (for logging and messages).
+	 * @param name         The name of the operator (for logging and messages).
 	 */
 	public ReduceOperatorBase(FT udf, UnaryOperatorInformation<T, T> operatorInfo, int[] keyPositions, String name) {
 		super(new UserCodeObjectWrapper<FT>(udf), operatorInfo, keyPositions, name);
 	}
-	
+
 	/**
 	 * Creates a grouped reduce data flow operator.
-	 * 
-	 * @param udf The class representing the parameterless user-defined function.
+	 *
+	 * @param udf          The class representing the parameterless user-defined function.
 	 * @param operatorInfo The type information, describing input and output types of the reduce function.
 	 * @param keyPositions The positions of the key fields, in the common data model (flattened).
-	 * @param name The name of the operator (for logging and messages).
+	 * @param name         The name of the operator (for logging and messages).
 	 */
 	public ReduceOperatorBase(Class<? extends FT> udf, UnaryOperatorInformation<T, T> operatorInfo, int[] keyPositions, String name) {
 		super(new UserCodeClassWrapper<FT>(udf), operatorInfo, keyPositions, name);
 	}
-	
+
 	// --------------------------------------------------------------------------------------------
 	//  Non-grouped reduce operations
 	// --------------------------------------------------------------------------------------------
-	
+
 	/**
 	 * Creates a non-grouped reduce data flow operator (all-reduce).
-	 * 
-	 * @param udf The user-defined function, contained in the UserCodeWrapper.
+	 *
+	 * @param udf          The user-defined function, contained in the UserCodeWrapper.
 	 * @param operatorInfo The type information, describing input and output types of the reduce function.
-	 * @param name The name of the operator (for logging and messages).
+	 * @param name         The name of the operator (for logging and messages).
 	 */
 	public ReduceOperatorBase(UserCodeWrapper<FT> udf, UnaryOperatorInformation<T, T> operatorInfo, String name) {
 		super(udf, operatorInfo, name);
@@ -142,28 +141,28 @@ public class ReduceOperatorBase<T, FT extends ReduceFunction<T>> extends SingleI
 
 	/**
 	 * Creates a non-grouped reduce data flow operator (all-reduce).
-	 * 
-	 * @param udf The user-defined function, as a function object.
+	 *
+	 * @param udf          The user-defined function, as a function object.
 	 * @param operatorInfo The type information, describing input and output types of the reduce function.
-	 * @param name The name of the operator (for logging and messages).
+	 * @param name         The name of the operator (for logging and messages).
 	 */
 	public ReduceOperatorBase(FT udf, UnaryOperatorInformation<T, T> operatorInfo, String name) {
 		super(new UserCodeObjectWrapper<FT>(udf), operatorInfo, name);
 	}
-	
+
 	/**
 	 * Creates a non-grouped reduce data flow operator (all-reduce).
-	 * 
-	 * @param udf The class representing the parameterless user-defined function.
+	 *
+	 * @param udf          The class representing the parameterless user-defined function.
 	 * @param operatorInfo The type information, describing input and output types of the reduce function.
-	 * @param name The name of the operator (for logging and messages).
+	 * @param name         The name of the operator (for logging and messages).
 	 */
 	public ReduceOperatorBase(Class<? extends FT> udf, UnaryOperatorInformation<T, T> operatorInfo, String name) {
 		super(new UserCodeClassWrapper<FT>(udf), operatorInfo, name);
 	}
 
 	// --------------------------------------------------------------------------------------------
-	
+
 	public void setCustomPartitioner(Partitioner<?> customPartitioner) {
 		if (customPartitioner != null) {
 			int[] keys = getKeyColumns(0);
@@ -176,13 +175,13 @@ public class ReduceOperatorBase<T, FT extends ReduceFunction<T>> extends SingleI
 		}
 		this.customPartitioner = customPartitioner;
 	}
-	
+
 	public Partitioner<?> getCustomPartitioner() {
 		return customPartitioner;
 	}
 
 	// --------------------------------------------------------------------------------------------
-	
+
 	@Override
 	protected List<T> executeOnCollections(List<T> inputData, RuntimeContext ctx, ExecutionConfig executionConfig) throws Exception {
 		// make sure we can handle empty inputs
@@ -209,8 +208,8 @@ public class ReduceOperatorBase<T, FT extends ReduceFunction<T>> extends SingleI
 		if (inputColumns.length > 0) {
 			boolean[] inputOrderings = new boolean[inputColumns.length];
 			TypeComparator<T> inputComparator = inputType instanceof AtomicType
-					? ((AtomicType<T>) inputType).createComparator(false, executionConfig)
-					: ((CompositeType<T>) inputType).createComparator(inputColumns, inputOrderings, 0, executionConfig);
+				? ((AtomicType<T>) inputType).createComparator(false, executionConfig)
+				: ((CompositeType<T>) inputType).createComparator(inputColumns, inputOrderings, 0, executionConfig);
 
 			Map<TypeComparable<T>, T> aggregateMap = new HashMap<TypeComparable<T>, T>(inputData.size() / 10);
 
@@ -234,10 +233,9 @@ public class ReduceOperatorBase<T, FT extends ReduceFunction<T>> extends SingleI
 
 			FunctionUtils.closeFunction(function);
 			return new ArrayList<T>(aggregateMap.values());
-		}
-		else {
+		} else {
 			T aggregate = inputData.get(0);
-			
+
 			aggregate = serializer.copy(aggregate);
 
 			for (int i = 1; i < inputData.size(); i++) {
@@ -246,7 +244,7 @@ public class ReduceOperatorBase<T, FT extends ReduceFunction<T>> extends SingleI
 			}
 
 			FunctionUtils.setFunctionRuntimeContext(function, ctx);
-			
+
 			return Collections.singletonList(aggregate);
 		}
 	}

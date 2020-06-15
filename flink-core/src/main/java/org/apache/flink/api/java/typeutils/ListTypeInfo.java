@@ -89,7 +89,7 @@ public final class ListTypeInfo<T> extends TypeInformation<List<T>> {
 	@SuppressWarnings("unchecked")
 	@Override
 	public Class<List<T>> getTypeClass() {
-		return (Class<List<T>>)(Class<?>)List.class;
+		return (Class<List<T>>) (Class<?>) List.class;
 	}
 
 	@Override
@@ -114,8 +114,7 @@ public final class ListTypeInfo<T> extends TypeInformation<List<T>> {
 	public boolean equals(Object obj) {
 		if (obj == this) {
 			return true;
-		}
-		else if (obj instanceof ListTypeInfo) {
+		} else if (obj instanceof ListTypeInfo) {
 			final ListTypeInfo<?> other = (ListTypeInfo<?>) obj;
 			return other.canEqual(this) && elementTypeInfo.equals(other.elementTypeInfo);
 		} else {

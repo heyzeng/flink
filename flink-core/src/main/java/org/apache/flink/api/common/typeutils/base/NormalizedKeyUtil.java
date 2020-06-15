@@ -35,10 +35,8 @@ public class NormalizedKeyUtil {
 			int highByte = value & 0xff;
 			highByte -= Byte.MIN_VALUE;
 			target.put(offset, (byte) highByte);
-		}
-		else if (numBytes <= 0) {
-		}
-		else {
+		} else if (numBytes <= 0) {
+		} else {
 			int highByte = value & 0xff;
 			highByte -= Byte.MIN_VALUE;
 			target.put(offset, (byte) highByte);
@@ -54,16 +52,13 @@ public class NormalizedKeyUtil {
 		// that is equivalent to unsigned, when compared byte by byte
 		if (numBytes == 2) {
 			// default case, full normalized key
-			target.put(offset,     (byte) ((value >>> 8) & 0xff));
+			target.put(offset, (byte) ((value >>> 8) & 0xff));
 			target.put(offset + 1, (byte) ((value) & 0xff));
-		}
-		else if (numBytes <= 0) {
-		}
-		else if (numBytes == 1) {
-			target.put(offset,     (byte) ((value >>> 8) & 0xff));
-		}
-		else {
-			target.put(offset,     (byte) ((value >>> 8) & 0xff));
+		} else if (numBytes <= 0) {
+		} else if (numBytes == 1) {
+			target.put(offset, (byte) ((value >>> 8) & 0xff));
+		} else {
+			target.put(offset, (byte) ((value >>> 8) & 0xff));
 			target.put(offset + 1, (byte) ((value) & 0xff));
 			for (int i = 2; i < numBytes; i++) {
 				target.put(offset + i, (byte) 0);
@@ -88,15 +83,12 @@ public class NormalizedKeyUtil {
 			highByte -= Byte.MIN_VALUE;
 			target.put(offset, (byte) highByte);
 			target.put(offset + 1, (byte) ((value) & 0xff));
-		}
-		else if (numBytes <= 0) {
-		}
-		else if (numBytes == 1) {
+		} else if (numBytes <= 0) {
+		} else if (numBytes == 1) {
 			int highByte = ((value >>> 8) & 0xff);
 			highByte -= Byte.MIN_VALUE;
 			target.put(offset, (byte) highByte);
-		}
-		else {
+		} else {
 			int highByte = ((value >>> 8) & 0xff);
 			highByte -= Byte.MIN_VALUE;
 			target.put(offset, (byte) highByte);

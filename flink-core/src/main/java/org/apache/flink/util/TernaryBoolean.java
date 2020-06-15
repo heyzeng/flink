@@ -31,14 +31,20 @@ import javax.annotation.Nullable;
 @PublicEvolving
 public enum TernaryBoolean {
 
-	/** The value for 'true'. */
+	/**
+	 * The value for 'true'.
+	 */
 	TRUE,
 
-	/** The value for 'false'. */
+	/**
+	 * The value for 'false'.
+	 */
 	FALSE,
 
-	/** The value for 'undefined'. In a configuration setting, this typically means that the
-	 * default value will be used, or the value from a deployment-wide configuration.*/
+	/**
+	 * The value for 'undefined'. In a configuration setting, this typically means that the
+	 * default value will be used, or the value from a deployment-wide configuration.
+	 */
 	UNDEFINED;
 
 	// ------------------------------------------------------------------------

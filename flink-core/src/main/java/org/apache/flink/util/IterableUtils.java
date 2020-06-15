@@ -33,7 +33,7 @@ public class IterableUtils {
 	 * Convert the given {@link Iterable} to a {@link Stream}.
 	 *
 	 * @param iterable to convert to a stream
-	 * @param <E> type of the elements of the iterable
+	 * @param <E>      type of the elements of the iterable
 	 * @return stream converted from the given {@link Iterable}
 	 */
 	public static <E> Stream<E> toStream(Iterable<E> iterable) {
@@ -49,5 +49,6 @@ public class IterableUtils {
 	/**
 	 * Private default constructor to avoid instantiation.
 	 */
-	private IterableUtils() {}
+	private IterableUtils() {
+	}
 }

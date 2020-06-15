@@ -20,6 +20,7 @@ package org.apache.flink.api.common.typeutils.base;
 
 import java.math.BigDecimal;
 import java.util.Random;
+
 import org.apache.flink.api.common.typeutils.SerializerTestBase;
 import org.apache.flink.api.common.typeutils.TypeSerializer;
 
@@ -47,7 +48,7 @@ public class BigDecSerializerTest extends SerializerTestBase<BigDecimal> {
 	protected BigDecimal[] getTestData() {
 		Random rnd = new Random(874597969123412341L);
 
-		return new BigDecimal[] {
+		return new BigDecimal[]{
 			BigDecimal.ZERO, BigDecimal.ONE, BigDecimal.TEN,
 			new BigDecimal(rnd.nextDouble()), new BigDecimal("874597969.1234123413478523984729447"),
 			BigDecimal.valueOf(-1.444), BigDecimal.valueOf(-10000.888)};

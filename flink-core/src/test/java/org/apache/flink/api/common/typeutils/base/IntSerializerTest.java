@@ -48,6 +48,6 @@ public class IntSerializerTest extends SerializerTestBase<Integer> {
 		Random rnd = new Random(874597969123412341L);
 		int rndInt = rnd.nextInt();
 
-		return new Integer[] {0, 1, -1, Integer.MAX_VALUE, Integer.MIN_VALUE, rndInt, -rndInt};
+		return new Integer[]{0, 1, -1, Integer.MAX_VALUE, Integer.MIN_VALUE, rndInt, -rndInt};
 	}
 }

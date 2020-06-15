@@ -57,10 +57,10 @@ public class InstantSerializerTest extends SerializerTestBase<Instant> {
 	protected Instant[] getTestData() {
 		final Random rnd = new Random(874597969123412341L);
 
-		return new Instant[] {
+		return new Instant[]{
 			Instant.EPOCH, Instant.MIN, Instant.MAX,
-			Instant.ofEpochSecond(rndSeconds(rnd),	rndNanos(rnd)),
-			Instant.ofEpochSecond(1534135584,949495),
+			Instant.ofEpochSecond(rndSeconds(rnd), rndNanos(rnd)),
+			Instant.ofEpochSecond(1534135584, 949495),
 			Instant.ofEpochSecond(56090783)
 		};
 	}

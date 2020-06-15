@@ -27,7 +27,7 @@ import org.apache.flink.util.Collector;
  * {@link RichFunction#open(org.apache.flink.configuration.Configuration)} and
  * {@link RichFunction#close()}.
  *
- * @param <IN> The data type of the elements to be combined.
+ * @param <IN>  The data type of the elements to be combined.
  * @param <OUT> The resulting data type of the elements to be combined.
  */
 @Public

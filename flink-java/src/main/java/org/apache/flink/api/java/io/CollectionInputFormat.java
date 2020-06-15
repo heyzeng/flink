@@ -86,7 +86,7 @@ public class CollectionInputFormat<T> extends GenericInputFormat<T> implements N
 
 		if (size > 0) {
 			DataOutputViewStreamWrapper wrapper = new DataOutputViewStreamWrapper(out);
-			for (T element : dataSet){
+			for (T element : dataSet) {
 				serializer.serialize(element, wrapper);
 			}
 		}
@@ -101,12 +101,11 @@ public class CollectionInputFormat<T> extends GenericInputFormat<T> implements N
 		if (collectionLength > 0) {
 			try {
 				DataInputViewStreamWrapper wrapper = new DataInputViewStreamWrapper(in);
-				for (int i = 0; i < collectionLength; i++){
+				for (int i = 0; i < collectionLength; i++) {
 					T element = serializer.deserialize(wrapper);
 					list.add(element);
 				}
-			}
-			catch (Throwable t) {
+			} catch (Throwable t) {
 				throw new IOException("Error while deserializing element from collection", t);
 			}
 		}
@@ -155,10 +154,10 @@ public class CollectionInputFormat<T> extends GenericInputFormat<T> implements N
 			// the actual objects that we will be working with, will be BoxedUnits.
 			// Note: TypeInformationGenTest.testUnit tests this condition.
 			if (!viewedAs.isAssignableFrom(elem.getClass()) &&
-					!(elem.getClass().toString().equals("class scala.runtime.BoxedUnit") && viewedAs.equals(void.class))) {
+				!(elem.getClass().toString().equals("class scala.runtime.BoxedUnit") && viewedAs.equals(void.class))) {
 
 				throw new IllegalArgumentException("The elements in the collection are not all subclasses of " +
-							viewedAs.getCanonicalName());
+					viewedAs.getCanonicalName());
 			}
 		}
 	}

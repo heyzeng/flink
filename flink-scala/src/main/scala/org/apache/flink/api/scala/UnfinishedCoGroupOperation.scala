@@ -64,8 +64,8 @@ class UnfinishedCoGroupOperation[L: ClassTag, R: ClassTag](
     // We have to use this hack, for some reason classOf[Array[T]] does not work.
     // Maybe because ObjectArrayTypeInfo does not accept the Scala Array as an array class.
     val leftArrayType =
-      ObjectArrayTypeInfo.getInfoFor(new Array[L](0).getClass, leftInput.getType)
-        .asInstanceOf[TypeInformation[Array[L]]]
+    ObjectArrayTypeInfo.getInfoFor(new Array[L](0).getClass, leftInput.getType)
+      .asInstanceOf[TypeInformation[Array[L]]]
     val rightArrayType =
       ObjectArrayTypeInfo.getInfoFor(new Array[R](0).getClass, rightInput.getType)
         .asInstanceOf[TypeInformation[Array[R]]]

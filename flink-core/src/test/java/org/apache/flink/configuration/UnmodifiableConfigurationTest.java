@@ -47,8 +47,7 @@ public class UnmodifiableConfigurationTest extends TestLogger {
 					assertEquals(clazz, m.getDeclaringClass());
 				}
 			}
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 			fail(e.getMessage());
 		}
@@ -57,8 +56,7 @@ public class UnmodifiableConfigurationTest extends TestLogger {
 	@Test
 	public void testExceptionOnSet() {
 		try {
-			@SuppressWarnings("rawtypes")
-			final ConfigOption rawOption = ConfigOptions.key("testkey").defaultValue("value");
+			@SuppressWarnings("rawtypes") final ConfigOption rawOption = ConfigOptions.key("testkey").defaultValue("value");
 
 			Map<Class<?>, Object> parameters = new HashMap<>();
 			parameters.put(byte[].class, new byte[0]);
@@ -87,14 +85,12 @@ public class UnmodifiableConfigurationTest extends TestLogger {
 					try {
 						m.invoke(config, key, parameter);
 						fail("should fail with an exception");
-					}
-					catch (InvocationTargetException e) {
+					} catch (InvocationTargetException e) {
 						assertTrue(e.getTargetException() instanceof UnsupportedOperationException);
 					}
 				}
 			}
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 			fail(e.getMessage());
 		}

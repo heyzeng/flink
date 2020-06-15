@@ -59,7 +59,7 @@ public class PojoSerializerTest extends SerializerTestBase<PojoSerializerTest.Te
 	@Override
 	protected TypeSerializer<TestUserClass> createSerializer() {
 		TypeSerializer<TestUserClass> serializer = type.createSerializer(new ExecutionConfig());
-		assert(serializer instanceof PojoSerializer);
+		assert (serializer instanceof PojoSerializer);
 		return serializer;
 	}
 
@@ -78,13 +78,13 @@ public class PojoSerializerTest extends SerializerTestBase<PojoSerializerTest.Te
 		Random rnd = new Random(874597969123412341L);
 
 		return new TestUserClass[]{
-				new TestUserClass(rnd.nextInt(), "foo", rnd.nextDouble(), new int[]{1, 2, 3}, new Date(),
-						new NestedTestUserClass(rnd.nextInt(), "foo@boo", rnd.nextDouble(), new int[]{10, 11, 12})),
-				new TestUserClass(rnd.nextInt(), "bar", rnd.nextDouble(), new int[]{4, 5, 6}, null,
-						new NestedTestUserClass(rnd.nextInt(), "bar@bas", rnd.nextDouble(), new int[]{20, 21, 22})),
-				new TestUserClass(rnd.nextInt(), null, rnd.nextDouble(), null, null, null),
-				new TestUserClass(rnd.nextInt(), "bar", rnd.nextDouble(), new int[]{4, 5, 6}, new Date(),
-						new NestedTestUserClass(rnd.nextInt(), "bar@bas", rnd.nextDouble(), new int[]{20, 21, 22}))
+			new TestUserClass(rnd.nextInt(), "foo", rnd.nextDouble(), new int[]{1, 2, 3}, new Date(),
+				new NestedTestUserClass(rnd.nextInt(), "foo@boo", rnd.nextDouble(), new int[]{10, 11, 12})),
+			new TestUserClass(rnd.nextInt(), "bar", rnd.nextDouble(), new int[]{4, 5, 6}, null,
+				new NestedTestUserClass(rnd.nextInt(), "bar@bas", rnd.nextDouble(), new int[]{20, 21, 22})),
+			new TestUserClass(rnd.nextInt(), null, rnd.nextDouble(), null, null, null),
+			new TestUserClass(rnd.nextInt(), "bar", rnd.nextDouble(), new int[]{4, 5, 6}, new Date(),
+				new NestedTestUserClass(rnd.nextInt(), "bar@bas", rnd.nextDouble(), new int[]{20, 21, 22}))
 		};
 
 	}
@@ -126,15 +126,15 @@ public class PojoSerializerTest extends SerializerTestBase<PojoSerializerTest.Te
 				return false;
 			}
 			if ((dumm2 == null && otherTUC.dumm2 != null)
-					|| (dumm2 != null && !dumm2.equals(otherTUC.dumm2))) {
+				|| (dumm2 != null && !dumm2.equals(otherTUC.dumm2))) {
 				return false;
 			}
 			if (dumm3 != otherTUC.dumm3) {
 				return false;
 			}
 			if ((dumm4 != null && otherTUC.dumm4 == null)
-					|| (dumm4 == null && otherTUC.dumm4 != null)
-					|| (dumm4 != null && otherTUC.dumm4 != null && dumm4.length != otherTUC.dumm4.length)) {
+				|| (dumm4 == null && otherTUC.dumm4 != null)
+				|| (dumm4 != null && otherTUC.dumm4 != null && dumm4.length != otherTUC.dumm4.length)) {
 				return false;
 			}
 			if (dumm4 != null && otherTUC.dumm4 != null) {
@@ -144,9 +144,9 @@ public class PojoSerializerTest extends SerializerTestBase<PojoSerializerTest.Te
 					}
 				}
 			}
-			
+
 			if ((nestedClass == null && otherTUC.nestedClass != null)
-					|| (nestedClass != null && !nestedClass.equals(otherTUC.nestedClass))) {
+				|| (nestedClass != null && !nestedClass.equals(otherTUC.nestedClass))) {
 				return false;
 			}
 			return true;
@@ -205,63 +205,65 @@ public class PojoSerializerTest extends SerializerTestBase<PojoSerializerTest.Te
 		public int subDumm1;
 		public String subDumm2;
 
-		public SubTestUserClassA() {}
+		public SubTestUserClassA() {
+		}
 	}
 
 	public static class SubTestUserClassB extends TestUserClass {
 		public Double subDumm1;
 		public float subDumm2;
 
-		public SubTestUserClassB() {}
+		public SubTestUserClassB() {
+		}
 	}
-	
+
 	/**
 	 * This tests if the hashes returned by the pojo and tuple comparators are the same
 	 */
-	@SuppressWarnings({ "rawtypes", "unchecked" })
+	@SuppressWarnings({"rawtypes", "unchecked"})
 	@Test
 	public void testTuplePojoTestEquality() {
-		
+
 		// test with a simple, string-key first.
 		PojoTypeInfo<TestUserClass> pType = (PojoTypeInfo<TestUserClass>) type;
 		List<FlatFieldDescriptor> result = new ArrayList<FlatFieldDescriptor>();
 		pType.getFlatFields("nestedClass.dumm2", 0, result);
 		int[] fields = new int[1]; // see below
 		fields[0] = result.get(0).getPosition();
-		TypeComparator<TestUserClass> pojoComp = pType.createComparator( fields, new boolean[]{true}, 0, new ExecutionConfig());
-		
-		TestUserClass pojoTestRecord = new TestUserClass(0, "abc", 3d, new int[] {1,2,3}, new Date(), new NestedTestUserClass(1, "haha", 4d, new int[] {5,4,3}));
+		TypeComparator<TestUserClass> pojoComp = pType.createComparator(fields, new boolean[]{true}, 0, new ExecutionConfig());
+
+		TestUserClass pojoTestRecord = new TestUserClass(0, "abc", 3d, new int[]{1, 2, 3}, new Date(), new NestedTestUserClass(1, "haha", 4d, new int[]{5, 4, 3}));
 		int pHash = pojoComp.hash(pojoTestRecord);
-		
+
 		Tuple1<String> tupleTest = new Tuple1<String>("haha");
-		TupleTypeInfo<Tuple1<String>> tType = (TupleTypeInfo<Tuple1<String>>)TypeExtractor.getForObject(tupleTest);
-		TypeComparator<Tuple1<String>> tupleComp = tType.createComparator(new int[] {0}, new boolean[] {true}, 0, new ExecutionConfig());
-		
+		TupleTypeInfo<Tuple1<String>> tType = (TupleTypeInfo<Tuple1<String>>) TypeExtractor.getForObject(tupleTest);
+		TypeComparator<Tuple1<String>> tupleComp = tType.createComparator(new int[]{0}, new boolean[]{true}, 0, new ExecutionConfig());
+
 		int tHash = tupleComp.hash(tupleTest);
-		
+
 		Assert.assertTrue("The hashing for tuples and pojos must be the same, so that they are mixable", pHash == tHash);
-		
+
 		Tuple3<Integer, String, Double> multiTupleTest = new Tuple3<Integer, String, Double>(1, "haha", 4d); // its important here to use the same values.
-		TupleTypeInfo<Tuple3<Integer, String, Double>> multiTupleType = (TupleTypeInfo<Tuple3<Integer, String, Double>>)TypeExtractor.getForObject(multiTupleTest);
-		
-		ExpressionKeys fieldKey = new ExpressionKeys(new int[]{1,0,2}, multiTupleType);
-		ExpressionKeys expressKey = new ExpressionKeys(new String[] {"nestedClass.dumm2", "nestedClass.dumm1", "nestedClass.dumm3"}, pType);
+		TupleTypeInfo<Tuple3<Integer, String, Double>> multiTupleType = (TupleTypeInfo<Tuple3<Integer, String, Double>>) TypeExtractor.getForObject(multiTupleTest);
+
+		ExpressionKeys fieldKey = new ExpressionKeys(new int[]{1, 0, 2}, multiTupleType);
+		ExpressionKeys expressKey = new ExpressionKeys(new String[]{"nestedClass.dumm2", "nestedClass.dumm1", "nestedClass.dumm3"}, pType);
 		try {
 			Assert.assertTrue("Expecting the keys to be compatible", fieldKey.areCompatible(expressKey));
 		} catch (IncompatibleKeysException e) {
 			e.printStackTrace();
-			Assert.fail("Keys must be compatible: "+e.getMessage());
+			Assert.fail("Keys must be compatible: " + e.getMessage());
 		}
-		TypeComparator<TestUserClass> multiPojoComp = pType.createComparator( expressKey.computeLogicalKeyPositions(), new boolean[]{true, true, true}, 0, new ExecutionConfig());
+		TypeComparator<TestUserClass> multiPojoComp = pType.createComparator(expressKey.computeLogicalKeyPositions(), new boolean[]{true, true, true}, 0, new ExecutionConfig());
 		int multiPojoHash = multiPojoComp.hash(pojoTestRecord);
-		
-		
+
+
 		// pojo order is: dumm2 (str), dumm1 (int), dumm3 (double).
-		TypeComparator<Tuple3<Integer, String, Double>> multiTupleComp = multiTupleType.createComparator(fieldKey.computeLogicalKeyPositions(), new boolean[] {true, true,true}, 0, new ExecutionConfig());
+		TypeComparator<Tuple3<Integer, String, Double>> multiTupleComp = multiTupleType.createComparator(fieldKey.computeLogicalKeyPositions(), new boolean[]{true, true, true}, 0, new ExecutionConfig());
 		int multiTupleHash = multiTupleComp.hash(multiTupleTest);
-		
+
 		Assert.assertTrue("The hashing for tuples and pojos must be the same, so that they are mixable. Also for those with multiple key fields", multiPojoHash == multiTupleHash);
-		
+
 	}
 
 	// --------------------------------------------------------------------------------------------
@@ -290,7 +292,7 @@ public class PojoSerializerTest extends SerializerTestBase<PojoSerializerTest.Te
 			TypeExtractor.getForClass(SubTestUserClassA.class).createSerializer(new ExecutionConfig());
 
 		// read configuration again from bytes
-		try(ByteArrayInputStream in = new ByteArrayInputStream(serializedConfig)) {
+		try (ByteArrayInputStream in = new ByteArrayInputStream(serializedConfig)) {
 			pojoSerializerConfigSnapshot = TypeSerializerSnapshotSerializationUtil.readSerializerSnapshot(
 				new DataInputViewStreamWrapper(in), Thread.currentThread().getContextClassLoader(), pojoSerializer2);
 		}
@@ -333,7 +335,7 @@ public class PojoSerializerTest extends SerializerTestBase<PojoSerializerTest.Te
 		pojoSerializer = (PojoSerializer<TestUserClass>) type.createSerializer(executionConfig);
 
 		// read configuration from bytes
-		try(ByteArrayInputStream in = new ByteArrayInputStream(serializedConfig)) {
+		try (ByteArrayInputStream in = new ByteArrayInputStream(serializedConfig)) {
 			pojoSerializerConfigSnapshot = TypeSerializerSnapshotSerializationUtil.readSerializerSnapshot(
 				new DataInputViewStreamWrapper(in), Thread.currentThread().getContextClassLoader(), pojoSerializer);
 		}
@@ -381,7 +383,7 @@ public class PojoSerializerTest extends SerializerTestBase<PojoSerializerTest.Te
 		pojoSerializer = (PojoSerializer<TestUserClass>) type.createSerializer(new ExecutionConfig());
 
 		// read configuration from bytes
-		try(ByteArrayInputStream in = new ByteArrayInputStream(serializedConfig)) {
+		try (ByteArrayInputStream in = new ByteArrayInputStream(serializedConfig)) {
 			pojoSerializerConfigSnapshot = TypeSerializerSnapshotSerializationUtil.readSerializerSnapshot(
 				new DataInputViewStreamWrapper(in), Thread.currentThread().getContextClassLoader(), pojoSerializer);
 		}
@@ -401,12 +403,12 @@ public class PojoSerializerTest extends SerializerTestBase<PojoSerializerTest.Te
 
 	/**
 	 * Tests that:
-	 *  - Previous Pojo serializer did not have registrations, and created cached serializers for subclasses
-	 *  - On restore, it had those subclasses registered
-	 *
+	 * - Previous Pojo serializer did not have registrations, and created cached serializers for subclasses
+	 * - On restore, it had those subclasses registered
+	 * <p>
 	 * In this case, after reconfiguration, the cache should be repopulated, and registrations should
 	 * also exist for the subclasses.
-	 *
+	 * <p>
 	 * Note: the cache still needs to be repopulated because previous data of those subclasses were
 	 * written with the cached serializers. In this case, the repopulated cache has reconfigured serializers
 	 * for the subclasses so that previous written data can be read, but the registered serializers
@@ -447,7 +449,7 @@ public class PojoSerializerTest extends SerializerTestBase<PojoSerializerTest.Te
 		pojoSerializer = (PojoSerializer<TestUserClass>) type.createSerializer(newExecutionConfig);
 
 		// read configuration from bytes
-		try(ByteArrayInputStream in = new ByteArrayInputStream(serializedConfig)) {
+		try (ByteArrayInputStream in = new ByteArrayInputStream(serializedConfig)) {
 			pojoSerializerConfigSnapshot = TypeSerializerSnapshotSerializationUtil.readSerializerSnapshot(
 				new DataInputViewStreamWrapper(in), Thread.currentThread().getContextClassLoader(), pojoSerializer);
 		}

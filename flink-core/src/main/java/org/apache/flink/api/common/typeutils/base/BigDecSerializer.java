@@ -21,6 +21,7 @@ package org.apache.flink.api.common.typeutils.base;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.math.BigInteger;
+
 import org.apache.flink.annotation.Internal;
 import org.apache.flink.api.common.typeutils.SimpleTypeSerializerSnapshot;
 import org.apache.flink.api.common.typeutils.TypeSerializerSnapshot;
@@ -51,7 +52,7 @@ public final class BigDecSerializer extends TypeSerializerSingleton<BigDecimal> 
 	public BigDecimal copy(BigDecimal from) {
 		return from;
 	}
-	
+
 	@Override
 	public BigDecimal copy(BigDecimal from, BigDecimal reuse) {
 		return from;
@@ -75,13 +76,11 @@ public final class BigDecSerializer extends TypeSerializerSingleton<BigDecimal> 
 			BigIntSerializer.writeBigInteger(BigInteger.ZERO, target);
 			target.writeInt(0);
 			return;
-		}
-		else if (record == BigDecimal.ONE) {
+		} else if (record == BigDecimal.ONE) {
 			BigIntSerializer.writeBigInteger(BigInteger.ONE, target);
 			target.writeInt(0);
 			return;
-		}
-		else if (record == BigDecimal.TEN) {
+		} else if (record == BigDecimal.TEN) {
 			BigIntSerializer.writeBigInteger(BigInteger.TEN, target);
 			target.writeInt(0);
 			return;
@@ -124,11 +123,9 @@ public final class BigDecSerializer extends TypeSerializerSingleton<BigDecimal> 
 		if (scale == 0) {
 			if (unscaledValue == BigInteger.ZERO) {
 				return BigDecimal.ZERO;
-			}
-			else if (unscaledValue == BigInteger.ONE) {
+			} else if (unscaledValue == BigInteger.ONE) {
 				return BigDecimal.ONE;
-			}
-			else if (unscaledValue == BigInteger.TEN) {
+			} else if (unscaledValue == BigInteger.TEN) {
 				return BigDecimal.TEN;
 			}
 		}

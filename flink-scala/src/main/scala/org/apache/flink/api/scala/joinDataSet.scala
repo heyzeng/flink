@@ -59,23 +59,24 @@ import scala.reflect.ClassTag
  */
 @Public
 class JoinDataSet[L, R](
-    defaultJoin: EquiJoin[L, R, (L, R)],
-    leftInput: DataSet[L],
-    rightInput: DataSet[R],
-    leftKeys: Keys[L],
-    rightKeys: Keys[R])
+                         defaultJoin: EquiJoin[L, R, (L, R)],
+                         leftInput: DataSet[L],
+                         rightInput: DataSet[R],
+                         leftKeys: Keys[L],
+                         rightKeys: Keys[R])
   extends DataSet(defaultJoin) with JoinFunctionAssigner[L, R] {
 
-  private var customPartitioner : Partitioner[_] = _
-  
+  private var customPartitioner: Partitioner[_] = _
+
   /**
    * Creates a new [[DataSet]] where the result for each pair of joined elements is the result
    * of the given function.
    */
-  def apply[O: TypeInformation: ClassTag](fun: (L, R) => O): DataSet[O] = {
+  def apply[O: TypeInformation : ClassTag](fun: (L, R) => O): DataSet[O] = {
     require(fun != null, "Join function must not be null.")
     val joiner = new FlatJoinFunction[L, R, O] {
       val cleanFun = clean(fun)
+
       def join(left: L, right: R, out: Collector[O]) = {
         out.collect(cleanFun(left, right))
       }
@@ -90,7 +91,7 @@ class JoinDataSet[L, R](
       defaultJoin.getJoinHint,
       getCallLocationName(),
       defaultJoin.getJoinType)
-    
+
     if (customPartitioner != null) {
       wrap(joinOperator.withPartitioner(customPartitioner))
     } else {
@@ -103,10 +104,11 @@ class JoinDataSet[L, R](
    * The function can output zero or more elements using the [[Collector]] which will form the
    * result.
    */
-  def apply[O: TypeInformation: ClassTag](fun: (L, R, Collector[O]) => Unit): DataSet[O] = {
+  def apply[O: TypeInformation : ClassTag](fun: (L, R, Collector[O]) => Unit): DataSet[O] = {
     require(fun != null, "Join function must not be null.")
     val joiner = new FlatJoinFunction[L, R, O] {
       val cleanFun = clean(fun)
+
       def join(left: L, right: R, out: Collector[O]) = {
         cleanFun(left, right, out)
       }
@@ -137,7 +139,7 @@ class JoinDataSet[L, R](
    * A [[RichFlatJoinFunction]] can be used to access the
    * broadcast variables and the [[org.apache.flink.api.common.functions.RuntimeContext]].
    */
-  def apply[O: TypeInformation: ClassTag](joiner: FlatJoinFunction[L, R, O]): DataSet[O] = {
+  def apply[O: TypeInformation : ClassTag](joiner: FlatJoinFunction[L, R, O]): DataSet[O] = {
     require(joiner != null, "Join function must not be null.")
 
     val joinOperator = new EquiJoin[L, R, O](
@@ -165,7 +167,7 @@ class JoinDataSet[L, R](
    * A [[org.apache.flink.api.common.functions.RichJoinFunction]] can be used to access the
    * broadcast variables and the [[org.apache.flink.api.common.functions.RuntimeContext]].
    */
-  def apply[O: TypeInformation: ClassTag](fun: JoinFunction[L, R, O]): DataSet[O] = {
+  def apply[O: TypeInformation : ClassTag](fun: JoinFunction[L, R, O]): DataSet[O] = {
     require(fun != null, "Join function must not be null.")
 
     val generatedFunction: FlatJoinFunction[L, R, O] = new WrappingFlatJoinFunction[L, R, O](fun)
@@ -187,21 +189,21 @@ class JoinDataSet[L, R](
       wrap(joinOperator)
     }
   }
-  
+
   // ----------------------------------------------------------------------------------------------
   //  Properties
   // ----------------------------------------------------------------------------------------------
-  
-  def withPartitioner[K : TypeInformation](partitioner : Partitioner[K]) : JoinDataSet[L, R] = {
+
+  def withPartitioner[K: TypeInformation](partitioner: Partitioner[K]): JoinDataSet[L, R] = {
     if (partitioner != null) {
-      val typeInfo : TypeInformation[K] = implicitly[TypeInformation[K]]
-      
+      val typeInfo: TypeInformation[K] = implicitly[TypeInformation[K]]
+
       leftKeys.validateCustomPartitioner(partitioner, typeInfo)
       rightKeys.validateCustomPartitioner(partitioner, typeInfo)
     }
     this.customPartitioner = partitioner
     defaultJoin.withPartitioner(partitioner)
-    
+
     this
   }
 
@@ -209,17 +211,17 @@ class JoinDataSet[L, R](
    * Gets the custom partitioner used by this join, or null, if none is set.
    */
   @Internal
-  def getPartitioner[K]() : Partitioner[K] = {
+  def getPartitioner[K](): Partitioner[K] = {
     customPartitioner.asInstanceOf[Partitioner[K]]
   }
 }
 
 @Internal
 private[flink] abstract class UnfinishedJoinOperationBase[L, R, O <: JoinFunctionAssigner[L, R]](
-    leftSet: DataSet[L],
-    rightSet: DataSet[R],
-    val joinHint: JoinHint,
-    val joinType: JoinType)
+                                                                                                  leftSet: DataSet[L],
+                                                                                                  rightSet: DataSet[R],
+                                                                                                  val joinHint: JoinHint,
+                                                                                                  val joinType: JoinType)
   extends UnfinishedKeyPairOperation[L, R, O](leftSet, rightSet) {
 
   def createJoinFunctionAssigner(leftKey: Keys[L], rightKey: Keys[R]): O
@@ -267,9 +269,9 @@ private[flink] abstract class UnfinishedJoinOperationBase[L, R, O <: JoinFunctio
  */
 @Public
 class UnfinishedJoinOperation[L, R](
-    leftSet: DataSet[L],
-    rightSet: DataSet[R],
-    joinHint: JoinHint)
+                                     leftSet: DataSet[L],
+                                     rightSet: DataSet[R],
+                                     joinHint: JoinHint)
   extends UnfinishedJoinOperationBase[L, R, JoinDataSet[L, R]](
     leftSet, rightSet, joinHint, JoinType.INNER) {
 
@@ -301,16 +303,16 @@ class UnfinishedJoinOperation[L, R](
  */
 @Public
 class UnfinishedOuterJoinOperation[L, R](
-    leftSet: DataSet[L],
-    rightSet: DataSet[R],
-    joinHint: JoinHint,
-    joinType: JoinType)
+                                          leftSet: DataSet[L],
+                                          rightSet: DataSet[R],
+                                          joinHint: JoinHint,
+                                          joinType: JoinType)
   extends UnfinishedJoinOperationBase[L, R, JoinFunctionAssigner[L, R]](
     leftSet, rightSet, joinHint, joinType) {
 
   @Internal
   override def createJoinFunctionAssigner(leftKey: Keys[L], rightKey: Keys[R]):
-      JoinFunctionAssigner[L, R] = {
+  JoinFunctionAssigner[L, R] = {
     new DefaultJoinFunctionAssigner(createDefaultJoin(leftKey, rightKey))
   }
 
@@ -338,10 +340,14 @@ class UnfinishedOuterJoinOperation[L, R](
 @Public
 trait JoinFunctionAssigner[L, R] {
 
-  def withPartitioner[K : TypeInformation](part : Partitioner[K]) : JoinFunctionAssigner[L, R]
-  def apply[O: TypeInformation: ClassTag](fun: (L, R) => O): DataSet[O]
-  def apply[O: TypeInformation: ClassTag](fun: (L, R, Collector[O]) => Unit): DataSet[O]
-  def apply[O: TypeInformation: ClassTag](fun: FlatJoinFunction[L, R, O]): DataSet[O]
-  def apply[O: TypeInformation: ClassTag](fun: JoinFunction[L, R, O]): DataSet[O]
+  def withPartitioner[K: TypeInformation](part: Partitioner[K]): JoinFunctionAssigner[L, R]
+
+  def apply[O: TypeInformation : ClassTag](fun: (L, R) => O): DataSet[O]
+
+  def apply[O: TypeInformation : ClassTag](fun: (L, R, Collector[O]) => Unit): DataSet[O]
+
+  def apply[O: TypeInformation : ClassTag](fun: FlatJoinFunction[L, R, O]): DataSet[O]
+
+  def apply[O: TypeInformation : ClassTag](fun: JoinFunction[L, R, O]): DataSet[O]
 
 }

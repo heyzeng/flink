@@ -38,19 +38,27 @@ public class SerializedThrowable extends Exception implements Serializable {
 
 	private static final long serialVersionUID = 7284183123441947635L;
 
-	/** The original exception in serialized form. */
+	/**
+	 * The original exception in serialized form.
+	 */
 	private final byte[] serializedException;
 
-	/** Name of the original error class. */
+	/**
+	 * Name of the original error class.
+	 */
 	private final String originalErrorClassName;
 
-	/** The original stack trace, to be printed. */
+	/**
+	 * The original stack trace, to be printed.
+	 */
 	private final String fullStringifiedStackTrace;
 
-	/** The original exception, not transported via serialization,
+	/**
+	 * The original exception, not transported via serialization,
 	 * because the class may not be part of the system class loader.
 	 * In addition, we make sure our cached references to not prevent
-	 * unloading the exception class. */
+	 * unloading the exception class.
+	 */
 	private transient WeakReference<Throwable> cachedException;
 
 	/**
@@ -70,8 +78,7 @@ public class SerializedThrowable extends Exception implements Serializable {
 			byte[] serialized;
 			try {
 				serialized = InstantiationUtil.serializeObject(exception);
-			}
-			catch (Throwable t) {
+			} catch (Throwable t) {
 				serialized = null;
 			}
 			this.serializedException = serialized;
@@ -87,8 +94,7 @@ public class SerializedThrowable extends Exception implements Serializable {
 			// mimic the original exception's cause
 			if (exception.getCause() == null) {
 				initCause(null);
-			}
-			else {
+			} else {
 				// exception causes may by cyclic, so we truncate the cycle when we find it
 				if (alreadySeen.add(exception)) {
 					// we are not in a cycle, yet
@@ -96,8 +102,7 @@ public class SerializedThrowable extends Exception implements Serializable {
 				}
 			}
 
-		}
-		else {
+		} else {
 			// copy from that serialized throwable
 			SerializedThrowable other = (SerializedThrowable) exception;
 			this.serializedException = other.serializedException;
@@ -121,8 +126,7 @@ public class SerializedThrowable extends Exception implements Serializable {
 			try {
 				cached = InstantiationUtil.deserializeObject(serializedException, classloader);
 				cachedException = new WeakReference<>(cached);
-			}
-			catch (Throwable t) {
+			} catch (Throwable t) {
 				// something went wrong
 				// return this SerializedThrowable as a stand in
 				return this;
@@ -180,8 +184,7 @@ public class SerializedThrowable extends Exception implements Serializable {
 	private static String getMessageOrError(Throwable error) {
 		try {
 			return error.getMessage();
-		}
-		catch (Throwable t) {
+		} catch (Throwable t) {
 			return "(failed to get message)";
 		}
 	}

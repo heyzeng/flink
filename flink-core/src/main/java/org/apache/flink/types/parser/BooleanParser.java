@@ -26,14 +26,16 @@ public class BooleanParser extends FieldParser<Boolean> {
 
 	private boolean result;
 
-	/** Values for true and false respectively. Must be lower case. */
-	private static final byte[][] TRUE = new byte[][] {
-			"true".getBytes(ConfigConstants.DEFAULT_CHARSET),
-			"1".getBytes(ConfigConstants.DEFAULT_CHARSET)
+	/**
+	 * Values for true and false respectively. Must be lower case.
+	 */
+	private static final byte[][] TRUE = new byte[][]{
+		"true".getBytes(ConfigConstants.DEFAULT_CHARSET),
+		"1".getBytes(ConfigConstants.DEFAULT_CHARSET)
 	};
-	private static final byte[][] FALSE = new byte[][] {
-			"false".getBytes(ConfigConstants.DEFAULT_CHARSET),
-			"0".getBytes(ConfigConstants.DEFAULT_CHARSET)
+	private static final byte[][] FALSE = new byte[][]{
+		"false".getBytes(ConfigConstants.DEFAULT_CHARSET),
+		"0".getBytes(ConfigConstants.DEFAULT_CHARSET)
 	};
 
 	@Override
@@ -75,10 +77,11 @@ public class BooleanParser extends FieldParser<Boolean> {
 
 	/**
 	 * Checks if a part of a byte array matches another byte array with chars (case-insensitive).
+	 *
 	 * @param source The source byte array.
-	 * @param start The offset into the source byte array.
+	 * @param start  The offset into the source byte array.
 	 * @param length The length of the match.
-	 * @param other The byte array which is fully compared to the part of the source array.
+	 * @param other  The byte array which is fully compared to the part of the source array.
 	 * @return true if other can be found in the specified part of source, false otherwise.
 	 */
 	private static boolean byteArrayEquals(byte[] source, int start, int length, byte[] other) {

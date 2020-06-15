@@ -37,12 +37,12 @@ import org.junit.runners.Parameterized
 import java.util
 
 /**
-  * Migration tests for the [[ScalaCaseClassSerializer]].
-  */
+ * Migration tests for the [[ScalaCaseClassSerializer]].
+ */
 @RunWith(classOf[Parameterized])
 class ScalaCaseClassSerializerSnapshotMigrationTest(
-  spec: TestSpecification[CustomCaseClass]
-) extends TypeSerializerSnapshotMigrationTestBase[CustomCaseClass](spec) {}
+                                                     spec: TestSpecification[CustomCaseClass]
+                                                   ) extends TypeSerializerSnapshotMigrationTestBase[CustomCaseClass](spec) {}
 
 object ScalaCaseClassSerializerSnapshotMigrationTest {
 

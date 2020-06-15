@@ -57,8 +57,7 @@ public abstract class FSDataOutputStream extends OutputStream {
 	 * Various components of the high-availability and recovery logic rely on the accurate
 	 *
 	 * @return The current position in the stream, defined as the number of bytes
-	 *         from the beginning of the file to the current writing position.
-	 *
+	 * from the beginning of the file to the current writing position.
 	 * @throws IOException Thrown if an I/O error occurs while obtaining the position from
 	 *                     the stream implementation.
 	 */

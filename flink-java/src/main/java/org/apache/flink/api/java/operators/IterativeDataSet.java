@@ -35,7 +35,6 @@ import org.apache.flink.types.Value;
  * represents the initial solution set via the {@link DataSet#iterate(int)} method.
  *
  * @param <T> The data type of set that is the input and feedback of the iteration.
- *
  * @see DataSet#iterate(int)
  */
 @Public
@@ -57,7 +56,6 @@ public class IterativeDataSet<T> extends SingleInputOperator<T, T, IterativeData
 	 *
 	 * @param iterationResult The data set that will be fed back to the next iteration.
 	 * @return The DataSet that represents the result of the iteration, after the computation has terminated.
-	 *
 	 * @see DataSet#iterate(int)
 	 */
 	public DataSet<T> closeWith(DataSet<T> iterationResult) {
@@ -73,10 +71,9 @@ public class IterativeDataSet<T> extends SingleInputOperator<T, T, IterativeData
 	 * criterion is to have a filter that filters out all elements that are considered non-converged. As soon as no more
 	 * such elements exist, the iteration finishes.
 	 *
-	 * @param iterationResult The data set that will be fed back to the next iteration.
+	 * @param iterationResult      The data set that will be fed back to the next iteration.
 	 * @param terminationCriterion The data set that being used to trigger halt on operation once it is empty.
 	 * @return The DataSet that represents the result of the iteration, after the computation has terminated.
-	 *
 	 * @see DataSet#iterate(int)
 	 */
 	public DataSet<T> closeWith(DataSet<T> iterationResult, DataSet<?> terminationCriterion) {
@@ -101,9 +98,8 @@ public class IterativeDataSet<T> extends SingleInputOperator<T, T, IterativeData
 	 * <p>Aggregators can be accessed inside a function via the
 	 * {@link org.apache.flink.api.common.functions.AbstractRichFunction#getIterationRuntimeContext()} method.
 	 *
-	 * @param name The name under which the aggregator is registered.
+	 * @param name       The name under which the aggregator is registered.
 	 * @param aggregator The aggregator class.
-	 *
 	 * @return The IterativeDataSet itself, to allow chaining function calls.
 	 */
 	@PublicEvolving
@@ -120,15 +116,14 @@ public class IterativeDataSet<T> extends SingleInputOperator<T, T, IterativeData
 	 * in an iteration step and have to have a convergence criterion that signals termination as soon as the aggregate value
 	 * is below a certain threshold.
 	 *
-	 * @param name The name under which the aggregator is registered.
-	 * @param aggregator The aggregator class.
+	 * @param name             The name under which the aggregator is registered.
+	 * @param aggregator       The aggregator class.
 	 * @param convergenceCheck The convergence criterion.
-	 *
 	 * @return The IterativeDataSet itself, to allow chaining function calls.
 	 */
 	@PublicEvolving
 	public <X extends Value> IterativeDataSet<T> registerAggregationConvergenceCriterion(
-			String name, Aggregator<X> aggregator, ConvergenceCriterion<X> convergenceCheck) {
+		String name, Aggregator<X> aggregator, ConvergenceCriterion<X> convergenceCheck) {
 		this.aggregators.registerAggregationConvergenceCriterion(name, aggregator, convergenceCheck);
 		return this;
 	}
@@ -151,6 +146,6 @@ public class IterativeDataSet<T> extends SingleInputOperator<T, T, IterativeData
 	protected org.apache.flink.api.common.operators.SingleInputOperator<T, T, ?> translateToDataFlow(Operator<T> input) {
 		// All the translation magic happens when the iteration end is encountered.
 		throw new InvalidProgramException("A data set that is part of an iteration was used as a sink or action."
-				+ " Did you forget to close the iteration?");
+			+ " Did you forget to close the iteration?");
 	}
 }

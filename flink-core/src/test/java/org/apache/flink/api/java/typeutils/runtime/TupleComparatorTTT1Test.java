@@ -45,94 +45,93 @@ public class TupleComparatorTTT1Test extends TupleComparatorTestBase<Tuple3<Tupl
 		new Tuple3<Tuple2<String, Double>, Tuple2<Long, Long>, Tuple2<Integer, Long>>(new Tuple2<String, Double>("world", 3.0), new Tuple2<Long, Long>(2L, 8L), new Tuple2<Integer, Long>(323, 2L)),
 		new Tuple3<Tuple2<String, Double>, Tuple2<Long, Long>, Tuple2<Integer, Long>>(new Tuple2<String, Double>("world", 3.5), new Tuple2<Long, Long>(2L, 9L), new Tuple2<Integer, Long>(323, 5L)),
 		new Tuple3<Tuple2<String, Double>, Tuple2<Long, Long>, Tuple2<Integer, Long>>(new Tuple2<String, Double>("world", 4325.12), new Tuple2<Long, Long>(2L, 123L), new Tuple2<Integer, Long>(555, 1L))
-		
+
 	};
-	
+
 	@SuppressWarnings("unchecked")
 	@Override
 	protected TupleComparator<Tuple3<Tuple2<String, Double>, Tuple2<Long, Long>, Tuple2<Integer, Long>>> createComparator(
-			boolean ascending) {
+		boolean ascending) {
 		return new TupleComparator<Tuple3<Tuple2<String, Double>, Tuple2<Long, Long>, Tuple2<Integer, Long>>>(
-				new int[] { 0 },
-				new TypeComparator[] {
-						new TupleComparator<Tuple2<String, Double>>(
-								new int[] { 0, 1 },
-								new TypeComparator[] {
-								new StringComparator(ascending),
-								new DoubleComparator(ascending) },
-								new TypeSerializer[] {
-										StringSerializer.INSTANCE,
-										DoubleSerializer.INSTANCE }) },
-				new TypeSerializer[] {
-						new TupleSerializer<Tuple2<String, Double>>(
-								(Class<Tuple2<String, Double>>) (Class<?>) Tuple2.class,
-								new TypeSerializer[] {
-										StringSerializer.INSTANCE,
-										DoubleSerializer.INSTANCE }),
-						new TupleSerializer<Tuple2<Long, Long>>(
-								(Class<Tuple2<Long, Long>>) (Class<?>) Tuple2.class,
-								new TypeSerializer[] {
-										LongSerializer.INSTANCE,
-										LongSerializer.INSTANCE }),
-						new TupleSerializer<Tuple2<Integer, Long>>(
-								(Class<Tuple2<Integer, Long>>) (Class<?>) Tuple2.class,
-								new TypeSerializer[] {
-										IntSerializer.INSTANCE,
-										LongSerializer.INSTANCE }) });
+			new int[]{0},
+			new TypeComparator[]{
+				new TupleComparator<Tuple2<String, Double>>(
+					new int[]{0, 1},
+					new TypeComparator[]{
+						new StringComparator(ascending),
+						new DoubleComparator(ascending)},
+					new TypeSerializer[]{
+						StringSerializer.INSTANCE,
+						DoubleSerializer.INSTANCE})},
+			new TypeSerializer[]{
+				new TupleSerializer<Tuple2<String, Double>>(
+					(Class<Tuple2<String, Double>>) (Class<?>) Tuple2.class,
+					new TypeSerializer[]{
+						StringSerializer.INSTANCE,
+						DoubleSerializer.INSTANCE}),
+				new TupleSerializer<Tuple2<Long, Long>>(
+					(Class<Tuple2<Long, Long>>) (Class<?>) Tuple2.class,
+					new TypeSerializer[]{
+						LongSerializer.INSTANCE,
+						LongSerializer.INSTANCE}),
+				new TupleSerializer<Tuple2<Integer, Long>>(
+					(Class<Tuple2<Integer, Long>>) (Class<?>) Tuple2.class,
+					new TypeSerializer[]{
+						IntSerializer.INSTANCE,
+						LongSerializer.INSTANCE})});
 	}
 
 	@SuppressWarnings("unchecked")
 	@Override
 	protected TupleSerializer<Tuple3<Tuple2<String, Double>, Tuple2<Long, Long>, Tuple2<Integer, Long>>> createSerializer() {
-		return new  TupleSerializer<Tuple3<Tuple2<String, Double>, Tuple2<Long, Long>, Tuple2<Integer, Long>>>(
-				(Class<Tuple3<Tuple2<String, Double>, Tuple2<Long, Long>, Tuple2<Integer, Long>>>) (Class<?>) Tuple3.class,
-				new TypeSerializer[]{
-					new TupleSerializer<Tuple2<String, Double>> (
-							(Class<Tuple2<String, Double>>) (Class<?>) Tuple2.class,
-							new TypeSerializer[]{
-									StringSerializer.INSTANCE,
-									DoubleSerializer.INSTANCE
+		return new TupleSerializer<Tuple3<Tuple2<String, Double>, Tuple2<Long, Long>, Tuple2<Integer, Long>>>(
+			(Class<Tuple3<Tuple2<String, Double>, Tuple2<Long, Long>, Tuple2<Integer, Long>>>) (Class<?>) Tuple3.class,
+			new TypeSerializer[]{
+				new TupleSerializer<Tuple2<String, Double>>(
+					(Class<Tuple2<String, Double>>) (Class<?>) Tuple2.class,
+					new TypeSerializer[]{
+						StringSerializer.INSTANCE,
+						DoubleSerializer.INSTANCE
 					}),
-					new TupleSerializer<Tuple2<Long, Long>> (
-							(Class<Tuple2<Long, Long>>) (Class<?>) Tuple2.class,
-							new TypeSerializer[]{
-									LongSerializer.INSTANCE,
-									LongSerializer.INSTANCE
+				new TupleSerializer<Tuple2<Long, Long>>(
+					(Class<Tuple2<Long, Long>>) (Class<?>) Tuple2.class,
+					new TypeSerializer[]{
+						LongSerializer.INSTANCE,
+						LongSerializer.INSTANCE
 					}),
-					new TupleSerializer<Tuple2<Integer, Long>> (
-							(Class<Tuple2<Integer, Long>>) (Class<?>) Tuple2.class,
-							new TypeSerializer[]{
-									IntSerializer.INSTANCE,
-									LongSerializer.INSTANCE
+				new TupleSerializer<Tuple2<Integer, Long>>(
+					(Class<Tuple2<Integer, Long>>) (Class<?>) Tuple2.class,
+					new TypeSerializer[]{
+						IntSerializer.INSTANCE,
+						LongSerializer.INSTANCE
 					})
-				});
+			});
 	}
 
 	@Override
 	protected Tuple3<Tuple2<String, Double>, Tuple2<Long, Long>, Tuple2<Integer, Long>>[] getSortedTestData() {
 		return this.dataISD;
 	}
-	
+
 	@Override
 	protected void deepEquals(
-			String message,
-			Tuple3<Tuple2<String, Double>, Tuple2<Long, Long>, Tuple2<Integer, Long>> should,
-			Tuple3<Tuple2<String, Double>, Tuple2<Long, Long>, Tuple2<Integer, Long>> is) {
-		
+		String message,
+		Tuple3<Tuple2<String, Double>, Tuple2<Long, Long>, Tuple2<Integer, Long>> should,
+		Tuple3<Tuple2<String, Double>, Tuple2<Long, Long>, Tuple2<Integer, Long>> is) {
+
 		for (int x = 0; x < should.getArity(); x++) {
 			// Check whether field is of type Tuple2 because assertEquals must be called on the non Tuple2 fields.
-			if(should.getField(x) instanceof Tuple2) {
-				this.deepEquals(message, (Tuple2<?,?>) should.getField(x), (Tuple2<?,?>)is.getField(x));
-			}
-			else {
+			if (should.getField(x) instanceof Tuple2) {
+				this.deepEquals(message, (Tuple2<?, ?>) should.getField(x), (Tuple2<?, ?>) is.getField(x));
+			} else {
 				assertEquals(message, should.getField(x), is.getField(x));
 			}
 		}// For
 	}
-	
-	protected void deepEquals(String message, Tuple2<?,?> should, Tuple2<?,?> is) {
+
+	protected void deepEquals(String message, Tuple2<?, ?> should, Tuple2<?, ?> is) {
 		for (int x = 0; x < should.getArity(); x++) {
-			assertEquals(message, (Object)should.getField(x), is.getField(x));
+			assertEquals(message, (Object) should.getField(x), is.getField(x));
 		}
 	}
 }

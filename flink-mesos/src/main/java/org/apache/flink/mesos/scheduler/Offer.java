@@ -39,7 +39,6 @@ import static org.apache.flink.util.Preconditions.checkNotNull;
  *
  * <p>The default implementation provided by Fenzo isn't compatible with reserved resources.
  * This implementation properly combines resources, e.g. a combination of reserved and unreserved cpus.
- *
  */
 public class Offer implements VirtualMachineLease {
 
@@ -105,7 +104,7 @@ public class Offer implements VirtualMachineLease {
 
 		if (offer.getAttributesCount() > 0) {
 			Map<String, Protos.Attribute> attributeMap = new HashMap<>();
-			for (Protos.Attribute attribute: offer.getAttributesList()) {
+			for (Protos.Attribute attribute : offer.getAttributesList()) {
 				attributeMap.put(attribute.getName(), attribute);
 			}
 			this.attributeMap = Collections.unmodifiableMap(attributeMap);
@@ -152,7 +151,7 @@ public class Offer implements VirtualMachineLease {
 		return diskMB;
 	}
 
-	public Protos.Offer getOffer(){
+	public Protos.Offer getOffer() {
 		return offer;
 	}
 

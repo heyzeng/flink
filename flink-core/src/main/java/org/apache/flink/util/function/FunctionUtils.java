@@ -36,7 +36,8 @@ public class FunctionUtils {
 
 	private static final Function<Object, Void> NULL_FN = ignored -> null;
 
-	private static final Consumer<Object> IGNORE_FN = ignored -> {};
+	private static final Consumer<Object> IGNORE_FN = ignored -> {
+	};
 
 	/**
 	 * Function which returns {@code null} (type: Void).
@@ -64,8 +65,8 @@ public class FunctionUtils {
 	 * Convert at {@link FunctionWithException} into a {@link Function}.
 	 *
 	 * @param functionWithException function with exception to convert into a function
-	 * @param <A> input type
-	 * @param <B> output type
+	 * @param <A>                   input type
+	 * @param <B>                   output type
 	 * @return {@link Function} which throws all checked exception as an unchecked exception.
 	 */
 	public static <A, B> Function<A, B> uncheckedFunction(FunctionWithException<A, B, ?> functionWithException) {
@@ -85,7 +86,7 @@ public class FunctionUtils {
 	 * as unchecked.
 	 *
 	 * @param throwingConsumer to convert into a {@link Consumer}
-	 * @param <A> input type
+	 * @param <A>              input type
 	 * @return {@link Consumer} which throws all checked exceptions as unchecked
 	 */
 	public static <A> Consumer<A> uncheckedConsumer(ThrowingConsumer<A, ?> throwingConsumer) {

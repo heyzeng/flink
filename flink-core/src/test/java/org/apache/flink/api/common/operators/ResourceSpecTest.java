@@ -44,31 +44,31 @@ public class ResourceSpecTest extends TestLogger {
 		assertTrue(rs2.lessThanOrEqual(rs1));
 
 		ResourceSpec rs3 = ResourceSpec.newBuilder(1.0, 100).
-				setGPUResource(1.1).
-				build();
+			setGPUResource(1.1).
+			build();
 		assertTrue(rs1.lessThanOrEqual(rs3));
 		assertFalse(rs3.lessThanOrEqual(rs1));
 
 		ResourceSpec rs4 = ResourceSpec.newBuilder(1.0, 100).
-				setGPUResource(2.2).
-				build();
+			setGPUResource(2.2).
+			build();
 		assertFalse(rs4.lessThanOrEqual(rs3));
 		assertTrue(rs3.lessThanOrEqual(rs4));
 	}
 
 	@Test
-	public void testLessThanOrEqualWhenBothUnknown(){
+	public void testLessThanOrEqualWhenBothUnknown() {
 		assertTrue(ResourceSpec.UNKNOWN.lessThanOrEqual(ResourceSpec.UNKNOWN));
 	}
 
 	@Test(expected = IllegalArgumentException.class)
-	public void testLessThanOrEqualWhenUnknownWithSpecified(){
+	public void testLessThanOrEqualWhenUnknownWithSpecified() {
 		final ResourceSpec rs1 = ResourceSpec.newBuilder(1.0, 100).build();
 		assertTrue(ResourceSpec.UNKNOWN.lessThanOrEqual(rs1));
 	}
 
 	@Test(expected = IllegalArgumentException.class)
-	public void testLessThanOrEqualWhenSpecifiedWithUnknown(){
+	public void testLessThanOrEqualWhenSpecifiedWithUnknown() {
 		final ResourceSpec rs1 = ResourceSpec.newBuilder(1.0, 100).build();
 		assertTrue(rs1.lessThanOrEqual(ResourceSpec.UNKNOWN));
 	}
@@ -81,16 +81,16 @@ public class ResourceSpecTest extends TestLogger {
 		assertEquals(rs2, rs1);
 
 		ResourceSpec rs3 = ResourceSpec.newBuilder(1.0, 100).
-				setGPUResource(2.2).
-				build();
+			setGPUResource(2.2).
+			build();
 		ResourceSpec rs4 = ResourceSpec.newBuilder(1.0, 100).
-				setGPUResource(1).
-				build();
+			setGPUResource(1).
+			build();
 		assertNotEquals(rs3, rs4);
 
 		ResourceSpec rs5 = ResourceSpec.newBuilder(1.0, 100).
-				setGPUResource(2.2).
-				build();
+			setGPUResource(2.2).
+			build();
 		assertEquals(rs3, rs5);
 	}
 
@@ -101,24 +101,24 @@ public class ResourceSpecTest extends TestLogger {
 		assertEquals(rs1.hashCode(), rs2.hashCode());
 
 		ResourceSpec rs3 = ResourceSpec.newBuilder(1.0, 100).
-				setGPUResource(2.2).
-				build();
+			setGPUResource(2.2).
+			build();
 		ResourceSpec rs4 = ResourceSpec.newBuilder(1.0, 100).
-				setGPUResource(1).
-				build();
+			setGPUResource(1).
+			build();
 		assertNotEquals(rs3.hashCode(), rs4.hashCode());
 
 		ResourceSpec rs5 = ResourceSpec.newBuilder(1.0, 100).
-				setGPUResource(2.2).
-				build();
+			setGPUResource(2.2).
+			build();
 		assertEquals(rs3.hashCode(), rs5.hashCode());
 	}
 
 	@Test
 	public void testMerge() throws Exception {
 		ResourceSpec rs1 = ResourceSpec.newBuilder(1.0, 100).
-				setGPUResource(1.1).
-				build();
+			setGPUResource(1.1).
+			build();
 		ResourceSpec rs2 = ResourceSpec.newBuilder(1.0, 100).build();
 
 		ResourceSpec rs3 = rs1.merge(rs2);
@@ -133,8 +133,8 @@ public class ResourceSpecTest extends TestLogger {
 	@Test
 	public void testSerializable() throws Exception {
 		ResourceSpec rs1 = ResourceSpec.newBuilder(1.0, 100).
-				setGPUResource(1.1).
-				build();
+			setGPUResource(1.1).
+			build();
 
 		ResourceSpec rs2 = CommonTestUtils.createCopySerializable(rs1);
 		assertEquals(rs1, rs2);
@@ -144,8 +144,8 @@ public class ResourceSpecTest extends TestLogger {
 	public void testMergeThisUnknown() throws Exception {
 		final ResourceSpec spec1 = ResourceSpec.UNKNOWN;
 		final ResourceSpec spec2 = ResourceSpec.newBuilder(1.0, 100)
-				.setGPUResource(1.1)
-				.build();
+			.setGPUResource(1.1)
+			.build();
 
 		final ResourceSpec merged = spec1.merge(spec2);
 

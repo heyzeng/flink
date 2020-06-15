@@ -32,31 +32,31 @@ import org.apache.flink.util.Collector;
  */
 @Internal
 public class PlanLeftUnwrappingCoGroupOperator<I1, I2, OUT, K>
-		extends CoGroupOperatorBase<Tuple2<K, I1>, I2, OUT, CoGroupFunction<Tuple2<K, I1>, I2, OUT>> {
+	extends CoGroupOperatorBase<Tuple2<K, I1>, I2, OUT, CoGroupFunction<Tuple2<K, I1>, I2, OUT>> {
 
 	public PlanLeftUnwrappingCoGroupOperator(
-			CoGroupFunction<I1, I2, OUT> udf,
-			Keys.SelectorFunctionKeys<I1, K> key1,
-			int[] key2,
-			String name,
-			TypeInformation<OUT> resultType,
-			TypeInformation<Tuple2<K, I1>> typeInfoWithKey1,
-			TypeInformation<I2> typeInfo2) {
+		CoGroupFunction<I1, I2, OUT> udf,
+		Keys.SelectorFunctionKeys<I1, K> key1,
+		int[] key2,
+		String name,
+		TypeInformation<OUT> resultType,
+		TypeInformation<Tuple2<K, I1>> typeInfoWithKey1,
+		TypeInformation<I2> typeInfo2) {
 
 		super(
-				new TupleLeftUnwrappingCoGrouper<I1, I2, OUT, K>(udf),
-				new BinaryOperatorInformation<Tuple2<K, I1>, I2, OUT>(
-						typeInfoWithKey1,
-						typeInfo2,
-						resultType),
-				key1.computeLogicalKeyPositions(),
-				key2,
-				name);
+			new TupleLeftUnwrappingCoGrouper<I1, I2, OUT, K>(udf),
+			new BinaryOperatorInformation<Tuple2<K, I1>, I2, OUT>(
+				typeInfoWithKey1,
+				typeInfo2,
+				resultType),
+			key1.computeLogicalKeyPositions(),
+			key2,
+			name);
 	}
 
 	private static final class TupleLeftUnwrappingCoGrouper<I1, I2, OUT, K>
-			extends WrappingFunction<CoGroupFunction<I1, I2, OUT>>
-			implements CoGroupFunction<Tuple2<K, I1>, I2, OUT> {
+		extends WrappingFunction<CoGroupFunction<I1, I2, OUT>>
+		implements CoGroupFunction<Tuple2<K, I1>, I2, OUT> {
 
 		private static final long serialVersionUID = 1L;
 
@@ -70,9 +70,9 @@ public class PlanLeftUnwrappingCoGroupOperator<I1, I2, OUT, K>
 
 		@Override
 		public void coGroup(
-				Iterable<Tuple2<K, I1>> records1,
-				Iterable<I2> records2,
-				Collector<OUT> out) throws Exception {
+			Iterable<Tuple2<K, I1>> records1,
+			Iterable<I2> records2,
+			Collector<OUT> out) throws Exception {
 
 			iter1.set(records1.iterator());
 			this.wrappedFunction.coGroup(iter1, records2, out);

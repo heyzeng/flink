@@ -47,8 +47,8 @@ public class SemanticPropertiesPrecedenceTest {
 		@SuppressWarnings("unchecked")
 		DataSet<Tuple3<Long, String, Integer>> input = env.fromElements(Tuple3.of(3L, "test", 42));
 		input
-				.map(new WildcardForwardedMapperWithForwardAnnotation<Tuple3<Long, String, Integer>>())
-				.output(new DiscardingOutputFormat<Tuple3<Long, String, Integer>>());
+			.map(new WildcardForwardedMapperWithForwardAnnotation<Tuple3<Long, String, Integer>>())
+			.output(new DiscardingOutputFormat<Tuple3<Long, String, Integer>>());
 		Plan plan = env.createProgramPlan();
 
 		GenericDataSinkBase<?> sink = plan.getDataSinks().iterator().next();
@@ -74,9 +74,9 @@ public class SemanticPropertiesPrecedenceTest {
 		@SuppressWarnings("unchecked")
 		DataSet<Tuple3<Long, String, Integer>> input = env.fromElements(Tuple3.of(3L, "test", 42));
 		input
-				.map(new WildcardForwardedMapper<Tuple3<Long, String, Integer>>())
-				.withForwardedFields("f0")
-				.output(new DiscardingOutputFormat<Tuple3<Long, String, Integer>>());
+			.map(new WildcardForwardedMapper<Tuple3<Long, String, Integer>>())
+			.withForwardedFields("f0")
+			.output(new DiscardingOutputFormat<Tuple3<Long, String, Integer>>());
 		Plan plan = env.createProgramPlan();
 
 		GenericDataSinkBase<?> sink = plan.getDataSinks().iterator().next();
@@ -101,7 +101,7 @@ public class SemanticPropertiesPrecedenceTest {
 	private static class WildcardForwardedMapperWithForwardAnnotation<T> implements MapFunction<T, T> {
 
 		@Override
-		public T map(T value)  {
+		public T map(T value) {
 			return value;
 		}
 	}
@@ -109,7 +109,7 @@ public class SemanticPropertiesPrecedenceTest {
 	private static class WildcardForwardedMapper<T> implements MapFunction<T, T> {
 
 		@Override
-		public T map(T value)  {
+		public T map(T value) {
 			return value;
 		}
 	}

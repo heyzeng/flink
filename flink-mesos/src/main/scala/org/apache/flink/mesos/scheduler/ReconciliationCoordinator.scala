@@ -31,15 +31,15 @@ import scala.collection.JavaConverters._
 import scala.concurrent.duration._
 
 /**
-  * Coordinates task reconciliation between Mesos and the scheduler.
-  *
-  * Implements the reconciliation procedures as outlined here:
-  * http://mesos.apache.org/documentation/latest/reconciliation/
-  *
-  */
+ * Coordinates task reconciliation between Mesos and the scheduler.
+ *
+ * Implements the reconciliation procedures as outlined here:
+ * http://mesos.apache.org/documentation/latest/reconciliation/
+ *
+ */
 class ReconciliationCoordinator(
-    flinkConfig: Configuration,
-    schedulerDriver: SchedulerDriver) extends Actor with FSM[TaskState,ReconciliationData] {
+                                 flinkConfig: Configuration,
+                                 schedulerDriver: SchedulerDriver) extends Actor with FSM[TaskState, ReconciliationData] {
 
   val LOG = Logger(getClass)
 
@@ -47,19 +47,19 @@ class ReconciliationCoordinator(
 
   when(Suspended) {
     case Event(reconcile: Reconcile, data: ReconciliationData) =>
-      val tasks = reconcile.tasks.map(task => (task.getTaskId,task))
+      val tasks = reconcile.tasks.map(task => (task.getTaskId, task))
       stay using data.copy(
-        remaining = if(reconcile.replace) tasks.toMap else data.remaining ++ tasks)
+        remaining = if (reconcile.replace) tasks.toMap else data.remaining ++ tasks)
 
     case Event(msg: Connected, data: ReconciliationData) =>
-      if(data.remaining.nonEmpty) goto(Reconciling)
+      if (data.remaining.nonEmpty) goto(Reconciling)
       else goto(Idle) using ReconciliationData()
   }
 
   when(Idle) {
     case Event(reconcile: Reconcile, _) =>
       goto(Reconciling) using {
-        val tasks = reconcile.tasks.map(task => (task.getTaskId,task))
+        val tasks = reconcile.tasks.map(task => (task.getTaskId, task))
         ReconciliationData(remaining = tasks.toMap)
       }
   }
@@ -75,14 +75,14 @@ class ReconciliationCoordinator(
     case Event(reconcile: Reconcile, data: ReconciliationData) =>
       // initiate reconciliation for additional tasks (even while reconciliation is ongoing)
       schedulerDriver.reconcileTasks(reconcile.tasks.asJavaCollection)
-      val tasks = reconcile.tasks.map(task => (task.getTaskId,task))
+      val tasks = reconcile.tasks.map(task => (task.getTaskId, task))
       stay using data.copy(
-        remaining = if(reconcile.replace) tasks.toMap else data.remaining ++ tasks)
+        remaining = if (reconcile.replace) tasks.toMap else data.remaining ++ tasks)
 
     case Event(update: StatusUpdate, data: ReconciliationData) =>
       // status information arrived for a task
       val remaining = data.remaining - update.status().getTaskId
-      if(remaining.isEmpty) {
+      if (remaining.isEmpty) {
         log.info("Reconciliation completed")
         goto(Idle) using ReconciliationData()
       } else {
@@ -93,7 +93,7 @@ class ReconciliationCoordinator(
       // timeout waiting for task status information
       log.warning("Reconciliation is proceeding slowly; re-sending the reconciliation request.")
       schedulerDriver.reconcileTasks(data.remaining.values.asJavaCollection)
-      stay using data.copy(retries = data.retries + 1) forMax(backoff(data.retries))
+      stay using data.copy(retries = data.retries + 1) forMax (backoff(data.retries))
   }
 
   whenUnhandled {
@@ -120,52 +120,52 @@ object ReconciliationCoordinator {
   val RECONCILIATION_MAX_BACKOFF = 1 minute
 
   /**
-    * An abstract FSM state.
-    */
+   * An abstract FSM state.
+   */
   sealed trait TaskState
 
   /**
-    * The state of active reconciliation.
-    */
+   * The state of active reconciliation.
+   */
   case object Reconciling extends TaskState
 
   /**
-    * The state of idling when reconciliation is not underway.
-    */
+   * The state of idling when reconciliation is not underway.
+   */
   case object Idle extends TaskState
 
   /**
-    * The state of being disconnected from Mesos.
-    */
+   * The state of being disconnected from Mesos.
+   */
   case object Suspended extends TaskState
 
   /**
-    * The state data of the reconciliation coordinator.
-    *
-    * @param remaining
-    * @param retries
-    */
+   * The state data of the reconciliation coordinator.
+   *
+   * @param remaining
+   * @param retries
+   */
   case class ReconciliationData(
-      remaining: Map[Protos.TaskID,Protos.TaskStatus] = Map(),
-      retries: Int = 0)
+                                 remaining: Map[Protos.TaskID, Protos.TaskStatus] = Map(),
+                                 retries: Int = 0)
 
   /**
-    * Initiates the task reconciliation process.
-    *
-    * @param tasks
-    */
+   * Initiates the task reconciliation process.
+   *
+   * @param tasks
+   */
   case class Reconcile(tasks: Seq[Protos.TaskStatus], replace: Boolean = false) {
     require(tasks.length >= 1, "Reconcile message must contain at least one task")
   }
 
   /**
-    * Calculate an exponential backoff duration.
-    */
+   * Calculate an exponential backoff duration.
+   */
   private def backoff(
-      retries: Int,
-      minBackoff: FiniteDuration = RECONCILIATION_MIN_BACKOFF,
-      maxBackoff: FiniteDuration = RECONCILIATION_MAX_BACKOFF,
-      randomFactor: Double = 0.2): FiniteDuration = {
+                       retries: Int,
+                       minBackoff: FiniteDuration = RECONCILIATION_MIN_BACKOFF,
+                       maxBackoff: FiniteDuration = RECONCILIATION_MAX_BACKOFF,
+                       randomFactor: Double = 0.2): FiniteDuration = {
     val rnd = 1.0 + ThreadLocalRandom.current().nextDouble() * randomFactor
     maxBackoff.min(minBackoff * math.pow(2, math.min(retries, 30))) * rnd match {
       case f: FiniteDuration => f
@@ -174,12 +174,12 @@ object ReconciliationCoordinator {
   }
 
   /**
-    * Create the properties for a reconciliation coordinator.
-    */
+   * Create the properties for a reconciliation coordinator.
+   */
   def createActorProps[T <: ReconciliationCoordinator](
-      actorClass: Class[T],
-      flinkConfig: Configuration,
-      schedulerDriver: SchedulerDriver): Props = {
+                                                        actorClass: Class[T],
+                                                        flinkConfig: Configuration,
+                                                        schedulerDriver: SchedulerDriver): Props = {
 
     Props.create(actorClass, flinkConfig, schedulerDriver)
   }

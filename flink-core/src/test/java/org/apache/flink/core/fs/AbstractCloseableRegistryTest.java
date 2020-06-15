@@ -98,7 +98,8 @@ public abstract class AbstractCloseableRegistryTest<C extends Closeable, T> {
 		try {
 			registerCloseable(testCloseable);
 			fail("Closed registry should not accept closeables!");
-		} catch (IOException expected) {}
+		} catch (IOException expected) {
+		}
 
 		assertTrue(testCloseable.isClosed());
 		assertEquals(0, unclosedCounter.get());
@@ -128,7 +129,8 @@ public abstract class AbstractCloseableRegistryTest<C extends Closeable, T> {
 		try {
 			registerCloseable(testCloseable);
 			fail("Closed registry should not accept closeables!");
-		} catch (IOException ignored) {}
+		} catch (IOException ignored) {
+		}
 
 		blockingCloseable.unblockClose();
 		closer.join();
@@ -165,7 +167,8 @@ public abstract class AbstractCloseableRegistryTest<C extends Closeable, T> {
 
 					try {
 						Thread.sleep(2);
-					} catch (InterruptedException ignored) {}
+					} catch (InterruptedException ignored) {
+					}
 
 					if (maxStreams != Integer.MAX_VALUE) {
 						++numStreams;

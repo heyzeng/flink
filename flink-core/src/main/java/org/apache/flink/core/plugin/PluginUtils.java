@@ -47,8 +47,7 @@ public final class PluginUtils {
 			} catch (IOException e) {
 				throw new FlinkRuntimeException("Exception when trying to initialize plugin system.", e);
 			}
-		}
-		else {
+		} else {
 			return new PluginManager(Collections.emptyList(), pluginConfig.getAlwaysParentFirstPatterns());
 		}
 	}

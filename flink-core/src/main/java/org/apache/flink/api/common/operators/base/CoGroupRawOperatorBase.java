@@ -42,6 +42,7 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
+
 import org.apache.flink.api.common.ExecutionConfig;
 
 /**
@@ -80,6 +81,7 @@ public class CoGroupRawOperatorBase<IN1, IN2, OUT, FT extends CoGroupFunction<IN
 	}
 
 	// --------------------------------------------------------------------------------------------
+
 	/**
 	 * Sets the order of the elements within a group for the given input.
 	 *

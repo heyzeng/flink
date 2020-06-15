@@ -89,9 +89,8 @@ public class ScalaCsvOutputFormat<T extends Product> extends FileOutputFormat<T>
 	 * Creates an instance of CsvOutputFormat. Lines are separated by the newline character '\n',
 	 * fields by the given field delimiter.
 	 *
-	 * @param outputPath The path where the CSV file is written.
-	 * @param fieldDelimiter
-	 *            The delimiter that is used to separate fields in a tuple.
+	 * @param outputPath     The path where the CSV file is written.
+	 * @param fieldDelimiter The delimiter that is used to separate fields in a tuple.
 	 */
 	public ScalaCsvOutputFormat(Path outputPath, String fieldDelimiter) {
 		this(outputPath, DEFAULT_LINE_DELIMITER, fieldDelimiter);
@@ -100,11 +99,9 @@ public class ScalaCsvOutputFormat<T extends Product> extends FileOutputFormat<T>
 	/**
 	 * Creates an instance of CsvOutputFormat.
 	 *
-	 * @param outputPath The path where the CSV file is written.
-	 * @param recordDelimiter
-	 *            The delimiter that is used to separate the tuples.
-	 * @param fieldDelimiter
-	 *            The delimiter that is used to separate fields in a tuple.
+	 * @param outputPath      The path where the CSV file is written.
+	 * @param recordDelimiter The delimiter that is used to separate the tuples.
+	 * @param fieldDelimiter  The delimiter that is used to separate fields in a tuple.
 	 */
 	public ScalaCsvOutputFormat(Path outputPath, String recordDelimiter, String fieldDelimiter) {
 		super(outputPath);
@@ -162,7 +159,7 @@ public class ScalaCsvOutputFormat<T extends Product> extends FileOutputFormat<T>
 	public void open(int taskNumber, int numTasks) throws IOException {
 		super.open(taskNumber, numTasks);
 		this.wrt = this.charsetName == null ? new OutputStreamWriter(new BufferedOutputStream(this.stream, 4096)) :
-				new OutputStreamWriter(new BufferedOutputStream(this.stream, 4096), this.charsetName);
+			new OutputStreamWriter(new BufferedOutputStream(this.stream, 4096), this.charsetName);
 	}
 
 	@Override

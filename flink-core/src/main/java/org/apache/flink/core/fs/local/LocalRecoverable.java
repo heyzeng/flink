@@ -33,20 +33,26 @@ import static org.apache.flink.util.Preconditions.checkNotNull;
 @Internal
 class LocalRecoverable implements CommitRecoverable, ResumeRecoverable {
 
-	/** The file path for the final result file. */
+	/**
+	 * The file path for the final result file.
+	 */
 	private final File targetFile;
 
-	/** The file path of the staging file. */
+	/**
+	 * The file path of the staging file.
+	 */
 	private final File tempFile;
 
-	/** The position to resume from. */
+	/**
+	 * The position to resume from.
+	 */
 	private final long offset;
 
 	/**
 	 * Creates a resumable for the given file at the given position.
 	 *
 	 * @param targetFile The file to resume.
-	 * @param offset The position to resume from.
+	 * @param offset     The position to resume from.
 	 */
 	LocalRecoverable(File targetFile, File tempFile, long offset) {
 		checkArgument(offset >= 0, "offset must be >= 0");

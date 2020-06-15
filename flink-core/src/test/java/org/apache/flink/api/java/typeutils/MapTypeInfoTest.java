@@ -28,7 +28,7 @@ public class MapTypeInfoTest extends TypeInformationTestBase<MapTypeInfo<?, ?>> 
 
 	@Override
 	protected MapTypeInfo<?, ?>[] getTestData() {
-		return new MapTypeInfo<?, ?>[] {
+		return new MapTypeInfo<?, ?>[]{
 			new MapTypeInfo<>(BasicTypeInfo.STRING_TYPE_INFO, BasicTypeInfo.INT_TYPE_INFO),
 			new MapTypeInfo<>(BasicTypeInfo.INT_TYPE_INFO, BasicTypeInfo.STRING_TYPE_INFO),
 			new MapTypeInfo<>(String.class, Boolean.class)

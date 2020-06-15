@@ -60,7 +60,7 @@ public class DeeplyEqualsChecker {
 	 * Adds custom check. Those check are always performed first, only after that it fallbacks to default checks.
 	 *
 	 * @param shouldCheck function to evaluate if the objects should be compared with comparator
-	 * @param comparator to perform equality comparison if the shouldCheck passed
+	 * @param comparator  to perform equality comparison if the shouldCheck passed
 	 * @return checker with added custom checks
 	 */
 	public DeeplyEqualsChecker withCustomCheck(

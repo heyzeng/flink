@@ -45,13 +45,13 @@ public class EitherSerializerCommonTest extends SerializerTestBase<Either<String
 	@Override
 	@SuppressWarnings("unchecked")
 	protected Either<String, Integer>[] getTestData() {
-		return new Either[] {
-				new Either.Left("hello friend"),
-				new Either.Left("hello friend"),
-				new Either.Right(37),
-				new Either.Left("hello friend"),
-				new Either.Right(1569653),
-				new Either.Left("hello friend")
+		return new Either[]{
+			new Either.Left("hello friend"),
+			new Either.Left("hello friend"),
+			new Either.Right(37),
+			new Either.Left("hello friend"),
+			new Either.Right(1569653),
+			new Either.Left("hello friend")
 		};
 	}
 }

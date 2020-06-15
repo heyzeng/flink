@@ -35,7 +35,7 @@ abstract class PairComparatorTestBase[T, R] extends TestLogger {
   def testEqualityWithReference(): Unit = {
     try {
       val comparator = getComparator(ascending = true)
-      
+
       val (dataT, dataR) = getSortedData
       for (i <- 0 until dataT.length) {
         comparator.setReference(dataT(i))

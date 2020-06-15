@@ -88,11 +88,14 @@ public class ConfigOptions {
 	 */
 	public static final class OptionBuilder {
 
-		/** The key for the config option. */
+		/**
+		 * The key for the config option.
+		 */
 		private final String key;
 
 		/**
 		 * Creates a new OptionBuilder.
+		 *
 		 * @param key The key for the config option
 		 */
 		OptionBuilder(String key) {
@@ -179,7 +182,7 @@ public class ConfigOptions {
 		 * one of the {@code noDefaultValue} methods.
 		 *
 		 * @param value The default value for the config option
-		 * @param <T> The type of the default value.
+		 * @param <T>   The type of the default value.
 		 * @return The config option with the default value.
 		 * @deprecated define the type explicitly first with one of the intType(), stringType(), etc.
 		 */
@@ -312,6 +315,9 @@ public class ConfigOptions {
 
 	// ------------------------------------------------------------------------
 
-	/** Not intended to be instantiated. */
-	private ConfigOptions() {}
+	/**
+	 * Not intended to be instantiated.
+	 */
+	private ConfigOptions() {
+	}
 }

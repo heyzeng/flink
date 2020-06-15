@@ -39,7 +39,6 @@ public interface CheckpointableInputFormat<S extends InputSplit, T extends Seria
 	 * In the case of a simple text file, the state can correspond to the last read offset in the split.
 	 *
 	 * @return The state of the channel.
-	 *
 	 * @throws IOException Thrown if the creation of the state object failed.
 	 */
 	T getCurrentState() throws IOException;
@@ -48,14 +47,14 @@ public interface CheckpointableInputFormat<S extends InputSplit, T extends Seria
 	 * Restores the state of a parallel instance reading from an {@link InputFormat}.
 	 * This is necessary when recovering from a task failure. When this method is called,
 	 * the input format it guaranteed to be configured.
-	 *
+	 * <p>
 	 * <p/>
 	 * <b>NOTE: </b> The caller has to make sure that the provided split is the one to whom
 	 * the state belongs.
 	 *
 	 * @param split The split to be opened.
 	 * @param state The state from which to start from. This can contain the offset,
-	 *                 but also other data, depending on the input format.
+	 *              but also other data, depending on the input format.
 	 */
 	void reopen(S split, T state) throws IOException;
 }

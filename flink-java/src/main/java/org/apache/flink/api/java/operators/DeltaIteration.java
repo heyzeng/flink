@@ -41,7 +41,6 @@ import java.util.Arrays;
  *
  * @param <ST> The data type of the solution set.
  * @param <WT> The data type of the workset (the feedback data set).
- *
  * @see DataSet#iterateDelta(DataSet, int, int...)
  * @see DataSet#iterateDelta(DataSet, int, int[])
  */
@@ -86,14 +85,13 @@ public class DeltaIteration<ST, WT> {
 	 *
 	 * @param solutionSetDelta The delta for the solution set. The delta will be merged into the solution set at the end of
 	 *                         each iteration.
-	 * @param newWorkset The new workset (feedback data set) that will be fed back to the next iteration.
+	 * @param newWorkset       The new workset (feedback data set) that will be fed back to the next iteration.
 	 * @return The DataSet that represents the result of the iteration, after the computation has terminated.
-	 *
 	 * @see DataSet#iterateDelta(DataSet, int, int...)
 	 */
 	public DataSet<ST> closeWith(DataSet<ST> solutionSetDelta, DataSet<WT> newWorkset) {
 		return new DeltaIterationResultSet<ST, WT>(initialSolutionSet.getExecutionEnvironment(),
-				initialSolutionSet.getType(), initialWorkset.getType(), this, solutionSetDelta, newWorkset, keys, maxIterations);
+			initialSolutionSet.getType(), initialWorkset.getType(), this, solutionSetDelta, newWorkset, keys, maxIterations);
 	}
 
 	/**
@@ -205,7 +203,7 @@ public class DeltaIteration<ST, WT> {
 	 * Sets the minimum and preferred resources for the iteration. This overrides the default resources.
 	 * The lower and upper resource limits will be considered in dynamic resource resize feature for future plan.
 	 *
-	 * @param minResources The minimum resources for the iteration.
+	 * @param minResources       The minimum resources for the iteration.
 	 * @param preferredResources The preferred resources for the iteration.
 	 * @return The iteration with set minimum and preferred resources.
 	 */
@@ -220,7 +218,7 @@ public class DeltaIteration<ST, WT> {
 
 	/**
 	 * Sets the resources for the iteration, and the minimum and preferred resources are the same by default.
-	 *	The lower and upper resource limits will be considered in dynamic resource resize feature for future plan.
+	 * The lower and upper resource limits will be considered in dynamic resource resize feature for future plan.
 	 *
 	 * @param resources The resources for the iteration.
 	 * @return The iteration with set minimum and preferred resources.
@@ -265,9 +263,8 @@ public class DeltaIteration<ST, WT> {
 	 * <p>Aggregators can be accessed inside a function via the
 	 * {@link org.apache.flink.api.common.functions.AbstractRichFunction#getIterationRuntimeContext()} method.
 	 *
-	 * @param name The name under which the aggregator is registered.
+	 * @param name       The name under which the aggregator is registered.
 	 * @param aggregator The aggregator class.
-	 *
 	 * @return The DeltaIteration itself, to allow chaining function calls.
 	 */
 	@PublicEvolving
@@ -284,15 +281,14 @@ public class DeltaIteration<ST, WT> {
 	 * in an iteration step and have to have a convergence criterion that signals termination as soon as the aggregate value
 	 * is below a certain threshold.
 	 *
-	 * @param name The name under which the aggregator is registered.
-	 * @param aggregator The aggregator class.
+	 * @param name             The name under which the aggregator is registered.
+	 * @param aggregator       The aggregator class.
 	 * @param convergenceCheck The convergence criterion.
-	 *
 	 * @return The DeltaIteration itself, to allow chaining function calls.
 	 */
 	@PublicEvolving
 	public <X extends Value> DeltaIteration<ST, WT> registerAggregationConvergenceCriterion(
-			String name, Aggregator<X> aggregator, ConvergenceCriterion<X> convergenceCheck) {
+		String name, Aggregator<X> aggregator, ConvergenceCriterion<X> convergenceCheck) {
 		this.aggregators.registerAggregationConvergenceCriterion(name, aggregator, convergenceCheck);
 		return this;
 	}
@@ -312,7 +308,6 @@ public class DeltaIteration<ST, WT> {
 	 * (objects on heap).
 	 *
 	 * @param solutionSetUnManaged True to keep the solution set in unmanaged memory, false to keep it in managed memory.
-	 *
 	 * @see #isSolutionSetUnManaged()
 	 */
 	public void setSolutionSetUnManaged(boolean solutionSetUnManaged) {
@@ -323,7 +318,6 @@ public class DeltaIteration<ST, WT> {
 	 * gets whether the solution set is in managed or unmanaged memory.
 	 *
 	 * @return True, if the solution set is in unmanaged memory (object heap), false if in managed memory.
-	 *
 	 * @see #setSolutionSetUnManaged(boolean)
 	 */
 	public boolean isSolutionSetUnManaged() {
@@ -338,7 +332,7 @@ public class DeltaIteration<ST, WT> {
 	 * @param <ST> The type of the elements in the solution set.
 	 */
 	@Public
-	public static class SolutionSetPlaceHolder<ST> extends DataSet<ST>{
+	public static class SolutionSetPlaceHolder<ST> extends DataSet<ST> {
 
 		private final DeltaIteration<ST, ?> deltaIteration;
 
@@ -361,7 +355,7 @@ public class DeltaIteration<ST, WT> {
 	 * @param <WT> The data type of the elements in the workset.
 	 */
 	@Public
-	public static class WorksetPlaceHolder<WT> extends DataSet<WT>{
+	public static class WorksetPlaceHolder<WT> extends DataSet<WT> {
 		private WorksetPlaceHolder(ExecutionEnvironment context, TypeInformation<WT> type) {
 			super(context, type);
 		}

@@ -59,11 +59,17 @@ public class StateTtlConfig implements Serializable {
 	 * This option value configures when to update last access timestamp which prolongs state TTL.
 	 */
 	public enum UpdateType {
-		/** TTL is disabled. State does not expire. */
+		/**
+		 * TTL is disabled. State does not expire.
+		 */
 		Disabled,
-		/** Last access timestamp is initialised when state is created and updated on every write operation. */
+		/**
+		 * Last access timestamp is initialised when state is created and updated on every write operation.
+		 */
 		OnCreateAndWrite,
-		/** The same as <code>OnCreateAndWrite</code> but also updated on read. */
+		/**
+		 * The same as <code>OnCreateAndWrite</code> but also updated on read.
+		 */
 		OnReadAndWrite
 	}
 
@@ -71,9 +77,13 @@ public class StateTtlConfig implements Serializable {
 	 * This option configures whether expired user value can be returned or not.
 	 */
 	public enum StateVisibility {
-		/** Return expired user value if it is not cleaned up yet. */
+		/**
+		 * Return expired user value if it is not cleaned up yet.
+		 */
 		ReturnExpiredIfNotCleanedUp,
-		/** Never return expired user value. */
+		/**
+		 * Never return expired user value.
+		 */
 		NeverReturnExpired
 	}
 
@@ -81,7 +91,9 @@ public class StateTtlConfig implements Serializable {
 	 * This option configures time scale to use for ttl.
 	 */
 	public enum TtlTimeCharacteristic {
-		/** Processing time, see also <code>org.apache.flink.streaming.api.TimeCharacteristic.ProcessingTime</code>. */
+		/**
+		 * Processing time, see also <code>org.apache.flink.streaming.api.TimeCharacteristic.ProcessingTime</code>.
+		 */
 		ProcessingTime
 	}
 
@@ -224,7 +236,9 @@ public class StateTtlConfig implements Serializable {
 			return setTtlTimeCharacteristic(ProcessingTime);
 		}
 
-		/** Cleanup expired state in full snapshot on checkpoint. */
+		/**
+		 * Cleanup expired state in full snapshot on checkpoint.
+		 */
 		@Nonnull
 		public Builder cleanupFullSnapshot() {
 			strategies.put(CleanupStrategies.Strategies.FULL_STATE_SCAN_SNAPSHOT, EMPTY_STRATEGY);
@@ -255,7 +269,7 @@ public class StateTtlConfig implements Serializable {
 		 * while iterating because of its specific implementation which does not support concurrent modifications.
 		 * Enabling of this feature will increase memory consumption then. Asynchronous snapshotting does not have this problem.
 		 *
-		 * @param cleanupSize max number of keys pulled from queue for clean up upon state touch for any key
+		 * @param cleanupSize              max number of keys pulled from queue for clean up upon state touch for any key
 		 * @param runCleanupForEveryRecord run incremental cleanup per each processed record
 		 */
 		@Nonnull
@@ -338,6 +352,7 @@ public class StateTtlConfig implements Serializable {
 
 		/**
 		 * Sets the ttl time.
+		 *
 		 * @param ttl The ttl time.
 		 */
 		@Nonnull
@@ -373,14 +388,18 @@ public class StateTtlConfig implements Serializable {
 
 		private final EnumMap<Strategies, CleanupStrategy> strategies;
 
-		/** Fixed strategies ordinals in {@code strategies} config field. */
+		/**
+		 * Fixed strategies ordinals in {@code strategies} config field.
+		 */
 		enum Strategies {
 			FULL_STATE_SCAN_SNAPSHOT,
 			INCREMENTAL_CLEANUP,
 			ROCKSDB_COMPACTION_FILTER
 		}
 
-		/** Base interface for cleanup strategies configurations. */
+		/**
+		 * Base interface for cleanup strategies configurations.
+		 */
 		interface CleanupStrategy extends Serializable {
 
 		}
@@ -419,16 +438,22 @@ public class StateTtlConfig implements Serializable {
 		}
 	}
 
-	/** Configuration of cleanup strategy while taking the full snapshot.  */
+	/**
+	 * Configuration of cleanup strategy while taking the full snapshot.
+	 */
 	public static class IncrementalCleanupStrategy implements CleanupStrategies.CleanupStrategy {
 		private static final long serialVersionUID = 3109278696501988780L;
 
 		static final IncrementalCleanupStrategy DEFAULT_INCREMENTAL_CLEANUP_STRATEGY = new IncrementalCleanupStrategy(5, false);
 
-		/** Max number of keys pulled from queue for clean up upon state touch for any key. */
+		/**
+		 * Max number of keys pulled from queue for clean up upon state touch for any key.
+		 */
 		private final int cleanupSize;
 
-		/** Whether to run incremental cleanup per each processed record. */
+		/**
+		 * Whether to run incremental cleanup per each processed record.
+		 */
 		private final boolean runCleanupForEveryRecord;
 
 		private IncrementalCleanupStrategy(
@@ -449,14 +474,18 @@ public class StateTtlConfig implements Serializable {
 		}
 	}
 
-	/** Configuration of cleanup strategy using custom compaction filter in RocksDB.  */
+	/**
+	 * Configuration of cleanup strategy using custom compaction filter in RocksDB.
+	 */
 	public static class RocksdbCompactFilterCleanupStrategy implements CleanupStrategies.CleanupStrategy {
 		private static final long serialVersionUID = 3109278796506988980L;
 
 		static final RocksdbCompactFilterCleanupStrategy DEFAULT_ROCKSDB_COMPACT_FILTER_CLEANUP_STRATEGY =
 			new RocksdbCompactFilterCleanupStrategy(1000L);
 
-		/** Number of state entries to process by compaction filter before updating current timestamp. */
+		/**
+		 * Number of state entries to process by compaction filter before updating current timestamp.
+		 */
 		private final long queryTimeAfterNumEntries;
 
 		private RocksdbCompactFilterCleanupStrategy(long queryTimeAfterNumEntries) {

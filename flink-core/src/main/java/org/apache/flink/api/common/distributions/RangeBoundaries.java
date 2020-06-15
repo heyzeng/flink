@@ -32,7 +32,7 @@ public interface RangeBoundaries<T> extends Serializable {
 	/**
 	 * Get the range index of record.
 	 *
-	 * @param record     The input record.
+	 * @param record The input record.
 	 * @return The range index.
 	 */
 	int getRangeIndex(T record);

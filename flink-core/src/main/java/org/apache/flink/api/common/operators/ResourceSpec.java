@@ -70,30 +70,38 @@ public final class ResourceSpec implements Serializable {
 	 */
 	public static final ResourceSpec ZERO = ResourceSpec.newBuilder(0.0, 0).build();
 
-	/** How many cpu cores are needed. Can be null only if it is unknown. */
+	/**
+	 * How many cpu cores are needed. Can be null only if it is unknown.
+	 */
 	@Nullable
 	private final Resource cpuCores;
 
-	/** How much task heap memory is needed. */
+	/**
+	 * How much task heap memory is needed.
+	 */
 	@Nullable // can be null only for UNKNOWN
 	private final MemorySize taskHeapMemory;
 
-	/** How much task off-heap memory is needed. */
+	/**
+	 * How much task off-heap memory is needed.
+	 */
 	@Nullable // can be null only for UNKNOWN
 	private final MemorySize taskOffHeapMemory;
 
-	/** How much managed memory is needed. */
+	/**
+	 * How much managed memory is needed.
+	 */
 	@Nullable // can be null only for UNKNOWN
 	private final MemorySize managedMemory;
 
 	private final Map<String, Resource> extendedResources = new HashMap<>(1);
 
 	private ResourceSpec(
-			final Resource cpuCores,
-			final MemorySize taskHeapMemory,
-			final MemorySize taskOffHeapMemory,
-			final MemorySize managedMemory,
-			final Resource... extendedResources) {
+		final Resource cpuCores,
+		final MemorySize taskHeapMemory,
+		final MemorySize taskOffHeapMemory,
+		final MemorySize managedMemory,
+		final Resource... extendedResources) {
 
 		checkNotNull(cpuCores);
 		checkArgument(cpuCores instanceof CPUResource, "cpuCores must be CPUResource");

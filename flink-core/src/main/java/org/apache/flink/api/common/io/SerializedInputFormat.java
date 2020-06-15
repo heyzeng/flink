@@ -26,7 +26,7 @@ import org.apache.flink.core.memory.DataInputView;
 
 /**
  * Reads elements by deserializing them with their regular serialization/deserialization functionality.
- * 
+ *
  * @see SerializedOutputFormat
  */
 @Public

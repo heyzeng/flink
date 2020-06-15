@@ -134,9 +134,8 @@ public interface AggregateFunction<IN, ACC, OUT> extends Function, Serializable 
 	 *
 	 * <p>For efficiency, the input accumulator may be modified and returned.
 	 *
-	 * @param value The value to add
+	 * @param value       The value to add
 	 * @param accumulator The accumulator to add the value to
-	 *
 	 * @return The accumulator with the updated state
 	 */
 	ACC add(IN value, ACC accumulator);
@@ -158,7 +157,6 @@ public interface AggregateFunction<IN, ACC, OUT> extends Function, Serializable 
 	 *
 	 * @param a An accumulator to merge
 	 * @param b Another accumulator to merge
-	 *
 	 * @return The accumulator with the merged state
 	 */
 	ACC merge(ACC a, ACC b);

@@ -44,8 +44,8 @@ import org.apache.flink.api.common.typeinfo.TypeInformation
  */
 @Internal
 private[flink] abstract class UnfinishedKeyPairOperation[L, R, O](
-    private[flink] val leftInput: DataSet[L],
-    private[flink] val rightInput: DataSet[R]) {
+                                                                   private[flink] val leftInput: DataSet[L],
+                                                                   private[flink] val rightInput: DataSet[R]) {
 
   private[flink] def finish(leftKey: Keys[L], rightKey: Keys[R]): O
 
@@ -85,6 +85,7 @@ private[flink] abstract class UnfinishedKeyPairOperation[L, R, O](
     val keyType = implicitly[TypeInformation[K]]
     val keyExtractor = new KeySelector[L, K] {
       val cleanFun = leftInput.clean(fun)
+
       def getKey(in: L) = cleanFun(in)
     }
     val leftKey = new Keys.SelectorFunctionKeys[L, K](keyExtractor, leftInput.getType, keyType)
@@ -107,7 +108,7 @@ private[flink] abstract class UnfinishedKeyPairOperation[L, R, O](
 
 @Internal
 private[flink] class HalfUnfinishedKeyPairOperation[L, R, O](
-    unfinished: UnfinishedKeyPairOperation[L, R, O], leftKey: Keys[L]) {
+                                                              unfinished: UnfinishedKeyPairOperation[L, R, O], leftKey: Keys[L]) {
 
   /**
    * Specify the key fields for the right side of the key based operation. This returns
@@ -147,6 +148,7 @@ private[flink] class HalfUnfinishedKeyPairOperation[L, R, O](
     val keyType = implicitly[TypeInformation[K]]
     val keyExtractor = new KeySelector[R, K] {
       val cleanFun = unfinished.leftInput.clean(fun)
+
       def getKey(in: R) = cleanFun(in)
     }
     val rightKey = new Keys.SelectorFunctionKeys[R, K](
@@ -172,7 +174,7 @@ private[flink] class HalfUnfinishedKeyPairOperation[L, R, O](
       unfinished.leftInput.clean(fun),
       unfinished.rightInput.getType,
       keyType)
-    
+
     if (!leftKey.areCompatible(rightKey)) {
       throw new InvalidProgramException("The types of the key fields do not match. Left: " +
         leftKey + " Right: " + rightKey)

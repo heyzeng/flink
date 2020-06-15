@@ -28,7 +28,7 @@ public class ListTypeInfoTest extends TypeInformationTestBase<ListTypeInfo<?>> {
 
 	@Override
 	protected ListTypeInfo<?>[] getTestData() {
-		return new ListTypeInfo<?>[] {
+		return new ListTypeInfo<?>[]{
 			new ListTypeInfo<>(BasicTypeInfo.STRING_TYPE_INFO),
 			new ListTypeInfo<>(BasicTypeInfo.BOOLEAN_TYPE_INFO),
 			new ListTypeInfo<>(Object.class),

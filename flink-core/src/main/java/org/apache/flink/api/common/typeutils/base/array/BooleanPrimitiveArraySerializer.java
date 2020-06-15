@@ -31,10 +31,10 @@ import org.apache.flink.core.memory.DataOutputView;
  * A serializer for boolean arrays.
  */
 @Internal
-public final class BooleanPrimitiveArraySerializer extends TypeSerializerSingleton<boolean[]>{
+public final class BooleanPrimitiveArraySerializer extends TypeSerializerSingleton<boolean[]> {
 
 	private static final long serialVersionUID = 1L;
-	
+
 	private static final boolean[] EMPTY = new boolean[0];
 
 	public static final BooleanPrimitiveArraySerializer INSTANCE = new BooleanPrimitiveArraySerializer();
@@ -43,7 +43,7 @@ public final class BooleanPrimitiveArraySerializer extends TypeSerializerSinglet
 	public boolean isImmutableType() {
 		return false;
 	}
-	
+
 	@Override
 	public boolean[] createInstance() {
 		return EMPTY;
@@ -72,7 +72,7 @@ public final class BooleanPrimitiveArraySerializer extends TypeSerializerSinglet
 		if (record == null) {
 			throw new IllegalArgumentException("The record must not be null.");
 		}
-		
+
 		final int len = record.length;
 		target.writeInt(len);
 		for (int i = 0; i < len; i++) {
@@ -85,14 +85,14 @@ public final class BooleanPrimitiveArraySerializer extends TypeSerializerSinglet
 	public boolean[] deserialize(DataInputView source) throws IOException {
 		final int len = source.readInt();
 		boolean[] result = new boolean[len];
-		
+
 		for (int i = 0; i < len; i++) {
 			result[i] = source.readBoolean();
 		}
-		
+
 		return result;
 	}
-	
+
 	@Override
 	public boolean[] deserialize(boolean[] reuse, DataInputView source) throws IOException {
 		return deserialize(source);

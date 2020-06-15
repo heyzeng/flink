@@ -30,9 +30,8 @@ import org.apache.flink.api.java.DataSet;
  * This operator represents the application of a "map" function on a data set, and the
  * result data set produced by the function.
  *
- * @param <IN> The type of the data set consumed by the operator.
+ * @param <IN>  The type of the data set consumed by the operator.
  * @param <OUT> The type of the data set created by the operator.
- *
  * @see org.apache.flink.api.common.functions.MapFunction
  */
 @Public
@@ -60,7 +59,7 @@ public class MapOperator<IN, OUT> extends SingleInputUdfOperator<IN, OUT, MapOpe
 		String name = getName() != null ? getName() : "Map at " + defaultName;
 		// create operator
 		MapOperatorBase<IN, OUT, MapFunction<IN, OUT>> po = new MapOperatorBase<IN, OUT, MapFunction<IN, OUT>>(function,
-				new UnaryOperatorInformation<IN, OUT>(getInputType(), getResultType()), name);
+			new UnaryOperatorInformation<IN, OUT>(getInputType(), getResultType()), name);
 		// set input
 		po.setInput(input);
 		// set parallelism

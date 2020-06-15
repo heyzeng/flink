@@ -35,7 +35,9 @@ public final class StringSerializer extends TypeSerializerSingleton<String> {
 
 	private static final long serialVersionUID = 1L;
 
-	/** Sharable instance of the StringSerializer. */
+	/**
+	 * Sharable instance of the StringSerializer.
+	 */
 	public static final StringSerializer INSTANCE = new StringSerializer();
 
 	private static final String EMPTY = "";

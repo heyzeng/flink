@@ -24,7 +24,7 @@ import java.io.Serializable;
 
 @Internal
 public class GenericPairComparator<T1, T2> extends TypePairComparator<T1, T2>
-		implements Serializable {
+	implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
@@ -35,7 +35,7 @@ public class GenericPairComparator<T1, T2> extends TypePairComparator<T1, T2>
 	private final TypeComparator<Object>[] comparators2;
 
 	private final Object[] referenceKeyFields;
-	
+
 	private final Object[] candidateKeyFields;
 
 	@SuppressWarnings("unchecked")
@@ -45,13 +45,13 @@ public class GenericPairComparator<T1, T2> extends TypePairComparator<T1, T2>
 		this.comparators1 = comparator1.getFlatComparators();
 		this.comparators2 = comparator2.getFlatComparators();
 
-		if(comparators1.length != comparators2.length) {
+		if (comparators1.length != comparators2.length) {
 			throw new IllegalArgumentException("Number of key fields and comparators differ.");
 		}
 
 		int numKeys = comparators1.length;
-		
-		for(int i = 0; i < numKeys; i++) {
+
+		for (int i = 0; i < numKeys; i++) {
 			this.comparators1[i] = comparators1[i].duplicate();
 			this.comparators2[i] = comparators2[i].duplicate();
 		}
@@ -59,7 +59,7 @@ public class GenericPairComparator<T1, T2> extends TypePairComparator<T1, T2>
 		this.referenceKeyFields = new Object[numKeys];
 		this.candidateKeyFields = new Object[numKeys];
 	}
-	
+
 	@Override
 	public void setReference(T1 reference) {
 		comparator1.extractKeys(reference, referenceKeyFields, 0);
@@ -83,7 +83,7 @@ public class GenericPairComparator<T1, T2> extends TypePairComparator<T1, T2>
 			// We reverse ordering here because our "compareToReference" does work in a mirrored
 			// way compared to Comparable.compareTo
 			int res = this.comparators1[i].compare(candidateKeyFields[i], referenceKeyFields[i]);
-			if(res != 0) {
+			if (res != 0) {
 				return res;
 			}
 		}

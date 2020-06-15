@@ -53,8 +53,8 @@ public class MapStateDescriptor<UK, UV> extends StateDescriptor<MapState<UK, UV>
 	/**
 	 * Create a new {@code MapStateDescriptor} with the given name and the given type serializers.
 	 *
-	 * @param name The name of the {@code MapStateDescriptor}.
-	 * @param keySerializer The type serializer for the keys in the state.
+	 * @param name            The name of the {@code MapStateDescriptor}.
+	 * @param keySerializer   The type serializer for the keys in the state.
 	 * @param valueSerializer The type serializer for the values in the state.
 	 */
 	public MapStateDescriptor(String name, TypeSerializer<UK> keySerializer, TypeSerializer<UV> valueSerializer) {
@@ -64,8 +64,8 @@ public class MapStateDescriptor<UK, UV> extends StateDescriptor<MapState<UK, UV>
 	/**
 	 * Create a new {@code MapStateDescriptor} with the given name and the given type information.
 	 *
-	 * @param name The name of the {@code MapStateDescriptor}.
-	 * @param keyTypeInfo The type information for the keys in the state.
+	 * @param name          The name of the {@code MapStateDescriptor}.
+	 * @param keyTypeInfo   The type information for the keys in the state.
 	 * @param valueTypeInfo The type information for the values in the state.
 	 */
 	public MapStateDescriptor(String name, TypeInformation<UK> keyTypeInfo, TypeInformation<UV> valueTypeInfo) {
@@ -78,8 +78,8 @@ public class MapStateDescriptor<UK, UV> extends StateDescriptor<MapState<UK, UV>
 	 * <p>If this constructor fails (because it is not possible to describe the type via a class),
 	 * consider using the {@link #MapStateDescriptor(String, TypeInformation, TypeInformation)} constructor.
 	 *
-	 * @param name The name of the {@code MapStateDescriptor}.
-	 * @param keyClass The class of the type of keys in the state.
+	 * @param name       The name of the {@code MapStateDescriptor}.
+	 * @param keyClass   The class of the type of keys in the state.
 	 * @param valueClass The class of the type of values in the state.
 	 */
 	public MapStateDescriptor(String name, Class<UK> keyClass, Class<UV> valueClass) {

@@ -42,7 +42,7 @@ public class LongParser extends FieldParser<Long> {
 		boolean neg = false;
 
 		final int delimLimit = limit - delimiter.length + 1;
-		
+
 		if (bytes[startPos] == '-') {
 			neg = true;
 			startPos++;
@@ -76,7 +76,7 @@ public class LongParser extends FieldParser<Long> {
 				if (neg && val == Long.MIN_VALUE) {
 					this.result = Long.MIN_VALUE;
 
-					if (i+1 >= limit) {
+					if (i + 1 >= limit) {
 						return limit;
 					} else if (i + 1 < delimLimit && delimiterNext(bytes, i + 1, delimiter)) {
 						return i + 1 + delimiter.length;
@@ -84,8 +84,7 @@ public class LongParser extends FieldParser<Long> {
 						setErrorState(ParseErrorState.NUMERIC_VALUE_OVERFLOW_UNDERFLOW);
 						return -1;
 					}
-				}
-				else {
+				} else {
 					setErrorState(ParseErrorState.NUMERIC_VALUE_OVERFLOW_UNDERFLOW);
 					return -1;
 				}
@@ -110,12 +109,10 @@ public class LongParser extends FieldParser<Long> {
 	 * Static utility to parse a field of type long from a byte sequence that represents text characters
 	 * (such as when read from a file stream).
 	 *
-	 * @param bytes The bytes containing the text data that should be parsed.
+	 * @param bytes    The bytes containing the text data that should be parsed.
 	 * @param startPos The offset to start the parsing.
-	 * @param length The length of the byte sequence (counting from the offset).
-	 *
+	 * @param length   The length of the byte sequence (counting from the offset).
 	 * @return The parsed value.
-	 *
 	 * @throws NumberFormatException Thrown when the value cannot be parsed because the text represents not a correct number.
 	 */
 	public static final long parseField(byte[] bytes, int startPos, int length) {
@@ -126,13 +123,11 @@ public class LongParser extends FieldParser<Long> {
 	 * Static utility to parse a field of type long from a byte sequence that represents text characters
 	 * (such as when read from a file stream).
 	 *
-	 * @param bytes The bytes containing the text data that should be parsed.
-	 * @param startPos The offset to start the parsing.
-	 * @param length The length of the byte sequence (counting from the offset).
+	 * @param bytes     The bytes containing the text data that should be parsed.
+	 * @param startPos  The offset to start the parsing.
+	 * @param length    The length of the byte sequence (counting from the offset).
 	 * @param delimiter The delimiter that terminates the field.
-	 *
 	 * @return The parsed value.
-	 *
 	 * @throws NumberFormatException Thrown when the value cannot be parsed because the text represents not a correct number.
 	 */
 	public static final long parseField(byte[] bytes, int startPos, int length, char delimiter) {
@@ -171,8 +166,7 @@ public class LongParser extends FieldParser<Long> {
 					} else {
 						throw new NumberFormatException("value overflow");
 					}
-				}
-				else {
+				} else {
 					throw new NumberFormatException("value overflow");
 				}
 			}

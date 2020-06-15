@@ -62,15 +62,15 @@ public class MesosResourceManagerFactory extends ActiveResourceManagerFactory<Re
 
 	@Override
 	public ResourceManager<RegisteredMesosWorkerNode> createActiveResourceManager(
-			Configuration configuration,
-			ResourceID resourceId,
-			RpcService rpcService,
-			HighAvailabilityServices highAvailabilityServices,
-			HeartbeatServices heartbeatServices,
-			FatalErrorHandler fatalErrorHandler,
-			ClusterInformation clusterInformation,
-			@Nullable String webInterfaceUrl,
-			ResourceManagerMetricGroup resourceManagerMetricGroup) throws Exception {
+		Configuration configuration,
+		ResourceID resourceId,
+		RpcService rpcService,
+		HighAvailabilityServices highAvailabilityServices,
+		HeartbeatServices heartbeatServices,
+		FatalErrorHandler fatalErrorHandler,
+		ClusterInformation clusterInformation,
+		@Nullable String webInterfaceUrl,
+		ResourceManagerMetricGroup resourceManagerMetricGroup) throws Exception {
 		final ResourceManagerRuntimeServicesConfiguration rmServicesConfiguration = ResourceManagerRuntimeServicesConfiguration.fromConfiguration(configuration);
 		final ResourceManagerRuntimeServices rmRuntimeServices = ResourceManagerRuntimeServices.fromConfiguration(
 			rmServicesConfiguration,

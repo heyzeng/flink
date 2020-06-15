@@ -51,9 +51,9 @@ public class SqlTableColumn extends SqlCall {
 	private SqlCharStringLiteral comment;
 
 	public SqlTableColumn(SqlIdentifier name,
-			SqlDataTypeSpec type,
-			SqlCharStringLiteral comment,
-			SqlParserPos pos) {
+						  SqlDataTypeSpec type,
+						  SqlCharStringLiteral comment,
+						  SqlParserPos pos) {
 		super(pos);
 		this.name = requireNonNull(name, "Column name should not be null");
 		this.type = requireNonNull(type, "Column type should not be null");

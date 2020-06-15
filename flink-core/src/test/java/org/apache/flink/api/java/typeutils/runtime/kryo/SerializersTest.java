@@ -36,24 +36,27 @@ public class SerializersTest {
 	public static class Node {
 		private Node parent;
 	}
-	
+
 	public static class FromNested {
 		Node recurseMe;
 	}
-	
-	public static class FromGeneric1 {}
-	public static class FromGeneric2 {}
-	
+
+	public static class FromGeneric1 {
+	}
+
+	public static class FromGeneric2 {
+	}
+
 	public static class Nested1 {
 		private FromNested fromNested;
 		private Path yodaInterval;
 	}
 
 	public static class ClassWithNested {
-		
+
 		Nested1 nested;
 		int ab;
-		
+
 		ArrayList<FromGeneric1> addGenType;
 		FromGeneric2[] genericArrayType;
 	}
@@ -62,20 +65,20 @@ public class SerializersTest {
 	public void testTypeRegistration() {
 		ExecutionConfig conf = new ExecutionConfig();
 		Serializers.recursivelyRegisterType(ClassWithNested.class, conf, new HashSet<Class<?>>());
-		
+
 		KryoSerializer<String> kryo = new KryoSerializer<>(String.class, conf); // we create Kryo from another type.
 
 		Assert.assertTrue(kryo.getKryo().getRegistration(FromNested.class).getId() > 0);
 		Assert.assertTrue(kryo.getKryo().getRegistration(ClassWithNested.class).getId() > 0);
 		Assert.assertTrue(kryo.getKryo().getRegistration(Path.class).getId() > 0);
-		
+
 		// check if the generic type from one field is also registered (its very likely that
 		// generic types are also used as fields somewhere.
 		Assert.assertTrue(kryo.getKryo().getRegistration(FromGeneric1.class).getId() > 0);
 		Assert.assertTrue(kryo.getKryo().getRegistration(FromGeneric2.class).getId() > 0);
 		Assert.assertTrue(kryo.getKryo().getRegistration(Node.class).getId() > 0);
-		
-		
+
+
 		// register again and make sure classes are still registered
 		ExecutionConfig conf2 = new ExecutionConfig();
 		Serializers.recursivelyRegisterType(ClassWithNested.class, conf2, new HashSet<Class<?>>());

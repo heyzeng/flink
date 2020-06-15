@@ -31,7 +31,7 @@ import static org.apache.flink.util.Preconditions.checkNotNull;
  * <p>The type internally stored in the state is the type of the {@code Accumulator} of the
  * {@code AggregateFunction}.
  *
- * @param <IN> The type of the values that are added to the state.
+ * @param <IN>  The type of the values that are added to the state.
  * @param <ACC> The type of the accumulator (intermediate aggregation state).
  * @param <OUT> The type of the values that are returned from the state.
  */
@@ -39,7 +39,9 @@ import static org.apache.flink.util.Preconditions.checkNotNull;
 public class AggregatingStateDescriptor<IN, ACC, OUT> extends StateDescriptor<AggregatingState<IN, OUT>, ACC> {
 	private static final long serialVersionUID = 1L;
 
-	/** The aggregation function for the state. */
+	/**
+	 * The aggregation function for the state.
+	 */
 	private final AggregateFunction<IN, ACC, OUT> aggFunction;
 
 	/**
@@ -48,14 +50,14 @@ public class AggregatingStateDescriptor<IN, ACC, OUT> extends StateDescriptor<Ag
 	 * <p>If this constructor fails (because it is not possible to describe the type via a class),
 	 * consider using the {@link #AggregatingStateDescriptor(String, AggregateFunction, TypeInformation)} constructor.
 	 *
-	 * @param name The (unique) name for the state.
+	 * @param name        The (unique) name for the state.
 	 * @param aggFunction The {@code AggregateFunction} used to aggregate the state.
-	 * @param stateType The type of the accumulator. The accumulator is stored in the state.
+	 * @param stateType   The type of the accumulator. The accumulator is stored in the state.
 	 */
 	public AggregatingStateDescriptor(
-			String name,
-			AggregateFunction<IN, ACC, OUT> aggFunction,
-			Class<ACC> stateType) {
+		String name,
+		AggregateFunction<IN, ACC, OUT> aggFunction,
+		Class<ACC> stateType) {
 
 		super(name, stateType, null);
 		this.aggFunction = checkNotNull(aggFunction);
@@ -64,14 +66,14 @@ public class AggregatingStateDescriptor<IN, ACC, OUT> extends StateDescriptor<Ag
 	/**
 	 * Creates a new {@code ReducingStateDescriptor} with the given name and default value.
 	 *
-	 * @param name The (unique) name for the state.
+	 * @param name        The (unique) name for the state.
 	 * @param aggFunction The {@code AggregateFunction} used to aggregate the state.
-	 * @param stateType The type of the accumulator. The accumulator is stored in the state.
+	 * @param stateType   The type of the accumulator. The accumulator is stored in the state.
 	 */
 	public AggregatingStateDescriptor(
-			String name,
-			AggregateFunction<IN, ACC, OUT> aggFunction,
-			TypeInformation<ACC> stateType) {
+		String name,
+		AggregateFunction<IN, ACC, OUT> aggFunction,
+		TypeInformation<ACC> stateType) {
 
 		super(name, stateType, null);
 		this.aggFunction = checkNotNull(aggFunction);
@@ -80,14 +82,14 @@ public class AggregatingStateDescriptor<IN, ACC, OUT> extends StateDescriptor<Ag
 	/**
 	 * Creates a new {@code ValueStateDescriptor} with the given name and default value.
 	 *
-	 * @param name The (unique) name for the state.
-	 * @param aggFunction The {@code AggregateFunction} used to aggregate the state.
+	 * @param name           The (unique) name for the state.
+	 * @param aggFunction    The {@code AggregateFunction} used to aggregate the state.
 	 * @param typeSerializer The serializer for the accumulator. The accumulator is stored in the state.
 	 */
 	public AggregatingStateDescriptor(
-			String name,
-			AggregateFunction<IN, ACC, OUT> aggFunction,
-			TypeSerializer<ACC> typeSerializer) {
+		String name,
+		AggregateFunction<IN, ACC, OUT> aggFunction,
+		TypeSerializer<ACC> typeSerializer) {
 
 		super(name, typeSerializer, null);
 		this.aggFunction = checkNotNull(aggFunction);

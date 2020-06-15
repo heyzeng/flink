@@ -34,7 +34,7 @@ import static org.apache.flink.util.Preconditions.checkArgument;
 public class ObjectArrayTypeInfo<T, C> extends TypeInformation<T> {
 
 	private static final long serialVersionUID = 1L;
-	
+
 	private final Class<T> arrayType;
 	private final TypeInformation<C> componentInfo;
 
@@ -105,7 +105,7 @@ public class ObjectArrayTypeInfo<T, C> extends TypeInformation<T> {
 	public boolean equals(Object obj) {
 		if (obj instanceof ObjectArrayTypeInfo) {
 			@SuppressWarnings("unchecked")
-			ObjectArrayTypeInfo<T, C> objectArrayTypeInfo = (ObjectArrayTypeInfo<T, C>)obj;
+			ObjectArrayTypeInfo<T, C> objectArrayTypeInfo = (ObjectArrayTypeInfo<T, C>) obj;
 
 			return objectArrayTypeInfo.canEqual(this) &&
 				arrayType == objectArrayTypeInfo.arrayType &&
@@ -150,7 +150,7 @@ public class ObjectArrayTypeInfo<T, C> extends TypeInformation<T> {
 		checkNotNull(componentInfo);
 
 		return new ObjectArrayTypeInfo<T, C>(
-			(Class<T>)Array.newInstance(componentInfo.getTypeClass(), 0).getClass(),
+			(Class<T>) Array.newInstance(componentInfo.getTypeClass(), 0).getClass(),
 			componentInfo);
 	}
 }

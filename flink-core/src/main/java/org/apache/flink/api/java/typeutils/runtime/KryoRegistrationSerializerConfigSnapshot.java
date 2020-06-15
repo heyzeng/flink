@@ -55,15 +55,20 @@ public abstract class KryoRegistrationSerializerConfigSnapshot<T> extends Generi
 
 	private static final Logger LOG = LoggerFactory.getLogger(KryoRegistrationSerializerConfigSnapshot.class);
 
-	/** Map of class tag to the registration, with ordering. */
+	/**
+	 * Map of class tag to the registration, with ordering.
+	 */
 	private LinkedHashMap<String, KryoRegistration> kryoRegistrations;
 
-	/** This empty nullary constructor is required for deserializing the configuration. */
-	public KryoRegistrationSerializerConfigSnapshot() {}
+	/**
+	 * This empty nullary constructor is required for deserializing the configuration.
+	 */
+	public KryoRegistrationSerializerConfigSnapshot() {
+	}
 
 	public KryoRegistrationSerializerConfigSnapshot(
-			Class<T> typeClass,
-			LinkedHashMap<String, KryoRegistration> kryoRegistrations) {
+		Class<T> typeClass,
+		LinkedHashMap<String, KryoRegistration> kryoRegistrations) {
 
 		super(typeClass);
 
@@ -141,7 +146,7 @@ public abstract class KryoRegistrationSerializerConfigSnapshot<T> extends Generi
 				default:
 					// this should not happen; adding as a guard for the future
 					throw new IllegalStateException(
-							"Unrecognized Kryo registration serializer definition type: " + serializerDefinitionType);
+						"Unrecognized Kryo registration serializer definition type: " + serializerDefinitionType);
 			}
 		}
 
@@ -176,8 +181,8 @@ public abstract class KryoRegistrationSerializerConfigSnapshot<T> extends Generi
 						serializerClass = Class.forName(serializerClassname, true, userCodeClassLoader);
 					} catch (ClassNotFoundException e) {
 						LOG.warn("Cannot find registered Kryo serializer class for class " + registeredClassname +
-								" in classpath; using a dummy Kryo serializer that should be replaced as soon as" +
-								" a new Kryo serializer for the class is present", e);
+							" in classpath; using a dummy Kryo serializer that should be replaced as soon as" +
+							" a new Kryo serializer for the class is present", e);
 
 						serializerClass = DummyKryoSerializerClass.class;
 					}
@@ -192,14 +197,14 @@ public abstract class KryoRegistrationSerializerConfigSnapshot<T> extends Generi
 						serializerInstance = InstantiationUtil.deserializeObject(inViewWrapper, userCodeClassLoader);
 					} catch (ClassNotFoundException e) {
 						LOG.warn("Cannot find registered Kryo serializer class for class " + registeredClassname +
-								" in classpath; using a dummy Kryo serializer that should be replaced as soon as" +
-								" a new Kryo serializer for the class is present", e);
+							" in classpath; using a dummy Kryo serializer that should be replaced as soon as" +
+							" a new Kryo serializer for the class is present", e);
 
 						serializerInstance = new ExecutionConfig.SerializableSerializer<>(new DummyKryoSerializerClass<RC>());
 					} catch (InvalidClassException e) {
 						LOG.warn("The registered Kryo serializer class for class " + registeredClassname +
-								" has changed and is no longer valid; using a dummy Kryo serializer that should be replaced" +
-								" as soon as a new Kryo serializer for the class is present.", e);
+							" has changed and is no longer valid; using a dummy Kryo serializer that should be replaced" +
+							" as soon as a new Kryo serializer for the class is present.", e);
 
 						serializerInstance = new ExecutionConfig.SerializableSerializer<>(new DummyKryoSerializerClass<RC>());
 					}
@@ -210,7 +215,7 @@ public abstract class KryoRegistrationSerializerConfigSnapshot<T> extends Generi
 				default:
 					// this should not happen; adding as a guard for the future
 					throw new IllegalStateException(
-							"Unrecognized Kryo registration serializer definition type: " + serializerDefinitionType);
+						"Unrecognized Kryo registration serializer definition type: " + serializerDefinitionType);
 			}
 		}
 	}
@@ -218,7 +223,8 @@ public abstract class KryoRegistrationSerializerConfigSnapshot<T> extends Generi
 	/**
 	 * Placeholder dummy for a previously registered class that can no longer be found in classpath on restore.
 	 */
-	public static class DummyRegisteredClass implements Serializable {}
+	public static class DummyRegisteredClass implements Serializable {
+	}
 
 	/**
 	 * Placeholder dummy for a previously registered Kryo serializer that is no longer valid or in classpath on restore.
@@ -230,22 +236,22 @@ public abstract class KryoRegistrationSerializerConfigSnapshot<T> extends Generi
 		@Override
 		public void write(Kryo kryo, Output output, Object o) {
 			throw new UnsupportedOperationException(
-					"This exception indicates that you're trying to write a data type" +
-						" that no longer has a valid Kryo serializer registered for it.");
+				"This exception indicates that you're trying to write a data type" +
+					" that no longer has a valid Kryo serializer registered for it.");
 		}
 
 		@Override
 		public Object read(Kryo kryo, Input input, Class aClass) {
 			throw new UnsupportedOperationException(
-					"This exception indicates that you're trying to read a data type" +
-						" that no longer has a valid Kryo serializer registered for it.");
+				"This exception indicates that you're trying to read a data type" +
+					" that no longer has a valid Kryo serializer registered for it.");
 		}
 	}
 
 	@Override
 	public boolean equals(Object obj) {
 		return super.equals(obj)
-				&& kryoRegistrations.equals(((KryoSerializer.KryoSerializerConfigSnapshot) obj).getKryoRegistrations());
+			&& kryoRegistrations.equals(((KryoSerializer.KryoSerializerConfigSnapshot) obj).getKryoRegistrations());
 	}
 
 	@Override

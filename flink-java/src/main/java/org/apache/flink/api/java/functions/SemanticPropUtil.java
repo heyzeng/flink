@@ -158,13 +158,13 @@ public final class SemanticPropUtil {
 	/**
 	 * Creates SemanticProperties by adding an offset to each input field index of the given SemanticProperties.
 	 *
-	 * @param props The SemanticProperties to which the offset is added.
+	 * @param props          The SemanticProperties to which the offset is added.
 	 * @param numInputFields The original number of fields of the input.
-	 * @param offset The offset that is added to each input field index.
+	 * @param offset         The offset that is added to each input field index.
 	 * @return New SemanticProperties with added offset.
 	 */
 	public static SingleInputSemanticProperties addSourceFieldOffset(SingleInputSemanticProperties props,
-																		int numInputFields, int offset) {
+																	 int numInputFields, int offset) {
 
 		SingleInputSemanticProperties offsetProps = new SingleInputSemanticProperties();
 		if (props.getReadFields(0) != null) {
@@ -186,11 +186,11 @@ public final class SemanticPropUtil {
 	/**
 	 * Creates SemanticProperties by adding offsets to each input field index of the given SemanticProperties.
 	 *
-	 * @param props The SemanticProperties to which the offset is added.
+	 * @param props           The SemanticProperties to which the offset is added.
 	 * @param numInputFields1 The original number of fields of the first input.
 	 * @param numInputFields2 The original number of fields of the second input.
-	 * @param offset1 The offset that is added to each input field index of the first input.
-	 * @param offset2 The offset that is added to each input field index of the second input.
+	 * @param offset1         The offset that is added to each input field index of the first input.
+	 * @param offset2         The offset that is added to each input field index of the second input.
 	 * @return New SemanticProperties with added offsets.
 	 */
 	public static DualInputSemanticProperties addSourceFieldOffsets(DualInputSemanticProperties props,
@@ -235,7 +235,7 @@ public final class SemanticPropUtil {
 	}
 
 	public static SingleInputSemanticProperties getSemanticPropsSingle(
-			Set<Annotation> set, TypeInformation<?> inType, TypeInformation<?> outType) {
+		Set<Annotation> set, TypeInformation<?> inType, TypeInformation<?> outType) {
 		if (set == null) {
 			return null;
 		}
@@ -256,8 +256,8 @@ public final class SemanticPropUtil {
 			} else if (ann instanceof ReadFields) {
 				read = ((ReadFields) ann).value();
 			} else if (ann instanceof ForwardedFieldsFirst || ann instanceof ForwardedFieldsSecond ||
-					ann instanceof NonForwardedFieldsFirst || ann instanceof NonForwardedFieldsSecond ||
-					ann instanceof ReadFieldsFirst || ann instanceof ReadFieldsSecond) {
+				ann instanceof NonForwardedFieldsFirst || ann instanceof NonForwardedFieldsSecond ||
+				ann instanceof ReadFieldsFirst || ann instanceof ReadFieldsSecond) {
 				throw new InvalidSemanticAnnotationException("Annotation " + ann.getClass() + " invalid for single input function.");
 			}
 		}
@@ -271,7 +271,7 @@ public final class SemanticPropUtil {
 	}
 
 	public static DualInputSemanticProperties getSemanticPropsDual(
-			Set<Annotation> set, TypeInformation<?> inType1, TypeInformation<?> inType2, TypeInformation<?> outType) {
+		Set<Annotation> set, TypeInformation<?> inType1, TypeInformation<?> inType2, TypeInformation<?> outType) {
 		if (set == null) {
 			return null;
 		}
@@ -305,7 +305,7 @@ public final class SemanticPropUtil {
 		}
 
 		if (forwardedFirst != null || nonForwardedFirst != null || readFirst != null ||
-				forwardedSecond != null || nonForwardedSecond != null || readSecond != null) {
+			forwardedSecond != null || nonForwardedSecond != null || readSecond != null) {
 			DualInputSemanticProperties result = new DualInputSemanticProperties();
 			getSemanticPropsDualFromString(result, forwardedFirst, forwardedSecond,
 				nonForwardedFirst, nonForwardedSecond, readFirst, readSecond, inType1, inType2, outType);
@@ -321,9 +321,9 @@ public final class SemanticPropUtil {
 	}
 
 	public static void getSemanticPropsSingleFromString(SingleInputSemanticProperties result,
-			String[] forwarded, String[] nonForwarded, String[] readSet,
-			TypeInformation<?> inType, TypeInformation<?> outType,
-			boolean skipIncompatibleTypes) {
+														String[] forwarded, String[] nonForwarded, String[] readSet,
+														TypeInformation<?> inType, TypeInformation<?> outType,
+														boolean skipIncompatibleTypes) {
 
 		boolean hasForwardedAnnotation = false;
 		boolean hasNonForwardedAnnotation = false;
@@ -338,7 +338,7 @@ public final class SemanticPropUtil {
 
 		if (hasForwardedAnnotation && hasNonForwardedAnnotation) {
 			throw new InvalidSemanticAnnotationException("Either ForwardedFields OR " +
-					"NonForwardedFields annotation permitted, NOT both.");
+				"NonForwardedFields annotation permitted, NOT both.");
 		} else if (hasForwardedAnnotation) {
 			parseForwardedFields(result, forwarded, inType, outType, 0, skipIncompatibleTypes);
 		} else if (hasNonForwardedAnnotation) {
@@ -348,21 +348,21 @@ public final class SemanticPropUtil {
 	}
 
 	public static void getSemanticPropsDualFromString(DualInputSemanticProperties result,
-			String[] forwardedFirst, String[] forwardedSecond,
-			String[] nonForwardedFirst, String[] nonForwardedSecond, String[]
-			readFieldsFirst, String[] readFieldsSecond,
-			TypeInformation<?> inType1, TypeInformation<?> inType2, TypeInformation<?> outType) {
+													  String[] forwardedFirst, String[] forwardedSecond,
+													  String[] nonForwardedFirst, String[] nonForwardedSecond, String[]
+														  readFieldsFirst, String[] readFieldsSecond,
+													  TypeInformation<?> inType1, TypeInformation<?> inType2, TypeInformation<?> outType) {
 		getSemanticPropsDualFromString(result, forwardedFirst, forwardedSecond, nonForwardedFirst,
 			nonForwardedSecond, readFieldsFirst, readFieldsSecond, inType1, inType2, outType,
 			false);
 	}
 
 	public static void getSemanticPropsDualFromString(DualInputSemanticProperties result,
-			String[] forwardedFirst, String[] forwardedSecond,
-			String[] nonForwardedFirst, String[] nonForwardedSecond, String[]
-			readFieldsFirst, String[] readFieldsSecond,
-			TypeInformation<?> inType1, TypeInformation<?> inType2, TypeInformation<?> outType,
-			boolean skipIncompatibleTypes) {
+													  String[] forwardedFirst, String[] forwardedSecond,
+													  String[] nonForwardedFirst, String[] nonForwardedSecond, String[]
+														  readFieldsFirst, String[] readFieldsSecond,
+													  TypeInformation<?> inType1, TypeInformation<?> inType2, TypeInformation<?> outType,
+													  boolean skipIncompatibleTypes) {
 
 		boolean hasForwardedFirstAnnotation = false;
 		boolean hasForwardedSecondAnnotation = false;
@@ -385,11 +385,11 @@ public final class SemanticPropUtil {
 
 		if (hasForwardedFirstAnnotation && hasNonForwardedFirstAnnotation) {
 			throw new InvalidSemanticAnnotationException("Either ForwardedFieldsFirst OR " +
-					"NonForwardedFieldsFirst annotation permitted, NOT both.");
+				"NonForwardedFieldsFirst annotation permitted, NOT both.");
 		}
 		if (hasForwardedSecondAnnotation && hasNonForwardedSecondAnnotation) {
 			throw new InvalidSemanticAnnotationException("Either ForwardedFieldsSecond OR " +
-					"NonForwardedFieldsSecond annotation permitted, NOT both.");
+				"NonForwardedFieldsSecond annotation permitted, NOT both.");
 		}
 
 		if (hasForwardedFirstAnnotation) {
@@ -409,7 +409,7 @@ public final class SemanticPropUtil {
 	}
 
 	private static void parseForwardedFields(SemanticProperties sp, String[] forwardedStr,
-			TypeInformation<?> inType, TypeInformation<?> outType, int input, boolean skipIncompatibleTypes) {
+											 TypeInformation<?> inType, TypeInformation<?> outType, int input, boolean skipIncompatibleTypes) {
 
 		if (forwardedStr == null) {
 			return;
@@ -432,7 +432,7 @@ public final class SemanticPropUtil {
 						continue;
 					} else {
 						throw new InvalidSemanticAnnotationException("Forwarded field annotation \"" + s +
-								"\" with wildcard only allowed for identical input and output types.");
+							"\" with wildcard only allowed for identical input and output types.");
 					}
 				}
 
@@ -532,7 +532,7 @@ public final class SemanticPropUtil {
 	}
 
 	private static void parseNonForwardedFields(SemanticProperties sp, String[] nonForwardedStr,
-			TypeInformation<?> inType, TypeInformation<?> outType, int input, boolean skipIncompatibleTypes) {
+												TypeInformation<?> inType, TypeInformation<?> outType, int input, boolean skipIncompatibleTypes) {
 
 		if (nonForwardedStr == null) {
 			return;
@@ -646,7 +646,7 @@ public final class SemanticPropUtil {
 	////////////////////// UTIL METHODS ///////////////////////////////
 
 	private static boolean areFieldsCompatible(String sourceField, TypeInformation<?> inType, String targetField,
-			TypeInformation<?> outType, boolean throwException) {
+											   TypeInformation<?> outType, boolean throwException) {
 
 		try {
 			// get source type information

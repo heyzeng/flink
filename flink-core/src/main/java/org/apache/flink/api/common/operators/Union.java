@@ -32,19 +32,19 @@ import org.apache.flink.api.common.operators.util.UserCodeClassWrapper;
  */
 @Internal
 public class Union<T> extends DualInputOperator<T, T, T, AbstractRichFunction> {
-	
-	
-	/** 
+
+
+	/**
 	 * Creates a new Union operator.
 	 */
 	public Union(BinaryOperatorInformation<T, T, T> operatorInfo, String unionLocationName) {
 		// we pass it an AbstractFunction, because currently all operators expect some form of UDF
-		super(new UserCodeClassWrapper<AbstractRichFunction>(AbstractRichFunction.class), operatorInfo, "Union at "+unionLocationName);
+		super(new UserCodeClassWrapper<AbstractRichFunction>(AbstractRichFunction.class), operatorInfo, "Union at " + unionLocationName);
 	}
-	
+
 	public Union(Operator<T> input1, Operator<T> input2, String unionLocationName) {
 		this(new BinaryOperatorInformation<T, T, T>(input1.getOperatorInfo().getOutputType(),
-				input1.getOperatorInfo().getOutputType(), input1.getOperatorInfo().getOutputType()), unionLocationName);
+			input1.getOperatorInfo().getOutputType(), input1.getOperatorInfo().getOutputType()), unionLocationName);
 		setFirstInput(input1);
 		setSecondInput(input2);
 	}

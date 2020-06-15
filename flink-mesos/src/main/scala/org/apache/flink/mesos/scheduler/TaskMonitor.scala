@@ -32,22 +32,22 @@ import scala.PartialFunction.empty
 import scala.concurrent.duration._
 
 /**
-  * Monitors a Mesos task throughout its lifecycle.
-  *
-  * Models a task with a state machine reflecting the perceived state of the task in Mesos.
-  * The state is primarily updated when task status information arrives from Mesos.
-  *
-  * The associated state data primarily tracks the task's goal (intended) state, as
-  * persisted by the scheduler. Keep in mind that goal state is persisted before actions are taken.
-  * The goal state strictly transitions thru New->Launched->Released.
-  *
-  * Unlike most exchanges with Mesos, task status is delivered at-least-once,
-  * so status handling should be idempotent.
-  */
+ * Monitors a Mesos task throughout its lifecycle.
+ *
+ * Models a task with a state machine reflecting the perceived state of the task in Mesos.
+ * The state is primarily updated when task status information arrives from Mesos.
+ *
+ * The associated state data primarily tracks the task's goal (intended) state, as
+ * persisted by the scheduler. Keep in mind that goal state is persisted before actions are taken.
+ * The goal state strictly transitions thru New->Launched->Released.
+ *
+ * Unlike most exchanges with Mesos, task status is delivered at-least-once,
+ * so status handling should be idempotent.
+ */
 class TaskMonitor(
-    flinkConfig: Configuration,
-    schedulerDriver: SchedulerDriver,
-    goalState: TaskGoalState) extends Actor with FSM[TaskMonitorState,StateData] {
+                   flinkConfig: Configuration,
+                   schedulerDriver: SchedulerDriver,
+                   goalState: TaskGoalState) extends Actor with FSM[TaskMonitorState, StateData] {
 
   val LOG = Logger(getClass)
 
@@ -198,30 +198,40 @@ object TaskMonitor {
   // ------------------------------------------------------------------------
 
   /**
-    * An FSM state of the task monitor, roughly corresponding to the task status.
-    */
+   * An FSM state of the task monitor, roughly corresponding to the task status.
+   */
   sealed trait TaskMonitorState
+
   case object Suspended extends TaskMonitorState
+
   case object New extends TaskMonitorState
+
   case object Reconciling extends TaskMonitorState
+
   case object Staging extends TaskMonitorState
+
   case object Running extends TaskMonitorState
+
   case object Killing extends TaskMonitorState
 
   /**
-    * The task monitor state data.
-    * @param goal the goal (intentional) state of the task.
-    */
-  case class StateData(goal:TaskGoalState)
+   * The task monitor state data.
+   *
+   * @param goal the goal (intentional) state of the task.
+   */
+  case class StateData(goal: TaskGoalState)
 
   /**
-    * Indicates the goal (intentional) state of a Mesos task; behavior varies accordingly.
-    */
+   * Indicates the goal (intentional) state of a Mesos task; behavior varies accordingly.
+   */
   sealed trait TaskGoalState {
     val taskID: Protos.TaskID
   }
+
   case class New(taskID: Protos.TaskID) extends TaskGoalState
+
   case class Launched(taskID: Protos.TaskID, slaveID: Protos.SlaveID) extends TaskGoalState
+
   case class Released(taskID: Protos.TaskID, slaveID: Protos.SlaveID) extends TaskGoalState
 
 
@@ -230,13 +240,13 @@ object TaskMonitor {
   // ------------------------------------------------------------------------
 
   /**
-    * Conveys an update to the goal (intentional) state of a given task.
-    */
+   * Conveys an update to the goal (intentional) state of a given task.
+   */
   case class TaskGoalStateUpdated(state: TaskGoalState)
 
   /**
-    * Indicates that the Mesos task has terminated for whatever reason.
-    */
+   * Indicates that the Mesos task has terminated for whatever reason.
+   */
   case class TaskTerminated(taskID: Protos.TaskID, status: Protos.TaskStatus)
 
   // ------------------------------------------------------------------------
@@ -244,15 +254,15 @@ object TaskMonitor {
   // ------------------------------------------------------------------------
 
   /**
-    * Creates the properties for the TaskMonitor actor.
-    *
-    * @param actorClass the task monitor actor class
-    * @param flinkConfig the Flink configuration
-    * @param schedulerDriver the Mesos scheduler driver
-    * @param goalState the task's goal state
-    * @tparam T the type of the task monitor actor class
-    * @return the Props to create the task monitor
-    */
+   * Creates the properties for the TaskMonitor actor.
+   *
+   * @param actorClass      the task monitor actor class
+   * @param flinkConfig     the Flink configuration
+   * @param schedulerDriver the Mesos scheduler driver
+   * @param goalState       the task's goal state
+   * @tparam T the type of the task monitor actor class
+   * @return the Props to create the task monitor
+   */
   def createActorProps[T <: TaskMonitor](actorClass: Class[T],
                                          flinkConfig: Configuration,
                                          schedulerDriver: SchedulerDriver,

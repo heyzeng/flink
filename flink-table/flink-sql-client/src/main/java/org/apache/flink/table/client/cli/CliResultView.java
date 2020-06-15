@@ -41,6 +41,7 @@ public abstract class CliResultView<O extends Enum<O>> extends CliView<O, Void> 
 	protected static final int NO_ROW_SELECTED = -1;
 
 	protected static final List<Tuple2<String, Long>> REFRESH_INTERVALS;
+
 	static {
 		REFRESH_INTERVALS = new ArrayList<>();
 		REFRESH_INTERVALS.add(Tuple2.of("Fastest", 0L));
@@ -200,7 +201,7 @@ public abstract class CliResultView<O extends Enum<O>> extends CliView<O, Void> 
 				// we don't highlight if the retrieval stopped
 				// both inverse and bold together do not work correctly
 				if (previousResults != null && lineIdx != selectedRow && refreshThread.isRunning &&
-						(lineIdx >= previousResults.size() || !col.equals(previousResults.get(lineIdx)[colIdx]))) {
+					(lineIdx >= previousResults.size() || !col.equals(previousResults.get(lineIdx)[colIdx]))) {
 					row.style(AttributedStyle.BOLD);
 					normalizeColumn(row, col, columnWidth);
 					row.style(AttributedStyle.DEFAULT);

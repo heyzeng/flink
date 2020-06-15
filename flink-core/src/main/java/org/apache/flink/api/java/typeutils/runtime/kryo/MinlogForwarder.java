@@ -38,7 +38,7 @@ class MinlogForwarder extends Logger {
 	}
 
 	@Override
-	public void log (int level, String category, String message, Throwable ex) {
+	public void log(int level, String category, String message, Throwable ex) {
 		final String logString = "[KRYO " + category + "] " + message;
 		switch (level) {
 			case Log.LEVEL_ERROR:

@@ -47,13 +47,13 @@ public class LocalTimeTypeInfo<T extends Temporal> extends TypeInformation<T> im
 	private static final long serialVersionUID = 1L;
 
 	public static final LocalTimeTypeInfo<LocalDate> LOCAL_DATE = new LocalTimeTypeInfo<>(
-			LocalDate.class, LocalDateSerializer.INSTANCE, LocalDateComparator.class);
+		LocalDate.class, LocalDateSerializer.INSTANCE, LocalDateComparator.class);
 
 	public static final LocalTimeTypeInfo<LocalTime> LOCAL_TIME = new LocalTimeTypeInfo<>(
-			LocalTime.class, LocalTimeSerializer.INSTANCE, LocalTimeComparator.class);
+		LocalTime.class, LocalTimeSerializer.INSTANCE, LocalTimeComparator.class);
 
 	public static final LocalTimeTypeInfo<LocalDateTime> LOCAL_DATE_TIME = new LocalTimeTypeInfo<>(
-			LocalDateTime.class, LocalDateTimeSerializer.INSTANCE, LocalDateTimeComparator.class);
+		LocalDateTime.class, LocalDateTimeSerializer.INSTANCE, LocalDateTimeComparator.class);
 
 	// --------------------------------------------------------------------------------------------
 
@@ -128,9 +128,9 @@ public class LocalTimeTypeInfo<T extends Temporal> extends TypeInformation<T> im
 			LocalTimeTypeInfo<T> other = (LocalTimeTypeInfo<T>) obj;
 
 			return other.canEqual(this) &&
-					this.clazz == other.clazz &&
-					serializer.equals(other.serializer) &&
-					this.comparatorClass == other.comparatorClass;
+				this.clazz == other.clazz &&
+				serializer.equals(other.serializer) &&
+				this.comparatorClass == other.comparatorClass;
 		} else {
 			return false;
 		}
@@ -147,8 +147,7 @@ public class LocalTimeTypeInfo<T extends Temporal> extends TypeInformation<T> im
 		try {
 			Constructor<? extends TypeComparator<X>> constructor = comparatorClass.getConstructor(boolean.class);
 			return constructor.newInstance(ascendingOrder);
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			throw new RuntimeException("Could not initialize comparator " + comparatorClass.getName(), e);
 		}
 	}
@@ -158,11 +157,9 @@ public class LocalTimeTypeInfo<T extends Temporal> extends TypeInformation<T> im
 
 		if (type == LocalDate.class) {
 			return LOCAL_DATE;
-		}
-		else if (type == LocalTime.class) {
+		} else if (type == LocalTime.class) {
 			return LOCAL_TIME;
-		}
-		else if (type == LocalDateTime.class) {
+		} else if (type == LocalDateTime.class) {
 			return LOCAL_DATE_TIME;
 		}
 		return null;

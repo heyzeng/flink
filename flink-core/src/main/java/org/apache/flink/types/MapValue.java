@@ -33,20 +33,17 @@ import org.apache.flink.util.ReflectionUtil;
 /**
  * Generic map base type for PACT programs that implements the Value and Map interfaces.
  * The {@link MapValue} encapsulates a Java {@link HashMap} object.
- * 
+ *
+ * @param <K> Type of the map's key element.
+ * @param <V> Type of the map's value element.
  * @see org.apache.flink.types.Value
  * @see java.util.Map
  * @see java.util.HashMap
- * 
- * @param <K> Type of the map's key element.
- * @param <V> Type of the map's value element.
- * 
- * 
  */
 @Public
 public abstract class MapValue<K extends Value, V extends Value> implements Value, Map<K, V> {
 	private static final long serialVersionUID = 1L;
-	
+
 	// type of the map's key
 	private final Class<K> keyClass;
 	// type of the map's value
@@ -66,7 +63,7 @@ public abstract class MapValue<K extends Value, V extends Value> implements Valu
 
 	/**
 	 * Initializes the encapsulated map with a HashMap filled with all entries of the provided map.
-	 * 
+	 *
 	 * @param map Map holding all entries with which the new encapsulated map is filled.
 	 */
 	public MapValue(Map<K, V> map) {

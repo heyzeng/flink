@@ -37,7 +37,7 @@ public class DoublePrimitiveArraySerializerTest extends SerializerTestBase<doubl
 	protected Class<double[]> getTypeClass() {
 		return double[].class;
 	}
-	
+
 	@Override
 	protected int getLength() {
 		return -1;
@@ -45,11 +45,11 @@ public class DoublePrimitiveArraySerializerTest extends SerializerTestBase<doubl
 
 	@Override
 	protected double[][] getTestData() {
-		return new double[][] {
-			new double[] {0, 1, 2, 3, -1, -2, -3, Integer.MAX_VALUE, Integer.MIN_VALUE, Double.MAX_VALUE, Double.MIN_VALUE},
-			new double[] {Double.NEGATIVE_INFINITY},
-			new double[] {},
-			new double[] {-1, -2, 96769243, Double.NaN, Double.POSITIVE_INFINITY, 26782, Double.MIN_NORMAL, 0, 0, 0}
+		return new double[][]{
+			new double[]{0, 1, 2, 3, -1, -2, -3, Integer.MAX_VALUE, Integer.MIN_VALUE, Double.MAX_VALUE, Double.MIN_VALUE},
+			new double[]{Double.NEGATIVE_INFINITY},
+			new double[]{},
+			new double[]{-1, -2, 96769243, Double.NaN, Double.POSITIVE_INFINITY, 26782, Double.MIN_NORMAL, 0, 0, 0}
 		};
 	}
 }

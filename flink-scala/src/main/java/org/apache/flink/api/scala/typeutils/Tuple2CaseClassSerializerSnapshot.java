@@ -77,7 +77,7 @@ public final class Tuple2CaseClassSerializerSnapshot<T1, T2>
 
 	@Override
 	protected ScalaCaseClassSerializer<Tuple2<T1, T2>> createOuterSerializerWithNestedSerializers(
-			TypeSerializer<?>[] nestedSerializers) {
+		TypeSerializer<?>[] nestedSerializers) {
 
 		checkState(type != null, "tuple class can not be NULL");
 		return package$.MODULE$.tuple2Serializer(type, nestedSerializers);

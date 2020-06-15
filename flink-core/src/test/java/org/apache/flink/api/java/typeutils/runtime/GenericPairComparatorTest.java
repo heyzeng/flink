@@ -62,20 +62,20 @@ public class GenericPairComparatorTest extends TuplePairComparatorTestBase<Tuple
 		int[] fields1 = new int[]{0, 2};
 		int[] fields2 = new int[]{0, 3};
 		TypeComparator[] comps1 = new TypeComparator[]{
-				new IntComparator(ascending),
-				new DoubleComparator(ascending)
+			new IntComparator(ascending),
+			new DoubleComparator(ascending)
 		};
 		TypeComparator[] comps2 = new TypeComparator[]{
-				new IntComparator(ascending),
-				new DoubleComparator(ascending)
+			new IntComparator(ascending),
+			new DoubleComparator(ascending)
 		};
 		TypeSerializer[] sers1 = new TypeSerializer[]{
-				IntSerializer.INSTANCE,
-				DoubleSerializer.INSTANCE
+			IntSerializer.INSTANCE,
+			DoubleSerializer.INSTANCE
 		};
-		TypeSerializer[] sers2= new TypeSerializer[]{
-				IntSerializer.INSTANCE,
-				DoubleSerializer.INSTANCE
+		TypeSerializer[] sers2 = new TypeSerializer[]{
+			IntSerializer.INSTANCE,
+			DoubleSerializer.INSTANCE
 		};
 		TypeComparator<Tuple3<Integer, String, Double>> comp1 = new TupleComparator<Tuple3<Integer, String, Double>>(fields1, comps1, sers1);
 		TypeComparator<Tuple4<Integer, Float, Long, Double>> comp2 = new TupleComparator<Tuple4<Integer, Float, Long, Double>>(fields2, comps2, sers2);

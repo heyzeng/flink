@@ -29,7 +29,7 @@ import org.apache.flink.configuration.ConfigConstants;
 public class FloatParser extends FieldParser<Float> {
 
 	private float result;
-	
+
 	@Override
 	public int parseField(byte[] bytes, int startPos, int limit, byte[] delimiter, Float reusable) {
 		final int endPos = nextStringEndPos(bytes, startPos, limit, delimiter);
@@ -38,7 +38,7 @@ public class FloatParser extends FieldParser<Float> {
 		}
 
 		if (endPos > startPos &&
-				(Character.isWhitespace(bytes[startPos]) || Character.isWhitespace(bytes[endPos - 1]))) {
+			(Character.isWhitespace(bytes[startPos]) || Character.isWhitespace(bytes[endPos - 1]))) {
 			setErrorState(ParseErrorState.NUMERIC_VALUE_ILLEGAL_CHARACTER);
 			return -1;
 		}
@@ -64,7 +64,7 @@ public class FloatParser extends FieldParser<Float> {
 	}
 
 	/**
-	 * Static utility to parse a field of type float from a byte sequence that represents text 
+	 * Static utility to parse a field of type float from a byte sequence that represents text
 	 * characters
 	 * (such as when read from a file stream).
 	 *
@@ -73,14 +73,14 @@ public class FloatParser extends FieldParser<Float> {
 	 * @param length   The length of the byte sequence (counting from the offset).
 	 * @return The parsed value.
 	 * @throws IllegalArgumentException Thrown when the value cannot be parsed because the text
-	 * represents not a correct number.
+	 *                                  represents not a correct number.
 	 */
 	public static final float parseField(byte[] bytes, int startPos, int length) {
 		return parseField(bytes, startPos, length, (char) 0xffff);
 	}
 
 	/**
-	 * Static utility to parse a field of type float from a byte sequence that represents text 
+	 * Static utility to parse a field of type float from a byte sequence that represents text
 	 * characters
 	 * (such as when read from a file stream).
 	 *
@@ -90,13 +90,13 @@ public class FloatParser extends FieldParser<Float> {
 	 * @param delimiter The delimiter that terminates the field.
 	 * @return The parsed value.
 	 * @throws IllegalArgumentException Thrown when the value cannot be parsed because the text
-	 * represents not a correct number.
+	 *                                  represents not a correct number.
 	 */
 	public static final float parseField(byte[] bytes, int startPos, int length, char delimiter) {
 		final int limitedLen = nextStringLength(bytes, startPos, length, delimiter);
 
 		if (limitedLen > 0 &&
-				(Character.isWhitespace(bytes[startPos]) || Character.isWhitespace(bytes[startPos + limitedLen - 1]))) {
+			(Character.isWhitespace(bytes[startPos]) || Character.isWhitespace(bytes[startPos + limitedLen - 1]))) {
 			throw new NumberFormatException("There is leading or trailing whitespace in the numeric field.");
 		}
 

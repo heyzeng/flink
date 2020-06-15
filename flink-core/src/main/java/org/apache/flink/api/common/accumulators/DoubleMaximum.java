@@ -30,7 +30,8 @@ public class DoubleMaximum implements SimpleAccumulator<Double> {
 
 	private double max = Double.NEGATIVE_INFINITY;
 
-	public DoubleMaximum() {}
+	public DoubleMaximum() {
+	}
 
 	public DoubleMaximum(double value) {
 		this.max = value;

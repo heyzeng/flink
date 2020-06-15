@@ -92,8 +92,7 @@ public abstract class GenericTypeSerializerSnapshot<T, S extends TypeSerializer>
 		@SuppressWarnings("unchecked") S casted = (S) newSerializer;
 		if (typeClass == getTypeClass(casted)) {
 			return TypeSerializerSchemaCompatibility.compatibleAsIs();
-		}
-		else {
+		} else {
 			return TypeSerializerSchemaCompatibility.incompatible();
 		}
 	}

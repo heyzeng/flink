@@ -39,7 +39,9 @@ import static java.util.Objects.requireNonNull;
  */
 public class SqlProperty extends SqlCall {
 
-	/** Use this operator only if you don't have a better one. */
+	/**
+	 * Use this operator only if you don't have a better one.
+	 */
 	protected static final SqlOperator OPERATOR =
 		new SqlSpecialOperator("Property", SqlKind.OTHER);
 

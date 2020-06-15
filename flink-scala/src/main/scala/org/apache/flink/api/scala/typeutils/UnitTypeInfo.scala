@@ -26,14 +26,19 @@ import org.apache.flink.api.common.typeutils.TypeSerializer
 class UnitTypeInfo extends TypeInformation[Unit] {
   @PublicEvolving
   override def isBasicType(): Boolean = false
+
   @PublicEvolving
   override def isTupleType(): Boolean = false
+
   @PublicEvolving
   override def getArity(): Int = 0
+
   @PublicEvolving
   override def getTotalFields(): Int = 1
+
   @PublicEvolving
   override def getTypeClass(): Class[Unit] = classOf[Unit]
+
   @PublicEvolving
   override def isKeyType(): Boolean = false
 

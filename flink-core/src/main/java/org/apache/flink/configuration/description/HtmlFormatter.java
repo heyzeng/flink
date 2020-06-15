@@ -37,10 +37,10 @@ public class HtmlFormatter extends Formatter {
 
 	@Override
 	protected void formatText(
-			StringBuilder state,
-			String format,
-			String[] elements,
-			EnumSet<TextElement.TextStyle> styles) {
+		StringBuilder state,
+		String format,
+		String[] elements,
+		EnumSet<TextElement.TextStyle> styles) {
 		String escapedFormat = escapeCharacters(format);
 
 		String prefix = "";

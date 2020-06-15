@@ -43,13 +43,13 @@ public class SecurityOptions {
 			.stringType()
 			.asList()
 			.defaultValues(
-					"org.apache.flink.runtime.security.contexts.HadoopSecurityContextFactory",
-					"org.apache.flink.runtime.security.contexts.NoOpSecurityContextFactory")
-				.withDescription(
-						"List of factories that should be used to instantiate a security context. " +
-								"If multiple are configured, Flink will use the first compatible " +
-								"factory. You should have a NoOpSecurityContextFactory in this list " +
-								"as a fallback.");
+				"org.apache.flink.runtime.security.contexts.HadoopSecurityContextFactory",
+				"org.apache.flink.runtime.security.contexts.NoOpSecurityContextFactory")
+			.withDescription(
+				"List of factories that should be used to instantiate a security context. " +
+					"If multiple are configured, Flink will use the first compatible " +
+					"factory. You should have a NoOpSecurityContextFactory in this list " +
+					"as a fallback.");
 
 	public static final ConfigOption<List<String>> SECURITY_MODULE_FACTORY_CLASSES =
 		key("security.module.factory.classes")
@@ -60,8 +60,8 @@ public class SecurityOptions {
 				"org.apache.flink.runtime.security.modules.JaasModuleFactory",
 				"org.apache.flink.runtime.security.modules.ZookeeperModuleFactory")
 			.withDescription("List of factories that should be used to instantiate security " +
-					"modules. All listed modules will be installed. Keep in mind that the " +
-					"configured security context might rely on some modules being present.");
+				"modules. All listed modules will be installed. Keep in mind that the " +
+				"configured security context might rely on some modules being present.");
 
 	// ------------------------------------------------------------------------
 	//  Kerberos Options
@@ -129,27 +129,27 @@ public class SecurityOptions {
 		key("security.ssl.enabled")
 			.defaultValue(false)
 			.withDescription("Turns on SSL for internal and external network communication." +
-					"This can be overridden by 'security.ssl.internal.enabled', 'security.ssl.external.enabled'. " +
-					"Specific internal components (rpc, data transport, blob server) may optionally override " +
-					"this through their own settings.");
+				"This can be overridden by 'security.ssl.internal.enabled', 'security.ssl.external.enabled'. " +
+				"Specific internal components (rpc, data transport, blob server) may optionally override " +
+				"this through their own settings.");
 
 	/**
 	 * Enable SSL for internal communication (akka rpc, netty data transport, blob server).
 	 */
 	@Documentation.Section(Documentation.Sections.SECURITY_SSL)
 	public static final ConfigOption<Boolean> SSL_INTERNAL_ENABLED =
-			key("security.ssl.internal.enabled")
+		key("security.ssl.internal.enabled")
 			.defaultValue(false)
 			.withDescription("Turns on SSL for internal network communication. " +
-					"Optionally, specific components may override this through their own settings " +
-					"(rpc, data transport, REST, etc).");
+				"Optionally, specific components may override this through their own settings " +
+				"(rpc, data transport, REST, etc).");
 
 	/**
 	 * Enable SSL for external REST endpoints.
 	 */
 	@Documentation.Section(Documentation.Sections.SECURITY_SSL)
 	public static final ConfigOption<Boolean> SSL_REST_ENABLED =
-			key("security.ssl.rest.enabled")
+		key("security.ssl.rest.enabled")
 			.defaultValue(false)
 			.withDescription("Turns on SSL for external communication via the REST endpoints.");
 
@@ -217,50 +217,50 @@ public class SecurityOptions {
 	 */
 	@Documentation.Section(Documentation.Sections.SECURITY_SSL)
 	public static final ConfigOption<String> SSL_INTERNAL_KEYSTORE =
-			key("security.ssl.internal.keystore")
-					.noDefaultValue()
-					.withDescription("The Java keystore file with SSL Key and Certificate, " +
-							"to be used Flink's internal endpoints (rpc, data transport, blob server).");
+		key("security.ssl.internal.keystore")
+			.noDefaultValue()
+			.withDescription("The Java keystore file with SSL Key and Certificate, " +
+				"to be used Flink's internal endpoints (rpc, data transport, blob server).");
 
 	/**
 	 * For internal SSL, the password to decrypt the keystore file containing the certificate.
 	 */
 	@Documentation.Section(Documentation.Sections.SECURITY_SSL)
 	public static final ConfigOption<String> SSL_INTERNAL_KEYSTORE_PASSWORD =
-			key("security.ssl.internal.keystore-password")
-					.noDefaultValue()
-					.withDescription("The secret to decrypt the keystore file for Flink's " +
-							"for Flink's internal endpoints (rpc, data transport, blob server).");
+		key("security.ssl.internal.keystore-password")
+			.noDefaultValue()
+			.withDescription("The secret to decrypt the keystore file for Flink's " +
+				"for Flink's internal endpoints (rpc, data transport, blob server).");
 
 	/**
 	 * For internal SSL, the password to decrypt the private key.
 	 */
 	@Documentation.Section(Documentation.Sections.SECURITY_SSL)
 	public static final ConfigOption<String> SSL_INTERNAL_KEY_PASSWORD =
-			key("security.ssl.internal.key-password")
-					.noDefaultValue()
-					.withDescription("The secret to decrypt the key in the keystore " +
-							"for Flink's internal endpoints (rpc, data transport, blob server).");
+		key("security.ssl.internal.key-password")
+			.noDefaultValue()
+			.withDescription("The secret to decrypt the key in the keystore " +
+				"for Flink's internal endpoints (rpc, data transport, blob server).");
 
 	/**
 	 * For internal SSL, the truststore file containing the public CA certificates to verify the ssl peers.
 	 */
 	@Documentation.Section(Documentation.Sections.SECURITY_SSL)
 	public static final ConfigOption<String> SSL_INTERNAL_TRUSTSTORE =
-			key("security.ssl.internal.truststore")
-					.noDefaultValue()
-					.withDescription("The truststore file containing the public CA certificates to verify the peer " +
-							"for Flink's internal endpoints (rpc, data transport, blob server).");
+		key("security.ssl.internal.truststore")
+			.noDefaultValue()
+			.withDescription("The truststore file containing the public CA certificates to verify the peer " +
+				"for Flink's internal endpoints (rpc, data transport, blob server).");
 
 	/**
 	 * For internal SSL, the secret to decrypt the truststore.
 	 */
 	@Documentation.Section(Documentation.Sections.SECURITY_SSL)
 	public static final ConfigOption<String> SSL_INTERNAL_TRUSTSTORE_PASSWORD =
-			key("security.ssl.internal.truststore-password")
-					.noDefaultValue()
-					.withDescription("The password to decrypt the truststore " +
-							"for Flink's internal endpoints (rpc, data transport, blob server).");
+		key("security.ssl.internal.truststore-password")
+			.noDefaultValue()
+			.withDescription("The password to decrypt the truststore " +
+				"for Flink's internal endpoints (rpc, data transport, blob server).");
 
 	/**
 	 * For internal SSL, the sha1 fingerprint of the internal certificate to verify the client.
@@ -280,50 +280,50 @@ public class SecurityOptions {
 	 */
 	@Documentation.Section(Documentation.Sections.SECURITY_SSL)
 	public static final ConfigOption<String> SSL_REST_KEYSTORE =
-			key("security.ssl.rest.keystore")
-					.noDefaultValue()
-					.withDescription("The Java keystore file with SSL Key and Certificate, " +
-							"to be used Flink's external REST endpoints.");
+		key("security.ssl.rest.keystore")
+			.noDefaultValue()
+			.withDescription("The Java keystore file with SSL Key and Certificate, " +
+				"to be used Flink's external REST endpoints.");
 
 	/**
 	 * For external (REST) SSL, the password to decrypt the keystore file containing the certificate.
 	 */
 	@Documentation.Section(Documentation.Sections.SECURITY_SSL)
 	public static final ConfigOption<String> SSL_REST_KEYSTORE_PASSWORD =
-			key("security.ssl.rest.keystore-password")
-					.noDefaultValue()
-					.withDescription("The secret to decrypt the keystore file for Flink's " +
-							"for Flink's external REST endpoints.");
+		key("security.ssl.rest.keystore-password")
+			.noDefaultValue()
+			.withDescription("The secret to decrypt the keystore file for Flink's " +
+				"for Flink's external REST endpoints.");
 
 	/**
 	 * For external (REST) SSL, the password to decrypt the private key.
 	 */
 	@Documentation.Section(Documentation.Sections.SECURITY_SSL)
 	public static final ConfigOption<String> SSL_REST_KEY_PASSWORD =
-			key("security.ssl.rest.key-password")
-					.noDefaultValue()
-					.withDescription("The secret to decrypt the key in the keystore " +
-							"for Flink's external REST endpoints.");
+		key("security.ssl.rest.key-password")
+			.noDefaultValue()
+			.withDescription("The secret to decrypt the key in the keystore " +
+				"for Flink's external REST endpoints.");
 
 	/**
 	 * For external (REST) SSL, the truststore file containing the public CA certificates to verify the ssl peers.
 	 */
 	@Documentation.Section(Documentation.Sections.SECURITY_SSL)
 	public static final ConfigOption<String> SSL_REST_TRUSTSTORE =
-			key("security.ssl.rest.truststore")
-					.noDefaultValue()
-					.withDescription("The truststore file containing the public CA certificates to verify the peer " +
-							"for Flink's external REST endpoints.");
+		key("security.ssl.rest.truststore")
+			.noDefaultValue()
+			.withDescription("The truststore file containing the public CA certificates to verify the peer " +
+				"for Flink's external REST endpoints.");
 
 	/**
 	 * For external (REST) SSL, the secret to decrypt the truststore.
 	 */
 	@Documentation.Section(Documentation.Sections.SECURITY_SSL)
 	public static final ConfigOption<String> SSL_REST_TRUSTSTORE_PASSWORD =
-			key("security.ssl.rest.truststore-password")
-					.noDefaultValue()
-					.withDescription("The password to decrypt the truststore " +
-							"for Flink's external REST endpoints.");
+		key("security.ssl.rest.truststore-password")
+			.noDefaultValue()
+			.withDescription("The password to decrypt the truststore " +
+				"for Flink's external REST endpoints.");
 
 	/**
 	 * For external (REST) SSL, the sha1 fingerprint of the rest client certificate to verify.
@@ -381,32 +381,32 @@ public class SecurityOptions {
 		key("security.ssl.provider")
 			.defaultValue("JDK")
 			.withDescription(Description.builder()
-					.text("The SSL engine provider to use for the ssl transport:")
-					.list(
-						text("%s: default Java-based SSL engine", code("JDK")),
-						text("%s: openSSL-based SSL engine using system libraries",
-							code("OPENSSL"))
-					)
-					.text("%s is based on %s and comes in two flavours:",
-						code("OPENSSL"),
-						link("http://netty.io/wiki/forked-tomcat-native.html#wiki-h2-4", "netty-tcnative"))
-					.list(
-						text("dynamically linked: This will use your system's openSSL libraries " +
+				.text("The SSL engine provider to use for the ssl transport:")
+				.list(
+					text("%s: default Java-based SSL engine", code("JDK")),
+					text("%s: openSSL-based SSL engine using system libraries",
+						code("OPENSSL"))
+				)
+				.text("%s is based on %s and comes in two flavours:",
+					code("OPENSSL"),
+					link("http://netty.io/wiki/forked-tomcat-native.html#wiki-h2-4", "netty-tcnative"))
+				.list(
+					text("dynamically linked: This will use your system's openSSL libraries " +
 							"(if compatible) and requires %s to be copied to %s",
-							code("opt/flink-shaded-netty-tcnative-dynamic-*.jar"),
-							code("lib/")),
-						text("statically linked: Due to potential licensing issues with " +
-								"openSSL (see %s), we cannot ship pre-built libraries. However, " +
-								"you can build the required library yourself and put it into %s:%s%s",
-							link("https://issues.apache.org/jira/browse/LEGAL-393", "LEGAL-393"),
-							code("lib/"),
-							linebreak(),
-							code("git clone https://github.com/apache/flink-shaded.git && " +
-								"cd flink-shaded && " +
-								"mvn clean package -Pinclude-netty-tcnative-static -pl flink-shaded-netty-tcnative-static"))
-					)
-					.build()
-				);
+						code("opt/flink-shaded-netty-tcnative-dynamic-*.jar"),
+						code("lib/")),
+					text("statically linked: Due to potential licensing issues with " +
+							"openSSL (see %s), we cannot ship pre-built libraries. However, " +
+							"you can build the required library yourself and put it into %s:%s%s",
+						link("https://issues.apache.org/jira/browse/LEGAL-393", "LEGAL-393"),
+						code("lib/"),
+						linebreak(),
+						code("git clone https://github.com/apache/flink-shaded.git && " +
+							"cd flink-shaded && " +
+							"mvn clean package -Pinclude-netty-tcnative-static -pl flink-shaded-netty-tcnative-static"))
+				)
+				.build()
+			);
 
 	// ------------------------ ssl parameters --------------------------------
 
@@ -421,7 +421,7 @@ public class SecurityOptions {
 				+ "According to https://github.com/netty/netty/issues/832, you should always set "
 				+ "this to an appropriate number to not run into a bug with stalling IO threads "
 				+ "during garbage collection. (-1 = use system default).")
-		.withDeprecatedKeys("security.ssl.session-cache-size");
+			.withDeprecatedKeys("security.ssl.session-cache-size");
 
 	/**
 	 * SSL session timeout.

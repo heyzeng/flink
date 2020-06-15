@@ -40,16 +40,24 @@ public class TypeInformationSerializationSchema<T> implements DeserializationSch
 
 	private static final long serialVersionUID = -5359448468131559102L;
 
-	/** The type information, to be returned by {@link #getProducedType()}. */
+	/**
+	 * The type information, to be returned by {@link #getProducedType()}.
+	 */
 	private final TypeInformation<T> typeInfo;
 
-	/** The serializer for the actual de-/serialization. */
+	/**
+	 * The serializer for the actual de-/serialization.
+	 */
 	private final TypeSerializer<T> serializer;
 
-	/** The reusable output serialization buffer. */
+	/**
+	 * The reusable output serialization buffer.
+	 */
 	private transient DataOutputSerializer dos;
 
-	/** The reusable input deserialization buffer. */
+	/**
+	 * The reusable input deserialization buffer.
+	 */
 	private transient DataInputDeserializer dis;
 
 	// ------------------------------------------------------------------------
@@ -58,7 +66,7 @@ public class TypeInformationSerializationSchema<T> implements DeserializationSch
 	 * Creates a new de-/serialization schema for the given type.
 	 *
 	 * @param typeInfo The type information for the type de-/serialized by this schema.
-	 * @param ec The execution config, which is used to parametrize the type serializers.
+	 * @param ec       The execution config, which is used to parametrize the type serializers.
 	 */
 	public TypeInformationSerializationSchema(TypeInformation<T> typeInfo, ExecutionConfig ec) {
 		this.typeInfo = checkNotNull(typeInfo, "typeInfo");
@@ -68,7 +76,7 @@ public class TypeInformationSerializationSchema<T> implements DeserializationSch
 	/**
 	 * Creates a new de-/serialization schema for the given type.
 	 *
-	 * @param typeInfo The type information for the type de-/serialized by this schema.
+	 * @param typeInfo   The type information for the type de-/serialized by this schema.
 	 * @param serializer The serializer to use for de-/serialization.
 	 */
 	public TypeInformationSerializationSchema(TypeInformation<T> typeInfo, TypeSerializer<T> serializer) {
@@ -88,14 +96,14 @@ public class TypeInformationSerializationSchema<T> implements DeserializationSch
 
 		try {
 			return serializer.deserialize(dis);
-		}
-		catch (IOException e) {
+		} catch (IOException e) {
 			throw new RuntimeException("Unable to deserialize message", e);
 		}
 	}
 
 	/**
 	 * This schema never considers an element to signal end-of-stream, so this method returns always false.
+	 *
 	 * @param nextElement The element to test for the end-of-stream signal.
 	 * @return Returns false.
 	 */
@@ -112,8 +120,7 @@ public class TypeInformationSerializationSchema<T> implements DeserializationSch
 
 		try {
 			serializer.serialize(element, dos);
-		}
-		catch (IOException e) {
+		} catch (IOException e) {
 			throw new RuntimeException("Unable to serialize record", e);
 		}
 

@@ -43,8 +43,8 @@ import java.util.List;
  * Utility methods for serialization of {@link TypeSerializer}.
  *
  * @deprecated This utility class was used to write serializers into checkpoints.
- *             Starting from Flink 1.6.x, this should no longer happen, and therefore
- *             this class is deprecated. It remains here for backwards compatibility paths.
+ * Starting from Flink 1.6.x, this should no longer happen, and therefore
+ * this class is deprecated. It remains here for backwards compatibility paths.
  */
 @Internal
 @Deprecated
@@ -58,11 +58,9 @@ public class TypeSerializerSerializationUtil {
 	 * <p>It is written with a format that can be later read again using
 	 * {@link #tryReadSerializer(DataInputView, ClassLoader, boolean)}.
 	 *
-	 * @param out the data output view.
+	 * @param out        the data output view.
 	 * @param serializer the serializer to write.
-	 *
-	 * @param <T> Data type of the serializer.
-	 *
+	 * @param <T>        Data type of the serializer.
 	 * @throws IOException
 	 */
 	public static <T> void writeSerializer(DataOutputView out, TypeSerializer<T> serializer) throws IOException {
@@ -76,11 +74,9 @@ public class TypeSerializerSerializationUtil {
 	 * <p>If deserialization fails for any reason (corrupted serializer bytes, serializer class
 	 * no longer in classpath, serializer class no longer valid, etc.), an {@link IOException} is thrown.
 	 *
-	 * @param in the data input view.
+	 * @param in                  the data input view.
 	 * @param userCodeClassLoader the user code class loader to use.
-	 *
-	 * @param <T> Data type of the serializer.
-	 *
+	 * @param <T>                 Data type of the serializer.
 	 * @return the deserialized serializer.
 	 */
 	public static <T> TypeSerializer<T> tryReadSerializer(DataInputView in, ClassLoader userCodeClassLoader) throws IOException {
@@ -94,20 +90,18 @@ public class TypeSerializerSerializationUtil {
 	 * <p>If deserialization fails due to any exception, users can opt to use a dummy
 	 * {@link UnloadableDummyTypeSerializer} to hold the serializer bytes, otherwise an {@link IOException} is thrown.
 	 *
-	 * @param in the data input view.
+	 * @param in                  the data input view.
 	 * @param userCodeClassLoader the user code class loader to use.
 	 * @param useDummyPlaceholder whether or not to use a dummy {@link UnloadableDummyTypeSerializer} to hold the
 	 *                            serializer bytes in the case of a {@link ClassNotFoundException} or
 	 *                            {@link InvalidClassException}.
-	 *
-	 * @param <T> Data type of the serializer.
-	 *
+	 * @param <T>                 Data type of the serializer.
 	 * @return the deserialized serializer.
 	 */
 	public static <T> TypeSerializer<T> tryReadSerializer(
-			DataInputView in,
-			ClassLoader userCodeClassLoader,
-			boolean useDummyPlaceholder) throws IOException {
+		DataInputView in,
+		ClassLoader userCodeClassLoader,
+		boolean useDummyPlaceholder) throws IOException {
 
 		final TypeSerializerSerializationUtil.TypeSerializerSerializationProxy<T> proxy =
 			new TypeSerializerSerializationUtil.TypeSerializerSerializationProxy<>(userCodeClassLoader);
@@ -140,14 +134,13 @@ public class TypeSerializerSerializationUtil {
 	 *     <li>4. serialized serializers and the config snapshots.</li>
 	 * </ul>
 	 *
-	 * @param out the data output view.
+	 * @param out                   the data output view.
 	 * @param serializersAndConfigs serializer and configuration snapshot pairs
-	 *
 	 * @throws IOException
 	 */
 	public static void writeSerializersAndConfigsWithResilience(
-			DataOutputView out,
-			List<Tuple2<TypeSerializer<?>, TypeSerializerSnapshot<?>>> serializersAndConfigs) throws IOException {
+		DataOutputView out,
+		List<Tuple2<TypeSerializer<?>, TypeSerializerSnapshot<?>>> serializersAndConfigs) throws IOException {
 
 		try (
 			ByteArrayOutputStreamWithPos bufferWithPos = new ByteArrayOutputStreamWithPos();
@@ -175,16 +168,14 @@ public class TypeSerializerSerializationUtil {
 	 * <p>If deserialization for serializers fails due to any exception, users can opt to use a dummy
 	 * {@link UnloadableDummyTypeSerializer} to hold the serializer bytes
 	 *
-	 * @param in the data input view.
+	 * @param in                  the data input view.
 	 * @param userCodeClassLoader the user code class loader to use.
-	 *
 	 * @return the deserialized serializer and config snapshot pairs.
-	 *
 	 * @throws IOException
 	 */
 	public static List<Tuple2<TypeSerializer<?>, TypeSerializerSnapshot<?>>> readSerializersAndConfigsWithResilience(
-			DataInputView in,
-			ClassLoader userCodeClassLoader) throws IOException {
+		DataInputView in,
+		ClassLoader userCodeClassLoader) throws IOException {
 
 		int numSerializersAndConfigSnapshots = in.readInt();
 
@@ -216,7 +207,7 @@ public class TypeSerializerSerializationUtil {
 				bufferWithPos.setPosition(offsets[i * 2 + 1]);
 
 				configSnapshot = TypeSerializerSnapshotSerializationUtil.readSerializerSnapshot(
-						bufferWrapper, userCodeClassLoader, serializer);
+					bufferWrapper, userCodeClassLoader, serializer);
 
 				if (serializer instanceof LegacySerializerSnapshotTransformer) {
 					configSnapshot = transformLegacySnapshot(serializer, configSnapshot);
@@ -330,7 +321,7 @@ public class TypeSerializerSerializationUtil {
 		/**
 		 * Creates a new exception, with the cause of the read error and the original serializer bytes.
 		 *
-		 * @param cause the cause of the read error.
+		 * @param cause           the cause of the read error.
 		 * @param serializerBytes the original serializer bytes.
 		 */
 		public UnloadableTypeSerializerException(Exception cause, byte[] serializerBytes) {

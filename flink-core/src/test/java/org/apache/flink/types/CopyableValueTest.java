@@ -26,7 +26,7 @@ public class CopyableValueTest {
 
 	@Test
 	public void testCopy() {
-		CopyableValue<?>[] value_types = new CopyableValue[] {
+		CopyableValue<?>[] value_types = new CopyableValue[]{
 			new BooleanValue(true),
 			new ByteValue((byte) 42),
 			new CharValue('q'),

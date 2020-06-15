@@ -51,7 +51,6 @@ import java.util.Arrays;
  * HOWEVER, if SplitDataProperties are not correctly defined, the result of the program might be wrong!</b>
  *
  * @param <T> The type of the DataSource on which the SplitDataProperties are defined.
- *
  * @see org.apache.flink.core.io.InputSplit
  * @see org.apache.flink.api.common.io.InputFormat
  * @see org.apache.flink.api.java.operators.DataSource
@@ -92,7 +91,7 @@ public class SplitDataProperties<T> implements GenericDataSourceBase.SplitDataPr
 	 * All records sharing the same key (combination) must be contained in a single input split.
 	 *
 	 * <p><b>
-	 *     IMPORTANT: Providing wrong information with SplitDataProperties can cause wrong results!
+	 * IMPORTANT: Providing wrong information with SplitDataProperties can cause wrong results!
 	 * </b>
 	 *
 	 * @param partitionFields The field positions of the partitioning keys.
@@ -108,11 +107,11 @@ public class SplitDataProperties<T> implements GenericDataSourceBase.SplitDataPr
 	 * All records sharing the same key (combination) must be contained in a single input split.
 	 *
 	 * <p><b>
-	 *     IMPORTANT: Providing wrong information with SplitDataProperties can cause wrong results!
+	 * IMPORTANT: Providing wrong information with SplitDataProperties can cause wrong results!
 	 * </b>
 	 *
 	 * @param partitionMethodId An ID for the method that was used to partition the data across splits.
-	 * @param partitionFields The field positions of the partitioning keys.
+	 * @param partitionFields   The field positions of the partitioning keys.
 	 * @return This SplitDataProperties object.
 	 */
 	public SplitDataProperties<T> splitsPartitionedBy(String partitionMethodId, int... partitionFields) {
@@ -135,11 +134,11 @@ public class SplitDataProperties<T> implements GenericDataSourceBase.SplitDataPr
 
 	/**
 	 * Defines that data is partitioned across input splits on the fields defined by field expressions.
- 	 * Multiple field expressions must be separated by the semicolon ';' character.
+	 * Multiple field expressions must be separated by the semicolon ';' character.
 	 * All records sharing the same key (combination) must be contained in a single input split.
 	 *
 	 * <p><b>
-	 *     IMPORTANT: Providing wrong information with SplitDataProperties can cause wrong results!
+	 * IMPORTANT: Providing wrong information with SplitDataProperties can cause wrong results!
 	 * </b>
 	 *
 	 * @param partitionFields The field expressions of the partitioning keys.
@@ -156,11 +155,11 @@ public class SplitDataProperties<T> implements GenericDataSourceBase.SplitDataPr
 	 * All records sharing the same key (combination) must be contained in a single input split.
 	 *
 	 * <p><b>
-	 *     IMPORTANT: Providing wrong information with SplitDataProperties can cause wrong results!
+	 * IMPORTANT: Providing wrong information with SplitDataProperties can cause wrong results!
 	 * </b>
 	 *
 	 * @param partitionMethodId An ID for the method that was used to partition the data across splits.
-	 * @param partitionFields The field expressions of the partitioning keys.
+	 * @param partitionFields   The field expressions of the partitioning keys.
 	 * @return This SplitDataProperties object.
 	 */
 	public SplitDataProperties<T> splitsPartitionedBy(String partitionMethodId, String partitionFields) {
@@ -177,8 +176,7 @@ public class SplitDataProperties<T> implements GenericDataSourceBase.SplitDataPr
 		this.splitPartitionKeys = getAllFlatKeys(partitionKeysA);
 		if (partitionMethodId != null) {
 			this.splitPartitioner = new SourcePartitionerMarker<>(partitionMethodId);
-		}
-		else {
+		} else {
 			this.splitPartitioner = null;
 		}
 
@@ -191,7 +189,7 @@ public class SplitDataProperties<T> implements GenericDataSourceBase.SplitDataPr
 	 * format for each input split.
 	 *
 	 * <p><b>
-	 *     IMPORTANT: Providing wrong information with SplitDataProperties can cause wrong results!
+	 * IMPORTANT: Providing wrong information with SplitDataProperties can cause wrong results!
 	 * </b>
 	 *
 	 * @param groupFields The field positions of the grouping keys.
@@ -221,7 +219,7 @@ public class SplitDataProperties<T> implements GenericDataSourceBase.SplitDataPr
 	 * format for each input split.
 	 *
 	 * <p><b>
-	 *     IMPORTANT: Providing wrong information with SplitDataProperties can cause wrong results!
+	 * IMPORTANT: Providing wrong information with SplitDataProperties can cause wrong results!
 	 * </b>
 	 *
 	 * @param groupFields The field expressions of the grouping keys.
@@ -253,11 +251,11 @@ public class SplitDataProperties<T> implements GenericDataSourceBase.SplitDataPr
 	 * All records of an input split must be emitted by the input format in the defined order.
 	 *
 	 * <p><b>
-	 *     IMPORTANT: Providing wrong information with SplitDataProperties can cause wrong results!
+	 * IMPORTANT: Providing wrong information with SplitDataProperties can cause wrong results!
 	 * </b>
 	 *
 	 * @param orderFields The field positions of the grouping keys.
-	 * @param orders The orders of the fields.
+	 * @param orders      The orders of the fields.
 	 * @return This SplitDataProperties object.
 	 */
 	public SplitDataProperties<T> splitsOrderedBy(int[] orderFields, Order[] orders) {
@@ -302,11 +300,11 @@ public class SplitDataProperties<T> implements GenericDataSourceBase.SplitDataPr
 	 * All records of an input split must be emitted by the input format in the defined order.
 	 *
 	 * <p><b>
-	 *     IMPORTANT: Providing wrong information with SplitDataProperties can cause wrong results!
+	 * IMPORTANT: Providing wrong information with SplitDataProperties can cause wrong results!
 	 * </b>
 	 *
 	 * @param orderFields The field expressions of the grouping key.
-	 * @param orders The orders of the fields.
+	 * @param orders      The orders of the fields.
 	 * @return This SplitDataProperties object.
 	 */
 	public SplitDataProperties<T> splitsOrderedBy(String orderFields, Order[] orders) {
@@ -419,7 +417,7 @@ public class SplitDataProperties<T> implements GenericDataSourceBase.SplitDataPr
 		@Override
 		public int partition(T key, int numPartitions) {
 			throw new UnsupportedOperationException("The SourcePartitionerMarker is only used as a marker for compatible partitioning. " +
-					"It must not be invoked.");
+				"It must not be invoked.");
 		}
 
 		@Override

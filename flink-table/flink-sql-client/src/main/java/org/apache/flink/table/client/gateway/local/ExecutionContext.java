@@ -140,14 +140,14 @@ public class ExecutionContext<ClusterID> {
 	private SessionState sessionState;
 
 	private ExecutionContext(
-			Environment environment,
-			SessionContext originalSessionContext,
-			@Nullable SessionState sessionState,
-			List<URL> dependencies,
-			Configuration flinkConfig,
-			ClusterClientServiceLoader clusterClientServiceLoader,
-			Options commandLineOptions,
-			List<CustomCommandLine> availableCommandLines) throws FlinkException {
+		Environment environment,
+		SessionContext originalSessionContext,
+		@Nullable SessionState sessionState,
+		List<URL> dependencies,
+		Configuration flinkConfig,
+		ClusterClientServiceLoader clusterClientServiceLoader,
+		Options commandLineOptions,
+		List<CustomCommandLine> availableCommandLines) throws FlinkException {
 		this.environment = environment;
 		this.originalSessionContext = originalSessionContext;
 
@@ -165,14 +165,14 @@ public class ExecutionContext<ClusterID> {
 
 		LOG.debug("Deployment descriptor: {}", environment.getDeployment());
 		final CommandLine commandLine = createCommandLine(
-				environment.getDeployment(),
-				commandLineOptions);
+			environment.getDeployment(),
+			commandLineOptions);
 
 		flinkConfig.addAll(createExecutionConfig(
-				commandLine,
-				commandLineOptions,
-				availableCommandLines,
-				dependencies));
+			commandLine,
+			commandLineOptions,
+			availableCommandLines,
+			dependencies));
 
 		final ClusterClientServiceLoader serviceLoader = checkNotNull(clusterClientServiceLoader);
 		clusterClientFactory = serviceLoader.getClusterClientFactory(flinkConfig);
@@ -232,7 +232,7 @@ public class ExecutionContext<ClusterID> {
 	 * Executes the given supplier using the execution context's classloader as thread classloader.
 	 */
 	public <R> R wrapClassLoader(Supplier<R> supplier) {
-		try (TemporaryClassLoaderContext ignored = TemporaryClassLoaderContext.of(classLoader)){
+		try (TemporaryClassLoaderContext ignored = TemporaryClassLoaderContext.of(classLoader)) {
 			return supplier.get();
 		}
 	}
@@ -241,7 +241,7 @@ public class ExecutionContext<ClusterID> {
 	 * Executes the given Runnable using the execution context's classloader as thread classloader.
 	 */
 	void wrapClassLoader(Runnable runnable) {
-		try (TemporaryClassLoaderContext ignored = TemporaryClassLoaderContext.of(classLoader)){
+		try (TemporaryClassLoaderContext ignored = TemporaryClassLoaderContext.of(classLoader)) {
 			runnable.run();
 		}
 	}
@@ -281,17 +281,19 @@ public class ExecutionContext<ClusterID> {
 		});
 	}
 
-	/** Returns a builder for this {@link ExecutionContext}. */
+	/**
+	 * Returns a builder for this {@link ExecutionContext}.
+	 */
 	public static Builder builder(
-			Environment defaultEnv,
-			SessionContext sessionContext,
-			List<URL> dependencies,
-			Configuration configuration,
-			ClusterClientServiceLoader serviceLoader,
-			Options commandLineOptions,
-			List<CustomCommandLine> commandLines) {
+		Environment defaultEnv,
+		SessionContext sessionContext,
+		List<URL> dependencies,
+		Configuration configuration,
+		ClusterClientServiceLoader serviceLoader,
+		Options commandLineOptions,
+		List<CustomCommandLine> commandLines) {
 		return new Builder(defaultEnv, sessionContext, dependencies, configuration,
-				serviceLoader, commandLineOptions, commandLines);
+			serviceLoader, commandLineOptions, commandLines);
 	}
 
 	//------------------------------------------------------------------------------------------------------------------
@@ -299,30 +301,30 @@ public class ExecutionContext<ClusterID> {
 	//------------------------------------------------------------------------------------------------------------------
 
 	private static Configuration createExecutionConfig(
-			CommandLine commandLine,
-			Options commandLineOptions,
-			List<CustomCommandLine> availableCommandLines,
-			List<URL> dependencies) throws FlinkException {
+		CommandLine commandLine,
+		Options commandLineOptions,
+		List<CustomCommandLine> availableCommandLines,
+		List<URL> dependencies) throws FlinkException {
 		LOG.debug("Available commandline options: {}", commandLineOptions);
 		List<String> options = Stream
-				.of(commandLine.getOptions())
-				.map(o -> o.getOpt() + "=" + o.getValue())
-				.collect(Collectors.toList());
+			.of(commandLine.getOptions())
+			.map(o -> o.getOpt() + "=" + o.getValue())
+			.collect(Collectors.toList());
 		LOG.debug(
-				"Instantiated commandline args: {}, options: {}",
-				commandLine.getArgList(),
-				options);
+			"Instantiated commandline args: {}, options: {}",
+			commandLine.getArgList(),
+			options);
 
 		final CustomCommandLine activeCommandLine = findActiveCommandLine(
-				availableCommandLines,
-				commandLine);
+			availableCommandLines,
+			commandLine);
 		LOG.debug(
-				"Available commandlines: {}, active commandline: {}",
-				availableCommandLines,
-				activeCommandLine);
+			"Available commandlines: {}, active commandline: {}",
+			availableCommandLines,
+			activeCommandLine);
 
 		Configuration executionConfig = activeCommandLine.applyCommandLineOptionsToConfiguration(
-				commandLine);
+			commandLine);
 
 		try {
 			final ProgramOptions programOptions = new ProgramOptions(commandLine);
@@ -370,12 +372,12 @@ public class ExecutionContext<ClusterID> {
 			final TableSourceFactory<?> factory = (TableSourceFactory<?>)
 				TableFactoryService.find(TableSourceFactory.class, sourceProperties, classLoader);
 			return factory.createTableSource(new TableSourceFactoryContextImpl(
-					ObjectIdentifier.of(
-							tableEnv.getCurrentCatalog(),
-							tableEnv.getCurrentDatabase(),
-							name),
-					CatalogTableImpl.fromProperties(sourceProperties),
-					tableEnv.getConfig().getConfiguration()));
+				ObjectIdentifier.of(
+					tableEnv.getCurrentCatalog(),
+					tableEnv.getCurrentDatabase(),
+					name),
+				CatalogTableImpl.fromProperties(sourceProperties),
+				tableEnv.getConfig().getConfiguration()));
 		} else if (environment.getExecution().isBatchPlanner()) {
 			final BatchTableSourceFactory<?> factory = (BatchTableSourceFactory<?>)
 				TableFactoryService.find(BatchTableSourceFactory.class, sourceProperties, classLoader);
@@ -389,12 +391,12 @@ public class ExecutionContext<ClusterID> {
 			final TableSinkFactory<?> factory = (TableSinkFactory<?>)
 				TableFactoryService.find(TableSinkFactory.class, sinkProperties, classLoader);
 			return factory.createTableSink(new TableSinkFactoryContextImpl(
-					ObjectIdentifier.of(
-							tableEnv.getCurrentCatalog(),
-							tableEnv.getCurrentDatabase(),
-							name),
-					CatalogTableImpl.fromProperties(sinkProperties),
-					tableEnv.getConfig().getConfiguration()));
+				ObjectIdentifier.of(
+					tableEnv.getCurrentCatalog(),
+					tableEnv.getCurrentDatabase(),
+					name),
+				CatalogTableImpl.fromProperties(sinkProperties),
+				tableEnv.getConfig().getConfiguration()));
 		} else if (environment.getExecution().isBatchPlanner()) {
 			final BatchTableSinkFactory<?> factory = (BatchTableSinkFactory<?>)
 				TableFactoryService.find(BatchTableSinkFactory.class, sinkProperties, classLoader);
@@ -404,13 +406,13 @@ public class ExecutionContext<ClusterID> {
 	}
 
 	private static TableEnvironment createStreamTableEnvironment(
-			StreamExecutionEnvironment env,
-			EnvironmentSettings settings,
-			TableConfig config,
-			Executor executor,
-			CatalogManager catalogManager,
-			ModuleManager moduleManager,
-			FunctionCatalog functionCatalog) {
+		StreamExecutionEnvironment env,
+		EnvironmentSettings settings,
+		TableConfig config,
+		Executor executor,
+		CatalogManager catalogManager,
+		ModuleManager moduleManager,
+		FunctionCatalog functionCatalog) {
 
 		final Map<String, String> plannerProperties = settings.toPlannerProperties();
 		final Planner planner = ComponentFactoryService.find(PlannerFactory.class, plannerProperties)
@@ -428,8 +430,8 @@ public class ExecutionContext<ClusterID> {
 	}
 
 	private static Executor lookupExecutor(
-			Map<String, String> executorProperties,
-			StreamExecutionEnvironment executionEnvironment) {
+		Map<String, String> executorProperties,
+		StreamExecutionEnvironment executionEnvironment) {
 		try {
 			ExecutorFactory executorFactory = ComponentFactoryService.find(ExecutorFactory.class, executorProperties);
 			Method createMethod = executorFactory.getClass()
@@ -456,7 +458,7 @@ public class ExecutionContext<ClusterID> {
 			// Step 1.0 Initialize the table configuration.
 			final TableConfig config = new TableConfig();
 			environment.getConfiguration().asMap().forEach((k, v) ->
-					config.getConfiguration().setString(k, v));
+				config.getConfiguration().setString(k, v));
 
 			// Step 1.1 Initialize the ModuleManager if required.
 			final ModuleManager moduleManager = new ModuleManager();
@@ -487,7 +489,7 @@ public class ExecutionContext<ClusterID> {
 			// No need to register the modules info if already inherit from the same session.
 			Map<String, Module> modules = new LinkedHashMap<>();
 			environment.getModules().forEach((name, entry) ->
-					modules.put(name, createModule(entry.asMap(), classLoader))
+				modules.put(name, createModule(entry.asMap(), classLoader))
 			);
 			if (!modules.isEmpty()) {
 				// unload core module first to respect whatever users configure
@@ -510,20 +512,20 @@ public class ExecutionContext<ClusterID> {
 			// Set up session state.
 			this.sessionState = sessionState;
 			createTableEnvironment(
-					settings,
-					sessionState.config,
-					sessionState.catalogManager,
-					sessionState.moduleManager,
-					sessionState.functionCatalog);
+				settings,
+				sessionState.config,
+				sessionState.catalogManager,
+				sessionState.moduleManager,
+				sessionState.functionCatalog);
 		}
 	}
 
 	private void createTableEnvironment(
-			EnvironmentSettings settings,
-			TableConfig config,
-			CatalogManager catalogManager,
-			ModuleManager moduleManager,
-			FunctionCatalog functionCatalog) {
+		EnvironmentSettings settings,
+		TableConfig config,
+		CatalogManager catalogManager,
+		ModuleManager moduleManager,
+		FunctionCatalog functionCatalog) {
 		if (environment.getExecution().isStreamingPlanner()) {
 			streamExecEnv = createStreamExecutionEnvironment();
 			execEnv = null;
@@ -531,22 +533,22 @@ public class ExecutionContext<ClusterID> {
 			final Map<String, String> executorProperties = settings.toExecutorProperties();
 			executor = lookupExecutor(executorProperties, streamExecEnv);
 			tableEnv = createStreamTableEnvironment(
-					streamExecEnv,
-					settings,
-					config,
-					executor,
-					catalogManager,
-					moduleManager,
-					functionCatalog);
+				streamExecEnv,
+				settings,
+				config,
+				executor,
+				catalogManager,
+				moduleManager,
+				functionCatalog);
 		} else if (environment.getExecution().isBatchPlanner()) {
 			streamExecEnv = null;
 			execEnv = createExecutionEnvironment();
 			executor = null;
 			tableEnv = new BatchTableEnvironmentImpl(
-					execEnv,
-					config,
-					catalogManager,
-					moduleManager);
+				execEnv,
+				config,
+				catalogManager,
+				moduleManager);
 		} else {
 			throw new SqlExecutionException("Unsupported execution type specified.");
 		}
@@ -705,7 +707,9 @@ public class ExecutionContext<ClusterID> {
 
 	//~ Inner Class -------------------------------------------------------------------------------
 
-	/** Builder for {@link ExecutionContext}. */
+	/**
+	 * Builder for {@link ExecutionContext}.
+	 */
 	public static class Builder {
 		// Required members.
 		private final SessionContext sessionContext;
@@ -723,13 +727,13 @@ public class ExecutionContext<ClusterID> {
 		private SessionState sessionState;
 
 		private Builder(
-				Environment defaultEnv,
-				@Nullable SessionContext sessionContext,
-				List<URL> dependencies,
-				Configuration configuration,
-				ClusterClientServiceLoader serviceLoader,
-				Options commandLineOptions,
-				List<CustomCommandLine> commandLines) {
+			Environment defaultEnv,
+			@Nullable SessionContext sessionContext,
+			List<URL> dependencies,
+			Configuration configuration,
+			ClusterClientServiceLoader serviceLoader,
+			Options commandLineOptions,
+			List<CustomCommandLine> commandLines) {
 			this.defaultEnv = defaultEnv;
 			this.sessionContext = sessionContext;
 			this.dependencies = dependencies;
@@ -752,16 +756,16 @@ public class ExecutionContext<ClusterID> {
 		public ExecutionContext<?> build() {
 			try {
 				return new ExecutionContext<>(
-						this.currentEnv == null
-								? Environment.merge(defaultEnv, sessionContext.getSessionEnv())
-								: this.currentEnv,
-						this.sessionContext,
-						this.sessionState,
-						this.dependencies,
-						this.configuration,
-						this.serviceLoader,
-						this.commandLineOptions,
-						this.commandLines);
+					this.currentEnv == null
+						? Environment.merge(defaultEnv, sessionContext.getSessionEnv())
+						: this.currentEnv,
+					this.sessionContext,
+					this.sessionState,
+					this.dependencies,
+					this.configuration,
+					this.serviceLoader,
+					this.commandLineOptions,
+					this.commandLines);
 			} catch (Throwable t) {
 				// catch everything such that a configuration does not crash the executor
 				throw new SqlExecutionException("Could not create execution context.", t);
@@ -769,7 +773,9 @@ public class ExecutionContext<ClusterID> {
 		}
 	}
 
-	/** Represents the state that should be reused in one session. **/
+	/**
+	 * Represents the state that should be reused in one session.
+	 **/
 	public static class SessionState {
 		public final TableConfig config;
 		public final CatalogManager catalogManager;
@@ -777,10 +783,10 @@ public class ExecutionContext<ClusterID> {
 		public final FunctionCatalog functionCatalog;
 
 		private SessionState(
-				TableConfig config,
-				CatalogManager catalogManager,
-				ModuleManager moduleManager,
-				FunctionCatalog functionCatalog) {
+			TableConfig config,
+			CatalogManager catalogManager,
+			ModuleManager moduleManager,
+			FunctionCatalog functionCatalog) {
 			this.config = config;
 			this.catalogManager = catalogManager;
 			this.moduleManager = moduleManager;
@@ -788,10 +794,10 @@ public class ExecutionContext<ClusterID> {
 		}
 
 		public static SessionState of(
-				TableConfig config,
-				CatalogManager catalogManager,
-				ModuleManager moduleManager,
-				FunctionCatalog functionCatalog) {
+			TableConfig config,
+			CatalogManager catalogManager,
+			ModuleManager moduleManager,
+			FunctionCatalog functionCatalog) {
 			return new SessionState(config, catalogManager, moduleManager, functionCatalog);
 		}
 	}

@@ -38,7 +38,7 @@ public class FieldSerializer {
 		out.writeUTF(field.getName());
 	}
 
-	public static Field deserializeField(ObjectInputStream in) throws IOException, ClassNotFoundException  {
+	public static Field deserializeField(ObjectInputStream in) throws IOException, ClassNotFoundException {
 		Class<?> clazz = (Class<?>) in.readObject();
 		String fieldName = in.readUTF();
 		// try superclasses as well

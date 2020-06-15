@@ -34,7 +34,9 @@ public final class ShortSerializer extends TypeSerializerSingleton<Short> {
 
 	private static final long serialVersionUID = 1L;
 
-	/** Sharable instance of the ShortSerializer. */
+	/**
+	 * Sharable instance of the ShortSerializer.
+	 */
 	public static final ShortSerializer INSTANCE = new ShortSerializer();
 
 	private static final Short ZERO = (short) 0;

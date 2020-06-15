@@ -18,7 +18,8 @@ specific language governing permissions and limitations
 under the License.
 -->
 
-<svg width="1000px" height="350px" viewBox="0 0 1000 350" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" style="background: #FFFFFF;">
+<svg width="1000px" height="350px" viewBox="0 0 1000 350" version="1.1" xmlns="http://www.w3.org/2000/svg"
+     xmlns:xlink="http://www.w3.org/1999/xlink" style="background: #FFFFFF;">
     <!-- Generator: Sketch 48.2 (47327) - http://www.bohemiancoding.com/sketch -->
     <title>Interval Join (Selected)</title>
     <desc>Created with Sketch.</desc>
@@ -112,22 +113,32 @@ under the License.
                 <tspan x="836" y="276">7,6</tspan>
                 <tspan x="836" y="298">7,7</tspan>
             </text>
-            <polygon id="Path-3" fill-opacity="0.100000001" fill="#9B9B9B" points="-51 99.8380503 151.566279 235.968947 251.677716 99.8380503"></polygon>
-            <polygon id="Path-3" fill-opacity="0.100000001" fill="#9B9B9B" points="246 99.8380503 448.566279 235.968947 548.677716 99.8380503"></polygon>
-            <polygon id="Path-3" fill-opacity="0.100000001" fill="#9B9B9B" points="350 99.8380503 552.566279 235.968947 652.677716 99.8380503"></polygon>
-            <polygon id="Path-3" fill-opacity="0.100000001" fill="#9B9B9B" points="448 99.8380503 650.566279 235.968947 750.677716 99.8380503"></polygon>
-            <polygon id="Path-3" fill-opacity="0.100000001" fill="#9B9B9B" points="651 99.8380503 853.566279 235.968947 953.677716 99.8380503"></polygon>
-            <polygon id="Path-3" fill-opacity="0.5" fill="#F8E71C" points="148.284508 99.8380503 350.850787 235.968947 450.962224 99.8380503"></polygon>
+            <polygon id="Path-3" fill-opacity="0.100000001" fill="#9B9B9B"
+                     points="-51 99.8380503 151.566279 235.968947 251.677716 99.8380503"></polygon>
+            <polygon id="Path-3" fill-opacity="0.100000001" fill="#9B9B9B"
+                     points="246 99.8380503 448.566279 235.968947 548.677716 99.8380503"></polygon>
+            <polygon id="Path-3" fill-opacity="0.100000001" fill="#9B9B9B"
+                     points="350 99.8380503 552.566279 235.968947 652.677716 99.8380503"></polygon>
+            <polygon id="Path-3" fill-opacity="0.100000001" fill="#9B9B9B"
+                     points="448 99.8380503 650.566279 235.968947 750.677716 99.8380503"></polygon>
+            <polygon id="Path-3" fill-opacity="0.100000001" fill="#9B9B9B"
+                     points="651 99.8380503 853.566279 235.968947 953.677716 99.8380503"></polygon>
+            <polygon id="Path-3" fill-opacity="0.5" fill="#F8E71C"
+                     points="148.284508 99.8380503 350.850787 235.968947 450.962224 99.8380503"></polygon>
             <g id="StreamRecord-Copy-7" transform="translate(235.000000, 85.000000)">
                 <circle id="Oval" stroke="#979797" fill="#7ED321" cx="12.5" cy="12.5" r="12.5"></circle>
                 <text id="1" font-family="Roboto-Regular, Roboto" font-size="16" font-weight="normal" fill="#34323B">
                     <tspan x="8" y="18">1</tspan>
                 </text>
             </g>
-            <text id="lower-bound" transform="translate(246.800863, 159.474217) rotate(34.000000) translate(-246.800863, -159.474217) " font-family="AndaleMono, Andale Mono" font-size="14" font-weight="normal" fill="#34323B">
+            <text id="lower-bound"
+                  transform="translate(246.800863, 159.474217) rotate(34.000000) translate(-246.800863, -159.474217) "
+                  font-family="AndaleMono, Andale Mono" font-size="14" font-weight="normal" fill="#34323B">
                 <tspan x="200.300863" y="164.474217">lower bound</tspan>
             </text>
-            <text id="upper-bound" transform="translate(398.500000, 156.000000) rotate(-53.000000) translate(-398.500000, -156.000000) " font-family="AndaleMono, Andale Mono" font-size="14" font-weight="normal" fill="#34323B">
+            <text id="upper-bound"
+                  transform="translate(398.500000, 156.000000) rotate(-53.000000) translate(-398.500000, -156.000000) "
+                  font-family="AndaleMono, Andale Mono" font-size="14" font-weight="normal" fill="#34323B">
                 <tspan x="352" y="161">upper bound</tspan>
             </text>
             <g id="StreamRecord" transform="translate(338.000000, 222.000000)">

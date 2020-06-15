@@ -55,8 +55,7 @@ public abstract class AggregateCombineHarness<T, R, A extends Aggregator<T, R>> 
 			A agg1 = initAggregator();
 			agg1.combine(initAggregator());
 			return agg1.result();
-		}
-		else {
+		} else {
 			R previousResult = null;
 			R result = null;
 
@@ -77,7 +76,7 @@ public abstract class AggregateCombineHarness<T, R, A extends Aggregator<T, R>> 
 				for (int j = 0; j < i; j++) {
 					aggregator1.aggregate(list.get(j));
 				}
-				for (int j = i; j < values.length; j++){
+				for (int j = i; j < values.length; j++) {
 					aggregator2.aggregate(list.get(j));
 				}
 
@@ -101,8 +100,7 @@ public abstract class AggregateCombineHarness<T, R, A extends Aggregator<T, R>> 
 			// Instantiate a generic type
 			// http://stackoverflow.com/questions/75175/create-instance-of-generic-type-in-java
 			return (A) ((Class) ((ParameterizedType) this.getClass().getGenericSuperclass()).getActualTypeArguments()[2]).newInstance();
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			throw new RuntimeException("Could not initialize aggregator", e);
 		}
 

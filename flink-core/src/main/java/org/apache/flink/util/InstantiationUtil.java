@@ -153,6 +153,7 @@ public final class InstantiationUtil {
 	 * <p>This can be removed once 1.2 is no longer supported.
 	 */
 	private static final Set<String> scalaSerializerClassnames = new HashSet<>();
+
 	static {
 		scalaSerializerClassnames.add("org.apache.flink.api.scala.typeutils.TraversableSerializer");
 		scalaSerializerClassnames.add("org.apache.flink.api.scala.typeutils.CaseClassSerializer");
@@ -170,6 +171,7 @@ public final class InstantiationUtil {
 	 * @see <a href="https://issues.apache.org/jira/browse/FLINK-8451">FLINK-8451</a>
 	 */
 	private static final Set<String> scalaTypes = new HashSet<>();
+
 	static {
 		scalaTypes.add("scala.Tuple1");
 		scalaTypes.add("scala.Tuple2");
@@ -236,7 +238,7 @@ public final class InstantiationUtil {
 			} catch (ClassNotFoundException e) {
 
 				final ObjectStreamClass equivalentSerializer =
-						MigrationUtil.getEquivalentSerializer(streamClassDescriptor.getName());
+					MigrationUtil.getEquivalentSerializer(streamClassDescriptor.getName());
 
 				if (equivalentSerializer != null) {
 					return equivalentSerializer;
@@ -297,19 +299,25 @@ public final class InstantiationUtil {
 		// To add a new mapping just pick a name and add an entry as the following:
 
 		GENERIC_DATA_ARRAY_SERIALIZER(
-				"org.apache.avro.generic.GenericData$Array",
-				ObjectStreamClass.lookup(KryoRegistrationSerializerConfigSnapshot.DummyRegisteredClass.class)),
+			"org.apache.avro.generic.GenericData$Array",
+			ObjectStreamClass.lookup(KryoRegistrationSerializerConfigSnapshot.DummyRegisteredClass.class)),
 		HASH_MAP_SERIALIZER(
-				"org.apache.flink.runtime.state.HashMapSerializer",
-				ObjectStreamClass.lookup(MapSerializer.class)); // added in 1.5
+			"org.apache.flink.runtime.state.HashMapSerializer",
+			ObjectStreamClass.lookup(MapSerializer.class)); // added in 1.5
 
-		/** An internal unmodifiable map containing the mappings between deprecated and new serializers. */
+		/**
+		 * An internal unmodifiable map containing the mappings between deprecated and new serializers.
+		 */
 		private static final Map<String, ObjectStreamClass> EQUIVALENCE_MAP = Collections.unmodifiableMap(initMap());
 
-		/** The full name of the class of the old serializer. */
+		/**
+		 * The full name of the class of the old serializer.
+		 */
 		private final String oldSerializerName;
 
-		/** The serialization descriptor of the class of the new serializer. */
+		/**
+		 * The serialization descriptor of the class of the new serializer.
+		 */
 		private final ObjectStreamClass newSerializerStreamClass;
 
 		MigrationUtil(String oldSerializerName, ObjectStreamClass newSerializerStreamClass) {
@@ -319,7 +327,7 @@ public final class InstantiationUtil {
 
 		private static Map<String, ObjectStreamClass> initMap() {
 			final Map<String, ObjectStreamClass> init = new HashMap<>(4);
-			for (MigrationUtil m: MigrationUtil.values()) {
+			for (MigrationUtil m : MigrationUtil.values()) {
 				init.put(m.oldSerializerName, m.newSerializerStreamClass);
 			}
 			return init;
@@ -333,10 +341,10 @@ public final class InstantiationUtil {
 	/**
 	 * Creates a new instance of the given class name and type using the provided {@link ClassLoader}.
 	 *
-	 * @param className of the class to load
-	 * @param targetType type of the instantiated class
+	 * @param className   of the class to load
+	 * @param targetType  type of the instantiated class
 	 * @param classLoader to use for loading the class
-	 * @param <T> type of the instantiated class
+	 * @param <T>         type of the instantiated class
 	 * @return Instance of the given class name
 	 * @throws FlinkException if the class could not be found
 	 */
@@ -362,12 +370,11 @@ public final class InstantiationUtil {
 	/**
 	 * Creates a new instance of the given class.
 	 *
-	 * @param <T> The generic type of the class.
-	 * @param clazz The class to instantiate.
+	 * @param <T>    The generic type of the class.
+	 * @param clazz  The class to instantiate.
 	 * @param castTo Optional parameter, specifying the class that the given class must be a subclass off. This
 	 *               argument is added to prevent class cast exceptions occurring later.
 	 * @return An instance of the given class.
-	 *
 	 * @throws RuntimeException Thrown, if the class could not be instantiated. The exception contains a detailed
 	 *                          message about the reason why the instantiation failed.
 	 */
@@ -388,11 +395,9 @@ public final class InstantiationUtil {
 	/**
 	 * Creates a new instance of the given class.
 	 *
-	 * @param <T> The generic type of the class.
+	 * @param <T>   The generic type of the class.
 	 * @param clazz The class to instantiate.
-
 	 * @return An instance of the given class.
-	 *
 	 * @throws RuntimeException Thrown, if the class could not be instantiated. The exception contains a detailed
 	 *                          message about the reason why the instantiation failed.
 	 */
@@ -404,17 +409,15 @@ public final class InstantiationUtil {
 		// try to instantiate the class
 		try {
 			return clazz.newInstance();
-		}
-		catch (InstantiationException | IllegalAccessException iex) {
+		} catch (InstantiationException | IllegalAccessException iex) {
 			// check for the common problem causes
 			checkForInstantiation(clazz);
 
 			// here we are, if non of the common causes was the problem. then the error was
 			// most likely an exception in the constructor or field initialization
 			throw new RuntimeException("Could not instantiate type '" + clazz.getName() +
-					"' due to an unspecified exception: " + iex.getMessage(), iex);
-		}
-		catch (Throwable t) {
+				"' due to an unspecified exception: " + iex.getMessage(), iex);
+		} catch (Throwable t) {
 			String message = t.getMessage();
 			throw new RuntimeException("Could not instantiate type '" + clazz.getName() +
 				"' Most likely the constructor (or a member variable initialization) threw an exception" +
@@ -432,7 +435,7 @@ public final class InstantiationUtil {
 		Constructor<?>[] constructors = clazz.getConstructors();
 		for (Constructor<?> constructor : constructors) {
 			if (constructor.getParameterTypes().length == 0 &&
-					Modifier.isPublic(constructor.getModifiers())) {
+				Modifier.isPublic(constructor.getModifiers())) {
 				return true;
 			}
 		}
@@ -557,14 +560,14 @@ public final class InstantiationUtil {
 
 	@SuppressWarnings("unchecked")
 	public static <T> T deserializeObject(byte[] bytes, ClassLoader cl, boolean isFailureTolerant)
-			throws IOException, ClassNotFoundException {
+		throws IOException, ClassNotFoundException {
 
 		return deserializeObject(new ByteArrayInputStream(bytes), cl, isFailureTolerant);
 	}
 
 	@SuppressWarnings("unchecked")
 	public static <T> T deserializeObject(InputStream in, ClassLoader cl, boolean isFailureTolerant)
-			throws IOException, ClassNotFoundException {
+		throws IOException, ClassNotFoundException {
 
 		final ClassLoader old = Thread.currentThread().getContextClassLoader();
 		// not using resource try to avoid AutoClosable's close() on the given stream
@@ -574,15 +577,14 @@ public final class InstantiationUtil {
 				: new InstantiationUtil.ClassLoaderObjectInputStream(in, cl);
 			Thread.currentThread().setContextClassLoader(cl);
 			return (T) oois.readObject();
-		}
-		finally {
+		} finally {
 			Thread.currentThread().setContextClassLoader(old);
 		}
 	}
 
 	public static byte[] serializeObject(Object o) throws IOException {
 		try (ByteArrayOutputStream baos = new ByteArrayOutputStream();
-				ObjectOutputStream oos = new ObjectOutputStream(baos)) {
+			 ObjectOutputStream oos = new ObjectOutputStream(baos)) {
 			oos.writeObject(o);
 			oos.flush();
 			return baos.toByteArray();
@@ -610,8 +612,7 @@ public final class InstantiationUtil {
 	 * @param obj Object to clone
 	 * @param <T> Type of the object to clone
 	 * @return The cloned object
-	 *
-	 * @throws IOException Thrown if the serialization or deserialization process fails.
+	 * @throws IOException            Thrown if the serialization or deserialization process fails.
 	 * @throws ClassNotFoundException Thrown if any of the classes referenced by the object
 	 *                                cannot be resolved during deserialization.
 	 */
@@ -627,13 +628,11 @@ public final class InstantiationUtil {
 	 * Clones the given serializable object using Java serialization, using the given classloader to
 	 * resolve the cloned classes.
 	 *
-	 * @param obj Object to clone
+	 * @param obj         Object to clone
 	 * @param classLoader The classloader to resolve the classes during deserialization.
-	 * @param <T> Type of the object to clone
-	 *
+	 * @param <T>         Type of the object to clone
 	 * @return Cloned object
-	 *
-	 * @throws IOException Thrown if the serialization or deserialization process fails.
+	 * @throws IOException            Thrown if the serialization or deserialization process fails.
 	 * @throws ClassNotFoundException Thrown if any of the classes referenced by the object
 	 *                                cannot be resolved during deserialization.
 	 */
@@ -650,7 +649,7 @@ public final class InstantiationUtil {
 	 * Clones the given writable using the {@link IOReadableWritable serialization}.
 	 *
 	 * @param original Object to clone
-	 * @param <T> Type of the object to clone
+	 * @param <T>      Type of the object to clone
 	 * @return Cloned object
 	 * @throws IOException Thrown is the serialization fails.
 	 */
@@ -682,12 +681,11 @@ public final class InstantiationUtil {
 	 *
 	 * @param in The stream to read the class name from.
 	 * @param cl The class loader to resolve the class.
-	 *
 	 * @throws IOException Thrown, if the class name could not be read, the class could not be found.
 	 */
 	public static <T> Class<T> resolveClassByName(
-			DataInputView in,
-			ClassLoader cl) throws IOException {
+		DataInputView in,
+		ClassLoader cl) throws IOException {
 		return resolveClassByName(in, cl, Object.class);
 	}
 
@@ -700,26 +698,24 @@ public final class InstantiationUtil {
 	 * <p>The resolved class is checked to be equal to or a subtype of the given supertype
 	 * class.
 	 *
-	 * @param in The stream to read the class name from.
-	 * @param cl The class loader to resolve the class.
+	 * @param in        The stream to read the class name from.
+	 * @param cl        The class loader to resolve the class.
 	 * @param supertype A class that the resolved class must extend.
-	 *
 	 * @throws IOException Thrown, if the class name could not be read, the class could not be found,
 	 *                     or the class is not a subtype of the given supertype class.
 	 */
 	public static <T> Class<T> resolveClassByName(
-			DataInputView in,
-			ClassLoader cl,
-			Class<? super T> supertype) throws IOException {
+		DataInputView in,
+		ClassLoader cl,
+		Class<? super T> supertype) throws IOException {
 
 		final String className = in.readUTF();
 		final Class<?> rawClazz;
 		try {
 			rawClazz = Class.forName(className, false, cl);
-		}
-		catch (ClassNotFoundException e) {
+		} catch (ClassNotFoundException e) {
 			throw new IOException(
-					"Could not find class '" + className +  "' in classpath.", e);
+				"Could not find class '" + className + "' in classpath.", e);
 		}
 
 		if (!supertype.isAssignableFrom(rawClazz)) {

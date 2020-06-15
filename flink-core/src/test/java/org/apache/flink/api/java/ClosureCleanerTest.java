@@ -38,7 +38,7 @@ import java.util.function.Supplier;
 public class ClosureCleanerTest {
 
 	@Test(expected = InvalidProgramException.class)
-	public void testNonSerializable() throws Exception  {
+	public void testNonSerializable() throws Exception {
 		MapCreator creator = new NonSerializableMapCreator();
 		MapFunction<Integer, Integer> map = creator.getMap();
 
@@ -49,7 +49,7 @@ public class ClosureCleanerTest {
 	}
 
 	@Test
-	public void testCleanedNonSerializable() throws Exception  {
+	public void testCleanedNonSerializable() throws Exception {
 		MapCreator creator = new NonSerializableMapCreator();
 		MapFunction<Integer, Integer> map = creator.getMap();
 
@@ -60,7 +60,7 @@ public class ClosureCleanerTest {
 	}
 
 	@Test
-	public void testSerializable() throws Exception  {
+	public void testSerializable() throws Exception {
 		MapCreator creator = new SerializableMapCreator(1);
 		MapFunction<Integer, Integer> map = creator.getMap();
 
@@ -71,7 +71,7 @@ public class ClosureCleanerTest {
 	}
 
 	@Test
-	public void testNestedSerializable() throws Exception  {
+	public void testNestedSerializable() throws Exception {
 		MapCreator creator = new NestedSerializableMapCreator(1);
 		MapFunction<Integer, Integer> map = creator.getMap();
 
@@ -84,7 +84,7 @@ public class ClosureCleanerTest {
 	}
 
 	@Test(expected = InvalidProgramException.class)
-	public void testNestedNonSerializable() throws Exception  {
+	public void testNestedNonSerializable() throws Exception {
 		MapCreator creator = new NestedNonSerializableMapCreator(1);
 		MapFunction<Integer, Integer> map = creator.getMap();
 
@@ -428,7 +428,7 @@ class OuterMapCreator implements MapCreator {
 
 	static class OuterStaticClass implements MapCreator {
 
-		static class InnerStaticClass implements MapCreator{
+		static class InnerStaticClass implements MapCreator {
 
 			@Override
 			public MapFunction<Integer, Integer> getMap() {

@@ -57,10 +57,10 @@ public class ExtendedSqlRowTypeNameSpec extends SqlTypeNameSpec {
 	 * @param unparseAsStandard whether to unparse as standard SQL style
 	 */
 	public ExtendedSqlRowTypeNameSpec(SqlParserPos pos,
-			List<SqlIdentifier> fieldNames,
-			List<SqlDataTypeSpec> fieldTypes,
-			List<SqlCharStringLiteral> comments,
-			boolean unparseAsStandard) {
+									  List<SqlIdentifier> fieldNames,
+									  List<SqlDataTypeSpec> fieldTypes,
+									  List<SqlCharStringLiteral> comments,
+									  boolean unparseAsStandard) {
 		super(new SqlIdentifier(SqlTypeName.ROW.getName(), pos), pos);
 		this.fieldNames = fieldNames;
 		this.fieldTypes = fieldTypes;
@@ -113,7 +113,8 @@ public class ExtendedSqlRowTypeNameSpec extends SqlTypeNameSpec {
 		}
 	}
 
-	@Override public boolean equalsDeep(SqlTypeNameSpec node, Litmus litmus) {
+	@Override
+	public boolean equalsDeep(SqlTypeNameSpec node, Litmus litmus) {
 		if (!(node instanceof SqlRowTypeNameSpec)) {
 			return litmus.fail("{} != {}", this, node);
 		}
@@ -137,7 +138,8 @@ public class ExtendedSqlRowTypeNameSpec extends SqlTypeNameSpec {
 		return litmus.succeed();
 	}
 
-	@Override public RelDataType deriveType(SqlValidator sqlValidator) {
+	@Override
+	public RelDataType deriveType(SqlValidator sqlValidator) {
 		final RelDataTypeFactory typeFactory = sqlValidator.getTypeFactory();
 		return typeFactory.createStructType(
 			fieldTypes.stream()

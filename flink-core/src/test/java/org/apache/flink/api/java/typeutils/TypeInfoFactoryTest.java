@@ -21,6 +21,7 @@ package org.apache.flink.api.java.typeutils;
 import java.lang.reflect.Type;
 import java.util.HashMap;
 import java.util.Map;
+
 import org.apache.flink.api.common.ExecutionConfig;
 import org.apache.flink.api.common.functions.InvalidTypesException;
 import org.apache.flink.api.common.functions.MapFunction;
@@ -448,7 +449,7 @@ public class TypeInfoFactoryTest {
 	public static class MyEitherTypeInfoFactory<A, B> extends TypeInfoFactory<MyEither<A, B>> {
 		@Override
 		@SuppressWarnings("unchecked")
-		public TypeInformation<MyEither<A,B>> createTypeInfo(Type t, Map<String, TypeInformation<?>> genericParams) {
+		public TypeInformation<MyEither<A, B>> createTypeInfo(Type t, Map<String, TypeInformation<?>> genericParams) {
 			return new EitherTypeInfo(genericParams.get("A"), genericParams.get("B"));
 		}
 	}

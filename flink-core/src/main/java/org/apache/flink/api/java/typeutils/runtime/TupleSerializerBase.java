@@ -49,11 +49,11 @@ public abstract class TupleSerializerBase<T> extends TypeSerializer<T> {
 		this.fieldSerializers = (TypeSerializer<Object>[]) checkNotNull(fieldSerializers);
 		this.arity = fieldSerializers.length;
 	}
-	
+
 	public Class<T> getTupleClass() {
 		return this.tupleClass;
 	}
-	
+
 	@Override
 	public boolean isImmutableType() {
 		return false;
@@ -92,12 +92,12 @@ public abstract class TupleSerializerBase<T> extends TypeSerializer<T> {
 			fieldSerializers[i].copy(source, target);
 		}
 	}
-	
+
 	@Override
 	public int hashCode() {
 		return 31 * Arrays.hashCode(fieldSerializers) + Objects.hash(tupleClass, arity);
 	}
-	
+
 	@Override
 	public boolean equals(Object obj) {
 		if (obj instanceof TupleSerializerBase) {

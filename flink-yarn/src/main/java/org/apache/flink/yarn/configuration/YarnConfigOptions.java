@@ -41,8 +41,8 @@ public class YarnConfigOptions {
 	 */
 	public static final ConfigOption<Integer> APP_MASTER_VCORES =
 		key("yarn.appmaster.vcores")
-		.defaultValue(1)
-		.withDescription("The number of virtual cores (vcores) used by YARN application master.");
+			.defaultValue(1)
+			.withDescription("The number of virtual cores (vcores) used by YARN application master.");
 
 	/**
 	 * Defines whether user-jars are included in the system class path for per-job-clusters as well as their positioning
@@ -64,7 +64,7 @@ public class YarnConfigOptions {
 		key("yarn.containers.vcores")
 			.defaultValue(-1)
 			.withDescription(Description.builder().text(
-					"The number of virtual cores (vcores) per YARN container. By default, the number of vcores" +
+				"The number of virtual cores (vcores) per YARN container. By default, the number of vcores" +
 					" is set to the number of slots per TaskManager, if set, or to 1, otherwise. In order for this" +
 					" parameter to be used your cluster must have CPU scheduling enabled. You can do this by setting" +
 					" the %s.",
@@ -80,32 +80,32 @@ public class YarnConfigOptions {
 	 */
 	public static final ConfigOption<String> APPLICATION_ATTEMPTS =
 		key("yarn.application-attempts")
-		.noDefaultValue()
-		.withDescription("Number of ApplicationMaster restarts. Note that that the entire Flink cluster will restart" +
-			" and the YARN Client will loose the connection. Also, the JobManager address will change and you’ll need" +
-			" to set the JM host:port manually. It is recommended to leave this option at 1.");
+			.noDefaultValue()
+			.withDescription("Number of ApplicationMaster restarts. Note that that the entire Flink cluster will restart" +
+				" and the YARN Client will loose the connection. Also, the JobManager address will change and you’ll need" +
+				" to set the JM host:port manually. It is recommended to leave this option at 1.");
 
 	/**
 	 * The config parameter defining the attemptFailuresValidityInterval of Yarn application.
 	 */
 	public static final ConfigOption<Long> APPLICATION_ATTEMPT_FAILURE_VALIDITY_INTERVAL =
 		key("yarn.application-attempt-failures-validity-interval")
-		.defaultValue(10000L)
-		.withDescription(Description.builder()
-			.text("Time window in milliseconds which defines the number of application attempt failures when restarting the AM. " +
-				"Failures which fall outside of this window are not being considered. " +
-				"Set this value to -1 in order to count globally. " +
-				"See %s for more information.", link("https://hortonworks.com/blog/apache-hadoop-yarn-hdp-2-2-fault-tolerance-features-long-running-services/", "here"))
-			.build());
+			.defaultValue(10000L)
+			.withDescription(Description.builder()
+				.text("Time window in milliseconds which defines the number of application attempt failures when restarting the AM. " +
+					"Failures which fall outside of this window are not being considered. " +
+					"Set this value to -1 in order to count globally. " +
+					"See %s for more information.", link("https://hortonworks.com/blog/apache-hadoop-yarn-hdp-2-2-fault-tolerance-features-long-running-services/", "here"))
+				.build());
 
 	/**
 	 * The heartbeat interval between the Application Master and the YARN Resource Manager.
 	 */
 	public static final ConfigOption<Integer> HEARTBEAT_DELAY_SECONDS =
 		key("yarn.heartbeat.interval")
-		.defaultValue(5)
-		.withDeprecatedKeys("yarn.heartbeat-delay")
-		.withDescription("Time between heartbeats with the ResourceManager in seconds.");
+			.defaultValue(5)
+			.withDeprecatedKeys("yarn.heartbeat-delay")
+			.withDescription("Time between heartbeats with the ResourceManager in seconds.");
 
 	/**
 	 * The heartbeat interval between the Application Master and the YARN Resource Manager
@@ -132,11 +132,11 @@ public class YarnConfigOptions {
 	 */
 	public static final ConfigOption<String> PROPERTIES_FILE_LOCATION =
 		key("yarn.properties-file.location")
-		.noDefaultValue()
-		.withDescription("When a Flink job is submitted to YARN, the JobManager’s host and the number of available" +
-			" processing slots is written into a properties file, so that the Flink client is able to pick those" +
-			" details up. This configuration parameter allows changing the default location of that file" +
-			" (for example for environments sharing a Flink installation between users).");
+			.noDefaultValue()
+			.withDescription("When a Flink job is submitted to YARN, the JobManager’s host and the number of available" +
+				" processing slots is written into a properties file, so that the Flink client is able to pick those" +
+				" details up. This configuration parameter allows changing the default location of that file" +
+				" (for example for environments sharing a Flink installation between users).");
 
 	/**
 	 * The config parameter defining the Akka actor system port for the ApplicationMaster and
@@ -148,13 +148,13 @@ public class YarnConfigOptions {
 	 */
 	public static final ConfigOption<String> APPLICATION_MASTER_PORT =
 		key("yarn.application-master.port")
-		.defaultValue("0")
-		.withDescription("With this configuration option, users can specify a port, a range of ports or a list of ports" +
-			" for the Application Master (and JobManager) RPC port. By default we recommend using the default value (0)" +
-			" to let the operating system choose an appropriate port. In particular when multiple AMs are running on" +
-			" the same physical host, fixed port assignments prevent the AM from starting. For example when running" +
-			" Flink on YARN on an environment with a restrictive firewall, this option allows specifying a range of" +
-			" allowed ports.");
+			.defaultValue("0")
+			.withDescription("With this configuration option, users can specify a port, a range of ports or a list of ports" +
+				" for the Application Master (and JobManager) RPC port. By default we recommend using the default value (0)" +
+				" to let the operating system choose an appropriate port. In particular when multiple AMs are running on" +
+				" the same physical host, fixed port assignments prevent the AM from starting. For example when running" +
+				" Flink on YARN on an environment with a restrictive firewall, this option allows specifying a range of" +
+				" allowed ports.");
 
 	/**
 	 * A non-negative integer indicating the priority for submitting a Flink YARN application. It will only take effect
@@ -190,82 +190,87 @@ public class YarnConfigOptions {
 	 */
 	public static final ConfigOption<String> APPLICATION_TAGS =
 		key("yarn.tags")
-		.defaultValue("")
-		.withDescription("A comma-separated list of tags to apply to the Flink YARN application.");
+			.defaultValue("")
+			.withDescription("A comma-separated list of tags to apply to the Flink YARN application.");
 
 	// ----------------------- YARN CLI OPTIONS ------------------------------------
 
 	public static final ConfigOption<List<String>> SHIP_DIRECTORIES =
-			key("yarn.ship-directories")
-				.stringType()
-				.asList()
-				.noDefaultValue()
-				.withDescription("A semicolon-separated list of directories to be shipped to the YARN cluster.");
+		key("yarn.ship-directories")
+			.stringType()
+			.asList()
+			.noDefaultValue()
+			.withDescription("A semicolon-separated list of directories to be shipped to the YARN cluster.");
 
 	public static final ConfigOption<String> FLINK_DIST_JAR =
-			key("yarn.flink-dist-jar")
-				.stringType()
-				.noDefaultValue()
-				.withDescription("The location of the Flink dist jar.");
+		key("yarn.flink-dist-jar")
+			.stringType()
+			.noDefaultValue()
+			.withDescription("The location of the Flink dist jar.");
 
 	public static final ConfigOption<String> APPLICATION_ID =
-			key("yarn.application.id")
-				.stringType()
-				.noDefaultValue()
-				.withDescription("The YARN application id of the running yarn cluster." +
-						" This is the YARN cluster where the pipeline is going to be executed.");
+		key("yarn.application.id")
+			.stringType()
+			.noDefaultValue()
+			.withDescription("The YARN application id of the running yarn cluster." +
+				" This is the YARN cluster where the pipeline is going to be executed.");
 
 	public static final ConfigOption<String> APPLICATION_QUEUE =
-			key("yarn.application.queue")
-				.stringType()
-				.noDefaultValue()
-				.withDescription("The YARN queue on which to put the current pipeline.");
+		key("yarn.application.queue")
+			.stringType()
+			.noDefaultValue()
+			.withDescription("The YARN queue on which to put the current pipeline.");
 
 	public static final ConfigOption<String> APPLICATION_NAME =
-			key("yarn.application.name")
-				.stringType()
-				.noDefaultValue()
-				.withDescription("A custom name for your YARN application.");
+		key("yarn.application.name")
+			.stringType()
+			.noDefaultValue()
+			.withDescription("A custom name for your YARN application.");
 
 	public static final ConfigOption<String> APPLICATION_TYPE =
-			key("yarn.application.type")
-				.stringType()
-				.noDefaultValue()
-				.withDescription("A custom type for your YARN application..");
+		key("yarn.application.type")
+			.stringType()
+			.noDefaultValue()
+			.withDescription("A custom type for your YARN application..");
 
 	public static final ConfigOption<String> NODE_LABEL =
-			key("yarn.application.node-label")
-				.stringType()
-				.noDefaultValue()
-				.withDescription("Specify YARN node label for the YARN application.");
+		key("yarn.application.node-label")
+			.stringType()
+			.noDefaultValue()
+			.withDescription("Specify YARN node label for the YARN application.");
 
 	public static final ConfigOption<Boolean> SHIP_LOCAL_KEYTAB =
-			key("yarn.security.kerberos.ship-local-keytab")
-					.booleanType()
-					.defaultValue(true)
-					.withDescription(
-							"When this is true Flink will ship the keytab file configured via " +
-									SecurityOptions.KERBEROS_LOGIN_KEYTAB.key() +
-									" as a localized YARN resource.");
+		key("yarn.security.kerberos.ship-local-keytab")
+			.booleanType()
+			.defaultValue(true)
+			.withDescription(
+				"When this is true Flink will ship the keytab file configured via " +
+					SecurityOptions.KERBEROS_LOGIN_KEYTAB.key() +
+					" as a localized YARN resource.");
 
 	public static final ConfigOption<String> LOCALIZED_KEYTAB_PATH =
-			key("yarn.security.kerberos.localized-keytab-path")
-					.stringType()
-					.defaultValue("krb5.keytab")
-					.withDescription(
-							"Local (on NodeManager) path where kerberos keytab file will be" +
-									" localized to. If " + SHIP_LOCAL_KEYTAB.key() + " set to " +
-									"true, Flink willl ship the keytab file as a YARN local " +
-									"resource. In this case, the path is relative to the local " +
-									"resource directory. If set to false, Flink" +
-									" will try to directly locate the keytab from the path itself.");
+		key("yarn.security.kerberos.localized-keytab-path")
+			.stringType()
+			.defaultValue("krb5.keytab")
+			.withDescription(
+				"Local (on NodeManager) path where kerberos keytab file will be" +
+					" localized to. If " + SHIP_LOCAL_KEYTAB.key() + " set to " +
+					"true, Flink willl ship the keytab file as a YARN local " +
+					"resource. In this case, the path is relative to the local " +
+					"resource directory. If set to false, Flink" +
+					" will try to directly locate the keytab from the path itself.");
 
 	// ------------------------------------------------------------------------
 
-	/** This class is not meant to be instantiated. */
-	private YarnConfigOptions() {}
+	/**
+	 * This class is not meant to be instantiated.
+	 */
+	private YarnConfigOptions() {
+	}
 
-	/** @see YarnConfigOptions#CLASSPATH_INCLUDE_USER_JAR */
+	/**
+	 * @see YarnConfigOptions#CLASSPATH_INCLUDE_USER_JAR
+	 */
 	public enum UserJarInclusion {
 		DISABLED,
 		FIRST,

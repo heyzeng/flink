@@ -18,6 +18,7 @@
 package org.apache.flink.api.common.typeutils.base.array;
 
 import java.io.IOException;
+
 import static java.lang.Math.min;
 
 import org.apache.flink.annotation.Internal;

@@ -48,13 +48,16 @@ import static org.apache.flink.util.Preconditions.checkArgument;
 /**
  * Base operator for the combineGroup transformation. It receives the UDF GroupCombineFunction as an input.
  * This class is later processed by the compiler to generate the plan.
+ *
  * @see org.apache.flink.api.common.functions.CombineFunction
  */
 @Internal
 public class GroupCombineOperatorBase<IN, OUT, FT extends GroupCombineFunction<IN, OUT>> extends SingleInputOperator<IN, OUT, FT> {
 
 
-	/** The ordering for the order inside a reduce group. */
+	/**
+	 * The ordering for the order inside a reduce group.
+	 */
 	private Ordering groupOrder;
 
 	public GroupCombineOperatorBase(FT udf, UnaryOperatorInformation<IN, OUT> operatorInfo, int[] keyPositions, String name) {
@@ -110,7 +113,7 @@ public class GroupCombineOperatorBase<IN, OUT, FT extends GroupCombineFunction<I
 			sortOrderings = ArrayUtils.addAll(sortOrderings, groupOrder.getFieldSortDirections());
 		}
 
-		if(sortColumns.length == 0) { // => all reduce. No comparator
+		if (sortColumns.length == 0) { // => all reduce. No comparator
 			checkArgument(sortOrderings.length == 0);
 		} else {
 			final TypeComparator<IN> sortComparator = getTypeComparator(inputType, sortColumns, sortOrderings, executionConfig);
@@ -132,7 +135,7 @@ public class GroupCombineOperatorBase<IN, OUT, FT extends GroupCombineFunction<I
 			final TypeSerializer<IN> inputSerializer = inputType.createSerializer(executionConfig);
 			TypeSerializer<OUT> outSerializer = getOperatorInfo().getOutputType().createSerializer(executionConfig);
 			List<IN> inputDataCopy = new ArrayList<IN>(inputData.size());
-			for (IN in: inputData) {
+			for (IN in : inputData) {
 				inputDataCopy.add(inputSerializer.copy(in));
 			}
 			CopyingListCollector<OUT> collector = new CopyingListCollector<OUT>(result, outSerializer);

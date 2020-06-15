@@ -40,23 +40,25 @@ import java.util.Objects;
 import java.util.function.IntFunction;
 import java.util.stream.IntStream;
 
-/** Test suite for {@link CompositeSerializer}. */
+/**
+ * Test suite for {@link CompositeSerializer}.
+ */
 public class CompositeSerializerTest {
 	private static final ExecutionConfig execConf = new ExecutionConfig();
 
 	private static final List<Tuple2<TypeSerializer<?>, Object[]>> TEST_FIELD_SERIALIZERS = Arrays.asList(
-		Tuple2.of(BooleanSerializer.INSTANCE, new Object[] { true, false }),
-		Tuple2.of(LongSerializer.INSTANCE, new Object[] { 1L, 23L }),
-		Tuple2.of(StringSerializer.INSTANCE, new Object[] { "teststr1", "teststr2" }),
+		Tuple2.of(BooleanSerializer.INSTANCE, new Object[]{true, false}),
+		Tuple2.of(LongSerializer.INSTANCE, new Object[]{1L, 23L}),
+		Tuple2.of(StringSerializer.INSTANCE, new Object[]{"teststr1", "teststr2"}),
 		Tuple2.of(TypeInformation.of(Pojo.class).createSerializer(execConf),
-			new Object[] { new Pojo(3, new String[] { "123", "456" }), new Pojo(6, new String[] {  }) })
+			new Object[]{new Pojo(3, new String[]{"123", "456"}), new Pojo(6, new String[]{})})
 	);
 
 	@Test
 	public void testSingleFieldSerializer() {
 		TEST_FIELD_SERIALIZERS.forEach(t -> {
 			@SuppressWarnings("unchecked")
-			TypeSerializer<Object>[] fieldSerializers = new TypeSerializer[] { t.f0 };
+			TypeSerializer<Object>[] fieldSerializers = new TypeSerializer[]{t.f0};
 			List<Object>[] instances = Arrays.stream(t.f1)
 				.map(Arrays::asList)
 				.toArray((IntFunction<List<Object>[]>) List[]::new);
@@ -69,7 +71,7 @@ public class CompositeSerializerTest {
 		TEST_FIELD_SERIALIZERS.forEach(t1 ->
 			TEST_FIELD_SERIALIZERS.forEach(t2 -> {
 				@SuppressWarnings("unchecked")
-				TypeSerializer<Object>[] fieldSerializers = new TypeSerializer[] { t1.f0, t2.f0 };
+				TypeSerializer<Object>[] fieldSerializers = new TypeSerializer[]{t1.f0, t2.f0};
 				List<Object>[] instances = IntStream.range(0, t1.f1.length)
 					.mapToObj(i -> Arrays.asList(t1.f1[i], t2.f1[i]))
 					.toArray((IntFunction<List<Object>[]>) List[]::new);
@@ -105,15 +107,14 @@ public class CompositeSerializerTest {
 	private void runTests(
 		int length,
 		TypeSerializer<Object>[] fieldSerializers,
-		List<Object> ... instances) {
+		List<Object>... instances) {
 		try {
 			for (boolean immutability : Arrays.asList(true, false)) {
 				TypeSerializer<List<Object>> serializer = new TestListCompositeSerializer(immutability, fieldSerializers);
 				CompositeSerializerTestInstance test = new CompositeSerializerTestInstance(serializer, length, instances);
 				test.testAll();
 			}
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			System.err.println(e.getMessage());
 			e.printStackTrace();
 			Assert.fail(e.getMessage());
@@ -216,8 +217,8 @@ public class CompositeSerializerTest {
 		 * Constructor to create the snapshot for writing.
 		 */
 		public TestListCompositeSerializerSnapshot(
-				TestListCompositeSerializer serializerInstance,
-				boolean isImmutableTargetType) {
+			TestListCompositeSerializer serializerInstance,
+			boolean isImmutableTargetType) {
 			super(serializerInstance);
 			this.isImmutableTargetType = isImmutableTargetType;
 		}
@@ -234,9 +235,9 @@ public class CompositeSerializerTest {
 
 		@Override
 		protected void readOuterSnapshot(
-				int readOuterSnapshotVersion,
-				DataInputView in,
-				ClassLoader userCodeClassLoader) throws IOException {
+			int readOuterSnapshotVersion,
+			DataInputView in,
+			ClassLoader userCodeClassLoader) throws IOException {
 			this.isImmutableTargetType = in.readBoolean();
 		}
 
@@ -256,7 +257,7 @@ public class CompositeSerializerTest {
 		CompositeSerializerTestInstance(
 			TypeSerializer<List<Object>> serializer,
 			int length,
-			List<Object> ... testData) {
+			List<Object>... testData) {
 			super(serializer, getCls(testData[0]), length, testData);
 		}
 

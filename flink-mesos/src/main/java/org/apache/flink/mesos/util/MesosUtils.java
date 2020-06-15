@@ -54,8 +54,9 @@ public class MesosUtils {
 
 	/**
 	 * Loads and validates the Mesos scheduler configuration.
+	 *
 	 * @param flinkConfig the global configuration.
-	 * @param hostname the hostname to advertise to the Mesos master.
+	 * @param hostname    the hostname to advertise to the Mesos master.
 	 */
 	public static MesosConfiguration createMesosSchedulerConfiguration(Configuration flinkConfig, String hostname) {
 
@@ -71,7 +72,7 @@ public class MesosUtils {
 		Duration failoverTimeout = FiniteDuration.apply(
 			flinkConfig.getInteger(
 				MesosOptions.FAILOVER_TIMEOUT_SECONDS),
-				TimeUnit.SECONDS);
+			TimeUnit.SECONDS);
 		frameworkInfo.setFailoverTimeout(failoverTimeout.toSeconds());
 
 		frameworkInfo.setName(flinkConfig.getString(
@@ -164,7 +165,7 @@ public class MesosUtils {
 	 * the temp directory paths.
 	 *
 	 * @param dynamicProperties dynamic properties to integrate
-	 * @param log logger instance
+	 * @param log               logger instance
 	 * @return the loaded and adapted global configuration
 	 */
 	public static Configuration loadConfiguration(Configuration dynamicProperties, Logger log) {

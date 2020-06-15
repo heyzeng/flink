@@ -64,12 +64,12 @@ public interface Source<T, SplitT extends SourceSplit, EnumChkT> extends Seriali
 	 * Restores an enumerator from a checkpoint.
 	 *
 	 * @param enumContext The {@link SplitEnumeratorContext context} for the restored split enumerator.
-	 * @param checkpoint The checkpoint to restore the SplitEnumerator from.
+	 * @param checkpoint  The checkpoint to restore the SplitEnumerator from.
 	 * @return A SplitEnumerator restored from the given checkpoint.
 	 */
 	SplitEnumerator<SplitT, EnumChkT> restoreEnumerator(
-			SplitEnumeratorContext<SplitT> enumContext,
-			EnumChkT checkpoint) throws IOException;
+		SplitEnumeratorContext<SplitT> enumContext,
+		EnumChkT checkpoint) throws IOException;
 
 	// ------------------------------------------------------------------------
 	//  serializers for the metadata

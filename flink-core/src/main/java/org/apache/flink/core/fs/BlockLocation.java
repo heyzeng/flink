@@ -32,8 +32,7 @@ public interface BlockLocation extends Comparable<BlockLocation> {
 	 * Get the list of hosts (hostname) hosting this block.
 	 *
 	 * @return A list of hosts (hostname) hosting this block.
-	 * @throws IOException
-	 *         thrown if the list of hosts could not be retrieved
+	 * @throws IOException thrown if the list of hosts could not be retrieved
 	 */
 	String[] getHosts() throws IOException;
 

@@ -41,12 +41,12 @@ public class SerializedFormatTest extends SequentialFormatTestBase<Record> {
 
 	private BlockInfo info;
 
-	public SerializedFormatTest(int numberOfRecords, long blockSize, int parallelism){
+	public SerializedFormatTest(int numberOfRecords, long blockSize, int parallelism) {
 		super(numberOfRecords, blockSize, parallelism);
 	}
 
 	@Before
-	public void setup(){
+	public void setup() {
 		info = createInputFormat().createBlockInfo();
 	}
 
@@ -64,7 +64,7 @@ public class SerializedFormatTest extends SequentialFormatTestBase<Record> {
 
 	@Override
 	protected BinaryOutputFormat<Record> createOutputFormat(String path, Configuration configuration)
-			throws IOException {
+		throws IOException {
 		final SerializedOutputFormat<Record> outputFormat = new SerializedOutputFormat<Record>();
 		outputFormat.setOutputFilePath(new Path(path));
 		outputFormat.setWriteMode(FileSystem.WriteMode.OVERWRITE);
@@ -91,7 +91,7 @@ public class SerializedFormatTest extends SequentialFormatTestBase<Record> {
 	}
 
 	@Override
-	protected void writeRecord(Record record, DataOutputView outputView) throws IOException{
+	protected void writeRecord(Record record, DataOutputView outputView) throws IOException {
 		record.write(outputView);
 	}
 

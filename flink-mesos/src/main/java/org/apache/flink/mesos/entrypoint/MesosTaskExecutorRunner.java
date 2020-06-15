@@ -77,8 +77,7 @@ public class MesosTaskExecutorRunner {
 			LOG.debug("Mesos dynamic properties: {}", dynamicProperties);
 
 			configuration = MesosUtils.loadConfiguration(dynamicProperties, LOG);
-		}
-		catch (Throwable t) {
+		} catch (Throwable t) {
 			LOG.error("Failed to load the TaskManager configuration and dynamic properties.", t);
 			System.exit(INIT_ERROR_EXIT_CODE);
 			return;
@@ -107,8 +106,7 @@ public class MesosTaskExecutorRunner {
 
 				return 0;
 			});
-		}
-		catch (Throwable t) {
+		} catch (Throwable t) {
 			final Throwable strippedThrowable = ExceptionUtils.stripException(t, UndeclaredThrowableException.class);
 			LOG.error("Error while starting the TaskManager", strippedThrowable);
 			System.exit(INIT_ERROR_EXIT_CODE);

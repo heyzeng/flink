@@ -112,11 +112,11 @@ public class MesosOptions {
 	 */
 	public static final ConfigOption<String> PORT_ASSIGNMENTS =
 		key("mesos.resourcemanager.tasks.port-assignments")
-		.noDefaultValue()
-		.withDescription(Description.builder()
-			.text("Comma-separated list of configuration keys which represent a configurable port. " +
-				"All port keys will dynamically get a port assigned through Mesos.")
-			.build());
+			.noDefaultValue()
+			.withDescription(Description.builder()
+				.text("Comma-separated list of configuration keys which represent a configurable port. " +
+					"All port keys will dynamically get a port assigned through Mesos.")
+				.build());
 
 	/**
 	 * Config parameter to configure the amount of time to wait for unused expired Mesos

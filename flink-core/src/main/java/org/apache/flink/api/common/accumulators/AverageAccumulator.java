@@ -71,7 +71,7 @@ public class AverageAccumulator implements SimpleAccumulator<Double> {
 	@Override
 	public void merge(Accumulator<Double, Double> other) {
 		if (other instanceof AverageAccumulator) {
-			AverageAccumulator avg = (AverageAccumulator)other;
+			AverageAccumulator avg = (AverageAccumulator) other;
 			this.count += avg.count;
 			this.sum += avg.sum;
 		} else {

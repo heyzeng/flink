@@ -38,14 +38,14 @@ public class LocalDateTimeComparatorTest extends ComparatorTestBase<LocalDateTim
 
 	@Override
 	protected LocalDateTime[] getSortedTestData() {
-		return new LocalDateTime[] {
-				LocalDateTime.of(1970, 1, 1, 0, 0, 0, 0),
-				LocalDateTime.of(1990, 10, 14, 2, 42, 25, 123_000_000),
-				LocalDateTime.of(1990, 10, 14, 2, 42, 25, 123_000_001),
-				LocalDateTime.of(1990, 10, 14, 2, 42, 25, 123_000_002),
-				LocalDateTime.of(2013, 8, 12, 14, 15, 59, 478_000_000),
-				LocalDateTime.of(2013, 8, 12, 14, 15, 59, 479_000_000),
-				LocalDateTime.of(2040, 5, 12, 18, 0, 45, 999_000_000)
+		return new LocalDateTime[]{
+			LocalDateTime.of(1970, 1, 1, 0, 0, 0, 0),
+			LocalDateTime.of(1990, 10, 14, 2, 42, 25, 123_000_000),
+			LocalDateTime.of(1990, 10, 14, 2, 42, 25, 123_000_001),
+			LocalDateTime.of(1990, 10, 14, 2, 42, 25, 123_000_002),
+			LocalDateTime.of(2013, 8, 12, 14, 15, 59, 478_000_000),
+			LocalDateTime.of(2013, 8, 12, 14, 15, 59, 479_000_000),
+			LocalDateTime.of(2040, 5, 12, 18, 0, 45, 999_000_000)
 		};
 	}
 }

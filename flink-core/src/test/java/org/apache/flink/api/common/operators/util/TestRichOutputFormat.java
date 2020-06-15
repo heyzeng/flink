@@ -32,21 +32,24 @@ public class TestRichOutputFormat extends RichOutputFormat<String> {
 	public List<String> output = new LinkedList<String>();
 
 	@Override
-	public void configure(Configuration parameters){}
-
-	@Override
-	public void open(int a, int b){}
-
-	@Override
-	public void close(){}
-
-	@Override
-	public void writeRecord(String record){
-		output.add(record + getRuntimeContext().getIndexOfThisSubtask() + "" +
-				getRuntimeContext().getNumberOfParallelSubtasks());
+	public void configure(Configuration parameters) {
 	}
 
-	public void clear(){
+	@Override
+	public void open(int a, int b) {
+	}
+
+	@Override
+	public void close() {
+	}
+
+	@Override
+	public void writeRecord(String record) {
+		output.add(record + getRuntimeContext().getIndexOfThisSubtask() + "" +
+			getRuntimeContext().getNumberOfParallelSubtasks());
+	}
+
+	public void clear() {
 		output.clear();
 	}
 }

@@ -35,8 +35,11 @@ public abstract class GenericTypeSerializerConfigSnapshot<T> extends TypeSeriali
 
 	private Class<T> typeClass;
 
-	/** This empty nullary constructor is required for deserializing the configuration. */
-	public GenericTypeSerializerConfigSnapshot() {}
+	/**
+	 * This empty nullary constructor is required for deserializing the configuration.
+	 */
+	public GenericTypeSerializerConfigSnapshot() {
+	}
 
 	public GenericTypeSerializerConfigSnapshot(Class<T> typeClass) {
 		this.typeClass = Preconditions.checkNotNull(typeClass);
@@ -78,7 +81,7 @@ public abstract class GenericTypeSerializerConfigSnapshot<T> extends TypeSeriali
 		}
 
 		return (obj.getClass().equals(getClass()))
-				&& typeClass.equals(((GenericTypeSerializerConfigSnapshot) obj).getTypeClass());
+			&& typeClass.equals(((GenericTypeSerializerConfigSnapshot) obj).getTypeClass());
 	}
 
 	@Override

@@ -287,11 +287,14 @@ public class KryoSerializerCompatibilityTest {
 		assertEquals(testClassBId, kryoSerializer.getKryo().getRegistration(TestClassB.class).getId());
 	}
 
-	private static class TestClass {}
+	private static class TestClass {
+	}
 
-	private static class TestClassA {}
+	private static class TestClassA {
+	}
 
-	private static class TestClassB {}
+	private static class TestClassB {
+	}
 
 	private static class TestClassBSerializer extends Serializer {
 		@Override

@@ -25,9 +25,9 @@ import org.junit.Test
 
 
 /**
-  * Test obtaining the primary constructor of a case class
-  * via reflection.
-  */
+ * Test obtaining the primary constructor of a case class
+ * via reflection.
+ */
 class ScalaCaseClassSerializerReflectionTest extends TestLogger {
 
   @Test
@@ -88,7 +88,7 @@ class ScalaCaseClassSerializerReflectionTest extends TestLogger {
       1.asInstanceOf[AnyRef],
       new DegreeCelsius(0.5f).asInstanceOf[AnyRef]
     )
-    
+
     val actual = constructor(arguments)
 
     assertEquals(Measurement(1, new DegreeCelsius(0.5f)), actual)

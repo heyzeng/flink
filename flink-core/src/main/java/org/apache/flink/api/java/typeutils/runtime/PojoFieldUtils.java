@@ -39,7 +39,7 @@ final class PojoFieldUtils {
 	 * <p>This write method avoids Java serialization, by writing only the classname of the field's declaring class
 	 * and the field name. The written field can be read using {@link #readField(DataInputView, ClassLoader)}.
 	 *
-	 * @param out the output view to write to.
+	 * @param out   the output view to write to.
 	 * @param field the field to write.
 	 */
 	static void writeField(DataOutputView out, Field field) throws IOException {
@@ -54,9 +54,8 @@ final class PojoFieldUtils {
 	 * <p>This read methods avoids Java serialization, by reading the classname of the field's declaring class
 	 * and dynamically loading it. The field is also read by field name and obtained via reflection.
 	 *
-	 * @param in the input view to read from.
+	 * @param in                  the input view to read from.
 	 * @param userCodeClassLoader the user classloader.
-	 *
 	 * @return the read field.
 	 */
 	static Field readField(DataInputView in, ClassLoader userCodeClassLoader) throws IOException {
@@ -69,9 +68,8 @@ final class PojoFieldUtils {
 	 * Finds a field by name from its declaring class. This also searches for the
 	 * field in super classes.
 	 *
-	 * @param fieldName the name of the field to find.
+	 * @param fieldName      the name of the field to find.
 	 * @param declaringClass the declaring class of the field.
-	 *
 	 * @return the field.
 	 */
 	@Nullable

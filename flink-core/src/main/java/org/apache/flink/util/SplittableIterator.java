@@ -47,7 +47,7 @@ public abstract class SplittableIterator<T> implements Iterator<T>, Serializable
 	 * Splits this iterator into <i>n</i> partitions and returns the <i>i-th</i> partition
 	 * out of those.
 	 *
-	 * @param num The partition to return (<i>i</i>).
+	 * @param num           The partition to return (<i>i</i>).
 	 * @param numPartitions The number of partitions to split into (<i>n</i>).
 	 * @return The iterator for the partition.
 	 */

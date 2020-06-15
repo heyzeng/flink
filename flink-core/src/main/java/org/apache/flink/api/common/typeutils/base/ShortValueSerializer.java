@@ -31,7 +31,7 @@ import org.apache.flink.types.ShortValue;
 public final class ShortValueSerializer extends TypeSerializerSingleton<ShortValue> {
 
 	private static final long serialVersionUID = 1L;
-	
+
 	public static final ShortValueSerializer INSTANCE = new ShortValueSerializer();
 
 	@Override
@@ -48,7 +48,7 @@ public final class ShortValueSerializer extends TypeSerializerSingleton<ShortVal
 	public ShortValue copy(ShortValue from) {
 		return copy(from, new ShortValue());
 	}
-	
+
 	@Override
 	public ShortValue copy(ShortValue from, ShortValue reuse) {
 		reuse.setValue(from.getValue());
@@ -69,7 +69,7 @@ public final class ShortValueSerializer extends TypeSerializerSingleton<ShortVal
 	public ShortValue deserialize(DataInputView source) throws IOException {
 		return deserialize(new ShortValue(), source);
 	}
-	
+
 	@Override
 	public ShortValue deserialize(ShortValue reuse, DataInputView source) throws IOException {
 		reuse.read(source);

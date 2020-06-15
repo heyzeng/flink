@@ -42,7 +42,7 @@ public class CollectionExecutionWithBroadcastVariableTest {
 
 	private static final String BC_VAR_NAME = "BC";
 
-	private static final String[] TEST_DATA = { "A", "B", "C", "D" };
+	private static final String[] TEST_DATA = {"A", "B", "C", "D"};
 	private static final String SUFFIX = "-suffixed";
 
 	@Test
@@ -55,8 +55,8 @@ public class CollectionExecutionWithBroadcastVariableTest {
 			List<String> result = new ArrayList<String>();
 
 			env.fromElements(TEST_DATA)
-					.map(new SuffixAppender()).withBroadcastSet(bcData, BC_VAR_NAME)
-					.output(new LocalCollectionOutputFormat<String>(result));
+				.map(new SuffixAppender()).withBroadcastSet(bcData, BC_VAR_NAME)
+				.output(new LocalCollectionOutputFormat<String>(result));
 
 			env.execute();
 
@@ -64,8 +64,7 @@ public class CollectionExecutionWithBroadcastVariableTest {
 			for (String s : result) {
 				assertTrue(s.indexOf(SUFFIX) > 0);
 			}
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 			fail(e.getMessage());
 		}
@@ -82,7 +81,7 @@ public class CollectionExecutionWithBroadcastVariableTest {
 			List<String> result = new ArrayList<String>();
 
 			inData.cross(inData).with(new SuffixCross()).withBroadcastSet(bcData, BC_VAR_NAME)
-					.output(new LocalCollectionOutputFormat<String>(result));
+				.output(new LocalCollectionOutputFormat<String>(result));
 
 			env.execute();
 
@@ -90,8 +89,7 @@ public class CollectionExecutionWithBroadcastVariableTest {
 			for (String s : result) {
 				assertTrue(s.indexOf(SUFFIX) == 2);
 			}
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 			fail(e.getMessage());
 		}

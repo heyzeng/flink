@@ -105,12 +105,10 @@ public class AverageAccumulatorTest {
 		try {
 			average.merge(averageNew);
 			fail("should fail with an exception");
-		}
-		catch (IllegalArgumentException e) {
+		} catch (IllegalArgumentException e) {
 			assertNotNull(e.getMessage());
 			assertTrue(e.getMessage().contains("The merged accumulator must be AverageAccumulator."));
-		}
-		catch (Throwable t) {
+		} catch (Throwable t) {
 			fail("wrong exception; expected IllegalArgumentException but found " + t.getClass().getName());
 		}
 	}

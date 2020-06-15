@@ -30,7 +30,7 @@ import java.util.function.BiConsumer;
  * 1. Host information necessary for the SplitEnumerator to make split assignment decisions.
  * 2. Accept and track the split assignment from the enumerator.
  * 3. Provide a managed threading model so the split enumerators do not need to create their
- *    own internal threads.
+ * own internal threads.
  *
  * @param <SplitT> the type of the splits.
  */
@@ -43,7 +43,7 @@ public interface SplitEnumeratorContext<SplitT extends SourceSplit> {
 	 * Send a source event to a source reader. The source reader is identified by its subtask id.
 	 *
 	 * @param subtaskId the subtask id of the source reader to send this event to.
-	 * @param event the source event to send.
+	 * @param event     the source event to send.
 	 */
 	void sendEventToSourceReader(int subtaskId, SourceEvent event);
 
@@ -76,7 +76,7 @@ public interface SplitEnumeratorContext<SplitT extends SourceSplit> {
 	 * any shared state. Otherwise the there might be unexpected behavior.
 	 *
 	 * @param callable a callable to call.
-	 * @param handler a handler that handles the return value of or the exception thrown from the callable.
+	 * @param handler  a handler that handles the return value of or the exception thrown from the callable.
 	 */
 	<T> void callAsync(Callable<T> callable, BiConsumer<T, Throwable> handler);
 
@@ -87,10 +87,10 @@ public interface SplitEnumeratorContext<SplitT extends SourceSplit> {
 	 * <p>It is important to make sure that the callable should not modify
 	 * any shared state. Otherwise the there might be unexpected behavior.
 	 *
-	 * @param callable the callable to call.
-	 * @param handler a handler that handles the return value of or the exception thrown from the callable.
+	 * @param callable     the callable to call.
+	 * @param handler      a handler that handles the return value of or the exception thrown from the callable.
 	 * @param initialDelay the initial delay of calling the callable.
-	 * @param period the period between two invocations of the callable.
+	 * @param period       the period between two invocations of the callable.
 	 */
 	<T> void callAsync(Callable<T> callable, BiConsumer<T, Throwable> handler, long initialDelay, long period);
 }

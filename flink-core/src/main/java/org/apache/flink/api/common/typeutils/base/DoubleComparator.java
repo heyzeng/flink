@@ -29,17 +29,17 @@ public final class DoubleComparator extends BasicTypeComparator<Double> {
 
 	private static final long serialVersionUID = 1L;
 
-	
+
 	public DoubleComparator(boolean ascending) {
 		super(ascending);
 	}
 
-	@Override 
+	@Override
 	public int compareSerialized(DataInputView firstSource, DataInputView secondSource) throws IOException {
-		double l1 = firstSource.readDouble(); 
-		double l2 = secondSource.readDouble(); 
-		int comp = (l1 < l2 ? -1 : (l1 > l2 ? 1 : 0)); 
-		return ascendingComparison ? comp : -comp; 
+		double l1 = firstSource.readDouble();
+		double l2 = secondSource.readDouble();
+		int comp = (l1 < l2 ? -1 : (l1 > l2 ? 1 : 0));
+		return ascendingComparison ? comp : -comp;
 	}
 
 

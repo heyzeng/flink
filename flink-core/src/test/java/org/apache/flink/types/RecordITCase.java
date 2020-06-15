@@ -33,20 +33,20 @@ import org.junit.Before;
 import org.junit.Test;
 
 public class RecordITCase extends TestLogger {
-	
+
 	private static final long SEED = 354144423270432543L;
 	private final Random rand = new Random(RecordITCase.SEED);
-	
+
 	private DataInputView in;
 	private DataOutputView out;
 
 	@Before
 	public void setUp() throws Exception {
-		PipedInputStream pipedInput = new PipedInputStream(32*1024*1024);
+		PipedInputStream pipedInput = new PipedInputStream(32 * 1024 * 1024);
 		this.in = new DataInputViewStreamWrapper(pipedInput);
 		this.out = new DataOutputViewStreamWrapper(new PipedOutputStream(pipedInput));
 	}
-	
+
 	@Test
 	public void massiveRandomBlackBoxTests() {
 		try {
@@ -55,13 +55,13 @@ public class RecordITCase extends TestLogger {
 				final Value[] fields = RecordTest.createRandomValues(this.rand, 0, 32);
 				RecordTest.blackboxTestRecordWithValues(fields, this.rand, this.in, this.out);
 			}
-			
+
 			// random tests with records with a moderately large number of fields
 			for (int i = 0; i < 2000; i++) {
 				final Value[] fields = RecordTest.createRandomValues(this.rand, 20, 200);
 				RecordTest.blackboxTestRecordWithValues(fields, this.rand, this.in, this.out);
 			}
-			
+
 			// random tests with records with very many fields
 			for (int i = 0; i < 200; i++) {
 				final Value[] fields = RecordTest.createRandomValues(this.rand, 500, 2000);

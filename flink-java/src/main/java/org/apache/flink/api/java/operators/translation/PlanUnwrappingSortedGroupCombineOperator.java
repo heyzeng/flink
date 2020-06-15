@@ -37,14 +37,14 @@ public class PlanUnwrappingSortedGroupCombineOperator<IN, OUT, K1, K2> extends G
 	public PlanUnwrappingSortedGroupCombineOperator(GroupCombineFunction<IN, OUT> udf, Keys.SelectorFunctionKeys<IN, K1> groupingKey, Keys.SelectorFunctionKeys<IN, K2> sortingKey, String name,
 													TypeInformation<OUT> outType, TypeInformation<Tuple3<K1, K2, IN>> typeInfoWithKey) {
 		super(new TupleUnwrappingGroupReducer<IN, OUT, K1, K2>(udf),
-				new UnaryOperatorInformation<Tuple3<K1, K2, IN>, OUT>(typeInfoWithKey, outType),
-				groupingKey.computeLogicalKeyPositions(),
-				name);
+			new UnaryOperatorInformation<Tuple3<K1, K2, IN>, OUT>(typeInfoWithKey, outType),
+			groupingKey.computeLogicalKeyPositions(),
+			name);
 
 	}
 
 	private static final class TupleUnwrappingGroupReducer<IN, OUT, K1, K2> extends WrappingFunction<GroupCombineFunction<IN, OUT>>
-			implements GroupCombineFunction<Tuple3<K1, K2, IN>, OUT> {
+		implements GroupCombineFunction<Tuple3<K1, K2, IN>, OUT> {
 
 		private static final long serialVersionUID = 1L;
 

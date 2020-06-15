@@ -44,7 +44,9 @@ public final class ListSerializer<T> extends TypeSerializer<List<T>> {
 
 	private static final long serialVersionUID = 1119562170939152304L;
 
-	/** The serializer for the elements of the list. */
+	/**
+	 * The serializer for the elements of the list.
+	 */
 	private final TypeSerializer<T> elementSerializer;
 
 	/**
@@ -62,6 +64,7 @@ public final class ListSerializer<T> extends TypeSerializer<List<T>> {
 
 	/**
 	 * Gets the serializer for the elements of the list.
+	 *
 	 * @return The serializer for the elements of the list
 	 */
 	public TypeSerializer<T> getElementSerializer() {
@@ -155,8 +158,8 @@ public final class ListSerializer<T> extends TypeSerializer<List<T>> {
 	@Override
 	public boolean equals(Object obj) {
 		return obj == this ||
-				(obj != null && obj.getClass() == getClass() &&
-						elementSerializer.equals(((ListSerializer<?>) obj).elementSerializer));
+			(obj != null && obj.getClass() == getClass() &&
+				elementSerializer.equals(((ListSerializer<?>) obj).elementSerializer));
 	}
 
 	@Override

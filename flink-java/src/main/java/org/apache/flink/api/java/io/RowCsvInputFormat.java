@@ -43,12 +43,12 @@ public class RowCsvInputFormat extends CsvInputFormat<Row> implements ResultType
 	private boolean emptyColumnAsNull;
 
 	public RowCsvInputFormat(
-			Path filePath,
-			TypeInformation[] fieldTypeInfos,
-			String lineDelimiter,
-			String fieldDelimiter,
-			int[] selectedFields,
-			boolean emptyColumnAsNull) {
+		Path filePath,
+		TypeInformation[] fieldTypeInfos,
+		String lineDelimiter,
+		String fieldDelimiter,
+		int[] selectedFields,
+		boolean emptyColumnAsNull) {
 
 		super(filePath);
 		this.arity = fieldTypeInfos.length;
@@ -203,10 +203,9 @@ public class RowCsvInputFormat extends CsvInputFormat<Row> implements ResultType
 			if (startPos < 0) {
 				throw new ParseException(String.format("Unexpected parser position for column %1$s of row '%2$s'",
 					field + 1, new String(bytes, offset, numBytes)));
-			}
-			else if (startPos == limit
-					&& field != fieldIncluded.length - 1
-					&& !FieldParser.endsWithDelimiter(bytes, startPos - 1, fieldDelimiter)) {
+			} else if (startPos == limit
+				&& field != fieldIncluded.length - 1
+				&& !FieldParser.endsWithDelimiter(bytes, startPos - 1, fieldDelimiter)) {
 				// We are at the end of the record, but not all fields have been read
 				// and the end is not a field delimiter indicating an empty last field.
 				if (isLenient()) {

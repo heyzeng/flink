@@ -63,7 +63,6 @@ public interface SimpleVersionedSerializer<E> extends Versioned {
 	 *
 	 * @param obj The object to serialize.
 	 * @return The serialized data (bytes).
-	 *
 	 * @throws IOException Thrown, if the serialization fails.
 	 */
 	byte[] serialize(E obj) throws IOException;
@@ -72,10 +71,9 @@ public interface SimpleVersionedSerializer<E> extends Versioned {
 	 * De-serializes the given data (bytes) which was serialized with the scheme of the
 	 * indicated version.
 	 *
-	 * @param version The version in which the data was serialized
+	 * @param version    The version in which the data was serialized
 	 * @param serialized The serialized data
 	 * @return The deserialized object
-	 *
 	 * @throws IOException Thrown, if the deserialization fails.
 	 */
 	E deserialize(int version, byte[] serialized) throws IOException;

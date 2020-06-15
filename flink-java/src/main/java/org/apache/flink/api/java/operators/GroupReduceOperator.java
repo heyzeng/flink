@@ -52,7 +52,7 @@ import java.lang.reflect.Type;
  * This operator represents the application of a "reduceGroup" function on a data set, and the
  * result data set produced by the function.
  *
- * @param <IN> The type of the data set consumed by the operator.
+ * @param <IN>  The type of the data set consumed by the operator.
  * @param <OUT> The type of the data set created by the operator.
  */
 @Public
@@ -71,7 +71,7 @@ public class GroupReduceOperator<IN, OUT> extends SingleInputUdfOperator<IN, OUT
 	/**
 	 * Constructor for a non-grouped reduce (all reduce).
 	 *
-	 * @param input The input data set to the groupReduce function.
+	 * @param input    The input data set to the groupReduce function.
 	 * @param function The user-defined GroupReduce function.
 	 */
 	public GroupReduceOperator(DataSet<IN> input, TypeInformation<OUT> resultType, GroupReduceFunction<IN, OUT> function, String defaultName) {
@@ -87,7 +87,7 @@ public class GroupReduceOperator<IN, OUT> extends SingleInputUdfOperator<IN, OUT
 	/**
 	 * Constructor for a grouped reduce.
 	 *
-	 * @param input The grouped input to be processed group-wise by the groupReduce function.
+	 * @param input    The grouped input to be processed group-wise by the groupReduce function.
 	 * @param function The user-defined GroupReduce function.
 	 */
 	public GroupReduceOperator(Grouping<IN> input, TypeInformation<OUT> resultType, GroupReduceFunction<IN, OUT> function, String defaultName) {
@@ -115,7 +115,7 @@ public class GroupReduceOperator<IN, OUT> extends SingleInputUdfOperator<IN, OUT
 					// get parameters of GroupReduceFunction
 					if (((ParameterizedType) genInterface).getRawType().equals(GroupReduceFunction.class)) {
 						reduceTypes = ((ParameterizedType) genInterface).getActualTypeArguments();
-					// get parameters of GroupCombineFunction
+						// get parameters of GroupCombineFunction
 					} else if ((((ParameterizedType) genInterface).getRawType().equals(GroupCombineFunction.class)) ||
 						(((ParameterizedType) genInterface).getRawType().equals(CombineFunction.class))) {
 
@@ -134,13 +134,11 @@ public class GroupReduceOperator<IN, OUT> extends SingleInputUdfOperator<IN, OUT
 						"Generic types are incompatible.");
 					return false;
 				}
-			}
-			else if (reduceTypes == null || reduceTypes.length != 2) {
+			} else if (reduceTypes == null || reduceTypes.length != 2) {
 				LOG.warn("Cannot check generic types of GroupReduceFunction. " +
 					"Enabling combiner but combine function might fail at runtime.");
 				return true;
-			}
-			else {
+			} else {
 				LOG.warn("Cannot check generic types of GroupCombineFunction. " +
 					"Enabling combiner but combine function might fail at runtime.");
 				return true;
@@ -171,8 +169,7 @@ public class GroupReduceOperator<IN, OUT> extends SingleInputUdfOperator<IN, OUT
 					"or the types of the combine() and reduce() methods are not compatible.");
 			}
 			this.combinable = true;
-		}
-		else {
+		} else {
 			this.combinable = false;
 		}
 		return this;
@@ -186,8 +183,8 @@ public class GroupReduceOperator<IN, OUT> extends SingleInputUdfOperator<IN, OUT
 
 		// offset semantic information by extracted key fields
 		if (props != null &&
-				this.grouper != null &&
-				this.grouper.keys instanceof SelectorFunctionKeys) {
+			this.grouper != null &&
+			this.grouper.keys instanceof SelectorFunctionKeys) {
 
 			int offset = ((SelectorFunctionKeys<?, ?>) this.grouper.keys).getKeyType().getTotalFields();
 			if (this.grouper instanceof SortedGrouping) {
@@ -221,7 +218,7 @@ public class GroupReduceOperator<IN, OUT> extends SingleInputUdfOperator<IN, OUT
 			// non grouped reduce
 			UnaryOperatorInformation<IN, OUT> operatorInfo = new UnaryOperatorInformation<>(getInputType(), getResultType());
 			GroupReduceOperatorBase<IN, OUT, GroupReduceFunction<IN, OUT>> po =
-					new GroupReduceOperatorBase<>(function, operatorInfo, new int[0], name);
+				new GroupReduceOperatorBase<>(function, operatorInfo, new int[0], name);
 
 			po.setCombinable(combinable);
 			po.setInput(input);
@@ -250,19 +247,18 @@ public class GroupReduceOperator<IN, OUT> extends SingleInputUdfOperator<IN, OUT
 				return po;
 			} else {
 				PlanUnwrappingReduceGroupOperator<IN, OUT, ?> po = translateSelectorFunctionReducer(
-							selectorKeys, function, getResultType(), name, input, isCombinable());
+					selectorKeys, function, getResultType(), name, input, isCombinable());
 
 				po.setParallelism(this.getParallelism());
 				po.setCustomPartitioner(grouper.getCustomPartitioner());
 				return po;
 			}
-		}
-		else if (grouper.getKeys() instanceof ExpressionKeys) {
+		} else if (grouper.getKeys() instanceof ExpressionKeys) {
 
 			int[] logicalKeyPositions = grouper.getKeys().computeLogicalKeyPositions();
 			UnaryOperatorInformation<IN, OUT> operatorInfo = new UnaryOperatorInformation<>(getInputType(), getResultType());
 			GroupReduceOperatorBase<IN, OUT, GroupReduceFunction<IN, OUT>> po =
-					new GroupReduceOperatorBase<>(function, operatorInfo, logicalKeyPositions, name);
+				new GroupReduceOperatorBase<>(function, operatorInfo, logicalKeyPositions, name);
 
 			po.setCombinable(combinable);
 			po.setInput(input);
@@ -284,8 +280,7 @@ public class GroupReduceOperator<IN, OUT> extends SingleInputUdfOperator<IN, OUT
 			}
 
 			return po;
-		}
-		else {
+		} else {
 			throw new UnsupportedOperationException("Unrecognized key type.");
 		}
 	}
@@ -294,12 +289,12 @@ public class GroupReduceOperator<IN, OUT> extends SingleInputUdfOperator<IN, OUT
 
 	@SuppressWarnings("unchecked")
 	private static <IN, OUT, K> PlanUnwrappingReduceGroupOperator<IN, OUT, K> translateSelectorFunctionReducer(
-			SelectorFunctionKeys<IN, ?> rawKeys,
-			GroupReduceFunction<IN, OUT> function,
-			TypeInformation<OUT> outputType,
-			String name,
-			Operator<IN> input,
-			boolean combinable) {
+		SelectorFunctionKeys<IN, ?> rawKeys,
+		GroupReduceFunction<IN, OUT> function,
+		TypeInformation<OUT> outputType,
+		String name,
+		Operator<IN> input,
+		boolean combinable) {
 		SelectorFunctionKeys<IN, K> keys = (SelectorFunctionKeys<IN, K>) rawKeys;
 		TypeInformation<Tuple2<K, IN>> typeInfoWithKey = KeyFunctions.createTypeWithKey(keys);
 

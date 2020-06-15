@@ -60,7 +60,7 @@ public class SortPartitionOperatorBase<IN> extends SingleInputOperator<IN, IN, N
 	}
 
 	// --------------------------------------------------------------------------------------------
-	
+
 	@Override
 	protected List<IN> executeOnCollections(List<IN> inputData, RuntimeContext runtimeContext, ExecutionConfig executionConfig) {
 
@@ -75,7 +75,7 @@ public class SortPartitionOperatorBase<IN> extends SingleInputOperator<IN, IN, N
 		} else if (inputType instanceof AtomicType) {
 			sortComparator = ((AtomicType) inputType).createComparator(sortOrderings[0], executionConfig);
 		} else {
-			throw new UnsupportedOperationException("Partition sorting does not support type "+inputType+" yet.");
+			throw new UnsupportedOperationException("Partition sorting does not support type " + inputType + " yet.");
 		}
 
 		Collections.sort(inputData, new Comparator<IN>() {

@@ -41,8 +41,8 @@ public class KeyFunctions {
 
 	@SuppressWarnings("unchecked")
 	public static <T, K> org.apache.flink.api.common.operators.Operator<Tuple2<K, T>> appendKeyExtractor(
-			org.apache.flink.api.common.operators.Operator<T> input,
-			SelectorFunctionKeys<T, K> key) {
+		org.apache.flink.api.common.operators.Operator<T> input,
+		SelectorFunctionKeys<T, K> key) {
 
 		if (input instanceof Union) {
 			// if input is a union, we apply the key extractors recursively to all inputs
@@ -50,9 +50,9 @@ public class KeyFunctions {
 			org.apache.flink.api.common.operators.Operator<T> secondInput = ((Union) input).getSecondInput();
 
 			org.apache.flink.api.common.operators.Operator<Tuple2<K, T>> firstInputWithKey =
-					appendKeyExtractor(firstInput, key);
+				appendKeyExtractor(firstInput, key);
 			org.apache.flink.api.common.operators.Operator<Tuple2<K, T>> secondInputWithKey =
-					appendKeyExtractor(secondInput, key);
+				appendKeyExtractor(secondInput, key);
 
 			return new Union(firstInputWithKey, secondInputWithKey, input.getName());
 		}
@@ -62,11 +62,11 @@ public class KeyFunctions {
 		KeyExtractingMapper<T, K> extractor = new KeyExtractingMapper(key.getKeyExtractor());
 
 		MapOperatorBase<T, Tuple2<K, T>, MapFunction<T, Tuple2<K, T>>> mapper =
-				new MapOperatorBase<T, Tuple2<K, T>, MapFunction<T, Tuple2<K, T>>>(
-						extractor,
-						new UnaryOperatorInformation(inputType, typeInfoWithKey),
-						"Key Extractor"
-				);
+			new MapOperatorBase<T, Tuple2<K, T>, MapFunction<T, Tuple2<K, T>>>(
+				extractor,
+				new UnaryOperatorInformation(inputType, typeInfoWithKey),
+				"Key Extractor"
+			);
 
 		mapper.setInput(input);
 		mapper.setParallelism(input.getParallelism());
@@ -76,9 +76,9 @@ public class KeyFunctions {
 
 	@SuppressWarnings("unchecked")
 	public static <T, K1, K2> org.apache.flink.api.common.operators.Operator<Tuple3<K1, K2, T>> appendKeyExtractor(
-			org.apache.flink.api.common.operators.Operator<T> input,
-			SelectorFunctionKeys<T, K1> key1,
-			SelectorFunctionKeys<T, K2> key2) {
+		org.apache.flink.api.common.operators.Operator<T> input,
+		SelectorFunctionKeys<T, K1> key1,
+		SelectorFunctionKeys<T, K2> key2) {
 
 		if (input instanceof Union) {
 			// if input is a union, we apply the key extractors recursively to all inputs
@@ -86,9 +86,9 @@ public class KeyFunctions {
 			org.apache.flink.api.common.operators.Operator<T> secondInput = ((Union) input).getSecondInput();
 
 			org.apache.flink.api.common.operators.Operator<Tuple3<K1, K2, T>> firstInputWithKey =
-					appendKeyExtractor(firstInput, key1, key2);
+				appendKeyExtractor(firstInput, key1, key2);
 			org.apache.flink.api.common.operators.Operator<Tuple3<K1, K2, T>> secondInputWithKey =
-					appendKeyExtractor(secondInput, key1, key2);
+				appendKeyExtractor(secondInput, key1, key2);
 
 			return new Union(firstInputWithKey, secondInputWithKey, input.getName());
 		}
@@ -96,14 +96,14 @@ public class KeyFunctions {
 		TypeInformation<T> inputType = key1.getInputType();
 		TypeInformation<Tuple3<K1, K2, T>> typeInfoWithKey = createTypeWithKey(key1, key2);
 		TwoKeyExtractingMapper<T, K1, K2> extractor =
-				new TwoKeyExtractingMapper<>(key1.getKeyExtractor(), key2.getKeyExtractor());
+			new TwoKeyExtractingMapper<>(key1.getKeyExtractor(), key2.getKeyExtractor());
 
 		MapOperatorBase<T, Tuple3<K1, K2, T>, MapFunction<T, Tuple3<K1, K2, T>>> mapper =
-				new MapOperatorBase<T, Tuple3<K1, K2, T>, MapFunction<T, Tuple3<K1, K2, T>>>(
-						extractor,
-						new UnaryOperatorInformation<>(inputType, typeInfoWithKey),
-						"Key Extractor"
-				);
+			new MapOperatorBase<T, Tuple3<K1, K2, T>, MapFunction<T, Tuple3<K1, K2, T>>>(
+				extractor,
+				new UnaryOperatorInformation<>(inputType, typeInfoWithKey),
+				"Key Extractor"
+			);
 
 		mapper.setInput(input);
 		mapper.setParallelism(input.getParallelism());
@@ -112,18 +112,18 @@ public class KeyFunctions {
 	}
 
 	public static <T, K> org.apache.flink.api.common.operators.SingleInputOperator<?, T, ?> appendKeyRemover(
-			org.apache.flink.api.common.operators.Operator<Tuple2<K, T>> inputWithKey,
-			SelectorFunctionKeys<T, K> key) {
+		org.apache.flink.api.common.operators.Operator<Tuple2<K, T>> inputWithKey,
+		SelectorFunctionKeys<T, K> key) {
 
 		TypeInformation<T> inputType = key.getInputType();
 		TypeInformation<Tuple2<K, T>> typeInfoWithKey = createTypeWithKey(key);
 
 		MapOperatorBase<Tuple2<K, T>, T, MapFunction<Tuple2<K, T>, T>> mapper =
-				new MapOperatorBase<Tuple2<K, T>, T, MapFunction<Tuple2<K, T>, T>>(
-						new KeyRemovingMapper<T, K>(),
-						new UnaryOperatorInformation<>(typeInfoWithKey, inputType),
-						"Key Remover"
-				);
+			new MapOperatorBase<Tuple2<K, T>, T, MapFunction<Tuple2<K, T>, T>>(
+				new KeyRemovingMapper<T, K>(),
+				new UnaryOperatorInformation<>(typeInfoWithKey, inputType),
+				"Key Remover"
+			);
 		mapper.setInput(inputWithKey);
 		mapper.setParallelism(inputWithKey.getParallelism());
 
@@ -131,13 +131,13 @@ public class KeyFunctions {
 	}
 
 	public static <T, K> TypeInformation<Tuple2<K, T>> createTypeWithKey(
-			SelectorFunctionKeys<T, K> key) {
+		SelectorFunctionKeys<T, K> key) {
 		return new TupleTypeInfo<>(key.getKeyType(), key.getInputType());
 	}
 
 	public static <T, K1, K2> TypeInformation<Tuple3<K1, K2, T>> createTypeWithKey(
-			SelectorFunctionKeys<T, K1> key1,
-			SelectorFunctionKeys<T, K2> key2) {
+		SelectorFunctionKeys<T, K1> key1,
+		SelectorFunctionKeys<T, K2> key2) {
 		return new TupleTypeInfo<>(key1.getKeyType(), key2.getKeyType(), key1.getInputType());
 	}
 }

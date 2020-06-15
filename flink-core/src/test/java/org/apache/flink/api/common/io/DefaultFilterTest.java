@@ -32,21 +32,21 @@ import static org.junit.Assert.assertEquals;
 public class DefaultFilterTest {
 	@Parameters
 	public static Collection<Object[]> data() {
-		return Arrays.asList(new Object[][] {
-			{"file.txt",			false},
+		return Arrays.asList(new Object[][]{
+			{"file.txt", false},
 
-			{".file.txt",			true},
-			{"dir/.file.txt",		true},
-			{".dir/file.txt",		false},
+			{".file.txt", true},
+			{"dir/.file.txt", true},
+			{".dir/file.txt", false},
 
-			{"_file.txt",			true},
-			{"dir/_file.txt",		true},
-			{"_dir/file.txt",		false},
+			{"_file.txt", true},
+			{"dir/_file.txt", true},
+			{"_dir/file.txt", false},
 
 			// Check filtering Hadoop's unfinished files
-			{FilePathFilter.HADOOP_COPYING,			true},
-			{"dir/" + FilePathFilter.HADOOP_COPYING,		true},
-			{FilePathFilter.HADOOP_COPYING + "/file.txt",	false},
+			{FilePathFilter.HADOOP_COPYING, true},
+			{"dir/" + FilePathFilter.HADOOP_COPYING, true},
+			{FilePathFilter.HADOOP_COPYING + "/file.txt", false},
 		});
 	}
 

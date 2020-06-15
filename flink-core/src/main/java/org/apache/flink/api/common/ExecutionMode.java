@@ -31,7 +31,7 @@ public enum ExecutionMode {
 	 * Executes the program in a pipelined fashion (including shuffles and broadcasts),
 	 * except for data exchanges that are susceptible to deadlocks when pipelining.
 	 * These data exchanges are performed in a batch manner.
-	 *
+	 * <p>
 	 * An example of situations that are susceptible to deadlocks (when executed in a
 	 * pipelined manner) are data flows that branch (one data set consumed by multiple
 	 * operations) and re-join later:
@@ -48,11 +48,11 @@ public enum ExecutionMode {
 	 * Executes the program in a pipelined fashion (including shuffles and broadcasts),
 	 * <strong>including</strong> data exchanges that are susceptible to deadlocks when
 	 * executed via pipelining.
-	 *
+	 * <p>
 	 * Usually, {@link #PIPELINED} is the preferable option, which pipelines most
 	 * data exchanges and only uses batch data exchanges in situations that are
 	 * susceptible to deadlocks.
-	 *
+	 * <p>
 	 * This option should only be used with care and only in situations where the
 	 * programmer is sure that the program is safe for full pipelining and that
 	 * Flink was too conservative when choosing the batch exchange at a certain

@@ -49,7 +49,7 @@ public class GenericTypeComparator<T extends Comparable<T>> extends TypeComparat
 	private transient T tmpReference;
 
 	@SuppressWarnings("rawtypes")
-	private final TypeComparator[] comparators = new TypeComparator[] {this};
+	private final TypeComparator[] comparators = new TypeComparator[]{this};
 
 	// ------------------------------------------------------------------------
 

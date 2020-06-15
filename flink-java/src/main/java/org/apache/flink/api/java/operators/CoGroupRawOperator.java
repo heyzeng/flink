@@ -33,10 +33,9 @@ import org.apache.flink.api.java.DataSet;
 /**
  * A {@link DataSet} that is the result of a CoGroup transformation.
  *
- * @param <I1> The type of the first input DataSet of the CoGroup transformation.
- * @param <I2> The type of the second input DataSet of the CoGroup transformation.
+ * @param <I1>  The type of the first input DataSet of the CoGroup transformation.
+ * @param <I2>  The type of the second input DataSet of the CoGroup transformation.
  * @param <OUT> The type of the result of the CoGroup transformation.
- *
  * @see DataSet
  */
 @Internal
@@ -50,10 +49,10 @@ public class CoGroupRawOperator<I1, I2, OUT> extends TwoInputUdfOperator<I1, I2,
 	private final String defaultName;
 
 	public CoGroupRawOperator(DataSet<I1> input1, DataSet<I2> input2,
-			Keys<I1> keys1, Keys<I2> keys2,
-			CoGroupFunction<I1, I2, OUT> function,
-			TypeInformation<OUT> returnType,
-			String defaultName) {
+							  Keys<I1> keys1, Keys<I2> keys2,
+							  CoGroupFunction<I1, I2, OUT> function,
+							  TypeInformation<OUT> returnType,
+							  String defaultName) {
 		super(input1, input2, returnType);
 		this.function = function;
 		this.defaultName = defaultName;

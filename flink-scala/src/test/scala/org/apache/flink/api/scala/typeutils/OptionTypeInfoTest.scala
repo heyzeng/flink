@@ -22,8 +22,8 @@ import org.apache.flink.api.common.typeinfo.BasicTypeInfo
 import org.apache.flink.api.common.typeutils.TypeInformationTestBase
 
 /**
-  * Test for [[OptionTypeInfo]].
-  */
+ * Test for [[OptionTypeInfo]].
+ */
 class OptionTypeInfoTest extends TypeInformationTestBase[OptionTypeInfo[_, _]] {
 
   override protected def getTestData: Array[OptionTypeInfo[_, _]] = Array(

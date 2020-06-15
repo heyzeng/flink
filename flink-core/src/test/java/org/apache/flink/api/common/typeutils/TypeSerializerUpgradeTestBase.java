@@ -52,9 +52,9 @@ import static org.junit.Assume.assumeThat;
 public abstract class TypeSerializerUpgradeTestBase<PreviousElementT, UpgradedElementT> extends TestLogger {
 
 	protected static final MigrationVersion[] migrationVersions = new MigrationVersion[]{
-			MigrationVersion.v1_7,
-			MigrationVersion.v1_8,
-			MigrationVersion.v1_9,
+		MigrationVersion.v1_7,
+		MigrationVersion.v1_8,
+		MigrationVersion.v1_9,
 	};
 
 	private final TestSpecification<PreviousElementT, UpgradedElementT> testSpecification;
@@ -69,12 +69,15 @@ public abstract class TypeSerializerUpgradeTestBase<PreviousElementT, UpgradedEl
 
 	public interface PreUpgradeSetup<PreviousElementT> {
 		TypeSerializer<PreviousElementT> createPriorSerializer();
+
 		PreviousElementT createTestData();
 	}
 
 	public interface UpgradeVerifier<UpgradedElementT> {
 		TypeSerializer<UpgradedElementT> createUpgradedSerializer();
+
 		UpgradedElementT expectedTestData();
+
 		Matcher<TypeSerializerSchemaCompatibility<UpgradedElementT>> schemaCompatibilityMatcher();
 	}
 
@@ -164,10 +167,10 @@ public abstract class TypeSerializerUpgradeTestBase<PreviousElementT, UpgradedEl
 		private final ClassLoaderSafeUpgradeVerifier<UpgradedElementT> verifier;
 
 		public TestSpecification(
-				String name,
-				MigrationVersion migrationVersion,
-				Class<? extends PreUpgradeSetup<PreviousElementT>> setupClass,
-				Class<? extends UpgradeVerifier<UpgradedElementT>> verifierClass) throws Exception {
+			String name,
+			MigrationVersion migrationVersion,
+			Class<? extends PreUpgradeSetup<PreviousElementT>> setupClass,
+			Class<? extends UpgradeVerifier<UpgradedElementT>> verifierClass) throws Exception {
 			this.name = checkNotNull(name);
 			this.migrationVersion = checkNotNull(migrationVersion);
 			this.setup = new ClassLoaderSafePreUpgradeSetup<>(setupClass);
@@ -330,9 +333,9 @@ public abstract class TypeSerializerUpgradeTestBase<PreviousElementT, UpgradedEl
 	 * </ul>
 	 */
 	private static <T> void assertSerializerIsValid(
-			TypeSerializer<T> serializer,
-			DataInputView dataInput,
-			T expectedData) throws Exception {
+		TypeSerializer<T> serializer,
+		DataInputView dataInput,
+		T expectedData) throws Exception {
 
 		DataInputView serializedData = readAndThenWriteData(dataInput, serializer, serializer, expectedData);
 		TypeSerializerSnapshot<T> snapshot = writeAndThenReadSerializerSnapshot(serializer);
@@ -369,8 +372,7 @@ public abstract class TypeSerializerUpgradeTestBase<PreviousElementT, UpgradedEl
 	private static void writeContentsTo(Path path, byte[] bytes) {
 		try {
 			Files.write(path, bytes);
-		}
-		catch (IOException e) {
+		} catch (IOException e) {
 			throw new RuntimeException("Failed to write to " + path, e);
 		}
 	}
@@ -379,16 +381,15 @@ public abstract class TypeSerializerUpgradeTestBase<PreviousElementT, UpgradedEl
 		try {
 			byte[] bytes = Files.readAllBytes(path);
 			return new DataInputDeserializer(bytes);
-		}
-		catch (IOException e) {
+		} catch (IOException e) {
 			throw new RuntimeException("Failed to read contents of " + path, e);
 		}
 	}
 
 	private static <T> void writeSerializerSnapshot(
-			DataOutputView out,
-			TypeSerializer<T> serializer,
-			MigrationVersion migrationVersion) throws IOException {
+		DataOutputView out,
+		TypeSerializer<T> serializer,
+		MigrationVersion migrationVersion) throws IOException {
 
 		if (migrationVersion.isNewerVersionThan(MigrationVersion.v1_6)) {
 			writeSerializerSnapshotCurrentFormat(out, serializer);
@@ -398,24 +399,24 @@ public abstract class TypeSerializerUpgradeTestBase<PreviousElementT, UpgradedEl
 	}
 
 	private static <T> void writeSerializerSnapshotCurrentFormat(
-			DataOutputView out,
-			TypeSerializer<T> serializer) throws IOException {
+		DataOutputView out,
+		TypeSerializer<T> serializer) throws IOException {
 
 		TypeSerializerSnapshotSerializationUtil.writeSerializerSnapshot(
 			out, serializer.snapshotConfiguration(), serializer);
 	}
 
 	private static <T> void writeSerializerSnapshotPre17Format(
-			DataOutputView out,
-			TypeSerializer<T> serializer) throws IOException {
+		DataOutputView out,
+		TypeSerializer<T> serializer) throws IOException {
 
 		TypeSerializerSerializationUtil.writeSerializersAndConfigsWithResilience(
 			out, Collections.singletonList(Tuple2.of(serializer, serializer.snapshotConfiguration())));
 	}
 
 	private static <T> TypeSerializerSnapshot<T> readSerializerSnapshot(
-			DataInputView in,
-			MigrationVersion migrationVersion) throws IOException {
+		DataInputView in,
+		MigrationVersion migrationVersion) throws IOException {
 
 		ClassLoader classLoader = Thread.currentThread().getContextClassLoader();
 		if (migrationVersion.isNewerVersionThan(MigrationVersion.v1_6)) {
@@ -426,8 +427,8 @@ public abstract class TypeSerializerUpgradeTestBase<PreviousElementT, UpgradedEl
 	}
 
 	private static <T> TypeSerializerSnapshot<T> readSerializerSnapshotCurrentFormat(
-			DataInputView in,
-			ClassLoader userCodeClassLoader) throws IOException {
+		DataInputView in,
+		ClassLoader userCodeClassLoader) throws IOException {
 
 		return TypeSerializerSnapshotSerializationUtil.readSerializerSnapshot(
 			in, userCodeClassLoader, null);
@@ -435,8 +436,8 @@ public abstract class TypeSerializerUpgradeTestBase<PreviousElementT, UpgradedEl
 
 	@SuppressWarnings("unchecked")
 	private static <T> TypeSerializerSnapshot<T> readSerializerSnapshotPre17Format(
-			DataInputView in,
-			ClassLoader userCodeClassLoader) throws IOException {
+		DataInputView in,
+		ClassLoader userCodeClassLoader) throws IOException {
 
 		List<Tuple2<TypeSerializer<?>, TypeSerializerSnapshot<?>>> serializerSnapshotPair =
 			TypeSerializerSerializationUtil.readSerializersAndConfigsWithResilience(in, userCodeClassLoader);
@@ -444,10 +445,10 @@ public abstract class TypeSerializerUpgradeTestBase<PreviousElementT, UpgradedEl
 	}
 
 	private static <T> DataInputView readAndThenWriteData(
-			DataInputView originalDataInput,
-			TypeSerializer<T> readSerializer,
-			TypeSerializer<T> writeSerializer,
-			T sanityCheckData) throws IOException {
+		DataInputView originalDataInput,
+		TypeSerializer<T> readSerializer,
+		TypeSerializer<T> writeSerializer,
+		T sanityCheckData) throws IOException {
 
 		T data = readSerializer.deserialize(originalDataInput);
 		assertEquals(sanityCheckData, data);
@@ -458,7 +459,7 @@ public abstract class TypeSerializerUpgradeTestBase<PreviousElementT, UpgradedEl
 	}
 
 	private static <T> TypeSerializerSnapshot<T> writeAndThenReadSerializerSnapshot(
-			TypeSerializer<T> serializer) throws IOException {
+		TypeSerializer<T> serializer) throws IOException {
 
 		DataOutputSerializer out = new DataOutputSerializer(INITIAL_OUTPUT_BUFFER_SIZE);
 		writeSerializerSnapshotCurrentFormat(out, serializer);

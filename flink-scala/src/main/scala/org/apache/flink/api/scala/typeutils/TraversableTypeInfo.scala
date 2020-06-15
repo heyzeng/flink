@@ -29,22 +29,28 @@ import scala.collection.JavaConverters._
  */
 @Public
 abstract class TraversableTypeInfo[T <: TraversableOnce[E], E](
-    val clazz: Class[T],
-    val elementTypeInfo: TypeInformation[E])
+                                                                val clazz: Class[T],
+                                                                val elementTypeInfo: TypeInformation[E])
   extends TypeInformation[T] {
 
   @PublicEvolving
   override def isBasicType: Boolean = false
+
   @PublicEvolving
   override def isTupleType: Boolean = false
+
   @PublicEvolving
   override def isKeyType: Boolean = false
+
   @PublicEvolving
   override def getTotalFields: Int = 1
+
   @PublicEvolving
   override def getArity: Int = 1
+
   @PublicEvolving
   override def getTypeClass: Class[T] = clazz
+
   @PublicEvolving
   override def getGenericParameters =
     Map[String, TypeInformation[_]]("A" -> elementTypeInfo).asJava
@@ -56,8 +62,8 @@ abstract class TraversableTypeInfo[T <: TraversableOnce[E], E](
     other match {
       case traversable: TraversableTypeInfo[_, _] =>
         traversable.canEqual(this) &&
-        clazz == traversable.clazz &&
-        elementTypeInfo.equals(traversable.elementTypeInfo)
+          clazz == traversable.clazz &&
+          elementTypeInfo.equals(traversable.elementTypeInfo)
       case _ => false
     }
   }

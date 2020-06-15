@@ -47,16 +47,24 @@ public class ConfigOption<T> {
 
 	// ------------------------------------------------------------------------
 
-	/** The current key for that config option. */
+	/**
+	 * The current key for that config option.
+	 */
 	private final String key;
 
-	/** The list of deprecated keys, in the order to be checked. */
+	/**
+	 * The list of deprecated keys, in the order to be checked.
+	 */
 	private final FallbackKey[] fallbackKeys;
 
-	/** The default value for this option. */
+	/**
+	 * The default value for this option.
+	 */
 	private final T defaultValue;
 
-	/** The description for this option. */
+	/**
+	 * The description for this option.
+	 */
 	private final Description description;
 
 	/**
@@ -84,20 +92,20 @@ public class ConfigOption<T> {
 	/**
 	 * Creates a new config option with fallback keys.
 	 *
-	 * @param key The current key for that config option
-	 * @param clazz describes type of the ConfigOption, see description of the clazz field
-	 * @param description Description for that option
+	 * @param key          The current key for that config option
+	 * @param clazz        describes type of the ConfigOption, see description of the clazz field
+	 * @param description  Description for that option
 	 * @param defaultValue The default value for this option
-	 * @param isList tells if the ConfigOption describes a list option, see description of the clazz field
+	 * @param isList       tells if the ConfigOption describes a list option, see description of the clazz field
 	 * @param fallbackKeys The list of fallback keys, in the order to be checked
 	 */
 	ConfigOption(
-			String key,
-			Class clazz,
-			Description description,
-			T defaultValue,
-			boolean isList,
-			FallbackKey... fallbackKeys) {
+		String key,
+		Class clazz,
+		Description description,
+		T defaultValue,
+		boolean isList,
+		FallbackKey... fallbackKeys) {
 		this.key = checkNotNull(key);
 		this.description = description;
 		this.defaultValue = defaultValue;
@@ -176,6 +184,7 @@ public class ConfigOption<T> {
 
 	/**
 	 * Gets the configuration key.
+	 *
 	 * @return The configuration key
 	 */
 	public String key() {
@@ -184,6 +193,7 @@ public class ConfigOption<T> {
 
 	/**
 	 * Checks if this option has a default value.
+	 *
 	 * @return True if it has a default value, false if not.
 	 */
 	public boolean hasDefaultValue() {
@@ -192,6 +202,7 @@ public class ConfigOption<T> {
 
 	/**
 	 * Returns the default value, or null, if there is no default value.
+	 *
 	 * @return The default value, or null.
 	 */
 	public T defaultValue() {
@@ -200,6 +211,7 @@ public class ConfigOption<T> {
 
 	/**
 	 * Checks whether this option has deprecated keys.
+	 *
 	 * @return True if the option has deprecated keys, false if not.
 	 * @deprecated Replaced by {@link #hasFallbackKeys()}
 	 */
@@ -210,6 +222,7 @@ public class ConfigOption<T> {
 
 	/**
 	 * Gets the deprecated keys, in the order to be checked.
+	 *
 	 * @return The option's deprecated keys.
 	 * @deprecated Replaced by {@link #fallbackKeys()}
 	 */
@@ -224,6 +237,7 @@ public class ConfigOption<T> {
 
 	/**
 	 * Checks whether this option has fallback keys.
+	 *
 	 * @return True if the option has fallback keys, false if not.
 	 */
 	public boolean hasFallbackKeys() {
@@ -232,6 +246,7 @@ public class ConfigOption<T> {
 
 	/**
 	 * Gets the fallback keys, in the order to be checked.
+	 *
 	 * @return The option's fallback keys.
 	 */
 	public Iterable<FallbackKey> fallbackKeys() {
@@ -240,6 +255,7 @@ public class ConfigOption<T> {
 
 	/**
 	 * Returns the description of this option.
+	 *
 	 * @return The option's description.
 	 */
 	public Description description() {
@@ -252,15 +268,13 @@ public class ConfigOption<T> {
 	public boolean equals(Object o) {
 		if (this == o) {
 			return true;
-		}
-		else if (o != null && o.getClass() == ConfigOption.class) {
+		} else if (o != null && o.getClass() == ConfigOption.class) {
 			ConfigOption<?> that = (ConfigOption<?>) o;
 			return this.key.equals(that.key) &&
-					Arrays.equals(this.fallbackKeys, that.fallbackKeys) &&
-					(this.defaultValue == null ? that.defaultValue == null :
-							(that.defaultValue != null && this.defaultValue.equals(that.defaultValue)));
-		}
-		else {
+				Arrays.equals(this.fallbackKeys, that.fallbackKeys) &&
+				(this.defaultValue == null ? that.defaultValue == null :
+					(that.defaultValue != null && this.defaultValue.equals(that.defaultValue)));
+		} else {
 			return false;
 		}
 	}
@@ -268,14 +282,14 @@ public class ConfigOption<T> {
 	@Override
 	public int hashCode() {
 		return 31 * key.hashCode() +
-				17 * Arrays.hashCode(fallbackKeys) +
-				(defaultValue != null ? defaultValue.hashCode() : 0);
+			17 * Arrays.hashCode(fallbackKeys) +
+			(defaultValue != null ? defaultValue.hashCode() : 0);
 	}
 
 	@Override
 	public String toString() {
 		return String.format("Key: '%s' , default: %s (fallback keys: %s)",
-				key, defaultValue, Arrays.toString(fallbackKeys));
+			key, defaultValue, Arrays.toString(fallbackKeys));
 	}
 
 }

@@ -84,11 +84,11 @@ final class PojoSerializerSnapshotData<T> {
 	 * by a new {@link PojoSerializer} (i.e. because the serialized old data was never accessed).
 	 */
 	static <T> PojoSerializerSnapshotData<T> createFrom(
-			Class<T> pojoClass,
-			Field[] fields,
-			TypeSerializer<?>[] fieldSerializers,
-			LinkedHashMap<Class<?>, TypeSerializer<?>> registeredSubclassSerializers,
-			Map<Class<?>, TypeSerializer<?>> nonRegisteredSubclassSerializers) {
+		Class<T> pojoClass,
+		Field[] fields,
+		TypeSerializer<?>[] fieldSerializers,
+		LinkedHashMap<Class<?>, TypeSerializer<?>> registeredSubclassSerializers,
+		Map<Class<?>, TypeSerializer<?>> nonRegisteredSubclassSerializers) {
 
 		final LinkedOptionalMap<Field, TypeSerializerSnapshot<?>> fieldSerializerSnapshots = new LinkedOptionalMap<>(fields.length);
 
@@ -126,11 +126,11 @@ final class PojoSerializerSnapshotData<T> {
 	 * Creates a {@link PojoSerializerSnapshotData} from existing snapshotted configuration of a {@link PojoSerializer}.
 	 */
 	static <T> PojoSerializerSnapshotData<T> createFrom(
-			Class<T> pojoClass,
-			Field[] fields,
-			TypeSerializerSnapshot<?>[] existingFieldSerializerSnapshots,
-			LinkedHashMap<Class<?>, TypeSerializerSnapshot<?>> existingRegisteredSubclassSerializerSnapshots,
-			Map<Class<?>, TypeSerializerSnapshot<?>> existingNonRegisteredSubclassSerializerSnapshots) {
+		Class<T> pojoClass,
+		Field[] fields,
+		TypeSerializerSnapshot<?>[] existingFieldSerializerSnapshots,
+		LinkedHashMap<Class<?>, TypeSerializerSnapshot<?>> existingRegisteredSubclassSerializerSnapshots,
+		Map<Class<?>, TypeSerializerSnapshot<?>> existingNonRegisteredSubclassSerializerSnapshots) {
 
 		final LinkedOptionalMap<Field, TypeSerializerSnapshot<?>> fieldSerializerSnapshots = new LinkedOptionalMap<>(fields.length);
 		for (int i = 0; i < fields.length; i++) {
@@ -152,10 +152,10 @@ final class PojoSerializerSnapshotData<T> {
 	private LinkedOptionalMap<Class<?>, TypeSerializerSnapshot<?>> nonRegisteredSubclassSerializerSnapshots;
 
 	private PojoSerializerSnapshotData(
-			Class<T> typeClass,
-			LinkedOptionalMap<Field, TypeSerializerSnapshot<?>> fieldSerializerSnapshots,
-			LinkedOptionalMap<Class<?>, TypeSerializerSnapshot<?>> registeredSubclassSerializerSnapshots,
-			LinkedOptionalMap<Class<?>, TypeSerializerSnapshot<?>> nonRegisteredSubclassSerializerSnapshots) {
+		Class<T> typeClass,
+		LinkedOptionalMap<Field, TypeSerializerSnapshot<?>> fieldSerializerSnapshots,
+		LinkedOptionalMap<Class<?>, TypeSerializerSnapshot<?>> registeredSubclassSerializerSnapshots,
+		LinkedOptionalMap<Class<?>, TypeSerializerSnapshot<?>> nonRegisteredSubclassSerializerSnapshots) {
 
 		this.pojoClass = checkNotNull(typeClass);
 		this.fieldSerializerSnapshots = checkNotNull(fieldSerializerSnapshots);
@@ -225,7 +225,8 @@ final class PojoSerializerSnapshotData<T> {
 		INSTANCE;
 
 		@Override
-		public void accept(DataOutputView dataOutputView, Object o) {}
+		public void accept(DataOutputView dataOutputView, Object o) {
+		}
 
 		@SuppressWarnings("unchecked")
 		static <K> BiConsumerWithException<DataOutputView, K, IOException> noopWriter() {
@@ -237,8 +238,7 @@ final class PojoSerializerSnapshotData<T> {
 		return (input, fieldName) -> {
 			try {
 				return PojoFieldUtils.readField(input, cl);
-			}
-			catch (Throwable t) {
+			} catch (Throwable t) {
 				LOG.warn(String.format("Exception while reading field %s", fieldName), t);
 				return null;
 			}
@@ -249,8 +249,7 @@ final class PojoSerializerSnapshotData<T> {
 		return (input, unused) -> {
 			try {
 				return TypeSerializerSnapshot.readVersionedSnapshot(input, cl);
-			}
-			catch (Throwable t) {
+			} catch (Throwable t) {
 				LOG.warn("Exception while reading serializer snapshot.", t);
 				return null;
 			}

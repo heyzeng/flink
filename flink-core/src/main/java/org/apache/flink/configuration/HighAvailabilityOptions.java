@@ -41,7 +41,7 @@ public class HighAvailabilityOptions {
 	 */
 	@Documentation.Section(Documentation.Sections.COMMON_HIGH_AVAILABILITY)
 	public static final ConfigOption<String> HA_MODE =
-			key("high-availability")
+		key("high-availability")
 			.defaultValue("NONE")
 			.withDeprecatedKeys("recovery.mode")
 			.withDescription("Defines high-availability mode used for the cluster execution." +
@@ -53,7 +53,7 @@ public class HighAvailabilityOptions {
 	 */
 	@Documentation.Section(Documentation.Sections.COMMON_HIGH_AVAILABILITY)
 	public static final ConfigOption<String> HA_CLUSTER_ID =
-			key("high-availability.cluster-id")
+		key("high-availability.cluster-id")
 			.defaultValue("/default")
 			.withDeprecatedKeys("high-availability.zookeeper.path.namespace", "recovery.zookeeper.path.namespace")
 			.withDescription("The ID of the Flink cluster, used to separate multiple Flink clusters from each other." +
@@ -64,7 +64,7 @@ public class HighAvailabilityOptions {
 	 */
 	@Documentation.Section(Documentation.Sections.COMMON_HIGH_AVAILABILITY)
 	public static final ConfigOption<String> HA_STORAGE_PATH =
-			key("high-availability.storageDir")
+		key("high-availability.storageDir")
 			.noDefaultValue()
 			.withDeprecatedKeys("high-availability.zookeeper.storageDir", "recovery.zookeeper.storageDir")
 			.withDescription("File system path (URI) where Flink persists metadata in high-availability setups.");
@@ -78,12 +78,12 @@ public class HighAvailabilityOptions {
 	 */
 	@Documentation.Section(Documentation.Sections.EXPERT_HIGH_AVAILABILITY)
 	public static final ConfigOption<String> HA_JOB_MANAGER_PORT_RANGE =
-			key("high-availability.jobmanager.port")
+		key("high-availability.jobmanager.port")
 			.stringType()
 			.defaultValue("0")
 			.withDeprecatedKeys("recovery.jobmanager.port")
 			.withDescription(
-					"The port (range) used by the Flink Master for its RPC connections in highly-available setups. " +
+				"The port (range) used by the Flink Master for its RPC connections in highly-available setups. " +
 					"In highly-available setups, this value is used instead of '" + JobManagerOptions.PORT.key() + "'." +
 					"A value of '0' means that a random free port is chosen. TaskManagers discover this port through " +
 					"the high-availability services (leader election), so a random port or a port range works " +
@@ -98,7 +98,7 @@ public class HighAvailabilityOptions {
 	 */
 	@Documentation.Section(Documentation.Sections.COMMON_HIGH_AVAILABILITY_ZOOKEEPER)
 	public static final ConfigOption<String> HA_ZOOKEEPER_QUORUM =
-			key("high-availability.zookeeper.quorum")
+		key("high-availability.zookeeper.quorum")
 			.noDefaultValue()
 			.withDeprecatedKeys("recovery.zookeeper.quorum")
 			.withDescription("The ZooKeeper quorum to use, when running Flink in a high-availability mode with ZooKeeper.");
@@ -108,55 +108,63 @@ public class HighAvailabilityOptions {
 	 */
 	@Documentation.Section(Documentation.Sections.COMMON_HIGH_AVAILABILITY_ZOOKEEPER)
 	public static final ConfigOption<String> HA_ZOOKEEPER_ROOT =
-			key("high-availability.zookeeper.path.root")
+		key("high-availability.zookeeper.path.root")
 			.defaultValue("/flink")
 			.withDeprecatedKeys("recovery.zookeeper.path.root")
 			.withDescription("The root path under which Flink stores its entries in ZooKeeper.");
 
 	@Documentation.Section(Documentation.Sections.EXPERT_ZOOKEEPER_HIGH_AVAILABILITY)
 	public static final ConfigOption<String> HA_ZOOKEEPER_LATCH_PATH =
-			key("high-availability.zookeeper.path.latch")
+		key("high-availability.zookeeper.path.latch")
 			.defaultValue("/leaderlatch")
 			.withDeprecatedKeys("recovery.zookeeper.path.latch")
 			.withDescription("Defines the znode of the leader latch which is used to elect the leader.");
 
-	/** ZooKeeper root path (ZNode) for job graphs. */
+	/**
+	 * ZooKeeper root path (ZNode) for job graphs.
+	 */
 	@Documentation.Section(Documentation.Sections.EXPERT_ZOOKEEPER_HIGH_AVAILABILITY)
 	public static final ConfigOption<String> HA_ZOOKEEPER_JOBGRAPHS_PATH =
-			key("high-availability.zookeeper.path.jobgraphs")
+		key("high-availability.zookeeper.path.jobgraphs")
 			.defaultValue("/jobgraphs")
 			.withDeprecatedKeys("recovery.zookeeper.path.jobgraphs")
 			.withDescription("ZooKeeper root path (ZNode) for job graphs");
 
 	@Documentation.Section(Documentation.Sections.EXPERT_ZOOKEEPER_HIGH_AVAILABILITY)
 	public static final ConfigOption<String> HA_ZOOKEEPER_LEADER_PATH =
-			key("high-availability.zookeeper.path.leader")
+		key("high-availability.zookeeper.path.leader")
 			.defaultValue("/leader")
 			.withDeprecatedKeys("recovery.zookeeper.path.leader")
 			.withDescription("Defines the znode of the leader which contains the URL to the leader and the current" +
 				" leader session ID.");
 
-	/** ZooKeeper root path (ZNode) for completed checkpoints. */
+	/**
+	 * ZooKeeper root path (ZNode) for completed checkpoints.
+	 */
 	@Documentation.Section(Documentation.Sections.EXPERT_ZOOKEEPER_HIGH_AVAILABILITY)
 	public static final ConfigOption<String> HA_ZOOKEEPER_CHECKPOINTS_PATH =
-			key("high-availability.zookeeper.path.checkpoints")
+		key("high-availability.zookeeper.path.checkpoints")
 			.defaultValue("/checkpoints")
 			.withDeprecatedKeys("recovery.zookeeper.path.checkpoints")
 			.withDescription("ZooKeeper root path (ZNode) for completed checkpoints.");
 
-	/** ZooKeeper root path (ZNode) for checkpoint counters. */
+	/**
+	 * ZooKeeper root path (ZNode) for checkpoint counters.
+	 */
 	@Documentation.Section(Documentation.Sections.EXPERT_ZOOKEEPER_HIGH_AVAILABILITY)
 	public static final ConfigOption<String> HA_ZOOKEEPER_CHECKPOINT_COUNTER_PATH =
-			key("high-availability.zookeeper.path.checkpoint-counter")
+		key("high-availability.zookeeper.path.checkpoint-counter")
 			.defaultValue("/checkpoint-counter")
 			.withDeprecatedKeys("recovery.zookeeper.path.checkpoint-counter")
 			.withDescription("ZooKeeper root path (ZNode) for checkpoint counters.");
 
-	/** ZooKeeper root path (ZNode) for Mesos workers. */
+	/**
+	 * ZooKeeper root path (ZNode) for Mesos workers.
+	 */
 	@PublicEvolving
 	@Documentation.Section(Documentation.Sections.EXPERT_ZOOKEEPER_HIGH_AVAILABILITY)
 	public static final ConfigOption<String> HA_ZOOKEEPER_MESOS_WORKERS_PATH =
-			key("high-availability.zookeeper.path.mesos-workers")
+		key("high-availability.zookeeper.path.mesos-workers")
 			.defaultValue("/mesos-workers")
 			.withDeprecatedKeys("recovery.zookeeper.path.mesos-workers")
 			.withDescription(Description.builder()
@@ -169,40 +177,40 @@ public class HighAvailabilityOptions {
 
 	@Documentation.Section(Documentation.Sections.EXPERT_ZOOKEEPER_HIGH_AVAILABILITY)
 	public static final ConfigOption<Integer> ZOOKEEPER_SESSION_TIMEOUT =
-			key("high-availability.zookeeper.client.session-timeout")
+		key("high-availability.zookeeper.client.session-timeout")
 			.defaultValue(60000)
 			.withDeprecatedKeys("recovery.zookeeper.client.session-timeout")
 			.withDescription("Defines the session timeout for the ZooKeeper session in ms.");
 
 	@Documentation.Section(Documentation.Sections.EXPERT_ZOOKEEPER_HIGH_AVAILABILITY)
 	public static final ConfigOption<Integer> ZOOKEEPER_CONNECTION_TIMEOUT =
-			key("high-availability.zookeeper.client.connection-timeout")
+		key("high-availability.zookeeper.client.connection-timeout")
 			.defaultValue(15000)
 			.withDeprecatedKeys("recovery.zookeeper.client.connection-timeout")
 			.withDescription("Defines the connection timeout for ZooKeeper in ms.");
 
 	@Documentation.Section(Documentation.Sections.EXPERT_ZOOKEEPER_HIGH_AVAILABILITY)
 	public static final ConfigOption<Integer> ZOOKEEPER_RETRY_WAIT =
-			key("high-availability.zookeeper.client.retry-wait")
+		key("high-availability.zookeeper.client.retry-wait")
 			.defaultValue(5000)
 			.withDeprecatedKeys("recovery.zookeeper.client.retry-wait")
 			.withDescription("Defines the pause between consecutive retries in ms.");
 
 	@Documentation.Section(Documentation.Sections.EXPERT_ZOOKEEPER_HIGH_AVAILABILITY)
 	public static final ConfigOption<Integer> ZOOKEEPER_MAX_RETRY_ATTEMPTS =
-			key("high-availability.zookeeper.client.max-retry-attempts")
+		key("high-availability.zookeeper.client.max-retry-attempts")
 			.defaultValue(3)
 			.withDeprecatedKeys("recovery.zookeeper.client.max-retry-attempts")
 			.withDescription("Defines the number of connection retries before the client gives up.");
 
 	@Documentation.Section(Documentation.Sections.EXPERT_ZOOKEEPER_HIGH_AVAILABILITY)
 	public static final ConfigOption<String> ZOOKEEPER_RUNNING_JOB_REGISTRY_PATH =
-			key("high-availability.zookeeper.path.running-registry")
+		key("high-availability.zookeeper.path.running-registry")
 			.defaultValue("/running_job_registry/");
 
 	@Documentation.Section(Documentation.Sections.EXPERT_ZOOKEEPER_HIGH_AVAILABILITY)
 	public static final ConfigOption<String> ZOOKEEPER_CLIENT_ACL =
-			key("high-availability.zookeeper.client.acl")
+		key("high-availability.zookeeper.client.acl")
 			.defaultValue("open")
 			.withDescription("Defines the ACL (open|creator) to be configured on ZK node. The configuration value can be" +
 				" set to “creator” if the ZooKeeper server configuration has the “authProvider” property mapped to use" +
@@ -226,6 +234,9 @@ public class HighAvailabilityOptions {
 
 	// ------------------------------------------------------------------------
 
-	/** Not intended to be instantiated. */
-	private HighAvailabilityOptions() {}
+	/**
+	 * Not intended to be instantiated.
+	 */
+	private HighAvailabilityOptions() {
+	}
 }

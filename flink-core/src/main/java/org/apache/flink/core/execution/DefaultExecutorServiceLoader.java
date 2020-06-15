@@ -74,9 +74,9 @@ public class DefaultExecutorServiceLoader implements PipelineExecutorServiceLoad
 
 		if (compatibleFactories.size() > 1) {
 			final String configStr =
-					configuration.toMap().entrySet().stream()
-							.map(e -> e.getKey() + "=" + e.getValue())
-							.collect(Collectors.joining("\n"));
+				configuration.toMap().entrySet().stream()
+					.map(e -> e.getKey() + "=" + e.getValue())
+					.collect(Collectors.joining("\n"));
 
 			throw new IllegalStateException("Multiple compatible client factories found for:\n" + configStr + ".");
 		}
@@ -87,7 +87,7 @@ public class DefaultExecutorServiceLoader implements PipelineExecutorServiceLoad
 	@Override
 	public Stream<String> getExecutorNames() {
 		return StreamSupport.stream(defaultLoader.spliterator(), false)
-				.map(PipelineExecutorFactory::getName);
+			.map(PipelineExecutorFactory::getName);
 	}
 
 	private DefaultExecutorServiceLoader() {

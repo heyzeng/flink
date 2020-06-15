@@ -30,7 +30,7 @@ import java.util.Iterator;
  *
  * <p>The function needs to be serializable, as defined in {@link java.io.Serializable}.
  *
- * @param <IN> Type of the input elements.
+ * @param <IN>  Type of the input elements.
  * @param <OUT> Type of the returned elements.
  */
 @PublicEvolving
@@ -44,7 +44,6 @@ public abstract class FlatMapIterator<IN, OUT> extends RichFlatMapFunction<IN, O
 	 *
 	 * @param value The input value.
 	 * @return An iterator over the returned elements.
-	 *
 	 * @throws Exception This method may throw exceptions. Throwing an exception will cause the operation
 	 *                   to fail and may trigger recovery.
 	 */

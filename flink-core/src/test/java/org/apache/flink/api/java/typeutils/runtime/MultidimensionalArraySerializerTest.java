@@ -34,7 +34,7 @@ public class MultidimensionalArraySerializerTest {
 
 	@Test
 	public void testStringArray() {
-		String[][] array = new String[][]{{null,"b"},{"c","d"},{"e","f"},{"g","h"},null};
+		String[][] array = new String[][]{{null, "b"}, {"c", "d"}, {"e", "f"}, {"g", "h"}, null};
 		TypeInformation<String[][]> ti = TypeExtractor.getForClass(String[][].class);
 
 		SerializerTestInstance<String[][]> testInstance = new SerializerTestInstance<String[][]>(ti.createSerializer(new ExecutionConfig()), String[][].class, -1, array);
@@ -43,7 +43,7 @@ public class MultidimensionalArraySerializerTest {
 
 	@Test
 	public void testPrimitiveArray() {
-		int[][] array = new int[][]{{12,1},{48,42},{23,80},{484,849},{987,4}};
+		int[][] array = new int[][]{{12, 1}, {48, 42}, {23, 80}, {484, 849}, {987, 4}};
 		TypeInformation<int[][]> ti = TypeExtractor.getForClass(int[][].class);
 
 		SerializerTestInstance<int[][]> testInstance = new SerializerTestInstance<int[][]>(ti.createSerializer(new ExecutionConfig()), int[][].class, -1, array);
@@ -66,13 +66,13 @@ public class MultidimensionalArraySerializerTest {
 			}
 			MyPojo other = (MyPojo) obj;
 			return ((field1 == null && other.field1 == null) || (field1 != null && field1.equals(other.field1)))
-					&& field2 == other.field2;
+				&& field2 == other.field2;
 		}
 	}
 
 	@Test
 	public void testObjectArrays() {
-		Integer[][] array = new Integer[][]{{0,1}, null, {null, 42}};
+		Integer[][] array = new Integer[][]{{0, 1}, null, {null, 42}};
 		TypeInformation<Integer[][]> ti = TypeExtractor.getForClass(Integer[][].class);
 
 		SerializerTestInstance<Integer[][]> testInstance = new SerializerTestInstance<Integer[][]>(ti.createSerializer(new ExecutionConfig()), Integer[][].class, -1, array);
@@ -106,15 +106,16 @@ public class MultidimensionalArraySerializerTest {
 		}
 	}
 
-	@SuppressWarnings({ "unchecked", "rawtypes" })
+	@SuppressWarnings({"unchecked", "rawtypes"})
 	@Test
 	public void testGenericObjectArrays() {
 		MyGenericPojo<String>[][] array = (MyGenericPojo<String>[][]) new MyGenericPojo[][]{
-			{ new MyGenericPojo<String>(new String[][]{{"a", "b"},{"c", "d"}}), null}
+			{new MyGenericPojo<String>(new String[][]{{"a", "b"}, {"c", "d"}}), null}
 		};
 
 		TypeInformation<MyGenericPojo<String>[][]> ti =
-				TypeInformation.of(new TypeHint<MyGenericPojo<String>[][]>(){});
+			TypeInformation.of(new TypeHint<MyGenericPojo<String>[][]>() {
+			});
 
 		SerializerTestInstance testInstance = new SerializerTestInstance(ti.createSerializer(new ExecutionConfig()), MyGenericPojo[][].class, -1, (Object) array);
 		testInstance.testAll();

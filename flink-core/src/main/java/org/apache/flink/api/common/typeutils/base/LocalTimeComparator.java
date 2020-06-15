@@ -69,7 +69,7 @@ public final class LocalTimeComparator extends BasicTypeComparator<LocalTime> {
 	// --------------------------------------------------------------------------------------------
 
 	public static int compareSerializedLocalTime(DataInputView firstSource, DataInputView secondSource,
-			boolean ascendingComparison) throws IOException {
+												 boolean ascendingComparison) throws IOException {
 		int cmp = firstSource.readByte() - secondSource.readByte();
 		if (cmp == 0) {
 			cmp = firstSource.readByte() - secondSource.readByte();

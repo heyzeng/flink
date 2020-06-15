@@ -45,11 +45,9 @@ public class AccumulatorHelper {
 	 * Merge two collections of accumulators. The second will be merged into the
 	 * first.
 	 *
-	 * @param target
-	 *            The collection of accumulators that will be updated
-	 * @param toMerge
-	 *            The collection of accumulators that will be merged into the
-	 *            other
+	 * @param target  The collection of accumulators that will be updated
+	 * @param toMerge The collection of accumulators that will be merged into the
+	 *                other
 	 */
 	public static void mergeInto(Map<String, OptionalFailure<Accumulator<?, ?>>> target, Map<String, Accumulator<?, ?>> toMerge) {
 		for (Map.Entry<String, Accumulator<?, ?>> otherEntry : toMerge.entrySet()) {
@@ -59,11 +57,9 @@ public class AccumulatorHelper {
 				target.put(
 					otherEntry.getKey(),
 					wrapUnchecked(otherEntry.getKey(), () -> otherEntry.getValue().clone()));
-			}
-			else if (ownAccumulator.isFailure()) {
+			} else if (ownAccumulator.isFailure()) {
 				continue;
-			}
-			else {
+			} else {
 				Accumulator<?, ?> accumulator = ownAccumulator.getUnchecked();
 				// Both should have the same type
 				compareAccumulatorTypes(otherEntry.getKey(),
@@ -99,9 +95,9 @@ public class AccumulatorHelper {
 	 */
 	@SuppressWarnings("rawtypes")
 	public static void compareAccumulatorTypes(
-			Object name,
-			Class<? extends Accumulator> first,
-			Class<? extends Accumulator> second) throws UnsupportedOperationException {
+		Object name,
+		Class<? extends Accumulator> first,
+		Class<? extends Accumulator> second) throws UnsupportedOperationException {
 		if (first == null || second == null) {
 			throw new NullPointerException();
 		}
@@ -113,9 +109,9 @@ public class AccumulatorHelper {
 			} else {
 				// damn, name is the same, but different classloaders
 				throw new UnsupportedOperationException("The accumulator object '" + name
-						+ "' was created with two different classes: " + first + " and " + second
-						+ " Both have the same type (" + first.getName() + ") but different classloaders: "
-						+ first.getClassLoader() + " and " + second.getClassLoader());
+					+ "' was created with two different classes: " + first + " and " + second
+					+ " Both have the same type (" + first.getName() + ") but different classloaders: "
+					+ first.getClassLoader() + " and " + second.getClassLoader());
 			}
 		}
 	}
@@ -165,7 +161,7 @@ public class AccumulatorHelper {
 	public static Map<String, Accumulator<?, ?>> copy(Map<String, Accumulator<?, ?>> accumulators) {
 		Map<String, Accumulator<?, ?>> result = new HashMap<String, Accumulator<?, ?>>();
 
-		for (Map.Entry<String, Accumulator<?, ?>> entry: accumulators.entrySet()){
+		for (Map.Entry<String, Accumulator<?, ?>> entry : accumulators.entrySet()) {
 			result.put(entry.getKey(), entry.getValue().clone());
 		}
 
@@ -175,13 +171,14 @@ public class AccumulatorHelper {
 	/**
 	 * Takes the serialized accumulator results and tries to deserialize them using the provided
 	 * class loader.
+	 *
 	 * @param serializedAccumulators The serialized accumulator results.
-	 * @param loader The class loader to use.
+	 * @param loader                 The class loader to use.
 	 * @return The deserialized accumulator results.
 	 */
 	public static Map<String, OptionalFailure<Object>> deserializeAccumulators(
-			Map<String, SerializedValue<OptionalFailure<Object>>> serializedAccumulators,
-			ClassLoader loader) throws IOException, ClassNotFoundException {
+		Map<String, SerializedValue<OptionalFailure<Object>>> serializedAccumulators,
+		ClassLoader loader) throws IOException, ClassNotFoundException {
 
 		if (serializedAccumulators == null || serializedAccumulators.isEmpty()) {
 			return Collections.emptyMap();
@@ -205,8 +202,9 @@ public class AccumulatorHelper {
 	/**
 	 * Takes the serialized accumulator results and tries to deserialize them using the provided
 	 * class loader, and then try to unwrap the value unchecked.
+	 *
 	 * @param serializedAccumulators The serialized accumulator results.
-	 * @param loader The class loader to use.
+	 * @param loader                 The class loader to use.
 	 * @return The deserialized and unwrapped accumulator results.
 	 */
 	public static Map<String, Object> deserializeAndUnwrapAccumulators(

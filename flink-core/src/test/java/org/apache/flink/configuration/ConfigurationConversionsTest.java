@@ -324,8 +324,10 @@ public class ConfigurationConversionsTest {
 	private static class TestSpec<T> {
 		private final ConfigurationAccessor<T> configurationAccessor;
 		private Matcher<T> matcher;
-		@Nullable private String expectedException = null;
-		@Nullable private Class<? extends Exception> exceptionClass;
+		@Nullable
+		private String expectedException = null;
+		@Nullable
+		private Class<? extends Exception> exceptionClass;
 
 		@FunctionalInterface
 		private interface ConfigurationAccessor<T> {

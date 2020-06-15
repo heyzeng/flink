@@ -53,24 +53,24 @@ public class SemanticPropertiesProjectionTest {
 	final List<Tuple5<Integer, Long, String, Long, Integer>> emptyTupleData = new ArrayList<Tuple5<Integer, Long, String, Long, Integer>>();
 
 	final TupleTypeInfo<Tuple5<Integer, Long, String, Long, Integer>> tupleTypeInfo = new
-			TupleTypeInfo<Tuple5<Integer, Long, String, Long, Integer>>(
-			BasicTypeInfo.INT_TYPE_INFO,
-			BasicTypeInfo.LONG_TYPE_INFO,
-			BasicTypeInfo.STRING_TYPE_INFO,
-			BasicTypeInfo.LONG_TYPE_INFO,
-			BasicTypeInfo.INT_TYPE_INFO
+		TupleTypeInfo<Tuple5<Integer, Long, String, Long, Integer>>(
+		BasicTypeInfo.INT_TYPE_INFO,
+		BasicTypeInfo.LONG_TYPE_INFO,
+		BasicTypeInfo.STRING_TYPE_INFO,
+		BasicTypeInfo.LONG_TYPE_INFO,
+		BasicTypeInfo.INT_TYPE_INFO
 	);
 
 	final List<Tuple4<Integer, Tuple3<String, Integer, Long>, Tuple2<Long, Long>, String>> emptyNestedTupleData =
-			new ArrayList<Tuple4<Integer, Tuple3<String, Integer, Long>, Tuple2<Long, Long>, String>>();
+		new ArrayList<Tuple4<Integer, Tuple3<String, Integer, Long>, Tuple2<Long, Long>, String>>();
 
 	final TupleTypeInfo<Tuple4<Integer, Tuple3<String, Integer, Long>, Tuple2<Long, Long>, String>> nestedTupleTypeInfo = new
-			TupleTypeInfo<Tuple4<Integer, Tuple3<String, Integer, Long>, Tuple2<Long, Long>, String>>(
-			BasicTypeInfo.INT_TYPE_INFO,
-			new TupleTypeInfo<Tuple3<String,  Integer, Long>>(BasicTypeInfo.STRING_TYPE_INFO, BasicTypeInfo.INT_TYPE_INFO, BasicTypeInfo.LONG_TYPE_INFO),
-			new TupleTypeInfo<Tuple2<Long, Long>>(BasicTypeInfo.LONG_TYPE_INFO, BasicTypeInfo.LONG_TYPE_INFO),
-			BasicTypeInfo.STRING_TYPE_INFO
-			);
+		TupleTypeInfo<Tuple4<Integer, Tuple3<String, Integer, Long>, Tuple2<Long, Long>, String>>(
+		BasicTypeInfo.INT_TYPE_INFO,
+		new TupleTypeInfo<Tuple3<String, Integer, Long>>(BasicTypeInfo.STRING_TYPE_INFO, BasicTypeInfo.INT_TYPE_INFO, BasicTypeInfo.LONG_TYPE_INFO),
+		new TupleTypeInfo<Tuple2<Long, Long>>(BasicTypeInfo.LONG_TYPE_INFO, BasicTypeInfo.LONG_TYPE_INFO),
+		BasicTypeInfo.STRING_TYPE_INFO
+	);
 
 	@Test
 	public void testProjectionSemProps1() {
@@ -137,9 +137,9 @@ public class SemanticPropertiesProjectionTest {
 		DataSet<Tuple5<Integer, Long, String, Long, Integer>> tupleDs = env.fromCollection(emptyTupleData, tupleTypeInfo);
 
 		tupleDs.join(tupleDs).where(0).equalTo(0)
-				.projectFirst(2, 3)
-				.projectSecond(1, 4)
-				.output(new DiscardingOutputFormat<Tuple>());
+			.projectFirst(2, 3)
+			.projectSecond(1, 4)
+			.output(new DiscardingOutputFormat<Tuple>());
 
 		Plan plan = env.createProgramPlan();
 
@@ -165,9 +165,9 @@ public class SemanticPropertiesProjectionTest {
 		DataSet<Tuple4<Integer, Tuple3<String, Integer, Long>, Tuple2<Long, Long>, String>> tupleDs = env.fromCollection(emptyNestedTupleData, nestedTupleTypeInfo);
 
 		tupleDs.join(tupleDs).where(0).equalTo(0)
-				.projectFirst(2, 0)
-				.projectSecond(1, 3)
-				.output(new DiscardingOutputFormat<Tuple>());
+			.projectFirst(2, 0)
+			.projectSecond(1, 3)
+			.output(new DiscardingOutputFormat<Tuple>());
 
 		Plan plan = env.createProgramPlan();
 
@@ -214,9 +214,9 @@ public class SemanticPropertiesProjectionTest {
 		DataSet<Tuple5<Integer, Long, String, Long, Integer>> tupleDs = env.fromCollection(emptyTupleData, tupleTypeInfo);
 
 		tupleDs.cross(tupleDs)
-				.projectFirst(2, 3)
-				.projectSecond(1, 4)
-				.output(new DiscardingOutputFormat<Tuple>());
+			.projectFirst(2, 3)
+			.projectSecond(1, 4)
+			.output(new DiscardingOutputFormat<Tuple>());
 
 		Plan plan = env.createProgramPlan();
 
@@ -242,9 +242,9 @@ public class SemanticPropertiesProjectionTest {
 		DataSet<Tuple4<Integer, Tuple3<String, Integer, Long>, Tuple2<Long, Long>, String>> tupleDs = env.fromCollection(emptyNestedTupleData, nestedTupleTypeInfo);
 
 		tupleDs.cross(tupleDs)
-				.projectFirst(2, 0)
-				.projectSecond(1, 3)
-				.output(new DiscardingOutputFormat<Tuple>());
+			.projectFirst(2, 0)
+			.projectSecond(1, 3)
+			.output(new DiscardingOutputFormat<Tuple>());
 
 		Plan plan = env.createProgramPlan();
 

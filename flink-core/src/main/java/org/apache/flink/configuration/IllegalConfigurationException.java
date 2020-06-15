@@ -44,7 +44,7 @@ public class IllegalConfigurationException extends RuntimeException {
 	 * Constructs an new IllegalConfigurationException with the given error message
 	 * format and arguments.
 	 *
-	 * @param format The error message format for the exception.
+	 * @param format    The error message format for the exception.
 	 * @param arguments The arguments for the format.
 	 */
 	public IllegalConfigurationException(String format, Object... arguments) {
@@ -56,7 +56,7 @@ public class IllegalConfigurationException extends RuntimeException {
 	 * and a given cause.
 	 *
 	 * @param message The error message for the exception.
-	 * @param cause The exception that caused this exception.
+	 * @param cause   The exception that caused this exception.
 	 */
 	public IllegalConfigurationException(String message, Throwable cause) {
 		super(message, cause);

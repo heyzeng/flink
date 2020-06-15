@@ -34,8 +34,7 @@ public class ObjectSummaryAggregator implements Aggregator<Object, ObjectColumnS
 	public void aggregate(Object value) {
 		if (value == null) {
 			nullCount++;
-		}
-		else {
+		} else {
 			nonNullCount++;
 		}
 	}

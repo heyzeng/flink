@@ -23,9 +23,9 @@ import org.apache.flink.annotation.Internal;
 import org.apache.flink.api.common.typeinfo.TypeInformation;
 
 /**
- *  A class for holding information about a single input operator, such as input/output TypeInformation.
+ * A class for holding information about a single input operator, such as input/output TypeInformation.
  *
- * @param <IN> Output type of the input operator
+ * @param <IN>  Output type of the input operator
  * @param <OUT> Output type of the records output by the operator described by this information
  */
 @Internal
@@ -37,7 +37,7 @@ public class UnaryOperatorInformation<IN, OUT> extends OperatorInformation<OUT> 
 	protected final TypeInformation<IN> inputType;
 
 	/**
-	 * @param inputType Input type of first input
+	 * @param inputType  Input type of first input
 	 * @param outputType The output type of the operator
 	 */
 	public UnaryOperatorInformation(TypeInformation<IN> inputType, TypeInformation<OUT> outputType) {

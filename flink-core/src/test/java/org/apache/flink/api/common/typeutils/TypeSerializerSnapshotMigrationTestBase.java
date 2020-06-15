@@ -53,7 +53,6 @@ import static org.hamcrest.MatcherAssert.assertThat;
  * A test base for verifying {@link TypeSerializerSnapshot} migration.
  *
  * @param <ElementT> the element being serialized.
- *
  * @deprecated please use the newer {@link TypeSerializerUpgradeTestBase}
  */
 @Deprecated
@@ -168,9 +167,8 @@ public abstract class TypeSerializerSnapshotMigrationTestBase<ElementT> extends 
 			} else {
 				return readSnapshot(input);
 			}
-		}
-		catch (IOException e) {
-			throw new RuntimeException("Unable to read " + testSpecification.getSnapshotDataLocation(),  e);
+		} catch (IOException e) {
+			throw new RuntimeException("Unable to read " + testSpecification.getSnapshotDataLocation(), e);
 		}
 	}
 
@@ -211,8 +209,7 @@ public abstract class TypeSerializerSnapshotMigrationTestBase<ElementT> extends 
 		try {
 			byte[] bytes = Files.readAllBytes(path);
 			return new DataInputDeserializer(bytes);
-		}
-		catch (IOException e) {
+		} catch (IOException e) {
 			throw new RuntimeException("Failed to read " + path, e);
 		}
 	}
@@ -226,8 +223,7 @@ public abstract class TypeSerializerSnapshotMigrationTestBase<ElementT> extends 
 				throw new IllegalArgumentException("unable locate test data " + resourceName);
 			}
 			return Paths.get(resource.toURI());
-		}
-		catch (URISyntaxException e) {
+		} catch (URISyntaxException e) {
 			throw new RuntimeException("unable", e);
 		}
 	}
@@ -285,15 +281,15 @@ public abstract class TypeSerializerSnapshotMigrationTestBase<ElementT> extends 
 		}
 
 		public TestSpecification<T> withNewSerializerProvider(
-				Supplier<? extends TypeSerializer<T>> serializerProvider,
-				TypeSerializerSchemaCompatibility<T> expectedCompatibilityResult) {
+			Supplier<? extends TypeSerializer<T>> serializerProvider,
+			TypeSerializerSchemaCompatibility<T> expectedCompatibilityResult) {
 			this.serializerProvider = serializerProvider;
 			this.schemaCompatibilityMatcher = hasSameCompatibilityAs(expectedCompatibilityResult);
 			return this;
 		}
 
 		public TestSpecification<T> withSchemaCompatibilityMatcher(
-				Matcher<TypeSerializerSchemaCompatibility<T>> schemaCompatibilityMatcher) {
+			Matcher<TypeSerializerSchemaCompatibility<T>> schemaCompatibilityMatcher) {
 			this.schemaCompatibilityMatcher = schemaCompatibilityMatcher;
 			return this;
 		}
@@ -322,8 +318,7 @@ public abstract class TypeSerializerSnapshotMigrationTestBase<ElementT> extends 
 		private TypeSerializer<T> createSerializer() {
 			try {
 				return (serializerProvider == null) ? serializerType.newInstance() : serializerProvider.get();
-			}
-			catch (InstantiationException | IllegalAccessException e) {
+			} catch (InstantiationException | IllegalAccessException e) {
 				throw new RuntimeException("serializer provider was not set, and creating the serializer reflectively failed.", e);
 			}
 		}
@@ -375,18 +370,17 @@ public abstract class TypeSerializerSnapshotMigrationTestBase<ElementT> extends 
 		 * with the format "flink-&lt;testVersion&gt;-&lt;specName&gt;-&lt;data/snapshot&gt;",
 		 * and each specification's test data count is assumed to always be 10.
 		 *
-		 * @param name test specification name.
-		 * @param serializerClass class of the current serializer.
-		 * @param snapshotClass class of the current serializer snapshot class.
+		 * @param name               test specification name.
+		 * @param serializerClass    class of the current serializer.
+		 * @param snapshotClass      class of the current serializer snapshot class.
 		 * @param serializerProvider provider for an instance of the current serializer.
-		 *
-		 * @param <T> type of the test data.
+		 * @param <T>                type of the test data.
 		 */
 		public <T> void add(
-				String name,
-				Class<? extends TypeSerializer> serializerClass,
-				Class<? extends TypeSerializerSnapshot> snapshotClass,
-				Supplier<? extends TypeSerializer<T>> serializerProvider) {
+			String name,
+			Class<? extends TypeSerializer> serializerClass,
+			Class<? extends TypeSerializerSnapshot> snapshotClass,
+			Supplier<? extends TypeSerializer<T>> serializerProvider) {
 			for (MigrationVersion testVersion : testVersions) {
 				testSpecifications.add(
 					TestSpecification.<T>builder(
@@ -414,25 +408,25 @@ public abstract class TypeSerializerSnapshotMigrationTestBase<ElementT> extends 
 		 * @param <T> type of the test data.
 		 */
 		public <T> void addWithCompatibilityMatcher(
-				String name,
-				Class<? extends TypeSerializer> serializerClass,
-				Class<? extends TypeSerializerSnapshot> snapshotClass,
-				Supplier<? extends TypeSerializer<T>> serializerProvider,
-				Matcher<TypeSerializerSchemaCompatibility<T>> schemaCompatibilityMatcher) {
+			String name,
+			Class<? extends TypeSerializer> serializerClass,
+			Class<? extends TypeSerializerSnapshot> snapshotClass,
+			Supplier<? extends TypeSerializer<T>> serializerProvider,
+			Matcher<TypeSerializerSchemaCompatibility<T>> schemaCompatibilityMatcher) {
 			for (MigrationVersion testVersion : testVersions) {
 				testSpecifications.add(
-						TestSpecification.<T>builder(
-								getSpecNameForVersion(name, testVersion),
-								serializerClass,
-								snapshotClass,
-								testVersion)
-								.withNewSerializerProvider(serializerProvider)
-								.withSchemaCompatibilityMatcher(schemaCompatibilityMatcher)
-								.withSnapshotDataLocation(
-										String.format(DEFAULT_SNAPSHOT_FILENAME_FORMAT, testVersion, name))
-								.withTestData(
-										String.format(DEFAULT_TEST_DATA_FILENAME_FORMAT, testVersion, name),
-										DEFAULT_TEST_DATA_COUNT)
+					TestSpecification.<T>builder(
+						getSpecNameForVersion(name, testVersion),
+						serializerClass,
+						snapshotClass,
+						testVersion)
+						.withNewSerializerProvider(serializerProvider)
+						.withSchemaCompatibilityMatcher(schemaCompatibilityMatcher)
+						.withSnapshotDataLocation(
+							String.format(DEFAULT_SNAPSHOT_FILENAME_FORMAT, testVersion, name))
+						.withTestData(
+							String.format(DEFAULT_TEST_DATA_FILENAME_FORMAT, testVersion, name),
+							DEFAULT_TEST_DATA_COUNT)
 				);
 			}
 		}
@@ -444,20 +438,19 @@ public abstract class TypeSerializerSnapshotMigrationTestBase<ElementT> extends 
 		 * with the format "flink-&lt;testVersion&gt;-&lt;specName&gt;-&lt;data/snapshot&gt;",
 		 * and each specification's test data count is assumed to always be 10.
 		 *
-		 * @param name test specification name.
-		 * @param serializerClass class of the current serializer.
-		 * @param snapshotClass class of the current serializer snapshot class.
+		 * @param name               test specification name.
+		 * @param serializerClass    class of the current serializer.
+		 * @param snapshotClass      class of the current serializer snapshot class.
 		 * @param serializerProvider provider for an instance of the current serializer.
-		 * @param elementMatcher an {@code hamcrest} matcher to match test data.
-		 *
-		 * @param <T> type of the test data.
+		 * @param elementMatcher     an {@code hamcrest} matcher to match test data.
+		 * @param <T>                type of the test data.
 		 */
 		public <T> void add(
 			String name,
 			Class<? extends TypeSerializer> serializerClass,
 			Class<? extends TypeSerializerSnapshot> snapshotClass,
 			Supplier<? extends TypeSerializer<T>> serializerProvider,
-			Matcher<T> elementMatcher)  {
+			Matcher<T> elementMatcher) {
 			for (MigrationVersion testVersion : testVersions) {
 				testSpecifications.add(
 					TestSpecification.<T>builder(
@@ -471,7 +464,7 @@ public abstract class TypeSerializerSnapshotMigrationTestBase<ElementT> extends 
 						.withTestData(
 							String.format(DEFAULT_TEST_DATA_FILENAME_FORMAT, testVersion, name),
 							DEFAULT_TEST_DATA_COUNT)
-					.withTestDataMatcher(elementMatcher)
+						.withTestDataMatcher(elementMatcher)
 				);
 			}
 		}
@@ -479,24 +472,23 @@ public abstract class TypeSerializerSnapshotMigrationTestBase<ElementT> extends 
 		/**
 		 * Adds a test specification to be tested for all specified test versions.
 		 *
-		 * @param name test specification name.
-		 * @param serializerClass class of the current serializer.
-		 * @param snapshotClass class of the current serializer snapshot class.
-		 * @param serializerProvider provider for an instance of the current serializer.
+		 * @param name                         test specification name.
+		 * @param serializerClass              class of the current serializer.
+		 * @param snapshotClass                class of the current serializer snapshot class.
+		 * @param serializerProvider           provider for an instance of the current serializer.
 		 * @param testSnapshotFilenameProvider provider for the filename of the test snapshot.
-		 * @param testDataFilenameProvider provider for the filename of the test data.
-		 * @param testDataCount expected number of records to be read in the test data files.
-		 *
-		 * @param <T> type of the test data.
+		 * @param testDataFilenameProvider     provider for the filename of the test data.
+		 * @param testDataCount                expected number of records to be read in the test data files.
+		 * @param <T>                          type of the test data.
 		 */
 		public <T> void add(
-				String name,
-				Class<? extends TypeSerializer> serializerClass,
-				Class<? extends TypeSerializerSnapshot> snapshotClass,
-				Supplier<? extends TypeSerializer<T>> serializerProvider,
-				TestResourceFilenameSupplier testSnapshotFilenameProvider,
-				TestResourceFilenameSupplier testDataFilenameProvider,
-				int testDataCount) {
+			String name,
+			Class<? extends TypeSerializer> serializerClass,
+			Class<? extends TypeSerializerSnapshot> snapshotClass,
+			Supplier<? extends TypeSerializer<T>> serializerProvider,
+			TestResourceFilenameSupplier testSnapshotFilenameProvider,
+			TestResourceFilenameSupplier testDataFilenameProvider,
+			int testDataCount) {
 			for (MigrationVersion testVersion : testVersions) {
 				testSpecifications.add(
 					TestSpecification.<T>builder(
@@ -504,9 +496,9 @@ public abstract class TypeSerializerSnapshotMigrationTestBase<ElementT> extends 
 						serializerClass,
 						snapshotClass,
 						testVersion)
-					.withNewSerializerProvider(serializerProvider)
-					.withSnapshotDataLocation(testSnapshotFilenameProvider.get(testVersion))
-					.withTestData(testDataFilenameProvider.get(testVersion), testDataCount)
+						.withNewSerializerProvider(serializerProvider)
+						.withSnapshotDataLocation(testSnapshotFilenameProvider.get(testVersion))
+						.withTestData(testDataFilenameProvider.get(testVersion), testDataCount)
 				);
 			}
 		}

@@ -38,7 +38,7 @@ public class BigDecComparatorTest extends ComparatorTestBase<BigDecimal> {
 
 	@Override
 	protected BigDecimal[] getSortedTestData() {
-		return new BigDecimal[] {
+		return new BigDecimal[]{
 			new BigDecimal("-12.5E1000"),
 			new BigDecimal("-12.5E100"),
 			BigDecimal.valueOf(-12E100),

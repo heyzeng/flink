@@ -23,14 +23,13 @@ import org.apache.flink.annotation.Internal;
 import org.apache.flink.configuration.Configuration;
 
 /**
- * 
+ *
  */
 @Internal
-public interface TypeComparatorFactory<T>
-{
+public interface TypeComparatorFactory<T> {
 	void writeParametersToConfig(Configuration config);
-	
+
 	void readParametersFromConfig(Configuration config, ClassLoader cl) throws ClassNotFoundException;
-	
+
 	TypeComparator<T> createComparator();
 }

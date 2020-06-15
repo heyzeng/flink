@@ -44,7 +44,6 @@ public interface MutableObjectIterator<E> {
 	 *
 	 * @param reuse The target object into which to place next element if E is mutable.
 	 * @return The filled object or <code>null</code> if the iterator is exhausted.
-	 *
 	 * @throws IOException Thrown, if a problem occurred in the underlying I/O layer or in the
 	 *                     serialization / deserialization logic
 	 */
@@ -55,7 +54,6 @@ public interface MutableObjectIterator<E> {
 	 * must obtain a new instance.
 	 *
 	 * @return The object or <code>null</code> if the iterator is exhausted.
-	 *
 	 * @throws IOException Thrown, if a problem occurred in the underlying I/O layer or in the
 	 *                     serialization / deserialization logic
 	 */

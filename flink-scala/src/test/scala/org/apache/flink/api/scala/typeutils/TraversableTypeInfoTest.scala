@@ -23,8 +23,8 @@ import org.apache.flink.api.common.typeinfo.{BasicTypeInfo, TypeInformation}
 import org.apache.flink.api.common.typeutils.{TypeInformationTestBase, TypeSerializer}
 
 /**
-  * Test for [[TraversableTypeInfo]].
-  */
+ * Test for [[TraversableTypeInfo]].
+ */
 class TraversableTypeInfoTest extends TypeInformationTestBase[TraversableTypeInfo[_, _]] {
 
   override protected def getTestData: Array[TraversableTypeInfo[_, _]] = Array(

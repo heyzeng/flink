@@ -24,7 +24,9 @@ import org.apache.flink.api.common.typeinfo.TypeInformation;
 import org.apache.flink.api.common.typeutils.TypeInformationTestBase;
 import org.apache.flink.api.common.typeutils.TypeSerializer;
 import org.apache.flink.api.java.tuple.Tuple1;
+
 import static org.junit.Assert.assertTrue;
+
 import org.junit.Test;
 
 /**
@@ -34,7 +36,7 @@ public class TupleTypeInfoTest extends TypeInformationTestBase<TupleTypeInfo<?>>
 
 	@Override
 	protected TupleTypeInfo<?>[] getTestData() {
-		return new TupleTypeInfo<?>[] {
+		return new TupleTypeInfo<?>[]{
 			new TupleTypeInfo<>(BasicTypeInfo.INT_TYPE_INFO, BasicTypeInfo.STRING_TYPE_INFO),
 			new TupleTypeInfo<>(BasicTypeInfo.INT_TYPE_INFO, BasicTypeInfo.BOOLEAN_TYPE_INFO)
 		};
@@ -46,7 +48,7 @@ public class TupleTypeInfoTest extends TypeInformationTestBase<TupleTypeInfo<?>>
 
 		TupleTypeInfoBase<Tuple1> anonymousTupleTypeInfo = new TupleTypeInfoBase<Tuple1>(
 			Tuple1.class,
-			(TypeInformation<?>)BasicTypeInfo.INT_TYPE_INFO) {
+			(TypeInformation<?>) BasicTypeInfo.INT_TYPE_INFO) {
 
 			private static final long serialVersionUID = -7985593598027660836L;
 

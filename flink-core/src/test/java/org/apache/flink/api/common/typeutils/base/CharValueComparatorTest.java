@@ -41,19 +41,19 @@ public class CharValueComparatorTest extends ComparatorTestBase<CharValue> {
 	protected CharValue[] getSortedTestData() {
 		Random rnd = new Random(874597969123412338L);
 		int rndChar = rnd.nextInt(Character.MAX_VALUE);
-		if(rndChar<0){
-			rndChar=-rndChar;
+		if (rndChar < 0) {
+			rndChar = -rndChar;
 		}
-		if(rndChar==(int)Character.MIN_VALUE){
-			rndChar+=2;
+		if (rndChar == (int) Character.MIN_VALUE) {
+			rndChar += 2;
 		}
-		if(rndChar==(int)Character.MAX_VALUE){
-			rndChar-=2;
+		if (rndChar == (int) Character.MAX_VALUE) {
+			rndChar -= 2;
 		}
 		return new CharValue[]{
 			new CharValue(Character.MIN_VALUE),
-			new CharValue((char)rndChar),
-			new CharValue((char)(rndChar+1)),
+			new CharValue((char) rndChar),
+			new CharValue((char) (rndChar + 1)),
 			new CharValue(Character.MAX_VALUE)
 		};
 	}

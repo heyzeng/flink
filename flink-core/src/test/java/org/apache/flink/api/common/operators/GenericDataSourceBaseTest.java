@@ -50,8 +50,8 @@ public class GenericDataSourceBaseTest implements java.io.Serializable {
 		try {
 			TestNonRichInputFormat in = new TestNonRichInputFormat();
 			GenericDataSourceBase<String, TestNonRichInputFormat> source =
-					new GenericDataSourceBase<String, TestNonRichInputFormat>(
-							in, new OperatorInformation<String>(BasicTypeInfo.STRING_TYPE_INFO), "testSource");
+				new GenericDataSourceBase<String, TestNonRichInputFormat>(
+					in, new OperatorInformation<String>(BasicTypeInfo.STRING_TYPE_INFO), "testSource");
 
 			ExecutionConfig executionConfig = new ExecutionConfig();
 			executionConfig.disableObjectReuse();
@@ -62,8 +62,7 @@ public class GenericDataSourceBaseTest implements java.io.Serializable {
 			List<String> resultRegular = source.executeOnCollections(null, executionConfig);
 			assertEquals(asList(TestIOData.NAMES), resultMutableSafe);
 			assertEquals(asList(TestIOData.NAMES), resultRegular);
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 			fail(e.getMessage());
 		}
@@ -74,8 +73,8 @@ public class GenericDataSourceBaseTest implements java.io.Serializable {
 		try {
 			TestRichInputFormat in = new TestRichInputFormat();
 			GenericDataSourceBase<String, TestRichInputFormat> source =
-					new GenericDataSourceBase<String, TestRichInputFormat>(
-							in, new OperatorInformation<String>(BasicTypeInfo.STRING_TYPE_INFO), "testSource");
+				new GenericDataSourceBase<String, TestRichInputFormat>(
+					in, new OperatorInformation<String>(BasicTypeInfo.STRING_TYPE_INFO), "testSource");
 
 			final HashMap<String, Accumulator<?, ?>> accumulatorMap = new HashMap<String, Accumulator<?, ?>>();
 			final HashMap<String, Future<Path>> cpTasks = new HashMap<>();
@@ -85,11 +84,11 @@ public class GenericDataSourceBaseTest implements java.io.Serializable {
 			executionConfig.disableObjectReuse();
 			assertEquals(false, in.hasBeenClosed());
 			assertEquals(false, in.hasBeenOpened());
-			
+
 			List<String> resultMutableSafe = source.executeOnCollections(
-					new RuntimeUDFContext(taskInfo, null, executionConfig, cpTasks, accumulatorMap,
-							new UnregisteredMetricsGroup()), executionConfig);
-			
+				new RuntimeUDFContext(taskInfo, null, executionConfig, cpTasks, accumulatorMap,
+					new UnregisteredMetricsGroup()), executionConfig);
+
 			assertEquals(true, in.hasBeenClosed());
 			assertEquals(true, in.hasBeenOpened());
 
@@ -97,18 +96,17 @@ public class GenericDataSourceBaseTest implements java.io.Serializable {
 			executionConfig.enableObjectReuse();
 			assertEquals(false, in.hasBeenClosed());
 			assertEquals(false, in.hasBeenOpened());
-			
+
 			List<String> resultRegular = source.executeOnCollections(
-					new RuntimeUDFContext(taskInfo, null, executionConfig, cpTasks, accumulatorMap,
-							new UnregisteredMetricsGroup()), executionConfig);
-			
+				new RuntimeUDFContext(taskInfo, null, executionConfig, cpTasks, accumulatorMap,
+					new UnregisteredMetricsGroup()), executionConfig);
+
 			assertEquals(true, in.hasBeenClosed());
 			assertEquals(true, in.hasBeenOpened());
 
 			assertEquals(asList(TestIOData.RICH_NAMES), resultMutableSafe);
 			assertEquals(asList(TestIOData.RICH_NAMES), resultRegular);
-		}
-		catch(Exception e){
+		} catch (Exception e) {
 			e.printStackTrace();
 			fail(e.getMessage());
 		}

@@ -114,7 +114,7 @@ public class SqlClient {
 	 * Opens the CLI client for executing SQL statements.
 	 *
 	 * @param sessionId session identifier for the current client.
-	 * @param executor executor
+	 * @param executor  executor
 	 */
 	private void openCli(String sessionId, Executor executor) {
 		CliClient cli = null;

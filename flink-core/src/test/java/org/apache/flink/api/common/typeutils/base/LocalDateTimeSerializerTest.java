@@ -45,7 +45,7 @@ public class LocalDateTimeSerializerTest extends SerializerTestBase<LocalDateTim
 
 	@Override
 	protected LocalDateTime[] getTestData() {
-		return new LocalDateTime[] {
+		return new LocalDateTime[]{
 			LocalDateTime.of(1970, 1, 1, 0, 0, 0, 0),
 			LocalDateTime.of(1990, 10, 14, 2, 42, 25, 123_000_000),
 			LocalDateTime.of(1990, 10, 14, 2, 42, 25, 123_000_001),

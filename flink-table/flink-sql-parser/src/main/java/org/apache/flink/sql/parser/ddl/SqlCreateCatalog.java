@@ -49,9 +49,9 @@ public class SqlCreateCatalog extends SqlCreate implements ExtendedSqlNode {
 	private final SqlNodeList propertyList;
 
 	public SqlCreateCatalog(
-			SqlParserPos position,
-			SqlIdentifier catalogName,
-			SqlNodeList propertyList) {
+		SqlParserPos position,
+		SqlIdentifier catalogName,
+		SqlNodeList propertyList) {
 		super(OPERATOR, position, false, false);
 		this.catalogName = requireNonNull(catalogName, "catalogName cannot be null");
 		this.propertyList = requireNonNull(propertyList, "propertyList cannot be null");

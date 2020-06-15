@@ -266,47 +266,47 @@ public class DataInputDeserializer implements DataInputView, java.io.Serializabl
 		while (count < utflen) {
 			c = (int) bytearr[count] & 0xff;
 			switch (c >> 4) {
-			case 0:
-			case 1:
-			case 2:
-			case 3:
-			case 4:
-			case 5:
-			case 6:
-			case 7:
-				/* 0xxxxxxx */
-				count++;
-				chararr[chararrCount++] = (char) c;
-				break;
-			case 12:
-			case 13:
-				/* 110x xxxx 10xx xxxx */
-				count += 2;
-				if (count > utflen) {
-					throw new UTFDataFormatException("malformed input: partial character at end");
-				}
-				char2 = (int) bytearr[count - 1];
-				if ((char2 & 0xC0) != 0x80) {
+				case 0:
+				case 1:
+				case 2:
+				case 3:
+				case 4:
+				case 5:
+				case 6:
+				case 7:
+					/* 0xxxxxxx */
+					count++;
+					chararr[chararrCount++] = (char) c;
+					break;
+				case 12:
+				case 13:
+					/* 110x xxxx 10xx xxxx */
+					count += 2;
+					if (count > utflen) {
+						throw new UTFDataFormatException("malformed input: partial character at end");
+					}
+					char2 = (int) bytearr[count - 1];
+					if ((char2 & 0xC0) != 0x80) {
+						throw new UTFDataFormatException("malformed input around byte " + count);
+					}
+					chararr[chararrCount++] = (char) (((c & 0x1F) << 6) | (char2 & 0x3F));
+					break;
+				case 14:
+					/* 1110 xxxx 10xx xxxx 10xx xxxx */
+					count += 3;
+					if (count > utflen) {
+						throw new UTFDataFormatException("malformed input: partial character at end");
+					}
+					char2 = (int) bytearr[count - 2];
+					char3 = (int) bytearr[count - 1];
+					if (((char2 & 0xC0) != 0x80) || ((char3 & 0xC0) != 0x80)) {
+						throw new UTFDataFormatException("malformed input around byte " + (count - 1));
+					}
+					chararr[chararrCount++] = (char) (((c & 0x0F) << 12) | ((char2 & 0x3F) << 6) | (char3 & 0x3F));
+					break;
+				default:
+					/* 10xx xxxx, 1111 xxxx */
 					throw new UTFDataFormatException("malformed input around byte " + count);
-				}
-				chararr[chararrCount++] = (char) (((c & 0x1F) << 6) | (char2 & 0x3F));
-				break;
-			case 14:
-				/* 1110 xxxx 10xx xxxx 10xx xxxx */
-				count += 3;
-				if (count > utflen) {
-					throw new UTFDataFormatException("malformed input: partial character at end");
-				}
-				char2 = (int) bytearr[count - 2];
-				char3 = (int) bytearr[count - 1];
-				if (((char2 & 0xC0) != 0x80) || ((char3 & 0xC0) != 0x80)) {
-					throw new UTFDataFormatException("malformed input around byte " + (count - 1));
-				}
-				chararr[chararrCount++] = (char) (((c & 0x0F) << 12) | ((char2 & 0x3F) << 6) | (char3 & 0x3F));
-				break;
-			default:
-				/* 10xx xxxx, 1111 xxxx */
-				throw new UTFDataFormatException("malformed input around byte " + count);
 			}
 		}
 		// The number of chars produced may be less than utflen
@@ -347,7 +347,7 @@ public class DataInputDeserializer implements DataInputView, java.io.Serializabl
 	public void skipBytesToRead(int numBytes) throws IOException {
 		int skippedBytes = skipBytes(numBytes);
 
-		if (skippedBytes < numBytes){
+		if (skippedBytes < numBytes) {
 			throw new EOFException("Could not skip " + numBytes + " bytes.");
 		}
 	}
@@ -355,17 +355,17 @@ public class DataInputDeserializer implements DataInputView, java.io.Serializabl
 	@Override
 	public int read(@Nonnull byte[] b, int off, int len) throws IOException {
 
-		if (off < 0){
+		if (off < 0) {
 			throw new IndexOutOfBoundsException("Offset cannot be negative.");
 		}
 
-		if (len < 0){
+		if (len < 0) {
 			throw new IndexOutOfBoundsException("Length cannot be negative.");
 		}
 
-		if (b.length - off < len){
+		if (b.length - off < len) {
 			throw new IndexOutOfBoundsException("Byte array does not provide enough space to store requested data" +
-					".");
+				".");
 		}
 
 		if (this.position >= this.end) {

@@ -38,7 +38,6 @@ import java.io.Serializable;
  *
  * @param <T> Type of the initial input and the returned element
  * @param <O> Type of the elements that the group/list/stream contains
- *
  * @deprecated use {@link AggregateFunction} instead
  */
 @Public
@@ -51,9 +50,8 @@ public interface FoldFunction<O, T> extends Function, Serializable {
 	 * The fold function is consecutively applied to all values of a group until only a single value remains.
 	 *
 	 * @param accumulator The initial value, and accumulator.
-	 * @param value The value from the group to "fold" into the accumulator.
+	 * @param value       The value from the group to "fold" into the accumulator.
 	 * @return The accumulator that is at the end of the "folding" the group.
-	 *
 	 * @throws Exception This method may throw exceptions. Throwing an exception will cause the operation
 	 *                   to fail and may trigger recovery.
 	 */

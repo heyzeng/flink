@@ -212,7 +212,7 @@ public class Types {
 	 * <p>Example use: {@code ROW_NAMED(new String[]{"name", "number"}, Types.STRING, Types.INT)}.
 	 *
 	 * @param fieldNames array of field names
-	 * @param types array of field types
+	 * @param types      array of field types
 	 */
 	public static TypeInformation<Row> ROW_NAMED(String[] fieldNames, TypeInformation<?>... types) {
 		return new RowTypeInfo(types, fieldNames);
@@ -323,8 +323,8 @@ public class Types {
 	 * we recommend to use {@link Types#POJO(Class)}.
 	 *
 	 * @param pojoClass POJO class
-	 * @param fields map of fields that map a name to type information. The map key is the name of
-	 *               the field and the value is its type.
+	 * @param fields    map of fields that map a name to type information. The map key is the name of
+	 *                  the field and the value is its type.
 	 */
 	public static <T> TypeInformation<T> POJO(Class<T> pojoClass, Map<String, TypeInformation<?>> fields) {
 		final List<PojoField> pojoFields = new ArrayList<>(fields.size());
@@ -426,7 +426,7 @@ public class Types {
 	 * <p><strong>Note:</strong> Flink does not preserve the concrete {@link Map} type. It converts a map into {@link HashMap} when
 	 * copying or deserializing.
 	 *
-	 * @param keyType type information for the map's keys
+	 * @param keyType   type information for the map's keys
 	 * @param valueType type information for the map's values
 	 */
 	public static <K, V> TypeInformation<Map<K, V>> MAP(TypeInformation<K> keyType, TypeInformation<V> valueType) {
@@ -466,7 +466,7 @@ public class Types {
 	 *
 	 * <p>Example use: <code>Types.EITHER(Types.VOID, Types.INT)</code>
 	 *
-	 * @param leftType type information of left side / {@link org.apache.flink.types.Either.Left}
+	 * @param leftType  type information of left side / {@link org.apache.flink.types.Either.Left}
 	 * @param rightType type information of right side / {@link org.apache.flink.types.Either.Right}
 	 */
 	public static <L, R> TypeInformation<Either<L, R>> EITHER(TypeInformation<L> leftType, TypeInformation<R> rightType) {

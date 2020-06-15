@@ -28,8 +28,7 @@ import org.apache.flink.annotation.Public;
  *
  * @param <T> Type of the initial input and the returned element
  * @param <O> Type of the elements that the group/list/stream contains
- *
- *@deprecated use {@link RichAggregateFunction} instead
+ * @deprecated use {@link RichAggregateFunction} instead
  */
 @Public
 @Deprecated

@@ -41,16 +41,16 @@ public class AggregateOperatorTest {
 	// TUPLE DATA
 
 	private final List<Tuple5<Integer, Long, String, Long, Integer>> emptyTupleData =
-			new ArrayList<Tuple5<Integer, Long, String, Long, Integer>>();
+		new ArrayList<Tuple5<Integer, Long, String, Long, Integer>>();
 
 	private final TupleTypeInfo<Tuple5<Integer, Long, String, Long, Integer>> tupleTypeInfo = new
-			TupleTypeInfo<Tuple5<Integer, Long, String, Long, Integer>>(
-					BasicTypeInfo.INT_TYPE_INFO,
-					BasicTypeInfo.LONG_TYPE_INFO,
-					BasicTypeInfo.STRING_TYPE_INFO,
-					BasicTypeInfo.LONG_TYPE_INFO,
-					BasicTypeInfo.INT_TYPE_INFO
-			);
+		TupleTypeInfo<Tuple5<Integer, Long, String, Long, Integer>>(
+		BasicTypeInfo.INT_TYPE_INFO,
+		BasicTypeInfo.LONG_TYPE_INFO,
+		BasicTypeInfo.STRING_TYPE_INFO,
+		BasicTypeInfo.LONG_TYPE_INFO,
+		BasicTypeInfo.INT_TYPE_INFO
+	);
 
 	// LONG DATA
 
@@ -111,8 +111,7 @@ public class AggregateOperatorTest {
 			} catch (UnsupportedAggregationTypeException iae) {
 				// we're good here
 			}
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			System.err.println(e.getMessage());
 			e.printStackTrace();
 			Assert.fail(e.getMessage());

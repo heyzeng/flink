@@ -31,10 +31,10 @@ import org.apache.flink.core.memory.DataOutputView;
  * A serializer for float arrays.
  */
 @Internal
-public final class FloatPrimitiveArraySerializer extends TypeSerializerSingleton<float[]>{
+public final class FloatPrimitiveArraySerializer extends TypeSerializerSingleton<float[]> {
 
 	private static final long serialVersionUID = 1L;
-	
+
 	private static final float[] EMPTY = new float[0];
 
 	public static final FloatPrimitiveArraySerializer INSTANCE = new FloatPrimitiveArraySerializer();
@@ -55,7 +55,7 @@ public final class FloatPrimitiveArraySerializer extends TypeSerializerSingleton
 		System.arraycopy(from, 0, copy, 0, from.length);
 		return copy;
 	}
-	
+
 	@Override
 	public float[] copy(float[] from, float[] reuse) {
 		return copy(from);
@@ -72,7 +72,7 @@ public final class FloatPrimitiveArraySerializer extends TypeSerializerSingleton
 		if (record == null) {
 			throw new IllegalArgumentException("The record must not be null.");
 		}
-		
+
 		final int len = record.length;
 		target.writeInt(len);
 		for (int i = 0; i < len; i++) {
@@ -84,14 +84,14 @@ public final class FloatPrimitiveArraySerializer extends TypeSerializerSingleton
 	public float[] deserialize(DataInputView source) throws IOException {
 		final int len = source.readInt();
 		float[] result = new float[len];
-		
+
 		for (int i = 0; i < len; i++) {
 			result[i] = source.readFloat();
 		}
-		
+
 		return result;
 	}
-	
+
 	@Override
 	public float[] deserialize(float[] reuse, DataInputView source) throws IOException {
 		return deserialize(source);

@@ -24,7 +24,7 @@ import java.io.IOException;
 
 /**
  * This interface may be implemented by {@link OutputFormat}s to have the master initialize them globally.
- * 
+ * <p>
  * For example, the {@link FileOutputFormat} implements this behavior for distributed file systems and
  * creates/deletes target directories if necessary.
  */
@@ -33,7 +33,7 @@ public interface InitializeOnMaster {
 
 	/**
 	 * The method is invoked on the master (JobManager) before the distributed program execution starts.
-	 * 
+	 *
 	 * @param parallelism The parallelism with which the format or functions will be run.
 	 * @throws IOException The initialization may throw exceptions, which may cause the job to abort.
 	 */

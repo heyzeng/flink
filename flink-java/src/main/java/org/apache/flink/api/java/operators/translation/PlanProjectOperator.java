@@ -37,8 +37,8 @@ import org.apache.flink.api.java.tuple.Tuple;
 public class PlanProjectOperator<T, R extends Tuple> extends MapOperatorBase<T, R, MapFunction<T, R>> {
 
 	public PlanProjectOperator(int[] fields, String name,
-								TypeInformation<T> inType, TypeInformation<R> outType,
-								ExecutionConfig executionConfig) {
+							   TypeInformation<T> inType, TypeInformation<R> outType,
+							   ExecutionConfig executionConfig) {
 		super(PlanProjectOperator.<T, R, Tuple>createTypedProjector(fields), new UnaryOperatorInformation<T, R>(inType, outType), name);
 	}
 
@@ -48,7 +48,7 @@ public class PlanProjectOperator<T, R extends Tuple> extends MapOperatorBase<T, 
 	}
 
 	private static final class MapProjector<T extends Tuple, R extends Tuple>
-			extends AbstractRichFunction implements MapFunction<T, R> {
+		extends AbstractRichFunction implements MapFunction<T, R> {
 		private static final long serialVersionUID = 1L;
 
 		private final int[] fields;
@@ -58,8 +58,7 @@ public class PlanProjectOperator<T, R extends Tuple> extends MapOperatorBase<T, 
 			this.fields = fields;
 			try {
 				this.outTuple = Tuple.getTupleClass(fields.length).newInstance();
-			}
-			catch (Exception e) {
+			} catch (Exception e) {
 				// this should never happen
 				throw new RuntimeException(e);
 			}

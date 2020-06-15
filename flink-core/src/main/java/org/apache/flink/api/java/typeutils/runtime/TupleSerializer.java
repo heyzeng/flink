@@ -38,7 +38,7 @@ import static org.apache.flink.util.Preconditions.checkArgument;
 public class TupleSerializer<T extends Tuple> extends TupleSerializerBase<T> implements SelfResolvingTypeSerializer<T> {
 
 	private static final long serialVersionUID = 1L;
-	
+
 	public TupleSerializer(Class<T> tupleClass, TypeSerializer<?>[] fieldSerializers) {
 		super(tupleClass, fieldSerializers);
 	}
@@ -67,14 +67,13 @@ public class TupleSerializer<T extends Tuple> extends TupleSerializerBase<T> imp
 	public T createInstance() {
 		try {
 			T t = tupleClass.newInstance();
-		
+
 			for (int i = 0; i < arity; i++) {
 				t.setField(fieldSerializers[i].createInstance(), i);
 			}
-			
+
 			return t;
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			throw new RuntimeException("Cannot instantiate tuple.", e);
 		}
 	}
@@ -90,8 +89,7 @@ public class TupleSerializer<T extends Tuple> extends TupleSerializerBase<T> imp
 			}
 
 			return t;
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			throw new RuntimeException("Cannot instantiate tuple.", e);
 		}
 	}
@@ -117,7 +115,7 @@ public class TupleSerializer<T extends Tuple> extends TupleSerializerBase<T> imp
 		}
 		return target;
 	}
-	
+
 	@Override
 	public T copy(T from, T reuse) {
 		if (from == null) {
@@ -125,10 +123,10 @@ public class TupleSerializer<T extends Tuple> extends TupleSerializerBase<T> imp
 		}
 
 		for (int i = 0; i < arity; i++) {
-			Object copy = fieldSerializers[i].copy((Object)from.getField(i), reuse.getField(i));
+			Object copy = fieldSerializers[i].copy((Object) from.getField(i), reuse.getField(i));
 			reuse.setField(copy, i);
 		}
-		
+
 		return reuse;
 	}
 
@@ -153,7 +151,7 @@ public class TupleSerializer<T extends Tuple> extends TupleSerializerBase<T> imp
 		}
 		return tuple;
 	}
-	
+
 	@Override
 	public T deserialize(T reuse, DataInputView source) throws IOException {
 		for (int i = 0; i < arity; i++) {
@@ -171,8 +169,7 @@ public class TupleSerializer<T extends Tuple> extends TupleSerializerBase<T> imp
 	private T instantiateRaw() {
 		try {
 			return tupleClass.newInstance();
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			throw new RuntimeException("Cannot instantiate tuple.", e);
 		}
 	}

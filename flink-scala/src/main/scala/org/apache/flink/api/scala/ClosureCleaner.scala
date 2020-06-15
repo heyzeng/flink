@@ -82,6 +82,7 @@ object ClosureCleaner {
     }
     (Nil, Nil)
   }
+
   /**
    * Return a list of classes that represent closures enclosed in the given closure object.
    */
@@ -104,8 +105,8 @@ object ClosureCleaner {
 
   /** Initializes the accessed fields for outer classes and their super classes. */
   private def initAccessedFields(
-      accessedFields: Map[Class[_], Set[String]],
-      outerClasses: Seq[Class[_]]): Unit = {
+                                  accessedFields: Map[Class[_], Set[String]],
+                                  outerClasses: Seq[Class[_]]): Unit = {
     for (cls <- outerClasses) {
       var currentClass = cls
       assert(currentClass != null, "The outer class can't be null.")
@@ -119,10 +120,10 @@ object ClosureCleaner {
 
   /** Sets accessed fields for given class in clone object based on given object. */
   private def setAccessedFields(
-      outerClass: Class[_],
-      clone: AnyRef,
-      obj: AnyRef,
-      accessedFields: Map[Class[_], Set[String]]): Unit = {
+                                 outerClass: Class[_],
+                                 clone: AnyRef,
+                                 obj: AnyRef,
+                                 accessedFields: Map[Class[_], Set[String]]): Unit = {
     for (fieldName <- accessedFields(outerClass)) {
       val field = outerClass.getDeclaredField(fieldName)
       field.setAccessible(true)
@@ -133,10 +134,10 @@ object ClosureCleaner {
 
   /** Clones a given object and sets accessed fields in cloned object. */
   private def cloneAndSetFields(
-      parent: AnyRef,
-      obj: AnyRef,
-      outerClass: Class[_],
-      accessedFields: Map[Class[_], Set[String]]): AnyRef = {
+                                 parent: AnyRef,
+                                 obj: AnyRef,
+                                 outerClass: Class[_],
+                                 accessedFields: Map[Class[_], Set[String]]): AnyRef = {
     val clone = instantiateClass(outerClass, parent)
 
     var currentClass = outerClass
@@ -156,14 +157,14 @@ object ClosureCleaner {
    * More specifically, this renders the given closure serializable as long as it does not
    * explicitly reference unserializable objects.
    *
-   * @param closure the closure to clean
+   * @param closure           the closure to clean
    * @param checkSerializable whether to verify that the closure is serializable after cleaning
-   * @param cleanLevel whether to clean enclosing closures transitively
+   * @param cleanLevel        whether to clean enclosing closures transitively
    */
   def clean(
-      closure: AnyRef,
-      checkSerializable: Boolean = true,
-      cleanLevel: ClosureCleanerLevel = ClosureCleanerLevel.RECURSIVE): Unit = {
+             closure: AnyRef,
+             checkSerializable: Boolean = true,
+             cleanLevel: ClosureCleanerLevel = ClosureCleanerLevel.RECURSIVE): Unit = {
     val cleanTransitively = if (cleanLevel == ClosureCleanerLevel.RECURSIVE) true else false
     clean(closure, checkSerializable, cleanTransitively, Map.empty)
   }
@@ -223,15 +224,15 @@ object ClosureCleaner {
    *
    * For instance, transitive cleaning is necessary in the following scenario:
    *
-   *   class SomethingNotSerializable {
-   *     def someValue = 1
-   *     def scope(name: String)(body: => Unit) = body
-   *     def someMethod(): Unit = scope("one") {
-   *       def x = someValue
-   *       def y = 2
-   *       scope("two") { println(y + 1) }
-   *     }
-   *   }
+   * class SomethingNotSerializable {
+   * def someValue = 1
+   * def scope(name: String)(body: => Unit) = body
+   * def someMethod(): Unit = scope("one") {
+   * def x = someValue
+   * def y = 2
+   * scope("two") { println(y + 1) }
+   * }
+   * }
    *
    * In this example, scope "two" is not serializable because it references scope "one", which
    * references SomethingNotSerializable. Note that, however, the body of scope "two" does not
@@ -239,17 +240,17 @@ object ClosureCleaner {
    * pointer of a cloned scope "one" and set it the parent of scope "two", such that scope "two"
    * no longer references SomethingNotSerializable transitively.
    *
-   * @param func the starting closure to clean
+   * @param func              the starting closure to clean
    * @param checkSerializable whether to verify that the closure is serializable after cleaning
    * @param cleanTransitively whether to clean enclosing closures transitively
-   * @param accessedFields a map from a class to a set of its fields that are accessed by
-   *                       the starting closure
+   * @param accessedFields    a map from a class to a set of its fields that are accessed by
+   *                          the starting closure
    */
   private def clean(
-      func: AnyRef,
-      checkSerializable: Boolean,
-      cleanTransitively: Boolean,
-      accessedFields: Map[Class[_], Set[String]]): Unit = {
+                     func: AnyRef,
+                     checkSerializable: Boolean,
+                     cleanTransitively: Boolean,
+                     accessedFields: Map[Class[_], Set[String]]): Unit = {
 
     // most likely to be the case with 2.12, 2.13
     // so we check first
@@ -289,7 +290,7 @@ object ClosureCleaner {
         declaredMethods.foreach { m => LOG.debug(s"     $m") }
         LOG.debug(s" + inner classes: ${innerClasses.size}")
         innerClasses.foreach { c => LOG.debug(s"     ${c.getName}") }
-        LOG.debug(s" + outer classes: ${outerClasses.size}" )
+        LOG.debug(s" + outer classes: ${outerClasses.size}")
         outerClasses.foreach { c => LOG.debug(s"     ${c.getName}") }
         LOG.debug(s" + outer objects: ${outerObjects.size}")
         outerObjects.foreach { o => LOG.debug(s"     $o") }
@@ -337,7 +338,7 @@ object ClosureCleaner {
           // Note that we still need to keep around the outermost object itself because
           // we need it to clone its child closure later (see below).
           LOG.debug(" + outermost object is not a closure or REPL line object," +
-            "so do not clone it: " +  outerPairs.head)
+            "so do not clone it: " + outerPairs.head)
           parent = outermostObject // e.g. SparkContext
           outerPairs = outerPairs.tail
         }
@@ -410,8 +411,8 @@ object ClosureCleaner {
   }
 
   private def instantiateClass(
-      cls: Class[_],
-      enclosingObject: AnyRef): AnyRef = {
+                                cls: Class[_],
+                                enclosingObject: AnyRef): AnyRef = {
     // Use reflection to instantiate object without calling constructor
     val rf = sun.reflect.ReflectionFactory.getReflectionFactory()
     val parentCtor = classOf[java.lang.Object].getDeclaredConstructor()
@@ -428,10 +429,9 @@ object ClosureCleaner {
 
   /** Copy all data from an InputStream to an OutputStream */
   def copyStream(
-      in: InputStream,
-      out: OutputStream,
-      closeStreams: Boolean = false): Long =
-  {
+                  in: InputStream,
+                  out: OutputStream,
+                  closeStreams: Boolean = false): Long = {
     var count = 0L
     try {
       if (in.isInstanceOf[FileInputStream] && out.isInstanceOf[FileOutputStream]) {
@@ -474,10 +474,10 @@ private class ReturnStatementInClosureException
 private class ReturnStatementFinder(targetMethodName: Option[String] = None)
   extends ClassVisitor(ASM6) {
   override def visitMethod(
-      access: Int,
-      name: String,
-      desc: String,
-      sig: String, exceptions: Array[String]): MethodVisitor = {
+                            access: Int,
+                            name: String,
+                            desc: String,
+                            sig: String, exceptions: Array[String]): MethodVisitor = {
 
     // $anonfun$ covers Java 8 lambdas
     if (name.contains("apply") || name.contains("$anonfun$")) {
@@ -511,24 +511,24 @@ private case class MethodIdentifier[T](cls: Class[T], name: String, desc: String
  * The resulting fields are stored in the mutable map passed in through the constructor.
  * This map is assumed to have its keys already populated with the classes of interest.
  *
- * @param fields the mutable map that stores the fields to return
+ * @param fields           the mutable map that stores the fields to return
  * @param findTransitively if true, find fields indirectly referenced through method calls
- * @param specificMethod if not empty, visit only this specific method
- * @param visitedMethods a set of visited methods to avoid cycles
+ * @param specificMethod   if not empty, visit only this specific method
+ * @param visitedMethods   a set of visited methods to avoid cycles
  */
 private class FieldAccessFinder(
-    fields: Map[Class[_], Set[String]],
-    findTransitively: Boolean,
-    specificMethod: Option[MethodIdentifier[_]] = None,
-    visitedMethods: Set[MethodIdentifier[_]] = Set.empty)
+                                 fields: Map[Class[_], Set[String]],
+                                 findTransitively: Boolean,
+                                 specificMethod: Option[MethodIdentifier[_]] = None,
+                                 visitedMethods: Set[MethodIdentifier[_]] = Set.empty)
   extends ClassVisitor(ASM6) {
 
   override def visitMethod(
-      access: Int,
-      name: String,
-      desc: String,
-      sig: String,
-      exceptions: Array[String]): MethodVisitor = {
+                            access: Int,
+                            name: String,
+                            desc: String,
+                            sig: String,
+                            exceptions: Array[String]): MethodVisitor = {
 
     // If we are told to visit only a certain method and this is not the one, ignore it
     if (specificMethod.isDefined &&
@@ -546,7 +546,7 @@ private class FieldAccessFinder(
       }
 
       override def visitMethodInsn(
-          op: Int, owner: String, name: String, desc: String, itf: Boolean) {
+                                    op: Int, owner: String, name: String, desc: String, itf: Boolean) {
         for (cl <- fields.keys if cl.getName == owner.replace('/', '.')) {
           // Check for calls a getter method for a variable in an interpreter wrapper object.
           // This means that the corresponding field will be accessed, so we should save it.
@@ -593,7 +593,7 @@ private class InnerClosureFinder(output: Set[Class[_]]) extends ClassVisitor(ASM
                            sig: String, exceptions: Array[String]): MethodVisitor = {
     new MethodVisitor(ASM6) {
       override def visitMethodInsn(
-          op: Int, owner: String, name: String, desc: String, itf: Boolean) {
+                                    op: Int, owner: String, name: String, desc: String, itf: Boolean) {
         val argTypes = Type.getArgumentTypes(desc)
         if (op == INVOKESPECIAL && name == "<init>" && argTypes.length > 0
           && argTypes(0).toString.startsWith("L") // is it an object?

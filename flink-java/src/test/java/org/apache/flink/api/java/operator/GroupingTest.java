@@ -45,24 +45,24 @@ public class GroupingTest {
 
 	// TUPLE DATA
 	private final List<Tuple5<Integer, Long, String, Long, Integer>> emptyTupleData =
-			new ArrayList<Tuple5<Integer, Long, String, Long, Integer>>();
+		new ArrayList<Tuple5<Integer, Long, String, Long, Integer>>();
 
 	private final TupleTypeInfo<Tuple5<Integer, Long, String, Long, Integer>> tupleTypeInfo = new
-			TupleTypeInfo<Tuple5<Integer, Long, String, Long, Integer>>(
-					BasicTypeInfo.INT_TYPE_INFO,
-					BasicTypeInfo.LONG_TYPE_INFO,
-					BasicTypeInfo.STRING_TYPE_INFO,
-					BasicTypeInfo.LONG_TYPE_INFO,
-					BasicTypeInfo.INT_TYPE_INFO
-			);
+		TupleTypeInfo<Tuple5<Integer, Long, String, Long, Integer>>(
+		BasicTypeInfo.INT_TYPE_INFO,
+		BasicTypeInfo.LONG_TYPE_INFO,
+		BasicTypeInfo.STRING_TYPE_INFO,
+		BasicTypeInfo.LONG_TYPE_INFO,
+		BasicTypeInfo.INT_TYPE_INFO
+	);
 
 	private final TupleTypeInfo<Tuple4<Integer, Long, CustomType, Long[]>> tupleWithCustomInfo = new
-			TupleTypeInfo<Tuple4<Integer, Long, CustomType, Long[]>>(
-				BasicTypeInfo.INT_TYPE_INFO,
-				BasicTypeInfo.LONG_TYPE_INFO,
-				TypeExtractor.createTypeInfo(CustomType.class),
-				BasicArrayTypeInfo.LONG_ARRAY_TYPE_INFO
-			);
+		TupleTypeInfo<Tuple4<Integer, Long, CustomType, Long[]>>(
+		BasicTypeInfo.INT_TYPE_INFO,
+		BasicTypeInfo.LONG_TYPE_INFO,
+		TypeExtractor.createTypeInfo(CustomType.class),
+		BasicArrayTypeInfo.LONG_ARRAY_TYPE_INFO
+	);
 
 	// LONG DATA
 	private final List<Long> emptyLongData = new ArrayList<Long>();
@@ -70,7 +70,7 @@ public class GroupingTest {
 	private final List<CustomType> customTypeData = new ArrayList<CustomType>();
 
 	private final List<Tuple4<Integer, Long, CustomType, Long[]>> tupleWithCustomData =
-			new ArrayList<Tuple4<Integer, Long, CustomType, Long[]>>();
+		new ArrayList<Tuple4<Integer, Long, CustomType, Long[]>>();
 
 	private final List<Tuple2<byte[], byte[]>> byteArrayData = new ArrayList<Tuple2<byte[], byte[]>>();
 
@@ -228,13 +228,13 @@ public class GroupingTest {
 			DataSet<CustomType> customDs = env.fromCollection(customTypeData);
 			// should work
 			customDs.groupBy(
-					new KeySelector<GroupingTest.CustomType, Long>() {
+				new KeySelector<GroupingTest.CustomType, Long>() {
 
-						@Override
-						public Long getKey(CustomType value) {
-							return value.myLong;
+					@Override
+					public Long getKey(CustomType value) {
+						return value.myLong;
 					}
-			});
+				});
 		} catch (Exception e) {
 			Assert.fail();
 		}
@@ -251,12 +251,12 @@ public class GroupingTest {
 			DataSet<CustomType> customDs = env.fromCollection(customTypeData);
 			// should work
 			customDs.groupBy(
-					new KeySelector<GroupingTest.CustomType, Tuple2<Integer, Long>>() {
-						@Override
-						public Tuple2<Integer, Long> getKey(CustomType value) {
-							return new Tuple2<Integer, Long>(value.myInt, value.myLong);
+				new KeySelector<GroupingTest.CustomType, Tuple2<Integer, Long>>() {
+					@Override
+					public Tuple2<Integer, Long> getKey(CustomType value) {
+						return new Tuple2<Integer, Long>(value.myInt, value.myLong);
 					}
-			});
+				});
 		} catch (Exception e) {
 			Assert.fail();
 		}
@@ -273,12 +273,12 @@ public class GroupingTest {
 			DataSet<CustomType> customDs = env.fromCollection(customTypeData);
 			// should not work
 			customDs.groupBy(
-					new KeySelector<GroupingTest.CustomType, CustomType>() {
-						@Override
-						public CustomType getKey(CustomType value) {
-							return value;
-						}
-					});
+				new KeySelector<GroupingTest.CustomType, CustomType>() {
+					@Override
+					public CustomType getKey(CustomType value) {
+						return value;
+					}
+				});
 		} catch (Exception e) {
 			Assert.fail();
 		}
@@ -295,12 +295,12 @@ public class GroupingTest {
 			DataSet<CustomType> customDs = env.fromCollection(customTypeData);
 			// should not work
 			customDs.groupBy(
-					new KeySelector<GroupingTest.CustomType, Tuple2<Integer, GroupingTest.CustomType>>() {
-						@Override
-						public Tuple2<Integer, CustomType> getKey(CustomType value) {
-							return new Tuple2<Integer, CustomType>(value.myInt, value);
-						}
-					});
+				new KeySelector<GroupingTest.CustomType, Tuple2<Integer, GroupingTest.CustomType>>() {
+					@Override
+					public Tuple2<Integer, CustomType> getKey(CustomType value) {
+						return new Tuple2<Integer, CustomType>(value.myInt, value);
+					}
+				});
 		} catch (Exception e) {
 			Assert.fail();
 		}
@@ -316,12 +316,12 @@ public class GroupingTest {
 		DataSet<CustomType> customDs = env.fromCollection(customTypeData);
 		// should not work
 		customDs.groupBy(
-				new KeySelector<GroupingTest.CustomType, CustomType2>() {
-					@Override
-					public CustomType2 getKey(CustomType value) {
-						return new CustomType2();
-					}
-				});
+			new KeySelector<GroupingTest.CustomType, CustomType2>() {
+				@Override
+				public CustomType2 getKey(CustomType value) {
+					return new CustomType2();
+				}
+			});
 	}
 
 	@Test
@@ -373,11 +373,11 @@ public class GroupingTest {
 
 		final ExecutionEnvironment env = ExecutionEnvironment.getExecutionEnvironment();
 		DataSet<Tuple4<Integer, Long, CustomType, Long[]>> tupleDs =
-				env.fromCollection(tupleWithCustomData, tupleWithCustomInfo);
+			env.fromCollection(tupleWithCustomData, tupleWithCustomInfo);
 
 		// should not work
 		tupleDs.groupBy(0)
-				.sortGroup(2, Order.ASCENDING);
+			.sortGroup(2, Order.ASCENDING);
 	}
 
 	@Test(expected = InvalidProgramException.class)
@@ -385,11 +385,11 @@ public class GroupingTest {
 
 		final ExecutionEnvironment env = ExecutionEnvironment.getExecutionEnvironment();
 		DataSet<Tuple4<Integer, Long, CustomType, Long[]>> tupleDs =
-				env.fromCollection(tupleWithCustomData, tupleWithCustomInfo);
+			env.fromCollection(tupleWithCustomData, tupleWithCustomInfo);
 
 		// should not work
 		tupleDs.groupBy(0)
-				.sortGroup(3, Order.ASCENDING);
+			.sortGroup(3, Order.ASCENDING);
 	}
 
 	@Test
@@ -411,7 +411,7 @@ public class GroupingTest {
 
 		final ExecutionEnvironment env = ExecutionEnvironment.getExecutionEnvironment();
 		DataSet<Tuple4<Integer, Long, CustomType, Long[]>> tupleDs =
-				env.fromCollection(tupleWithCustomData, tupleWithCustomInfo);
+			env.fromCollection(tupleWithCustomData, tupleWithCustomInfo);
 
 		// should work
 		try {
@@ -426,7 +426,7 @@ public class GroupingTest {
 
 		final ExecutionEnvironment env = ExecutionEnvironment.getExecutionEnvironment();
 		DataSet<Tuple4<Integer, Long, CustomType, Long[]>> tupleDs =
-				env.fromCollection(tupleWithCustomData, tupleWithCustomInfo);
+			env.fromCollection(tupleWithCustomData, tupleWithCustomInfo);
 
 		// should work
 		try {
@@ -441,13 +441,13 @@ public class GroupingTest {
 
 		final ExecutionEnvironment env = ExecutionEnvironment.getExecutionEnvironment();
 		DataSet<Tuple4<Integer, Long, CustomType, Long[]>> tupleDs =
-				env.fromCollection(tupleWithCustomData, tupleWithCustomInfo);
+			env.fromCollection(tupleWithCustomData, tupleWithCustomInfo);
 
 		// should work
 		try {
 			tupleDs.groupBy("f0")
-					.sortGroup("f2.myString", Order.ASCENDING)
-					.sortGroup("f1", Order.DESCENDING);
+				.sortGroup("f2.myString", Order.ASCENDING)
+				.sortGroup("f1", Order.DESCENDING);
 		} catch (Exception e) {
 			Assert.fail();
 		}
@@ -458,11 +458,11 @@ public class GroupingTest {
 
 		final ExecutionEnvironment env = ExecutionEnvironment.getExecutionEnvironment();
 		DataSet<Tuple4<Integer, Long, CustomType, Long[]>> tupleDs =
-				env.fromCollection(tupleWithCustomData, tupleWithCustomInfo);
+			env.fromCollection(tupleWithCustomData, tupleWithCustomInfo);
 
 		// should not work
 		tupleDs.groupBy("f0")
-				.sortGroup("f2", Order.ASCENDING);
+			.sortGroup("f2", Order.ASCENDING);
 	}
 
 	@Test(expected = InvalidProgramException.class)
@@ -470,12 +470,12 @@ public class GroupingTest {
 
 		final ExecutionEnvironment env = ExecutionEnvironment.getExecutionEnvironment();
 		DataSet<Tuple4<Integer, Long, CustomType, Long[]>> tupleDs =
-				env.fromCollection(tupleWithCustomData, tupleWithCustomInfo);
+			env.fromCollection(tupleWithCustomData, tupleWithCustomInfo);
 
 		// should not work
 		tupleDs.groupBy("f0")
-				.sortGroup("f1", Order.ASCENDING)
-				.sortGroup("f2", Order.ASCENDING);
+			.sortGroup("f1", Order.ASCENDING)
+			.sortGroup("f2", Order.ASCENDING);
 	}
 
 	@Test(expected = InvalidProgramException.class)
@@ -483,11 +483,11 @@ public class GroupingTest {
 
 		final ExecutionEnvironment env = ExecutionEnvironment.getExecutionEnvironment();
 		DataSet<Tuple4<Integer, Long, CustomType, Long[]>> tupleDs =
-				env.fromCollection(tupleWithCustomData, tupleWithCustomInfo);
+			env.fromCollection(tupleWithCustomData, tupleWithCustomInfo);
 
 		// should not work
 		tupleDs.groupBy("f0")
-				.sortGroup("f3", Order.ASCENDING);
+			.sortGroup("f3", Order.ASCENDING);
 	}
 
 	@SuppressWarnings("serial")
@@ -496,23 +496,23 @@ public class GroupingTest {
 
 		final ExecutionEnvironment env = ExecutionEnvironment.getExecutionEnvironment();
 		DataSet<Tuple4<Integer, Long, CustomType, Long[]>> tupleDs =
-				env.fromCollection(tupleWithCustomData, tupleWithCustomInfo);
+			env.fromCollection(tupleWithCustomData, tupleWithCustomInfo);
 
 		// should not work
 		tupleDs.groupBy(
-				new KeySelector<Tuple4<Integer, Long, CustomType, Long[]>, Long>() {
+			new KeySelector<Tuple4<Integer, Long, CustomType, Long[]>, Long>() {
+				@Override
+				public Long getKey(Tuple4<Integer, Long, CustomType, Long[]> value) throws Exception {
+					return value.f1;
+				}
+			})
+			.sortGroup(
+				new KeySelector<Tuple4<Integer, Long, CustomType, Long[]>, Integer>() {
 					@Override
-					public Long getKey(Tuple4<Integer, Long, CustomType, Long[]> value) throws Exception {
-						return value.f1;
+					public Integer getKey(Tuple4<Integer, Long, CustomType, Long[]> value) throws Exception {
+						return value.f0;
 					}
-				})
-				.sortGroup(
-						new KeySelector<Tuple4<Integer, Long, CustomType, Long[]>, Integer>() {
-							@Override
-							public Integer getKey(Tuple4<Integer, Long, CustomType, Long[]> value) throws Exception {
-								return value.f0;
-							}
-						}, Order.ASCENDING);
+				}, Order.ASCENDING);
 	}
 
 	@SuppressWarnings("serial")
@@ -521,23 +521,23 @@ public class GroupingTest {
 
 		final ExecutionEnvironment env = ExecutionEnvironment.getExecutionEnvironment();
 		DataSet<Tuple4<Integer, Long, CustomType, Long[]>> tupleDs =
-				env.fromCollection(tupleWithCustomData, tupleWithCustomInfo);
+			env.fromCollection(tupleWithCustomData, tupleWithCustomInfo);
 
 		// should not work
 		tupleDs.groupBy(
-				new KeySelector<Tuple4<Integer, Long, CustomType, Long[]>, Long>() {
+			new KeySelector<Tuple4<Integer, Long, CustomType, Long[]>, Long>() {
+				@Override
+				public Long getKey(Tuple4<Integer, Long, CustomType, Long[]> value) throws Exception {
+					return value.f1;
+				}
+			})
+			.sortGroup(
+				new KeySelector<Tuple4<Integer, Long, CustomType, Long[]>, CustomType>() {
 					@Override
-					public Long getKey(Tuple4<Integer, Long, CustomType, Long[]> value) throws Exception {
-						return value.f1;
+					public CustomType getKey(Tuple4<Integer, Long, CustomType, Long[]> value) throws Exception {
+						return value.f2;
 					}
-				})
-				.sortGroup(
-						new KeySelector<Tuple4<Integer, Long, CustomType, Long[]>, CustomType>() {
-							@Override
-							public CustomType getKey(Tuple4<Integer, Long, CustomType, Long[]> value) throws Exception {
-								return value.f2;
-							}
-						}, Order.ASCENDING);
+				}, Order.ASCENDING);
 	}
 
 	@SuppressWarnings("serial")
@@ -546,23 +546,23 @@ public class GroupingTest {
 
 		final ExecutionEnvironment env = ExecutionEnvironment.getExecutionEnvironment();
 		DataSet<Tuple4<Integer, Long, CustomType, Long[]>> tupleDs =
-				env.fromCollection(tupleWithCustomData, tupleWithCustomInfo);
+			env.fromCollection(tupleWithCustomData, tupleWithCustomInfo);
 
 		// should not work
 		tupleDs.groupBy(
-				new KeySelector<Tuple4<Integer, Long, CustomType, Long[]>, Long>() {
+			new KeySelector<Tuple4<Integer, Long, CustomType, Long[]>, Long>() {
+				@Override
+				public Long getKey(Tuple4<Integer, Long, CustomType, Long[]> value) throws Exception {
+					return value.f1;
+				}
+			})
+			.sortGroup(
+				new KeySelector<Tuple4<Integer, Long, CustomType, Long[]>, Long[]>() {
 					@Override
-					public Long getKey(Tuple4<Integer, Long, CustomType, Long[]> value) throws Exception {
-						return value.f1;
+					public Long[] getKey(Tuple4<Integer, Long, CustomType, Long[]> value) throws Exception {
+						return value.f3;
 					}
-				})
-				.sortGroup(
-						new KeySelector<Tuple4<Integer, Long, CustomType, Long[]>, Long[]>() {
-							@Override
-							public Long[] getKey(Tuple4<Integer, Long, CustomType, Long[]> value) throws Exception {
-								return value.f3;
-							}
-						}, Order.ASCENDING);
+				}, Order.ASCENDING);
 	}
 
 	@Test
@@ -616,7 +616,8 @@ public class GroupingTest {
 		public String myString;
 		public Nest nested;
 
-		public CustomType() {}
+		public CustomType() {
+		}
 
 		public CustomType(int i, long l, String s) {
 			myInt = i;

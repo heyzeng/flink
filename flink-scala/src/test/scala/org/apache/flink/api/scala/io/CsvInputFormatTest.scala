@@ -39,13 +39,13 @@ class CsvInputFormatTest {
   private final val SECOND_PART: String = "That is the second part"
 
   @Test
-  def ignoreSingleCharPrefixComments():Unit = {
+  def ignoreSingleCharPrefixComments(): Unit = {
     try {
       val fileContent = "#description of the data\n" +
-                        "#successive commented line\n" +
-                        "this is|1|2.0|\n" +
-                        "a test|3|4.0|\n" +
-                        "#next|5|6.0|\n"
+        "#successive commented line\n" +
+        "this is|1|2.0|\n" +
+        "a test|3|4.0|\n" +
+        "#next|5|6.0|\n"
       val split = createTempFile(fileContent)
       val format = new TupleCsvInputFormat[(String, Integer, Double)](
         PATH,
@@ -81,13 +81,13 @@ class CsvInputFormatTest {
   }
 
   @Test
-  def ignoreMultiCharPrefixComments():Unit = {
+  def ignoreMultiCharPrefixComments(): Unit = {
     try {
       val fileContent = "//description of the data\n" +
-                        "//successive commented line\n" +
-                        "this is|1|2.0|\n" +
-                        "a test|3|4.0|\n" +
-                        "//next|5|6.0|\n"
+        "//successive commented line\n" +
+        "this is|1|2.0|\n" +
+        "a test|3|4.0|\n" +
+        "//next|5|6.0|\n"
       val split = createTempFile(fileContent)
       val format = new TupleCsvInputFormat[(String, Integer, Double)](
         PATH,
@@ -123,7 +123,7 @@ class CsvInputFormatTest {
   }
 
   @Test
-  def readStringFields():Unit = {
+  def readStringFields(): Unit = {
     try {
       val fileContent = "abc|def|ghijk\nabc||hhg\n|||"
       val split = createTempFile(fileContent)
@@ -165,7 +165,7 @@ class CsvInputFormatTest {
   }
 
   @Test
-  def readMixedQuotedStringFields():Unit = {
+  def readMixedQuotedStringFields(): Unit = {
     try {
       val fileContent = "abc|\"de|f\"|ghijk\n\"a|bc\"||hhg\n|||"
       val split = createTempFile(fileContent)
@@ -314,6 +314,7 @@ class CsvInputFormatTest {
         fail("Test failed due to a " + ex.getClass.getName + ": " + ex.getMessage)
     }
   }
+
   @Test
   def testReadSparseWithPositionSetter(): Unit = {
     try {
@@ -355,7 +356,7 @@ class CsvInputFormatTest {
     wrt.write(content)
     wrt.close()
     new FileInputSplit(0, new Path(tempFile.toURI.toString), 0,
-      tempFile.length,Array[String]("localhost"))
+      tempFile.length, Array[String]("localhost"))
   }
 
   @Test
@@ -450,7 +451,7 @@ class CsvInputFormatTest {
     val tempFile = createTempFile(fileContent)
     val typeInfo: CaseClassTypeInfo[CaseClassItem] =
       createTypeInformation[CaseClassItem]
-      .asInstanceOf[CaseClassTypeInfo[CaseClassItem]]
+        .asInstanceOf[CaseClassTypeInfo[CaseClassItem]]
     val format = new TupleCsvInputFormat[CaseClassItem](PATH, typeInfo)
 
     format.setDelimiter('\n')
@@ -477,7 +478,7 @@ class CsvInputFormatTest {
 
     validatePOJOItem(format)
   }
-  
+
   @Test
   def testPOJOTypeWithFieldSubsetAndDataSubset(): Unit = {
     val fileContent = "HELLO,123,NODATA,3.123,NODATA\n" + "ABC,456,NODATA,1.234,NODATA"
@@ -532,7 +533,7 @@ class CsvInputFormatTest {
 
 }
 
-class POJO (var table: String, var time: String) {
+class POJO(var table: String, var time: String) {
 
   def this() {
     this("", "")
@@ -562,6 +563,7 @@ class TwitterPOJO(theTable: String, theTime: String, var tweet: String)
 }
 
 object CsvInputFormatTest {
+
   case class CaseClassItem(field1: Int, field2: String, field3: Double)
 
 }

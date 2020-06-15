@@ -24,7 +24,7 @@ package org.apache.flink.api.java.utils;
  * <p>Name maps directly to the corresponding Java type.
  *
  * @deprecated These classes will be dropped in the next version. Use {@link ParameterTool} or a third-party
- *             command line parsing library instead.
+ * command line parsing library instead.
  */
 @Deprecated
 public enum OptionType {

@@ -38,8 +38,8 @@ public interface AtomicType<T> {
 	 *
 	 * @param sortOrderAscending True, if the comparator should define the order to be ascending,
 	 *                           false, if the comparator should define the order to be descending.
-	 * @param executionConfig The config from which the comparator will be parametrized. Parametrization
-	 *                        includes for example registration of class tags for frameworks like Kryo.
+	 * @param executionConfig    The config from which the comparator will be parametrized. Parametrization
+	 *                           includes for example registration of class tags for frameworks like Kryo.
 	 * @return A comparator for this type.
 	 */
 	TypeComparator<T> createComparator(boolean sortOrderAscending, ExecutionConfig executionConfig);

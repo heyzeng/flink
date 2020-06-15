@@ -56,13 +56,13 @@ public class PojoField implements Serializable {
 	}
 
 	private void writeObject(ObjectOutputStream out)
-			throws IOException, ClassNotFoundException {
+		throws IOException, ClassNotFoundException {
 		out.defaultWriteObject();
 		FieldSerializer.serializeField(field, out);
 	}
 
 	private void readObject(ObjectInputStream in)
-			throws IOException, ClassNotFoundException {
+		throws IOException, ClassNotFoundException {
 		in.defaultReadObject();
 		field = FieldSerializer.deserializeField(in);
 	}

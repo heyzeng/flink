@@ -52,7 +52,7 @@ import static org.junit.Assert.fail;
 
 /**
  * Abstract test base for serializers.
- *
+ * <p>
  * We have a toString() call on all deserialized
  * values because this is further evidence that the deserialized value is actually correct.
  * (JodaTime DataTime) with the default KryoSerializer used to pass this test but the
@@ -90,7 +90,7 @@ public abstract class SerializerTestBase<T> extends TestLogger {
 	public void testInstantiate() {
 		try {
 			TypeSerializer<T> serializer = getSerializer();
-			if(serializer.getClass().getName().endsWith("KryoSerializer")) {
+			if (serializer.getClass().getName().endsWith("KryoSerializer")) {
 				// the kryo serializer will return null. We ignore this test for Kryo.
 				return;
 			}
@@ -104,8 +104,7 @@ public abstract class SerializerTestBase<T> extends TestLogger {
 				fail("Type of the instantiated object is wrong. " +
 					"Expected Type: " + type + " present type " + instance.getClass());
 			}
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			System.err.println(e.getMessage());
 			e.printStackTrace();
 			fail("Exception in test: " + e.getMessage());
@@ -141,11 +140,9 @@ public abstract class SerializerTestBase<T> extends TestLogger {
 		final TypeSerializer<T> restoreSerializer;
 		if (strategy.isCompatibleAsIs()) {
 			restoreSerializer = restoredConfig.restoreSerializer();
-		}
-		else if (strategy.isCompatibleWithReconfiguredSerializer()) {
+		} else if (strategy.isCompatibleWithReconfiguredSerializer()) {
 			restoreSerializer = strategy.getReconfiguredSerializer();
-		}
-		else {
+		} else {
 			throw new AssertionError("Unable to restore serializer with " + strategy);
 		}
 		assertEquals(serializer.getClass(), restoreSerializer.getClass());
@@ -162,8 +159,7 @@ public abstract class SerializerTestBase<T> extends TestLogger {
 		try {
 			TypeSerializer<T> serializer = getSerializer();
 			assertEquals(len, serializer.getLength());
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			System.err.println(e.getMessage());
 			e.printStackTrace();
 			fail("Exception in test: " + e.getMessage());
@@ -181,8 +177,7 @@ public abstract class SerializerTestBase<T> extends TestLogger {
 				checkToString(copy);
 				deepEquals("Copied element is not equal to the original element.", datum, copy);
 			}
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			System.err.println(e.getMessage());
 			e.printStackTrace();
 			fail("Exception in test: " + e.getMessage());
@@ -200,8 +195,7 @@ public abstract class SerializerTestBase<T> extends TestLogger {
 				checkToString(copy);
 				deepEquals("Copied element is not equal to the original element.", datum, copy);
 			}
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			System.err.println(e.getMessage());
 			e.printStackTrace();
 			fail("Exception in test: " + e.getMessage());
@@ -222,8 +216,7 @@ public abstract class SerializerTestBase<T> extends TestLogger {
 				deepEquals("Copied element is not equal to the original element.", datum, copy);
 				target = copy;
 			}
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			System.err.println(e.getMessage());
 			e.printStackTrace();
 			fail("Exception in test: " + e.getMessage());
@@ -250,8 +243,7 @@ public abstract class SerializerTestBase<T> extends TestLogger {
 
 				assertTrue("Trailing data available after deserialization.", in.available() == 0);
 			}
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			System.err.println(e.getMessage());
 			e.printStackTrace();
 			fail("Exception in test: " + e.getMessage());
@@ -283,8 +275,7 @@ public abstract class SerializerTestBase<T> extends TestLogger {
 
 				reuseValue = deserialized;
 			}
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			System.err.println(e.getMessage());
 			e.printStackTrace();
 			fail("Exception in test: " + e.getMessage());
@@ -314,8 +305,7 @@ public abstract class SerializerTestBase<T> extends TestLogger {
 			}
 
 			assertEquals("Wrong number of elements deserialized.", testData.length, num);
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			System.err.println(e.getMessage());
 			e.printStackTrace();
 			fail("Exception in test: " + e.getMessage());
@@ -347,8 +337,7 @@ public abstract class SerializerTestBase<T> extends TestLogger {
 			}
 
 			assertEquals("Wrong number of elements deserialized.", testData.length, num);
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			System.err.println(e.getMessage());
 			e.printStackTrace();
 			fail("Exception in test: " + e.getMessage());
@@ -380,8 +369,7 @@ public abstract class SerializerTestBase<T> extends TestLogger {
 
 				assertTrue("Trailing data available after deserialization.", toVerify.available() == 0);
 			}
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			System.err.println(e.getMessage());
 			e.printStackTrace();
 			fail("Exception in test: " + e.getMessage());
@@ -418,8 +406,7 @@ public abstract class SerializerTestBase<T> extends TestLogger {
 			}
 
 			assertEquals("Wrong number of elements copied.", testData.length, num);
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			System.err.println(e.getMessage());
 			e.printStackTrace();
 			fail("Exception in test: " + e.getMessage());
@@ -439,8 +426,7 @@ public abstract class SerializerTestBase<T> extends TestLogger {
 			}
 
 			assertEquals("The copy of the serializer is not equal to the original one.", ser1, ser2);
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			System.err.println(e.getMessage());
 			e.printStackTrace();
 			fail("Exception in test: " + e.getMessage());
@@ -541,6 +527,7 @@ public abstract class SerializerTestBase<T> extends TestLogger {
 
 	/**
 	 * Runner to test serializer duplication via concurrency.
+	 *
 	 * @param <T> type of the test elements.
 	 */
 	static class SerializerRunner<T> extends Thread {
@@ -560,7 +547,7 @@ public abstract class SerializerTestBase<T> extends TestLogger {
 			this.allReadyBarrier = allReadyBarrier;
 			this.serializer = serializer;
 			this.testData = testData;
-			this.durationLimitMillis =  testTargetDurationMillis;
+			this.durationLimitMillis = testTargetDurationMillis;
 			this.checker = checker;
 			this.failure = null;
 		}

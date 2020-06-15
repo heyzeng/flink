@@ -42,7 +42,7 @@ public class StringValueComparator extends TypeComparator<StringValue> {
 
 	private final StringValue tempReference = new StringValue();
 
-	private final TypeComparator<?>[] comparators = new TypeComparator[] {this};
+	private final TypeComparator<?>[] comparators = new TypeComparator[]{this};
 
 	public StringValueComparator(boolean ascending) {
 		this.ascendingComparison = ascending;

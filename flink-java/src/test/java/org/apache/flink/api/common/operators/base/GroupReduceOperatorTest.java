@@ -54,18 +54,19 @@ import static org.junit.Assert.fail;
 public class GroupReduceOperatorTest implements java.io.Serializable {
 
 	private static final TypeInformation<Tuple2<String, Integer>> STRING_INT_TUPLE =
-			TypeInformation.of(new TypeHint<Tuple2<String, Integer>>(){});
+		TypeInformation.of(new TypeHint<Tuple2<String, Integer>>() {
+		});
 
 	@Test
 	public void testGroupReduceCollection() {
 		try {
 			final GroupReduceFunction<Tuple2<String, Integer>, Tuple2<String,
-					Integer>> reducer = new GroupReduceFunction<Tuple2<String, Integer>,
-					Tuple2<String, Integer>>() {
+				Integer>> reducer = new GroupReduceFunction<Tuple2<String, Integer>,
+				Tuple2<String, Integer>>() {
 
 				@Override
 				public void reduce(Iterable<Tuple2<String, Integer>> values,
-									Collector<Tuple2<String, Integer>> out) throws Exception {
+								   Collector<Tuple2<String, Integer>> out) throws Exception {
 					Iterator<Tuple2<String, Integer>> input = values.iterator();
 
 					Tuple2<String, Integer> result = input.next();
@@ -80,18 +81,18 @@ public class GroupReduceOperatorTest implements java.io.Serializable {
 			};
 
 			GroupReduceOperatorBase<Tuple2<String, Integer>, Tuple2<String, Integer>,
-							GroupReduceFunction<Tuple2<String, Integer>, Tuple2<String, Integer>>> op =
-					new GroupReduceOperatorBase<>(
-							reducer,
-							new UnaryOperatorInformation<>(STRING_INT_TUPLE, STRING_INT_TUPLE),
-							new int[]{0},
-							"TestReducer");
+				GroupReduceFunction<Tuple2<String, Integer>, Tuple2<String, Integer>>> op =
+				new GroupReduceOperatorBase<>(
+					reducer,
+					new UnaryOperatorInformation<>(STRING_INT_TUPLE, STRING_INT_TUPLE),
+					new int[]{0},
+					"TestReducer");
 
 			List<Tuple2<String, Integer>> input = new ArrayList<>(asList(
-					new Tuple2<>("foo", 1),
-					new Tuple2<>("foo", 3),
-					new Tuple2<>("bar", 2),
-					new Tuple2<>("bar", 4)));
+				new Tuple2<>("foo", 1),
+				new Tuple2<>("foo", 3),
+				new Tuple2<>("bar", 2),
+				new Tuple2<>("bar", 4)));
 
 			ExecutionConfig executionConfig = new ExecutionConfig();
 			executionConfig.disableObjectReuse();
@@ -103,13 +104,12 @@ public class GroupReduceOperatorTest implements java.io.Serializable {
 			Set<Tuple2<String, Integer>> resultSetRegular = new HashSet<>(resultRegular);
 
 			Set<Tuple2<String, Integer>> expectedResult = new HashSet<>(asList(
-					new Tuple2<>("foo", 4),
-					new Tuple2<>("bar", 6)));
+				new Tuple2<>("foo", 4),
+				new Tuple2<>("bar", 6)));
 
 			assertEquals(expectedResult, resultSetMutableSafe);
 			assertEquals(expectedResult, resultSetRegular);
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 			fail(e.getMessage());
 		}
@@ -123,12 +123,12 @@ public class GroupReduceOperatorTest implements java.io.Serializable {
 			final AtomicBoolean closed = new AtomicBoolean();
 
 			final RichGroupReduceFunction<Tuple2<String, Integer>, Tuple2<String,
-					Integer>> reducer = new RichGroupReduceFunction<Tuple2<String, Integer>,
-					Tuple2<String, Integer>>() {
+				Integer>> reducer = new RichGroupReduceFunction<Tuple2<String, Integer>,
+				Tuple2<String, Integer>>() {
 
 				@Override
 				public void reduce(Iterable<Tuple2<String, Integer>> values,
-									Collector<Tuple2<String, Integer>> out) throws Exception {
+								   Collector<Tuple2<String, Integer>> out) throws Exception {
 					Iterator<Tuple2<String, Integer>> input = values.iterator();
 
 					Tuple2<String, Integer> result = input.next();
@@ -157,44 +157,44 @@ public class GroupReduceOperatorTest implements java.io.Serializable {
 			};
 
 			GroupReduceOperatorBase<Tuple2<String, Integer>, Tuple2<String, Integer>,
-							GroupReduceFunction<Tuple2<String, Integer>, Tuple2<String, Integer>>> op =
-					new GroupReduceOperatorBase<>(
-							reducer,
-							new UnaryOperatorInformation<>(STRING_INT_TUPLE, STRING_INT_TUPLE),
-							new int[]{0},
-							"TestReducer");
+				GroupReduceFunction<Tuple2<String, Integer>, Tuple2<String, Integer>>> op =
+				new GroupReduceOperatorBase<>(
+					reducer,
+					new UnaryOperatorInformation<>(STRING_INT_TUPLE, STRING_INT_TUPLE),
+					new int[]{0},
+					"TestReducer");
 
 			List<Tuple2<String, Integer>> input = new ArrayList<>(asList(
-					new Tuple2<>("foo", 1),
-					new Tuple2<>("foo", 3),
-					new Tuple2<>("bar", 2),
-					new Tuple2<>("bar", 4)));
+				new Tuple2<>("foo", 1),
+				new Tuple2<>("foo", 3),
+				new Tuple2<>("bar", 2),
+				new Tuple2<>("bar", 4)));
 
 			final TaskInfo taskInfo = new TaskInfo(taskName, 1, 0, 1, 0);
 
 			ExecutionConfig executionConfig = new ExecutionConfig();
 			executionConfig.disableObjectReuse();
 			List<Tuple2<String, Integer>> resultMutableSafe = op.executeOnCollections(input,
-					new RuntimeUDFContext(taskInfo, null, executionConfig,
-							new HashMap<>(),
-							new HashMap<>(),
-							new UnregisteredMetricsGroup()),
-					executionConfig);
+				new RuntimeUDFContext(taskInfo, null, executionConfig,
+					new HashMap<>(),
+					new HashMap<>(),
+					new UnregisteredMetricsGroup()),
+				executionConfig);
 
 			executionConfig.enableObjectReuse();
 			List<Tuple2<String, Integer>> resultRegular = op.executeOnCollections(input,
-					new RuntimeUDFContext(taskInfo, null, executionConfig,
-							new HashMap<>(),
-							new HashMap<>(),
-							new UnregisteredMetricsGroup()),
-					executionConfig);
+				new RuntimeUDFContext(taskInfo, null, executionConfig,
+					new HashMap<>(),
+					new HashMap<>(),
+					new UnregisteredMetricsGroup()),
+				executionConfig);
 
 			Set<Tuple2<String, Integer>> resultSetMutableSafe = new HashSet<>(resultMutableSafe);
 			Set<Tuple2<String, Integer>> resultSetRegular = new HashSet<>(resultRegular);
 
 			Set<Tuple2<String, Integer>> expectedResult = new HashSet<>(asList(
-					new Tuple2<>("foo", 4),
-					new Tuple2<>("bar", 6)));
+				new Tuple2<>("foo", 4),
+				new Tuple2<>("bar", 6)));
 
 			assertEquals(expectedResult, resultSetMutableSafe);
 			assertEquals(expectedResult, resultSetRegular);

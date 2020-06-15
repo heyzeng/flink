@@ -81,14 +81,13 @@ public class CrossSegmentTypeTest {
 			int pos2 = random.nextInt(bytes2.length);
 
 			int len = Math.min(Math.min(bytes1.length - pos1, bytes2.length - pos2),
-					random.nextInt(pageSize / 50));
+				random.nextInt(pageSize / 50));
 
 			int cmp = seg1.compare(seg2, pos1, pos2, len);
 
 			if (pos1 < pos2 - shift) {
 				assertTrue(cmp <= 0);
-			}
-			else {
+			} else {
 				assertTrue(cmp >= 0);
 			}
 		}
@@ -194,7 +193,7 @@ public class CrossSegmentTypeTest {
 
 			int otherPos2 = random.nextInt(pageSize - numBytes);
 			unsafeCopySeg.copyFromUnsafe(otherPos2, unsafeCopy,
-					(int) (otherPos + BYTE_ARRAY_BASE_OFFSET), numBytes);
+				(int) (otherPos + BYTE_ARRAY_BASE_OFFSET), numBytes);
 			assertTrue(unsafeCopySeg.equalTo(seg2, otherPos2, otherPos, numBytes));
 		}
 
@@ -203,11 +202,11 @@ public class CrossSegmentTypeTest {
 
 		// test out of bound conditions
 
-		final int[] validOffsets = { 0, 1, pageSize / 10 * 9 };
-		final int[] invalidOffsets = { -1, pageSize + 1, -pageSize, Integer.MAX_VALUE, Integer.MIN_VALUE };
+		final int[] validOffsets = {0, 1, pageSize / 10 * 9};
+		final int[] invalidOffsets = {-1, pageSize + 1, -pageSize, Integer.MAX_VALUE, Integer.MIN_VALUE};
 
-		final int[] validLengths = { 0, 1, pageSize / 10, pageSize };
-		final int[] invalidLengths = { -1, -pageSize, pageSize + 1, Integer.MAX_VALUE, Integer.MIN_VALUE };
+		final int[] validLengths = {0, 1, pageSize / 10, pageSize};
+		final int[] invalidLengths = {-1, -pageSize, pageSize + 1, Integer.MAX_VALUE, Integer.MIN_VALUE};
 
 		for (int off1 : validOffsets) {
 			for (int off2 : validOffsets) {
@@ -215,26 +214,26 @@ public class CrossSegmentTypeTest {
 					try {
 						seg1.copyTo(off1, seg2, off2, len);
 						fail("should fail with an IndexOutOfBoundsException");
+					} catch (IndexOutOfBoundsException ignored) {
 					}
-					catch (IndexOutOfBoundsException ignored) {}
 
 					try {
 						seg1.copyTo(off2, seg2, off1, len);
 						fail("should fail with an IndexOutOfBoundsException");
+					} catch (IndexOutOfBoundsException ignored) {
 					}
-					catch (IndexOutOfBoundsException ignored) {}
 
 					try {
 						seg2.copyTo(off1, seg1, off2, len);
 						fail("should fail with an IndexOutOfBoundsException");
+					} catch (IndexOutOfBoundsException ignored) {
 					}
-					catch (IndexOutOfBoundsException ignored) {}
 
 					try {
 						seg2.copyTo(off2, seg1, off1, len);
 						fail("should fail with an IndexOutOfBoundsException");
+					} catch (IndexOutOfBoundsException ignored) {
 					}
-					catch (IndexOutOfBoundsException ignored) {}
 				}
 			}
 		}
@@ -245,26 +244,26 @@ public class CrossSegmentTypeTest {
 					try {
 						seg1.copyTo(off1, seg2, off2, len);
 						fail("should fail with an IndexOutOfBoundsException");
+					} catch (IndexOutOfBoundsException ignored) {
 					}
-					catch (IndexOutOfBoundsException ignored) {}
 
 					try {
 						seg1.copyTo(off2, seg2, off1, len);
 						fail("should fail with an IndexOutOfBoundsException");
+					} catch (IndexOutOfBoundsException ignored) {
 					}
-					catch (IndexOutOfBoundsException ignored) {}
 
 					try {
 						seg2.copyTo(off1, seg1, off2, len);
 						fail("should fail with an IndexOutOfBoundsException");
+					} catch (IndexOutOfBoundsException ignored) {
 					}
-					catch (IndexOutOfBoundsException ignored) {}
 
 					try {
 						seg2.copyTo(off2, seg1, off1, len);
 						fail("should fail with an IndexOutOfBoundsException");
+					} catch (IndexOutOfBoundsException ignored) {
 					}
-					catch (IndexOutOfBoundsException ignored) {}
 				}
 			}
 		}
@@ -275,26 +274,26 @@ public class CrossSegmentTypeTest {
 					try {
 						seg1.copyTo(off1, seg2, off2, len);
 						fail("should fail with an IndexOutOfBoundsException");
+					} catch (IndexOutOfBoundsException ignored) {
 					}
-					catch (IndexOutOfBoundsException ignored) {}
 
 					try {
 						seg1.copyTo(off2, seg2, off1, len);
 						fail("should fail with an IndexOutOfBoundsException");
+					} catch (IndexOutOfBoundsException ignored) {
 					}
-					catch (IndexOutOfBoundsException ignored) {}
 
 					try {
 						seg2.copyTo(off1, seg1, off2, len);
 						fail("should fail with an IndexOutOfBoundsException");
+					} catch (IndexOutOfBoundsException ignored) {
 					}
-					catch (IndexOutOfBoundsException ignored) {}
 
 					try {
 						seg2.copyTo(off2, seg1, off1, len);
 						fail("should fail with an IndexOutOfBoundsException");
+					} catch (IndexOutOfBoundsException ignored) {
 					}
-					catch (IndexOutOfBoundsException ignored) {}
 				}
 			}
 		}
@@ -305,26 +304,26 @@ public class CrossSegmentTypeTest {
 					try {
 						seg1.copyTo(off1, seg2, off2, len);
 						fail("should fail with an IndexOutOfBoundsException");
+					} catch (IndexOutOfBoundsException ignored) {
 					}
-					catch (IndexOutOfBoundsException ignored) {}
 
 					try {
 						seg1.copyTo(off2, seg2, off1, len);
 						fail("should fail with an IndexOutOfBoundsException");
+					} catch (IndexOutOfBoundsException ignored) {
 					}
-					catch (IndexOutOfBoundsException ignored) {}
 
 					try {
 						seg2.copyTo(off1, seg1, off2, len);
 						fail("should fail with an IndexOutOfBoundsException");
+					} catch (IndexOutOfBoundsException ignored) {
 					}
-					catch (IndexOutOfBoundsException ignored) {}
 
 					try {
 						seg2.copyTo(off2, seg1, off1, len);
 						fail("should fail with an IndexOutOfBoundsException");
+					} catch (IndexOutOfBoundsException ignored) {
 					}
-					catch (IndexOutOfBoundsException ignored) {}
 				}
 			}
 		}

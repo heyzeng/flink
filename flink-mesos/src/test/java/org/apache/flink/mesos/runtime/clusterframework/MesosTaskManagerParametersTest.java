@@ -104,7 +104,7 @@ public class MesosTaskManagerParametersTest extends TestLogger {
 	public void testContainerDockerParameters() throws Exception {
 		Configuration config = getConfiguration();
 		config.setString(MesosTaskManagerParameters.MESOS_RM_CONTAINER_DOCKER_PARAMETERS,
-				"testKey1=testValue1,testKey2=testValue2,testParam3=key3=value3,testParam4=\"key4=value4\"");
+			"testKey1=testValue1,testKey2=testValue2,testParam3=key3=value3,testParam4=\"key4=value4\"");
 
 		MesosTaskManagerParameters params = MesosTaskManagerParameters.create(config);
 		assertEquals(params.dockerParameters().size(), 4);
@@ -129,7 +129,7 @@ public class MesosTaskManagerParametersTest extends TestLogger {
 	public void testUriParameters() throws Exception {
 		Configuration config = getConfiguration();
 		config.setString(MesosTaskManagerParameters.MESOS_TM_URIS,
-				"file:///dev/null,http://localhost/test,  test_url ");
+			"file:///dev/null,http://localhost/test,  test_url ");
 
 		MesosTaskManagerParameters params = MesosTaskManagerParameters.create(config);
 		assertEquals(params.uris().size(), 3);

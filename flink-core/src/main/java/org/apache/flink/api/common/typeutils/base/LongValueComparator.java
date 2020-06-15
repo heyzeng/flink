@@ -42,7 +42,7 @@ public class LongValueComparator extends TypeComparator<LongValue> {
 
 	private final LongValue tempReference = new LongValue();
 
-	private final TypeComparator<?>[] comparators = new TypeComparator[] {this};
+	private final TypeComparator<?>[] comparators = new TypeComparator[]{this};
 
 	public LongValueComparator(boolean ascending) {
 		this.ascendingComparison = ascending;

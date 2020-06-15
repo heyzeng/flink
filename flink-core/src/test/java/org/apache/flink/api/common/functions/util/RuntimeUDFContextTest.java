@@ -46,18 +46,17 @@ public class RuntimeUDFContextTest {
 	public void testBroadcastVariableNotFound() {
 		try {
 			RuntimeUDFContext ctx = new RuntimeUDFContext(
-					taskInfo, getClass().getClassLoader(), new ExecutionConfig(),
-					new HashMap<>(),
-					new HashMap<>(),
-					new UnregisteredMetricsGroup());
+				taskInfo, getClass().getClassLoader(), new ExecutionConfig(),
+				new HashMap<>(),
+				new HashMap<>(),
+				new UnregisteredMetricsGroup());
 
 			assertFalse(ctx.hasBroadcastVariable("some name"));
 
 			try {
 				ctx.getBroadcastVariable("some name");
 				fail("should throw an exception");
-			}
-			catch (IllegalArgumentException e) {
+			} catch (IllegalArgumentException e) {
 				// expected
 			}
 
@@ -69,12 +68,10 @@ public class RuntimeUDFContextTest {
 				});
 
 				fail("should throw an exception");
-			}
-			catch (IllegalArgumentException e) {
+			} catch (IllegalArgumentException e) {
 				// expected
 			}
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 			fail(e.getMessage());
 		}
@@ -84,10 +81,10 @@ public class RuntimeUDFContextTest {
 	public void testBroadcastVariableSimple() {
 		try {
 			RuntimeUDFContext ctx = new RuntimeUDFContext(
-					taskInfo, getClass().getClassLoader(), new ExecutionConfig(),
-					new HashMap<>(),
-					new HashMap<>(),
-					new UnregisteredMetricsGroup());
+				taskInfo, getClass().getClassLoader(), new ExecutionConfig(),
+				new HashMap<>(),
+				new HashMap<>(),
+				new UnregisteredMetricsGroup());
 
 			ctx.setBroadcastVariable("name1", Arrays.asList(1, 2, 3, 4));
 			ctx.setBroadcastVariable("name2", Arrays.asList(1.0, 2.0, 3.0, 4.0));
@@ -114,8 +111,7 @@ public class RuntimeUDFContextTest {
 
 			assertEquals(Arrays.asList(1, 2, 3, 4), list5);
 			assertEquals(Arrays.asList(1.0, 2.0, 3.0, 4.0), list6);
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 			fail(e.getMessage());
 		}
@@ -125,10 +121,10 @@ public class RuntimeUDFContextTest {
 	public void testBroadcastVariableWithInitializer() {
 		try {
 			RuntimeUDFContext ctx = new RuntimeUDFContext(
-					taskInfo, getClass().getClassLoader(), new ExecutionConfig(),
-					new HashMap<>(),
-					new HashMap<>(),
-					new UnregisteredMetricsGroup());
+				taskInfo, getClass().getClassLoader(), new ExecutionConfig(),
+				new HashMap<>(),
+				new HashMap<>(),
+				new UnregisteredMetricsGroup());
 
 			ctx.setBroadcastVariable("name", Arrays.asList(1, 2, 3, 4));
 
@@ -143,8 +139,7 @@ public class RuntimeUDFContextTest {
 			// access it the third time without an initializer (should work by "chance", because the result is a list)
 			List<Double> list3 = ctx.getBroadcastVariable("name");
 			assertEquals(Arrays.asList(1.0, 2.0, 3.0, 4.0), list3);
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 			fail(e.getMessage());
 		}
@@ -154,10 +149,10 @@ public class RuntimeUDFContextTest {
 	public void testResetBroadcastVariableWithInitializer() {
 		try {
 			RuntimeUDFContext ctx = new RuntimeUDFContext(
-					taskInfo, getClass().getClassLoader(), new ExecutionConfig(),
-					new HashMap<>(),
-					new HashMap<>(),
-					new UnregisteredMetricsGroup());
+				taskInfo, getClass().getClassLoader(), new ExecutionConfig(),
+				new HashMap<>(),
+				new HashMap<>(),
+				new UnregisteredMetricsGroup());
 
 			ctx.setBroadcastVariable("name", Arrays.asList(1, 2, 3, 4));
 
@@ -170,8 +165,7 @@ public class RuntimeUDFContextTest {
 
 			List<Double> list2 = ctx.getBroadcastVariableWithInitializer("name", new ConvertingInitializer());
 			assertEquals(Arrays.asList(2.0, 3.0, 4.0, 5.0), list2);
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 			fail(e.getMessage());
 		}
@@ -181,10 +175,10 @@ public class RuntimeUDFContextTest {
 	public void testBroadcastVariableWithInitializerAndMismatch() {
 		try {
 			RuntimeUDFContext ctx = new RuntimeUDFContext(
-					taskInfo, getClass().getClassLoader(), new ExecutionConfig(),
-					new HashMap<>(),
-					new HashMap<>(),
-					new UnregisteredMetricsGroup());
+				taskInfo, getClass().getClassLoader(), new ExecutionConfig(),
+				new HashMap<>(),
+				new HashMap<>(),
+				new UnregisteredMetricsGroup());
 
 			ctx.setBroadcastVariable("name", Arrays.asList(1, 2, 3, 4));
 
@@ -196,12 +190,10 @@ public class RuntimeUDFContextTest {
 			try {
 				ctx.getBroadcastVariable("name");
 				fail("should throw an exception");
-			}
-			catch (IllegalStateException e) {
+			} catch (IllegalStateException e) {
 				// expected
 			}
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 			fail(e.getMessage());
 		}

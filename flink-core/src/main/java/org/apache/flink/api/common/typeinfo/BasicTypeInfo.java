@@ -115,7 +115,7 @@ public class BasicTypeInfo<T> extends TypeInformation<T> implements AtomicType<T
 	 */
 	@PublicEvolving
 	public boolean shouldAutocastTo(BasicTypeInfo<?> to) {
-		for (Class<?> possibleTo: possibleCastTargetTypes) {
+		for (Class<?> possibleTo : possibleCastTargetTypes) {
 			if (possibleTo.equals(to.getTypeClass())) {
 				return true;
 			}
@@ -224,8 +224,7 @@ public class BasicTypeInfo<T> extends TypeInformation<T> implements AtomicType<T
 		try {
 			Constructor<? extends TypeComparator<X>> constructor = comparatorClass.getConstructor(boolean.class);
 			return constructor.newInstance(ascendingOrder);
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			throw new RuntimeException("Could not initialize basic comparator " + comparatorClass.getName(), e);
 		}
 	}

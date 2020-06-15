@@ -103,8 +103,7 @@ public class TextValueInputFormat extends DelimitedInputFormat<StringValue> {
 		if (this.ascii) {
 			reuse.setValueAscii(bytes, offset, numBytes);
 			return reuse;
-		}
-		else {
+		} else {
 			ByteBuffer byteWrapper = this.byteWrapper;
 			if (bytes != byteWrapper.array()) {
 				byteWrapper = ByteBuffer.wrap(bytes, 0, bytes.length);
@@ -117,8 +116,7 @@ public class TextValueInputFormat extends DelimitedInputFormat<StringValue> {
 				CharBuffer result = this.decoder.decode(byteWrapper);
 				reuse.setValue(result);
 				return reuse;
-			}
-			catch (CharacterCodingException e) {
+			} catch (CharacterCodingException e) {
 				if (skipInvalidLines) {
 					return null;
 				} else {

@@ -43,7 +43,7 @@ public final class LocalDateTimeComparator extends TypeComparator<LocalDateTime>
 
 	// For use by getComparators
 	@SuppressWarnings("rawtypes")
-	private final LocalDateTimeComparator[] comparators = new LocalDateTimeComparator[] {this};
+	private final LocalDateTimeComparator[] comparators = new LocalDateTimeComparator[]{this};
 
 	public LocalDateTimeComparator(boolean ascending) {
 		this.ascendingComparison = ascending;
@@ -142,7 +142,7 @@ public final class LocalDateTimeComparator extends TypeComparator<LocalDateTime>
 		} else {
 			dateComparator.putNormalizedKey(record.toLocalDate(), target, offset, dateNKLen);
 			timeComparator.putNormalizedKey(
-					record.toLocalTime(), target, offset + dateNKLen, numBytes - dateNKLen);
+				record.toLocalTime(), target, offset + dateNKLen, numBytes - dateNKLen);
 		}
 	}
 

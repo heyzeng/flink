@@ -30,8 +30,8 @@ public class PropertiesUtil {
 	 * Get integer from properties.
 	 * This method throws an exception if the integer is not valid.
 	 *
-	 * @param config Properties
-	 * @param key key in Properties
+	 * @param config       Properties
+	 * @param key          key in Properties
 	 * @param defaultValue default value if value is not set
 	 * @return default or value of key
 	 */
@@ -44,7 +44,7 @@ public class PropertiesUtil {
 				return Integer.parseInt(val);
 			} catch (NumberFormatException nfe) {
 				throw new IllegalArgumentException("Value for configuration key='" + key + "' is not set correctly. " +
-						"Entered value='" + val + "'. Default value='" + defaultValue + "'");
+					"Entered value='" + val + "'. Default value='" + defaultValue + "'");
 			}
 		}
 	}
@@ -53,8 +53,8 @@ public class PropertiesUtil {
 	 * Get long from properties.
 	 * This method throws an exception if the long is not valid.
 	 *
-	 * @param config Properties
-	 * @param key key in Properties
+	 * @param config       Properties
+	 * @param key          key in Properties
 	 * @param defaultValue default value if value is not set
 	 * @return default or value of key
 	 */
@@ -67,7 +67,7 @@ public class PropertiesUtil {
 				return Long.parseLong(val);
 			} catch (NumberFormatException nfe) {
 				throw new IllegalArgumentException("Value for configuration key='" + key + "' is not set correctly. " +
-						"Entered value='" + val + "'. Default value='" + defaultValue + "'");
+					"Entered value='" + val + "'. Default value='" + defaultValue + "'");
 			}
 		}
 	}
@@ -76,8 +76,8 @@ public class PropertiesUtil {
 	 * Get long from properties.
 	 * This method only logs if the long is not valid.
 	 *
-	 * @param config Properties
-	 * @param key key in Properties
+	 * @param config       Properties
+	 * @param key          key in Properties
 	 * @param defaultValue default value if value is not set
 	 * @return default or value of key
 	 */
@@ -94,8 +94,8 @@ public class PropertiesUtil {
 	 * Get boolean from properties.
 	 * This method returns {@code true} iff the parsed value is "true".
 	 *
-	 * @param config Properties
-	 * @param key key in Properties
+	 * @param config       Properties
+	 * @param key          key in Properties
 	 * @param defaultValue default value if value is not set
 	 * @return default or value of key
 	 */
@@ -110,6 +110,9 @@ public class PropertiesUtil {
 
 	// ------------------------------------------------------------------------
 
-	/** Private default constructor to prevent instantiation. */
-	private PropertiesUtil() {}
+	/**
+	 * Private default constructor to prevent instantiation.
+	 */
+	private PropertiesUtil() {
+	}
 }

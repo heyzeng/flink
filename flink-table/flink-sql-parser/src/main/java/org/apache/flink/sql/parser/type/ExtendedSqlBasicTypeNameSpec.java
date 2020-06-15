@@ -42,10 +42,10 @@ public class ExtendedSqlBasicTypeNameSpec extends SqlBasicTypeNameSpec {
 	 * @param pos       parser position
 	 */
 	public ExtendedSqlBasicTypeNameSpec(
-			String typeAlias,
-			SqlTypeName typeName,
-			int precision,
-			SqlParserPos pos) {
+		String typeAlias,
+		SqlTypeName typeName,
+		int precision,
+		SqlParserPos pos) {
 		super(typeName, precision, pos);
 		this.typeAlias = typeAlias;
 	}

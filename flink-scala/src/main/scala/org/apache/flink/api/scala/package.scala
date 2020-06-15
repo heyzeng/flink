@@ -58,15 +58,15 @@ package object scala {
 
   // Checks if object has explicit type information using ResultTypeQueryable
   private[flink] def explicitFirst[T](
-      funcOrInputFormat: AnyRef,
-      typeInfo: TypeInformation[T]): TypeInformation[T] = funcOrInputFormat match {
+                                       funcOrInputFormat: AnyRef,
+                                       typeInfo: TypeInformation[T]): TypeInformation[T] = funcOrInputFormat match {
     case rtq: ResultTypeQueryable[_] => rtq.asInstanceOf[ResultTypeQueryable[T]].getProducedType
     case _ => typeInfo
   }
 
   private[flink] def fieldNames2Indices(
-      typeInfo: TypeInformation[_],
-      fields: Array[String]): Array[Int] = {
+                                         typeInfo: TypeInformation[_],
+                                         fields: Array[String]): Array[Int] = {
     typeInfo match {
       case ti: CaseClassTypeInfo[_] =>
         val result = ti.getFieldIndices(fields)
@@ -84,7 +84,7 @@ package object scala {
     }
   }
 
-  def getCallLocationName(depth: Int = 3) : String = {
+  def getCallLocationName(depth: Int = 3): String = {
     val st = Thread.currentThread().getStackTrace()
     if (st.length < depth) {
       "<unknown>"
@@ -94,35 +94,35 @@ package object scala {
   }
 
   /**
-    * The definition of the class [[Tuple2CaseClassSerializer]] is not visible from Java,
-    * because it is defined within a scala package object, and we need it in
-    * [[Tuple2CaseClassSerializerSnapshot]] so we need to expose it as a subtype, via this method.
-    */
+   * The definition of the class [[Tuple2CaseClassSerializer]] is not visible from Java,
+   * because it is defined within a scala package object, and we need it in
+   * [[Tuple2CaseClassSerializerSnapshot]] so we need to expose it as a subtype, via this method.
+   */
   @Internal()
   private[scala] def tuple2ClassForJava[T1, T2]()
-    : Class[ScalaCaseClassSerializer[(T1, T2)]] = {
+  : Class[ScalaCaseClassSerializer[(T1, T2)]] = {
     classOf[Tuple2CaseClassSerializer[T1, T2]]
       .asInstanceOf[Class[ScalaCaseClassSerializer[(T1, T2)]]]
   }
 
   /**
-    * The definition of the class [[Tuple2CaseClassSerializer]] is not visible from Java
-    * because it is defined within a scala package object, and we need to be able to create new
-    * instances of it from [[Tuple2CaseClassSerializerSnapshot]] so we need to expose it via
-    * this method.
-    */
+   * The definition of the class [[Tuple2CaseClassSerializer]] is not visible from Java
+   * because it is defined within a scala package object, and we need to be able to create new
+   * instances of it from [[Tuple2CaseClassSerializerSnapshot]] so we need to expose it via
+   * this method.
+   */
   @Internal()
   private[scala] def tuple2Serializer[T1, T2](
-    klass: Class[(T1, T2)],
-    fieldSerializers: Array[TypeSerializer[_]]
-  ): ScalaCaseClassSerializer[(T1, T2)] = {
+                                               klass: Class[(T1, T2)],
+                                               fieldSerializers: Array[TypeSerializer[_]]
+                                             ): ScalaCaseClassSerializer[(T1, T2)] = {
     new Tuple2CaseClassSerializer[T1, T2](klass, fieldSerializers)
   }
 
   def createTuple2TypeInformation[T1, T2](
-      t1: TypeInformation[T1],
-      t2: TypeInformation[T2])
-    : TypeInformation[(T1, T2)] =
+                                           t1: TypeInformation[T1],
+                                           t2: TypeInformation[T2])
+  : TypeInformation[(T1, T2)] =
     new CaseClassTypeInfo[(T1, T2)](
       classOf[(T1, T2)],
       Array(t1, t2),
@@ -140,10 +140,10 @@ package object scala {
     }
 
   class Tuple2CaseClassSerializer[T1, T2](
-    val clazz: Class[(T1, T2)],
-    fieldSerializers: Array[TypeSerializer[_]]
-  ) extends ScalaCaseClassSerializer[(T1, T2)](clazz, fieldSerializers)
-      with SelfResolvingTypeSerializer[(T1, T2)] {
+                                           val clazz: Class[(T1, T2)],
+                                           fieldSerializers: Array[TypeSerializer[_]]
+                                         ) extends ScalaCaseClassSerializer[(T1, T2)](clazz, fieldSerializers)
+    with SelfResolvingTypeSerializer[(T1, T2)] {
 
     override def createInstance(fields: Array[AnyRef]): (T1, T2) = {
       (fields(0).asInstanceOf[T1], fields(1).asInstanceOf[T2])
@@ -154,8 +154,8 @@ package object scala {
     }
 
     override def resolveSchemaCompatibilityViaRedirectingToNewSnapshotClass(
-      s: TypeSerializerConfigSnapshot[(T1, T2)]
-    ): TypeSerializerSchemaCompatibility[(T1, T2)] = {
+                                                                             s: TypeSerializerConfigSnapshot[(T1, T2)]
+                                                                           ): TypeSerializerSchemaCompatibility[(T1, T2)] = {
 
       require(s.isInstanceOf[TupleSerializerConfigSnapshot[(T1, T2)]])
 
@@ -173,4 +173,5 @@ package object scala {
       )
     }
   }
+
 }

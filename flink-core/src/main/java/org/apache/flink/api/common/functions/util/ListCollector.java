@@ -43,5 +43,6 @@ public class ListCollector<T> implements Collector<T> {
 	}
 
 	@Override
-	public void close() {}
+	public void close() {
+	}
 }

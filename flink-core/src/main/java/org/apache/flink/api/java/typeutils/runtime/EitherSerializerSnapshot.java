@@ -38,7 +38,7 @@ import static org.apache.flink.util.Preconditions.checkState;
  * Configuration snapshot for the {@link EitherSerializer}.
  *
  * @deprecated this snapshot class is no longer used by any serializers.
- *             Instead, {@link JavaEitherSerializerSnapshot} is used.
+ * Instead, {@link JavaEitherSerializerSnapshot} is used.
  */
 @Internal
 @Deprecated
@@ -46,7 +46,9 @@ public final class EitherSerializerSnapshot<L, R> implements TypeSerializerSnaps
 
 	private static final int CURRENT_VERSION = 2;
 
-	/** Snapshot handling for the component serializer snapshot. */
+	/**
+	 * Snapshot handling for the component serializer snapshot.
+	 */
 	@Nullable
 	private NestedSerializersSnapshotDelegate nestedSnapshot;
 
@@ -54,14 +56,15 @@ public final class EitherSerializerSnapshot<L, R> implements TypeSerializerSnaps
 	 * Constructor for read instantiation.
 	 */
 	@SuppressWarnings("unused")
-	public EitherSerializerSnapshot() {}
+	public EitherSerializerSnapshot() {
+	}
 
 	/**
 	 * Constructor to create the snapshot for writing.
 	 */
 	public EitherSerializerSnapshot(
-			TypeSerializer<L> leftSerializer,
-			TypeSerializer<R> rightSerializer) {
+		TypeSerializer<L> leftSerializer,
+		TypeSerializer<R> rightSerializer) {
 
 		this.nestedSnapshot = new NestedSerializersSnapshotDelegate(leftSerializer, rightSerializer);
 	}
@@ -105,13 +108,13 @@ public final class EitherSerializerSnapshot<L, R> implements TypeSerializerSnaps
 	public EitherSerializer<L, R> restoreSerializer() {
 		checkState(nestedSnapshot != null);
 		return new EitherSerializer<>(
-				nestedSnapshot.getRestoredNestedSerializer(0),
-				nestedSnapshot.getRestoredNestedSerializer(1));
+			nestedSnapshot.getRestoredNestedSerializer(0),
+			nestedSnapshot.getRestoredNestedSerializer(1));
 	}
 
 	@Override
 	public TypeSerializerSchemaCompatibility<Either<L, R>> resolveSchemaCompatibility(
-			TypeSerializer<Either<L, R>> newSerializer) {
+		TypeSerializer<Either<L, R>> newSerializer) {
 		checkState(nestedSnapshot != null);
 
 		if (newSerializer instanceof EitherSerializer) {
@@ -120,8 +123,7 @@ public final class EitherSerializerSnapshot<L, R> implements TypeSerializerSnaps
 				newSerializer,
 				new JavaEitherSerializerSnapshot<>(),
 				nestedSnapshot.getNestedSerializerSnapshots());
-		}
-		else {
+		} else {
 			return TypeSerializerSchemaCompatibility.incompatible();
 		}
 	}

@@ -43,13 +43,13 @@ public class ExecutionPlanUtil {
 
 	private static ExecutionPlanJSONGenerator getJSONGenerator() {
 		Class<? extends ExecutionPlanJSONGenerator> planGeneratorClass = loadJSONGeneratorClass(
-				PLAN_GENERATOR_CLASS_NAME);
+			PLAN_GENERATOR_CLASS_NAME);
 
 		try {
 			return planGeneratorClass.getConstructor().newInstance();
 		} catch (Throwable t) {
 			throw new RuntimeException("An error occurred while loading the plan generator ("
-					+ PLAN_GENERATOR_CLASS_NAME + ").", t);
+				+ PLAN_GENERATOR_CLASS_NAME + ").", t);
 		}
 	}
 
@@ -59,11 +59,11 @@ public class ExecutionPlanUtil {
 			return generatorClass.asSubclass(ExecutionPlanJSONGenerator.class);
 		} catch (ClassNotFoundException cnfe) {
 			throw new RuntimeException("Could not load the plan generator class (" + className
-					+ "). Do you have the 'flink-optimizer' project in your dependencies?");
+				+ "). Do you have the 'flink-optimizer' project in your dependencies?");
 		} catch (Throwable t) {
 			throw new RuntimeException(
-					"An error occurred while loading the plan generator (" + className + ").",
-					t);
+				"An error occurred while loading the plan generator (" + className + ").",
+				t);
 		}
 	}
 

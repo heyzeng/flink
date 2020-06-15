@@ -84,7 +84,7 @@ public class ConfigurationUtilsTest extends TestLogger {
 			}
 		};
 
-		final Configuration configuration =  new Configuration();
+		final Configuration configuration = new Configuration();
 		expectedKeyValuePairs.forEach((k, v) -> configuration.setString(prefix + k, v));
 
 		final Map<String, String> resultKeyValuePairs = ConfigurationUtils.getPrefixedKeyValuePairs(prefix, configuration);

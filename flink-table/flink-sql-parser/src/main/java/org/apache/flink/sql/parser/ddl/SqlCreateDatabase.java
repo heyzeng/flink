@@ -55,11 +55,11 @@ public class SqlCreateDatabase extends SqlCreate implements ExtendedSqlNode {
 	private final SqlCharStringLiteral comment;
 
 	public SqlCreateDatabase(
-			SqlParserPos pos,
-			SqlIdentifier databaseName,
-			SqlNodeList propertyList,
-			SqlCharStringLiteral comment,
-			boolean ifNotExists) {
+		SqlParserPos pos,
+		SqlIdentifier databaseName,
+		SqlNodeList propertyList,
+		SqlCharStringLiteral comment,
+		boolean ifNotExists) {
 		super(OPERATOR, pos, false, ifNotExists);
 		this.databaseName = requireNonNull(databaseName, "tableName should not be null");
 		this.propertyList = requireNonNull(propertyList, "propertyList should not be null");
@@ -99,9 +99,9 @@ public class SqlCreateDatabase extends SqlCreate implements ExtendedSqlNode {
 
 	@Override
 	public void unparse(
-			SqlWriter writer,
-			int leftPrec,
-			int rightPrec) {
+		SqlWriter writer,
+		int leftPrec,
+		int rightPrec) {
 		writer.keyword("CREATE DATABASE");
 		if (isIfNotExists()) {
 			writer.keyword("IF NOT EXISTS");

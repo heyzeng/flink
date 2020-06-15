@@ -25,6 +25,7 @@ import org.apache.flink.api.java.typeutils.TupleTypeInfo;
 
 /**
  * Function that enables selection by maximal value of a field.
+ *
  * @param <T>
  */
 @Internal
@@ -36,10 +37,11 @@ public class SelectByMaxFunction<T extends Tuple> implements ReduceFunction<T> {
 
 	/**
 	 * Constructor which is overwriting the default constructor.
-	 * @param type Types of tuple whether to check if given fields are key types.
+	 *
+	 * @param type   Types of tuple whether to check if given fields are key types.
 	 * @param fields Array of integers which are used as key for comparison. The order of indexes
-	 * is regarded in the reduce function. First index has highest priority and last index has
-	 * least priority.
+	 *               is regarded in the reduce function. First index has highest priority and last index has
+	 *               least priority.
 	 */
 	public SelectByMaxFunction(TupleTypeInfo<T> type, int... fields) {
 		this.fields = fields;
@@ -49,13 +51,13 @@ public class SelectByMaxFunction<T extends Tuple> implements ReduceFunction<T> {
 			// Is field inside array
 			if (field < 0 || field >= type.getArity()) {
 				throw new IndexOutOfBoundsException(
-						"MinReduceFunction field position " + field + " is out of range.");
+					"MinReduceFunction field position " + field + " is out of range.");
 			}
 
 			// Check whether type is comparable
 			if (!type.getTypeAt(field).isKeyType()) {
 				throw new java.lang.IllegalArgumentException(
-						"MinReduceFunction supports only key(Comparable) types.");
+					"MinReduceFunction supports only key(Comparable) types.");
 			}
 
 		}
@@ -70,7 +72,7 @@ public class SelectByMaxFunction<T extends Tuple> implements ReduceFunction<T> {
 	 * is returned.
 	 * The tuple which has a bigger value at one index will be returned.
 	 */
-	@SuppressWarnings({ "unchecked", "rawtypes" })
+	@SuppressWarnings({"unchecked", "rawtypes"})
 	@Override
 	public T reduce(T value1, T value2) throws Exception {
 

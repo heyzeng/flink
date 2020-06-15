@@ -53,7 +53,8 @@ public class PojoSerializerUpgradeTestSpecifications {
 		public Color favoriteColor;
 		public boolean married;
 
-		public StaticSchemaPojo() {}
+		public StaticSchemaPojo() {
+		}
 
 		public StaticSchemaPojo(String name, int age, Color favoriteColor, boolean married) {
 			this.name = name;
@@ -90,7 +91,8 @@ public class PojoSerializerUpgradeTestSpecifications {
 
 		public int subclassField;
 
-		public StaticSchemaPojoSubclassA() {}
+		public StaticSchemaPojoSubclassA() {
+		}
 
 		public StaticSchemaPojoSubclassA(String name, int age, Color favoriteColor, boolean married, int subclassField) {
 			super(name, age, favoriteColor, married);
@@ -126,7 +128,8 @@ public class PojoSerializerUpgradeTestSpecifications {
 
 		public boolean subclassField;
 
-		public StaticSchemaPojoSubclassB() {}
+		public StaticSchemaPojoSubclassB() {
+		}
 
 		public StaticSchemaPojoSubclassB(String name, int age, Color favoriteColor, boolean married, boolean subclassField) {
 			super(name, age, favoriteColor, married);
@@ -162,7 +165,8 @@ public class PojoSerializerUpgradeTestSpecifications {
 
 		public double subclassField;
 
-		public StaticSchemaPojoSubclassC() {}
+		public StaticSchemaPojoSubclassC() {
+		}
 
 		public StaticSchemaPojoSubclassC(String name, int age, Color favoriteColor, boolean married, double subclassField) {
 			super(name, age, favoriteColor, married);
@@ -246,7 +250,8 @@ public class PojoSerializerUpgradeTestSpecifications {
 			public int age;
 			public double height;
 
-			public PojoBeforeSchemaUpgrade() {}
+			public PojoBeforeSchemaUpgrade() {
+			}
 
 			public PojoBeforeSchemaUpgrade(int id, String name, int age, double height) {
 				this.id = id;
@@ -284,7 +289,8 @@ public class PojoSerializerUpgradeTestSpecifications {
 			public Color favoriteColor;
 			public boolean married;
 
-			public PojoAfterSchemaUpgrade() {}
+			public PojoAfterSchemaUpgrade() {
+			}
 
 			public PojoAfterSchemaUpgrade(String name, int age, Color favoriteColor, boolean married) {
 				this.name = name;
@@ -346,7 +352,8 @@ public class PojoSerializerUpgradeTestSpecifications {
 
 			public int fieldValue;
 
-			public PojoWithIntField() {}
+			public PojoWithIntField() {
+			}
 
 			public PojoWithIntField(int fieldValue) {
 				this.fieldValue = fieldValue;
@@ -374,7 +381,8 @@ public class PojoSerializerUpgradeTestSpecifications {
 
 			public String fieldValue;
 
-			public PojoWithStringField() {}
+			public PojoWithStringField() {
+			}
 
 			public PojoWithStringField(String fieldValue) {
 				this.fieldValue = fieldValue;
@@ -410,7 +418,8 @@ public class PojoSerializerUpgradeTestSpecifications {
 			public int baseFieldA;
 			public String baseFieldB;
 
-			public BasePojo() {}
+			public BasePojo() {
+			}
 
 			public BasePojo(int baseFieldA, String baseFieldB) {
 				this.baseFieldA = baseFieldA;
@@ -423,7 +432,8 @@ public class PojoSerializerUpgradeTestSpecifications {
 			public boolean subclassFieldC;
 			public double subclassFieldD;
 
-			public SubclassPojoBeforeSchemaUpgrade() {}
+			public SubclassPojoBeforeSchemaUpgrade() {
+			}
 
 			public SubclassPojoBeforeSchemaUpgrade(int baseFieldA, String baseFieldB, boolean subclassFieldC, double subclassFieldD) {
 				super(baseFieldA, baseFieldB);
@@ -455,7 +465,8 @@ public class PojoSerializerUpgradeTestSpecifications {
 			public int baseFieldA;
 			public String baseFieldB;
 
-			public BasePojo() {}
+			public BasePojo() {
+			}
 
 			public BasePojo(int baseFieldA, String baseFieldB) {
 				this.baseFieldA = baseFieldA;
@@ -469,7 +480,8 @@ public class PojoSerializerUpgradeTestSpecifications {
 			public long subclassFieldE;
 			public double subclassFieldF;
 
-			public SubclassPojoAfterSchemaUpgrade() {}
+			public SubclassPojoAfterSchemaUpgrade() {
+			}
 
 			public SubclassPojoAfterSchemaUpgrade(int baseFieldA, String baseFieldB, boolean subclassFieldC, long subclassFieldE, double subclassFieldF) {
 				super(baseFieldA, baseFieldB);
@@ -535,7 +547,8 @@ public class PojoSerializerUpgradeTestSpecifications {
 
 			public int fieldValue;
 
-			public SubclassPojoWithIntField() {}
+			public SubclassPojoWithIntField() {
+			}
 
 			public SubclassPojoWithIntField(String name, int age, Color favoriteColor, boolean married, int fieldValue) {
 				super(name, age, favoriteColor, married);
@@ -567,7 +580,8 @@ public class PojoSerializerUpgradeTestSpecifications {
 
 			public String fieldValue;
 
-			public SubclassPojoWithStringField() {}
+			public SubclassPojoWithStringField() {
+			}
 
 			public SubclassPojoWithStringField(String name, int age, Color favoriteColor, boolean married, String fieldValue) {
 				super(name, age, favoriteColor, married);

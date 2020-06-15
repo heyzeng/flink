@@ -29,13 +29,13 @@ import org.apache.flink.util.InstantiationUtil;
 public final class RuntimeSerializerFactory<T> implements TypeSerializerFactory<T>, java.io.Serializable {
 
 	private static final long serialVersionUID = 1L;
-	
+
 
 	private static final String CONFIG_KEY_SER = "SER_DATA";
 
 	private static final String CONFIG_KEY_CLASS = "CLASS_DATA";
 
-	
+
 	private TypeSerializer<T> serializer;
 
 	private boolean firstSerializer = true;
@@ -43,7 +43,8 @@ public final class RuntimeSerializerFactory<T> implements TypeSerializerFactory<
 	private Class<T> clazz;
 
 	// Because we read the class from the TaskConfig and instantiate ourselves
-	public RuntimeSerializerFactory() {}
+	public RuntimeSerializerFactory() {
+	}
 
 	public RuntimeSerializerFactory(TypeSerializer<T> serializer, Class<T> clazz) {
 		if (serializer == null || clazz == null) {
@@ -60,8 +61,7 @@ public final class RuntimeSerializerFactory<T> implements TypeSerializerFactory<
 		try {
 			InstantiationUtil.writeObjectToConfig(clazz, config, CONFIG_KEY_CLASS);
 			InstantiationUtil.writeObjectToConfig(serializer, config, CONFIG_KEY_SER);
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			throw new RuntimeException("Could not serialize serializer into the configuration.", e);
 		}
 	}
@@ -72,16 +72,14 @@ public final class RuntimeSerializerFactory<T> implements TypeSerializerFactory<
 		if (config == null || cl == null) {
 			throw new NullPointerException();
 		}
-		
+
 		try {
 			this.clazz = (Class<T>) InstantiationUtil.readObjectFromConfig(config, CONFIG_KEY_CLASS, cl);
-			this.serializer = (TypeSerializer<T>)  InstantiationUtil.readObjectFromConfig(config, CONFIG_KEY_SER, cl);
+			this.serializer = (TypeSerializer<T>) InstantiationUtil.readObjectFromConfig(config, CONFIG_KEY_SER, cl);
 			firstSerializer = true;
-		}
-		catch (ClassNotFoundException e) {
+		} catch (ClassNotFoundException e) {
 			throw e;
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			throw new RuntimeException("Could not load deserializer from the configuration.", e);
 		}
 	}
@@ -104,21 +102,21 @@ public final class RuntimeSerializerFactory<T> implements TypeSerializerFactory<
 	public Class<T> getDataType() {
 		return clazz;
 	}
-	
+
 	// --------------------------------------------------------------------------------------------
-	
+
 	@Override
 	public int hashCode() {
 		return clazz.hashCode() ^ serializer.hashCode();
 	}
-	
+
 	@Override
 	public boolean equals(Object obj) {
 		if (obj instanceof RuntimeSerializerFactory) {
 			RuntimeSerializerFactory<?> other = (RuntimeSerializerFactory<?>) obj;
-			
+
 			return this.clazz == other.clazz &&
-					this.serializer.equals(other.serializer);
+				this.serializer.equals(other.serializer);
 		} else {
 			return false;
 		}

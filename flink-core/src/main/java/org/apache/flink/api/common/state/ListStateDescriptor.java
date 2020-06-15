@@ -49,7 +49,7 @@ public class ListStateDescriptor<T> extends StateDescriptor<ListState<T>, List<T
 	 * <p>If this constructor fails (because it is not possible to describe the type via a class),
 	 * consider using the {@link #ListStateDescriptor(String, TypeInformation)} constructor.
 	 *
-	 * @param name The (unique) name for the state.
+	 * @param name             The (unique) name for the state.
 	 * @param elementTypeClass The type of the elements in the state.
 	 */
 	public ListStateDescriptor(String name, Class<T> elementTypeClass) {
@@ -59,7 +59,7 @@ public class ListStateDescriptor<T> extends StateDescriptor<ListState<T>, List<T
 	/**
 	 * Creates a new {@code ListStateDescriptor} with the given name and list element type.
 	 *
-	 * @param name The (unique) name for the state.
+	 * @param name            The (unique) name for the state.
 	 * @param elementTypeInfo The type of the elements in the state.
 	 */
 	public ListStateDescriptor(String name, TypeInformation<T> elementTypeInfo) {
@@ -69,7 +69,7 @@ public class ListStateDescriptor<T> extends StateDescriptor<ListState<T>, List<T
 	/**
 	 * Creates a new {@code ListStateDescriptor} with the given name and list element type.
 	 *
-	 * @param name The (unique) name for the state.
+	 * @param name           The (unique) name for the state.
 	 * @param typeSerializer The type serializer for the list values.
 	 */
 	public ListStateDescriptor(String name, TypeSerializer<T> typeSerializer) {

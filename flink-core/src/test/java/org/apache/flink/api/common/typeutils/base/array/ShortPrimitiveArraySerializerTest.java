@@ -37,7 +37,7 @@ public class ShortPrimitiveArraySerializerTest extends SerializerTestBase<short[
 	protected Class<short[]> getTypeClass() {
 		return short[].class;
 	}
-	
+
 	@Override
 	protected int getLength() {
 		return -1;
@@ -45,10 +45,10 @@ public class ShortPrimitiveArraySerializerTest extends SerializerTestBase<short[
 
 	@Override
 	protected short[][] getTestData() {
-		return new short[][] {
-			new short[] {0, 1, 2, 3, -1, -2, -3, Short.MAX_VALUE, Short.MIN_VALUE},
-			new short[] {},
-			new short[] {-1, -2, 9673, 26782, 0, 0, 0}
+		return new short[][]{
+			new short[]{0, 1, 2, 3, -1, -2, -3, Short.MAX_VALUE, Short.MIN_VALUE},
+			new short[]{},
+			new short[]{-1, -2, 9673, 26782, 0, 0, 0}
 		};
 	}
 }

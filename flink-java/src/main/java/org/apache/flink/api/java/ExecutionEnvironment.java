@@ -109,16 +109,24 @@ import static org.apache.flink.util.Preconditions.checkNotNull;
 @Public
 public class ExecutionEnvironment {
 
-	/** The logger used by the environment and its subclasses. */
+	/**
+	 * The logger used by the environment and its subclasses.
+	 */
 	protected static final Logger LOG = LoggerFactory.getLogger(ExecutionEnvironment.class);
 
-	/** The environment of the context (local by default, cluster if invoked through command line). */
+	/**
+	 * The environment of the context (local by default, cluster if invoked through command line).
+	 */
 	private static ExecutionEnvironmentFactory contextEnvironmentFactory = null;
 
-	/** The ThreadLocal used to store {@link ExecutionEnvironmentFactory}. */
+	/**
+	 * The ThreadLocal used to store {@link ExecutionEnvironmentFactory}.
+	 */
 	private static final ThreadLocal<ExecutionEnvironmentFactory> threadLocalContextEnvironmentFactory = new ThreadLocal<>();
 
-	/** The default parallelism used by local environments. */
+	/**
+	 * The default parallelism used by local environments.
+	 */
 	private static int defaultLocalDop = Runtime.getRuntime().availableProcessors();
 
 	// --------------------------------------------------------------------------------------------
@@ -129,10 +137,14 @@ public class ExecutionEnvironment {
 
 	private final ExecutionConfig config = new ExecutionConfig();
 
-	/** Result from the latest execution, to make it retrievable when using eager execution methods. */
+	/**
+	 * Result from the latest execution, to make it retrievable when using eager execution methods.
+	 */
 	protected JobExecutionResult lastJobExecutionResult;
 
-	/** Flag to indicate whether sinks have been cleared in previous executions. */
+	/**
+	 * Flag to indicate whether sinks have been cleared in previous executions.
+	 */
 	private boolean wasExecuted = false;
 
 	private final PipelineExecutorServiceLoader executorServiceLoader;
@@ -161,9 +173,9 @@ public class ExecutionEnvironment {
 	 */
 	@PublicEvolving
 	public ExecutionEnvironment(
-			final PipelineExecutorServiceLoader executorServiceLoader,
-			final Configuration configuration,
-			final ClassLoader userClassloader) {
+		final PipelineExecutorServiceLoader executorServiceLoader,
+		final Configuration configuration,
+		final ClassLoader userClassloader) {
 		this.executorServiceLoader = checkNotNull(executorServiceLoader);
 		this.configuration = checkNotNull(configuration);
 		this.userClassloader = userClassloader == null ? getClass().getClassLoader() : userClassloader;
@@ -224,7 +236,7 @@ public class ExecutionEnvironment {
 	 * set will insert eventually an operation that runs non-parallel (parallelism of one).
 	 *
 	 * @return The parallelism used by operations, unless they override that value. This method
-	 *         returns {@link ExecutionConfig#PARALLELISM_DEFAULT}, if the environment's default parallelism should be used.
+	 * returns {@link ExecutionConfig#PARALLELISM_DEFAULT}, if the environment's default parallelism should be used.
 	 */
 	public int getParallelism() {
 		return config.getParallelism();
@@ -273,7 +285,6 @@ public class ExecutionEnvironment {
 	 * default value (as defined in the configuration) should be used.
 	 *
 	 * @param numberOfExecutionRetries The number of times the system will try to re-execute failed tasks.
-	 *
 	 * @deprecated This method will be replaced by {@link #setRestartStrategy}. The
 	 * {@link RestartStrategies.FixedDelayRestartStrategyConfiguration} contains the number of
 	 * execution retries.
@@ -290,7 +301,6 @@ public class ExecutionEnvironment {
 	 * should be used.
 	 *
 	 * @return The number of times the system will try to re-execute failed tasks.
-	 *
 	 * @deprecated This method will be replaced by {@link #getRestartStrategy}. The
 	 * {@link RestartStrategies.FixedDelayRestartStrategyConfiguration} contains the number of
 	 * execution retries.
@@ -306,7 +316,7 @@ public class ExecutionEnvironment {
 	 *
 	 * @return The execution result from the latest job execution.
 	 */
-	public JobExecutionResult getLastJobExecutionResult(){
+	public JobExecutionResult getLastJobExecutionResult() {
 		return this.lastJobExecutionResult;
 	}
 
@@ -320,17 +330,17 @@ public class ExecutionEnvironment {
 	 * <p>Note that the serializer instance must be serializable (as defined by java.io.Serializable),
 	 * because it may be distributed to the worker nodes by java serialization.
 	 *
-	 * @param type The class of the types serialized with the given serializer.
+	 * @param type       The class of the types serialized with the given serializer.
 	 * @param serializer The serializer to use.
 	 */
-	public <T extends Serializer<?> & Serializable>void addDefaultKryoSerializer(Class<?> type, T serializer) {
+	public <T extends Serializer<?> & Serializable> void addDefaultKryoSerializer(Class<?> type, T serializer) {
 		config.addDefaultKryoSerializer(type, serializer);
 	}
 
 	/**
 	 * Adds a new Kryo default serializer to the Runtime.
 	 *
-	 * @param type The class of the types serialized with the given serializer.
+	 * @param type            The class of the types serialized with the given serializer.
 	 * @param serializerClass The class of the serializer to use.
 	 */
 	public void addDefaultKryoSerializer(Class<?> type, Class<? extends Serializer<?>> serializerClass) {
@@ -343,17 +353,17 @@ public class ExecutionEnvironment {
 	 * <p>Note that the serializer instance must be serializable (as defined by java.io.Serializable),
 	 * because it may be distributed to the worker nodes by java serialization.
 	 *
-	 * @param type The class of the types serialized with the given serializer.
+	 * @param type       The class of the types serialized with the given serializer.
 	 * @param serializer The serializer to use.
 	 */
-	public <T extends Serializer<?> & Serializable>void registerTypeWithKryoSerializer(Class<?> type, T serializer) {
+	public <T extends Serializer<?> & Serializable> void registerTypeWithKryoSerializer(Class<?> type, T serializer) {
 		config.registerTypeWithKryoSerializer(type, serializer);
 	}
 
 	/**
 	 * Registers the given Serializer via its class as a serializer for the given type at the KryoSerializer.
 	 *
-	 * @param type The class of the types serialized with the given serializer.
+	 * @param type            The class of the types serialized with the given serializer.
 	 * @param serializerClass The class of the serializer to use.
 	 */
 	public void registerTypeWithKryoSerializer(Class<?> type, Class<? extends Serializer<?>> serializerClass) {
@@ -392,7 +402,7 @@ public class ExecutionEnvironment {
 	 * untouched.
 	 *
 	 * @param configuration a configuration to read the values from
-	 * @param classLoader a class loader to use when loading classes
+	 * @param classLoader   a class loader to use when loading classes
 	 */
 	@PublicEvolving
 	public void configure(ReadableConfig configuration, ClassLoader classLoader) {
@@ -427,7 +437,7 @@ public class ExecutionEnvironment {
 	 * Creates a {@link DataSet} that represents the Strings produced by reading the given file line wise.
 	 * The {@link java.nio.charset.Charset} with the given name will be used to read the files.
 	 *
-	 * @param filePath The path of the file, as a URI (e.g., "file:///some/local/file" or "hdfs://host:port/file/path").
+	 * @param filePath    The path of the file, as a URI (e.g., "file:///some/local/file" or "hdfs://host:port/file/path").
 	 * @param charsetName The name of the character set used to read the file.
 	 * @return A {@link DataSet} that represents the data read from the given file as text lines.
 	 */
@@ -466,10 +476,9 @@ public class ExecutionEnvironment {
 	 *
 	 * <p>The {@link java.nio.charset.Charset} with the given name will be used to read the files.
 	 *
-	 * @param filePath The path of the file, as a URI (e.g., "file:///some/local/file" or "hdfs://host:port/file/path").
-	 * @param charsetName The name of the character set used to read the file.
+	 * @param filePath         The path of the file, as a URI (e.g., "file:///some/local/file" or "hdfs://host:port/file/path").
+	 * @param charsetName      The name of the character set used to read the file.
 	 * @param skipInvalidLines A flag to indicate whether to skip lines that cannot be read with the given character set.
-	 *
 	 * @return A DataSet that represents the data read from the given file as text lines.
 	 */
 	public DataSource<StringValue> readTextFileWithValue(String filePath, String charsetName, boolean skipInvalidLines) {
@@ -488,7 +497,7 @@ public class ExecutionEnvironment {
 	 * This method is similar to {@link #readCsvFile(String)} with single field, but it produces a DataSet not through
 	 * {@link org.apache.flink.api.java.tuple.Tuple1}.
 	 *
-	 * @param filePath The path of the file, as a URI (e.g., "file:///some/local/file" or "hdfs://host:port/file/path").
+	 * @param filePath  The path of the file, as a URI (e.g., "file:///some/local/file" or "hdfs://host:port/file/path").
 	 * @param typeClass The primitive type class to be read.
 	 * @return A {@link DataSet} that represents the data read from the given file as primitive type.
 	 */
@@ -503,7 +512,7 @@ public class ExecutionEnvironment {
 	 * This method is similar to {@link #readCsvFile(String)} with single field, but it produces a DataSet not through
 	 * {@link org.apache.flink.api.java.tuple.Tuple1}.
 	 *
-	 * @param filePath The path of the file, as a URI (e.g., "file:///some/local/file" or "hdfs://host:port/file/path").
+	 * @param filePath  The path of the file, as a URI (e.g., "file:///some/local/file" or "hdfs://host:port/file/path").
 	 * @param delimiter The delimiter of the given file.
 	 * @param typeClass The primitive type class to be read.
 	 * @return A {@link DataSet} that represents the data read from the given file as primitive type.
@@ -541,11 +550,10 @@ public class ExecutionEnvironment {
 		inputFormat.setFilePath(new Path(filePath));
 		try {
 			return createInput(inputFormat, TypeExtractor.getInputFormatTypes(inputFormat));
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			throw new InvalidProgramException("The type returned by the input format could not be automatically determined. " +
-					"Please specify the TypeInformation of the produced type explicitly by using the " +
-					"'createInput(InputFormat, TypeInformation)' method instead.");
+				"Please specify the TypeInformation of the produced type explicitly by using the " +
+				"'createInput(InputFormat, TypeInformation)' method instead.");
 		}
 	}
 
@@ -564,7 +572,6 @@ public class ExecutionEnvironment {
 	 *
 	 * @param inputFormat The input format used to create the data set.
 	 * @return A {@link DataSet} that represents the data created by the input format.
-	 *
 	 * @see #createInput(InputFormat, TypeInformation)
 	 */
 	public <X> DataSource<X> createInput(InputFormat<X, ?> inputFormat) {
@@ -574,11 +581,10 @@ public class ExecutionEnvironment {
 
 		try {
 			return createInput(inputFormat, TypeExtractor.getInputFormatTypes(inputFormat));
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			throw new InvalidProgramException("The type returned by the input format could not be automatically determined. " +
-					"Please specify the TypeInformation of the produced type explicitly by using the " +
-					"'createInput(InputFormat, TypeInformation)' method instead.", e);
+				"Please specify the TypeInformation of the produced type explicitly by using the " +
+				"'createInput(InputFormat, TypeInformation)' method instead.", e);
 		}
 	}
 
@@ -593,7 +599,6 @@ public class ExecutionEnvironment {
 	 *
 	 * @param inputFormat The input format used to create the data set.
 	 * @return A {@link DataSet} that represents the data created by the input format.
-	 *
 	 * @see #createInput(InputFormat)
 	 */
 	public <X> DataSource<X> createInput(InputFormat<X, ?> inputFormat, TypeInformation<X> producedType) {
@@ -623,7 +628,6 @@ public class ExecutionEnvironment {
 	 *
 	 * @param data The collection of elements to create the data set from.
 	 * @return A DataSet representing the given collection.
-	 *
 	 * @see #fromCollection(Collection, TypeInformation)
 	 */
 	public <X> DataSource<X> fromCollection(Collection<X> data) {
@@ -650,7 +654,6 @@ public class ExecutionEnvironment {
 	 * @param data The collection of elements to create the data set from.
 	 * @param type The TypeInformation for the produced data set.
 	 * @return A DataSet representing the given collection.
-	 *
 	 * @see #fromCollection(Collection)
 	 */
 	public <X> DataSource<X> fromCollection(Collection<X> data, TypeInformation<X> type) {
@@ -674,7 +677,6 @@ public class ExecutionEnvironment {
 	 * @param data The collection of elements to create the data set from.
 	 * @param type The class of the data produced by the iterator. Must not be a generic class.
 	 * @return A DataSet representing the elements in the iterator.
-	 *
 	 * @see #fromCollection(Iterator, TypeInformation)
 	 */
 	public <X> DataSource<X> fromCollection(Iterator<X> data, Class<X> type) {
@@ -694,7 +696,6 @@ public class ExecutionEnvironment {
 	 * @param data The collection of elements to create the data set from.
 	 * @param type The TypeInformation for the produced data set.
 	 * @return A DataSet representing the elements in the iterator.
-	 *
 	 * @see #fromCollection(Iterator, Class)
 	 */
 	public <X> DataSource<X> fromCollection(Iterator<X> data, TypeInformation<X> type) {
@@ -727,11 +728,10 @@ public class ExecutionEnvironment {
 		TypeInformation<X> typeInfo;
 		try {
 			typeInfo = TypeExtractor.getForObject(data[0]);
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			throw new RuntimeException("Could not create TypeInformation for type " + data[0].getClass().getName()
-					+ "; please specify the TypeInformation manually via "
-					+ "ExecutionEnvironment#fromElements(Collection, TypeInformation)", e);
+				+ "; please specify the TypeInformation manually via "
+				+ "ExecutionEnvironment#fromElements(Collection, TypeInformation)", e);
 		}
 
 		return fromCollection(Arrays.asList(data), typeInfo, Utils.getCallLocationName());
@@ -760,11 +760,10 @@ public class ExecutionEnvironment {
 		TypeInformation<X> typeInfo;
 		try {
 			typeInfo = TypeExtractor.getForClass(type);
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			throw new RuntimeException("Could not create TypeInformation for type " + type.getName()
-					+ "; please specify the TypeInformation manually via "
-					+ "ExecutionEnvironment#fromElements(Collection, TypeInformation)", e);
+				+ "; please specify the TypeInformation manually via "
+				+ "ExecutionEnvironment#fromElements(Collection, TypeInformation)", e);
 		}
 
 		return fromCollection(Arrays.asList(data), typeInfo, Utils.getCallLocationName());
@@ -779,9 +778,8 @@ public class ExecutionEnvironment {
 	 * fact that the Java compiler erases the generic type information).
 	 *
 	 * @param iterator The iterator that produces the elements of the data set.
-	 * @param type The class of the data produced by the iterator. Must not be a generic class.
+	 * @param type     The class of the data produced by the iterator. Must not be a generic class.
 	 * @return A DataSet representing the elements in the iterator.
-	 *
 	 * @see #fromParallelCollection(SplittableIterator, TypeInformation)
 	 */
 	public <X> DataSource<X> fromParallelCollection(SplittableIterator<X> iterator, Class<X> type) {
@@ -798,9 +796,8 @@ public class ExecutionEnvironment {
 	 * (as given in {@link #fromParallelCollection(SplittableIterator, Class)} does not supply all type information.
 	 *
 	 * @param iterator The iterator that produces the elements of the data set.
-	 * @param type The TypeInformation for the produced data set.
+	 * @param type     The TypeInformation for the produced data set.
 	 * @return A DataSet representing the elements in the iterator.
-	 *
 	 * @see #fromParallelCollection(SplittableIterator, Class)
 	 */
 	public <X> DataSource<X> fromParallelCollection(SplittableIterator<X> iterator, TypeInformation<X> type) {
@@ -817,7 +814,7 @@ public class ExecutionEnvironment {
 	 * so there is no guarantee about the order of the elements.
 	 *
 	 * @param from The number to start at (inclusive).
-	 * @param to The number to stop at (inclusive).
+	 * @param to   The number to stop at (inclusive).
 	 * @return A DataSet, containing all number in the {@code [from, to]} interval.
 	 */
 	public DataSource<Long> generateSequence(long from, long to) {
@@ -867,7 +864,7 @@ public class ExecutionEnvironment {
 			}
 
 			jobListeners.forEach(
-					jobListener -> jobListener.onJobExecuted(lastJobExecutionResult, null));
+				jobListener -> jobListener.onJobExecuted(lastJobExecutionResult, null));
 
 		} catch (Throwable t) {
 			jobListeners.forEach(jobListener -> {
@@ -980,9 +977,9 @@ public class ExecutionEnvironment {
 	 * {@link org.apache.flink.api.common.functions.RuntimeContext#getDistributedCache()}.
 	 *
 	 * @param filePath The path of the file, as a URI (e.g. "file:///some/path" or "hdfs://host:port/and/path")
-	 * @param name The name under which the file is registered.
+	 * @param name     The name under which the file is registered.
 	 */
-	public void registerCachedFile(String filePath, String name){
+	public void registerCachedFile(String filePath, String name) {
 		registerCachedFile(filePath, name, false);
 	}
 
@@ -997,11 +994,11 @@ public class ExecutionEnvironment {
 	 * {@link org.apache.flink.api.common.cache.DistributedCache} via
 	 * {@link org.apache.flink.api.common.functions.RuntimeContext#getDistributedCache()}.
 	 *
-	 * @param filePath The path of the file, as a URI (e.g. "file:///some/path" or "hdfs://host:port/and/path")
-	 * @param name The name under which the file is registered.
+	 * @param filePath   The path of the file, as a URI (e.g. "file:///some/path" or "hdfs://host:port/and/path")
+	 * @param name       The name under which the file is registered.
 	 * @param executable flag indicating whether the file should be executable
 	 */
-	public void registerCachedFile(String filePath, String name, boolean executable){
+	public void registerCachedFile(String filePath, String name, boolean executable) {
 		this.cacheFile.add(new Tuple2<>(name, new DistributedCacheEntry(filePath, executable)));
 	}
 
@@ -1056,7 +1053,7 @@ public class ExecutionEnvironment {
 	 * executor is an alternative way to run a program and is only possible if the program consists
 	 * only of distributed operations.
 	 *
-	 * @param jobName The name attached to the plan (displayed in logs and monitoring).
+	 * @param jobName    The name attached to the plan (displayed in logs and monitoring).
 	 * @param clearSinks Whether or not to start a new stage of execution.
 	 * @return The program's plan.
 	 */
@@ -1067,12 +1064,12 @@ public class ExecutionEnvironment {
 		if (this.sinks.isEmpty()) {
 			if (wasExecuted) {
 				throw new RuntimeException("No new data sinks have been defined since the " +
-						"last execution. The last execution refers to the latest call to " +
-						"'execute()', 'count()', 'collect()', or 'print()'.");
+					"last execution. The last execution refers to the latest call to " +
+					"'execute()', 'count()', 'collect()', or 'print()'.");
 			} else {
 				throw new RuntimeException("No data sinks have been created yet. " +
-						"A program needs at least one sink that consumes data. " +
-						"Examples are writing the data set or printing it.");
+					"A program needs at least one sink that consumes data. " +
+					"Examples are writing the data set or printing it.");
 			}
 		}
 
@@ -1102,7 +1099,8 @@ public class ExecutionEnvironment {
 				}
 
 				@Override
-				public void postVisit(org.apache.flink.api.common.operators.Operator<?> visitable) {}
+				public void postVisit(org.apache.flink.api.common.operators.Operator<?> visitable) {
+				}
 			});
 		}
 
@@ -1120,11 +1118,11 @@ public class ExecutionEnvironment {
 
 		// All types are registered now. Print information.
 		int registeredTypes = config.getRegisteredKryoTypes().size() +
-				config.getRegisteredPojoTypes().size() +
-				config.getRegisteredTypesWithKryoSerializerClasses().size() +
-				config.getRegisteredTypesWithKryoSerializers().size();
+			config.getRegisteredPojoTypes().size() +
+			config.getRegisteredTypesWithKryoSerializerClasses().size() +
+			config.getRegisteredTypesWithKryoSerializers().size();
 		int defaultKryoSerializers = config.getDefaultKryoSerializers().size() +
-				config.getDefaultKryoSerializerClasses().size();
+			config.getDefaultKryoSerializerClasses().size();
 		LOG.info("The job has {} registered types and {} default Kryo serializers", registeredTypes, defaultKryoSerializers);
 
 		if (config.isForceKryoEnabled() && config.isForceAvroEnabled()) {
@@ -1194,10 +1192,11 @@ public class ExecutionEnvironment {
 	 * Creates a {@link CollectionEnvironment} that uses Java Collections underneath. This will execute in a
 	 * single thread in the current JVM. It is very fast but will fail if the data does not fit into
 	 * memory. parallelism will always be 1. This is useful during implementation and for debugging.
+	 *
 	 * @return A Collection Environment
 	 */
 	@PublicEvolving
-	public static CollectionEnvironment createCollectionsEnvironment(){
+	public static CollectionEnvironment createCollectionsEnvironment() {
 		CollectionEnvironment ce = new CollectionEnvironment();
 		ce.setParallelism(1);
 		return ce;
@@ -1265,7 +1264,7 @@ public class ExecutionEnvironment {
 	/**
 	 * Creates a {@link LocalEnvironment} which is used for executing Flink jobs.
 	 *
-	 * @param configuration to start the {@link LocalEnvironment} with
+	 * @param configuration      to start the {@link LocalEnvironment} with
 	 * @param defaultParallelism to initialize the {@link LocalEnvironment} with
 	 * @return {@link LocalEnvironment}
 	 */
@@ -1285,8 +1284,8 @@ public class ExecutionEnvironment {
 	 * cluster. The execution will use the cluster's default parallelism, unless the parallelism is
 	 * set explicitly via {@link ExecutionEnvironment#setParallelism(int)}.
 	 *
-	 * @param host The host name or address of the master (JobManager), where the program should be executed.
-	 * @param port The port of the master (JobManager), where the program should be executed.
+	 * @param host     The host name or address of the master (JobManager), where the program should be executed.
+	 * @param port     The port of the master (JobManager), where the program should be executed.
 	 * @param jarFiles The JAR files with code that needs to be shipped to the cluster. If the program uses
 	 *                 user-defined functions, user-defined input formats, or any libraries, those must be
 	 *                 provided in the JAR files.
@@ -1304,16 +1303,16 @@ public class ExecutionEnvironment {
 	 *
 	 * <p>Cluster configuration has to be done in the remotely running Flink instance.
 	 *
-	 * @param host The host name or address of the master (JobManager), where the program should be executed.
-	 * @param port The port of the master (JobManager), where the program should be executed.
+	 * @param host                The host name or address of the master (JobManager), where the program should be executed.
+	 * @param port                The port of the master (JobManager), where the program should be executed.
 	 * @param clientConfiguration Configuration used by the client that connects to the cluster.
-	 * @param jarFiles The JAR files with code that needs to be shipped to the cluster. If the program uses
-	 *                 user-defined functions, user-defined input formats, or any libraries, those must be
-	 *                 provided in the JAR files.
+	 * @param jarFiles            The JAR files with code that needs to be shipped to the cluster. If the program uses
+	 *                            user-defined functions, user-defined input formats, or any libraries, those must be
+	 *                            provided in the JAR files.
 	 * @return A remote environment that executes the program on a cluster.
 	 */
 	public static ExecutionEnvironment createRemoteEnvironment(
-			String host, int port, Configuration clientConfiguration, String... jarFiles) {
+		String host, int port, Configuration clientConfiguration, String... jarFiles) {
 		return new RemoteEnvironment(host, port, clientConfiguration, jarFiles, null);
 	}
 
@@ -1322,12 +1321,12 @@ public class ExecutionEnvironment {
 	 * to a cluster for execution. Note that all file paths used in the program must be accessible from the
 	 * cluster. The execution will use the specified parallelism.
 	 *
-	 * @param host The host name or address of the master (JobManager), where the program should be executed.
-	 * @param port The port of the master (JobManager), where the program should be executed.
+	 * @param host        The host name or address of the master (JobManager), where the program should be executed.
+	 * @param port        The port of the master (JobManager), where the program should be executed.
 	 * @param parallelism The parallelism to use during the execution.
-	 * @param jarFiles The JAR files with code that needs to be shipped to the cluster. If the program uses
-	 *                 user-defined functions, user-defined input formats, or any libraries, those must be
-	 *                 provided in the JAR files.
+	 * @param jarFiles    The JAR files with code that needs to be shipped to the cluster. If the program uses
+	 *                    user-defined functions, user-defined input formats, or any libraries, those must be
+	 *                    provided in the JAR files.
 	 * @return A remote environment that executes the program on a cluster.
 	 */
 	public static ExecutionEnvironment createRemoteEnvironment(String host, int port, int parallelism, String... jarFiles) {
@@ -1394,7 +1393,7 @@ public class ExecutionEnvironment {
 	 * or a RemoteEnvironment.
 	 *
 	 * @return True, if it is possible to explicitly instantiate a LocalEnvironment or a
-	 *         RemoteEnvironment, false otherwise.
+	 * RemoteEnvironment, false otherwise.
 	 */
 	@Internal
 	public static boolean areExplicitEnvironmentsAllowed() {

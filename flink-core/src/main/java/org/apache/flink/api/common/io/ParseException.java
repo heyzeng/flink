@@ -26,10 +26,10 @@ import org.apache.flink.annotation.PublicEvolving;
  */
 @PublicEvolving
 public class ParseException extends RuntimeException {
-	
+
 	private static final long serialVersionUID = -6721968786653128017L;
 
-	
+
 	public ParseException() {
 		super();
 	}
@@ -41,7 +41,7 @@ public class ParseException extends RuntimeException {
 	public ParseException(Throwable cause) {
 		super(cause);
 	}
-	
+
 	public ParseException(String message, Throwable cause) {
 		super(message, cause);
 	}

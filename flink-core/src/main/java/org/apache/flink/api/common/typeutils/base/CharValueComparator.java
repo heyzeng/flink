@@ -42,7 +42,7 @@ public class CharValueComparator extends TypeComparator<CharValue> {
 
 	private final CharValue tempReference = new CharValue();
 
-	private final TypeComparator<?>[] comparators = new TypeComparator[] {this};
+	private final TypeComparator<?>[] comparators = new TypeComparator[]{this};
 
 	public CharValueComparator(boolean ascending) {
 		this.ascendingComparison = ascending;

@@ -59,9 +59,9 @@ public class SqlUseCatalog extends SqlCall {
 
 	@Override
 	public void unparse(
-			SqlWriter writer,
-			int leftPrec,
-			int rightPrec) {
+		SqlWriter writer,
+		int leftPrec,
+		int rightPrec) {
 		writer.keyword("USE CATALOG");
 		catalogName.unparse(writer, leftPrec, rightPrec);
 	}

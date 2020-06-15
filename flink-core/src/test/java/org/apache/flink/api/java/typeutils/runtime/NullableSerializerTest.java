@@ -34,7 +34,9 @@ import java.util.List;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
-/** Unit tests for {@link NullableSerializer}. */
+/**
+ * Unit tests for {@link NullableSerializer}.
+ */
 @RunWith(Parameterized.class)
 public class NullableSerializerTest extends SerializerTestBase<Integer> {
 	private static final TypeSerializer<Integer> originalSerializer = IntSerializer.INSTANCE;
@@ -71,7 +73,7 @@ public class NullableSerializerTest extends SerializerTestBase<Integer> {
 
 	@Override
 	protected Integer[] getTestData() {
-		return new Integer[] { 5, -1, 0, null };
+		return new Integer[]{5, -1, 0, null};
 	}
 
 	@Test

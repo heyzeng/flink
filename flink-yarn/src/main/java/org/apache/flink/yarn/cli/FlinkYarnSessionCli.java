@@ -102,7 +102,9 @@ public class FlinkYarnSessionCli extends AbstractCustomCommandLine {
 
 	private static final long CLIENT_POLLING_INTERVAL_MS = 3000L;
 
-	/** The id for the CommandLine interface. */
+	/**
+	 * The id for the CommandLine interface.
+	 */
 	private static final String ID = "yarn-cluster";
 
 	// YARN-session related constants
@@ -158,29 +160,29 @@ public class FlinkYarnSessionCli extends AbstractCustomCommandLine {
 	private String dynamicPropertiesEncoded = null;
 
 	public FlinkYarnSessionCli(
-			Configuration configuration,
-			String configurationDirectory,
-			String shortPrefix,
-			String longPrefix) throws FlinkException {
+		Configuration configuration,
+		String configurationDirectory,
+		String shortPrefix,
+		String longPrefix) throws FlinkException {
 		this(configuration, new DefaultClusterClientServiceLoader(), configurationDirectory, shortPrefix, longPrefix, true);
 	}
 
 	public FlinkYarnSessionCli(
-			Configuration configuration,
-			String configurationDirectory,
-			String shortPrefix,
-			String longPrefix,
-			boolean acceptInteractiveInput) throws FlinkException {
+		Configuration configuration,
+		String configurationDirectory,
+		String shortPrefix,
+		String longPrefix,
+		boolean acceptInteractiveInput) throws FlinkException {
 		this(configuration, new DefaultClusterClientServiceLoader(), configurationDirectory, shortPrefix, longPrefix, acceptInteractiveInput);
 	}
 
 	public FlinkYarnSessionCli(
-			Configuration configuration,
-			ClusterClientServiceLoader clusterClientServiceLoader,
-			String configurationDirectory,
-			String shortPrefix,
-			String longPrefix,
-			boolean acceptInteractiveInput) throws FlinkException {
+		Configuration configuration,
+		ClusterClientServiceLoader clusterClientServiceLoader,
+		String configurationDirectory,
+		String shortPrefix,
+		String longPrefix,
+		boolean acceptInteractiveInput) throws FlinkException {
 		super(configuration);
 		this.clusterClientServiceLoader = checkNotNull(clusterClientServiceLoader);
 		this.configurationDirectory = checkNotNull(configurationDirectory);
@@ -252,8 +254,7 @@ public class FlinkYarnSessionCli extends AbstractCustomCommandLine {
 			try {
 				// try converting id to ApplicationId
 				yarnApplicationIdFromYarnProperties = ConverterUtils.toApplicationId(yarnApplicationIdString);
-			}
-			catch (Exception e) {
+			} catch (Exception e) {
 				throw new FlinkException("YARN properties contain an invalid entry for " +
 					"application id: " + yarnApplicationIdString + ". Please delete the file at " +
 					yarnPropertiesLocation.getAbsolutePath(), e);
@@ -282,17 +283,17 @@ public class FlinkYarnSessionCli extends AbstractCustomCommandLine {
 
 		if (cmd.hasOption(shipPath.getOpt())) {
 			ConfigUtils.encodeArrayToConfig(
-					configuration,
-					YarnConfigOptions.SHIP_DIRECTORIES,
-					cmd.getOptionValues(this.shipPath.getOpt()),
-					(String path) -> {
-						final File shipDir = new File(path);
-						if (shipDir.isDirectory()) {
-							return path;
-						}
-						LOG.warn("Ship directory {} is not a directory. Ignoring it.", shipDir.getAbsolutePath());
-						return null;
-					});
+				configuration,
+				YarnConfigOptions.SHIP_DIRECTORIES,
+				cmd.getOptionValues(this.shipPath.getOpt()),
+				(String path) -> {
+					final File shipDir = new File(path);
+					if (shipDir.isDirectory()) {
+						return path;
+					}
+					LOG.warn("Ship directory {} is not a directory. Ignoring it.", shipDir.getAbsolutePath());
+					return null;
+				});
 		}
 	}
 
@@ -301,9 +302,9 @@ public class FlinkYarnSessionCli extends AbstractCustomCommandLine {
 		final String jobManagerOption = commandLine.getOptionValue(addressOption.getOpt(), null);
 		final boolean yarnJobManager = ID.equals(jobManagerOption);
 		final boolean hasYarnAppId = commandLine.hasOption(applicationId.getOpt())
-				|| configuration.getOptional(YarnConfigOptions.APPLICATION_ID).isPresent();
+			|| configuration.getOptional(YarnConfigOptions.APPLICATION_ID).isPresent();
 		final boolean hasYarnExecutor = YarnSessionClusterExecutor.NAME.equals(configuration.get(DeploymentOptions.TARGET))
-				|| YarnJobClusterExecutor.NAME.equals(configuration.get(DeploymentOptions.TARGET));
+			|| YarnJobClusterExecutor.NAME.equals(configuration.get(DeploymentOptions.TARGET));
 		return hasYarnExecutor || yarnJobManager || hasYarnAppId || (isYarnPropertiesFileMode(commandLine) && yarnApplicationIdFromYarnProperties != null);
 	}
 
@@ -337,7 +338,7 @@ public class FlinkYarnSessionCli extends AbstractCustomCommandLine {
 		final ApplicationId applicationId = getApplicationId(commandLine);
 		if (applicationId != null) {
 			final String zooKeeperNamespace;
-			if (commandLine.hasOption(zookeeperNamespace.getOpt())){
+			if (commandLine.hasOption(zookeeperNamespace.getOpt())) {
 				zooKeeperNamespace = commandLine.getOptionValue(zookeeperNamespace.getOpt());
 			} else {
 				zooKeeperNamespace = effectiveConfiguration.getString(HA_CLUSTER_ID, applicationId.toString());
@@ -448,7 +449,7 @@ public class FlinkYarnSessionCli extends AbstractCustomCommandLine {
 		}
 
 		FlinkYarnSessionCli.discoverLogConfigFile(configurationDirectory).ifPresent(file ->
-				configuration.setString(YarnConfigOptionsInternal.APPLICATION_LOG_CONFIG_FILE, file.getPath()));
+			configuration.setString(YarnConfigOptionsInternal.APPLICATION_LOG_CONFIG_FILE, file.getPath()));
 		return configuration;
 	}
 
@@ -464,7 +465,7 @@ public class FlinkYarnSessionCli extends AbstractCustomCommandLine {
 		if (logbackFile.exists()) {
 			if (logConfigFile.isPresent()) {
 				LOG.warn("The configuration directory ('" + configurationDirectory + "') already contains a LOG4J config file." +
-						"If you want to use logback, then please delete or rename the log configuration file.");
+					"If you want to use logback, then please delete or rename the log configuration file.");
 			} else {
 				logConfigFile = Optional.of(logbackFile);
 			}
@@ -585,20 +586,20 @@ public class FlinkYarnSessionCli extends AbstractCustomCommandLine {
 						new ScheduledExecutorServiceAdapter(scheduledExecutorService));
 					Thread shutdownHook = ShutdownHookUtil.addShutdownHook(
 						() -> shutdownCluster(
-								clusterClientProvider.getClusterClient(),
-								scheduledExecutorService,
-								yarnApplicationStatusMonitor),
-								getClass().getSimpleName(),
-								LOG);
+							clusterClientProvider.getClusterClient(),
+							scheduledExecutorService,
+							yarnApplicationStatusMonitor),
+						getClass().getSimpleName(),
+						LOG);
 					try {
 						runInteractiveCli(
 							yarnApplicationStatusMonitor,
 							acceptInteractiveInput);
 					} finally {
 						shutdownCluster(
-								clusterClientProvider.getClusterClient(),
-								scheduledExecutorService,
-								yarnApplicationStatusMonitor);
+							clusterClientProvider.getClusterClient(),
+							scheduledExecutorService,
+							yarnApplicationStatusMonitor);
 
 						if (shutdownHook != null) {
 							// we do not need the hook anymore as we have just tried to shutdown the cluster.
@@ -623,9 +624,9 @@ public class FlinkYarnSessionCli extends AbstractCustomCommandLine {
 	}
 
 	private void shutdownCluster(
-			ClusterClient clusterClient,
-			ScheduledExecutorService scheduledExecutorService,
-			YarnApplicationStatusMonitor yarnApplicationStatusMonitor) {
+		ClusterClient clusterClient,
+		ScheduledExecutorService scheduledExecutorService,
+		YarnApplicationStatusMonitor yarnApplicationStatusMonitor) {
 		try {
 			yarnApplicationStatusMonitor.close();
 		} catch (Exception e) {
@@ -697,8 +698,8 @@ public class FlinkYarnSessionCli extends AbstractCustomCommandLine {
 	}
 
 	private void writeYarnPropertiesFile(
-			ApplicationId yarnApplicationId,
-			@Nullable String dynamicProperties) {
+		ApplicationId yarnApplicationId,
+		@Nullable String dynamicProperties) {
 		// file that we write into the conf/ dir containing the jobManager address and the dop.
 		final File yarnPropertiesFile = getYarnPropertiesLocation(yarnPropertiesFileLocation);
 
@@ -721,19 +722,19 @@ public class FlinkYarnSessionCli extends AbstractCustomCommandLine {
 	private String encodeDynamicProperties(final CommandLine cmd) {
 		final Properties properties = cmd.getOptionProperties(dynamicproperties.getOpt());
 		final String[] dynamicProperties = properties.stringPropertyNames().stream()
-				.flatMap(
-						(String key) -> {
-							final String value = properties.getProperty(key);
+			.flatMap(
+				(String key) -> {
+					final String value = properties.getProperty(key);
 
-							LOG.info("Dynamic Property set: {}={}", key, GlobalConfiguration.isSensitive(key) ? GlobalConfiguration.HIDDEN_CONTENT : value);
+					LOG.info("Dynamic Property set: {}={}", key, GlobalConfiguration.isSensitive(key) ? GlobalConfiguration.HIDDEN_CONTENT : value);
 
-							if (value != null) {
-								return Stream.of(key + dynamicproperties.getValueSeparator() + value);
-							} else {
-								return Stream.empty();
-							}
-						})
-				.toArray(String[]::new);
+					if (value != null) {
+						return Stream.of(key + dynamicproperties.getValueSeparator() + value);
+					} else {
+						return Stream.empty();
+					}
+				})
+			.toArray(String[]::new);
 
 		return StringUtils.join(dynamicProperties, YARN_DYNAMIC_PROPERTIES_SEPARATOR);
 	}
@@ -760,8 +761,7 @@ public class FlinkYarnSessionCli extends AbstractCustomCommandLine {
 				}
 			}
 			return properties;
-		}
-		else {
+		} else {
 			return Collections.emptyMap();
 		}
 	}
@@ -794,8 +794,8 @@ public class FlinkYarnSessionCli extends AbstractCustomCommandLine {
 	}
 
 	private static void runInteractiveCli(
-			YarnApplicationStatusMonitor yarnApplicationStatusMonitor,
-			boolean readConsoleInput) {
+		YarnApplicationStatusMonitor yarnApplicationStatusMonitor,
+		boolean readConsoleInput) {
 		try (BufferedReader in = new BufferedReader(new InputStreamReader(System.in))) {
 			boolean continueRepl = true;
 			boolean isLastStatusUnknown = true;
@@ -840,15 +840,15 @@ public class FlinkYarnSessionCli extends AbstractCustomCommandLine {
 	/**
 	 * Read-Evaluate-Print step for the REPL.
 	 *
-	 * @param in to read from
+	 * @param in               to read from
 	 * @param readConsoleInput true if console input has to be read
 	 * @return true if the REPL shall be continued, otherwise false
 	 * @throws IOException
 	 * @throws InterruptedException
 	 */
 	private static boolean repStep(
-			BufferedReader in,
-			boolean readConsoleInput) throws IOException, InterruptedException {
+		BufferedReader in,
+		boolean readConsoleInput) throws IOException, InterruptedException {
 
 		// wait until CLIENT_POLLING_INTERVAL is over or the user entered something.
 		long startTime = System.currentTimeMillis();

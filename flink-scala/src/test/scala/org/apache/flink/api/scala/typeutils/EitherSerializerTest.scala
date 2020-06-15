@@ -28,8 +28,8 @@ import org.junit.Assert.assertNotSame
 import org.junit.Assert.assertSame
 
 /**
-  * Test suite for the [[EitherSerializer]]
-  */
+ * Test suite for the [[EitherSerializer]]
+ */
 class EitherSerializerTest extends SerializerTestBase[Either[String, Integer]] {
 
   // --------------------------------------------------------------------------

@@ -26,9 +26,9 @@ import org.apache.flink.annotation.Public;
 @Public
 public enum Aggregations {
 
-	SUM (new SumAggregationFunction.SumAggregationFunctionFactory()),
-	MIN (new MinAggregationFunction.MinAggregationFunctionFactory()),
-	MAX (new MaxAggregationFunction.MaxAggregationFunctionFactory());
+	SUM(new SumAggregationFunction.SumAggregationFunctionFactory()),
+	MIN(new MinAggregationFunction.MinAggregationFunctionFactory()),
+	MAX(new MaxAggregationFunction.MaxAggregationFunctionFactory());
 
 	// --------------------------------------------------------------------------------------------
 

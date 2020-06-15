@@ -29,7 +29,7 @@ public final class CharComparator extends BasicTypeComparator<Character> {
 
 	private static final long serialVersionUID = 1L;
 
-	
+
 	public CharComparator(boolean ascending) {
 		super(ascending);
 	}
@@ -38,8 +38,8 @@ public final class CharComparator extends BasicTypeComparator<Character> {
 	public int compareSerialized(DataInputView firstSource, DataInputView secondSource) throws IOException {
 		char c1 = firstSource.readChar();
 		char c2 = secondSource.readChar();
-		int comp = (c1 < c2 ? -1 : (c1 == c2 ? 0 : 1)); 
-		return ascendingComparison ? comp : -comp; 
+		int comp = (c1 < c2 ? -1 : (c1 == c2 ? 0 : 1));
+		return ascendingComparison ? comp : -comp;
 	}
 
 	@Override

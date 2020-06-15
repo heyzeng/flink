@@ -25,6 +25,7 @@ import org.apache.flink.api.java.tuple.Tuple2;
 
 /**
  * Mapper that removes keys.
+ *
  * @param <T> type of values
  * @param <K> type of keys
  */

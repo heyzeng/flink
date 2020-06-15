@@ -34,7 +34,9 @@ public final class FloatSerializer extends TypeSerializerSingleton<Float> {
 
 	private static final long serialVersionUID = 1L;
 
-	/** Sharable instance of the FloatSerializer. */
+	/**
+	 * Sharable instance of the FloatSerializer.
+	 */
 	public static final FloatSerializer INSTANCE = new FloatSerializer();
 
 	private static final Float ZERO = 0f;

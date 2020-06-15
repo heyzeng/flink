@@ -44,7 +44,7 @@ public class ByteParser extends FieldParser<Byte> {
 			startPos++;
 
 			// check for empty field with only the sign
-			if (startPos == limit || (startPos < delimLimit && delimiterNext(bytes, startPos, 
+			if (startPos == limit || (startPos < delimLimit && delimiterNext(bytes, startPos,
 				delimiter))) {
 				setErrorState(ParseErrorState.NUMERIC_VALUE_ORPHAN_SIGN);
 				return -1;
@@ -88,7 +88,7 @@ public class ByteParser extends FieldParser<Byte> {
 	}
 
 	/**
-	 * Static utility to parse a field of type byte from a byte sequence that represents text 
+	 * Static utility to parse a field of type byte from a byte sequence that represents text
 	 * characters
 	 * (such as when read from a file stream).
 	 *
@@ -96,15 +96,15 @@ public class ByteParser extends FieldParser<Byte> {
 	 * @param startPos The offset to start the parsing.
 	 * @param length   The length of the byte sequence (counting from the offset).
 	 * @return The parsed value.
-	 * @throws NumberFormatException Thrown when the value cannot be parsed because the text 
-	 * represents not a correct number.
+	 * @throws NumberFormatException Thrown when the value cannot be parsed because the text
+	 *                               represents not a correct number.
 	 */
 	public static final byte parseField(byte[] bytes, int startPos, int length) {
 		return parseField(bytes, startPos, length, (char) 0xffff);
 	}
 
 	/**
-	 * Static utility to parse a field of type byte from a byte sequence that represents text 
+	 * Static utility to parse a field of type byte from a byte sequence that represents text
 	 * characters
 	 * (such as when read from a file stream).
 	 *
@@ -113,14 +113,14 @@ public class ByteParser extends FieldParser<Byte> {
 	 * @param length    The length of the byte sequence (counting from the offset).
 	 * @param delimiter The delimiter that terminates the field.
 	 * @return The parsed value.
-	 * @throws NumberFormatException Thrown when the value cannot be parsed because the text 
-	 * represents not a correct number.
+	 * @throws NumberFormatException Thrown when the value cannot be parsed because the text
+	 *                               represents not a correct number.
 	 */
 	public static final byte parseField(byte[] bytes, int startPos, int length, char delimiter) {
 		long val = 0;
 		boolean neg = false;
 
-		if(bytes[startPos] == delimiter) {
+		if (bytes[startPos] == delimiter) {
 			throw new NumberFormatException("Empty field.");
 		}
 

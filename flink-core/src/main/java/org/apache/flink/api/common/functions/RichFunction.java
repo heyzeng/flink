@@ -56,11 +56,9 @@ public interface RichFunction extends Function {
 	 * <p>By default, this method does nothing.
 	 *
 	 * @param parameters The configuration containing the parameters attached to the contract.
-	 *
 	 * @throws Exception Implementations may forward exceptions, which are caught by the runtime. When the
 	 *                   runtime catches an exception, it aborts the task and lets the fail-over logic
 	 *                   decide whether to retry the task execution.
-	 *
 	 * @see org.apache.flink.configuration.Configuration
 	 */
 	void open(Configuration parameters) throws Exception;

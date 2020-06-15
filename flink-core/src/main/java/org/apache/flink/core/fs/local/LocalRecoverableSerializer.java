@@ -43,7 +43,8 @@ class LocalRecoverableSerializer implements SimpleVersionedSerializer<LocalRecov
 	/**
 	 * Do not instantiate, use reusable {@link #INSTANCE} instead.
 	 */
-	private LocalRecoverableSerializer() {}
+	private LocalRecoverableSerializer() {
+	}
 
 	@Override
 	public int getVersion() {

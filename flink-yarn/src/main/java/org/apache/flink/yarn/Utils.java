@@ -71,19 +71,29 @@ public final class Utils {
 
 	private static final Logger LOG = LoggerFactory.getLogger(Utils.class);
 
-	/** Keytab file name populated in YARN container. */
+	/**
+	 * Keytab file name populated in YARN container.
+	 */
 	public static final String DEFAULT_KEYTAB_FILE = "krb5.keytab";
 
-	/** KRB5 file name populated in YARN container for secure IT run. */
+	/**
+	 * KRB5 file name populated in YARN container for secure IT run.
+	 */
 	public static final String KRB5_FILE_NAME = "krb5.conf";
 
-	/** Yarn site xml file name populated in YARN container for secure IT run. */
+	/**
+	 * Yarn site xml file name populated in YARN container for secure IT run.
+	 */
 	public static final String YARN_SITE_FILE_NAME = "yarn-site.xml";
 
-	/** Number of total retries to fetch the remote resources after uploaded in case of FileNotFoundException. */
+	/**
+	 * Number of total retries to fetch the remote resources after uploaded in case of FileNotFoundException.
+	 */
 	public static final int REMOTE_RESOURCES_FETCH_NUM_RETRY = 3;
 
-	/** Time to wait in milliseconds between each remote resources fetch in case of FileNotFoundException. */
+	/**
+	 * Time to wait in milliseconds between each remote resources fetch in case of FileNotFoundException.
+	 */
 	public static final int REMOTE_RESOURCES_FETCH_WAIT_IN_MILLI = 100;
 
 	public static void setupYarnClassPath(Configuration conf, Map<String, String> appMasterEnv) {
@@ -102,19 +112,12 @@ public final class Utils {
 	/**
 	 * Copy a local file to a remote file system and register as Local Resource.
 	 *
-	 * @param fs
-	 * 		remote filesystem
-	 * @param appId
-	 * 		application ID
-	 * @param localSrcPath
-	 * 		path to the local file
-	 * @param homedir
-	 * 		remote home directory base (will be extended)
-	 * @param relativeTargetPath
-	 * 		relative target path of the file (will be prefixed be the full home directory we set up)
-	 * @param replication
-	 * 	    number of replications of a remote file to be created
-	 *
+	 * @param fs                 remote filesystem
+	 * @param appId              application ID
+	 * @param localSrcPath       path to the local file
+	 * @param homedir            remote home directory base (will be extended)
+	 * @param relativeTargetPath relative target path of the file (will be prefixed be the full home directory we set up)
+	 * @param replication        number of replications of a remote file to be created
 	 * @return Path to remote file (usually hdfs)
 	 */
 	static Tuple2<Path, LocalResource> setupLocalResource(
@@ -135,19 +138,12 @@ public final class Utils {
 	/**
 	 * Copy a local file to a remote file system.
 	 *
-	 * @param fs
-	 * 		remote filesystem
-	 * @param appId
-	 * 		application ID
-	 * @param localSrcPath
-	 * 		path to the local file
-	 * @param homedir
-	 * 		remote home directory base (will be extended)
-	 * @param relativeTargetPath
-	 * 		relative target path of the file (will be prefixed be the full home directory we set up)
-	 * @param replication
-	 * 	    number of replications of a remote file to be created
-	 *
+	 * @param fs                 remote filesystem
+	 * @param appId              application ID
+	 * @param localSrcPath       path to the local file
+	 * @param homedir            remote home directory base (will be extended)
+	 * @param relativeTargetPath relative target path of the file (will be prefixed be the full home directory we set up)
+	 * @param replication        number of replications of a remote file to be created
 	 * @return Path to remote file (usually hdfs)
 	 */
 	static Tuple2<Path, Long> uploadLocalFileToRemote(
@@ -201,7 +197,7 @@ public final class Utils {
 		}
 
 		final long dstModificationTime;
-		if (fss != null && fss.length >  0) {
+		if (fss != null && fss.length > 0) {
 			dstModificationTime = fss[0].getModificationTime();
 			LOG.debug("Got modification time {} from remote path {}", dstModificationTime, dst);
 		} else {
@@ -237,16 +233,15 @@ public final class Utils {
 	/**
 	 * Creates a YARN resource for the remote object at the given location.
 	 *
-	 * @param remoteRsrcPath	remote location of the resource
-	 * @param resourceSize		size of the resource
+	 * @param remoteRsrcPath           remote location of the resource
+	 * @param resourceSize             size of the resource
 	 * @param resourceModificationTime last modification time of the resource
-	 *
 	 * @return YARN resource
 	 */
 	private static LocalResource registerLocalResource(
-			Path remoteRsrcPath,
-			long resourceSize,
-			long resourceModificationTime) {
+		Path remoteRsrcPath,
+		long resourceSize,
+		long resourceModificationTime) {
 		LocalResource localResource = Records.newRecord(LocalResource.class);
 		localResource.setResource(ConverterUtils.getYarnUrlFromURI(remoteRsrcPath.toUri()));
 		localResource.setSize(resourceSize);
@@ -304,9 +299,9 @@ public final class Utils {
 				// ----
 				// Intended call: HBaseConfiguration.addHbaseResources(conf);
 				Class
-						.forName("org.apache.hadoop.hbase.HBaseConfiguration")
-						.getMethod("addHbaseResources", Configuration.class)
-						.invoke(null, conf);
+					.forName("org.apache.hadoop.hbase.HBaseConfiguration")
+					.getMethod("addHbaseResources", Configuration.class)
+					.invoke(null, conf);
 				// ----
 
 				LOG.info("HBase security setting: {}", conf.get("hbase.security.authentication"));
@@ -320,9 +315,9 @@ public final class Utils {
 				// ----
 				// Intended call: Token<AuthenticationTokenIdentifier> token = TokenUtil.obtainToken(conf);
 				Token<?> token = (Token<?>) Class
-						.forName("org.apache.hadoop.hbase.security.token.TokenUtil")
-						.getMethod("obtainToken", Configuration.class)
-						.invoke(null, conf);
+					.forName("org.apache.hadoop.hbase.security.token.TokenUtil")
+					.getMethod("obtainToken", Configuration.class)
+					.invoke(null, conf);
 				// ----
 
 				if (token == null) {
@@ -333,11 +328,11 @@ public final class Utils {
 				credentials.addToken(token.getService(), token);
 				LOG.info("Added HBase Kerberos security token to credentials.");
 			} catch (ClassNotFoundException
-					| NoSuchMethodException
-					| IllegalAccessException
-					| InvocationTargetException e) {
+				| NoSuchMethodException
+				| IllegalAccessException
+				| InvocationTargetException e) {
 				LOG.info("HBase is not available (not packaged with this application): {} : \"{}\".",
-						e.getClass().getSimpleName(), e.getMessage());
+					e.getClass().getSimpleName(), e.getMessage());
 			}
 		}
 	}
@@ -348,7 +343,7 @@ public final class Utils {
 	 * by https://issues.apache.org/jira/browse/YARN-1931
 	 */
 	public static void addToEnvironment(Map<String, String> environment,
-			String variable, String value) {
+										String variable, String value) {
 		String val = environment.get(variable);
 		if (val == null) {
 			val = value;
@@ -356,7 +351,7 @@ public final class Utils {
 			val = val + File.pathSeparator + value;
 		}
 		environment.put(StringInterner.weakIntern(variable),
-				StringInterner.weakIntern(val));
+			StringInterner.weakIntern(val));
 	}
 
 	/**
@@ -406,27 +401,17 @@ public final class Utils {
 	 * container launch context. The launch context then ensures that those resources will be
 	 * copied into the containers transient working directory.
 	 *
-	 * @param flinkConfig
-	 *		 The Flink configuration object.
-	 * @param yarnConfig
-	 *		 The YARN configuration object.
-	 * @param env
-	 *		 The environment variables.
-	 * @param tmParams
-	 *		 The TaskExecutor container memory parameters.
-	 * @param taskManagerDynamicProperties
-	 *		 The dynamic configurations to be updated for the TaskExecutors based on client uploaded Flink config.
-	 * @param workingDirectory
-	 *		 The current application master container's working directory.
-	 * @param taskManagerMainClass
-	 *		 The class with the main method.
-	 * @param log
-	 *		 The logger.
-	 *
+	 * @param flinkConfig                  The Flink configuration object.
+	 * @param yarnConfig                   The YARN configuration object.
+	 * @param env                          The environment variables.
+	 * @param tmParams                     The TaskExecutor container memory parameters.
+	 * @param taskManagerDynamicProperties The dynamic configurations to be updated for the TaskExecutors based on client uploaded Flink config.
+	 * @param workingDirectory             The current application master container's working directory.
+	 * @param taskManagerMainClass         The class with the main method.
+	 * @param log                          The logger.
 	 * @return The launch context for the TaskManager processes.
-	 *
 	 * @throws Exception Thrown if the launch context could not be created, for example if
-	 *				   the resources could not be copied.
+	 *                   the resources could not be copied.
 	 */
 	static ContainerLaunchContext createTaskExecutorContext(
 		org.apache.flink.configuration.Configuration flinkConfig,
@@ -544,8 +529,8 @@ public final class Utils {
 		boolean hasLog4j = new File(workingDirectory, "log4j.properties").exists();
 
 		String launchCommand = BootstrapTools.getTaskManagerShellCommand(
-				flinkConfig, tmParams, ".", ApplicationConstants.LOG_DIR_EXPANSION_VAR,
-				hasLogback, hasLog4j, hasKrb5, taskManagerMainClass, taskManagerDynamicProperties);
+			flinkConfig, tmParams, ".", ApplicationConstants.LOG_DIR_EXPANSION_VAR,
+			hasLogback, hasLog4j, hasKrb5, taskManagerMainClass, taskManagerDynamicProperties);
 
 		if (log.isDebugEnabled()) {
 			log.debug("Starting TaskManagers with command: " + launchCommand);
@@ -622,9 +607,9 @@ public final class Utils {
 	 * Validates a condition, throwing a RuntimeException if the condition is violated.
 	 *
 	 * @param condition The condition.
-	 * @param message The message for the runtime exception, with format variables as defined by
-	 *                {@link String#format(String, Object...)}.
-	 * @param values The format arguments.
+	 * @param message   The message for the runtime exception, with format variables as defined by
+	 *                  {@link String#format(String, Object...)}.
+	 * @param values    The format arguments.
 	 */
 	static void require(boolean condition, String message, Object... values) {
 		if (!condition) {

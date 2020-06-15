@@ -92,8 +92,7 @@ public final class RowSerializer extends TypeSerializer<Row> {
 			if (fromField != null) {
 				Object copy = fieldSerializers[i].copy(fromField);
 				result.setField(i, copy);
-			}
-			else {
+			} else {
 				result.setField(i, null);
 			}
 		}
@@ -121,13 +120,11 @@ public final class RowSerializer extends TypeSerializer<Row> {
 				if (reuseField != null) {
 					Object copy = fieldSerializers[i].copy(fromField, reuseField);
 					reuse.setField(i, copy);
-				}
-				else {
+				} else {
 					Object copy = fieldSerializers[i].copy(fromField);
 					reuse.setField(i, copy);
 				}
-			}
-			else {
+			} else {
 				reuse.setField(i, null);
 			}
 		}
@@ -175,8 +172,7 @@ public final class RowSerializer extends TypeSerializer<Row> {
 		for (int i = 0; i < len; i++) {
 			if (nullMask[i]) {
 				result.setField(i, null);
-			}
-			else {
+			} else {
 				result.setField(i, fieldSerializers[i].deserialize(source));
 			}
 		}
@@ -198,13 +194,11 @@ public final class RowSerializer extends TypeSerializer<Row> {
 		for (int i = 0; i < len; i++) {
 			if (nullMask[i]) {
 				reuse.setField(i, null);
-			}
-			else {
+			} else {
 				Object reuseField = reuse.getField(i);
 				if (reuseField != null) {
 					reuse.setField(i, fieldSerializers[i].deserialize(reuseField, source));
-				}
-				else {
+				} else {
 					reuse.setField(i, fieldSerializers[i].deserialize(source));
 				}
 			}
@@ -269,7 +263,7 @@ public final class RowSerializer extends TypeSerializer<Row> {
 	 * A snapshot for {@link RowSerializer}.
 	 *
 	 * @deprecated this snapshot class is no longer in use, and is maintained only for backwards compatibility.
-	 *             It is fully replaced by {@link RowSerializerSnapshot}.
+	 * It is fully replaced by {@link RowSerializerSnapshot}.
 	 */
 	@Deprecated
 	public static final class RowSerializerConfigSnapshot extends CompositeTypeSerializerConfigSnapshot<Row> {

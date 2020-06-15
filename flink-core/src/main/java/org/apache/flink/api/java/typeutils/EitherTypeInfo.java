@@ -102,7 +102,7 @@ public class EitherTypeInfo<L, R> extends TypeInformation<Either<L, R>> {
 	@PublicEvolving
 	public TypeSerializer<Either<L, R>> createSerializer(ExecutionConfig config) {
 		return new EitherSerializer<L, R>(leftType.createSerializer(config),
-				rightType.createSerializer(config));
+			rightType.createSerializer(config));
 	}
 
 	@Override

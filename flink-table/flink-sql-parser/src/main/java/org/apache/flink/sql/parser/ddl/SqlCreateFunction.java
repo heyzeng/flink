@@ -56,13 +56,13 @@ public class SqlCreateFunction extends SqlCreate implements ExtendedSqlNode {
 	private final boolean isSystemFunction;
 
 	public SqlCreateFunction(
-			SqlParserPos pos,
-			SqlIdentifier functionIdentifier,
-			SqlCharStringLiteral functionClassName,
-			String functionLanguage,
-			boolean ifNotExists,
-			boolean isTemporary,
-			boolean isSystemFunction) {
+		SqlParserPos pos,
+		SqlIdentifier functionIdentifier,
+		SqlCharStringLiteral functionClassName,
+		String functionLanguage,
+		boolean ifNotExists,
+		boolean isTemporary,
+		boolean isSystemFunction) {
 		super(OPERATOR, pos, false, ifNotExists);
 		this.functionIdentifier = requireNonNull(functionIdentifier);
 		this.functionClassName = requireNonNull(functionClassName);

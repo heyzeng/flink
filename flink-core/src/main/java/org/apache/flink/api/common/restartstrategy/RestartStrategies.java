@@ -54,7 +54,7 @@ public class RestartStrategies {
 	/**
 	 * Generates a FixedDelayRestartStrategyConfiguration.
 	 *
-	 * @param restartAttempts Number of restart attempts for the FixedDelayRestartStrategy
+	 * @param restartAttempts      Number of restart attempts for the FixedDelayRestartStrategy
 	 * @param delayBetweenAttempts Delay in-between restart attempts for the FixedDelayRestartStrategy
 	 * @return FixedDelayRestartStrategy
 	 */
@@ -66,7 +66,7 @@ public class RestartStrategies {
 	 * Generates a FixedDelayRestartStrategyConfiguration.
 	 *
 	 * @param restartAttempts Number of restart attempts for the FixedDelayRestartStrategy
-	 * @param delayInterval Delay in-between restart attempts for the FixedDelayRestartStrategy
+	 * @param delayInterval   Delay in-between restart attempts for the FixedDelayRestartStrategy
 	 * @return FixedDelayRestartStrategy
 	 */
 	public static RestartStrategyConfiguration fixedDelayRestart(int restartAttempts, Time delayInterval) {
@@ -76,12 +76,12 @@ public class RestartStrategies {
 	/**
 	 * Generates a FailureRateRestartStrategyConfiguration.
 	 *
-	 * @param failureRate Maximum number of restarts in given interval {@code failureInterval} before failing a job
+	 * @param failureRate     Maximum number of restarts in given interval {@code failureInterval} before failing a job
 	 * @param failureInterval Time interval for failures
-	 * @param delayInterval Delay in-between restart attempts
+	 * @param delayInterval   Delay in-between restart attempts
 	 */
 	public static FailureRateRestartStrategyConfiguration failureRateRestart(
-			int failureRate, Time failureInterval, Time delayInterval) {
+		int failureRate, Time failureInterval, Time delayInterval) {
 		return new FailureRateRestartStrategyConfiguration(failureRate, failureInterval, delayInterval);
 	}
 
@@ -91,7 +91,8 @@ public class RestartStrategies {
 	public abstract static class RestartStrategyConfiguration implements Serializable {
 		private static final long serialVersionUID = 6285853591578313960L;
 
-		private RestartStrategyConfiguration() {}
+		private RestartStrategyConfiguration() {
+		}
 
 		/**
 		 * Returns a description which is shown in the web interface.
@@ -192,9 +193,9 @@ public class RestartStrategies {
 		private final Time delayBetweenAttemptsInterval;
 
 		public FailureRateRestartStrategyConfiguration(
-				int maxFailureRate,
-				Time failureInterval,
-				Time delayBetweenAttemptsInterval) {
+			int maxFailureRate,
+			Time failureInterval,
+			Time delayBetweenAttemptsInterval) {
 			this.maxFailureRate = maxFailureRate;
 			this.failureInterval = failureInterval;
 			this.delayBetweenAttemptsInterval = delayBetweenAttemptsInterval;
@@ -280,8 +281,8 @@ public class RestartStrategies {
 	}
 
 	private static RestartStrategyConfiguration parseConfiguration(
-			String restartstrategyKind,
-			ReadableConfig configuration) {
+		String restartstrategyKind,
+		ReadableConfig configuration) {
 		switch (restartstrategyKind.toLowerCase()) {
 			case "none":
 			case "off":

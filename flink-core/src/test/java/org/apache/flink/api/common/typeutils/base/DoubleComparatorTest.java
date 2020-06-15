@@ -37,7 +37,7 @@ public class DoubleComparatorTest extends ComparatorTestBase<Double> {
 	protected TypeSerializer<Double> createSerializer() {
 		return new DoubleSerializer();
 	}
-	
+
 	@Override
 	protected Double[] getSortedTestData() {
 		Random rnd = new Random(874597969123412338L);

@@ -49,7 +49,7 @@ public interface MapPartitionFunction<T, O> extends Function, Serializable {
 	 * A user-implemented function that modifies or transforms an incoming object.
 	 *
 	 * @param values All records for the mapper
-	 * @param out The collector to hand results to.
+	 * @param out    The collector to hand results to.
 	 * @throws Exception This method may throw exceptions. Throwing an exception will cause the operation
 	 *                   to fail and may trigger recovery.
 	 */

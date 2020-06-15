@@ -81,23 +81,31 @@ import java.util.concurrent.ConcurrentMap;
  * via the resource framework YARN.
  */
 public class YarnResourceManager extends ActiveResourceManager<YarnWorkerNode>
-		implements AMRMClientAsync.CallbackHandler, NMClientAsync.CallbackHandler {
+	implements AMRMClientAsync.CallbackHandler, NMClientAsync.CallbackHandler {
 
 	private static final Priority RM_REQUEST_PRIORITY = Priority.newInstance(1);
 
-	/** YARN container map. Package private for unit test purposes. */
+	/**
+	 * YARN container map. Package private for unit test purposes.
+	 */
 	private final ConcurrentMap<ResourceID, YarnWorkerNode> workerNodeMap;
-	/** Environment variable name of the final container id used by the YarnResourceManager.
-	 * Container ID generation may vary across Hadoop versions. */
+	/**
+	 * Environment variable name of the final container id used by the YarnResourceManager.
+	 * Container ID generation may vary across Hadoop versions.
+	 */
 	static final String ENV_FLINK_CONTAINER_ID = "_FLINK_CONTAINER_ID";
 
-	/** Environment variable name of the hostname given by the YARN.
-	 * In task executor we use the hostnames given by YARN consistently throughout akka */
+	/**
+	 * Environment variable name of the hostname given by the YARN.
+	 * In task executor we use the hostnames given by YARN consistently throughout akka
+	 */
 	static final String ENV_FLINK_NODE_ID = "_FLINK_NODE_ID";
 
 	static final String ERROR_MASSAGE_ON_SHUTDOWN_REQUEST = "Received shutdown request from YARN ResourceManager.";
 
-	/** Default heartbeat interval between this resource manager and the YARN ResourceManager. */
+	/**
+	 * Default heartbeat interval between this resource manager and the YARN ResourceManager.
+	 */
 	private final int yarnHeartbeatIntervalMillis;
 
 	private final YarnConfiguration yarnConfig;
@@ -105,34 +113,42 @@ public class YarnResourceManager extends ActiveResourceManager<YarnWorkerNode>
 	@Nullable
 	private final String webInterfaceUrl;
 
-	/** The heartbeat interval while the resource master is waiting for containers. */
+	/**
+	 * The heartbeat interval while the resource master is waiting for containers.
+	 */
 	private final int containerRequestHeartbeatIntervalMillis;
 
-	/** Client to communicate with the Resource Manager (YARN's master). */
+	/**
+	 * Client to communicate with the Resource Manager (YARN's master).
+	 */
 	private AMRMClientAsync<AMRMClient.ContainerRequest> resourceManagerClient;
 
-	/** Client to communicate with the Node manager and launch TaskExecutor processes. */
+	/**
+	 * Client to communicate with the Node manager and launch TaskExecutor processes.
+	 */
 	private NMClientAsync nodeManagerClient;
 
-	/** The number of containers requested, but not yet granted. */
+	/**
+	 * The number of containers requested, but not yet granted.
+	 */
 	private int numPendingContainerRequests;
 
 	private final Resource resource;
 
 	public YarnResourceManager(
-			RpcService rpcService,
-			String resourceManagerEndpointId,
-			ResourceID resourceId,
-			Configuration flinkConfig,
-			Map<String, String> env,
-			HighAvailabilityServices highAvailabilityServices,
-			HeartbeatServices heartbeatServices,
-			SlotManager slotManager,
-			JobLeaderIdService jobLeaderIdService,
-			ClusterInformation clusterInformation,
-			FatalErrorHandler fatalErrorHandler,
-			@Nullable String webInterfaceUrl,
-			ResourceManagerMetricGroup resourceManagerMetricGroup) {
+		RpcService rpcService,
+		String resourceManagerEndpointId,
+		ResourceID resourceId,
+		Configuration flinkConfig,
+		Map<String, String> env,
+		HighAvailabilityServices highAvailabilityServices,
+		HeartbeatServices heartbeatServices,
+		SlotManager slotManager,
+		JobLeaderIdService jobLeaderIdService,
+		ClusterInformation clusterInformation,
+		FatalErrorHandler fatalErrorHandler,
+		@Nullable String webInterfaceUrl,
+		ResourceManagerMetricGroup resourceManagerMetricGroup) {
 		super(
 			flinkConfig,
 			env,
@@ -149,16 +165,16 @@ public class YarnResourceManager extends ActiveResourceManager<YarnWorkerNode>
 		this.yarnConfig = new YarnConfiguration();
 		this.workerNodeMap = new ConcurrentHashMap<>();
 		final int yarnHeartbeatIntervalMS = flinkConfig.getInteger(
-				YarnConfigOptions.HEARTBEAT_DELAY_SECONDS) * 1000;
+			YarnConfigOptions.HEARTBEAT_DELAY_SECONDS) * 1000;
 
 		final long yarnExpiryIntervalMS = yarnConfig.getLong(
-				YarnConfiguration.RM_AM_EXPIRY_INTERVAL_MS,
-				YarnConfiguration.DEFAULT_RM_AM_EXPIRY_INTERVAL_MS);
+			YarnConfiguration.RM_AM_EXPIRY_INTERVAL_MS,
+			YarnConfiguration.DEFAULT_RM_AM_EXPIRY_INTERVAL_MS);
 
 		if (yarnHeartbeatIntervalMS >= yarnExpiryIntervalMS) {
 			log.warn("The heartbeat interval of the Flink Application master ({}) is greater " +
 					"than YARN's expiry interval ({}). The application is likely to be killed by YARN.",
-					yarnHeartbeatIntervalMS, yarnExpiryIntervalMS);
+				yarnHeartbeatIntervalMS, yarnExpiryIntervalMS);
 		}
 		yarnHeartbeatIntervalMillis = yarnHeartbeatIntervalMS;
 		containerRequestHeartbeatIntervalMillis = flinkConfig.getInteger(YarnConfigOptions.CONTAINER_REQUEST_HEARTBEAT_INTERVAL_MILLISECONDS);
@@ -169,9 +185,9 @@ public class YarnResourceManager extends ActiveResourceManager<YarnWorkerNode>
 	}
 
 	protected AMRMClientAsync<AMRMClient.ContainerRequest> createAndStartResourceManagerClient(
-			YarnConfiguration yarnConfiguration,
-			int yarnHeartbeatIntervalMillis,
-			@Nullable String webInterfaceUrl) throws Exception {
+		YarnConfiguration yarnConfiguration,
+		int yarnHeartbeatIntervalMillis,
+		@Nullable String webInterfaceUrl) throws Exception {
 		AMRMClientAsync<AMRMClient.ContainerRequest> resourceManagerClient = AMRMClientAsync.createAMRMClientAsync(
 			yarnHeartbeatIntervalMillis,
 			this);
@@ -267,8 +283,8 @@ public class YarnResourceManager extends ActiveResourceManager<YarnWorkerNode>
 
 	@Override
 	protected void internalDeregisterApplication(
-			ApplicationStatus finalStatus,
-			@Nullable String diagnostics) {
+		ApplicationStatus finalStatus,
+		@Nullable String diagnostics) {
 
 		// first, de-register from YARN
 		FinalApplicationStatus yarnStatus = getYarnStatus(finalStatus);
@@ -493,14 +509,14 @@ public class YarnResourceManager extends ActiveResourceManager<YarnWorkerNode>
 
 	/**
 	 * Converts a Flink application status enum to a YARN application status enum.
+	 *
 	 * @param status The Flink application status.
 	 * @return The corresponding YARN application status.
 	 */
 	private FinalApplicationStatus getYarnStatus(ApplicationStatus status) {
 		if (status == null) {
 			return FinalApplicationStatus.UNDEFINED;
-		}
-		else {
+		} else {
 			switch (status) {
 				case SUCCEEDED:
 					return FinalApplicationStatus.SUCCEEDED;
@@ -565,7 +581,7 @@ public class YarnResourceManager extends ActiveResourceManager<YarnWorkerNode>
 		final String currDir = env.get(ApplicationConstants.Environment.PWD.key());
 
 		final ContaineredTaskManagerParameters taskManagerParameters =
-				ContaineredTaskManagerParameters.create(flinkConfig, taskExecutorProcessSpec, numSlotsPerTaskManager);
+			ContaineredTaskManagerParameters.create(flinkConfig, taskExecutorProcessSpec, numSlotsPerTaskManager);
 
 		log.info("TaskExecutor {} will be started on {} with {}.",
 			containerId,
@@ -591,9 +607,9 @@ public class YarnResourceManager extends ActiveResourceManager<YarnWorkerNode>
 
 		// set a special environment variable to uniquely identify this container
 		taskExecutorLaunchContext.getEnvironment()
-				.put(ENV_FLINK_CONTAINER_ID, containerId);
+			.put(ENV_FLINK_CONTAINER_ID, containerId);
 		taskExecutorLaunchContext.getEnvironment()
-				.put(ENV_FLINK_NODE_ID, host);
+			.put(ENV_FLINK_NODE_ID, host);
 		return taskExecutorLaunchContext;
 	}
 

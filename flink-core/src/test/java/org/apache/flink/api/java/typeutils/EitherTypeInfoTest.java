@@ -29,7 +29,7 @@ public class EitherTypeInfoTest extends TypeInformationTestBase<EitherTypeInfo<?
 
 	@Override
 	protected EitherTypeInfo<?, ?>[] getTestData() {
-		return new EitherTypeInfo<?, ?>[] {
+		return new EitherTypeInfo<?, ?>[]{
 			new EitherTypeInfo<>(BasicTypeInfo.INT_TYPE_INFO, BasicTypeInfo.STRING_TYPE_INFO),
 			new EitherTypeInfo<>(BasicTypeInfo.INT_TYPE_INFO,
 				new TupleTypeInfo<Tuple2<Double, Long>>(TypeExtractor.getForClass(Double.class), TypeExtractor.getForClass(String.class)))

@@ -256,8 +256,7 @@ final class KryoSerializerSnapshotData<T> {
 			Class<?> registeredClass;
 			try {
 				registeredClass = Class.forName(registeredClassname, true, userCodeClassLoader);
-			}
-			catch (ClassNotFoundException e) {
+			} catch (ClassNotFoundException e) {
 				LOG.warn("Cannot find registered class " + registeredClassname + " for Kryo serialization in classpath;" +
 					" using a dummy class as a placeholder.", e);
 				return null;
@@ -294,8 +293,7 @@ final class KryoSerializerSnapshotData<T> {
 			try {
 				serializerClass = Class.forName(serializerClassname, true, userCodeClassLoader);
 				return new KryoRegistration(registeredClass, serializerClass);
-			}
-			catch (ClassNotFoundException e) {
+			} catch (ClassNotFoundException e) {
 				LOG.warn("Cannot find registered Kryo serializer class for class " + registeredClassname +
 					" in classpath; using a dummy Kryo serializer that should be replaced as soon as" +
 					" a new Kryo serializer for the class is present", e);
@@ -313,13 +311,11 @@ final class KryoSerializerSnapshotData<T> {
 			try (final DataInputViewStream inViewWrapper = new DataInputViewStream(in)) {
 				serializerInstance = InstantiationUtil.deserializeObject(inViewWrapper, userCodeClassLoader);
 				return new KryoRegistration(registeredClass, serializerInstance);
-			}
-			catch (ClassNotFoundException e) {
+			} catch (ClassNotFoundException e) {
 				LOG.warn("Cannot find registered Kryo serializer class for class " + registeredClassname +
 					" in classpath; using a dummy Kryo serializer that should be replaced as soon as" +
 					" a new Kryo serializer for the class is present", e);
-			}
-			catch (InvalidClassException e) {
+			} catch (InvalidClassException e) {
 				LOG.warn("The registered Kryo serializer class for class " + registeredClassname +
 					" has changed and is no longer valid; using a dummy Kryo serializer that should be replaced" +
 					" as soon as a new Kryo serializer for the class is present.", e);
@@ -343,8 +339,7 @@ final class KryoSerializerSnapshotData<T> {
 			String className = stream.readUTF();
 			try {
 				return (Class<T>) Class.forName(className, false, classLoader);
-			}
-			catch (ClassNotFoundException e) {
+			} catch (ClassNotFoundException e) {
 				LOG.warn("Cannot find registered class " + className + " for Kryo serialization in classpath.", e);
 				return null;
 			}
@@ -365,8 +360,7 @@ final class KryoSerializerSnapshotData<T> {
 				try (final DataInputViewStream inViewWrapper = new DataInputViewStream(stream)) {
 					return InstantiationUtil.deserializeObject(inViewWrapper, classLoader);
 				}
-			}
-			catch (Throwable e) {
+			} catch (Throwable e) {
 				LOG.warn("Cannot deserialize a previously serialized kryo serializer for the type " + className, e);
 				return null;
 			}

@@ -129,8 +129,7 @@ public final class ReflectionUtil {
 		final Type type = clazz.getGenericSuperclass();
 		if (type instanceof ParameterizedType) {
 			return getTemplateTypes((ParameterizedType) type);
-		}
-		else {
+		} else {
 			throw new IllegalArgumentException("The searched for superclass is not a generic class.");
 		}
 	}
@@ -162,7 +161,7 @@ public final class ReflectionUtil {
 	 * Extract the full template type information from the given type's template parameter at the
 	 * given position.
 	 *
-	 * @param type type to extract the full template parameter information from
+	 * @param type             type to extract the full template parameter information from
 	 * @param templatePosition describing at which position the template type parameter is
 	 * @return Full type information describing the template parameter's type
 	 */

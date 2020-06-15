@@ -60,7 +60,7 @@ public class DeltaIterationTranslationTest implements java.io.Serializable {
 
 			final String aggregatorName = "AggregatorName";
 
-			final int[] iterationKeys = new int[] {2};
+			final int[] iterationKeys = new int[]{2};
 			final int numIterations = 13;
 
 			final int defaultParallelism = 133;
@@ -92,8 +92,8 @@ public class DeltaIterationTranslationTest implements java.io.Serializable {
 				DataSet<Tuple3<Double, Long, String>> joined = worksetSelfJoin.join(iteration.getSolutionSet()).where(1).equalTo(2).with(new SolutionWorksetJoin());
 
 				DataSet<Tuple3<Double, Long, String>> result = iteration.closeWith(
-						joined,
-						joined.map(new NextWorksetMapper()).name(beforeNextWorksetMap));
+					joined,
+					joined.map(new NextWorksetMapper()).name(beforeNextWorksetMap));
 
 				result.output(new DiscardingOutputFormat<Tuple3<Double, Long, String>>());
 				result.writeAsText("/dev/null");
@@ -134,16 +134,14 @@ public class DeltaIterationTranslationTest implements java.io.Serializable {
 			if (solutionSetJoin.getUserCodeWrapper().getUserCodeObject() instanceof WrappingFunction) {
 				WrappingFunction<?> wf = (WrappingFunction<?>) solutionSetJoin.getUserCodeWrapper().getUserCodeObject();
 				assertEquals(SolutionWorksetJoin.class, wf.getWrappedFunction().getClass());
-			}
-			else {
+			} else {
 				assertEquals(SolutionWorksetJoin.class, solutionSetJoin.getUserCodeWrapper().getUserCodeClass());
 			}
 
 			assertEquals(beforeNextWorksetMap, nextWorksetMapper.getName());
 
 			assertEquals(aggregatorName, iteration.getAggregators().getAllRegisteredAggregators().iterator().next().getName());
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			System.err.println(e.getMessage());
 			e.printStackTrace();
 			fail(e.getMessage());
@@ -166,20 +164,17 @@ public class DeltaIterationTranslationTest implements java.io.Serializable {
 			try {
 				iteration.getWorkset().join(iteration.getSolutionSet()).where(1).equalTo(2);
 				fail("Accepted invalid program.");
-			}
-			catch (InvalidProgramException e) {
+			} catch (InvalidProgramException e) {
 				// all good!
 			}
 
 			try {
 				iteration.getSolutionSet().join(iteration.getWorkset()).where(2).equalTo(1);
 				fail("Accepted invalid program.");
-			}
-			catch (InvalidProgramException e) {
+			} catch (InvalidProgramException e) {
 				// all good!
 			}
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			System.err.println(e.getMessage());
 			e.printStackTrace();
 			fail(e.getMessage());
@@ -202,20 +197,17 @@ public class DeltaIterationTranslationTest implements java.io.Serializable {
 			try {
 				iteration.getWorkset().coGroup(iteration.getSolutionSet()).where(1).equalTo(2).with(new SolutionWorksetCoGroup1());
 				fail("Accepted invalid program.");
-			}
-			catch (InvalidProgramException e) {
+			} catch (InvalidProgramException e) {
 				// all good!
 			}
 
 			try {
 				iteration.getSolutionSet().coGroup(iteration.getWorkset()).where(2).equalTo(1).with(new SolutionWorksetCoGroup2());
 				fail("Accepted invalid program.");
-			}
-			catch (InvalidProgramException e) {
+			} catch (InvalidProgramException e) {
 				// all good!
 			}
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			System.err.println(e.getMessage());
 			e.printStackTrace();
 			fail(e.getMessage());
@@ -226,7 +218,7 @@ public class DeltaIterationTranslationTest implements java.io.Serializable {
 
 	private static class SolutionWorksetJoin extends RichJoinFunction<Tuple2<Double, String>, Tuple3<Double, Long, String>, Tuple3<Double, Long, String>> {
 		@Override
-		public Tuple3<Double, Long, String> join(Tuple2<Double, String> first, Tuple3<Double, Long, String> second){
+		public Tuple3<Double, Long, String> join(Tuple2<Double, String> first, Tuple3<Double, Long, String> second) {
 			return null;
 		}
 	}
@@ -250,7 +242,7 @@ public class DeltaIterationTranslationTest implements java.io.Serializable {
 
 		@Override
 		public void coGroup(Iterable<Tuple2<Double, String>> first, Iterable<Tuple3<Double, Long, String>> second,
-				Collector<Tuple3<Double, Long, String>> out) {
+							Collector<Tuple3<Double, Long, String>> out) {
 		}
 	}
 
@@ -258,7 +250,7 @@ public class DeltaIterationTranslationTest implements java.io.Serializable {
 
 		@Override
 		public void coGroup(Iterable<Tuple3<Double, Long, String>> second, Iterable<Tuple2<Double, String>> first,
-				Collector<Tuple3<Double, Long, String>> out) {
+							Collector<Tuple3<Double, Long, String>> out) {
 		}
 	}
 }

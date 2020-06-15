@@ -44,7 +44,7 @@ public class StringValueSummaryAggregatorTest extends StringSummaryAggregatorTes
 			}
 		}
 
-		return new AggregateCombineHarness<StringValue, StringColumnSummary, ValueSummaryAggregator.StringValueSummaryAggregator>(){
+		return new AggregateCombineHarness<StringValue, StringColumnSummary, ValueSummaryAggregator.StringValueSummaryAggregator>() {
 
 			@Override
 			protected void compareResults(StringColumnSummary result1, StringColumnSummary result2) {
@@ -53,8 +53,7 @@ public class StringValueSummaryAggregatorTest extends StringSummaryAggregatorTes
 				Assert.assertEquals(result1.getMinLength(), result2.getMinLength());
 				if (result1.getMeanLength() == null) {
 					Assert.assertEquals(result1.getMeanLength(), result2.getMeanLength());
-				}
-				else {
+				} else {
 					Assert.assertEquals(result1.getMeanLength().doubleValue(), result2.getMeanLength().doubleValue(), 1e-5d);
 				}
 

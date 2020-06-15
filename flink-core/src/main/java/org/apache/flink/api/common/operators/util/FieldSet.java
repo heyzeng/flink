@@ -32,9 +32,9 @@ import java.util.Iterator;
  */
 @Internal
 public class FieldSet implements Iterable<Integer> {
-	
+
 	public static final FieldSet EMPTY_SET = new FieldSet();
-	
+
 	protected final Collection<Integer> collection;
 
 	// --------------------------------------------------------------------------------------------
@@ -45,23 +45,23 @@ public class FieldSet implements Iterable<Integer> {
 	public FieldSet() {
 		this.collection = Collections.emptySet();
 	}
-	
+
 	/**
 	 * Creates a set with one field.
-	 * 
+	 *
 	 * @param fieldID The id of the field.
 	 */
 	public FieldSet(Integer fieldID) {
 		if (fieldID == null) {
 			throw new IllegalArgumentException("Field ID must not be null.");
 		}
-		
+
 		this.collection = Collections.singleton(fieldID);
 	}
-	
+
 	/**
 	 * Creates a set with the given fields.
-	 * 
+	 *
 	 * @param fieldIDs The IDs of the fields.
 	 */
 	public FieldSet(int... fieldIDs) {
@@ -72,14 +72,14 @@ public class FieldSet implements Iterable<Integer> {
 			for (int i = 0; i < fieldIDs.length; i++) {
 				set.add(fieldIDs[i]);
 			}
-			
+
 			this.collection = Collections.unmodifiableSet(set);
 		}
 	}
-	
+
 	/**
 	 * Creates a set with the given fields.
-	 * 
+	 *
 	 * @param fieldIDs The IDs of the fields.
 	 */
 	public FieldSet(int[] fieldIDs, boolean marker) {
@@ -90,63 +90,60 @@ public class FieldSet implements Iterable<Integer> {
 			for (int i = 0; i < fieldIDs.length; i++) {
 				set.add(fieldIDs[i]);
 			}
-			
+
 			this.collection = Collections.unmodifiableSet(set);
 		}
 	}
-	
+
 	protected FieldSet(Collection<Integer> fields) {
 		this.collection = fields;
 	}
-	
+
 	/**
 	 * @param fieldSet The first part of the new set, NOT NULL!
-	 * @param fieldID The ID to be added, NOT NULL!
+	 * @param fieldID  The ID to be added, NOT NULL!
 	 */
 	private FieldSet(FieldSet fieldSet, Integer fieldID) {
 		if (fieldSet.size() == 0) {
 			this.collection = Collections.singleton(fieldID);
-		}
-		else {
+		} else {
 			HashSet<Integer> set = new HashSet<Integer>(2 * (fieldSet.collection.size() + 1));
 			set.addAll(fieldSet.collection);
 			set.add(fieldID);
 			this.collection = Collections.unmodifiableSet(set);
 		}
 	}
-	
+
 	private FieldSet(FieldSet fieldSet, int... fieldIDs) {
 		if (fieldIDs == null || fieldIDs.length == 0) {
 			this.collection = fieldSet.collection;
 		} else {
 			HashSet<Integer> set = new HashSet<Integer>(2 * (fieldSet.collection.size() + fieldIDs.length));
 			set.addAll(fieldSet.collection);
-			
+
 			for (int i = 0; i < fieldIDs.length; i++) {
 				set.add(fieldIDs[i]);
 			}
-			
+
 			this.collection = Collections.unmodifiableSet(set);
 		}
 	}
-	
+
 	private FieldSet(FieldSet fieldSet1, FieldSet fieldSet2) {
 		if (fieldSet2.size() == 0) {
 			this.collection = fieldSet1.collection;
-		}
-		else if (fieldSet1.size() == 0) {
+		} else if (fieldSet1.size() == 0) {
 			this.collection = fieldSet2.collection;
-		}
-		else {
+		} else {
 			HashSet<Integer> set = new HashSet<Integer>(2 * (fieldSet1.size() + fieldSet2.size()));
 			set.addAll(fieldSet1.collection);
 			set.addAll(fieldSet2.collection);
 			this.collection = Collections.unmodifiableSet(set);
 		}
 	}
-	
+
 	// --------------------------------------------------------------------------------------------
-	
+
 	public FieldSet addField(Integer fieldID) {
 		if (fieldID == null) {
 			throw new IllegalArgumentException("Field ID must not be null.");
@@ -157,39 +154,37 @@ public class FieldSet implements Iterable<Integer> {
 	public FieldSet addFields(int... fieldIDs) {
 		return new FieldSet(this, fieldIDs);
 	}
-	
+
 	public FieldSet addFields(FieldSet set) {
 		if (set == null) {
 			throw new IllegalArgumentException("FieldSet to add must not be null.");
 		}
-		
+
 		if (set.size() == 0) {
 			return this;
-		}
-		else if (this.size() == 0) {
+		} else if (this.size() == 0) {
 			return set;
-		}
-		else {
+		} else {
 			return new FieldSet(this, set);
 		}
 	}
-	
+
 	public boolean contains(Integer columnIndex) {
 		return this.collection.contains(columnIndex);
 	}
-	
+
 	public int size() {
 		return this.collection.size();
 	}
-	
+
 	@Override
 	public Iterator<Integer> iterator() {
 		return this.collection.iterator();
 	}
-	
+
 	/**
 	 * Turns the FieldSet into an ordered FieldList.
-	 * 
+	 *
 	 * @return An ordered FieldList.
 	 */
 	public FieldList toFieldList() {
@@ -197,11 +192,11 @@ public class FieldSet implements Iterable<Integer> {
 		Arrays.sort(pos);
 		return new FieldList(pos);
 	}
-	
+
 	/**
 	 * Transforms the field set into an array of field IDs. Whether the IDs are ordered
 	 * or unordered depends on the specific subclass of the field set.
-	 * 
+	 *
 	 * @return An array of all contained field IDs.
 	 */
 	public int[] toArray() {
@@ -212,16 +207,16 @@ public class FieldSet implements Iterable<Integer> {
 		}
 		return a;
 	}
-	
+
 	// --------------------------------------------------------------------------------------------
-	
+
 	/**
 	 * Checks if the given set of fields is a valid subset of this set of fields. For unordered
 	 * sets, this is the case if all of the given set's fields are also part of this field.
 	 * <p>
 	 * Subclasses that describe field sets where the field order matters must override this method
 	 * to implement a field ordering sensitive check.
-	 * 
+	 *
 	 * @param set The set that is a candidate subset.
 	 * @return True, if the given set is a subset of this set, false otherwise.
 	 */
@@ -236,9 +231,9 @@ public class FieldSet implements Iterable<Integer> {
 		}
 		return true;
 	}
-	
+
 	// --------------------------------------------------------------------------------------------
-	
+
 	@Override
 	public int hashCode() {
 		return this.collection.hashCode();
@@ -272,24 +267,24 @@ public class FieldSet implements Iterable<Integer> {
 		bld.append(getDescriptionSuffix());
 		return bld.toString();
 	}
-	
+
 
 	/**
 	 * Since instances of FieldSet are strictly immutable, this method does not actually clone,
 	 * but it only returns the original instance.
-	 * 
+	 *
 	 * @return This objects reference, unmodified.
 	 */
 	public FieldSet clone() {
 		return this;
 	}
-	
+
 	// --------------------------------------------------------------------------------------------
-	
+
 	protected String getDescriptionPrefix() {
 		return "(";
 	}
-	
+
 	protected String getDescriptionSuffix() {
 		return ")";
 	}

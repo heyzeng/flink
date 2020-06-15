@@ -27,7 +27,7 @@ public class SqlTimeTypeInfoTest extends TypeInformationTestBase<SqlTimeTypeInfo
 
 	@Override
 	protected SqlTimeTypeInfo<?>[] getTestData() {
-		return new SqlTimeTypeInfo<?>[] {
+		return new SqlTimeTypeInfo<?>[]{
 			SqlTimeTypeInfo.DATE,
 			SqlTimeTypeInfo.TIME,
 			SqlTimeTypeInfo.TIMESTAMP

@@ -163,39 +163,39 @@ public abstract class AbstractRecoverableWriterTest extends TestLogger {
 	@Test
 	public void testRecoverWithEmptyState() throws Exception {
 		testResumeAfterMultiplePersist(
-				INIT_EMPTY_PERSIST,
-				"",
-				testData3);
+			INIT_EMPTY_PERSIST,
+			"",
+			testData3);
 	}
 
 	@Test
 	public void testRecoverWithState() throws Exception {
 		testResumeAfterMultiplePersist(
-				INTERM_WITH_STATE_PERSIST,
-				testData1,
-				testData1 + testData3);
+			INTERM_WITH_STATE_PERSIST,
+			testData1,
+			testData1 + testData3);
 	}
 
 	@Test
 	public void testRecoverFromIntermWithoutAdditionalState() throws Exception {
 		testResumeAfterMultiplePersist(
-				INTERM_WITH_NO_ADDITIONAL_STATE_PERSIST,
-				testData1,
-				testData1 + testData3);
+			INTERM_WITH_NO_ADDITIONAL_STATE_PERSIST,
+			testData1,
+			testData1 + testData3);
 	}
 
 	@Test
 	public void testRecoverAfterMultiplePersistsState() throws Exception {
 		testResumeAfterMultiplePersist(
-				FINAL_WITH_EXTRA_STATE,
-				testData1 + testData2,
-				testData1 + testData2 + testData3);
+			FINAL_WITH_EXTRA_STATE,
+			testData1 + testData2,
+			testData1 + testData2 + testData3);
 	}
 
 	private void testResumeAfterMultiplePersist(
-			final String persistName,
-			final String expectedPostRecoveryContents,
-			final String expectedFinalContents) throws Exception {
+		final String persistName,
+		final String expectedPostRecoveryContents,
+		final String expectedFinalContents) throws Exception {
 
 		final Path testDir = getBasePathForTest();
 		final Path path = new Path(testDir, "part-0");
@@ -228,7 +228,7 @@ public abstract class AbstractRecoverableWriterTest extends TestLogger {
 		final RecoverableWriter newWriter = getNewFileSystemWriter();
 		final SimpleVersionedSerializer<RecoverableWriter.ResumeRecoverable> deserializer = newWriter.getResumeRecoverableSerializer();
 		final RecoverableWriter.ResumeRecoverable recoveredRecoverable =
-				deserializer.deserialize(serializer.getVersion(), serializedRecoverable);
+			deserializer.deserialize(serializer.getVersion(), serializedRecoverable);
 
 		RecoverableFsDataOutputStream recoveredStream = null;
 		try {

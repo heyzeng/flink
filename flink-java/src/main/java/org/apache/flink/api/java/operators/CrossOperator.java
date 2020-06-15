@@ -67,10 +67,9 @@ import java.util.Arrays;
 /**
  * A {@link DataSet} that is the result of a Cross transformation.
  *
- * @param <I1> The type of the first input DataSet of the Cross transformation.
- * @param <I2> The type of the second input DataSet of the Cross transformation.
+ * @param <I1>  The type of the first input DataSet of the Cross transformation.
+ * @param <I2>  The type of the second input DataSet of the Cross transformation.
  * @param <OUT> The type of the result of the Cross transformation.
- *
  * @see DataSet
  */
 @Public
@@ -83,10 +82,10 @@ public class CrossOperator<I1, I2, OUT> extends TwoInputUdfOperator<I1, I2, OUT,
 	private final CrossHint hint;
 
 	public CrossOperator(DataSet<I1> input1, DataSet<I2> input2,
-							CrossFunction<I1, I2, OUT> function,
-							TypeInformation<OUT> returnType,
-							CrossHint hint,
-							String defaultName) {
+						 CrossFunction<I1, I2, OUT> function,
+						 TypeInformation<OUT> returnType,
+						 CrossHint hint,
+						 String defaultName) {
 		super(input1, input2, returnType);
 
 		this.function = function;
@@ -114,9 +113,9 @@ public class CrossOperator<I1, I2, OUT> extends TwoInputUdfOperator<I1, I2, OUT,
 		String name = getName() != null ? getName() : "Cross at " + defaultName;
 		// create operator
 		CrossOperatorBase<I1, I2, OUT, CrossFunction<I1, I2, OUT>> po =
-				new CrossOperatorBase<I1, I2, OUT, CrossFunction<I1, I2, OUT>>(function,
-						new BinaryOperatorInformation<I1, I2, OUT>(getInput1Type(), getInput2Type(), getResultType()),
-						name);
+			new CrossOperatorBase<I1, I2, OUT, CrossFunction<I1, I2, OUT>>(function,
+				new BinaryOperatorInformation<I1, I2, OUT>(getInput1Type(), getInput2Type(), getResultType()),
+				name);
 
 		po.setFirstInput(input1);
 		po.setSecondInput(input2);
@@ -137,12 +136,11 @@ public class CrossOperator<I1, I2, OUT> extends TwoInputUdfOperator<I1, I2, OUT,
 	 *
 	 * @param <I1> The type of the first input DataSet of the Cross transformation.
 	 * @param <I2> The type of the second input DataSet of the Cross transformation.
-	 *
 	 * @see Tuple2
 	 * @see DataSet
 	 */
 	@Public
-	public static final class DefaultCross<I1, I2> extends CrossOperator<I1, I2, Tuple2<I1, I2>>  {
+	public static final class DefaultCross<I1, I2> extends CrossOperator<I1, I2, Tuple2<I1, I2>> {
 
 		public DefaultCross(DataSet<I1> input1, DataSet<I2> input2, CrossHint hint, String defaultName) {
 			super(input1, input2, new DefaultCrossFunction<I1, I2>(),
@@ -159,7 +157,6 @@ public class CrossOperator<I1, I2, OUT> extends TwoInputUdfOperator<I1, I2, OUT,
 		 *
 		 * @param function The CrossFunction that is called for each pair of crossed elements.
 		 * @return An CrossOperator that represents the crossed result DataSet
-		 *
 		 * @see CrossFunction
 		 * @see DataSet
 		 */
@@ -168,9 +165,9 @@ public class CrossOperator<I1, I2, OUT> extends TwoInputUdfOperator<I1, I2, OUT,
 				throw new NullPointerException("Cross function must not be null.");
 			}
 			TypeInformation<R> returnType = TypeExtractor.getCrossReturnTypes(function, getInput1().getType(), getInput2().getType(),
-					super.getDefaultName(), true);
+				super.getDefaultName(), true);
 			return new CrossOperator<I1, I2, R>(getInput1(), getInput2(), clean(function), returnType,
-					getCrossHint(), Utils.getCallLocationName());
+				getCrossHint(), Utils.getCallLocationName());
 		}
 
 		/**
@@ -183,20 +180,19 @@ public class CrossOperator<I1, I2, OUT> extends TwoInputUdfOperator<I1, I2, OUT,
 		 * {@link org.apache.flink.api.java.operators.CrossOperator.ProjectCross#projectFirst(int...)} and
 		 * {@link org.apache.flink.api.java.operators.CrossOperator.ProjectCross#projectSecond(int...)}.
 		 *
- 		 * <b>Note: With the current implementation, the Project transformation looses type information.</b>
+		 * <b>Note: With the current implementation, the Project transformation looses type information.</b>
 		 *
 		 * @param firstFieldIndexes If the first input is a Tuple DataSet, the indexes of the selected fields.
-		 * 					   For a non-Tuple DataSet, do not provide parameters.
-		 * 					   The order of fields in the output tuple is defined by to the order of field indexes.
+		 *                          For a non-Tuple DataSet, do not provide parameters.
+		 *                          The order of fields in the output tuple is defined by to the order of field indexes.
 		 * @return A ProjectCross which represents the projected cross result.
-		 *
 		 * @see Tuple
 		 * @see DataSet
 		 * @see org.apache.flink.api.java.operators.CrossOperator.ProjectCross
 		 */
 		public <OUT extends Tuple> ProjectCross<I1, I2, OUT> projectFirst(int... firstFieldIndexes) {
 			return new CrossProjection<I1, I2>(getInput1(), getInput2(), firstFieldIndexes, null, getCrossHint())
-						.projectTupleX();
+				.projectTupleX();
 		}
 
 		/**
@@ -212,17 +208,16 @@ public class CrossOperator<I1, I2, OUT> extends TwoInputUdfOperator<I1, I2, OUT,
 		 * <b>Note: With the current implementation, the Project transformation looses type information.</b>
 		 *
 		 * @param secondFieldIndexes If the second input is a Tuple DataSet, the indexes of the selected fields.
-		 * 					   For a non-Tuple DataSet, do not provide parameters.
-		 * 					   The order of fields in the output tuple is defined by to the order of field indexes.
+		 *                           For a non-Tuple DataSet, do not provide parameters.
+		 *                           The order of fields in the output tuple is defined by to the order of field indexes.
 		 * @return A ProjectCross which represents the projected cross result.
-		 *
 		 * @see Tuple
 		 * @see DataSet
 		 * @see org.apache.flink.api.java.operators.CrossOperator.ProjectCross
 		 */
 		public <OUT extends Tuple> ProjectCross<I1, I2, OUT> projectSecond(int... secondFieldIndexes) {
 			return new CrossProjection<I1, I2>(getInput1(), getInput2(), null, secondFieldIndexes, getCrossHint())
-						.projectTupleX();
+				.projectTupleX();
 		}
 
 	}
@@ -233,10 +228,9 @@ public class CrossOperator<I1, I2, OUT> extends TwoInputUdfOperator<I1, I2, OUT,
 	 *
 	 * <p>It also represents the {@link DataSet} that is the result of a Cross transformation.
 	 *
-	 * @param <I1> The type of the first input DataSet of the Cross transformation.
-	 * @param <I2> The type of the second input DataSet of the Cross transformation.
+	 * @param <I1>  The type of the first input DataSet of the Cross transformation.
+	 * @param <I2>  The type of the second input DataSet of the Cross transformation.
 	 * @param <OUT> The type of the result of the Cross transformation.
-	 *
 	 * @see Tuple
 	 * @see DataSet
 	 */
@@ -246,16 +240,16 @@ public class CrossOperator<I1, I2, OUT> extends TwoInputUdfOperator<I1, I2, OUT,
 		private CrossProjection<I1, I2> crossProjection;
 
 		protected ProjectCross(DataSet<I1> input1, DataSet<I2> input2, int[] fields, boolean[] isFromFirst,
-				TupleTypeInfo<OUT> returnType, CrossHint hint) {
+							   TupleTypeInfo<OUT> returnType, CrossHint hint) {
 			super(input1, input2,
-					new ProjectCrossFunction<I1, I2, OUT>(fields, isFromFirst, returnType.createSerializer(input1.getExecutionEnvironment().getConfig()).createInstance()),
-					returnType, hint, "unknown");
+				new ProjectCrossFunction<I1, I2, OUT>(fields, isFromFirst, returnType.createSerializer(input1.getExecutionEnvironment().getConfig()).createInstance()),
+				returnType, hint, "unknown");
 
 			crossProjection = null;
 		}
 
 		protected ProjectCross(DataSet<I1> input1, DataSet<I2> input2, int[] fields, boolean[] isFromFirst,
-				TupleTypeInfo<OUT> returnType, CrossProjection<I1, I2> crossProjection, CrossHint hint) {
+							   TupleTypeInfo<OUT> returnType, CrossProjection<I1, I2> crossProjection, CrossHint hint) {
 			super(input1, input2,
 				new ProjectCrossFunction<I1, I2, OUT>(fields, isFromFirst, returnType.createSerializer(input1.getExecutionEnvironment().getConfig()).createInstance()),
 				returnType, hint, "unknown");
@@ -281,10 +275,9 @@ public class CrossOperator<I1, I2, OUT> extends TwoInputUdfOperator<I1, I2, OUT,
 		 * <p><b>Note: With the current implementation, the Project transformation looses type information.</b>
 		 *
 		 * @param firstFieldIndexes If the first input is a Tuple DataSet, the indexes of the selected fields.
-		 * 					   For a non-Tuple DataSet, do not provide parameters.
-		 * 					   The order of fields in the output tuple is defined by to the order of field indexes.
+		 *                          For a non-Tuple DataSet, do not provide parameters.
+		 *                          The order of fields in the output tuple is defined by to the order of field indexes.
 		 * @return A ProjectCross which represents the projected cross result.
-		 *
 		 * @see Tuple
 		 * @see DataSet
 		 * @see org.apache.flink.api.java.operators.CrossOperator.ProjectCross
@@ -309,10 +302,9 @@ public class CrossOperator<I1, I2, OUT> extends TwoInputUdfOperator<I1, I2, OUT,
 		 * <b>Note: With the current implementation, the Project transformation looses type information.</b>
 		 *
 		 * @param secondFieldIndexes If the second input is a Tuple DataSet, the indexes of the selected fields.
-		 * 					   For a non-Tuple DataSet, do not provide parameters.
-		 * 					   The order of fields in the output tuple is defined by to the order of field indexes.
+		 *                           For a non-Tuple DataSet, do not provide parameters.
+		 *                           The order of fields in the output tuple is defined by to the order of field indexes.
 		 * @return A ProjectCross which represents the projected cross result.
-		 *
 		 * @see Tuple
 		 * @see DataSet
 		 * @see org.apache.flink.api.java.operators.CrossOperator.ProjectCross
@@ -327,7 +319,7 @@ public class CrossOperator<I1, I2, OUT> extends TwoInputUdfOperator<I1, I2, OUT,
 		/**
 		 * @deprecated Deprecated method only kept for compatibility.
 		 */
-		@SuppressWarnings({ "hiding", "unchecked" })
+		@SuppressWarnings({"hiding", "unchecked"})
 		@Deprecated
 		@PublicEvolving
 		public <OUT extends Tuple> CrossOperator<I1, I2, OUT> types(Class<?>... types) {
@@ -359,15 +351,15 @@ public class CrossOperator<I1, I2, OUT> extends TwoInputUdfOperator<I1, I2, OUT,
 		protected DualInputSemanticProperties extractSemanticAnnotationsFromUdf(Class<?> udfClass) {
 			// we do not extract anything, but construct the properties from the projection
 			return SemanticPropUtil.createProjectionPropertiesDual(getFunction().getFields(), getFunction().getIsFromFirst(),
-					getInput1Type(), getInput2Type());
+				getInput1Type(), getInput2Type());
 		}
 	}
 
 	/**
-	 * @see ProjectCross
 	 * @param <T1>
 	 * @param <T2>
 	 * @param <R>
+	 * @see ProjectCross
 	 */
 	@Internal
 	public static final class ProjectCrossFunction<T1, T2, R extends Tuple> implements CrossFunction<T1, T2, R> {
@@ -383,9 +375,9 @@ public class CrossOperator<I1, I2, OUT> extends TwoInputUdfOperator<I1, I2, OUT,
 		 * Instantiates and configures a ProjectCrossFunction.
 		 * Creates output tuples by copying fields of crossed input tuples (or a full input object) into an output tuple.
 		 *
-		 * @param fields List of indexes fields that should be copied to the output tuple.
-		 * 					If the full input object should be copied (for example in case of a non-tuple input) the index should be -1.
-		 * @param isFromFirst List of flags indicating whether the field should be copied from the first (true) or the second (false) input.
+		 * @param fields           List of indexes fields that should be copied to the output tuple.
+		 *                         If the full input object should be copied (for example in case of a non-tuple input) the index should be -1.
+		 * @param isFromFirst      List of flags indicating whether the field should be copied from the first (true) or the second (false) input.
 		 * @param outTupleInstance An instance of an output tuple.
 		 */
 		private ProjectCrossFunction(int[] fields, boolean[] isFromFirst, R outTupleInstance) {
@@ -428,9 +420,9 @@ public class CrossOperator<I1, I2, OUT> extends TwoInputUdfOperator<I1, I2, OUT,
 	}
 
 	/**
-	 * @see ProjectCross
 	 * @param <I1>
 	 * @param <I2>
+	 * @see ProjectCross
 	 */
 	@Internal
 	public static final class CrossProjection<I1, I2> {
@@ -538,10 +530,9 @@ public class CrossOperator<I1, I2, OUT> extends TwoInputUdfOperator<I1, I2, OUT,
 		 * {@link org.apache.flink.api.java.operators.CrossOperator.CrossProjection#projectSecond(int...)}.
 		 *
 		 * @param firstFieldIndexes If the first input is a Tuple DataSet, the indexes of the selected fields.
-		 * 					   For a non-Tuple DataSet, do not provide parameters.
-		 * 					   The order of fields in the output tuple is defined by to the order of field indexes.
+		 *                          For a non-Tuple DataSet, do not provide parameters.
+		 *                          The order of fields in the output tuple is defined by to the order of field indexes.
 		 * @return An extended CrossProjection.
-		 *
 		 * @see Tuple
 		 * @see DataSet
 		 * @see org.apache.flink.api.java.operators.CrossOperator.CrossProjection
@@ -605,10 +596,9 @@ public class CrossOperator<I1, I2, OUT> extends TwoInputUdfOperator<I1, I2, OUT,
 		 * {@link org.apache.flink.api.java.operators.CrossOperator.CrossProjection#projectSecond(int...)}.
 		 *
 		 * @param secondFieldIndexes If the second input is a Tuple DataSet, the indexes of the selected fields.
-		 * 					   For a non-Tuple DataSet, do not provide parameters.
-		 * 					   The order of fields in the output tuple is defined by to the order of field indexes.
+		 *                           For a non-Tuple DataSet, do not provide parameters.
+		 *                           The order of fields in the output tuple is defined by to the order of field indexes.
 		 * @return An extended CrossProjection.
-		 *
 		 * @see Tuple
 		 * @see DataSet
 		 * @see org.apache.flink.api.java.operators.CrossOperator.CrossProjection
@@ -665,7 +655,7 @@ public class CrossOperator<I1, I2, OUT> extends TwoInputUdfOperator<I1, I2, OUT,
 		// The following lines are generated.
 		// --------------------------------------------------------------------------------------------
 		// BEGIN_OF_TUPLE_DEPENDENT_CODE
-	// GENERATED FROM org.apache.flink.api.java.tuple.TupleGenerator.
+		// GENERATED FROM org.apache.flink.api.java.tuple.TupleGenerator.
 
 		/**
 		 * Chooses a projectTupleX according to the length of
@@ -678,32 +668,83 @@ public class CrossOperator<I1, I2, OUT> extends TwoInputUdfOperator<I1, I2, OUT,
 			ProjectCross<I1, I2, OUT> projectionCross = null;
 
 			switch (fieldIndexes.length) {
-			case 1: projectionCross = (ProjectCross<I1, I2, OUT>) projectTuple1(); break;
-			case 2: projectionCross = (ProjectCross<I1, I2, OUT>) projectTuple2(); break;
-			case 3: projectionCross = (ProjectCross<I1, I2, OUT>) projectTuple3(); break;
-			case 4: projectionCross = (ProjectCross<I1, I2, OUT>) projectTuple4(); break;
-			case 5: projectionCross = (ProjectCross<I1, I2, OUT>) projectTuple5(); break;
-			case 6: projectionCross = (ProjectCross<I1, I2, OUT>) projectTuple6(); break;
-			case 7: projectionCross = (ProjectCross<I1, I2, OUT>) projectTuple7(); break;
-			case 8: projectionCross = (ProjectCross<I1, I2, OUT>) projectTuple8(); break;
-			case 9: projectionCross = (ProjectCross<I1, I2, OUT>) projectTuple9(); break;
-			case 10: projectionCross = (ProjectCross<I1, I2, OUT>) projectTuple10(); break;
-			case 11: projectionCross = (ProjectCross<I1, I2, OUT>) projectTuple11(); break;
-			case 12: projectionCross = (ProjectCross<I1, I2, OUT>) projectTuple12(); break;
-			case 13: projectionCross = (ProjectCross<I1, I2, OUT>) projectTuple13(); break;
-			case 14: projectionCross = (ProjectCross<I1, I2, OUT>) projectTuple14(); break;
-			case 15: projectionCross = (ProjectCross<I1, I2, OUT>) projectTuple15(); break;
-			case 16: projectionCross = (ProjectCross<I1, I2, OUT>) projectTuple16(); break;
-			case 17: projectionCross = (ProjectCross<I1, I2, OUT>) projectTuple17(); break;
-			case 18: projectionCross = (ProjectCross<I1, I2, OUT>) projectTuple18(); break;
-			case 19: projectionCross = (ProjectCross<I1, I2, OUT>) projectTuple19(); break;
-			case 20: projectionCross = (ProjectCross<I1, I2, OUT>) projectTuple20(); break;
-			case 21: projectionCross = (ProjectCross<I1, I2, OUT>) projectTuple21(); break;
-			case 22: projectionCross = (ProjectCross<I1, I2, OUT>) projectTuple22(); break;
-			case 23: projectionCross = (ProjectCross<I1, I2, OUT>) projectTuple23(); break;
-			case 24: projectionCross = (ProjectCross<I1, I2, OUT>) projectTuple24(); break;
-			case 25: projectionCross = (ProjectCross<I1, I2, OUT>) projectTuple25(); break;
-			default: throw new IllegalStateException("Excessive arity in tuple.");
+				case 1:
+					projectionCross = (ProjectCross<I1, I2, OUT>) projectTuple1();
+					break;
+				case 2:
+					projectionCross = (ProjectCross<I1, I2, OUT>) projectTuple2();
+					break;
+				case 3:
+					projectionCross = (ProjectCross<I1, I2, OUT>) projectTuple3();
+					break;
+				case 4:
+					projectionCross = (ProjectCross<I1, I2, OUT>) projectTuple4();
+					break;
+				case 5:
+					projectionCross = (ProjectCross<I1, I2, OUT>) projectTuple5();
+					break;
+				case 6:
+					projectionCross = (ProjectCross<I1, I2, OUT>) projectTuple6();
+					break;
+				case 7:
+					projectionCross = (ProjectCross<I1, I2, OUT>) projectTuple7();
+					break;
+				case 8:
+					projectionCross = (ProjectCross<I1, I2, OUT>) projectTuple8();
+					break;
+				case 9:
+					projectionCross = (ProjectCross<I1, I2, OUT>) projectTuple9();
+					break;
+				case 10:
+					projectionCross = (ProjectCross<I1, I2, OUT>) projectTuple10();
+					break;
+				case 11:
+					projectionCross = (ProjectCross<I1, I2, OUT>) projectTuple11();
+					break;
+				case 12:
+					projectionCross = (ProjectCross<I1, I2, OUT>) projectTuple12();
+					break;
+				case 13:
+					projectionCross = (ProjectCross<I1, I2, OUT>) projectTuple13();
+					break;
+				case 14:
+					projectionCross = (ProjectCross<I1, I2, OUT>) projectTuple14();
+					break;
+				case 15:
+					projectionCross = (ProjectCross<I1, I2, OUT>) projectTuple15();
+					break;
+				case 16:
+					projectionCross = (ProjectCross<I1, I2, OUT>) projectTuple16();
+					break;
+				case 17:
+					projectionCross = (ProjectCross<I1, I2, OUT>) projectTuple17();
+					break;
+				case 18:
+					projectionCross = (ProjectCross<I1, I2, OUT>) projectTuple18();
+					break;
+				case 19:
+					projectionCross = (ProjectCross<I1, I2, OUT>) projectTuple19();
+					break;
+				case 20:
+					projectionCross = (ProjectCross<I1, I2, OUT>) projectTuple20();
+					break;
+				case 21:
+					projectionCross = (ProjectCross<I1, I2, OUT>) projectTuple21();
+					break;
+				case 22:
+					projectionCross = (ProjectCross<I1, I2, OUT>) projectTuple22();
+					break;
+				case 23:
+					projectionCross = (ProjectCross<I1, I2, OUT>) projectTuple23();
+					break;
+				case 24:
+					projectionCross = (ProjectCross<I1, I2, OUT>) projectTuple24();
+					break;
+				case 25:
+					projectionCross = (ProjectCross<I1, I2, OUT>) projectTuple25();
+					break;
+				default:
+					throw new IllegalStateException("Excessive arity in tuple.");
 			}
 
 			return projectionCross;
@@ -713,7 +754,6 @@ public class CrossOperator<I1, I2, OUT> extends TwoInputUdfOperator<I1, I2, OUT,
 		 * Projects a pair of crossed elements to a {@link Tuple} with the previously selected fields.
 		 *
 		 * @return The projected data set.
-		 *
 		 * @see Tuple
 		 * @see DataSet
 		 */
@@ -728,7 +768,6 @@ public class CrossOperator<I1, I2, OUT> extends TwoInputUdfOperator<I1, I2, OUT,
 		 * Projects a pair of crossed elements to a {@link Tuple} with the previously selected fields.
 		 *
 		 * @return The projected data set.
-		 *
 		 * @see Tuple
 		 * @see DataSet
 		 */
@@ -743,7 +782,6 @@ public class CrossOperator<I1, I2, OUT> extends TwoInputUdfOperator<I1, I2, OUT,
 		 * Projects a pair of crossed elements to a {@link Tuple} with the previously selected fields.
 		 *
 		 * @return The projected data set.
-		 *
 		 * @see Tuple
 		 * @see DataSet
 		 */
@@ -758,7 +796,6 @@ public class CrossOperator<I1, I2, OUT> extends TwoInputUdfOperator<I1, I2, OUT,
 		 * Projects a pair of crossed elements to a {@link Tuple} with the previously selected fields.
 		 *
 		 * @return The projected data set.
-		 *
 		 * @see Tuple
 		 * @see DataSet
 		 */
@@ -773,7 +810,6 @@ public class CrossOperator<I1, I2, OUT> extends TwoInputUdfOperator<I1, I2, OUT,
 		 * Projects a pair of crossed elements to a {@link Tuple} with the previously selected fields.
 		 *
 		 * @return The projected data set.
-		 *
 		 * @see Tuple
 		 * @see DataSet
 		 */
@@ -788,7 +824,6 @@ public class CrossOperator<I1, I2, OUT> extends TwoInputUdfOperator<I1, I2, OUT,
 		 * Projects a pair of crossed elements to a {@link Tuple} with the previously selected fields.
 		 *
 		 * @return The projected data set.
-		 *
 		 * @see Tuple
 		 * @see DataSet
 		 */
@@ -803,7 +838,6 @@ public class CrossOperator<I1, I2, OUT> extends TwoInputUdfOperator<I1, I2, OUT,
 		 * Projects a pair of crossed elements to a {@link Tuple} with the previously selected fields.
 		 *
 		 * @return The projected data set.
-		 *
 		 * @see Tuple
 		 * @see DataSet
 		 */
@@ -818,7 +852,6 @@ public class CrossOperator<I1, I2, OUT> extends TwoInputUdfOperator<I1, I2, OUT,
 		 * Projects a pair of crossed elements to a {@link Tuple} with the previously selected fields.
 		 *
 		 * @return The projected data set.
-		 *
 		 * @see Tuple
 		 * @see DataSet
 		 */
@@ -833,7 +866,6 @@ public class CrossOperator<I1, I2, OUT> extends TwoInputUdfOperator<I1, I2, OUT,
 		 * Projects a pair of crossed elements to a {@link Tuple} with the previously selected fields.
 		 *
 		 * @return The projected data set.
-		 *
 		 * @see Tuple
 		 * @see DataSet
 		 */
@@ -848,7 +880,6 @@ public class CrossOperator<I1, I2, OUT> extends TwoInputUdfOperator<I1, I2, OUT,
 		 * Projects a pair of crossed elements to a {@link Tuple} with the previously selected fields.
 		 *
 		 * @return The projected data set.
-		 *
 		 * @see Tuple
 		 * @see DataSet
 		 */
@@ -863,7 +894,6 @@ public class CrossOperator<I1, I2, OUT> extends TwoInputUdfOperator<I1, I2, OUT,
 		 * Projects a pair of crossed elements to a {@link Tuple} with the previously selected fields.
 		 *
 		 * @return The projected data set.
-		 *
 		 * @see Tuple
 		 * @see DataSet
 		 */
@@ -878,7 +908,6 @@ public class CrossOperator<I1, I2, OUT> extends TwoInputUdfOperator<I1, I2, OUT,
 		 * Projects a pair of crossed elements to a {@link Tuple} with the previously selected fields.
 		 *
 		 * @return The projected data set.
-		 *
 		 * @see Tuple
 		 * @see DataSet
 		 */
@@ -893,7 +922,6 @@ public class CrossOperator<I1, I2, OUT> extends TwoInputUdfOperator<I1, I2, OUT,
 		 * Projects a pair of crossed elements to a {@link Tuple} with the previously selected fields.
 		 *
 		 * @return The projected data set.
-		 *
 		 * @see Tuple
 		 * @see DataSet
 		 */
@@ -908,7 +936,6 @@ public class CrossOperator<I1, I2, OUT> extends TwoInputUdfOperator<I1, I2, OUT,
 		 * Projects a pair of crossed elements to a {@link Tuple} with the previously selected fields.
 		 *
 		 * @return The projected data set.
-		 *
 		 * @see Tuple
 		 * @see DataSet
 		 */
@@ -923,7 +950,6 @@ public class CrossOperator<I1, I2, OUT> extends TwoInputUdfOperator<I1, I2, OUT,
 		 * Projects a pair of crossed elements to a {@link Tuple} with the previously selected fields.
 		 *
 		 * @return The projected data set.
-		 *
 		 * @see Tuple
 		 * @see DataSet
 		 */
@@ -938,7 +964,6 @@ public class CrossOperator<I1, I2, OUT> extends TwoInputUdfOperator<I1, I2, OUT,
 		 * Projects a pair of crossed elements to a {@link Tuple} with the previously selected fields.
 		 *
 		 * @return The projected data set.
-		 *
 		 * @see Tuple
 		 * @see DataSet
 		 */
@@ -953,7 +978,6 @@ public class CrossOperator<I1, I2, OUT> extends TwoInputUdfOperator<I1, I2, OUT,
 		 * Projects a pair of crossed elements to a {@link Tuple} with the previously selected fields.
 		 *
 		 * @return The projected data set.
-		 *
 		 * @see Tuple
 		 * @see DataSet
 		 */
@@ -968,7 +992,6 @@ public class CrossOperator<I1, I2, OUT> extends TwoInputUdfOperator<I1, I2, OUT,
 		 * Projects a pair of crossed elements to a {@link Tuple} with the previously selected fields.
 		 *
 		 * @return The projected data set.
-		 *
 		 * @see Tuple
 		 * @see DataSet
 		 */
@@ -983,7 +1006,6 @@ public class CrossOperator<I1, I2, OUT> extends TwoInputUdfOperator<I1, I2, OUT,
 		 * Projects a pair of crossed elements to a {@link Tuple} with the previously selected fields.
 		 *
 		 * @return The projected data set.
-		 *
 		 * @see Tuple
 		 * @see DataSet
 		 */
@@ -998,7 +1020,6 @@ public class CrossOperator<I1, I2, OUT> extends TwoInputUdfOperator<I1, I2, OUT,
 		 * Projects a pair of crossed elements to a {@link Tuple} with the previously selected fields.
 		 *
 		 * @return The projected data set.
-		 *
 		 * @see Tuple
 		 * @see DataSet
 		 */
@@ -1013,7 +1034,6 @@ public class CrossOperator<I1, I2, OUT> extends TwoInputUdfOperator<I1, I2, OUT,
 		 * Projects a pair of crossed elements to a {@link Tuple} with the previously selected fields.
 		 *
 		 * @return The projected data set.
-		 *
 		 * @see Tuple
 		 * @see DataSet
 		 */
@@ -1028,7 +1048,6 @@ public class CrossOperator<I1, I2, OUT> extends TwoInputUdfOperator<I1, I2, OUT,
 		 * Projects a pair of crossed elements to a {@link Tuple} with the previously selected fields.
 		 *
 		 * @return The projected data set.
-		 *
 		 * @see Tuple
 		 * @see DataSet
 		 */
@@ -1043,7 +1062,6 @@ public class CrossOperator<I1, I2, OUT> extends TwoInputUdfOperator<I1, I2, OUT,
 		 * Projects a pair of crossed elements to a {@link Tuple} with the previously selected fields.
 		 *
 		 * @return The projected data set.
-		 *
 		 * @see Tuple
 		 * @see DataSet
 		 */
@@ -1058,7 +1076,6 @@ public class CrossOperator<I1, I2, OUT> extends TwoInputUdfOperator<I1, I2, OUT,
 		 * Projects a pair of crossed elements to a {@link Tuple} with the previously selected fields.
 		 *
 		 * @return The projected data set.
-		 *
 		 * @see Tuple
 		 * @see DataSet
 		 */
@@ -1073,7 +1090,6 @@ public class CrossOperator<I1, I2, OUT> extends TwoInputUdfOperator<I1, I2, OUT,
 		 * Projects a pair of crossed elements to a {@link Tuple} with the previously selected fields.
 		 *
 		 * @return The projected data set.
-		 *
 		 * @see Tuple
 		 * @see DataSet
 		 */

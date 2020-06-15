@@ -31,7 +31,7 @@ import org.apache.flink.types.LongValue;
 public final class LongValueSerializer extends TypeSerializerSingleton<LongValue> {
 
 	private static final long serialVersionUID = 1L;
-	
+
 	public static final LongValueSerializer INSTANCE = new LongValueSerializer();
 
 	@Override
@@ -48,7 +48,7 @@ public final class LongValueSerializer extends TypeSerializerSingleton<LongValue
 	public LongValue copy(LongValue from) {
 		return copy(from, new LongValue());
 	}
-	
+
 	@Override
 	public LongValue copy(LongValue from, LongValue reuse) {
 		reuse.setValue(from.getValue());
@@ -69,7 +69,7 @@ public final class LongValueSerializer extends TypeSerializerSingleton<LongValue
 	public LongValue deserialize(DataInputView source) throws IOException {
 		return deserialize(new LongValue(), source);
 	}
-	
+
 	@Override
 	public LongValue deserialize(LongValue reuse, DataInputView source) throws IOException {
 		reuse.read(source);

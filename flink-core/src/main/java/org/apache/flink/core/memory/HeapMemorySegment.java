@@ -62,7 +62,7 @@ public final class HeapMemorySegment extends MemorySegment {
 	 * The memory segment references the given owner.
 	 *
 	 * @param memory The byte array that holds the data.
-	 * @param owner The owner referenced by the memory segment.
+	 * @param owner  The owner referenced by the memory segment.
 	 */
 	HeapMemorySegment(byte[] memory, Object owner) {
 		super(Objects.requireNonNull(memory), owner);
@@ -83,8 +83,7 @@ public final class HeapMemorySegment extends MemorySegment {
 	public ByteBuffer wrap(int offset, int length) {
 		try {
 			return ByteBuffer.wrap(this.memory, offset, length);
-		}
-		catch (NullPointerException e) {
+		} catch (NullPointerException e) {
 			throw new IllegalStateException("segment has been freed");
 		}
 	}
@@ -178,7 +177,7 @@ public final class HeapMemorySegment extends MemorySegment {
 	 * A memory segment factory that produces heap memory segments. Note that this factory does not
 	 * support to allocate off-heap memory.
 	 */
-	public static final class HeapMemorySegmentFactory  {
+	public static final class HeapMemorySegmentFactory {
 
 		/**
 		 * Creates a new memory segment that targets the given heap memory region.
@@ -194,7 +193,7 @@ public final class HeapMemorySegment extends MemorySegment {
 		 * Allocates some unpooled memory and creates a new memory segment that represents
 		 * that memory.
 		 *
-		 * @param size The size of the memory segment to allocate.
+		 * @param size  The size of the memory segment to allocate.
 		 * @param owner The owner to associate with the memory segment.
 		 * @return A new memory segment, backed by unpooled heap memory.
 		 */
@@ -209,7 +208,7 @@ public final class HeapMemorySegment extends MemorySegment {
 		 * memory segments around long-lived memory regions.
 		 *
 		 * @param memory The heap memory to be represented by the memory segment.
-		 * @param owner The owner to associate with the memory segment.
+		 * @param owner  The owner to associate with the memory segment.
 		 * @return A new memory segment representing the given heap memory.
 		 */
 		public HeapMemorySegment wrapPooledHeapMemory(byte[] memory, Object owner) {
@@ -219,7 +218,8 @@ public final class HeapMemorySegment extends MemorySegment {
 		/**
 		 * Prevent external instantiation.
 		 */
-		HeapMemorySegmentFactory() {}
+		HeapMemorySegmentFactory() {
+		}
 	}
 
 	public static final HeapMemorySegmentFactory FACTORY = new HeapMemorySegmentFactory();

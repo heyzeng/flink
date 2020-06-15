@@ -57,9 +57,9 @@ public class MaterializedCollectBatchResult<C> extends BasicResult<C> implements
 	private volatile boolean snapshotted = false;
 
 	public MaterializedCollectBatchResult(
-			TableSchema tableSchema,
-			ExecutionConfig config,
-			ClassLoader classLoader) {
+		TableSchema tableSchema,
+		ExecutionConfig config,
+		ClassLoader classLoader) {
 
 		accumulatorName = new AbstractID().toString();
 		TypeSerializer<Row> serializer = tableSchema.toRowType().createSerializer(config);
@@ -78,17 +78,17 @@ public class MaterializedCollectBatchResult<C> extends BasicResult<C> implements
 	@Override
 	public void startRetrieval(ProgramDeployer deployer) {
 		deployer
-				.deploy()
-				.thenCompose(jobClient -> jobClient.getJobExecutionResult(classLoader))
-				.thenAccept(new ResultRetrievalHandler())
-				.whenComplete((unused, throwable) -> {
-					if (throwable != null) {
-						executionException.compareAndSet(null,
-								new SqlExecutionException(
-										"Error while submitting job.",
-										throwable));
-					}
-				});
+			.deploy()
+			.thenCompose(jobClient -> jobClient.getJobExecutionResult(classLoader))
+			.thenAccept(new ResultRetrievalHandler())
+			.whenComplete((unused, throwable) -> {
+				if (throwable != null) {
+					executionException.compareAndSet(null,
+						new SqlExecutionException(
+							"Error while submitting job.",
+							throwable));
+				}
+			});
 	}
 
 	@Override
@@ -97,7 +97,8 @@ public class MaterializedCollectBatchResult<C> extends BasicResult<C> implements
 	}
 
 	@Override
-	public void close() {}
+	public void close() {
+	}
 
 	@Override
 	public List<Row> retrievePage(int page) {

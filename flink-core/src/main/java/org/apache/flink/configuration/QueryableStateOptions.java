@@ -58,14 +58,18 @@ public class QueryableStateOptions {
 				"or a list of ranges and ports: \"50100-50200,50300-50400,51234\".")
 			.withDeprecatedKeys("query.proxy.ports");
 
-	/** Number of network (event loop) threads for the client proxy (0 => #slots). */
+	/**
+	 * Number of network (event loop) threads for the client proxy (0 => #slots).
+	 */
 	public static final ConfigOption<Integer> PROXY_NETWORK_THREADS =
 		key("queryable-state.proxy.network-threads")
 			.defaultValue(0)
 			.withDescription("Number of network (Netty's event loop) Threads for queryable state proxy.")
 			.withDeprecatedKeys("query.proxy.network-threads");
 
-	/** Number of async query threads for the client proxy (0 => #slots). */
+	/**
+	 * Number of async query threads for the client proxy (0 => #slots).
+	 */
 	public static final ConfigOption<Integer> PROXY_ASYNC_QUERY_THREADS =
 		key("queryable-state.proxy.query-threads")
 			.defaultValue(0)
@@ -98,24 +102,30 @@ public class QueryableStateOptions {
 				"or a list of ranges and ports: \"50100-50200,50300-50400,51234\".")
 			.withDeprecatedKeys("query.server.ports");
 
-	/** Number of network (event loop) threads for the KvState server (0 => #slots). */
+	/**
+	 * Number of network (event loop) threads for the KvState server (0 => #slots).
+	 */
 	public static final ConfigOption<Integer> SERVER_NETWORK_THREADS =
 		key("queryable-state.server.network-threads")
 			.defaultValue(0)
 			.withDescription("Number of network (Netty's event loop) Threads for queryable state server.")
 			.withDeprecatedKeys("query.server.network-threads");
 
-	/** Number of async query threads for the KvStateServerHandler (0 => #slots). */
+	/**
+	 * Number of async query threads for the KvStateServerHandler (0 => #slots).
+	 */
 	public static final ConfigOption<Integer> SERVER_ASYNC_QUERY_THREADS =
 		key("queryable-state.server.query-threads")
 			.defaultValue(0)
 			.withDescription("Number of query Threads for queryable state server. Uses the number of slots if set to 0.")
 			.withDeprecatedKeys("query.server.query-threads");
 
-	/** Option whether the queryable state proxy and server should be enabled where possible and configurable.
+	/**
+	 * Option whether the queryable state proxy and server should be enabled where possible and configurable.
 	 *
 	 * <p>Queryable state proxy and server are still more experimental features, hence disabled unless they are enable
-	 * in user configuration. */
+	 * in user configuration.
+	 */
 	public static final ConfigOption<Boolean> ENABLE_QUERYABLE_STATE_PROXY_SERVER =
 		key("queryable-state.enable")
 			.defaultValue(false)
@@ -126,7 +136,9 @@ public class QueryableStateOptions {
 	// Client Options
 	// ------------------------------------------------------------------------
 
-	/** Number of network (event loop) threads for the KvState client (0 => Use number of available cores). */
+	/**
+	 * Number of network (event loop) threads for the KvState client (0 => Use number of available cores).
+	 */
 	public static final ConfigOption<Integer> CLIENT_NETWORK_THREADS =
 		key("queryable-state.client.network-threads")
 			.defaultValue(0)
@@ -135,7 +147,9 @@ public class QueryableStateOptions {
 
 	// ------------------------------------------------------------------------
 
-	/** Not intended to be instantiated. */
+	/**
+	 * Not intended to be instantiated.
+	 */
 	private QueryableStateOptions() {
 	}
 }

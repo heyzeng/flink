@@ -37,7 +37,7 @@ public final class ListKeyGroupedIterator<E> {
 	private final List<E> input;
 
 	private final TypeSerializer<E> serializer;  // != null if the elements should be copied
-	
+
 	private final TypeComparator<E> comparator;
 
 	private ValuesIterator valuesIterator;
@@ -45,13 +45,13 @@ public final class ListKeyGroupedIterator<E> {
 	private int currentPosition = 0;
 
 	private E lookahead;
-	
+
 	private boolean done;
 
 	/**
 	 * Initializes the ListKeyGroupedIterator..
 	 *
-	 * @param input The list with the input elements.
+	 * @param input      The list with the input elements.
 	 * @param comparator The comparator for the data type iterated over.
 	 */
 	public ListKeyGroupedIterator(List<E> input, TypeSerializer<E> serializer, TypeComparator<E> comparator) {
@@ -101,8 +101,7 @@ public final class ListKeyGroupedIterator<E> {
 						this.valuesIterator.iteratorAvailable = true;
 						return true;
 					}
-				}
-				else {
+				} else {
 					// input exhausted
 					this.valuesIterator.next = null;
 					this.valuesIterator = null;
@@ -110,8 +109,7 @@ public final class ListKeyGroupedIterator<E> {
 					return false;
 				}
 			}
-		}
-		else {
+		} else {
 			// first element
 			// get the next element
 			E first = input.get(currentPosition++);
@@ -119,8 +117,7 @@ public final class ListKeyGroupedIterator<E> {
 				this.comparator.setReference(first);
 				this.valuesIterator = new ValuesIterator(first, serializer);
 				return true;
-			}
-			else {
+			} else {
 				// empty input, set everything null
 				this.done = true;
 				return false;
@@ -139,8 +136,7 @@ public final class ListKeyGroupedIterator<E> {
 				lookahead = next;
 				return null;
 			}
-		}
-		else {
+		} else {
 			// backing iterator is consumed
 			this.done = true;
 			return null;

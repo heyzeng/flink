@@ -38,8 +38,8 @@ public class ConnectionLimitingFactory implements FileSystemFactory {
 	private final ConnectionLimitingSettings settings;
 
 	private ConnectionLimitingFactory(
-			FileSystemFactory factory,
-			ConnectionLimitingSettings settings) {
+		FileSystemFactory factory,
+		ConnectionLimitingSettings settings) {
 
 		this.factory = checkNotNull(factory);
 		this.settings = checkNotNull(settings);
@@ -66,8 +66,8 @@ public class ConnectionLimitingFactory implements FileSystemFactory {
 	public FileSystem create(URI fsUri) throws IOException {
 		FileSystem original = factory.create(fsUri);
 		return new LimitedConnectionsFileSystem(original,
-				settings.limitTotal, settings.limitOutput, settings.limitInput,
-				settings.streamOpenTimeout, settings.streamInactivityTimeout);
+			settings.limitTotal, settings.limitOutput, settings.limitInput,
+			settings.streamOpenTimeout, settings.streamInactivityTimeout);
 	}
 
 	// ------------------------------------------------------------------------
@@ -78,9 +78,8 @@ public class ConnectionLimitingFactory implements FileSystemFactory {
 	 * Otherwise, it returns the given factory as is.
 	 *
 	 * @param factory The factory to potentially decorate.
-	 * @param scheme The file scheme for which to check the configuration.
-	 * @param config The configuration
-	 *
+	 * @param scheme  The file scheme for which to check the configuration.
+	 * @param config  The configuration
 	 * @return The decorated factors, if connection limiting is configured, the original factory otherwise.
 	 */
 	public static FileSystemFactory decorateIfLimited(FileSystemFactory factory, String scheme, Configuration config) {
@@ -92,8 +91,7 @@ public class ConnectionLimitingFactory implements FileSystemFactory {
 		if (settings == null) {
 			// no limit configured
 			return factory;
-		}
-		else {
+		} else {
 			return new ConnectionLimitingFactory(factory, settings);
 		}
 	}

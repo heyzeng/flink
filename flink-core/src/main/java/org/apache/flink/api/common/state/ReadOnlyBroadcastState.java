@@ -45,7 +45,6 @@ public interface ReadOnlyBroadcastState<K, V> extends State {
 	 *
 	 * @param key The key of the mapping
 	 * @return The value of the mapping with the given key
-	 *
 	 * @throws Exception Thrown if the system cannot access the state.
 	 */
 	V get(K key) throws Exception;
@@ -55,7 +54,6 @@ public interface ReadOnlyBroadcastState<K, V> extends State {
 	 *
 	 * @param key The key of the mapping
 	 * @return True if there exists a mapping whose key equals to the given key
-	 *
 	 * @throws Exception Thrown if the system cannot access the state.
 	 */
 	boolean contains(K key) throws Exception;

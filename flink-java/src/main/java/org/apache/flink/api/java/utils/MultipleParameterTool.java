@@ -246,6 +246,7 @@ public class MultipleParameterTool extends AbstractParameterTool {
 	/**
 	 * Get the flat map of the multiple map data. If the key have multiple values, only the last one will be used. This
 	 * is also the current behavior when multiple parameters is specified for {@link ParameterTool}.
+	 *
 	 * @param data multiple map of data.
 	 * @return flat map of data.
 	 */

@@ -63,10 +63,9 @@ public class LocalRecoverableWriter implements RecoverableWriter {
 	public RecoverableFsDataOutputStream recover(ResumeRecoverable recoverable) throws IOException {
 		if (recoverable instanceof LocalRecoverable) {
 			return new LocalRecoverableFsDataOutputStream((LocalRecoverable) recoverable);
-		}
-		else {
+		} else {
 			throw new IllegalArgumentException(
-					"LocalFileSystem cannot recover recoverable for other file system: " + recoverable);
+				"LocalFileSystem cannot recover recoverable for other file system: " + recoverable);
 		}
 	}
 
@@ -84,10 +83,9 @@ public class LocalRecoverableWriter implements RecoverableWriter {
 	public Committer recoverForCommit(CommitRecoverable recoverable) throws IOException {
 		if (recoverable instanceof LocalRecoverable) {
 			return new LocalRecoverableFsDataOutputStream.LocalCommitter((LocalRecoverable) recoverable);
-		}
-		else {
+		} else {
 			throw new IllegalArgumentException(
-					"LocalFileSystem cannot recover recoverable for other file system: " + recoverable);
+				"LocalFileSystem cannot recover recoverable for other file system: " + recoverable);
 		}
 	}
 
@@ -95,7 +93,7 @@ public class LocalRecoverableWriter implements RecoverableWriter {
 	public SimpleVersionedSerializer<CommitRecoverable> getCommitRecoverableSerializer() {
 		@SuppressWarnings("unchecked")
 		SimpleVersionedSerializer<CommitRecoverable> typedSerializer = (SimpleVersionedSerializer<CommitRecoverable>)
-				(SimpleVersionedSerializer<?>) LocalRecoverableSerializer.INSTANCE;
+			(SimpleVersionedSerializer<?>) LocalRecoverableSerializer.INSTANCE;
 
 		return typedSerializer;
 	}
@@ -104,7 +102,7 @@ public class LocalRecoverableWriter implements RecoverableWriter {
 	public SimpleVersionedSerializer<ResumeRecoverable> getResumeRecoverableSerializer() {
 		@SuppressWarnings("unchecked")
 		SimpleVersionedSerializer<ResumeRecoverable> typedSerializer = (SimpleVersionedSerializer<ResumeRecoverable>)
-				(SimpleVersionedSerializer<?>) LocalRecoverableSerializer.INSTANCE;
+			(SimpleVersionedSerializer<?>) LocalRecoverableSerializer.INSTANCE;
 
 		return typedSerializer;
 	}

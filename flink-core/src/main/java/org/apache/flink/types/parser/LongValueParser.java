@@ -28,9 +28,9 @@ import org.apache.flink.types.LongValue;
  */
 @PublicEvolving
 public class LongValueParser extends FieldParser<LongValue> {
-	
+
 	private LongValue result;
-	
+
 	@Override
 	public int parseField(byte[] bytes, int startPos, int limit, byte[] delimiter, LongValue reusable) {
 
@@ -45,18 +45,18 @@ public class LongValueParser extends FieldParser<LongValue> {
 		final int delimLimit = limit - delimiter.length + 1;
 
 		this.result = reusable;
-		
+
 		if (bytes[startPos] == '-') {
 			neg = true;
 			startPos++;
-			
+
 			// check for empty field with only the sign
 			if (startPos == limit || (startPos < delimLimit && delimiterNext(bytes, startPos, delimiter))) {
 				setErrorState(ParseErrorState.NUMERIC_VALUE_ORPHAN_SIGN);
 				return -1;
 			}
 		}
-		
+
 		for (int i = startPos; i < limit; i++) {
 			if (i < delimLimit && delimiterNext(bytes, i, delimiter)) {
 				if (i == startPos) {
@@ -78,8 +78,8 @@ public class LongValueParser extends FieldParser<LongValue> {
 				// this is an overflow/underflow, unless we hit exactly the Long.MIN_VALUE
 				if (neg && val == Long.MIN_VALUE) {
 					reusable.setValue(Long.MIN_VALUE);
-					
-					if (i+1 >= limit) {
+
+					if (i + 1 >= limit) {
 						return limit;
 					} else if (i + 1 < delimLimit && delimiterNext(bytes, i + 1, delimiter)) {
 						return i + 1 + delimiter.length;
@@ -87,8 +87,7 @@ public class LongValueParser extends FieldParser<LongValue> {
 						setErrorState(ParseErrorState.NUMERIC_VALUE_OVERFLOW_UNDERFLOW);
 						return -1;
 					}
-				}
-				else {
+				} else {
 					setErrorState(ParseErrorState.NUMERIC_VALUE_OVERFLOW_UNDERFLOW);
 					return -1;
 				}
@@ -98,12 +97,12 @@ public class LongValueParser extends FieldParser<LongValue> {
 		reusable.setValue(neg ? -val : val);
 		return limit;
 	}
-	
+
 	@Override
 	public LongValue createValue() {
 		return new LongValue();
 	}
-	
+
 	@Override
 	public LongValue getLastResult() {
 		return this.result;

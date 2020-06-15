@@ -39,7 +39,7 @@ import scala.collection.mutable.{Map => MutableMap}
 
 @RunWith(classOf[JUnitRunner])
 class TasksTest
-    extends WordSpecLike
+  extends WordSpecLike
     with Matchers
     with BeforeAndAfterAll {
 
@@ -68,11 +68,11 @@ class TasksTest
     val childRef = parent.actorOf(Props(
       new Actor {
         override def receive: Receive = {
-          case msg @ _ => probe.ref.forward(msg)
+          case msg@_ => probe.ref.forward(msg)
         }
       }
     ))
-    (probe,childRef)
+    (probe, childRef)
   }
 
   class Context(implicit val system: ActorSystem) extends TestKitBase with ImplicitSender {
@@ -84,7 +84,7 @@ class TasksTest
     val slave = randomSlave
     val task = randomTask(slave._1)
 
-    val taskActors = MutableMap[Protos.TaskID,MockTaskMonitor]()
+    val taskActors = MutableMap[Protos.TaskID, MockTaskMonitor]()
 
     val actor = {
       val taskActorCreator = (factory: ActorRefFactory, task: TaskGoalState) => {
@@ -116,7 +116,7 @@ class TasksTest
       "stores the connected message for later use" in new Context {
         val msg = new Connected() {}
         actor ! msg
-        actor.underlyingActor.registered should be (Some(msg))
+        actor.underlyingActor.registered should be(Some(msg))
       }
 
       "forwards the message to child tasks" in new Context {
@@ -131,7 +131,7 @@ class TasksTest
       "releases any connected message that was previously stored" in new Context {
         actor.underlyingActor.registered = Some(new Connected() {})
         actor ! new Disconnected()
-        actor.underlyingActor.registered should be (None)
+        actor.underlyingActor.registered should be(None)
       }
 
       "forwards the message to child tasks" in new Context {
@@ -146,8 +146,8 @@ class TasksTest
       "creates a task monitor on-demand for a given task" in new Context {
         val goal = Launched(task._1, slave._1)
         actor ! TaskGoalStateUpdated(goal)
-        actor.underlyingActor.taskMap.contains(task._1) should be (true)
-        taskActors(task._1).task should be (goal)
+        actor.underlyingActor.taskMap.contains(task._1) should be(true)
+        taskActors(task._1).task should be(goal)
       }
 
       "forwards the stored connected message to new monitor actors" in new Context {
@@ -177,8 +177,8 @@ class TasksTest
       "resumes monitoring of resurrected tasks" in new Context {
         // in this scenario, no goal state is sent prior to the status update
         actor ! new StatusUpdate(task._2.setState(TASK_RUNNING).build())
-        taskActors.contains(task._1) should be (true)
-        taskActors(task._1).task should be (Released(task._1, slave._1))
+        taskActors.contains(task._1) should be(true)
+        taskActors(task._1).task should be(Released(task._1, slave._1))
       }
     }
 
@@ -193,9 +193,9 @@ class TasksTest
     "TaskTerminated" which {
       "removes the task monitor ref" in new Context {
         actor ! TaskGoalStateUpdated(Launched(task._1, slave._1))
-        actor.underlyingActor.taskMap.contains(task._1) should be (true)
+        actor.underlyingActor.taskMap.contains(task._1) should be(true)
         actor ! TaskTerminated(task._1, task._2.setState(TASK_FAILED).build())
-        actor.underlyingActor.taskMap.contains(task._1) should be (false)
+        actor.underlyingActor.taskMap.contains(task._1) should be(false)
       }
 
       "forwards to the parent" in new Context {

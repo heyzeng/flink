@@ -132,13 +132,13 @@ public class TimeUtils {
 		long nanos = duration.toNanos();
 
 		List<TimeUnit> orderedUnits = Arrays.asList(
-				TimeUnit.NANOSECONDS,
-				TimeUnit.MICROSECONDS,
-				TimeUnit.MILLISECONDS,
-				TimeUnit.SECONDS,
-				TimeUnit.MINUTES,
-				TimeUnit.HOURS,
-				TimeUnit.DAYS);
+			TimeUnit.NANOSECONDS,
+			TimeUnit.MICROSECONDS,
+			TimeUnit.MILLISECONDS,
+			TimeUnit.SECONDS,
+			TimeUnit.MINUTES,
+			TimeUnit.HOURS,
+			TimeUnit.DAYS);
 
 		TimeUnit highestIntegerUnit = IntStream.range(0, orderedUnits.size())
 			.sequential()
@@ -188,7 +188,7 @@ public class TimeUtils {
 		 * @return the singular format of the original label
 		 */
 		private static String[] singular(String label) {
-			return new String[] {
+			return new String[]{
 				label
 			};
 		}
@@ -198,7 +198,7 @@ public class TimeUtils {
 		 * @return both the singular format and plural format of the original label
 		 */
 		private static String[] plural(String label) {
-			return new String[] {
+			return new String[]{
 				label,
 				label + PLURAL_SUFFIX
 			};

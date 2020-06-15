@@ -47,7 +47,7 @@ import java.util.concurrent.atomic.AtomicBoolean;
 public class InnerJoinOperatorBaseTest implements Serializable {
 
 	@Test
-	public void testJoinPlain(){
+	public void testJoinPlain() {
 		final FlatJoinFunction<String, String, Integer> joiner = new FlatJoinFunction<String, String, Integer>() {
 
 			@Override
@@ -57,15 +57,15 @@ public class InnerJoinOperatorBaseTest implements Serializable {
 			}
 		};
 
-		@SuppressWarnings({ "rawtypes", "unchecked" })
+		@SuppressWarnings({"rawtypes", "unchecked"})
 		InnerJoinOperatorBase<String, String, Integer,
-						FlatJoinFunction<String, String,Integer> > base = new InnerJoinOperatorBase(joiner,
-				new BinaryOperatorInformation(BasicTypeInfo.STRING_TYPE_INFO, BasicTypeInfo.STRING_TYPE_INFO,
-						BasicTypeInfo.INT_TYPE_INFO), new int[0], new int[0], "TestJoiner");
+			FlatJoinFunction<String, String, Integer>> base = new InnerJoinOperatorBase(joiner,
+			new BinaryOperatorInformation(BasicTypeInfo.STRING_TYPE_INFO, BasicTypeInfo.STRING_TYPE_INFO,
+				BasicTypeInfo.INT_TYPE_INFO), new int[0], new int[0], "TestJoiner");
 
 		List<String> inputData1 = new ArrayList<String>(Arrays.asList("foo", "bar", "foobar"));
 		List<String> inputData2 = new ArrayList<String>(Arrays.asList("foobar", "foo"));
-		List<Integer> expected = new ArrayList<Integer>(Arrays.asList(3, 3, 6 ,6));
+		List<Integer> expected = new ArrayList<Integer>(Arrays.asList(3, 3, 6, 6));
 
 		try {
 			ExecutionConfig executionConfig = new ExecutionConfig();
@@ -76,15 +76,14 @@ public class InnerJoinOperatorBaseTest implements Serializable {
 
 			assertEquals(expected, resultSafe);
 			assertEquals(expected, resultRegular);
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 			fail(e.getMessage());
 		}
 	}
 
 	@Test
-	public void testJoinRich(){
+	public void testJoinRich() {
 		final AtomicBoolean opened = new AtomicBoolean(false);
 		final AtomicBoolean closed = new AtomicBoolean(false);
 		final String taskName = "Test rich join function";
@@ -98,7 +97,7 @@ public class InnerJoinOperatorBaseTest implements Serializable {
 			}
 
 			@Override
-			public void close() throws Exception{
+			public void close() throws Exception {
 				closed.compareAndSet(false, true);
 			}
 
@@ -110,10 +109,10 @@ public class InnerJoinOperatorBaseTest implements Serializable {
 		};
 
 		InnerJoinOperatorBase<String, String, Integer,
-						RichFlatJoinFunction<String, String, Integer>> base = new InnerJoinOperatorBase<String, String, Integer,
-										RichFlatJoinFunction<String, String, Integer>>(joiner, new BinaryOperatorInformation<String, String,
-				Integer>(BasicTypeInfo.STRING_TYPE_INFO, BasicTypeInfo.STRING_TYPE_INFO,
-				BasicTypeInfo.INT_TYPE_INFO), new int[0], new int[0], taskName);
+			RichFlatJoinFunction<String, String, Integer>> base = new InnerJoinOperatorBase<String, String, Integer,
+			RichFlatJoinFunction<String, String, Integer>>(joiner, new BinaryOperatorInformation<String, String,
+			Integer>(BasicTypeInfo.STRING_TYPE_INFO, BasicTypeInfo.STRING_TYPE_INFO,
+			BasicTypeInfo.INT_TYPE_INFO), new int[0], new int[0], taskName);
 
 		final List<String> inputData1 = new ArrayList<String>(Arrays.asList("foo", "bar", "foobar"));
 		final List<String> inputData2 = new ArrayList<String>(Arrays.asList("foobar", "foo"));
@@ -126,23 +125,22 @@ public class InnerJoinOperatorBaseTest implements Serializable {
 			final HashMap<String, Future<Path>> cpTasks = new HashMap<>();
 
 			ExecutionConfig executionConfig = new ExecutionConfig();
-			
+
 			executionConfig.disableObjectReuse();
 			List<Integer> resultSafe = base.executeOnCollections(inputData1, inputData2,
-					new RuntimeUDFContext(taskInfo, null, executionConfig, cpTasks,
-							accumulatorMap, new UnregisteredMetricsGroup()),
-					executionConfig);
-			
+				new RuntimeUDFContext(taskInfo, null, executionConfig, cpTasks,
+					accumulatorMap, new UnregisteredMetricsGroup()),
+				executionConfig);
+
 			executionConfig.enableObjectReuse();
 			List<Integer> resultRegular = base.executeOnCollections(inputData1, inputData2,
-					new RuntimeUDFContext(taskInfo, null, executionConfig, cpTasks,
-							accumulatorMap, new UnregisteredMetricsGroup()),
-					executionConfig);
+				new RuntimeUDFContext(taskInfo, null, executionConfig, cpTasks,
+					accumulatorMap, new UnregisteredMetricsGroup()),
+				executionConfig);
 
 			assertEquals(expected, resultSafe);
 			assertEquals(expected, resultRegular);
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 			fail(e.getMessage());
 		}

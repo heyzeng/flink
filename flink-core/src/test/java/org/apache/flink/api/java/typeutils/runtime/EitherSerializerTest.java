@@ -48,26 +48,26 @@ public class EitherSerializerTest {
 	@Test
 	public void testStringDoubleEither() {
 
-	Either<String, Double>[] testData = new Either[] {
+		Either<String, Double>[] testData = new Either[]{
 			Left("banana"),
 			Left(""),
 			Right(32.0),
 			Right(Double.MIN_VALUE),
 			Right(Double.MAX_VALUE)};
 
-	EitherTypeInfo<String, Double> eitherTypeInfo = (EitherTypeInfo<String, Double>) new EitherTypeInfo<String, Double>(
+		EitherTypeInfo<String, Double> eitherTypeInfo = (EitherTypeInfo<String, Double>) new EitherTypeInfo<String, Double>(
 			BasicTypeInfo.STRING_TYPE_INFO, BasicTypeInfo.DOUBLE_TYPE_INFO);
-	EitherSerializer<String, Double> eitherSerializer =
+		EitherSerializer<String, Double> eitherSerializer =
 			(EitherSerializer<String, Double>) eitherTypeInfo.createSerializer(new ExecutionConfig());
-	SerializerTestInstance<Either<String, Double>> testInstance =
+		SerializerTestInstance<Either<String, Double>> testInstance =
 			new EitherSerializerTestInstance<Either<String, Double>>(eitherSerializer, eitherTypeInfo.getTypeClass(), -1, testData);
-	testInstance.testAll();
+		testInstance.testAll();
 	}
 
 	@Test
 	public void testStringValueDoubleValueEither() {
 		@SuppressWarnings("unchecked")
-		Either<StringValue, DoubleValue>[] testData = new Either[] {
+		Either<StringValue, DoubleValue>[] testData = new Either[]{
 			Left(new StringValue("banana")),
 			Left.of(new StringValue("apple")),
 			new Left(new StringValue("")),
@@ -88,29 +88,29 @@ public class EitherSerializerTest {
 	@Test
 	public void testEitherWithTuple() {
 
-	Either<Tuple2<Long, Long>, Double>[] testData = new Either[] {
+		Either<Tuple2<Long, Long>, Double>[] testData = new Either[]{
 			Either.Left(new Tuple2<>(2L, 9L)),
 			new Left<>(new Tuple2<>(Long.MIN_VALUE, Long.MAX_VALUE)),
 			new Right<>(32.0),
 			Right(Double.MIN_VALUE),
 			Right(Double.MAX_VALUE)};
 
-	EitherTypeInfo<Tuple2<Long, Long>, Double> eitherTypeInfo = (EitherTypeInfo<Tuple2<Long, Long>, Double>)
+		EitherTypeInfo<Tuple2<Long, Long>, Double> eitherTypeInfo = (EitherTypeInfo<Tuple2<Long, Long>, Double>)
 			new EitherTypeInfo<Tuple2<Long, Long>, Double>(
-			new TupleTypeInfo<Tuple2<Long, Long>>(BasicTypeInfo.LONG_TYPE_INFO, BasicTypeInfo.LONG_TYPE_INFO),
-			BasicTypeInfo.DOUBLE_TYPE_INFO);
-	EitherSerializer<Tuple2<Long, Long>, Double> eitherSerializer =
+				new TupleTypeInfo<Tuple2<Long, Long>>(BasicTypeInfo.LONG_TYPE_INFO, BasicTypeInfo.LONG_TYPE_INFO),
+				BasicTypeInfo.DOUBLE_TYPE_INFO);
+		EitherSerializer<Tuple2<Long, Long>, Double> eitherSerializer =
 			(EitherSerializer<Tuple2<Long, Long>, Double>) eitherTypeInfo.createSerializer(new ExecutionConfig());
-	SerializerTestInstance<Either<Tuple2<Long, Long>, Double>> testInstance =
+		SerializerTestInstance<Either<Tuple2<Long, Long>, Double>> testInstance =
 			new EitherSerializerTestInstance<Either<Tuple2<Long, Long>, Double>>(
-					eitherSerializer, eitherTypeInfo.getTypeClass(), -1, testData);
-	testInstance.testAll();
+				eitherSerializer, eitherTypeInfo.getTypeClass(), -1, testData);
+		testInstance.testAll();
 	}
 
 	@Test
 	public void testEitherWithTupleValues() {
 		@SuppressWarnings("unchecked")
-		Either<Tuple2<LongValue, LongValue>, DoubleValue>[] testData = new Either[] {
+		Either<Tuple2<LongValue, LongValue>, DoubleValue>[] testData = new Either[]{
 			Left(new Tuple2<>(new LongValue(2L), new LongValue(9L))),
 			new Left<>(new Tuple2<>(new LongValue(Long.MIN_VALUE), new LongValue(Long.MAX_VALUE))),
 			new Right<>(new DoubleValue(32.0)),
@@ -199,7 +199,7 @@ public class EitherSerializerTest {
 	private class EitherSerializerTestInstance<T> extends SerializerTestInstance<T> {
 
 		public EitherSerializerTestInstance(TypeSerializer<T> serializer,
-				Class<T> typeClass, int length, T[] testData) {
+											Class<T> typeClass, int length, T[] testData) {
 			super(serializer, typeClass, length, testData);
 		}
 
@@ -214,8 +214,7 @@ public class EitherSerializerTest {
 
 				Class<T> type = getTypeClass();
 				assertNotNull("The test is corrupt: type class is null.", type);
-			}
-			catch (Exception e) {
+			} catch (Exception e) {
 				System.err.println(e.getMessage());
 				e.printStackTrace();
 				fail("Exception in test: " + e.getMessage());

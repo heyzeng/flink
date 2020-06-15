@@ -25,7 +25,7 @@ import java.util.List;
  * Exception which is thrown if validation of {@link RequiredParameters} fails.
  *
  * @deprecated These classes will be dropped in the next version. Use {@link ParameterTool} or a third-party
- *             command line parsing library instead.
+ * command line parsing library instead.
  */
 @Deprecated
 public class RequiredParametersException extends Exception {

@@ -45,8 +45,7 @@ public class TypeSerializerSnapshotTest {
 		try {
 			TypeSerializerSnapshot.writeVersionedSnapshot(new DataOutputSerializer(64), snap);
 			fail("exception expected");
-		}
-		catch (IllegalStateException e) {
+		} catch (IllegalStateException e) {
 			// expected
 		}
 	}
@@ -61,25 +60,23 @@ public class TypeSerializerSnapshotTest {
 
 		TypeSerializerSnapshot.writeVersionedSnapshot(out, snap);
 		TypeSerializerSnapshot<Object> readBack = TypeSerializerSnapshot.readVersionedSnapshot(
-				new DataInputDeserializer(out.getCopyOfBuffer()), getClass().getClassLoader());
+			new DataInputDeserializer(out.getCopyOfBuffer()), getClass().getClassLoader());
 
 		assertNotNull(readBack);
 
 		try {
 			readBack.restoreSerializer();
 			fail("expected exception");
-		}
-		catch (IllegalStateException e) {
+		} catch (IllegalStateException e) {
 			// expected
 		}
 
 		((TypeSerializerConfigSnapshot<Object>) readBack).setPriorSerializer(
-				new UnloadableDummyTypeSerializer<>(new byte[0]));
+			new UnloadableDummyTypeSerializer<>(new byte[0]));
 		try {
 			readBack.restoreSerializer();
 			fail("expected exception");
-		}
-		catch (IllegalStateException e) {
+		} catch (IllegalStateException e) {
 			// expected
 		}
 	}

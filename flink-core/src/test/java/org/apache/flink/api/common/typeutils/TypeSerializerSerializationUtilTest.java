@@ -112,8 +112,8 @@ public class TypeSerializerSerializationUtilTest implements Serializable {
 		Assert.assertTrue(deserializedSerializer instanceof UnloadableDummyTypeSerializer);
 
 		Assert.assertArrayEquals(
-				InstantiationUtil.serializeObject(serializer),
-				((UnloadableDummyTypeSerializer<?>) deserializedSerializer).getActualBytes());
+			InstantiationUtil.serializeObject(serializer),
+			((UnloadableDummyTypeSerializer<?>) deserializedSerializer).getActualBytes());
 	}
 
 	/**
@@ -209,7 +209,7 @@ public class TypeSerializerSerializationUtilTest implements Serializable {
 		byte[] serializedSerializersAndConfigs;
 		try (ByteArrayOutputStream out = new ByteArrayOutputStream()) {
 			TypeSerializerSerializationUtil.writeSerializersAndConfigsWithResilience(
-					new DataOutputViewStreamWrapper(out), serializersAndConfigs);
+				new DataOutputViewStreamWrapper(out), serializersAndConfigs);
 			serializedSerializersAndConfigs = out.toByteArray();
 		}
 
@@ -272,7 +272,8 @@ public class TypeSerializerSerializationUtilTest implements Serializable {
 		private int val;
 		private String msg;
 
-		public TestConfigSnapshot() {}
+		public TestConfigSnapshot() {
+		}
 
 		public TestConfigSnapshot(int val, String msg) {
 			this.val = val;
@@ -425,7 +426,9 @@ public class TypeSerializerSerializationUtilTest implements Serializable {
 		}
 	}
 
-	/** Just some serializer used for tests. */
+	/**
+	 * Just some serializer used for tests.
+	 */
 	public static class TestIntSerializer extends AbstractIntSerializer {
 		private static final long serialVersionUID = -3684467698271707216L;
 

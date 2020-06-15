@@ -56,9 +56,9 @@ public class SqlShowFunctions extends SqlCall {
 
 	@Override
 	public void unparse(
-			SqlWriter writer,
-			int leftPrec,
-			int rightPrec) {
+		SqlWriter writer,
+		int leftPrec,
+		int rightPrec) {
 		writer.keyword("SHOW FUNCTIONS");
 		if (databaseName != null) {
 			databaseName.unparse(writer, leftPrec, rightPrec);

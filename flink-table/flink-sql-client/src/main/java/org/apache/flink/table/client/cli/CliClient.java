@@ -516,7 +516,7 @@ public class CliClient {
 
 		if (resultDesc.isTableauMode()) {
 			try (CliTableauResultView tableauResultView = new CliTableauResultView(
-					terminal, executor, sessionId, resultDesc)) {
+				terminal, executor, sessionId, resultDesc)) {
 				if (resultDesc.isMaterialized()) {
 					tableauResultView.displayBatchResults();
 				} else {

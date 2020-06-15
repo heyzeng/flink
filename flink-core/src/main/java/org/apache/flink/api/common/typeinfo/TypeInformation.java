@@ -140,7 +140,7 @@ public abstract class TypeInformation<T> implements Serializable {
 	 * </code>
 	 *
 	 * @return map of inferred subtypes; it does not have to contain all generic parameters as key;
-	 *         values may be null if type could not be inferred
+	 * values may be null if type could not be inferred
 	 */
 	@PublicEvolving
 	public Map<String, TypeInformation<?>> getGenericParameters() {
@@ -202,17 +202,15 @@ public abstract class TypeInformation<T> implements Serializable {
 	 * {@link #of(TypeHint)} method.
 	 *
 	 * @param typeClass The class of the type.
-	 * @param <T> The generic type.
-	 *
+	 * @param <T>       The generic type.
 	 * @return The TypeInformation object for the type described by the hint.
 	 */
 	public static <T> TypeInformation<T> of(Class<T> typeClass) {
 		try {
 			return TypeExtractor.createTypeInfo(typeClass);
-		}
-		catch (InvalidTypesException e) {
+		} catch (InvalidTypesException e) {
 			throw new FlinkRuntimeException(
-					"Cannot extract TypeInformation from Class alone, because generic parameters are missing. " +
+				"Cannot extract TypeInformation from Class alone, because generic parameters are missing. " +
 					"Please use TypeInformation.of(TypeHint) instead, or another equivalent method in the API that " +
 					"accepts a TypeHint instead of a Class. " +
 					"For example for a Tuple2<Long, String> pass a 'new TypeHint<Tuple2<Long, String>>(){}'.");
@@ -229,8 +227,7 @@ public abstract class TypeInformation<T> implements Serializable {
 	 * </pre>
 	 *
 	 * @param typeHint The hint for the generic type.
-	 * @param <T> The generic type.
-	 *
+	 * @param <T>      The generic type.
 	 * @return The TypeInformation object for the type described by the hint.
 	 */
 	public static <T> TypeInformation<T> of(TypeHint<T> typeHint) {

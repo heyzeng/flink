@@ -42,7 +42,7 @@ public class DoubleValueComparator extends TypeComparator<DoubleValue> {
 
 	private final DoubleValue tempReference = new DoubleValue();
 
-	private final TypeComparator<?>[] comparators = new TypeComparator[] {this};
+	private final TypeComparator<?>[] comparators = new TypeComparator[]{this};
 
 	public DoubleValueComparator(boolean ascending) {
 		this.ascendingComparison = ascending;

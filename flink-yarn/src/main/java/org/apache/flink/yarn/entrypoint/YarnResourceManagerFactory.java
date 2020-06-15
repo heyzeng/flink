@@ -43,7 +43,8 @@ public class YarnResourceManagerFactory extends ActiveResourceManagerFactory<Yar
 
 	private static final YarnResourceManagerFactory INSTANCE = new YarnResourceManagerFactory();
 
-	private YarnResourceManagerFactory() {}
+	private YarnResourceManagerFactory() {
+	}
 
 	public static YarnResourceManagerFactory getInstance() {
 		return INSTANCE;
@@ -51,15 +52,15 @@ public class YarnResourceManagerFactory extends ActiveResourceManagerFactory<Yar
 
 	@Override
 	public ResourceManager<YarnWorkerNode> createActiveResourceManager(
-			Configuration configuration,
-			ResourceID resourceId,
-			RpcService rpcService,
-			HighAvailabilityServices highAvailabilityServices,
-			HeartbeatServices heartbeatServices,
-			FatalErrorHandler fatalErrorHandler,
-			ClusterInformation clusterInformation,
-			@Nullable String webInterfaceUrl,
-			ResourceManagerMetricGroup resourceManagerMetricGroup) throws Exception {
+		Configuration configuration,
+		ResourceID resourceId,
+		RpcService rpcService,
+		HighAvailabilityServices highAvailabilityServices,
+		HeartbeatServices heartbeatServices,
+		FatalErrorHandler fatalErrorHandler,
+		ClusterInformation clusterInformation,
+		@Nullable String webInterfaceUrl,
+		ResourceManagerMetricGroup resourceManagerMetricGroup) throws Exception {
 		final ResourceManagerRuntimeServicesConfiguration rmServicesConfiguration = ResourceManagerRuntimeServicesConfiguration.fromConfiguration(configuration);
 		final ResourceManagerRuntimeServices rmRuntimeServices = ResourceManagerRuntimeServices.fromConfiguration(
 			rmServicesConfiguration,

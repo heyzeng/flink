@@ -32,21 +32,21 @@ import static org.apache.flink.util.Preconditions.checkNotNull;
 public abstract class TupleTypeInfoBase<T> extends CompositeType<T> {
 
 	private static final long serialVersionUID = 1L;
-	
+
 	private final static String REGEX_FIELD = "(f?)([0-9]+)";
-	private final static String REGEX_NESTED_FIELDS = "("+REGEX_FIELD+")(\\.(.+))?";
+	private final static String REGEX_NESTED_FIELDS = "(" + REGEX_FIELD + ")(\\.(.+))?";
 	private final static String REGEX_NESTED_FIELDS_WILDCARD = REGEX_NESTED_FIELDS
-			+"|\\"+ ExpressionKeys.SELECT_ALL_CHAR
-			+"|\\"+ExpressionKeys.SELECT_ALL_CHAR_SCALA;
+		+ "|\\" + ExpressionKeys.SELECT_ALL_CHAR
+		+ "|\\" + ExpressionKeys.SELECT_ALL_CHAR_SCALA;
 
 	private static final Pattern PATTERN_FIELD = Pattern.compile(REGEX_FIELD);
 	private static final Pattern PATTERN_NESTED_FIELDS = Pattern.compile(REGEX_NESTED_FIELDS);
 	private static final Pattern PATTERN_NESTED_FIELDS_WILDCARD = Pattern.compile(REGEX_NESTED_FIELDS_WILDCARD);
 
 	// --------------------------------------------------------------------------------------------
-	
+
 	protected final TypeInformation<?>[] types;
-	
+
 	private final int totalFields;
 
 	public TupleTypeInfoBase(Class<T> tupleType, TypeInformation<?>... types) {
@@ -56,7 +56,7 @@ public abstract class TupleTypeInfoBase<T> extends CompositeType<T> {
 
 		int fieldCounter = 0;
 
-		for(TypeInformation<?> type : types) {
+		for (TypeInformation<?> type : types) {
 			fieldCounter += type.getTotalFields();
 		}
 
@@ -81,7 +81,7 @@ public abstract class TupleTypeInfoBase<T> extends CompositeType<T> {
 	public int getArity() {
 		return types.length;
 	}
-	
+
 	@Override
 	public int getTotalFields() {
 		return totalFields;
@@ -92,7 +92,7 @@ public abstract class TupleTypeInfoBase<T> extends CompositeType<T> {
 
 		Matcher matcher = PATTERN_NESTED_FIELDS_WILDCARD.matcher(fieldExpression);
 		if (!matcher.matches()) {
-			throw new InvalidFieldReferenceException("Invalid tuple field reference \""+fieldExpression+"\".");
+			throw new InvalidFieldReferenceException("Invalid tuple field reference \"" + fieldExpression + "\".");
 		}
 
 		String field = matcher.group(0);
@@ -160,39 +160,39 @@ public abstract class TupleTypeInfoBase<T> extends CompositeType<T> {
 	public <X> TypeInformation<X> getTypeAt(String fieldExpression) {
 
 		Matcher matcher = PATTERN_NESTED_FIELDS.matcher(fieldExpression);
-		if(!matcher.matches()) {
+		if (!matcher.matches()) {
 			if (fieldExpression.equals(ExpressionKeys.SELECT_ALL_CHAR) || fieldExpression.equals(ExpressionKeys.SELECT_ALL_CHAR_SCALA)) {
 				throw new InvalidFieldReferenceException("Wildcard expressions are not allowed here.");
 			} else {
-				throw new InvalidFieldReferenceException("Invalid format of tuple field expression \""+fieldExpression+"\".");
+				throw new InvalidFieldReferenceException("Invalid format of tuple field expression \"" + fieldExpression + "\".");
 			}
 		}
 
 		String fieldStr = matcher.group(1);
 		Matcher fieldMatcher = PATTERN_FIELD.matcher(fieldStr);
-		if(!fieldMatcher.matches()) {
+		if (!fieldMatcher.matches()) {
 			throw new RuntimeException("Invalid matcher pattern");
 		}
 		String field = fieldMatcher.group(2);
 		int fieldPos = Integer.valueOf(field);
 
-		if(fieldPos >= this.getArity()) {
-			throw new InvalidFieldReferenceException("Tuple field expression \""+fieldStr+"\" out of bounds of "+this.toString()+".");
+		if (fieldPos >= this.getArity()) {
+			throw new InvalidFieldReferenceException("Tuple field expression \"" + fieldStr + "\" out of bounds of " + this.toString() + ".");
 		}
 		TypeInformation<X> fieldType = this.getTypeAt(fieldPos);
 		String tail = matcher.group(5);
-		if(tail == null) {
+		if (tail == null) {
 			// we found the type
 			return fieldType;
 		} else {
-			if(fieldType instanceof CompositeType<?>) {
+			if (fieldType instanceof CompositeType<?>) {
 				return ((CompositeType<?>) fieldType).getTypeAt(tail);
 			} else {
-				throw new InvalidFieldReferenceException("Nested field expression \""+tail+"\" not possible on atomic type "+fieldType+".");
+				throw new InvalidFieldReferenceException("Nested field expression \"" + tail + "\" not possible on atomic type " + fieldType + ".");
 			}
 		}
 	}
-	
+
 	@Override
 	public <X> TypeInformation<X> getTypeAt(int pos) {
 		if (pos < 0 || pos >= this.types.length) {
@@ -203,7 +203,7 @@ public abstract class TupleTypeInfoBase<T> extends CompositeType<T> {
 		TypeInformation<X> typed = (TypeInformation<X>) this.types[pos];
 		return typed;
 	}
-	
+
 	@Override
 	public boolean equals(Object obj) {
 		if (obj instanceof TupleTypeInfoBase) {
@@ -223,7 +223,7 @@ public abstract class TupleTypeInfoBase<T> extends CompositeType<T> {
 	public boolean canEqual(Object obj) {
 		return obj instanceof TupleTypeInfoBase;
 	}
-	
+
 	@Override
 	public int hashCode() {
 		return 31 * (31 * super.hashCode() + Arrays.hashCode(types)) + totalFields;

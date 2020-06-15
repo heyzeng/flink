@@ -31,7 +31,9 @@ public abstract class FilePathFilter implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
-	/** Name of an unfinished Hadoop file */
+	/**
+	 * Name of an unfinished Hadoop file
+	 */
 	public static final String HADOOP_COPYING = "_COPYING_";
 
 	/**
@@ -49,13 +51,13 @@ public abstract class FilePathFilter implements Serializable {
 
 	/**
 	 * Returns the default filter, which excludes the following files:
-	 * 
+	 *
 	 * <ul>
 	 *     <li>Files starting with &quot;_&quot;</li>
 	 *     <li>Files starting with &quot;.&quot;</li>
 	 *     <li>Files containing the string &quot;_COPYING_&quot;</li>
 	 * </ul>
-	 * 
+	 *
 	 * @return The singleton instance of the default file path filter.
 	 */
 	public static FilePathFilter createDefaultFilter() {
@@ -77,7 +79,8 @@ public abstract class FilePathFilter implements Serializable {
 
 		static final DefaultFilter INSTANCE = new DefaultFilter();
 
-		DefaultFilter() {}
+		DefaultFilter() {
+		}
 
 		@Override
 		public boolean filterPath(Path filePath) {

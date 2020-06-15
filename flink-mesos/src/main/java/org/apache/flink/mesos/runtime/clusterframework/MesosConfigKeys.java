@@ -51,7 +51,9 @@ public class MesosConfigKeys {
 	 */
 	public static final String ENV_FRAMEWORK_NAME = "FRAMEWORK_NAME";
 
-	/** Private constructor to prevent instantiation. */
+	/**
+	 * Private constructor to prevent instantiation.
+	 */
 	private MesosConfigKeys() {
 	}
 }

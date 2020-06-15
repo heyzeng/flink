@@ -58,8 +58,7 @@ public class UnionIterator<T> implements Iterator<T>, Iterable<T> {
 	public void add(Iterator<T> iterator) {
 		if (currentIterator == null) {
 			currentIterator = iterator;
-		}
-		else {
+		} else {
 			furtherIterators.add(iterator);
 		}
 	}
@@ -81,12 +80,10 @@ public class UnionIterator<T> implements Iterator<T>, Iterable<T> {
 		while (currentIterator != null) {
 			if (currentIterator.hasNext()) {
 				return true;
-			}
-			else if (nextIterator < furtherIterators.size()) {
+			} else if (nextIterator < furtherIterators.size()) {
 				currentIterator = furtherIterators.get(nextIterator);
 				nextIterator++;
-			}
-			else {
+			} else {
 				currentIterator = null;
 			}
 		}
@@ -98,8 +95,7 @@ public class UnionIterator<T> implements Iterator<T>, Iterable<T> {
 	public T next() {
 		if (hasNext()) {
 			return currentIterator.next();
-		}
-		else {
+		} else {
 			throw new NoSuchElementException();
 		}
 	}

@@ -25,7 +25,7 @@ import org.apache.flink.api.java.DataSet;
 /**
  * Base class for operations that operates on a single input data set.
  *
- * @param <IN> The data type of the input data set.
+ * @param <IN>  The data type of the input data set.
  * @param <OUT> The data type of the returned data set.
  */
 @Public
@@ -64,6 +64,6 @@ public abstract class SingleInputOperator<IN, OUT, O extends SingleInputOperator
 	 * @return The translated data flow operator.
 	 */
 	protected abstract org.apache.flink.api.common.operators.Operator<OUT> translateToDataFlow(
-			org.apache.flink.api.common.operators.Operator<IN> input);
+		org.apache.flink.api.common.operators.Operator<IN> input);
 
 }

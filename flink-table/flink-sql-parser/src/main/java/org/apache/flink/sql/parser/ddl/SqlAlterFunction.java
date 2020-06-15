@@ -55,13 +55,13 @@ public class SqlAlterFunction extends SqlCall {
 	private final boolean isTemporary;
 
 	public SqlAlterFunction(
-			SqlParserPos pos,
-			SqlIdentifier functionIdentifier,
-			SqlCharStringLiteral functionClassName,
-			String functionLanguage,
-			boolean ifExists,
-			boolean isTemporary,
-			boolean isSystemFunction) {
+		SqlParserPos pos,
+		SqlIdentifier functionIdentifier,
+		SqlCharStringLiteral functionClassName,
+		String functionLanguage,
+		boolean ifExists,
+		boolean isTemporary,
+		boolean isSystemFunction) {
 		super(pos);
 		this.functionIdentifier = requireNonNull(functionIdentifier, "functionIdentifier should not be null");
 		this.functionClassName = requireNonNull(functionClassName, "functionClassName should not be null");

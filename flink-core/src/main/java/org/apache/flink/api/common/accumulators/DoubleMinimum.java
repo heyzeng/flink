@@ -30,7 +30,8 @@ public class DoubleMinimum implements SimpleAccumulator<Double> {
 
 	private double min = Double.POSITIVE_INFINITY;
 
-	public DoubleMinimum() {}
+	public DoubleMinimum() {
+	}
 
 	public DoubleMinimum(double value) {
 		this.min = value;

@@ -63,8 +63,7 @@ public class HybridOnHeapMemorySegmentTest extends MemorySegmentTestBase {
 			//noinspection ResultOfMethodCallIgnored
 			seg.getOffHeapBuffer();
 			fail("should throw an exception");
-		}
-		catch (IllegalStateException e) {
+		} catch (IllegalStateException e) {
 			// expected
 		}
 

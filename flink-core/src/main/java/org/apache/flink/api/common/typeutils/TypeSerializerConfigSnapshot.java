@@ -41,13 +41,19 @@ import static org.apache.flink.util.Preconditions.checkState;
 @Deprecated
 public abstract class TypeSerializerConfigSnapshot<T> extends VersionedIOReadableWritable implements TypeSerializerSnapshot<T> {
 
-	/** Version / Magic number for the format that bridges between the old and new interface. */
+	/**
+	 * Version / Magic number for the format that bridges between the old and new interface.
+	 */
 	static final int ADAPTER_VERSION = 0x7a53c4f0;
 
-	/** The user code class loader; only relevant if this configuration instance was deserialized from binary form. */
+	/**
+	 * The user code class loader; only relevant if this configuration instance was deserialized from binary form.
+	 */
 	private ClassLoader userCodeClassLoader;
 
-	/** The originating serializer of this configuration snapshot. */
+	/**
+	 * The originating serializer of this configuration snapshot.
+	 */
 	private TypeSerializer<T> serializer;
 
 	/**
@@ -127,14 +133,13 @@ public abstract class TypeSerializerConfigSnapshot<T> extends VersionedIOReadabl
 	public final TypeSerializer<T> restoreSerializer() {
 		if (serializer == null) {
 			throw new IllegalStateException(
-					"Trying to restore the prior serializer via TypeSerializerConfigSnapshot, " +
+				"Trying to restore the prior serializer via TypeSerializerConfigSnapshot, " +
 					"but the prior serializer has not been set.");
-		}
-		else if (serializer instanceof UnloadableDummyTypeSerializer) {
+		} else if (serializer instanceof UnloadableDummyTypeSerializer) {
 			Throwable originalError = ((UnloadableDummyTypeSerializer<?>) serializer).getOriginalError();
 
 			throw new IllegalStateException(
-					"Could not Java-deserialize TypeSerializer while restoring checkpoint metadata for serializer " +
+				"Could not Java-deserialize TypeSerializer while restoring checkpoint metadata for serializer " +
 					"snapshot '" + getClass().getName() + "'. " +
 					"Please update to the TypeSerializerSnapshot interface that removes Java Serialization to avoid " +
 					"this problem in the future.", originalError);
@@ -145,11 +150,11 @@ public abstract class TypeSerializerConfigSnapshot<T> extends VersionedIOReadabl
 
 	@Override
 	public TypeSerializerSchemaCompatibility<T> resolveSchemaCompatibility(
-			TypeSerializer<T> newSerializer) {
+		TypeSerializer<T> newSerializer) {
 		if (newSerializer instanceof TypeSerializerConfigSnapshot.SelfResolvingTypeSerializer<?>) {
-				@SuppressWarnings("unchecked")
-				SelfResolvingTypeSerializer<T> selfResolvingTypeSerializer = (SelfResolvingTypeSerializer<T>) newSerializer;
-				return selfResolvingTypeSerializer.resolveSchemaCompatibilityViaRedirectingToNewSnapshotClass(this);
+			@SuppressWarnings("unchecked")
+			SelfResolvingTypeSerializer<T> selfResolvingTypeSerializer = (SelfResolvingTypeSerializer<T>) newSerializer;
+			return selfResolvingTypeSerializer.resolveSchemaCompatibilityViaRedirectingToNewSnapshotClass(this);
 		}
 
 		// we reach here if:

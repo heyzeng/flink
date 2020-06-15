@@ -74,7 +74,7 @@ public class ByteArrayOutputStreamWithPos extends OutputStream {
 	@Override
 	public void write(byte[] b, int off, int len) {
 		if ((off < 0) || (len < 0) || (off > b.length) ||
-				((off + len) - b.length > 0)) {
+			((off + len) - b.length > 0)) {
 			throw new IndexOutOfBoundsException();
 		}
 

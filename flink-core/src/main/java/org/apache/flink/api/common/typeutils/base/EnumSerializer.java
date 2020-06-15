@@ -146,7 +146,7 @@ public final class EnumSerializer<T extends Enum<T>> extends TypeSerializer<T> {
 			EnumSerializer<?> other = (EnumSerializer<?>) obj;
 
 			return other.enumClass == this.enumClass &&
-					Arrays.equals(values, other.values);
+				Arrays.equals(values, other.values);
 		} else {
 			return false;
 		}
@@ -231,8 +231,8 @@ public final class EnumSerializer<T extends Enum<T>> extends TypeSerializer<T> {
 					previousEnums[i] = Enum.valueOf(enumClass, enumName);
 				} catch (IllegalArgumentException e) {
 					throw new IllegalStateException("Could not create a restore serializer for enum " +
-							enumClass +
-							". Probably because an enum value was removed.");
+						enumClass +
+						". Probably because an enum value was removed.");
 				}
 			}
 
@@ -268,13 +268,13 @@ public final class EnumSerializer<T extends Enum<T>> extends TypeSerializer<T> {
 
 			@SuppressWarnings("unchecked")
 			T[] reconfiguredEnums = reconfiguredEnumSet.toArray(
-					(T[]) Array.newInstance(enumClass, reconfiguredEnumSet.size()));
+				(T[]) Array.newInstance(enumClass, reconfiguredEnumSet.size()));
 
 			EnumSerializer<T> reconfiguredSerializer = new EnumSerializer<>(
-					enumClass,
-					reconfiguredEnums);
+				enumClass,
+				reconfiguredEnums);
 			return TypeSerializerSchemaCompatibility.compatibleWithReconfiguredSerializer(
-					reconfiguredSerializer);
+				reconfiguredSerializer);
 		}
 	}
 
@@ -288,15 +288,18 @@ public final class EnumSerializer<T extends Enum<T>> extends TypeSerializer<T> {
 	 */
 	@Deprecated
 	public static final class EnumSerializerConfigSnapshot<T extends Enum<T>>
-			extends GenericTypeSerializerConfigSnapshot<T> {
+		extends GenericTypeSerializerConfigSnapshot<T> {
 
 		private static final int VERSION = 2;
 
 		private List<String> enumConstants;
 
-		/** This empty nullary constructor is required for deserializing the configuration. */
+		/**
+		 * This empty nullary constructor is required for deserializing the configuration.
+		 */
 		@SuppressWarnings("unused")
-		public EnumSerializerConfigSnapshot() {}
+		public EnumSerializerConfigSnapshot() {
+		}
 
 		@Override
 		public void write(DataOutputView out) throws IOException {
@@ -350,8 +353,8 @@ public final class EnumSerializer<T extends Enum<T>> extends TypeSerializer<T> {
 					previousEnums[i] = Enum.valueOf(enumClass, enumName);
 				} catch (IllegalArgumentException e) {
 					throw new RuntimeException("Could not create a restore serializer for enum " +
-							enumClass +
-							". Probably because an enum value was removed.");
+						enumClass +
+						". Probably because an enum value was removed.");
 				}
 			}
 			return new EnumSerializerSnapshot<>(enumClass, previousEnums).resolveSchemaCompatibility(newSerializer);
@@ -364,7 +367,7 @@ public final class EnumSerializer<T extends Enum<T>> extends TypeSerializer<T> {
 
 		@Override
 		public int[] getCompatibleVersions() {
-			return new int[] {VERSION, 1};
+			return new int[]{VERSION, 1};
 		}
 
 		List<String> getEnumConstants() {
@@ -409,8 +412,8 @@ public final class EnumSerializer<T extends Enum<T>> extends TypeSerializer<T> {
 	@Override
 	public String toString() {
 		return "EnumSerializer{" +
-				"enumClass=" + enumClass +
-				", values=" + Arrays.toString(values) +
-				'}';
+			"enumClass=" + enumClass +
+			", values=" + Arrays.toString(values) +
+			'}';
 	}
 }

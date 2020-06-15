@@ -45,14 +45,14 @@ public class JobManagerOptions {
 	@Documentation.Section({Documentation.Sections.COMMON_HOST_PORT, Documentation.Sections.ALL_JOB_MANAGER})
 	public static final ConfigOption<String> ADDRESS =
 		key("jobmanager.rpc.address")
-		.noDefaultValue()
-		.withDescription("The config parameter defining the network address to connect to" +
-			" for communication with the job manager." +
-			" This value is only interpreted in setups where a single JobManager with static" +
-			" name or address exists (simple standalone setups, or container setups with dynamic" +
-			" service name resolution). It is not used in many high-availability setups, when a" +
-			" leader-election service (like ZooKeeper) is used to elect and discover the JobManager" +
-			" leader from potentially multiple standby JobManagers.");
+			.noDefaultValue()
+			.withDescription("The config parameter defining the network address to connect to" +
+				" for communication with the job manager." +
+				" This value is only interpreted in setups where a single JobManager with static" +
+				" name or address exists (simple standalone setups, or container setups with dynamic" +
+				" service name resolution). It is not used in many high-availability setups, when a" +
+				" leader-election service (like ZooKeeper) is used to elect and discover the JobManager" +
+				" leader from potentially multiple standby JobManagers.");
 
 	/**
 	 * The local address of the network interface that the job manager binds to.
@@ -78,15 +78,15 @@ public class JobManagerOptions {
 	@Documentation.Section({Documentation.Sections.COMMON_HOST_PORT, Documentation.Sections.ALL_JOB_MANAGER})
 	public static final ConfigOption<Integer> PORT =
 		key("jobmanager.rpc.port")
-		.defaultValue(6123)
-		.withDescription("The config parameter defining the network port to connect to" +
-			" for communication with the job manager." +
-			" Like " + ADDRESS.key() + ", this value is only interpreted in setups where" +
-			" a single JobManager with static name/address and port exists (simple standalone setups," +
-			" or container setups with dynamic service name resolution)." +
-			" This config option is not used in many high-availability setups, when a" +
-			" leader-election service (like ZooKeeper) is used to elect and discover the JobManager" +
-			" leader from potentially multiple standby JobManagers.");
+			.defaultValue(6123)
+			.withDescription("The config parameter defining the network port to connect to" +
+				" for communication with the job manager." +
+				" Like " + ADDRESS.key() + ", this value is only interpreted in setups where" +
+				" a single JobManager with static name/address and port exists (simple standalone setups," +
+				" or container setups with dynamic service name resolution)." +
+				" This config option is not used in many high-availability setups, when a" +
+				" leader-election service (like ZooKeeper) is used to elect and discover the JobManager" +
+				" leader from potentially multiple standby JobManagers.");
 
 	/**
 	 * The local port that the job manager binds to.
@@ -104,18 +104,19 @@ public class JobManagerOptions {
 	@Documentation.Section(Documentation.Sections.ALL_JOB_MANAGER)
 	public static final ConfigOption<String> JOB_MANAGER_HEAP_MEMORY =
 		key("jobmanager.heap.size")
-		.defaultValue("1024m")
-		.withDescription("JVM heap size for the JobManager.");
+			.defaultValue("1024m")
+			.withDescription("JVM heap size for the JobManager.");
 
 	/**
 	 * JVM heap size (in megabytes) for the JobManager.
+	 *
 	 * @deprecated use {@link #JOB_MANAGER_HEAP_MEMORY}
 	 */
 	@Deprecated
 	public static final ConfigOption<Integer> JOB_MANAGER_HEAP_MEMORY_MB =
 		key("jobmanager.heap.mb")
-		.defaultValue(1024)
-		.withDescription("JVM heap size (in megabytes) for the JobManager.");
+			.defaultValue(1024)
+			.withDescription("JVM heap size (in megabytes) for the JobManager.");
 
 	/**
 	 * The maximum number of prior execution attempts kept in history.
@@ -146,7 +147,7 @@ public class JobManagerOptions {
 				.list(
 					text("'full': Restarts all tasks to recover the job."),
 					text("'region': Restarts all tasks that could be affected by the task failure. " +
-						"More details can be found %s.",
+							"More details can be found %s.",
 						link(
 							"../dev/task_failure_recovery.html#restart-pipelined-region-failover-strategy",
 							"here"))
@@ -168,8 +169,8 @@ public class JobManagerOptions {
 	@Documentation.Section(Documentation.Sections.ALL_JOB_MANAGER)
 	public static final ConfigOption<Long> JOB_STORE_CACHE_SIZE =
 		key("jobstore.cache-size")
-		.defaultValue(50L * 1024L * 1024L)
-		.withDescription("The job store cache size in bytes which is used to keep completed jobs in memory.");
+			.defaultValue(50L * 1024L * 1024L)
+			.withDescription("The job store cache size in bytes which is used to keep completed jobs in memory.");
 
 	/**
 	 * The time in seconds after which a completed job expires and is purged from the job store.
@@ -177,8 +178,8 @@ public class JobManagerOptions {
 	@Documentation.Section(Documentation.Sections.ALL_JOB_MANAGER)
 	public static final ConfigOption<Long> JOB_STORE_EXPIRATION_TIME =
 		key("jobstore.expiration-time")
-		.defaultValue(60L * 60L)
-		.withDescription("The time in seconds after which a completed job expires and is purged from the job store.");
+			.defaultValue(60L * 60L)
+			.withDescription("The time in seconds after which a completed job expires and is purged from the job store.");
 
 	/**
 	 * The max number of completed jobs that can be kept in the job store.
@@ -195,8 +196,8 @@ public class JobManagerOptions {
 	@Documentation.Section(Documentation.Sections.EXPERT_SCHEDULING)
 	public static final ConfigOption<Long> SLOT_REQUEST_TIMEOUT =
 		key("slot.request.timeout")
-		.defaultValue(5L * 60L * 1000L)
-		.withDescription("The timeout in milliseconds for requesting a slot from Slot Pool.");
+			.defaultValue(5L * 60L * 1000L)
+			.withDescription("The timeout in milliseconds for requesting a slot from Slot Pool.");
 
 	/**
 	 * The timeout in milliseconds for a idle slot in Slot Pool.

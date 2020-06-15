@@ -26,7 +26,7 @@ import java.io.IOException;
 /**
  * Test Non rich input format class which emits just five elements.
  */
-public class TestNonRichInputFormat extends NonRichGenericInputFormat<String> implements NonParallelInput{
+public class TestNonRichInputFormat extends NonRichGenericInputFormat<String> implements NonParallelInput {
 
 	private static final long serialVersionUID = 1L;
 	private static final int NUM = 5;
@@ -44,7 +44,7 @@ public class TestNonRichInputFormat extends NonRichGenericInputFormat<String> im
 		return NAMES[count - 1];
 	}
 
-	public void reset(){
+	public void reset() {
 		count = 0;
 	}
 }

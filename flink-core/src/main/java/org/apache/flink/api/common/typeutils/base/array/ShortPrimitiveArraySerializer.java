@@ -31,10 +31,10 @@ import org.apache.flink.core.memory.DataOutputView;
  * A serializer for short arrays.
  */
 @Internal
-public final class ShortPrimitiveArraySerializer extends TypeSerializerSingleton<short[]>{
+public final class ShortPrimitiveArraySerializer extends TypeSerializerSingleton<short[]> {
 
 	private static final long serialVersionUID = 1L;
-	
+
 	private static final short[] EMPTY = new short[0];
 
 	public static final ShortPrimitiveArraySerializer INSTANCE = new ShortPrimitiveArraySerializer();
@@ -43,7 +43,7 @@ public final class ShortPrimitiveArraySerializer extends TypeSerializerSingleton
 	public boolean isImmutableType() {
 		return false;
 	}
-	
+
 	@Override
 	public short[] createInstance() {
 		return EMPTY;
@@ -55,7 +55,7 @@ public final class ShortPrimitiveArraySerializer extends TypeSerializerSingleton
 		System.arraycopy(from, 0, copy, 0, from.length);
 		return copy;
 	}
-	
+
 	@Override
 	public short[] copy(short[] from, short[] reuse) {
 		return copy(from);
@@ -72,7 +72,7 @@ public final class ShortPrimitiveArraySerializer extends TypeSerializerSingleton
 		if (record == null) {
 			throw new IllegalArgumentException("The record must not be null.");
 		}
-		
+
 		final int len = record.length;
 		target.writeInt(len);
 		for (int i = 0; i < len; i++) {
@@ -84,11 +84,11 @@ public final class ShortPrimitiveArraySerializer extends TypeSerializerSingleton
 	public short[] deserialize(DataInputView source) throws IOException {
 		final int len = source.readInt();
 		short[] array = new short[len];
-		
+
 		for (int i = 0; i < len; i++) {
 			array[i] = source.readShort();
 		}
-		
+
 		return array;
 	}
 

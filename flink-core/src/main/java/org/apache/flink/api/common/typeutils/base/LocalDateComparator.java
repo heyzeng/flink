@@ -41,7 +41,7 @@ public final class LocalDateComparator extends TypeComparator<LocalDate> impleme
 
 	// For use by getComparators
 	@SuppressWarnings("rawtypes")
-	private final LocalDateComparator[] comparators = new LocalDateComparator[] {this};
+	private final LocalDateComparator[] comparators = new LocalDateComparator[]{this};
 
 	public LocalDateComparator(boolean ascending) {
 		this.ascendingComparison = ascending;
@@ -141,7 +141,7 @@ public final class LocalDateComparator extends TypeComparator<LocalDate> impleme
 	// --------------------------------------------------------------------------------------------
 
 	public static int compareSerializedLocalDate(DataInputView firstSource, DataInputView secondSource,
-			boolean ascendingComparison) throws IOException {
+												 boolean ascendingComparison) throws IOException {
 		int cmp = firstSource.readInt() - secondSource.readInt();
 		if (cmp == 0) {
 			cmp = firstSource.readByte() - secondSource.readByte();

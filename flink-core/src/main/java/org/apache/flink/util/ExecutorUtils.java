@@ -37,12 +37,12 @@ public class ExecutorUtils {
 	 * all ExecutorServices terminate. If the ExecutorServices do not terminate in this time,
 	 * they will be shut down hard.
 	 *
-	 * @param timeout to wait for the termination of all ExecutorServices
-	 * @param unit of the timeout
+	 * @param timeout          to wait for the termination of all ExecutorServices
+	 * @param unit             of the timeout
 	 * @param executorServices to shut down
 	 */
 	public static void gracefulShutdown(long timeout, TimeUnit unit, ExecutorService... executorServices) {
-		for (ExecutorService executorService: executorServices) {
+		for (ExecutorService executorService : executorServices) {
 			executorService.shutdown();
 		}
 
@@ -51,7 +51,7 @@ public class ExecutorUtils {
 		long timeLeft = unit.toMillis(timeout);
 		boolean hasTimeLeft = timeLeft > 0L;
 
-		for (ExecutorService executorService: executorServices) {
+		for (ExecutorService executorService : executorServices) {
 			if (wasInterrupted || !hasTimeLeft) {
 				executorService.shutdownNow();
 			} else {
@@ -62,7 +62,7 @@ public class ExecutorUtils {
 					}
 				} catch (InterruptedException e) {
 					LOG.warn("Interrupted while shutting down executor services. Shutting all " +
-							"remaining ExecutorServices down now.", e);
+						"remaining ExecutorServices down now.", e);
 					executorService.shutdownNow();
 
 					wasInterrupted = true;
@@ -83,8 +83,8 @@ public class ExecutorUtils {
 	 * <p>The executor services will be shut down gracefully for the given timeout period. Afterwards
 	 * {@link ExecutorService#shutdownNow()} will be called.
 	 *
-	 * @param timeout before {@link ExecutorService#shutdownNow()} is called
-	 * @param unit time unit of the timeout
+	 * @param timeout          before {@link ExecutorService#shutdownNow()} is called
+	 * @param unit             time unit of the timeout
 	 * @param executorServices to shut down
 	 * @return Future which is completed once the {@link ExecutorService} are shut down
 	 */

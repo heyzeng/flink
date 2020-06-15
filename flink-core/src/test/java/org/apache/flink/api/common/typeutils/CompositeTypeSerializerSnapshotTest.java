@@ -170,10 +170,10 @@ public class CompositeTypeSerializerSnapshotTest {
 	}
 
 	private TypeSerializerSchemaCompatibility<String> snapshotCompositeSerializerAndGetSchemaCompatibilityAfterRestore(
-			TypeSerializer<?>[] initialNestedSerializers,
-			TypeSerializer<?>[] newNestedSerializer,
-			String initialOuterConfiguration,
-			String newOuterConfiguration) throws IOException {
+		TypeSerializer<?>[] initialNestedSerializers,
+		TypeSerializer<?>[] newNestedSerializer,
+		String initialOuterConfiguration,
+		String newOuterConfiguration) throws IOException {
 		TestCompositeTypeSerializer testSerializer =
 			new TestCompositeTypeSerializer(initialOuterConfiguration, initialNestedSerializers);
 
@@ -243,8 +243,8 @@ public class CompositeTypeSerializerSnapshotTest {
 		private final TypeSerializer<?>[] nestedSerializers;
 
 		TestCompositeTypeSerializer(
-				String outerConfiguration,
-				TypeSerializer<?>[] nestedSerializers) {
+			String outerConfiguration,
+			TypeSerializer<?>[] nestedSerializers) {
 			this.outerConfiguration = outerConfiguration;
 			this.nestedSerializers = nestedSerializers;
 		}
@@ -480,7 +480,8 @@ public class CompositeTypeSerializerSnapshotTest {
 
 		private TargetCompatibility targetCompatibility;
 
-		public NestedSerializerSnapshot() {}
+		public NestedSerializerSnapshot() {
+		}
 
 		public NestedSerializerSnapshot(TargetCompatibility targetCompatibility) {
 			this.targetCompatibility = targetCompatibility;

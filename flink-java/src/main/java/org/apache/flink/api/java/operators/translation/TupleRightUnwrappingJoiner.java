@@ -33,8 +33,8 @@ import org.apache.flink.util.Collector;
  */
 @Internal
 public final class TupleRightUnwrappingJoiner<I1, I2, OUT, K>
-		extends WrappingFunction<FlatJoinFunction<I1, I2, OUT>>
-		implements FlatJoinFunction<I1, Tuple2<K, I2>, OUT> {
+	extends WrappingFunction<FlatJoinFunction<I1, I2, OUT>>
+	implements FlatJoinFunction<I1, Tuple2<K, I2>, OUT> {
 
 	private static final long serialVersionUID = 1L;
 

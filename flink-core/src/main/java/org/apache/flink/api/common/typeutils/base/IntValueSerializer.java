@@ -31,7 +31,7 @@ import org.apache.flink.types.IntValue;
 public final class IntValueSerializer extends TypeSerializerSingleton<IntValue> {
 
 	private static final long serialVersionUID = 1L;
-	
+
 	public static final IntValueSerializer INSTANCE = new IntValueSerializer();
 
 	@Override
@@ -48,7 +48,7 @@ public final class IntValueSerializer extends TypeSerializerSingleton<IntValue> 
 	public IntValue copy(IntValue from) {
 		return copy(from, new IntValue());
 	}
-	
+
 	@Override
 	public IntValue copy(IntValue from, IntValue reuse) {
 		reuse.setValue(from.getValue());
@@ -69,7 +69,7 @@ public final class IntValueSerializer extends TypeSerializerSingleton<IntValue> 
 	public IntValue deserialize(DataInputView source) throws IOException {
 		return deserialize(new IntValue(), source);
 	}
-	
+
 	@Override
 	public IntValue deserialize(IntValue reuse, DataInputView source) throws IOException {
 		reuse.read(source);

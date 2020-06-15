@@ -44,8 +44,8 @@ public final class LocalDateTimeSerializer extends TypeSerializerSingleton<Local
 	@Override
 	public LocalDateTime createInstance() {
 		return LocalDateTime.of(
-				LocalDateSerializer.INSTANCE.createInstance(),
-				LocalTimeSerializer.INSTANCE.createInstance());
+			LocalDateSerializer.INSTANCE.createInstance(),
+			LocalTimeSerializer.INSTANCE.createInstance());
 	}
 
 	@Override

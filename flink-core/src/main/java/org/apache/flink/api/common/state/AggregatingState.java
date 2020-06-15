@@ -38,8 +38,9 @@ import org.apache.flink.api.common.functions.AggregateFunction;
  * key of the current element. That way, the system can handle stream and state partitioning
  * consistently together.
  *
- * @param <IN> Type of the value added to the state.
+ * @param <IN>  Type of the value added to the state.
  * @param <OUT> Type of the value extracted from the state.
  */
 @PublicEvolving
-public interface AggregatingState<IN, OUT> extends MergingState<IN, OUT> {}
+public interface AggregatingState<IN, OUT> extends MergingState<IN, OUT> {
+}

@@ -45,24 +45,24 @@ public class SortPartitionTest {
 
 	// TUPLE DATA
 	private final List<Tuple5<Integer, Long, String, Long, Integer>> emptyTupleData =
-			new ArrayList<Tuple5<Integer, Long, String, Long, Integer>>();
+		new ArrayList<Tuple5<Integer, Long, String, Long, Integer>>();
 
 	private final TupleTypeInfo<Tuple5<Integer, Long, String, Long, Integer>> tupleTypeInfo = new
-			TupleTypeInfo<Tuple5<Integer, Long, String, Long, Integer>>(
-					BasicTypeInfo.INT_TYPE_INFO,
-					BasicTypeInfo.LONG_TYPE_INFO,
-					BasicTypeInfo.STRING_TYPE_INFO,
-					BasicTypeInfo.LONG_TYPE_INFO,
-					BasicTypeInfo.INT_TYPE_INFO
-			);
+		TupleTypeInfo<Tuple5<Integer, Long, String, Long, Integer>>(
+		BasicTypeInfo.INT_TYPE_INFO,
+		BasicTypeInfo.LONG_TYPE_INFO,
+		BasicTypeInfo.STRING_TYPE_INFO,
+		BasicTypeInfo.LONG_TYPE_INFO,
+		BasicTypeInfo.INT_TYPE_INFO
+	);
 
 	private final TupleTypeInfo<Tuple4<Integer, Long, CustomType, Long[]>> tupleWithCustomInfo = new
-			TupleTypeInfo<Tuple4<Integer, Long, CustomType, Long[]>>(
-				BasicTypeInfo.INT_TYPE_INFO,
-				BasicTypeInfo.LONG_TYPE_INFO,
-				TypeExtractor.createTypeInfo(CustomType.class),
-				BasicArrayTypeInfo.LONG_ARRAY_TYPE_INFO
-			);
+		TupleTypeInfo<Tuple4<Integer, Long, CustomType, Long[]>>(
+		BasicTypeInfo.INT_TYPE_INFO,
+		BasicTypeInfo.LONG_TYPE_INFO,
+		TypeExtractor.createTypeInfo(CustomType.class),
+		BasicArrayTypeInfo.LONG_ARRAY_TYPE_INFO
+	);
 
 	// LONG DATA
 	private final List<Long> emptyLongData = new ArrayList<Long>();
@@ -70,7 +70,7 @@ public class SortPartitionTest {
 	private final List<CustomType> customTypeData = new ArrayList<CustomType>();
 
 	private final List<Tuple4<Integer, Long, CustomType, Long[]>> tupleWithCustomData =
-			new ArrayList<Tuple4<Integer, Long, CustomType, Long[]>>();
+		new ArrayList<Tuple4<Integer, Long, CustomType, Long[]>>();
 
 	@Test
 	public void testSortPartitionPositionKeys1() {
@@ -95,8 +95,8 @@ public class SortPartitionTest {
 		// should work
 		try {
 			tupleDs
-					.sortPartition(0, Order.ASCENDING)
-					.sortPartition(3, Order.DESCENDING);
+				.sortPartition(0, Order.ASCENDING)
+				.sortPartition(3, Order.DESCENDING);
 		} catch (Exception e) {
 			Assert.fail();
 		}
@@ -145,8 +145,8 @@ public class SortPartitionTest {
 		// should work
 		try {
 			tupleDs
-					.sortPartition("f0", Order.ASCENDING)
-					.sortPartition("f2.nested.myInt", Order.DESCENDING);
+				.sortPartition("f0", Order.ASCENDING)
+				.sortPartition("f2.nested.myInt", Order.DESCENDING);
 		} catch (Exception e) {
 			Assert.fail();
 		}
@@ -273,7 +273,8 @@ public class SortPartitionTest {
 		public String myString;
 		public Nest nested;
 
-		public CustomType() {}
+		public CustomType() {
+		}
 
 		public CustomType(int i, long l, String s) {
 			myInt = i;

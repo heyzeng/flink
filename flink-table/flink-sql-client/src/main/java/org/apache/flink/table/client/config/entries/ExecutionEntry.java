@@ -179,14 +179,14 @@ public class ExecutionEntry extends ConfigEntry {
 
 	public boolean inStreamingMode() {
 		return properties.getOptionalString(EXECUTION_TYPE)
-				.map((v) -> v.equals(EXECUTION_TYPE_VALUE_STREAMING))
-				.orElse(false);
+			.map((v) -> v.equals(EXECUTION_TYPE_VALUE_STREAMING))
+			.orElse(false);
 	}
 
 	public boolean inBatchMode() {
 		return properties.getOptionalString(EXECUTION_TYPE)
-				.map((v) -> v.equals(EXECUTION_TYPE_VALUE_BATCH))
-				.orElse(false);
+			.map((v) -> v.equals(EXECUTION_TYPE_VALUE_BATCH))
+			.orElse(false);
 	}
 
 	public boolean isStreamingPlanner() {
@@ -295,7 +295,7 @@ public class ExecutionEntry extends ConfigEntry {
 							Time.milliseconds(attemptDelay)));
 					default:
 						return Optional.empty();
-					}
+				}
 			})
 			.orElseGet(() ->
 				useDefaultValue(
@@ -326,8 +326,8 @@ public class ExecutionEntry extends ConfigEntry {
 
 	public boolean isTableauMode() {
 		return properties.getOptionalString(EXECUTION_RESULT_MODE)
-				.map((v) -> v.equals(EXECUTION_RESULT_MODE_VALUE_TABLEAU))
-				.orElse(false);
+			.map((v) -> v.equals(EXECUTION_RESULT_MODE_VALUE_TABLEAU))
+			.orElse(false);
 	}
 
 	public Map<String, String> asTopLevelMap() {

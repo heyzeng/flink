@@ -260,14 +260,14 @@ class IndividualForwardMapper[X, Y, Z] extends RichMapFunction[(X, Y, Z), (X, Y,
 
 @ForwardedFields(Array("_2"))
 class FieldTwoForwardMapper[X, Y, Z] extends RichMapFunction[(X, Y, Z), (X, Y, Z)] {
-  def map(value: (X, Y ,Z)): (X, Y, Z) = {
+  def map(value: (X, Y, Z)): (X, Y, Z) = {
     value
   }
 }
 
 @ForwardedFieldsFirst(Array("_2 -> _1"))
 @ForwardedFieldsSecond(Array("_1 -> _2"))
-class ForwardingTupleJoin[A, B, C, D] extends RichJoinFunction[(A, B),  (C, D), (B, C)] {
+class ForwardingTupleJoin[A, B, C, D] extends RichJoinFunction[(A, B), (C, D), (B, C)] {
   def join(first: (A, B), second: (C, D)): (B, C) = {
     (first._2, second._1)
   }

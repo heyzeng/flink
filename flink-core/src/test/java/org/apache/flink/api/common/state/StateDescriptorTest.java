@@ -80,7 +80,8 @@ public class StateDescriptorTest {
 		try {
 			descr.getSerializer();
 			fail("should fail with an exception");
-		} catch (IllegalStateException ignored) {}
+		} catch (IllegalStateException ignored) {
+		}
 
 		descr.initializeSerializerUnlessSet(new ExecutionConfig());
 
@@ -103,7 +104,8 @@ public class StateDescriptorTest {
 		try {
 			descr.getSerializer();
 			fail("should fail with an exception");
-		} catch (IllegalStateException ignored) {}
+		} catch (IllegalStateException ignored) {
+		}
 
 		TestStateDescriptor<String> clone = CommonTestUtils.createCopySerializable(descr);
 
@@ -111,7 +113,8 @@ public class StateDescriptorTest {
 		try {
 			clone.getSerializer();
 			fail("should fail with an exception");
-		} catch (IllegalStateException ignored) {}
+		} catch (IllegalStateException ignored) {
+		}
 
 		clone.initializeSerializerUnlessSet(new ExecutionConfig());
 
@@ -124,8 +127,8 @@ public class StateDescriptorTest {
 	public void testInitializeSerializerAfterSerializationWithCustomConfig() throws Exception {
 		// guard our test assumptions.
 		assertEquals("broken test assumption", -1,
-				new KryoSerializer<>(String.class, new ExecutionConfig()).getKryo()
-						.getRegistration(File.class).getId());
+			new KryoSerializer<>(String.class, new ExecutionConfig()).getKryo()
+				.getRegistration(File.class).getId());
 
 		final ExecutionConfig config = new ExecutionConfig();
 		config.registerKryoType(File.class);
@@ -137,7 +140,7 @@ public class StateDescriptorTest {
 
 		// serialized one (later initialized) carries the registration
 		assertTrue(((KryoSerializer<?>) clone.getSerializer()).getKryo()
-				.getRegistration(File.class).getId() > 0);
+			.getRegistration(File.class).getId() > 0);
 	}
 
 	// ------------------------------------------------------------------------

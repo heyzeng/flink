@@ -44,7 +44,6 @@ import static org.apache.flink.util.Preconditions.checkNotNull;
  *
  * <p>The size can be parsed from a text expression. If the expression is a pure number,
  * the value will be interpreted as bytes.
- *
  */
 @PublicEvolving
 public class MemorySize implements java.io.Serializable, Comparable<MemorySize> {
@@ -64,13 +63,19 @@ public class MemorySize implements java.io.Serializable, Comparable<MemorySize> 
 
 	// ------------------------------------------------------------------------
 
-	/** The memory size, in bytes. */
+	/**
+	 * The memory size, in bytes.
+	 */
 	private final long bytes;
 
-	/** The memorized value returned by toString(). */
+	/**
+	 * The memorized value returned by toString().
+	 */
 	private transient String stringified;
 
-	/** The memorized value returned by toHumanReadableString(). */
+	/**
+	 * The memorized value returned by toHumanReadableString().
+	 */
 	private transient String humanReadableStr;
 
 	/**
@@ -134,7 +139,7 @@ public class MemorySize implements java.io.Serializable, Comparable<MemorySize> 
 	@Override
 	public boolean equals(Object obj) {
 		return obj == this ||
-				(obj != null && obj.getClass() == this.getClass() && ((MemorySize) obj).bytes == this.bytes);
+			(obj != null && obj.getClass() == this.getClass() && ((MemorySize) obj).bytes == this.bytes);
 	}
 
 	@Override
@@ -240,7 +245,6 @@ public class MemorySize implements java.io.Serializable, Comparable<MemorySize> 
 	 *
 	 * @param text The string to parse
 	 * @return The parsed MemorySize
-	 *
 	 * @throws IllegalArgumentException Thrown, if the expression cannot be parsed.
 	 */
 	public static MemorySize parse(String text) throws IllegalArgumentException {
@@ -250,10 +254,9 @@ public class MemorySize implements java.io.Serializable, Comparable<MemorySize> 
 	/**
 	 * Parses the given string with a default unit.
 	 *
-	 * @param text The string to parse.
+	 * @param text        The string to parse.
 	 * @param defaultUnit specify the default unit.
 	 * @return The parsed MemorySize.
-	 *
 	 * @throws IllegalArgumentException Thrown, if the expression cannot be parsed.
 	 */
 	public static MemorySize parse(String text, MemoryUnit defaultUnit) throws IllegalArgumentException {
@@ -270,7 +273,6 @@ public class MemorySize implements java.io.Serializable, Comparable<MemorySize> 
 	 *
 	 * @param text The string to parse
 	 * @return The parsed size, in bytes.
-	 *
 	 * @throws IllegalArgumentException Thrown, if the expression cannot be parsed.
 	 */
 	public static long parseBytes(String text) throws IllegalArgumentException {
@@ -297,10 +299,9 @@ public class MemorySize implements java.io.Serializable, Comparable<MemorySize> 
 		final long value;
 		try {
 			value = Long.parseLong(number); // this throws a NumberFormatException on overflow
-		}
-		catch (NumberFormatException e) {
+		} catch (NumberFormatException e) {
 			throw new IllegalArgumentException("The value '" + number +
-					"' cannot be re represented as 64bit number (numeric overflow).");
+				"' cannot be re represented as 64bit number (numeric overflow).");
 		}
 
 		final long multiplier = parseUnit(unit).map(MemoryUnit::getMultiplier).orElse(1L);
@@ -309,7 +310,7 @@ public class MemorySize implements java.io.Serializable, Comparable<MemorySize> 
 		// check for overflow
 		if (result / multiplier != value) {
 			throw new IllegalArgumentException("The value '" + text +
-					"' cannot be re represented as 64bit number of bytes (numeric overflow).");
+				"' cannot be re represented as 64bit number of bytes (numeric overflow).");
 		}
 
 		return result;
@@ -344,7 +345,7 @@ public class MemorySize implements java.io.Serializable, Comparable<MemorySize> 
 	}
 
 	/**
-	 *  Enum which defines memory unit, mostly used to parse value from configuration file.
+	 * Enum which defines memory unit, mostly used to parse value from configuration file.
 	 *
 	 * <p>To make larger values more compact, the common size suffixes are supported:
 	 *
@@ -355,15 +356,14 @@ public class MemorySize implements java.io.Serializable, Comparable<MemorySize> 
 	 *     <li>1g or 1gb or 1gibibytes (interpreted as gibibytes = 1024 mebibytes)
 	 *     <li>1t or 1tb or 1tebibytes (interpreted as tebibytes = 1024 gibibytes)
 	 * </ul>
-	 *
 	 */
 	public enum MemoryUnit {
 
-		BYTES(new String[] { "b", "bytes" }, 1L),
-		KILO_BYTES(new String[] { "k", "kb", "kibibytes" }, 1024L),
-		MEGA_BYTES(new String[] { "m", "mb", "mebibytes" }, 1024L * 1024L),
-		GIGA_BYTES(new String[] { "g", "gb", "gibibytes" }, 1024L * 1024L * 1024L),
-		TERA_BYTES(new String[] { "t", "tb", "tebibytes" }, 1024L * 1024L * 1024L * 1024L);
+		BYTES(new String[]{"b", "bytes"}, 1L),
+		KILO_BYTES(new String[]{"k", "kb", "kibibytes"}, 1024L),
+		MEGA_BYTES(new String[]{"m", "mb", "mebibytes"}, 1024L * 1024L),
+		GIGA_BYTES(new String[]{"g", "gb", "gibibytes"}, 1024L * 1024L * 1024L),
+		TERA_BYTES(new String[]{"t", "tb", "tebibytes"}, 1024L * 1024L * 1024L * 1024L);
 
 		private final String[] units;
 

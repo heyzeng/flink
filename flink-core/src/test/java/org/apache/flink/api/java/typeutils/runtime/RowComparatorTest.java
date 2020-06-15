@@ -89,10 +89,10 @@ public class RowComparatorTest extends ComparatorTestBase<Row> {
 	@Override
 	protected TypeComparator<Row> createComparator(boolean ascending) {
 		return typeInfo.createComparator(
-			new int[] {0, 1, 2, 3, 4, 5, 6},
-		    new boolean[] {ascending, ascending, ascending, ascending, ascending, ascending, ascending},
-		    0,
-		    new ExecutionConfig());
+			new int[]{0, 1, 2, 3, 4, 5, 6},
+			new boolean[]{ascending, ascending, ascending, ascending, ascending, ascending, ascending},
+			0,
+			new ExecutionConfig());
 	}
 
 	@Override

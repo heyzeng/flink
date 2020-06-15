@@ -31,9 +31,9 @@ public class DoubleZeroConvergence implements ConvergenceCriterion<DoubleValue> 
 
 	/**
 	 * Returns true, if the aggregator value is zero, false otherwise.
-	 * 
+	 *
 	 * @param iteration The number of the iteration superstep. Ignored in this case.
-	 * @param value The aggregator value, which is compared to zero.
+	 * @param value     The aggregator value, which is compared to zero.
 	 * @return True, if the aggregator value is zero, false otherwise.
 	 */
 	@Override

@@ -59,7 +59,8 @@ public class ExceptionUtilsTest extends TestLogger {
 		try {
 			ExceptionUtils.rethrowIfFatalError(new InternalError());
 			fail();
-		} catch (InternalError ignored) {}
+		} catch (InternalError ignored) {
+		}
 
 		// non-fatal error is not rethrown
 		ExceptionUtils.rethrowIfFatalError(new NoClassDefFoundError());

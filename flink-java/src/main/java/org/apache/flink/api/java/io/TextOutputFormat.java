@@ -32,6 +32,7 @@ import java.nio.charset.UnsupportedCharsetException;
  * A {@link FileOutputFormat} that writes objects to a text file.
  *
  * <p>Objects are converted to Strings using either {@link Object#toString()} or a {@link TextFormatter}.
+ *
  * @param <T> type of elements
  */
 @PublicEvolving
@@ -50,6 +51,7 @@ public class TextOutputFormat<T> extends FileOutputFormat<T> {
 
 	/**
 	 * Formatter that transforms values into their {@link String} representations.
+	 *
 	 * @param <IN> type of input elements
 	 */
 	public interface TextFormatter<IN> extends Serializable {
@@ -89,11 +91,9 @@ public class TextOutputFormat<T> extends FileOutputFormat<T> {
 
 		try {
 			this.charset = Charset.forName(charsetName);
-		}
-		catch (IllegalCharsetNameException e) {
+		} catch (IllegalCharsetNameException e) {
 			throw new IOException("The charset " + charsetName + " is not valid.", e);
-		}
-		catch (UnsupportedCharsetException e) {
+		} catch (UnsupportedCharsetException e) {
 			throw new IOException("The charset " + charsetName + " is not supported.", e);
 		}
 	}

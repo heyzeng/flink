@@ -48,8 +48,8 @@ public class GenericDataSinkBaseTest implements java.io.Serializable {
 
 	private static TestNonRichInputFormat in = new TestNonRichInputFormat();
 	GenericDataSourceBase<String, TestNonRichInputFormat> source =
-			new GenericDataSourceBase<String, TestNonRichInputFormat>(
-					in, new OperatorInformation<String>(BasicTypeInfo.STRING_TYPE_INFO), "testSource");
+		new GenericDataSourceBase<String, TestNonRichInputFormat>(
+			in, new OperatorInformation<String>(BasicTypeInfo.STRING_TYPE_INFO), "testSource");
 
 
 	@Test
@@ -57,9 +57,9 @@ public class GenericDataSinkBaseTest implements java.io.Serializable {
 		try {
 			TestNonRichOutputFormat out = new TestNonRichOutputFormat();
 			GenericDataSinkBase<String> sink = new GenericDataSinkBase<String>(
-					out,
-					new UnaryOperatorInformation<String, Nothing>(BasicTypeInfo.STRING_TYPE_INFO, BasicTypeInfo.getInfoFor(Nothing.class)),
-					"test_sink");
+				out,
+				new UnaryOperatorInformation<String, Nothing>(BasicTypeInfo.STRING_TYPE_INFO, BasicTypeInfo.getInfoFor(Nothing.class)),
+				"test_sink");
 			sink.setInput(source);
 
 			ExecutionConfig executionConfig = new ExecutionConfig();
@@ -73,8 +73,7 @@ public class GenericDataSinkBaseTest implements java.io.Serializable {
 			in.reset();
 			sink.executeOnCollections(asList(TestIOData.NAMES), null, executionConfig);
 			assertEquals(out.output, asList(TestIOData.NAMES));
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 			fail(e.getMessage());
 		}
@@ -85,9 +84,9 @@ public class GenericDataSinkBaseTest implements java.io.Serializable {
 		try {
 			TestRichOutputFormat out = new TestRichOutputFormat();
 			GenericDataSinkBase<String> sink = new GenericDataSinkBase<String>(
-					out,
-					new UnaryOperatorInformation<String, Nothing>(BasicTypeInfo.STRING_TYPE_INFO, BasicTypeInfo.getInfoFor(Nothing.class)),
-					"test_sink");
+				out,
+				new UnaryOperatorInformation<String, Nothing>(BasicTypeInfo.STRING_TYPE_INFO, BasicTypeInfo.getInfoFor(Nothing.class)),
+				"test_sink");
 			sink.setInput(source);
 
 			ExecutionConfig executionConfig = new ExecutionConfig();
@@ -96,22 +95,22 @@ public class GenericDataSinkBaseTest implements java.io.Serializable {
 			final TaskInfo taskInfo = new TaskInfo("test_sink", 1, 0, 1, 0);
 			executionConfig.disableObjectReuse();
 			in.reset();
-			
+
 			sink.executeOnCollections(asList(TestIOData.NAMES), new RuntimeUDFContext(
 					taskInfo, null, executionConfig, cpTasks, accumulatorMap, new UnregisteredMetricsGroup()),
-					executionConfig);
-		
-				assertEquals(out.output, asList(TestIOData.RICH_NAMES));
+				executionConfig);
+
+			assertEquals(out.output, asList(TestIOData.RICH_NAMES));
 
 			executionConfig.enableObjectReuse();
 			out.clear();
 			in.reset();
-			
+
 			sink.executeOnCollections(asList(TestIOData.NAMES), new RuntimeUDFContext(
 					taskInfo, null, executionConfig, cpTasks, accumulatorMap, new UnregisteredMetricsGroup()),
-					executionConfig);
+				executionConfig);
 			assertEquals(out.output, asList(TestIOData.RICH_NAMES));
-		} catch(Exception e){
+		} catch (Exception e) {
 			e.printStackTrace();
 			fail(e.getMessage());
 		}

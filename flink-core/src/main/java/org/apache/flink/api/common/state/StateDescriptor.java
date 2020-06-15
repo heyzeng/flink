@@ -82,28 +82,40 @@ public abstract class StateDescriptor<S extends State, T> implements Serializabl
 
 	// ------------------------------------------------------------------------
 
-	/** Name that uniquely identifies state created from this StateDescriptor. */
+	/**
+	 * Name that uniquely identifies state created from this StateDescriptor.
+	 */
 	protected final String name;
 
-	/** The serializer for the type. May be eagerly initialized in the constructor,
+	/**
+	 * The serializer for the type. May be eagerly initialized in the constructor,
 	 * or lazily once the {@link #initializeSerializerUnlessSet(ExecutionConfig)} method
-	 * is called. */
+	 * is called.
+	 */
 	private final AtomicReference<TypeSerializer<T>> serializerAtomicReference = new AtomicReference<>();
 
-	/** The type information describing the value type. Only used to if the serializer
-	 * is created lazily. */
+	/**
+	 * The type information describing the value type. Only used to if the serializer
+	 * is created lazily.
+	 */
 	@Nullable
 	private TypeInformation<T> typeInfo;
 
-	/** Name for queries against state created from this StateDescriptor. */
+	/**
+	 * Name for queries against state created from this StateDescriptor.
+	 */
 	@Nullable
 	private String queryableStateName;
 
-	/** Name for queries against state created from this StateDescriptor. */
+	/**
+	 * Name for queries against state created from this StateDescriptor.
+	 */
 	@Nonnull
 	private StateTtlConfig ttlConfig = StateTtlConfig.DISABLED;
 
-	/** The default value returned by the state when no other value is bound to a key. */
+	/**
+	 * The default value returned by the state when no other value is bound to a key.
+	 */
 	@Nullable
 	protected transient T defaultValue;
 
@@ -112,8 +124,8 @@ public abstract class StateDescriptor<S extends State, T> implements Serializabl
 	/**
 	 * Create a new {@code StateDescriptor} with the given name and the given type serializer.
 	 *
-	 * @param name The name of the {@code StateDescriptor}.
-	 * @param serializer The type serializer for the values in the state.
+	 * @param name         The name of the {@code StateDescriptor}.
+	 * @param serializer   The type serializer for the values in the state.
 	 * @param defaultValue The default value that will be set when requesting state without setting
 	 *                     a value before.
 	 */
@@ -126,8 +138,8 @@ public abstract class StateDescriptor<S extends State, T> implements Serializabl
 	/**
 	 * Create a new {@code StateDescriptor} with the given name and the given type information.
 	 *
-	 * @param name The name of the {@code StateDescriptor}.
-	 * @param typeInfo The type information for the values in the state.
+	 * @param name         The name of the {@code StateDescriptor}.
+	 * @param typeInfo     The type information for the values in the state.
 	 * @param defaultValue The default value that will be set when requesting state without setting
 	 *                     a value before.
 	 */
@@ -143,8 +155,8 @@ public abstract class StateDescriptor<S extends State, T> implements Serializabl
 	 * <p>If this constructor fails (because it is not possible to describe the type via a class),
 	 * consider using the {@link #StateDescriptor(String, TypeInformation, Object)} constructor.
 	 *
-	 * @param name The name of the {@code StateDescriptor}.
-	 * @param type The class of the type of values in the state.
+	 * @param name         The name of the {@code StateDescriptor}.
+	 * @param type         The class of the type of values in the state.
 	 * @param defaultValue The default value that will be set when requesting state without setting
 	 *                     a value before.
 	 */
@@ -156,7 +168,7 @@ public abstract class StateDescriptor<S extends State, T> implements Serializabl
 			this.typeInfo = TypeExtractor.createTypeInfo(type);
 		} catch (Exception e) {
 			throw new RuntimeException(
-					"Could not create the type information for '" + type.getName() + "'. " +
+				"Could not create the type information for '" + type.getName() + "'. " +
 					"The most common reason is failure to infer the generic type information, due to Java's type erasure. " +
 					"In that case, please pass a 'TypeHint' instead of a class to describe the type. " +
 					"For example, to describe 'Tuple2<String, String>' as a generic type, use " +
@@ -322,12 +334,10 @@ public abstract class StateDescriptor<S extends State, T> implements Serializabl
 	public final boolean equals(Object o) {
 		if (o == this) {
 			return true;
-		}
-		else if (o != null && o.getClass() == this.getClass()) {
+		} else if (o != null && o.getClass() == this.getClass()) {
 			final StateDescriptor<?, ?> that = (StateDescriptor<?, ?>) o;
 			return this.name.equals(that.name);
-		}
-		else {
+		} else {
 			return false;
 		}
 	}
@@ -335,11 +345,11 @@ public abstract class StateDescriptor<S extends State, T> implements Serializabl
 	@Override
 	public String toString() {
 		return getClass().getSimpleName() +
-				"{name=" + name +
-				", defaultValue=" + defaultValue +
-				", serializer=" + serializerAtomicReference.get() +
-				(isQueryable() ? ", queryableStateName=" + queryableStateName + "" : "") +
-				'}';
+			"{name=" + name +
+			", defaultValue=" + defaultValue +
+			", serializer=" + serializerAtomicReference.get() +
+			(isQueryable() ? ", queryableStateName=" + queryableStateName + "" : "") +
+			'}';
 	}
 
 	public abstract Type getType();
@@ -365,17 +375,16 @@ public abstract class StateDescriptor<S extends State, T> implements Serializabl
 
 			byte[] serializedDefaultValue;
 			try (ByteArrayOutputStream baos = new ByteArrayOutputStream();
-					DataOutputViewStreamWrapper outView = new DataOutputViewStreamWrapper(baos)) {
+				 DataOutputViewStreamWrapper outView = new DataOutputViewStreamWrapper(baos)) {
 
 				TypeSerializer<T> duplicateSerializer = serializer.duplicate();
 				duplicateSerializer.serialize(defaultValue, outView);
 
 				outView.flush();
 				serializedDefaultValue = baos.toByteArray();
-			}
-			catch (Exception e) {
+			} catch (Exception e) {
 				throw new IOException("Unable to serialize default value of type " +
-						defaultValue.getClass().getSimpleName() + ".", e);
+					defaultValue.getClass().getSimpleName() + ".", e);
 			}
 
 			out.writeInt(serializedDefaultValue.length);
@@ -400,11 +409,10 @@ public abstract class StateDescriptor<S extends State, T> implements Serializabl
 			in.readFully(buffer);
 
 			try (ByteArrayInputStream bais = new ByteArrayInputStream(buffer);
-					DataInputViewStreamWrapper inView = new DataInputViewStreamWrapper(bais)) {
+				 DataInputViewStreamWrapper inView = new DataInputViewStreamWrapper(bais)) {
 
 				defaultValue = serializer.deserialize(inView);
-			}
-			catch (Exception e) {
+			} catch (Exception e) {
 				throw new IOException("Unable to deserialize default value.", e);
 			}
 		} else {

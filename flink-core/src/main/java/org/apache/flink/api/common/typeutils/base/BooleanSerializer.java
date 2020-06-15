@@ -34,7 +34,9 @@ public final class BooleanSerializer extends TypeSerializerSingleton<Boolean> {
 
 	private static final long serialVersionUID = 1L;
 
-	/** Sharable instance of the BooleanSerializer. */
+	/**
+	 * Sharable instance of the BooleanSerializer.
+	 */
 	public static final BooleanSerializer INSTANCE = new BooleanSerializer();
 
 	private static final Boolean FALSE = Boolean.FALSE;

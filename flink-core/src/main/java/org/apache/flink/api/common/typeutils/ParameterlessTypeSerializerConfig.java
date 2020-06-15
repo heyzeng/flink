@@ -30,7 +30,7 @@ import java.io.IOException;
  * A base class for {@link TypeSerializerConfigSnapshot}s that do not have any parameters.
  *
  * @deprecated this snapshot class is no longer used by any serializers, and is maintained only
- *             for backward compatibility reasons. It is fully replaced by {@link SimpleTypeSerializerSnapshot}.
+ * for backward compatibility reasons. It is fully replaced by {@link SimpleTypeSerializerSnapshot}.
  */
 @Internal
 @Deprecated
@@ -40,13 +40,16 @@ public final class ParameterlessTypeSerializerConfig<T> extends TypeSerializerCo
 
 	/**
 	 * A string identifier that encodes the serialization format used by the serializer.
-	 *
+	 * <p>
 	 * TODO we might change this to a proper serialization format class in the future
 	 */
 	private String serializationFormatIdentifier;
 
-	/** This empty nullary constructor is required for deserializing the configuration. */
-	public ParameterlessTypeSerializerConfig() {}
+	/**
+	 * This empty nullary constructor is required for deserializing the configuration.
+	 */
+	public ParameterlessTypeSerializerConfig() {
+	}
 
 	public ParameterlessTypeSerializerConfig(String serializationFormatIdentifier) {
 		this.serializationFormatIdentifier = Preconditions.checkNotNull(serializationFormatIdentifier);
@@ -96,7 +99,7 @@ public final class ParameterlessTypeSerializerConfig<T> extends TypeSerializerCo
 		}
 
 		return (other instanceof ParameterlessTypeSerializerConfig)
-				&& serializationFormatIdentifier.equals(((ParameterlessTypeSerializerConfig) other).getSerializationFormatIdentifier());
+			&& serializationFormatIdentifier.equals(((ParameterlessTypeSerializerConfig) other).getSerializationFormatIdentifier());
 	}
 
 	@Override
@@ -105,7 +108,7 @@ public final class ParameterlessTypeSerializerConfig<T> extends TypeSerializerCo
 	}
 
 	private static boolean isCompatibleSerializationFormatIdentifier(
-			String identifier, TypeSerializerSingleton<?> newSingletonSerializer) {
+		String identifier, TypeSerializerSingleton<?> newSingletonSerializer) {
 
 		String name = newSingletonSerializer.getClass().getName();
 		// we also need to check canonical name because some singleton serializers were using that as the identifier

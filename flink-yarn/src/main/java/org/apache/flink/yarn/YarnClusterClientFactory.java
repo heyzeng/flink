@@ -47,7 +47,7 @@ public class YarnClusterClientFactory extends AbstractContainerizedClusterClient
 		checkNotNull(configuration);
 		final String deploymentTarget = configuration.getString(DeploymentOptions.TARGET);
 		return YarnJobClusterExecutor.NAME.equalsIgnoreCase(deploymentTarget) ||
-				YarnSessionClusterExecutor.NAME.equalsIgnoreCase(deploymentTarget);
+			YarnSessionClusterExecutor.NAME.equalsIgnoreCase(deploymentTarget);
 	}
 
 	@Override
@@ -72,10 +72,10 @@ public class YarnClusterClientFactory extends AbstractContainerizedClusterClient
 		yarnClient.start();
 
 		return new YarnClusterDescriptor(
-				configuration,
-				yarnConfiguration,
-				yarnClient,
-				YarnClientYarnClusterInformationRetriever.create(yarnClient),
-				false);
+			configuration,
+			yarnConfiguration,
+			yarnClient,
+			YarnClientYarnClusterInformationRetriever.create(yarnClient),
+			false);
 	}
 }

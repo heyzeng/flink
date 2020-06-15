@@ -34,7 +34,9 @@ public final class DoubleSerializer extends TypeSerializerSingleton<Double> {
 
 	private static final long serialVersionUID = 1L;
 
-	/** Sharable instance of the DoubleSerializer. */
+	/**
+	 * Sharable instance of the DoubleSerializer.
+	 */
 	public static final DoubleSerializer INSTANCE = new DoubleSerializer();
 
 	private static final Double ZERO = 0.0;

@@ -31,10 +31,10 @@ import org.apache.flink.core.memory.DataOutputView;
  * A serializer for long arrays.
  */
 @Internal
-public final class LongPrimitiveArraySerializer extends TypeSerializerSingleton<long[]>{
+public final class LongPrimitiveArraySerializer extends TypeSerializerSingleton<long[]> {
 
 	private static final long serialVersionUID = 1L;
-	
+
 	private static final long[] EMPTY = new long[0];
 
 	public static final LongPrimitiveArraySerializer INSTANCE = new LongPrimitiveArraySerializer();
@@ -55,7 +55,7 @@ public final class LongPrimitiveArraySerializer extends TypeSerializerSingleton<
 		System.arraycopy(from, 0, result, 0, from.length);
 		return result;
 	}
-	
+
 	@Override
 	public long[] copy(long[] from, long[] reuse) {
 		return copy(from);
@@ -72,7 +72,7 @@ public final class LongPrimitiveArraySerializer extends TypeSerializerSingleton<
 		if (record == null) {
 			throw new IllegalArgumentException("The record must not be null.");
 		}
-		
+
 		final int len = record.length;
 		target.writeInt(len);
 		for (int i = 0; i < len; i++) {
@@ -84,14 +84,14 @@ public final class LongPrimitiveArraySerializer extends TypeSerializerSingleton<
 	public long[] deserialize(DataInputView source) throws IOException {
 		final int len = source.readInt();
 		long[] array = new long[len];
-		
+
 		for (int i = 0; i < len; i++) {
 			array[i] = source.readLong();
 		}
-		
+
 		return array;
 	}
-	
+
 	@Override
 	public long[] deserialize(long[] reuse, DataInputView source) throws IOException {
 		return deserialize(source);

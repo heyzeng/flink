@@ -137,15 +137,15 @@ public class AggregateOperator<IN> extends SingleInputOperator<IN, IN, Aggregate
 		return this;
 	}
 
-	public AggregateOperator<IN> andSum (int field) {
+	public AggregateOperator<IN> andSum(int field) {
 		return this.and(Aggregations.SUM, field);
 	}
 
-	public AggregateOperator<IN> andMin (int field) {
+	public AggregateOperator<IN> andMin(int field) {
 		return this.and(Aggregations.MIN, field);
 	}
 
-	public AggregateOperator<IN> andMax (int field) {
+	public AggregateOperator<IN> andMax(int field) {
 		return this.and(Aggregations.MAX, field);
 	}
 
@@ -183,7 +183,7 @@ public class AggregateOperator<IN> extends SingleInputOperator<IN, IN, Aggregate
 			// non grouped aggregation
 			UnaryOperatorInformation<IN, IN> operatorInfo = new UnaryOperatorInformation<>(getInputType(), getResultType());
 			GroupReduceOperatorBase<IN, IN, GroupReduceFunction<IN, IN>> po =
-					new GroupReduceOperatorBase<IN, IN, GroupReduceFunction<IN, IN>>(function, operatorInfo, new int[0], name);
+				new GroupReduceOperatorBase<IN, IN, GroupReduceFunction<IN, IN>>(function, operatorInfo, new int[0], name);
 
 			po.setCombinable(true);
 
@@ -200,7 +200,7 @@ public class AggregateOperator<IN> extends SingleInputOperator<IN, IN, Aggregate
 			int[] logicalKeyPositions = this.grouping.getKeys().computeLogicalKeyPositions();
 			UnaryOperatorInformation<IN, IN> operatorInfo = new UnaryOperatorInformation<>(getInputType(), getResultType());
 			GroupReduceOperatorBase<IN, IN, GroupReduceFunction<IN, IN>> po =
-					new GroupReduceOperatorBase<IN, IN, GroupReduceFunction<IN, IN>>(function, operatorInfo, logicalKeyPositions, name);
+				new GroupReduceOperatorBase<IN, IN, GroupReduceFunction<IN, IN>>(function, operatorInfo, logicalKeyPositions, name);
 
 			po.setCombinable(true);
 
@@ -228,11 +228,9 @@ public class AggregateOperator<IN> extends SingleInputOperator<IN, IN, Aggregate
 			po.setSemanticProperties(props);
 
 			return po;
-		}
-		else if (this.grouping.getKeys() instanceof Keys.SelectorFunctionKeys) {
+		} else if (this.grouping.getKeys() instanceof Keys.SelectorFunctionKeys) {
 			throw new UnsupportedOperationException("Aggregate does not support grouping with KeySelector functions, yet.");
-		}
-		else {
+		} else {
 			throw new UnsupportedOperationException("Unrecognized key type.");
 		}
 

@@ -53,9 +53,9 @@ public class DataSource<OUT> extends Operator<OUT, DataSource<OUT>> {
 	/**
 	 * Creates a new data source.
 	 *
-	 * @param context The environment in which the data source gets executed.
+	 * @param context     The environment in which the data source gets executed.
 	 * @param inputFormat The input format that the data source executes.
-	 * @param type The type of the elements produced by this input format.
+	 * @param type        The type of the elements produced by this input format.
 	 */
 	public DataSource(ExecutionEnvironment context, InputFormat<OUT, ?> inputFormat, TypeInformation<OUT> type, String dataSourceLocationName) {
 		super(context, type);
@@ -85,6 +85,7 @@ public class DataSource<OUT> extends Operator<OUT, DataSource<OUT>> {
 
 	/**
 	 * Pass a configuration to the InputFormat.
+	 *
 	 * @param parameters Configuration parameters
 	 */
 	public DataSource<OUT> withParameters(Configuration parameters) {
@@ -108,7 +109,7 @@ public class DataSource<OUT> extends Operator<OUT, DataSource<OUT>> {
 	 *
 	 *
 	 * <p><b>
-	 *     IMPORTANT: Incorrect configuration of SplitDataProperties can cause wrong results!
+	 * IMPORTANT: Incorrect configuration of SplitDataProperties can cause wrong results!
 	 * </b>
 	 *
 	 * @return The SplitDataProperties for the InputSplits of this DataSource.

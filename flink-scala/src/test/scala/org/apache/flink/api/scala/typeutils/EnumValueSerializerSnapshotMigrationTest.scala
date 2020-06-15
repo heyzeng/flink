@@ -29,12 +29,12 @@ import org.junit.runner.RunWith
 import org.junit.runners.Parameterized
 
 /**
-  * Migration tests for the [[EnumValueSerializer]].
+ * Migration tests for the [[EnumValueSerializer]].
  */
 @RunWith(classOf[Parameterized])
 class EnumValueSerializerSnapshotMigrationTest(
-  spec: TestSpecification[Letters.Value])
-extends TypeSerializerSnapshotMigrationTestBase[Letters.Value](spec) {}
+                                                spec: TestSpecification[Letters.Value])
+  extends TypeSerializerSnapshotMigrationTestBase[Letters.Value](spec) {}
 
 object EnumValueSerializerSnapshotMigrationTest {
 

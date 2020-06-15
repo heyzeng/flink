@@ -32,6 +32,7 @@ public interface InflaterInputStreamFactory<T extends InputStream> {
 
 	/**
 	 * Creates a {@link java.util.zip.InflaterInputStream} that wraps the given input stream.
+	 *
 	 * @param in is the compressed input stream
 	 * @return the inflated input stream
 	 */
@@ -40,6 +41,7 @@ public interface InflaterInputStreamFactory<T extends InputStream> {
 	/**
 	 * Lists a collection of typical file extensions (e.g., "gz", "gzip") that are associated with the compression
 	 * algorithm in the {@link java.util.zip.InflaterInputStream} {@code T}.
+	 *
 	 * @return a (possibly empty) collection of lower-case file extensions, without the period
 	 */
 	Collection<String> getCommonFileExtensions();

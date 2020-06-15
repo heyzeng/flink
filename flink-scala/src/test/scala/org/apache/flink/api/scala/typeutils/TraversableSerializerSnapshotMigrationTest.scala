@@ -32,15 +32,15 @@ import org.junit.runners.Parameterized
 import scala.collection.{BitSet, LinearSeq, mutable}
 
 /**
-  * [[TraversableSerializer]] migration test.
-  */
+ * [[TraversableSerializer]] migration test.
+ */
 @RunWith(classOf[Parameterized])
 class TraversableSerializerSnapshotMigrationTest(
-  testSpecification: TypeSerializerSnapshotMigrationTestBase.TestSpecification[
-    TraversableOnce[_]
-  ]) extends TypeSerializerSnapshotMigrationTestBase[TraversableOnce[_]](
-      testSpecification
-    )
+                                                  testSpecification: TypeSerializerSnapshotMigrationTestBase.TestSpecification[
+                                                    TraversableOnce[_]
+                                                  ]) extends TypeSerializerSnapshotMigrationTestBase[TraversableOnce[_]](
+  testSpecification
+)
 
 object TraversableSerializerSnapshotMigrationTest {
 
@@ -52,7 +52,7 @@ object TraversableSerializerSnapshotMigrationTest {
       override def equals(other: Any): Boolean = {
         other match {
           case oP: Pojo => name == oP.name && count == oP.count
-          case _        => false
+          case _ => false
         }
       }
     }
@@ -115,4 +115,5 @@ object TraversableSerializerSnapshotMigrationTest {
         .asInstanceOf[TypeSerializer[T]]
     }
   }
+
 }

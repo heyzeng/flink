@@ -20,7 +20,8 @@ package org.apache.flink.sql.parser;
 
 import org.apache.flink.sql.parser.error.SqlValidateException;
 
-/** An remark interface which should be inherited by extended sql nodes which are not supported
+/**
+ * An remark interface which should be inherited by extended sql nodes which are not supported
  * by Calcite core parser.
  *
  * <p>We need this to customize our validation rules combined with the rules defined in

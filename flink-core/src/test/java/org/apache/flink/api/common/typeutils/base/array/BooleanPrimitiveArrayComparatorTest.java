@@ -28,7 +28,7 @@ public class BooleanPrimitiveArrayComparatorTest extends PrimitiveArrayComparato
 	@Override
 	protected void deepEquals(String message, boolean[] should, boolean[] is) {
 		Assert.assertTrue(should.length == is.length);
-		for(int x=0; x< should.length; x++) {
+		for (int x = 0; x < should.length; x++) {
 			Assert.assertEquals(should[x], is[x]);
 		}
 	}

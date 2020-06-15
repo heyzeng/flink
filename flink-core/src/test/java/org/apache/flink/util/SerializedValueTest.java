@@ -49,8 +49,7 @@ public class SerializedValueTest {
 			assertNotNull(v.toString());
 			assertNotNull(copy.toString());
 
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 			fail(e.getMessage());
 		}
@@ -67,8 +66,7 @@ public class SerializedValueTest {
 			assertEquals(v, copy);
 			assertEquals(v.hashCode(), copy.hashCode());
 			assertEquals(v.toString(), copy.toString());
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 			fail(e.getMessage());
 		}

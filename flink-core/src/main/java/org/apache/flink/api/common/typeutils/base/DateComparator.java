@@ -69,7 +69,7 @@ public final class DateComparator extends BasicTypeComparator<Date> {
 	// --------------------------------------------------------------------------------------------
 
 	public static int compareSerializedDate(DataInputView firstSource, DataInputView secondSource,
-			boolean ascendingComparison) throws IOException {
+											boolean ascendingComparison) throws IOException {
 		final long l1 = firstSource.readLong();
 		final long l2 = secondSource.readLong();
 		final int comp = (l1 < l2 ? -1 : (l1 == l2 ? 0 : 1));
@@ -83,13 +83,11 @@ public final class DateComparator extends BasicTypeComparator<Date> {
 		if (numBytes == 8) {
 			// default case, full normalized key
 			target.putLongBigEndian(offset, value);
-		}
-		else if (numBytes < 8) {
+		} else if (numBytes < 8) {
 			for (int i = 0; numBytes > 0; numBytes--, i++) {
-				target.put(offset + i, (byte) (value >>> ((7-i)<<3)));
+				target.put(offset + i, (byte) (value >>> ((7 - i) << 3)));
 			}
-		}
-		else {
+		} else {
 			target.putLongBigEndian(offset, value);
 			for (int i = 8; i < numBytes; i++) {
 				target.put(offset + i, (byte) 0);

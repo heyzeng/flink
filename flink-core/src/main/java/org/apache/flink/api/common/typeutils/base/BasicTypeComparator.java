@@ -29,15 +29,15 @@ import org.apache.flink.core.memory.DataOutputView;
 public abstract class BasicTypeComparator<T extends Comparable<T>> extends TypeComparator<T> implements java.io.Serializable {
 
 	private static final long serialVersionUID = 1L;
-	
+
 	private transient T reference;
-	
+
 	protected final boolean ascendingComparison;
 
 	// For use by getComparators
 	@SuppressWarnings("rawtypes")
-	private final TypeComparator[] comparators = new TypeComparator[] {this};
-	
+	private final TypeComparator[] comparators = new TypeComparator[]{this};
+
 
 	protected BasicTypeComparator(boolean ascending) {
 		this.ascendingComparison = ascending;
@@ -74,7 +74,7 @@ public abstract class BasicTypeComparator<T extends Comparable<T>> extends TypeC
 	public boolean invertNormalizedKey() {
 		return !ascendingComparison;
 	}
-	
+
 	@Override
 	public boolean supportsSerializationWithKeyNormalization() {
 		return false;

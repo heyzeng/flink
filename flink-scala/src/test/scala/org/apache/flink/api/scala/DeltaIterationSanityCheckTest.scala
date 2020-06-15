@@ -52,7 +52,7 @@ class DeltaIterationSanityCheckTest extends Serializable {
       (result, ws)
     }
 
-    iteration.output(new DiscardingOutputFormat[(Int,String)])
+    iteration.output(new DiscardingOutputFormat[(Int, String)])
   }
 
   @Test(expected = classOf[InvalidProgramException])
@@ -66,7 +66,7 @@ class DeltaIterationSanityCheckTest extends Serializable {
       (result, ws)
     }
 
-    iteration.output(new DiscardingOutputFormat[(Int,String)])
+    iteration.output(new DiscardingOutputFormat[(Int, String)])
   }
 
   @Test(expected = classOf[InvalidProgramException])
@@ -80,7 +80,7 @@ class DeltaIterationSanityCheckTest extends Serializable {
       (result, ws)
     }
 
-    iteration.output(new DiscardingOutputFormat[(Int,String)])  
+    iteration.output(new DiscardingOutputFormat[(Int, String)])
   }
 
   @Test(expected = classOf[InvalidProgramException])
@@ -94,8 +94,8 @@ class DeltaIterationSanityCheckTest extends Serializable {
       (result, ws)
     }
 
-    iteration.output(new DiscardingOutputFormat[(Int,String)])
-   }
+    iteration.output(new DiscardingOutputFormat[(Int, String)])
+  }
 
   @Test
   def testCorrectCoGroupWithSolution1(): Unit = {
@@ -108,7 +108,7 @@ class DeltaIterationSanityCheckTest extends Serializable {
       (result, ws)
     }
 
-    iteration.output(new DiscardingOutputFormat[(Int,String)])
+    iteration.output(new DiscardingOutputFormat[(Int, String)])
   }
 
   @Test
@@ -122,7 +122,7 @@ class DeltaIterationSanityCheckTest extends Serializable {
       (result, ws)
     }
 
-    iteration.output(new DiscardingOutputFormat[(Int,String)])
+    iteration.output(new DiscardingOutputFormat[(Int, String)])
   }
 
   @Test(expected = classOf[InvalidProgramException])
@@ -136,7 +136,7 @@ class DeltaIterationSanityCheckTest extends Serializable {
       (result, ws)
     }
 
-    iteration.output(new DiscardingOutputFormat[(Int,String)])
+    iteration.output(new DiscardingOutputFormat[(Int, String)])
   }
 
   @Test(expected = classOf[InvalidProgramException])
@@ -150,7 +150,7 @@ class DeltaIterationSanityCheckTest extends Serializable {
       (result, ws)
     }
 
-    iteration.output(new DiscardingOutputFormat[(Int,String)])  
+    iteration.output(new DiscardingOutputFormat[(Int, String)])
   }
 
   @Test(expected = classOf[InvalidProgramException])
@@ -164,6 +164,6 @@ class DeltaIterationSanityCheckTest extends Serializable {
       (result, ws)
     }
 
-    iteration.output(new DiscardingOutputFormat[(Int,String)])
+    iteration.output(new DiscardingOutputFormat[(Int, String)])
   }
 }

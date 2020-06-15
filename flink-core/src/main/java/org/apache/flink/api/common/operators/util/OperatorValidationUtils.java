@@ -28,7 +28,8 @@ import org.apache.flink.util.Preconditions;
  */
 public class OperatorValidationUtils {
 
-	private OperatorValidationUtils() {}
+	private OperatorValidationUtils() {
+	}
 
 	public static void validateParallelism(int parallelism) {
 		validateParallelism(parallelism, true);
@@ -75,9 +76,9 @@ public class OperatorValidationUtils {
 	}
 
 	public static void validateResourceRequirements(
-			final ResourceSpec minResources,
-			final ResourceSpec preferredResources,
-			final int managedMemoryWeight) {
+		final ResourceSpec minResources,
+		final ResourceSpec preferredResources,
+		final int managedMemoryWeight) {
 
 		validateMinAndPreferredResources(minResources, preferredResources);
 		Preconditions.checkArgument(

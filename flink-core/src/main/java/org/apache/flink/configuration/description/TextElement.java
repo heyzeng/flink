@@ -37,7 +37,7 @@ public class TextElement implements BlockElement, InlineElement {
 	 *
 	 * <p>{@code text("This is a text with a link %s", link("https://somepage", "to here"))}
 	 *
-	 * @param format text with placeholders for elements
+	 * @param format   text with placeholders for elements
 	 * @param elements elements to be put in the text
 	 * @return block of text
 	 */

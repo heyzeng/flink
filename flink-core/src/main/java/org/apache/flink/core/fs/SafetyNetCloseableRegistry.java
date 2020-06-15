@@ -49,20 +49,26 @@ import java.util.Map;
  */
 @Internal
 public class SafetyNetCloseableRegistry extends
-		AbstractCloseableRegistry<WrappingProxyCloseable<? extends Closeable>,
-				SafetyNetCloseableRegistry.PhantomDelegatingCloseableRef> {
+	AbstractCloseableRegistry<WrappingProxyCloseable<? extends Closeable>,
+		SafetyNetCloseableRegistry.PhantomDelegatingCloseableRef> {
 
 	private static final Logger LOG = LoggerFactory.getLogger(SafetyNetCloseableRegistry.class);
 
-	/** Lock for atomic modifications to reaper thread and registry count. */
+	/**
+	 * Lock for atomic modifications to reaper thread and registry count.
+	 */
 	private static final Object REAPER_THREAD_LOCK = new Object();
 
 	//CHECKSTYLE.OFF: StaticVariableName
 
-	/** Singleton reaper thread takes care of all registries in VM. */
+	/**
+	 * Singleton reaper thread takes care of all registries in VM.
+	 */
 	private static CloseableReaperThread REAPER_THREAD = null;
 
-	/** Global count of all instances of SafetyNetCloseableRegistry. */
+	/**
+	 * Global count of all instances of SafetyNetCloseableRegistry.
+	 */
 	private static int GLOBAL_SAFETY_NET_REGISTRY_COUNT = 0;
 
 	//CHECKSTYLE.ON: StaticVariableName
@@ -82,8 +88,8 @@ public class SafetyNetCloseableRegistry extends
 
 	@Override
 	protected void doRegister(
-			@Nonnull WrappingProxyCloseable<? extends Closeable> wrappingProxyCloseable,
-			@Nonnull Map<Closeable, PhantomDelegatingCloseableRef> closeableMap) {
+		@Nonnull WrappingProxyCloseable<? extends Closeable> wrappingProxyCloseable,
+		@Nonnull Map<Closeable, PhantomDelegatingCloseableRef> closeableMap) {
 
 		assert Thread.holdsLock(getSynchronizationLock());
 
@@ -94,9 +100,9 @@ public class SafetyNetCloseableRegistry extends
 		}
 
 		PhantomDelegatingCloseableRef phantomRef = new PhantomDelegatingCloseableRef(
-				wrappingProxyCloseable,
-				this,
-				REAPER_THREAD.referenceQueue);
+			wrappingProxyCloseable,
+			this,
+			REAPER_THREAD.referenceQueue);
 
 		closeableMap.put(innerCloseable, phantomRef);
 	}
@@ -117,8 +123,7 @@ public class SafetyNetCloseableRegistry extends
 	public void close() throws IOException {
 		try {
 			super.close();
-		}
-		finally {
+		} finally {
 			synchronized (REAPER_THREAD_LOCK) {
 				--GLOBAL_SAFETY_NET_REGISTRY_COUNT;
 				if (0 == GLOBAL_SAFETY_NET_REGISTRY_COUNT) {
@@ -140,8 +145,8 @@ public class SafetyNetCloseableRegistry extends
 	 * Phantom reference to {@link WrappingProxyCloseable}.
 	 */
 	static final class PhantomDelegatingCloseableRef
-			extends PhantomReference<WrappingProxyCloseable<? extends Closeable>>
-			implements Closeable {
+		extends PhantomReference<WrappingProxyCloseable<? extends Closeable>>
+		implements Closeable {
 
 		private final Closeable innerCloseable;
 		private final SafetyNetCloseableRegistry closeableRegistry;
@@ -196,8 +201,7 @@ public class SafetyNetCloseableRegistry extends
 						try {
 							LOG.warn("Closing unclosed resource via safety-net: {}", toClose.getDebugString());
 							toClose.close();
-						}
-						catch (Throwable t) {
+						} catch (Throwable t) {
 							LOG.debug("Error while closing resource via safety-net", t);
 						}
 					}

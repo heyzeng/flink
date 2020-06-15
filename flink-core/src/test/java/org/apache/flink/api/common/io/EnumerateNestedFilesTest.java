@@ -157,7 +157,7 @@ public class EnumerateNestedFilesTest {
 			this.format.setFilePath(new Path(nestedDir.toURI().toString()));
 			this.config.setBoolean("recursive.file.enumeration", true);
 			format.configure(this.config);
-			
+
 			FileInputSplit[] splits = format.createInputSplits(1);
 			Assert.assertEquals(4, splits.length);
 		} catch (Exception ex) {
@@ -209,8 +209,8 @@ public class EnumerateNestedFilesTest {
 			String firstLevelDir = TestFileUtils.randomFileName();
 			String secondLevelDir = TestFileUtils.randomFileName();
 			String thirdLevelDir = TestFileUtils.randomFileName();
-			String secondLevelFilterDir = "_"+TestFileUtils.randomFileName();
-			String thirdLevelFilterDir = "_"+TestFileUtils.randomFileName();
+			String secondLevelFilterDir = "_" + TestFileUtils.randomFileName();
+			String thirdLevelFilterDir = "_" + TestFileUtils.randomFileName();
 
 			File nestedNestedDirFiltered = tempFolder.newFolder(firstLevelDir, secondLevelDir, thirdLevelDir, thirdLevelFilterDir);
 			File nestedNestedDir = nestedNestedDirFiltered.getParentFile();
@@ -312,7 +312,7 @@ public class EnumerateNestedFilesTest {
 	}
 
 	// ------------------------------------------------------------------------
-	
+
 	private class DummyFileInputFormat extends FileInputFormat<IntValue> {
 		private static final long serialVersionUID = 1L;
 

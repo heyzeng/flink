@@ -38,7 +38,7 @@ public class ExecutionOptions {
 		ConfigOptions.key("execution.checkpointing.snapshot-compression")
 			.booleanType()
 			.defaultValue(false)
-		.withDescription("Tells if we should use compression for the state snapshot data or not");
+			.withDescription("Tells if we should use compression for the state snapshot data or not");
 
 	public static final ConfigOption<Duration> BUFFER_TIMEOUT =
 		ConfigOptions.key("execution.buffer-timeout")

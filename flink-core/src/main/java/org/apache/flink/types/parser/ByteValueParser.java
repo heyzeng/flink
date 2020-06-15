@@ -28,9 +28,9 @@ import org.apache.flink.types.ByteValue;
  */
 @PublicEvolving
 public class ByteValueParser extends FieldParser<ByteValue> {
-	
+
 	private ByteValue result;
-	
+
 	@Override
 	public int parseField(byte[] bytes, int startPos, int limit, byte[] delimiter, ByteValue reusable) {
 
@@ -41,15 +41,15 @@ public class ByteValueParser extends FieldParser<ByteValue> {
 
 		int val = 0;
 		boolean neg = false;
-		
+
 		this.result = reusable;
 
 		final int delimLimit = limit - delimiter.length + 1;
-		
+
 		if (bytes[startPos] == '-') {
 			neg = true;
 			startPos++;
-			
+
 			// check for empty field with only the sign
 			if (startPos == limit || (startPos < delimLimit && delimiterNext(bytes, startPos, delimiter))) {
 				setErrorState(ParseErrorState.NUMERIC_VALUE_ORPHAN_SIGN);
@@ -73,7 +73,7 @@ public class ByteValueParser extends FieldParser<ByteValue> {
 			}
 			val *= 10;
 			val += bytes[i] - 48;
-			
+
 			if (val > Byte.MAX_VALUE && (!neg || val > -Byte.MIN_VALUE)) {
 				setErrorState(ParseErrorState.NUMERIC_VALUE_OVERFLOW_UNDERFLOW);
 				return -1;
@@ -83,7 +83,7 @@ public class ByteValueParser extends FieldParser<ByteValue> {
 		reusable.setValue((byte) (neg ? -val : val));
 		return limit;
 	}
-	
+
 	@Override
 	public ByteValue createValue() {
 		return new ByteValue();

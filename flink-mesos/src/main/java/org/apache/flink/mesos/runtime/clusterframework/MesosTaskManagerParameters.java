@@ -50,7 +50,9 @@ import static org.apache.flink.configuration.ConfigOptions.key;
  */
 public class MesosTaskManagerParameters {
 
-	/** Pattern replaced in the {@link #MESOS_TM_HOSTNAME} by the actual task id of the Mesos task. */
+	/**
+	 * Pattern replaced in the {@link #MESOS_TM_HOSTNAME} by the actual task id of the Mesos task.
+	 */
 	public static final Pattern TASK_ID_PATTERN = Pattern.compile("_TASK_", Pattern.LITERAL);
 
 	public static final ConfigOption<Integer> MESOS_RM_TASKS_SLOTS =
@@ -58,82 +60,82 @@ public class MesosTaskManagerParameters {
 
 	public static final ConfigOption<Integer> MESOS_RM_TASKS_DISK_MB =
 		key("mesos.resourcemanager.tasks.disk")
-		.defaultValue(0)
-		.withDescription(Description.builder().text("Disk space to assign to the Mesos workers in MB.").build());
+			.defaultValue(0)
+			.withDescription(Description.builder().text("Disk space to assign to the Mesos workers in MB.").build());
 
 	public static final ConfigOption<Double> MESOS_RM_TASKS_CPUS =
 		key("mesos.resourcemanager.tasks.cpus")
-		.doubleType()
-		.defaultValue(0.0)
-		.withDescription("CPUs to assign to the Mesos workers.");
+			.doubleType()
+			.defaultValue(0.0)
+			.withDescription("CPUs to assign to the Mesos workers.");
 
 	public static final ConfigOption<Integer> MESOS_RM_TASKS_GPUS =
 		key("mesos.resourcemanager.tasks.gpus")
-		.defaultValue(0)
-		.withDescription(Description.builder().text("GPUs to assign to the Mesos workers.").build());
+			.defaultValue(0)
+			.withDescription(Description.builder().text("GPUs to assign to the Mesos workers.").build());
 
 	public static final ConfigOption<String> MESOS_RM_CONTAINER_TYPE =
 		key("mesos.resourcemanager.tasks.container.type")
-		.defaultValue("mesos")
-		.withDescription("Type of the containerization used: “mesos” or “docker”.");
+			.defaultValue("mesos")
+			.withDescription("Type of the containerization used: “mesos” or “docker”.");
 
 	public static final ConfigOption<String> MESOS_RM_CONTAINER_IMAGE_NAME =
 		key("mesos.resourcemanager.tasks.container.image.name")
-		.noDefaultValue()
-		.withDescription("Image name to use for the container.");
+			.noDefaultValue()
+			.withDescription("Image name to use for the container.");
 
 	public static final ConfigOption<String> MESOS_TM_HOSTNAME =
 		key("mesos.resourcemanager.tasks.hostname")
-		.noDefaultValue()
-		.withDescription(Description.builder()
-			.text("Optional value to define the TaskManager’s hostname. " +
-				"The pattern _TASK_ is replaced by the actual id of the Mesos task. " +
-				"This can be used to configure the TaskManager to use Mesos DNS (e.g. _TASK_.flink-service.mesos) for name lookups.")
-			.build());
+			.noDefaultValue()
+			.withDescription(Description.builder()
+				.text("Optional value to define the TaskManager’s hostname. " +
+					"The pattern _TASK_ is replaced by the actual id of the Mesos task. " +
+					"This can be used to configure the TaskManager to use Mesos DNS (e.g. _TASK_.flink-service.mesos) for name lookups.")
+				.build());
 
 	public static final ConfigOption<String> MESOS_TM_CMD =
 		key("mesos.resourcemanager.tasks.taskmanager-cmd")
-		.defaultValue("$FLINK_HOME/bin/mesos-taskmanager.sh"); // internal
+			.defaultValue("$FLINK_HOME/bin/mesos-taskmanager.sh"); // internal
 
 	public static final ConfigOption<String> MESOS_TM_BOOTSTRAP_CMD =
 		key("mesos.resourcemanager.tasks.bootstrap-cmd")
-		.noDefaultValue()
-		.withDescription(Description.builder()
-			.text("A command which is executed before the TaskManager is started.")
-			.build());
+			.noDefaultValue()
+			.withDescription(Description.builder()
+				.text("A command which is executed before the TaskManager is started.")
+				.build());
 
 	public static final ConfigOption<String> MESOS_TM_URIS =
 		key("mesos.resourcemanager.tasks.uris")
-		.noDefaultValue()
-		.withDescription("A comma separated list of URIs of custom artifacts to be downloaded into the sandbox" +
-			" of Mesos workers.");
+			.noDefaultValue()
+			.withDescription("A comma separated list of URIs of custom artifacts to be downloaded into the sandbox" +
+				" of Mesos workers.");
 
 	public static final ConfigOption<String> MESOS_RM_CONTAINER_VOLUMES =
 		key("mesos.resourcemanager.tasks.container.volumes")
-		.noDefaultValue()
-		.withDescription("A comma separated list of [host_path:]container_path[:RO|RW]. This allows for mounting" +
-			" additional volumes into your container.");
+			.noDefaultValue()
+			.withDescription("A comma separated list of [host_path:]container_path[:RO|RW]. This allows for mounting" +
+				" additional volumes into your container.");
 
 	public static final ConfigOption<String> MESOS_RM_CONTAINER_DOCKER_PARAMETERS =
 		key("mesos.resourcemanager.tasks.container.docker.parameters")
-		.noDefaultValue()
-		.withDescription("Custom parameters to be passed into docker run command when using the docker containerizer." +
-			" Comma separated list of \"key=value\" pairs. The \"value\" may contain '='.");
+			.noDefaultValue()
+			.withDescription("Custom parameters to be passed into docker run command when using the docker containerizer." +
+				" Comma separated list of \"key=value\" pairs. The \"value\" may contain '='.");
 
 	public static final ConfigOption<Boolean> MESOS_RM_CONTAINER_DOCKER_FORCE_PULL_IMAGE =
 		key("mesos.resourcemanager.tasks.container.docker.force-pull-image")
-		.defaultValue(false)
-		.withDescription("Instruct the docker containerizer to forcefully pull the image rather than" +
-			" reuse a cached version.");
+			.defaultValue(false)
+			.withDescription("Instruct the docker containerizer to forcefully pull the image rather than" +
+				" reuse a cached version.");
 
 	public static final ConfigOption<String> MESOS_CONSTRAINTS_HARD_HOSTATTR =
 		key("mesos.constraints.hard.hostattribute")
-		.noDefaultValue()
-		.withDescription(Description.builder()
-			.text("Constraints for task placement on Mesos based on agent attributes. " +
-				"Takes a comma-separated list of key:value pairs corresponding to the attributes exposed by the target mesos agents. " +
-				"Example: az:eu-west-1a,series:t2")
-			.build());
+			.noDefaultValue()
+			.withDescription(Description.builder()
+				.text("Constraints for task placement on Mesos based on agent attributes. " +
+					"Takes a comma-separated list of key:value pairs corresponding to the attributes exposed by the target mesos agents. " +
+					"Example: az:eu-west-1a,series:t2")
+				.build());
 
 	/**
 	 * Value for {@code MESOS_RESOURCEMANAGER_TASKS_CONTAINER_TYPE} setting. Tells to use the Mesos containerizer.
@@ -171,19 +173,19 @@ public class MesosTaskManagerParameters {
 	private final List<String> uris;
 
 	public MesosTaskManagerParameters(
-			int gpus,
-			int disk,
-			ContainerType containerType,
-			Option<String> containerImageName,
-			ContaineredTaskManagerParameters containeredParameters,
-			List<Protos.Volume> containerVolumes,
-			List<Protos.Parameter> dockerParameters,
-			boolean dockerForcePullImage,
-			List<ConstraintEvaluator> constraints,
-			String command,
-			Option<String> bootstrapCommand,
-			Option<String> taskManagerHostname,
-			List<String> uris) {
+		int gpus,
+		int disk,
+		ContainerType containerType,
+		Option<String> containerImageName,
+		ContaineredTaskManagerParameters containeredParameters,
+		List<Protos.Volume> containerVolumes,
+		List<Protos.Parameter> dockerParameters,
+		boolean dockerForcePullImage,
+		List<ConstraintEvaluator> constraints,
+		String command,
+		Option<String> bootstrapCommand,
+		Option<String> taskManagerHostname,
+		List<String> uris) {
 
 		this.gpus = gpus;
 		this.disk = disk;
@@ -526,6 +528,7 @@ public class MesosTaskManagerParameters {
 
 	/**
 	 * Build a list of URIs for providing custom artifacts to Mesos tasks.
+	 *
 	 * @param uris a comma delimited optional string listing artifact URIs
 	 */
 	public static List<String> buildUris(Option<String> uris) {

@@ -34,16 +34,16 @@ public class DualInputSemanticProperties implements SemanticProperties {
 
 	/**
 	 * Mapping from fields in the source record(s) in the first input to fields
-	 * in the destination record(s).  
+	 * in the destination record(s).
 	 */
-	private Map<Integer,FieldSet> fieldMapping1;
-	
+	private Map<Integer, FieldSet> fieldMapping1;
+
 	/**
 	 * Mapping from fields in the source record(s) in the second input to fields
-	 * in the destination record(s).  
+	 * in the destination record(s).
 	 */
-	private Map<Integer,FieldSet> fieldMapping2;
-	
+	private Map<Integer, FieldSet> fieldMapping2;
+
 	/**
 	 * Set of fields that are read in the source record(s) from the
 	 * first input.
@@ -56,10 +56,10 @@ public class DualInputSemanticProperties implements SemanticProperties {
 	 */
 	private FieldSet readFields2;
 
-	
+
 	public DualInputSemanticProperties() {
-		this.fieldMapping1 = new HashMap<Integer,FieldSet>();
-		this.fieldMapping2 = new HashMap<Integer,FieldSet>();
+		this.fieldMapping1 = new HashMap<Integer, FieldSet>();
+		this.fieldMapping2 = new HashMap<Integer, FieldSet>();
 		this.readFields1 = null;
 		this.readFields2 = null;
 	}
@@ -115,7 +115,7 @@ public class DualInputSemanticProperties implements SemanticProperties {
 	 * from the source record(s) in the first input to the destination
 	 * record(s).
 	 *
-	 * @param input the input of the source field
+	 * @param input       the input of the source field
 	 * @param sourceField the position in the source record
 	 * @param targetField the position in the destination record
 	 */
@@ -131,8 +131,8 @@ public class DualInputSemanticProperties implements SemanticProperties {
 			fieldMapping = this.fieldMapping2;
 		}
 
-		if(isTargetFieldPresent(targetField, fieldMapping)) {
-			throw new InvalidSemanticAnnotationException("Target field "+targetField+" was added twice to input "+input);
+		if (isTargetFieldPresent(targetField, fieldMapping)) {
+			throw new InvalidSemanticAnnotationException("Target field " + targetField + " was added twice to input " + input);
 		}
 
 		FieldSet targetFields = fieldMapping.get(sourceField);
@@ -145,8 +145,8 @@ public class DualInputSemanticProperties implements SemanticProperties {
 
 	private boolean isTargetFieldPresent(int targetField, Map<Integer, FieldSet> fieldMapping) {
 
-		for(FieldSet targetFields : fieldMapping.values()) {
-			if(targetFields.contains(targetField)) {
+		for (FieldSet targetFields : fieldMapping.values()) {
+			if (targetFields.contains(targetField)) {
 				return true;
 			}
 		}
@@ -157,7 +157,7 @@ public class DualInputSemanticProperties implements SemanticProperties {
 	 * Adds, to the existing information, field(s) that are read in
 	 * the source record(s) from the first input.
 	 *
-	 * @param input the input of the read fields
+	 * @param input      the input of the read fields
 	 * @param readFields the position(s) in the source record(s)
 	 */
 	public void addReadFields(int input, FieldSet readFields) {

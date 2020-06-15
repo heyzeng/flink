@@ -169,7 +169,7 @@ public class ScalaAggregateOperator<IN> extends SingleInputOperator<IN, IN, Scal
 			// non grouped aggregation
 			UnaryOperatorInformation<IN, IN> operatorInfo = new UnaryOperatorInformation<>(getInputType(), getResultType());
 			GroupReduceOperatorBase<IN, IN, GroupReduceFunction<IN, IN>> po =
-					new GroupReduceOperatorBase<IN, IN, GroupReduceFunction<IN, IN>>(function, operatorInfo, new int[0], name);
+				new GroupReduceOperatorBase<IN, IN, GroupReduceFunction<IN, IN>>(function, operatorInfo, new int[0], name);
 
 			po.setCombinable(true);
 
@@ -186,7 +186,7 @@ public class ScalaAggregateOperator<IN> extends SingleInputOperator<IN, IN, Scal
 			int[] logicalKeyPositions = this.grouping.getKeys().computeLogicalKeyPositions();
 			UnaryOperatorInformation<IN, IN> operatorInfo = new UnaryOperatorInformation<>(getInputType(), getResultType());
 			GroupReduceOperatorBase<IN, IN, GroupReduceFunction<IN, IN>> po =
-					new GroupReduceOperatorBase<IN, IN, GroupReduceFunction<IN, IN>>(function, operatorInfo, logicalKeyPositions, name);
+				new GroupReduceOperatorBase<IN, IN, GroupReduceFunction<IN, IN>>(function, operatorInfo, logicalKeyPositions, name);
 
 			po.setCombinable(true);
 
@@ -215,11 +215,9 @@ public class ScalaAggregateOperator<IN> extends SingleInputOperator<IN, IN, Scal
 			po.setCustomPartitioner(grouping.getCustomPartitioner());
 
 			return po;
-		}
-		else if (this.grouping.getKeys() instanceof Keys.SelectorFunctionKeys) {
+		} else if (this.grouping.getKeys() instanceof Keys.SelectorFunctionKeys) {
 			throw new UnsupportedOperationException("Aggregate does not support grouping with KeySelector functions, yet.");
-		}
-		else {
+		} else {
 			throw new UnsupportedOperationException("Unrecognized key type.");
 		}
 

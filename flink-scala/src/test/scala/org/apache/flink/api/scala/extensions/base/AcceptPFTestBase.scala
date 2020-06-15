@@ -23,8 +23,8 @@ import org.apache.flink.util.TestLogger
 import org.scalatest.junit.JUnitSuiteLike
 
 /**
-  * Common facilities to test the `acceptPartialFunctions` extension
-  */
+ * Common facilities to test the `acceptPartialFunctions` extension
+ */
 private[extensions] abstract class AcceptPFTestBase extends TestLogger with JUnitSuiteLike {
 
   private val env = ExecutionEnvironment.getExecutionEnvironment

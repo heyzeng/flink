@@ -103,7 +103,7 @@ public final class TypeSerializerMatchers {
 	 * Matches if the expected {@code TypeSerializerSchemaCompatibility} has the same compatibility as {@code expectedCompatibility}.
 	 *
 	 * @param expectedCompatibility the compatibility to match to.
-	 * @param <T> element type.
+	 * @param <T>                   element type.
 	 * @return a {@code Matcher} that matches if it has the same compatibility as {@code expectedCompatibility}.
 	 */
 	public static <T> Matcher<TypeSerializerSchemaCompatibility<T>> hasSameCompatibilityAs(
@@ -136,7 +136,7 @@ public final class TypeSerializerMatchers {
 	// -------------------------------------------------------------------------------------------------------------
 
 	private static final class CompatibleAfterReconfiguration<T>
-			extends TypeSafeDiagnosingMatcher<TypeSerializerSchemaCompatibility<T>> {
+		extends TypeSafeDiagnosingMatcher<TypeSerializerSchemaCompatibility<T>> {
 
 		private final Matcher<? extends TypeSerializer<T>> reconfiguredSerializerMatcher;
 
@@ -178,14 +178,11 @@ public final class TypeSerializerMatchers {
 		protected boolean matchesSafely(TypeSerializerSchemaCompatibility<T> testResultCompatibility) {
 			if (expectedCompatibility.isCompatibleAsIs()) {
 				return testResultCompatibility.isCompatibleAsIs();
-			}
-			else if (expectedCompatibility.isIncompatible()) {
+			} else if (expectedCompatibility.isIncompatible()) {
 				return testResultCompatibility.isIncompatible();
-			}
-			else if (expectedCompatibility.isCompatibleAfterMigration()) {
+			} else if (expectedCompatibility.isCompatibleAfterMigration()) {
 				return testResultCompatibility.isCompatibleAfterMigration();
-			}
-			else if (expectedCompatibility.isCompatibleWithReconfiguredSerializer()) {
+			} else if (expectedCompatibility.isCompatibleWithReconfiguredSerializer()) {
 				return testResultCompatibility.isCompatibleWithReconfiguredSerializer();
 			}
 			return false;

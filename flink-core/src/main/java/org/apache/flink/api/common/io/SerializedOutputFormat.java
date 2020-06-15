@@ -26,12 +26,12 @@ import org.apache.flink.core.memory.DataOutputView;
 
 /**
  * Stores elements by serializing them with their regular serialization/deserialization functionality.
- * 
+ *
  * @see SerializedInputFormat
  */
 @Public
 public class SerializedOutputFormat<T extends IOReadableWritable> extends BinaryOutputFormat<T> {
-	
+
 	private static final long serialVersionUID = 1L;
 
 	@Override

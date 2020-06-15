@@ -50,26 +50,26 @@ import java.util.Map;
 public class InnerJoinOperatorBase<IN1, IN2, OUT, FT extends FlatJoinFunction<IN1, IN2, OUT>> extends JoinOperatorBase<IN1, IN2, OUT, FT> {
 
 	public InnerJoinOperatorBase(UserCodeWrapper<FT> udf, BinaryOperatorInformation<IN1, IN2, OUT> operatorInfo,
-			int[] keyPositions1, int[] keyPositions2, String name) {
+								 int[] keyPositions1, int[] keyPositions2, String name) {
 		super(udf, operatorInfo, keyPositions1, keyPositions2, name);
 	}
 
 	public InnerJoinOperatorBase(FT udf, BinaryOperatorInformation<IN1, IN2, OUT> operatorInfo, int[] keyPositions1,
-			int[] keyPositions2, String name) {
+								 int[] keyPositions2, String name) {
 		super(new UserCodeObjectWrapper<FT>(udf), operatorInfo, keyPositions1, keyPositions2, name);
 	}
 
 	public InnerJoinOperatorBase(Class<? extends FT> udf, BinaryOperatorInformation<IN1, IN2, OUT> operatorInfo,
-			int[] keyPositions1, int[] keyPositions2, String name) {
+								 int[] keyPositions1, int[] keyPositions2, String name) {
 		super(new UserCodeClassWrapper<FT>(udf), operatorInfo, keyPositions1, keyPositions2, name);
 	}
-	
+
 	// --------------------------------------------------------------------------------------------
 
 	@SuppressWarnings("unchecked")
 	@Override
 	protected List<OUT> executeOnCollections(List<IN1> inputData1, List<IN2> inputData2, RuntimeContext runtimeContext,
-			ExecutionConfig executionConfig) throws Exception {
+											 ExecutionConfig executionConfig) throws Exception {
 		FlatJoinFunction<IN1, IN2, OUT> function = userFunction.getUserCodeObject();
 
 		FunctionUtils.setFunctionRuntimeContext(function, runtimeContext);
@@ -95,7 +95,7 @@ public class InnerJoinOperatorBase<IN1, IN2, OUT, FT extends FlatJoinFunction<IN
 			leftComparator = ((CompositeType<IN1>) leftInformation).createComparator(keyPositions, orders, 0, executionConfig);
 		} else {
 			throw new RuntimeException("Type information for left input of type " + leftInformation.getClass()
-					.getCanonicalName() + " is not supported. Could not generate a comparator.");
+				.getCanonicalName() + " is not supported. Could not generate a comparator.");
 		}
 
 		if (rightInformation instanceof AtomicType) {
@@ -108,7 +108,7 @@ public class InnerJoinOperatorBase<IN1, IN2, OUT, FT extends FlatJoinFunction<IN
 			rightComparator = ((CompositeType<IN2>) rightInformation).createComparator(keyPositions, orders, 0, executionConfig);
 		} else {
 			throw new RuntimeException("Type information for right input of type " + rightInformation.getClass()
-					.getCanonicalName() + " is not supported. Could not generate a comparator.");
+				.getCanonicalName() + " is not supported. Could not generate a comparator.");
 		}
 
 		TypePairComparator<IN1, IN2> pairComparator = new GenericPairComparator<IN1, IN2>(leftComparator, rightComparator);

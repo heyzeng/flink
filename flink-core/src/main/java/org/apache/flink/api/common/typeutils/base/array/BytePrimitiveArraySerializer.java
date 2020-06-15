@@ -31,10 +31,10 @@ import org.apache.flink.core.memory.DataOutputView;
  * A serializer for byte arrays.
  */
 @Internal
-public final class BytePrimitiveArraySerializer extends TypeSerializerSingleton<byte[]>{
+public final class BytePrimitiveArraySerializer extends TypeSerializerSingleton<byte[]> {
 
 	private static final long serialVersionUID = 1L;
-	
+
 	private static final byte[] EMPTY = new byte[0];
 
 	public static final BytePrimitiveArraySerializer INSTANCE = new BytePrimitiveArraySerializer();
@@ -55,7 +55,7 @@ public final class BytePrimitiveArraySerializer extends TypeSerializerSingleton<
 		System.arraycopy(from, 0, copy, 0, from.length);
 		return copy;
 	}
-	
+
 	@Override
 	public byte[] copy(byte[] from, byte[] reuse) {
 		return copy(from);
@@ -72,7 +72,7 @@ public final class BytePrimitiveArraySerializer extends TypeSerializerSingleton<
 		if (record == null) {
 			throw new IllegalArgumentException("The record must not be null.");
 		}
-		
+
 		final int len = record.length;
 		target.writeInt(len);
 		target.write(record);
@@ -85,7 +85,7 @@ public final class BytePrimitiveArraySerializer extends TypeSerializerSingleton<
 		source.readFully(result);
 		return result;
 	}
-	
+
 	@Override
 	public byte[] deserialize(byte[] reuse, DataInputView source) throws IOException {
 		return deserialize(source);

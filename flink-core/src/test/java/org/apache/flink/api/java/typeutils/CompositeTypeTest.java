@@ -29,32 +29,32 @@ import org.junit.Test;
 public class CompositeTypeTest {
 
 	private final TupleTypeInfo<?> tupleTypeInfo = new TupleTypeInfo<Tuple4<Integer, Integer, Integer, Integer>>(
-			BasicTypeInfo.INT_TYPE_INFO, BasicTypeInfo.INT_TYPE_INFO, BasicTypeInfo.INT_TYPE_INFO, BasicTypeInfo.INT_TYPE_INFO);
+		BasicTypeInfo.INT_TYPE_INFO, BasicTypeInfo.INT_TYPE_INFO, BasicTypeInfo.INT_TYPE_INFO, BasicTypeInfo.INT_TYPE_INFO);
 
 
 	private final TupleTypeInfo<Tuple3<Integer, String, Long>> inNestedTuple1 = new TupleTypeInfo<Tuple3<Integer, String, Long>>(
-			BasicTypeInfo.INT_TYPE_INFO, BasicTypeInfo.STRING_TYPE_INFO, BasicTypeInfo.LONG_TYPE_INFO);
+		BasicTypeInfo.INT_TYPE_INFO, BasicTypeInfo.STRING_TYPE_INFO, BasicTypeInfo.LONG_TYPE_INFO);
 
 	private final TupleTypeInfo<Tuple2<Double, Double>> inNestedTuple2 = new TupleTypeInfo<Tuple2<Double, Double>>(
-			BasicTypeInfo.DOUBLE_TYPE_INFO, BasicTypeInfo.DOUBLE_TYPE_INFO);
+		BasicTypeInfo.DOUBLE_TYPE_INFO, BasicTypeInfo.DOUBLE_TYPE_INFO);
 
 	private final TupleTypeInfo<?> nestedTypeInfo = new TupleTypeInfo<Tuple4<Integer, Tuple3<Integer, String, Long>, Integer, Tuple2<Double, Double>>>(
-			BasicTypeInfo.INT_TYPE_INFO,
-			inNestedTuple1,
-			BasicTypeInfo.INT_TYPE_INFO,
-			inNestedTuple2);
+		BasicTypeInfo.INT_TYPE_INFO,
+		inNestedTuple1,
+		BasicTypeInfo.INT_TYPE_INFO,
+		inNestedTuple2);
 
 	private final TupleTypeInfo<Tuple2<Integer, Tuple2<Integer, Integer>>> inNestedTuple3 = new TupleTypeInfo<Tuple2<Integer, Tuple2<Integer, Integer>>>(
-			BasicTypeInfo.INT_TYPE_INFO,
-			new TupleTypeInfo<Tuple2<Integer, Integer>>(BasicTypeInfo.INT_TYPE_INFO, BasicTypeInfo.INT_TYPE_INFO));
+		BasicTypeInfo.INT_TYPE_INFO,
+		new TupleTypeInfo<Tuple2<Integer, Integer>>(BasicTypeInfo.INT_TYPE_INFO, BasicTypeInfo.INT_TYPE_INFO));
 
 	private final TupleTypeInfo<?> deepNestedTupleTypeInfo = new TupleTypeInfo<Tuple3<Integer, Tuple2<Integer, Tuple2<Integer, Integer>>, Integer>>(
-			BasicTypeInfo.INT_TYPE_INFO,
-			inNestedTuple3,
-			BasicTypeInfo.INT_TYPE_INFO	);
+		BasicTypeInfo.INT_TYPE_INFO,
+		inNestedTuple3,
+		BasicTypeInfo.INT_TYPE_INFO);
 
 	private final PojoTypeInfo<?> pojoTypeInfo = ((PojoTypeInfo<?>) TypeExtractor.getForClass
-			(MyPojo.class));
+		(MyPojo.class));
 
 	private final TupleTypeInfo<?> pojoInTupleTypeInfo = new TupleTypeInfo<Tuple2<Integer, MyPojo>>(BasicTypeInfo.INT_TYPE_INFO, pojoTypeInfo);
 
@@ -97,13 +97,13 @@ public class CompositeTypeTest {
 		assertEquals(5, nestedTypeInfo.getFlatFields("f3").get(0).getPosition());
 		assertEquals(6, nestedTypeInfo.getFlatFields("f3").get(1).getPosition());
 		assertEquals(BasicTypeInfo.INT_TYPE_INFO,
-				nestedTypeInfo.getFlatFields("0").get(0).getType());
+			nestedTypeInfo.getFlatFields("0").get(0).getType());
 		assertEquals(BasicTypeInfo.STRING_TYPE_INFO,
-				nestedTypeInfo.getFlatFields("1.1").get(0).getType());
+			nestedTypeInfo.getFlatFields("1.1").get(0).getType());
 		assertEquals(BasicTypeInfo.LONG_TYPE_INFO,
-				nestedTypeInfo.getFlatFields("1").get(2).getType());
+			nestedTypeInfo.getFlatFields("1").get(2).getType());
 		assertEquals(BasicTypeInfo.DOUBLE_TYPE_INFO,
-				nestedTypeInfo.getFlatFields("3").get(1).getType());
+			nestedTypeInfo.getFlatFields("3").get(1).getType());
 
 		assertEquals(3, deepNestedTupleTypeInfo.getFlatFields("1").size());
 		assertEquals(1, deepNestedTupleTypeInfo.getFlatFields("1").get(0).getPosition());

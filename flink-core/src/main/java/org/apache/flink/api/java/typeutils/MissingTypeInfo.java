@@ -30,11 +30,11 @@ import org.apache.flink.api.common.typeutils.TypeSerializer;
 public class MissingTypeInfo extends TypeInformation<InvalidTypesException> {
 
 	private static final long serialVersionUID = -4212082837126702723L;
-	
+
 	private final String functionName;
 	private final InvalidTypesException typeException;
 
-	
+
 	public MissingTypeInfo(String functionName) {
 		this(functionName, new InvalidTypesException("An unknown error occured."));
 	}
@@ -43,9 +43,9 @@ public class MissingTypeInfo extends TypeInformation<InvalidTypesException> {
 		this.functionName = functionName;
 		this.typeException = typeException;
 	}
-	
+
 	// --------------------------------------------------------------------------------------------
-	
+
 	public String getFunctionName() {
 		return functionName;
 	}
@@ -55,7 +55,7 @@ public class MissingTypeInfo extends TypeInformation<InvalidTypesException> {
 	}
 
 	// --------------------------------------------------------------------------------------------
-	
+
 	@Override
 	public boolean isBasicType() {
 		throw new UnsupportedOperationException("The missing type information cannot be used as a type information.");

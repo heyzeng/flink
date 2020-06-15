@@ -54,7 +54,7 @@ public class MapSerializerTest extends SerializerTestBase<Map<Long, String>> {
 		final Random rnd = new Random(123654789);
 
 		// empty maps
-		final Map<Long, String> map1 = Collections.emptyMap(); 
+		final Map<Long, String> map1 = Collections.emptyMap();
 		final Map<Long, String> map2 = new HashMap<>();
 		final Map<Long, String> map3 = new TreeMap<>();
 
@@ -75,7 +75,7 @@ public class MapSerializerTest extends SerializerTestBase<Map<Long, String>> {
 		for (int i = 0; i < rnd.nextInt(200); i++) {
 			map8.put(rnd.nextLong(), Long.toString(rnd.nextLong()));
 		}
-		
+
 		// null-value maps
 		final Map<Long, String> map9 = Collections.singletonMap(0L, null);
 		final Map<Long, String> map10 = new HashMap<>();
@@ -83,8 +83,8 @@ public class MapSerializerTest extends SerializerTestBase<Map<Long, String>> {
 		final Map<Long, String> map11 = new TreeMap<>();
 		map11.put(666L, null);
 
-		return (Map<Long, String>[]) new Map[] {
-				map1, map2, map3, map4, map5, map6, map7, map8, map9, map10, map11
+		return (Map<Long, String>[]) new Map[]{
+			map1, map2, map3, map4, map5, map6, map7, map8, map9, map10, map11
 		};
 	}
 }

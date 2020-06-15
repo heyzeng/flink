@@ -44,9 +44,9 @@ public class SqlDropDatabase extends SqlDrop implements ExtendedSqlNode {
 	private final boolean isCascade;
 
 	public SqlDropDatabase(SqlParserPos pos,
-			SqlIdentifier databaseName,
-			boolean ifExists,
-			boolean isCascade) {
+						   SqlIdentifier databaseName,
+						   boolean ifExists,
+						   boolean isCascade) {
 		super(OPERATOR, pos, ifExists);
 		this.databaseName = databaseName;
 		this.ifExists = ifExists;

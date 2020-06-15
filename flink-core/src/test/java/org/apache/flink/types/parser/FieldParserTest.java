@@ -125,7 +125,7 @@ public class FieldParserTest {
  *
  * @param <T> The type that is parsed.
  */
-class TestFieldParser<T> extends FieldParser<T>{
+class TestFieldParser<T> extends FieldParser<T> {
 
 	@Override
 	protected int parseField(byte[] bytes, int startPos, int limit, byte[] delim, T reuse) {

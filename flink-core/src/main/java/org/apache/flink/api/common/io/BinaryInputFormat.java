@@ -46,7 +46,7 @@ import java.util.List;
  * Base class for all input formats that use blocks of fixed size. The input splits are aligned to these blocks,
  * meaning that each split will consist of one block. Without configuration, these block sizes equal the native
  * block sizes of the HDFS.
- *
+ * <p>
  * A block will contain a {@link BlockInfo} at the end of the block. There, the reader can find some statistics
  * about the split currently being read, that will help correctly parse the contents of the block.
  */
@@ -56,23 +56,33 @@ public abstract class BinaryInputFormat<T> extends FileInputFormat<T>
 
 	private static final long serialVersionUID = 1L;
 
-	/** The log. */
+	/**
+	 * The log.
+	 */
 	private static final Logger LOG = LoggerFactory.getLogger(BinaryInputFormat.class);
 
-	/** The config parameter which defines the fixed length of a record. */
+	/**
+	 * The config parameter which defines the fixed length of a record.
+	 */
 	public static final String BLOCK_SIZE_PARAMETER_KEY = "input.block_size";
 
 	public static final long NATIVE_BLOCK_SIZE = Long.MIN_VALUE;
 
-	/** The block size to use. */
+	/**
+	 * The block size to use.
+	 */
 	private long blockSize = NATIVE_BLOCK_SIZE;
 
 	private transient DataInputViewStreamWrapper dataInputStream;
 
-	/** The BlockInfo for the Block corresponding to the split currently being read. */
+	/**
+	 * The BlockInfo for the Block corresponding to the split currently being read.
+	 */
 	private transient BlockInfo blockInfo;
 
-	/** A wrapper around the block currently being read. */
+	/**
+	 * A wrapper around the block currently being read.
+	 */
 	private transient BlockBasedInput blockBasedInput = null;
 
 	/**
@@ -148,7 +158,7 @@ public abstract class BinaryInputFormat<T> extends FileInputFormat<T>
 		// get all the files that are involved in the splits
 		List<FileStatus> files = new ArrayList<>();
 
-		for (Path filePath: getFilePaths()) {
+		for (Path filePath : getFilePaths()) {
 			final FileSystem fs = filePath.getFileSystem();
 			final FileStatus pathFile = fs.getFileStatus(filePath);
 
@@ -228,13 +238,11 @@ public abstract class BinaryInputFormat<T> extends FileInputFormat<T>
 	/**
 	 * Fill in the statistics. The last modification time and the total input size are prefilled.
 	 *
-	 * @param files
-	 *        The files that are associated with this block input format.
-	 * @param stats
-	 *        The pre-filled statistics.
+	 * @param files The files that are associated with this block input format.
+	 * @param stats The pre-filled statistics.
 	 */
 	protected SequentialStatistics createStatistics(List<FileStatus> files, FileBaseStatistics stats)
-			throws IOException {
+		throws IOException {
 		if (files.isEmpty()) {
 			return null;
 		}
@@ -284,7 +292,7 @@ public abstract class BinaryInputFormat<T> extends FileInputFormat<T>
 
 		// We set the size of the BlockBasedInput to splitLength as each split contains one block.
 		// After reading the block info, we seek in the file to the correct position.
-		
+
 		this.readRecords = 0;
 		this.stream.seek(this.splitStart + this.blockInfo.getFirstRecordStart());
 		this.blockBasedInput = new BlockBasedInput(this.stream,
@@ -323,7 +331,7 @@ public abstract class BinaryInputFormat<T> extends FileInputFormat<T>
 			this.blockPos = (int) BinaryInputFormat.this.blockInfo.getFirstRecordStart();
 			this.maxPayloadSize = blockSize - BinaryInputFormat.this.blockInfo.getInfoSize();
 		}
-		
+
 		public BlockBasedInput(FSDataInputStream in, int startPos, long length) {
 			super(in);
 			this.blockPos = startPos;
@@ -359,7 +367,7 @@ public abstract class BinaryInputFormat<T> extends FileInputFormat<T>
 		@Override
 		public int read(byte[] b, int off, int len) throws IOException {
 			int totalRead = 0;
-			for (int remainingLength = len, offset = off; remainingLength > 0;) {
+			for (int remainingLength = len, offset = off; remainingLength > 0; ) {
 				int blockLen = Math.min(remainingLength, this.maxPayloadSize - this.blockPos);
 				int read = this.in.read(b, offset, blockLen);
 				if (read < 0) {
@@ -388,9 +396,9 @@ public abstract class BinaryInputFormat<T> extends FileInputFormat<T>
 			throw new RuntimeException("You must have forgotten to call open() on your input format.");
 		}
 
-		return  new Tuple2<>(
-			this.blockBasedInput.getCurrBlockPos(), 		// the last read index in the block
-			this.readRecords								// the number of records read
+		return new Tuple2<>(
+			this.blockBasedInput.getCurrBlockPos(),        // the last read index in the block
+			this.readRecords                                // the number of records read
 		);
 	}
 

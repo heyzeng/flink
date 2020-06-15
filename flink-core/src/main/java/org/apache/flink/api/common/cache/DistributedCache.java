@@ -61,17 +61,23 @@ public class DistributedCache {
 
 		public byte[] blobKey;
 
-		/** Client-side constructor used by the API for initial registration. */
+		/**
+		 * Client-side constructor used by the API for initial registration.
+		 */
 		public DistributedCacheEntry(String filePath, Boolean isExecutable) {
 			this(filePath, isExecutable, null);
 		}
 
-		/** Client-side constructor used during job-submission for zipped directory. */
+		/**
+		 * Client-side constructor used during job-submission for zipped directory.
+		 */
 		public DistributedCacheEntry(String filePath, boolean isExecutable, boolean isZipped) {
 			this(filePath, isExecutable, null, isZipped);
 		}
 
-		/** Server-side constructor used during job-submission for zipped directories. */
+		/**
+		 * Server-side constructor used during job-submission for zipped directories.
+		 */
 		public DistributedCacheEntry(String filePath, Boolean isExecutable, byte[] blobKey, boolean isZipped) {
 			this.filePath = filePath;
 			this.isExecutable = isExecutable;
@@ -79,8 +85,10 @@ public class DistributedCache {
 			this.isZipped = isZipped;
 		}
 
-		/** Server-side constructor used during job-submission for files. */
-		public DistributedCacheEntry(String filePath, Boolean isExecutable, byte[] blobKey){
+		/**
+		 * Server-side constructor used during job-submission for files.
+		 */
+		public DistributedCacheEntry(String filePath, Boolean isExecutable, byte[] blobKey) {
 			this(filePath, isExecutable, blobKey, false);
 		}
 
@@ -135,20 +143,18 @@ public class DistributedCache {
 		Future<Path> future = cacheCopyTasks.get(name);
 		if (future == null) {
 			throw new IllegalArgumentException("File with name '" + name + "' is not available." +
-					" Did you forget to register the file?");
+				" Did you forget to register the file?");
 		}
 
 		try {
 			final Path path = future.get();
 			URI tmp = path.makeQualified(path.getFileSystem()).toUri();
 			return new File(tmp);
-		}
-		catch (ExecutionException e) {
+		} catch (ExecutionException e) {
 			throw new RuntimeException("An error occurred while copying the file.", e.getCause());
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			throw new RuntimeException("Error while getting the file registered under '" + name +
-					"' from the distributed cache", e);
+				"' from the distributed cache", e);
 		}
 	}
 

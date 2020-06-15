@@ -90,7 +90,7 @@ public class SortPartitionOperator<T> extends SingleInputOperator<T, T, SortPart
 
 	/**
 	 * Returns whether using key selector or not.
-     */
+	 */
 	public boolean useKeySelector() {
 		return useKeySelector;
 	}

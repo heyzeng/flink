@@ -437,8 +437,8 @@ public class FlinkDDLDataTypeTest {
 		}
 
 		private void checkEx(String expectedMsgPattern,
-				SqlParserUtil.StringAndPos sap,
-				Throwable thrown) {
+							 SqlParserUtil.StringAndPos sap,
+							 Throwable thrown) {
 			SqlValidatorTestCase.checkEx(thrown, expectedMsgPattern, sap);
 		}
 	}
@@ -464,9 +464,9 @@ public class FlinkDDLDataTypeTest {
 		}
 
 		TestFactory(
-				Map<String, Object> options,
-				SqlTestFactory.MockCatalogReaderFactory catalogReaderFactory,
-				SqlTestFactory.ValidatorFactory validatorFactory) {
+			Map<String, Object> options,
+			SqlTestFactory.MockCatalogReaderFactory catalogReaderFactory,
+			SqlTestFactory.ValidatorFactory validatorFactory) {
 			this.options = options;
 			this.validatorFactory = validatorFactory;
 			this.operatorTable =

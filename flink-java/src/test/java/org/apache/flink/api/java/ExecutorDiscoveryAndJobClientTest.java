@@ -64,7 +64,7 @@ public class ExecutorDiscoveryAndJobClientTest {
 	private JobExecutionResult executeTestJobBasedOnConfig(final Configuration configuration) throws Exception {
 		final ExecutionEnvironment env = new ExecutionEnvironment(configuration);
 		env.fromCollection(Collections.singletonList(42))
-				.output(new DiscardingOutputFormat<>());
+			.output(new DiscardingOutputFormat<>());
 		return env.execute();
 	}
 

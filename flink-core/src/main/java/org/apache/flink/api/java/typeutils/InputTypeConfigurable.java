@@ -35,7 +35,7 @@ public interface InputTypeConfigurable {
 	 * Method that is called on an {@link org.apache.flink.api.common.io.OutputFormat} when it is passed to
 	 * the DataSet's output method. May be used to configures the output format based on the data type.
 	 *
-	 * @param type The data type of the input.
+	 * @param type            The data type of the input.
 	 * @param executionConfig The execution config for this parallel execution.
 	 */
 	void setInputType(TypeInformation<?> type, ExecutionConfig executionConfig);

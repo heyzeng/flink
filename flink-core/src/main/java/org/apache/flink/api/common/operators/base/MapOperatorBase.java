@@ -34,35 +34,34 @@ import org.apache.flink.api.common.operators.util.UserCodeWrapper;
 import org.apache.flink.api.common.typeutils.TypeSerializer;
 
 /**
- *
- * @param <IN> The input type.
+ * @param <IN>  The input type.
  * @param <OUT> The result type.
- * @param <FT> The type of the user-defined function.
+ * @param <FT>  The type of the user-defined function.
  */
 @Internal
 public class MapOperatorBase<IN, OUT, FT extends MapFunction<IN, OUT>> extends SingleInputOperator<IN, OUT, FT> {
-	
+
 	public MapOperatorBase(UserCodeWrapper<FT> udf, UnaryOperatorInformation<IN, OUT> operatorInfo, String name) {
 		super(udf, operatorInfo, name);
 	}
-	
+
 	public MapOperatorBase(FT udf, UnaryOperatorInformation<IN, OUT> operatorInfo, String name) {
 		super(new UserCodeObjectWrapper<FT>(udf), operatorInfo, name);
 	}
-	
+
 	public MapOperatorBase(Class<? extends FT> udf, UnaryOperatorInformation<IN, OUT> operatorInfo, String name) {
 		super(new UserCodeClassWrapper<FT>(udf), operatorInfo, name);
 	}
-	
+
 	// --------------------------------------------------------------------------------------------
-	
+
 	@Override
 	protected List<OUT> executeOnCollections(List<IN> inputData, RuntimeContext ctx, ExecutionConfig executionConfig) throws Exception {
 		MapFunction<IN, OUT> function = this.userFunction.getUserCodeObject();
-		
+
 		FunctionUtils.setFunctionRuntimeContext(function, ctx);
 		FunctionUtils.openFunction(function, this.parameters);
-		
+
 		ArrayList<OUT> result = new ArrayList<OUT>(inputData.size());
 
 		TypeSerializer<IN> inSerializer = getOperatorInfo().getInputType().createSerializer(executionConfig);
@@ -75,7 +74,7 @@ public class MapOperatorBase<IN, OUT, FT extends MapFunction<IN, OUT>> extends S
 		}
 
 		FunctionUtils.closeFunction(function);
-		
+
 		return result;
 	}
 }

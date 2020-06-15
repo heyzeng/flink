@@ -129,7 +129,7 @@ public class LocalFileSystemTest extends TestLogger {
 		assertTrue(lfs.exists(pathtotestfile2));
 
 		// test that lfs can write to files properly
-		final byte[] testbytes = { 1, 2, 3, 4, 5 };
+		final byte[] testbytes = {1, 2, 3, 4, 5};
 		lfsoutput1.write(testbytes);
 		lfsoutput1.close();
 
@@ -220,15 +220,15 @@ public class LocalFileSystemTest extends TestLogger {
 		final File rootDirectory = temporaryFolder.newFolder();
 
 		//create a file /root/src/B/test.csv
-		final File srcDirectory  = new File(new File(rootDirectory, "src"), "B");
+		final File srcDirectory = new File(new File(rootDirectory, "src"), "B");
 		assertTrue(srcDirectory.mkdirs());
 
 		final File srcFile = new File(srcDirectory, "test.csv");
 		assertTrue(srcFile.createNewFile());
 
 		//Move/rename B and its content to /root/dst/A
-		final File destDirectory  = new File(new File(rootDirectory, "dst"), "B");
-		final File destFile  = new File(destDirectory, "test.csv");
+		final File destDirectory = new File(new File(rootDirectory, "dst"), "B");
+		final File destFile = new File(destDirectory, "test.csv");
 
 		final Path srcDirPath = new Path(srcDirectory.toURI());
 		final Path srcFilePath = new Path(srcFile.toURI());
@@ -266,7 +266,7 @@ public class LocalFileSystemTest extends TestLogger {
 		final FileSystem fs = FileSystem.getLocalFileSystem();
 
 		final File srcFile = new File(temporaryFolder.newFolder(), "someFile.txt");
-		final File destFile  = new File(temporaryFolder.newFolder(), "target");
+		final File destFile = new File(temporaryFolder.newFolder(), "target");
 
 		final Path srcFilePath = new Path(srcFile.toURI());
 		final Path destFilePath = new Path(destFile.toURI());
@@ -292,8 +292,7 @@ public class LocalFileSystemTest extends TestLogger {
 
 			// this cannot succeed because the source folder has no permission to remove the file
 			assertFalse(fs.rename(srcFilePath, destFilePath));
-		}
-		finally {
+		} finally {
 			// make sure we give permission back to ensure proper cleanup
 
 			//noinspection ResultOfMethodCallIgnored
@@ -314,7 +313,7 @@ public class LocalFileSystemTest extends TestLogger {
 
 		// a non-empty destination folder
 		final File dstFolder = temporaryFolder.newFolder();
-		final File dstFile  = new File(dstFolder, "target");
+		final File dstFile = new File(dstFolder, "target");
 		assertTrue(dstFile.createNewFile());
 
 		// this cannot succeed because the destination folder is not empty

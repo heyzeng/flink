@@ -33,7 +33,7 @@ import org.apache.flink.core.memory.MemorySegment;
 @Public
 public class IntValue implements NormalizableKey<IntValue>, ResettableValue<IntValue>, CopyableValue<IntValue> {
 	private static final long serialVersionUID = 1L;
-	
+
 	private int value;
 
 	/**
@@ -45,16 +45,16 @@ public class IntValue implements NormalizableKey<IntValue>, ResettableValue<IntV
 
 	/**
 	 * Initializes the encapsulated int with the provided value.
-	 * 
+	 *
 	 * @param value Initial value of the encapsulated int.
 	 */
 	public IntValue(int value) {
 		this.value = value;
 	}
-	
+
 	/**
 	 * Returns the value of the encapsulated int.
-	 * 
+	 *
 	 * @return the value of the encapsulated int.
 	 */
 	public int getValue() {
@@ -63,9 +63,8 @@ public class IntValue implements NormalizableKey<IntValue>, ResettableValue<IntV
 
 	/**
 	 * Sets the encapsulated int to the specified value.
-	 * 
-	 * @param value
-	 *        the new value of the encapsulated int.
+	 *
+	 * @param value the new value of the encapsulated int.
 	 */
 	public void setValue(int value) {
 		this.value = value;
@@ -82,7 +81,7 @@ public class IntValue implements NormalizableKey<IntValue>, ResettableValue<IntV
 	}
 
 	// --------------------------------------------------------------------------------------------
-	
+
 	@Override
 	public void read(DataInputView in) throws IOException {
 		this.value = in.readInt();
@@ -94,7 +93,7 @@ public class IntValue implements NormalizableKey<IntValue>, ResettableValue<IntV
 	}
 
 	// --------------------------------------------------------------------------------------------
-	
+
 	@Override
 	public int compareTo(IntValue o) {
 		final int other = o.value;
@@ -113,7 +112,7 @@ public class IntValue implements NormalizableKey<IntValue>, ResettableValue<IntV
 		}
 		return false;
 	}
-	
+
 	// --------------------------------------------------------------------------------------------
 
 	@Override
@@ -129,16 +128,13 @@ public class IntValue implements NormalizableKey<IntValue>, ResettableValue<IntV
 		// most significant byte comes first.
 		if (len == 4) {
 			target.putIntBigEndian(offset, value - Integer.MIN_VALUE);
-		}
-		else if (len <= 0) {
-		}
-		else if (len < 4) {
+		} else if (len <= 0) {
+		} else if (len < 4) {
 			int value = this.value - Integer.MIN_VALUE;
 			for (int i = 0; len > 0; len--, i++) {
-				target.put(offset + i, (byte) ((value >>> ((3-i)<<3)) & 0xff));
+				target.put(offset + i, (byte) ((value >>> ((3 - i) << 3)) & 0xff));
 			}
-		}
-		else {
+		} else {
 			target.putIntBigEndian(offset, value - Integer.MIN_VALUE);
 			for (int i = 4; i < len; i++) {
 				target.put(offset + i, (byte) 0);
@@ -147,7 +143,7 @@ public class IntValue implements NormalizableKey<IntValue>, ResettableValue<IntV
 	}
 
 	// --------------------------------------------------------------------------------------------
-	
+
 	@Override
 	public int getBinaryLength() {
 		return 4;

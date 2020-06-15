@@ -38,9 +38,12 @@ public final class EitherSerializerConfigSnapshot<L, R> extends CompositeTypeSer
 
 	private static final int VERSION = 1;
 
-	/** This empty nullary constructor is required for deserializing the configuration. */
+	/**
+	 * This empty nullary constructor is required for deserializing the configuration.
+	 */
 	@SuppressWarnings("unused")
-	public EitherSerializerConfigSnapshot() {}
+	public EitherSerializerConfigSnapshot() {
+	}
 
 	@Override
 	public int getVersion() {
@@ -50,7 +53,7 @@ public final class EitherSerializerConfigSnapshot<L, R> extends CompositeTypeSer
 	@Override
 	@SuppressWarnings("unchecked")
 	public TypeSerializerSchemaCompatibility<Either<L, R>> resolveSchemaCompatibility(
-			TypeSerializer<Either<L, R>> newSerializer) {
+		TypeSerializer<Either<L, R>> newSerializer) {
 
 		// this class was shared between the Java Either Serializer and the
 		// Scala Either serializer
@@ -61,8 +64,7 @@ public final class EitherSerializerConfigSnapshot<L, R> extends CompositeTypeSer
 				new JavaEitherSerializerSnapshot<>(),
 				nestedSerializersAndConfigs.get(0).f1,
 				nestedSerializersAndConfigs.get(1).f1);
-		}
-		else {
+		} else {
 			// fall back to the backwards compatibility path
 			return super.resolveSchemaCompatibility(newSerializer);
 		}

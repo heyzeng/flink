@@ -83,8 +83,7 @@ public class LimitedConnectionsConfigurationTest {
 			assertEquals(40, limitedFs.getMaxNumOpenOutputStreams());
 			assertEquals(12345, limitedFs.getStreamOpenTimeout());
 			assertEquals(98765, limitedFs.getStreamInactivityTimeout());
-		}
-		finally {
+		} finally {
 			// clear all settings
 			FileSystem.initialize(new Configuration());
 		}

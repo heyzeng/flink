@@ -46,8 +46,7 @@ public class TypeInformationTest {
 		try {
 			TypeInformation.of(Tuple3.class);
 			fail("should fail with an exception");
-		}
-		catch (FlinkRuntimeException e) {
+		} catch (FlinkRuntimeException e) {
 			// check that the error message mentions the TypeHint
 			assertNotEquals(-1, e.getMessage().indexOf("TypeHint"));
 		}
@@ -61,11 +60,13 @@ public class TypeInformationTest {
 	@Test
 	public void testOfTypeHint() {
 		assertEquals(BasicTypeInfo.STRING_TYPE_INFO, TypeInformation.of(String.class));
-		assertEquals(BasicTypeInfo.STRING_TYPE_INFO, TypeInformation.of(new TypeHint<String>(){}));
+		assertEquals(BasicTypeInfo.STRING_TYPE_INFO, TypeInformation.of(new TypeHint<String>() {
+		}));
 
 		TypeInformation<Tuple3<String, Double, Boolean>> tupleInfo =
-				new TupleTypeInfo<>(BasicTypeInfo.STRING_TYPE_INFO, BasicTypeInfo.DOUBLE_TYPE_INFO, BasicTypeInfo.BOOLEAN_TYPE_INFO);
+			new TupleTypeInfo<>(BasicTypeInfo.STRING_TYPE_INFO, BasicTypeInfo.DOUBLE_TYPE_INFO, BasicTypeInfo.BOOLEAN_TYPE_INFO);
 
-		assertEquals(tupleInfo, TypeInformation.of(new TypeHint<Tuple3<String, Double, Boolean>>(){}));
+		assertEquals(tupleInfo, TypeInformation.of(new TypeHint<Tuple3<String, Double, Boolean>>() {
+		}));
 	}
 }

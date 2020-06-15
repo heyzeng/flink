@@ -101,8 +101,7 @@ public class NullableSerializer<T> extends TypeSerializer<T> {
 		DataOutputSerializer dos = new DataOutputSerializer(length);
 		try {
 			serializer.serialize(null, dos);
-		}
-		catch (IOException | RuntimeException e) {
+		} catch (IOException | RuntimeException e) {
 			return false;
 		}
 		checkArgument(
@@ -112,8 +111,7 @@ public class NullableSerializer<T> extends TypeSerializer<T> {
 		DataInputDeserializer dis = new DataInputDeserializer(dos.getSharedBuffer());
 		try {
 			checkArgument(serializer.deserialize(dis) == null);
-		}
-		catch (IOException e) {
+		} catch (IOException e) {
 			throw new RuntimeException(
 				String.format("Unexpected failure to deserialize just serialized null value with %s",
 					serializer.getClass().getName()), e);
@@ -188,8 +186,7 @@ public class NullableSerializer<T> extends TypeSerializer<T> {
 		if (record == null) {
 			target.writeBoolean(true);
 			target.write(padding);
-		}
-		else {
+		} else {
 			target.writeBoolean(false);
 			originalSerializer.serialize(record, target);
 		}
@@ -222,8 +219,7 @@ public class NullableSerializer<T> extends TypeSerializer<T> {
 		target.writeBoolean(isNull);
 		if (isNull) {
 			target.write(padding);
-		}
-		else {
+		} else {
 			originalSerializer.copy(source, target);
 		}
 	}
@@ -251,8 +247,8 @@ public class NullableSerializer<T> extends TypeSerializer<T> {
 	 * configuration snapshot of its original serializer.
 	 *
 	 * @deprecated this snapshot class is no longer in use, and is maintained only for
-	 *             backwards compatibility purposes. It is fully replaced
-	 *             by {@link NullableSerializerSnapshot}.
+	 * backwards compatibility purposes. It is fully replaced
+	 * by {@link NullableSerializerSnapshot}.
 	 */
 	@Deprecated
 	@Internal

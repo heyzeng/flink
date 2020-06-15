@@ -27,23 +27,23 @@ public class BooleanValueParserTest extends ParserTestBase<BooleanValue> {
 
 	@Override
 	public String[] getValidTestValues() {
-		return new String[] {
-				"true", "false", "0", "1", "TRUE", "FALSE", "True", "False"
+		return new String[]{
+			"true", "false", "0", "1", "TRUE", "FALSE", "True", "False"
 		};
 	}
 
 	@Override
 	public BooleanValue[] getValidTestResults() {
-		return new BooleanValue[] {
-				new BooleanValue(true), new BooleanValue(false), new BooleanValue(false), new BooleanValue(true),
-				new BooleanValue(true), new BooleanValue(false), new BooleanValue(true), new BooleanValue(false)
+		return new BooleanValue[]{
+			new BooleanValue(true), new BooleanValue(false), new BooleanValue(false), new BooleanValue(true),
+			new BooleanValue(true), new BooleanValue(false), new BooleanValue(true), new BooleanValue(false)
 		};
 	}
 
 	@Override
 	public String[] getInvalidTestValues() {
 		return new String[]{
-				"yes", "no", "2", "-1", "wahr", "falsch", "", "asdf"
+			"yes", "no", "2", "-1", "wahr", "falsch", "", "asdf"
 		};
 	}
 

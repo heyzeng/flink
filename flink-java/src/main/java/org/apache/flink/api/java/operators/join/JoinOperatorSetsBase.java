@@ -80,10 +80,9 @@ public class JoinOperatorSetsBase<I1, I2> {
 	 *
 	 * @param fields The indexes of the other Tuple fields of the first join DataSets that should be used as keys.
 	 * @return An incomplete Join transformation.
-	 *           Call {@link org.apache.flink.api.java.operators.join.JoinOperatorSetsBase.JoinOperatorSetsPredicateBase#equalTo(int...)} or
-	 *           {@link org.apache.flink.api.java.operators.join.JoinOperatorSetsBase.JoinOperatorSetsPredicateBase#equalTo(KeySelector)}
-	 *           to continue the Join.
-	 *
+	 * Call {@link org.apache.flink.api.java.operators.join.JoinOperatorSetsBase.JoinOperatorSetsPredicateBase#equalTo(int...)} or
+	 * {@link org.apache.flink.api.java.operators.join.JoinOperatorSetsBase.JoinOperatorSetsPredicateBase#equalTo(KeySelector)}
+	 * to continue the Join.
 	 * @see Tuple
 	 * @see DataSet
 	 */
@@ -99,10 +98,9 @@ public class JoinOperatorSetsBase<I1, I2> {
 	 *
 	 * @param fields The  fields of the first join DataSets that should be used as keys.
 	 * @return An incomplete Join transformation.
-	 *           Call {@link org.apache.flink.api.java.operators.join.JoinOperatorSetsBase.JoinOperatorSetsPredicateBase#equalTo(int...)} or
-	 *           {@link org.apache.flink.api.java.operators.join.JoinOperatorSetsBase.JoinOperatorSetsPredicateBase#equalTo(KeySelector)}
-	 *           to continue the Join.
-	 *
+	 * Call {@link org.apache.flink.api.java.operators.join.JoinOperatorSetsBase.JoinOperatorSetsPredicateBase#equalTo(int...)} or
+	 * {@link org.apache.flink.api.java.operators.join.JoinOperatorSetsBase.JoinOperatorSetsPredicateBase#equalTo(KeySelector)}
+	 * to continue the Join.
 	 * @see Tuple
 	 * @see DataSet
 	 */
@@ -118,10 +116,9 @@ public class JoinOperatorSetsBase<I1, I2> {
 	 *
 	 * @param keySelector The KeySelector function which extracts the key values from the DataSet on which it is joined.
 	 * @return An incomplete Join transformation.
-	 *           Call {@link org.apache.flink.api.java.operators.join.JoinOperatorSetsBase.JoinOperatorSetsPredicateBase#equalTo(int...)} or
-	 *           {@link org.apache.flink.api.java.operators.join.JoinOperatorSetsBase.JoinOperatorSetsPredicateBase#equalTo(KeySelector)}
-	 *           to continue the Join.
-	 *
+	 * Call {@link org.apache.flink.api.java.operators.join.JoinOperatorSetsBase.JoinOperatorSetsPredicateBase#equalTo(int...)} or
+	 * {@link org.apache.flink.api.java.operators.join.JoinOperatorSetsBase.JoinOperatorSetsPredicateBase#equalTo(KeySelector)}
+	 * to continue the Join.
 	 * @see KeySelector
 	 * @see DataSet
 	 */
@@ -136,7 +133,6 @@ public class JoinOperatorSetsBase<I1, I2> {
 	 * <p>To continue the Join transformation, select the join key of the second input {@link DataSet} by calling
 	 * {@link org.apache.flink.api.java.operators.join.JoinOperatorSetsBase.JoinOperatorSetsPredicateBase#equalTo(int...)} or
 	 * {@link org.apache.flink.api.java.operators.join.JoinOperatorSetsBase.JoinOperatorSetsPredicateBase#equalTo(KeySelector)}.
-	 *
 	 */
 	public class JoinOperatorSetsPredicateBase {
 

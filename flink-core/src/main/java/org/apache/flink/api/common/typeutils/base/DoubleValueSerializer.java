@@ -31,7 +31,7 @@ import org.apache.flink.types.DoubleValue;
 public final class DoubleValueSerializer extends TypeSerializerSingleton<DoubleValue> {
 
 	private static final long serialVersionUID = 1L;
-	
+
 	public static final DoubleValueSerializer INSTANCE = new DoubleValueSerializer();
 
 	@Override
@@ -48,7 +48,7 @@ public final class DoubleValueSerializer extends TypeSerializerSingleton<DoubleV
 	public DoubleValue copy(DoubleValue from) {
 		return copy(from, new DoubleValue());
 	}
-	
+
 	@Override
 	public DoubleValue copy(DoubleValue from, DoubleValue reuse) {
 		reuse.setValue(from.getValue());
@@ -69,7 +69,7 @@ public final class DoubleValueSerializer extends TypeSerializerSingleton<DoubleV
 	public DoubleValue deserialize(DataInputView source) throws IOException {
 		return deserialize(new DoubleValue(), source);
 	}
-	
+
 	@Override
 	public DoubleValue deserialize(DoubleValue reuse, DataInputView source) throws IOException {
 		reuse.read(source);

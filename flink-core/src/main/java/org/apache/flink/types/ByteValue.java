@@ -33,7 +33,7 @@ import org.apache.flink.core.memory.MemorySegment;
 @Public
 public class ByteValue implements NormalizableKey<ByteValue>, ResettableValue<ByteValue>, CopyableValue<ByteValue> {
 	private static final long serialVersionUID = 1L;
-	
+
 	private byte value;
 
 	/**
@@ -45,16 +45,16 @@ public class ByteValue implements NormalizableKey<ByteValue>, ResettableValue<By
 
 	/**
 	 * Initializes the encapsulated byte with the provided value.
-	 * 
+	 *
 	 * @param value Initial value of the encapsulated byte.
 	 */
 	public ByteValue(byte value) {
 		this.value = value;
 	}
-	
+
 	/**
 	 * Returns the value of the encapsulated byte.
-	 * 
+	 *
 	 * @return the value of the encapsulated byte.
 	 */
 	public byte getValue() {
@@ -63,9 +63,8 @@ public class ByteValue implements NormalizableKey<ByteValue>, ResettableValue<By
 
 	/**
 	 * Sets the encapsulated byte to the specified value.
-	 * 
-	 * @param value
-	 *        the new value of the encapsulated byte.
+	 *
+	 * @param value the new value of the encapsulated byte.
 	 */
 	public void setValue(byte value) {
 		this.value = value;
@@ -77,7 +76,7 @@ public class ByteValue implements NormalizableKey<ByteValue>, ResettableValue<By
 	}
 
 	// --------------------------------------------------------------------------------------------
-	
+
 	@Override
 	public void read(DataInputView in) throws IOException {
 		this.value = in.readByte();
@@ -89,12 +88,12 @@ public class ByteValue implements NormalizableKey<ByteValue>, ResettableValue<By
 	}
 
 	// --------------------------------------------------------------------------------------------
-	
+
 	@Override
 	public String toString() {
 		return String.valueOf(this.value);
 	}
-	
+
 	@Override
 	public int compareTo(ByteValue o) {
 		final byte other = o.value;
@@ -113,7 +112,7 @@ public class ByteValue implements NormalizableKey<ByteValue>, ResettableValue<By
 		}
 		return false;
 	}
-	
+
 	// --------------------------------------------------------------------------------------------
 
 	@Override
@@ -130,8 +129,7 @@ public class ByteValue implements NormalizableKey<ByteValue>, ResettableValue<By
 			int highByte = this.value & 0xff;
 			highByte -= Byte.MIN_VALUE;
 			target.put(offset, (byte) highByte);
-		}
-		else if (len > 1) {
+		} else if (len > 1) {
 			int highByte = this.value & 0xff;
 			highByte -= Byte.MIN_VALUE;
 			target.put(offset, (byte) highByte);
@@ -142,7 +140,7 @@ public class ByteValue implements NormalizableKey<ByteValue>, ResettableValue<By
 	}
 
 	// --------------------------------------------------------------------------------------------
-	
+
 	@Override
 	public int getBinaryLength() {
 		return 1;

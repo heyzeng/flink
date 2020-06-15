@@ -67,8 +67,7 @@ public class MultipleInvokationsTest {
 				assertEquals("textsink", sink.getName());
 				assertEquals("source1", sink.getInput().getName());
 			}
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			System.err.println(e.getMessage());
 			e.printStackTrace();
 			fail(e.getMessage());

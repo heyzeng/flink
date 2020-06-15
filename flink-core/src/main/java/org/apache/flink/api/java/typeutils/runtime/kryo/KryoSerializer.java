@@ -63,7 +63,7 @@ import static org.apache.flink.util.Preconditions.checkNotNull;
 /**
  * A type serializer that serializes its type using the Kryo serialization
  * framework (https://github.com/EsotericSoftware/kryo).
- * 
+ * <p>
  * This serializer is intended as a fallback serializer for the cases that are
  * not covered by the basic types, tuples, and POJOs.
  *
@@ -75,11 +75,13 @@ public class KryoSerializer<T> extends TypeSerializer<T> {
 
 	private static final Logger LOG = LoggerFactory.getLogger(KryoSerializer.class);
 
-	/** Flag whether to check for concurrent thread access.
+	/**
+	 * Flag whether to check for concurrent thread access.
 	 * Because this flag is static final, a value of 'false' allows the JIT compiler to eliminate
-	 * the guarded code sections. */
+	 * the guarded code sections.
+	 */
 	private static final boolean CONCURRENT_ACCESS_CHECK =
-			LOG.isDebugEnabled() || KryoSerializerDebugInitHelper.setToDebug;
+		LOG.isDebugEnabled() || KryoSerializerDebugInitHelper.setToDebug;
 
 	static {
 		configureKryoLogging();
@@ -99,16 +101,16 @@ public class KryoSerializer<T> extends TypeSerializer<T> {
 	private LinkedHashMap<String, KryoRegistration> kryoRegistrations;
 
 	private final Class<T> type;
-	
+
 	// ------------------------------------------------------------------------
 	// The fields below are lazily initialized after duplication or deserialization.
 
 	private transient Kryo kryo;
 	private transient T copyInstance;
-	
+
 	private transient DataOutputView previousOut;
 	private transient DataInputView previousIn;
-	
+
 	private transient Input input;
 	private transient Output output;
 
@@ -124,17 +126,17 @@ public class KryoSerializer<T> extends TypeSerializer<T> {
 
 	// ------------------------------------------------------------------------
 
-	public KryoSerializer(Class<T> type, ExecutionConfig executionConfig){
+	public KryoSerializer(Class<T> type, ExecutionConfig executionConfig) {
 		this.type = checkNotNull(type);
 
 		this.defaultSerializers = executionConfig.getDefaultKryoSerializers();
 		this.defaultSerializerClasses = executionConfig.getDefaultKryoSerializerClasses();
 
 		this.kryoRegistrations = buildKryoRegistrations(
-				this.type,
-				executionConfig.getRegisteredKryoTypes(),
-				executionConfig.getRegisteredTypesWithKryoSerializerClasses(),
-				executionConfig.getRegisteredTypesWithKryoSerializers());
+			this.type,
+			executionConfig.getRegisteredKryoTypes(),
+			executionConfig.getRegisteredTypesWithKryoSerializerClasses(),
+			executionConfig.getRegisteredTypesWithKryoSerializers());
 	}
 
 	/**
@@ -219,13 +221,13 @@ public class KryoSerializer<T> extends TypeSerializer<T> {
 
 	@Override
 	public T createInstance() {
-		if(Modifier.isAbstract(type.getModifiers()) || Modifier.isInterface(type.getModifiers()) ) {
+		if (Modifier.isAbstract(type.getModifiers()) || Modifier.isInterface(type.getModifiers())) {
 			return null;
 		} else {
 			checkKryoInitialized();
 			try {
 				return kryo.newInstance(type);
-			} catch(Throwable e) {
+			} catch (Throwable e) {
 				return null;
 			}
 		}
@@ -246,8 +248,7 @@ public class KryoSerializer<T> extends TypeSerializer<T> {
 			checkKryoInitialized();
 			try {
 				return kryo.copy(from);
-			}
-			catch (KryoException ke) {
+			} catch (KryoException ke) {
 				// kryo was unable to copy it, so we do it through serialization:
 				ByteArrayOutputStream baout = new ByteArrayOutputStream();
 				Output output = new Output(baout);
@@ -259,10 +260,9 @@ public class KryoSerializer<T> extends TypeSerializer<T> {
 				ByteArrayInputStream bain = new ByteArrayInputStream(baout.toByteArray());
 				Input input = new Input(bain);
 
-				return (T)kryo.readObject(input, from.getClass());
+				return (T) kryo.readObject(input, from.getClass());
 			}
-		}
-		finally {
+		} finally {
 			if (CONCURRENT_ACCESS_CHECK) {
 				exitExclusiveThread();
 			}
@@ -304,8 +304,7 @@ public class KryoSerializer<T> extends TypeSerializer<T> {
 			try {
 				kryo.writeClassAndObject(output, record);
 				output.flush();
-			}
-			catch (KryoException ke) {
+			} catch (KryoException ke) {
 				// make sure that the Kryo output buffer is cleared in case that we can recover from
 				// the exception (e.g. EOFException which denotes buffer full)
 				output.clear();
@@ -313,13 +312,11 @@ public class KryoSerializer<T> extends TypeSerializer<T> {
 				Throwable cause = ke.getCause();
 				if (cause instanceof EOFException) {
 					throw (EOFException) cause;
-				}
-				else {
+				} else {
 					throw ke;
 				}
 			}
-		}
-		finally {
+		} finally {
 			if (CONCURRENT_ACCESS_CHECK) {
 				exitExclusiveThread();
 			}
@@ -353,8 +350,7 @@ public class KryoSerializer<T> extends TypeSerializer<T> {
 					throw ke;
 				}
 			}
-		}
-		finally {
+		} finally {
 			if (CONCURRENT_ACCESS_CHECK) {
 				exitExclusiveThread();
 			}
@@ -374,20 +370,19 @@ public class KryoSerializer<T> extends TypeSerializer<T> {
 
 		try {
 			checkKryoInitialized();
-			if (this.copyInstance == null){
+			if (this.copyInstance == null) {
 				this.copyInstance = createInstance();
 			}
 
 			T tmp = deserialize(copyInstance, source);
 			serialize(tmp, target);
-		}
-		finally {
+		} finally {
 			if (CONCURRENT_ACCESS_CHECK) {
 				exitExclusiveThread();
 			}
 		}
 	}
-	
+
 	// --------------------------------------------------------------------------------------------
 
 	@Override
@@ -419,6 +414,7 @@ public class KryoSerializer<T> extends TypeSerializer<T> {
 	/**
 	 * Returns the Chill Kryo Serializer which is implicitly added to the classpath via flink-runtime.
 	 * Falls back to the default Kryo serializer if it can't be found.
+	 *
 	 * @return The Kryo serializer instance.
 	 */
 	private Kryo getKryoInstance() {
@@ -427,7 +423,7 @@ public class KryoSerializer<T> extends TypeSerializer<T> {
 			// check if ScalaKryoInstantiator is in class path (coming from Twitter's Chill library).
 			// This will be true if Flink's Scala API is used.
 			Class<?> chillInstantiatorClazz =
-					Class.forName("org.apache.flink.runtime.types.FlinkScalaKryoInstantiator");
+				Class.forName("org.apache.flink.runtime.types.FlinkScalaKryoInstantiator");
 			Object chillInstantiator = chillInstantiatorClazz.newInstance();
 
 			// obtain a Kryo instance through Twitter Chill
@@ -455,7 +451,7 @@ public class KryoSerializer<T> extends TypeSerializer<T> {
 
 			// Enable reference tracking. 
 			kryo.setReferences(true);
-			
+
 			// Throwable and all subclasses should be serialized via java serialization
 			// Note: the registered JavaSerializer is Flink's own implementation, and not Kryo's.
 			//       This is due to a know issue with Kryo's JavaSerializer. See FLINK-6025 for details.
@@ -463,11 +459,11 @@ public class KryoSerializer<T> extends TypeSerializer<T> {
 
 			// Add default serializers first, so that the type registrations without a serializer
 			// are registered with a default serializer
-			for (Map.Entry<Class<?>, ExecutionConfig.SerializableSerializer<?>> entry: defaultSerializers.entrySet()) {
+			for (Map.Entry<Class<?>, ExecutionConfig.SerializableSerializer<?>> entry : defaultSerializers.entrySet()) {
 				kryo.addDefaultSerializer(entry.getKey(), entry.getValue().getSerializer());
 			}
 
-			for (Map.Entry<Class<?>, Class<? extends Serializer<?>>> entry: defaultSerializerClasses.entrySet()) {
+			for (Map.Entry<Class<?>, Class<? extends Serializer<?>>> entry : defaultSerializerClasses.entrySet()) {
 				kryo.addDefaultSerializer(entry.getKey(), entry.getValue());
 			}
 
@@ -496,12 +492,15 @@ public class KryoSerializer<T> extends TypeSerializer<T> {
 
 		private static final int VERSION = 1;
 
-		/** This empty nullary constructor is required for deserializing the configuration. */
-		public KryoSerializerConfigSnapshot() {}
+		/**
+		 * This empty nullary constructor is required for deserializing the configuration.
+		 */
+		public KryoSerializerConfigSnapshot() {
+		}
 
 		public KryoSerializerConfigSnapshot(
-				Class<T> typeClass,
-				LinkedHashMap<String, KryoRegistration> kryoRegistrations) {
+			Class<T> typeClass,
+			LinkedHashMap<String, KryoRegistration> kryoRegistrations) {
 
 			super(typeClass, kryoRegistrations);
 		}
@@ -535,10 +534,10 @@ public class KryoSerializer<T> extends TypeSerializer<T> {
 	 * result in Kryo.
 	 */
 	private static LinkedHashMap<String, KryoRegistration> buildKryoRegistrations(
-			Class<?> serializedType,
-			LinkedHashSet<Class<?>> registeredTypes,
-			LinkedHashMap<Class<?>, Class<? extends Serializer<?>>> registeredTypesWithSerializerClasses,
-			LinkedHashMap<Class<?>, ExecutionConfig.SerializableSerializer<?>> registeredTypesWithSerializers) {
+		Class<?> serializedType,
+		LinkedHashSet<Class<?>> registeredTypes,
+		LinkedHashMap<Class<?>, Class<? extends Serializer<?>>> registeredTypesWithSerializerClasses,
+		LinkedHashMap<Class<?>, ExecutionConfig.SerializableSerializer<?>> registeredTypesWithSerializers) {
 
 		final LinkedHashMap<String, KryoRegistration> kryoRegistrations = new LinkedHashMap<>();
 
@@ -549,23 +548,23 @@ public class KryoSerializer<T> extends TypeSerializer<T> {
 		}
 
 		for (Map.Entry<Class<?>, Class<? extends Serializer<?>>> registeredTypeWithSerializerClassEntry :
-				checkNotNull(registeredTypesWithSerializerClasses).entrySet()) {
+			checkNotNull(registeredTypesWithSerializerClasses).entrySet()) {
 
 			kryoRegistrations.put(
-					registeredTypeWithSerializerClassEntry.getKey().getName(),
-					new KryoRegistration(
-							registeredTypeWithSerializerClassEntry.getKey(),
-							registeredTypeWithSerializerClassEntry.getValue()));
+				registeredTypeWithSerializerClassEntry.getKey().getName(),
+				new KryoRegistration(
+					registeredTypeWithSerializerClassEntry.getKey(),
+					registeredTypeWithSerializerClassEntry.getValue()));
 		}
 
 		for (Map.Entry<Class<?>, ExecutionConfig.SerializableSerializer<?>> registeredTypeWithSerializerEntry :
-				checkNotNull(registeredTypesWithSerializers).entrySet()) {
+			checkNotNull(registeredTypesWithSerializers).entrySet()) {
 
 			kryoRegistrations.put(
-					registeredTypeWithSerializerEntry.getKey().getName(),
-					new KryoRegistration(
-							registeredTypeWithSerializerEntry.getKey(),
-							registeredTypeWithSerializerEntry.getValue()));
+				registeredTypeWithSerializerEntry.getKey().getName(),
+				new KryoRegistration(
+					registeredTypeWithSerializerEntry.getKey(),
+					registeredTypeWithSerializerEntry.getValue()));
 		}
 
 		// add Avro support if flink-avro is available; a dummy otherwise
@@ -592,10 +591,10 @@ public class KryoSerializer<T> extends TypeSerializer<T> {
 		// kryoRegistrations may be null if this Kryo serializer is deserialized from an old version
 		if (kryoRegistrations == null) {
 			this.kryoRegistrations = buildKryoRegistrations(
-					type,
-					registeredTypes,
-					registeredTypesWithSerializerClasses,
-					registeredTypesWithSerializers);
+				type,
+				registeredTypes,
+				registeredTypesWithSerializerClasses,
+				registeredTypesWithSerializers);
 		}
 	}
 
@@ -623,11 +622,10 @@ public class KryoSerializer<T> extends TypeSerializer<T> {
 
 		if (previous == null) {
 			currentThread = thisThread;
-		}
-		else if (previous != thisThread) {
+		} else if (previous != thisThread) {
 			throw new IllegalStateException(
-					"Concurrent access to KryoSerializer. Thread 1: " + thisThread.getName() +
-							" , Thread 2: " + previous.getName());
+				"Concurrent access to KryoSerializer. Thread 1: " + thisThread.getName() +
+					" , Thread 2: " + previous.getName());
 		}
 	}
 

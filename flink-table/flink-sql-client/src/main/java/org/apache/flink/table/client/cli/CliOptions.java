@@ -36,13 +36,13 @@ public class CliOptions {
 	private final String updateStatement;
 
 	public CliOptions(
-			boolean isPrintHelp,
-			String sessionId,
-			URL environment,
-			URL defaults,
-			List<URL> jars,
-			List<URL> libraryDirs,
-			String updateStatement) {
+		boolean isPrintHelp,
+		String sessionId,
+		URL environment,
+		URL defaults,
+		List<URL> jars,
+		List<URL> libraryDirs,
+		String updateStatement) {
 		this.isPrintHelp = isPrintHelp;
 		this.sessionId = sessionId;
 		this.environment = environment;

@@ -35,28 +35,31 @@ import org.apache.flink.util.StringUtils;
  * with Tuples to reuse objects in order to reduce pressure on the garbage collector.</p>
  *
  * <p>Warning: If you subclass Tuple1, then be sure to either <ul>
- *  <li> not add any new fields, or </li>
- *  <li> make it a POJO, and always declare the element type of your DataStreams/DataSets to your descendant
- *       type. (That is, if you have a "class Foo extends Tuple1", then don't use instances of
- *       Foo in a DataStream&lt;Tuple1&gt; / DataSet&lt;Tuple1&gt;, but declare it as
- *       DataStream&lt;Foo&gt; / DataSet&lt;Foo&gt;.) </li>
+ * <li> not add any new fields, or </li>
+ * <li> make it a POJO, and always declare the element type of your DataStreams/DataSets to your descendant
+ * type. (That is, if you have a "class Foo extends Tuple1", then don't use instances of
+ * Foo in a DataStream&lt;Tuple1&gt; / DataSet&lt;Tuple1&gt;, but declare it as
+ * DataStream&lt;Foo&gt; / DataSet&lt;Foo&gt;.) </li>
  * </ul></p>
- * @see Tuple
  *
  * @param <T0> The type of field 0
+ * @see Tuple
  */
 @Public
 public class Tuple1<T0> extends Tuple {
 
 	private static final long serialVersionUID = 1L;
 
-	/** Field 0 of the tuple. */
+	/**
+	 * Field 0 of the tuple.
+	 */
 	public T0 f0;
 
 	/**
 	 * Creates a new tuple where all fields are null.
 	 */
-	public Tuple1() {}
+	public Tuple1() {
+	}
 
 	/**
 	 * Creates a new tuple and assigns the given values to the tuple's fields.
@@ -75,20 +78,23 @@ public class Tuple1<T0> extends Tuple {
 	@Override
 	@SuppressWarnings("unchecked")
 	public <T> T getField(int pos) {
-		switch(pos) {
-			case 0: return (T) this.f0;
-			default: throw new IndexOutOfBoundsException(String.valueOf(pos));
+		switch (pos) {
+			case 0:
+				return (T) this.f0;
+			default:
+				throw new IndexOutOfBoundsException(String.valueOf(pos));
 		}
 	}
 
 	@Override
 	@SuppressWarnings("unchecked")
 	public <T> void setField(T value, int pos) {
-		switch(pos) {
+		switch (pos) {
 			case 0:
 				this.f0 = (T0) value;
 				break;
-			default: throw new IndexOutOfBoundsException(String.valueOf(pos));
+			default:
+				throw new IndexOutOfBoundsException(String.valueOf(pos));
 		}
 	}
 
@@ -110,6 +116,7 @@ public class Tuple1<T0> extends Tuple {
 	 * Creates a string representation of the tuple in the form
 	 * (f0),
 	 * where the individual fields are the value returned by calling {@link Object#toString} on that field.
+	 *
 	 * @return The string representation of the tuple.
 	 */
 	@Override
@@ -120,6 +127,7 @@ public class Tuple1<T0> extends Tuple {
 
 	/**
 	 * Deep equality for tuples by calling equals() on the tuple members.
+	 *
 	 * @param o the object checked for equality
 	 * @return true if this is equal to o.
 	 */
@@ -146,9 +154,10 @@ public class Tuple1<T0> extends Tuple {
 	}
 
 	/**
-	* Shallow tuple copy.
-	* @return A new Tuple with the same fields as this.
-	*/
+	 * Shallow tuple copy.
+	 *
+	 * @return A new Tuple with the same fields as this.
+	 */
 	@Override
 	@SuppressWarnings("unchecked")
 	public Tuple1<T0> copy() {

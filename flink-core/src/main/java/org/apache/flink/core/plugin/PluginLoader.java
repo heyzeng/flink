@@ -42,7 +42,9 @@ import java.util.ServiceLoader;
 @ThreadSafe
 public class PluginLoader {
 
-	/** Classloader which is used to load the plugin classes. We expect this classloader is thread-safe.*/
+	/**
+	 * Classloader which is used to load the plugin classes. We expect this classloader is thread-safe.
+	 */
 	private final ClassLoader pluginClassLoader;
 
 	@VisibleForTesting
@@ -66,7 +68,7 @@ public class PluginLoader {
 	 * Returns in iterator over all available implementations of the given service interface (SPI) for the plugin.
 	 *
 	 * @param service the service interface (SPI) for which implementations are requested.
-	 * @param <P> Type of the requested plugin service.
+	 * @param <P>     Type of the requested plugin service.
 	 * @return An iterator of all implementations of the given service interface that could be loaded from the plugin.
 	 */
 	public <P extends Plugin> Iterator<P> load(Class<P> service) {

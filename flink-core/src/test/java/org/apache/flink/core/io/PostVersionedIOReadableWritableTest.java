@@ -46,7 +46,7 @@ public class PostVersionedIOReadableWritableTest {
 		}
 
 		TestPostVersionedReadableWritable restoredVersionedReadableWritable = new TestPostVersionedReadableWritable();
-		try(ByteArrayInputStreamWithPos in = new ByteArrayInputStreamWithPos(serialized)) {
+		try (ByteArrayInputStreamWithPos in = new ByteArrayInputStreamWithPos(serialized)) {
 			restoredVersionedReadableWritable.read(in);
 		}
 
@@ -66,7 +66,7 @@ public class PostVersionedIOReadableWritableTest {
 		}
 
 		TestPostVersionedReadableWritable restoredVersionedReadableWritable = new TestPostVersionedReadableWritable();
-		try(ByteArrayInputStreamWithPos in = new ByteArrayInputStreamWithPos(serialized)) {
+		try (ByteArrayInputStreamWithPos in = new ByteArrayInputStreamWithPos(serialized)) {
 			restoredVersionedReadableWritable.read(in);
 		}
 
@@ -78,7 +78,8 @@ public class PostVersionedIOReadableWritableTest {
 		private static final int VERSION = 1;
 		private String data;
 
-		TestPostVersionedReadableWritable() {}
+		TestPostVersionedReadableWritable() {
+		}
 
 		TestPostVersionedReadableWritable(String data) {
 			this.data = data;

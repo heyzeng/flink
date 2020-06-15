@@ -39,7 +39,7 @@ import java.util.List;
  */
 @Internal
 public class FlatMapOperatorBase<IN, OUT, FT extends FlatMapFunction<IN, OUT>> extends SingleInputOperator<IN, OUT, FT> {
-	
+
 	public FlatMapOperatorBase(UserCodeWrapper<FT> udf, UnaryOperatorInformation<IN, OUT> operatorInfo, String name) {
 		super(udf, operatorInfo, name);
 	}
@@ -57,7 +57,7 @@ public class FlatMapOperatorBase<IN, OUT, FT extends FlatMapFunction<IN, OUT>> e
 	@Override
 	protected List<OUT> executeOnCollections(List<IN> input, RuntimeContext ctx, ExecutionConfig executionConfig) throws Exception {
 		FlatMapFunction<IN, OUT> function = userFunction.getUserCodeObject();
-		
+
 		FunctionUtils.setFunctionRuntimeContext(function, ctx);
 		FunctionUtils.openFunction(function, parameters);
 

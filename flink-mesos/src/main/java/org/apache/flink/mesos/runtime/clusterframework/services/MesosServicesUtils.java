@@ -39,7 +39,7 @@ public class MesosServicesUtils {
 	 * Creates a {@link MesosServices} instance depending on the high availability settings.
 	 *
 	 * @param configuration containing the high availability settings
-	 * @param hostname the hostname to advertise to remote clients
+	 * @param hostname      the hostname to advertise to remote clients
 	 * @return a mesos services instance
 	 * @throws Exception if the mesos services instance could not be created
 	 */

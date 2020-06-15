@@ -43,13 +43,12 @@ public class TypeExtractorInputFormatsTest {
 			InputFormat<?, ?> format = new DummyFloatInputFormat();
 			TypeInformation<?> typeInfo = TypeExtractor.getInputFormatTypes(format);
 			assertEquals(BasicTypeInfo.FLOAT_TYPE_INFO, typeInfo);
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 			fail(e.getMessage());
 		}
 	}
-	
+
 	@Test
 	public void testExtractDerivedInputFormatType() {
 		try {
@@ -59,30 +58,29 @@ public class TypeExtractorInputFormatsTest {
 				TypeInformation<?> typeInfo = TypeExtractor.getInputFormatTypes(format);
 				assertEquals(BasicTypeInfo.SHORT_TYPE_INFO, typeInfo);
 			}
-			
+
 			// composite type
 			{
 				InputFormat<?, ?> format = new DerivedTupleInputFormat();
 				TypeInformation<?> typeInfo = TypeExtractor.getInputFormatTypes(format);
-				
+
 				assertTrue(typeInfo.isTupleType());
 				assertTrue(typeInfo instanceof TupleTypeInfo);
-				
+
 				@SuppressWarnings("unchecked")
 				TupleTypeInfo<Tuple3<String, Short, Double>> tupleInfo = (TupleTypeInfo<Tuple3<String, Short, Double>>) typeInfo;
-				
+
 				assertEquals(3, tupleInfo.getArity());
 				assertEquals(BasicTypeInfo.STRING_TYPE_INFO, tupleInfo.getTypeAt(0));
 				assertEquals(BasicTypeInfo.SHORT_TYPE_INFO, tupleInfo.getTypeAt(1));
 				assertEquals(BasicTypeInfo.DOUBLE_TYPE_INFO, tupleInfo.getTypeAt(2));
 			}
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 			fail(e.getMessage());
 		}
 	}
-	
+
 	@Test
 	public void testMultiLevelDerivedInputFormatType() {
 		try {
@@ -91,137 +89,175 @@ public class TypeExtractorInputFormatsTest {
 			{
 				InputFormat<?, ?> format = new FinalRelativeInputFormat();
 				TypeInformation<?> typeInfo = TypeExtractor.getInputFormatTypes(format);
-				
+
 				assertTrue(typeInfo.isTupleType());
 				assertTrue(typeInfo instanceof TupleTypeInfo);
-				
+
 				@SuppressWarnings("unchecked")
 				TupleTypeInfo<Tuple3<String, Integer, Double>> tupleInfo = (TupleTypeInfo<Tuple3<String, Integer, Double>>) typeInfo;
-				
+
 				assertEquals(3, tupleInfo.getArity());
 				assertEquals(BasicTypeInfo.STRING_TYPE_INFO, tupleInfo.getTypeAt(0));
 				assertEquals(BasicTypeInfo.INT_TYPE_INFO, tupleInfo.getTypeAt(1));
 				assertEquals(BasicTypeInfo.DOUBLE_TYPE_INFO, tupleInfo.getTypeAt(2));
 			}
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 			fail(e.getMessage());
 		}
 	}
-	
+
 	@Test
 	public void testQueryableFormatType() {
 		try {
 			InputFormat<?, ?> format = new QueryableInputFormat();
 			TypeInformation<?> typeInfo = TypeExtractor.getInputFormatTypes(format);
 			assertEquals(BasicTypeInfo.DOUBLE_TYPE_INFO, typeInfo);
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 			fail(e.getMessage());
 		}
 	}
-	
+
 	// --------------------------------------------------------------------------------------------
 	//  Test formats
 	// --------------------------------------------------------------------------------------------
-	
+
 	public static final class DummyFloatInputFormat implements InputFormat<Float, InputSplit> {
 
 		@Override
-		public void configure(Configuration parameters) {}
+		public void configure(Configuration parameters) {
+		}
 
 		@Override
-		public BaseStatistics getStatistics(BaseStatistics cachedStatistics) { return null; }
+		public BaseStatistics getStatistics(BaseStatistics cachedStatistics) {
+			return null;
+		}
 
 		@Override
-		public InputSplit[] createInputSplits(int minNumSplits) { return null; }
+		public InputSplit[] createInputSplits(int minNumSplits) {
+			return null;
+		}
 
 		@Override
-		public DefaultInputSplitAssigner getInputSplitAssigner(InputSplit[] splits) { return null; }
+		public DefaultInputSplitAssigner getInputSplitAssigner(InputSplit[] splits) {
+			return null;
+		}
 
 		@Override
-		public void open(InputSplit split) {}
+		public void open(InputSplit split) {
+		}
 
 		@Override
-		public boolean reachedEnd() { return false; }
+		public boolean reachedEnd() {
+			return false;
+		}
 
 		@Override
-		public Float nextRecord(Float reuse) throws IOException { return null; }
+		public Float nextRecord(Float reuse) throws IOException {
+			return null;
+		}
 
 		@Override
-		public void close() {}
+		public void close() {
+		}
 	}
-	
+
 	// --------------------------------------------------------------------------------------------
-	
+
 	public static final class DerivedInputFormat extends GenericInputFormat<Short> {
 
 		@Override
-		public boolean reachedEnd() { return false; }
+		public boolean reachedEnd() {
+			return false;
+		}
 
 		@Override
-		public Short nextRecord(Short reuse) { return null; }
+		public Short nextRecord(Short reuse) {
+			return null;
+		}
 	}
-	
+
 	// --------------------------------------------------------------------------------------------
-	
+
 	public static final class DerivedTupleInputFormat extends GenericInputFormat<Tuple3<String, Short, Double>> {
 
 		@Override
-		public boolean reachedEnd() { return false; }
+		public boolean reachedEnd() {
+			return false;
+		}
 
 		@Override
-		public Tuple3<String, Short, Double> nextRecord(Tuple3<String, Short, Double> reuse) { return null; }
+		public Tuple3<String, Short, Double> nextRecord(Tuple3<String, Short, Double> reuse) {
+			return null;
+		}
 	}
-	
+
 	// --------------------------------------------------------------------------------------------
-	
+
 	public static class RelativeInputFormat<T> extends GenericInputFormat<Tuple3<String, T, Double>> {
 
 		@Override
-		public boolean reachedEnd() { return false; }
+		public boolean reachedEnd() {
+			return false;
+		}
 
 		@Override
-		public Tuple3<String, T, Double> nextRecord(Tuple3<String, T, Double> reuse) { return null; }
+		public Tuple3<String, T, Double> nextRecord(Tuple3<String, T, Double> reuse) {
+			return null;
+		}
 	}
-	
+
 	// --------------------------------------------------------------------------------------------
-	
+
 	public static final class FinalRelativeInputFormat extends RelativeInputFormat<Integer> {
 
 		@Override
-		public Tuple3<String, Integer, Double> nextRecord(Tuple3<String, Integer, Double> reuse) { return null; }
+		public Tuple3<String, Integer, Double> nextRecord(Tuple3<String, Integer, Double> reuse) {
+			return null;
+		}
 	}
-	
+
 	// --------------------------------------------------------------------------------------------
-	
+
 	public static final class QueryableInputFormat implements InputFormat<Float, InputSplit>, ResultTypeQueryable<Double> {
 
 		@Override
-		public void configure(Configuration parameters) {}
+		public void configure(Configuration parameters) {
+		}
 
 		@Override
-		public BaseStatistics getStatistics(BaseStatistics cachedStatistics) { return null; }
+		public BaseStatistics getStatistics(BaseStatistics cachedStatistics) {
+			return null;
+		}
 
 		@Override
-		public InputSplit[] createInputSplits(int minNumSplits) { return null; }
+		public InputSplit[] createInputSplits(int minNumSplits) {
+			return null;
+		}
 
 		@Override
-		public DefaultInputSplitAssigner getInputSplitAssigner(InputSplit[] splits) { return null; }
+		public DefaultInputSplitAssigner getInputSplitAssigner(InputSplit[] splits) {
+			return null;
+		}
 
 		@Override
-		public void open(InputSplit split) {}
+		public void open(InputSplit split) {
+		}
 
 		@Override
-		public boolean reachedEnd() { return false; }
+		public boolean reachedEnd() {
+			return false;
+		}
 
 		@Override
-		public Float nextRecord(Float reuse) throws IOException { return null; }
+		public Float nextRecord(Float reuse) throws IOException {
+			return null;
+		}
 
 		@Override
-		public void close() {}
+		public void close() {
+		}
 
 		@Override
 		public TypeInformation<Double> getProducedType() {

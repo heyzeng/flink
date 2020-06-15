@@ -32,7 +32,7 @@ import org.apache.flink.annotation.PublicEvolving;
  * key of the current element. That way, the system can handle stream and state partitioning
  * consistently together.
  *
- * @param <IN> Type of the value that can be added to the state.
+ * @param <IN>  Type of the value that can be added to the state.
  * @param <OUT> Type of the value that can be retrieved from the state.
  */
 @PublicEvolving
@@ -50,7 +50,6 @@ public interface AppendingState<IN, OUT> extends State {
 	 *
 	 * @return The operator state value corresponding to the current input or {@code null}
 	 * if the state is empty.
-	 *
 	 * @throws Exception Thrown if the system cannot access the state.
 	 */
 	OUT get() throws Exception;
@@ -63,7 +62,6 @@ public interface AppendingState<IN, OUT> extends State {
 	 * <p>If null is passed in, the state value will remain unchanged.
 	 *
 	 * @param value The new value for the state.
-	 *
 	 * @throws Exception Thrown if the system cannot access the state.
 	 */
 	void add(IN value) throws Exception;

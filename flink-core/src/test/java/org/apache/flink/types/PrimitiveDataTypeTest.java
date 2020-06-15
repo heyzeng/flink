@@ -77,8 +77,7 @@ public class PrimitiveDataTypeTest {
 			Assert.assertEquals(int2.getValue(), int2n.getValue());
 			Assert.assertEquals(int3.compareTo(int3n), 0);
 			Assert.assertEquals(int3.getValue(), int3n.getValue());
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			Assert.fail(e.getMessage());
 		}
 	}
@@ -161,7 +160,7 @@ public class PrimitiveDataTypeTest {
 		} catch (IndexOutOfBoundsException iOOBE) {
 			// expected
 		}
-		
+
 		// test stream out/input
 		try {
 			string0.write(mOut);
@@ -192,46 +191,44 @@ public class PrimitiveDataTypeTest {
 			try {
 				string7n.charAt(5);
 				Assert.fail("Exception should have been thrown when accessing characters out of bounds.");
-			}
-			catch (IndexOutOfBoundsException iOOBE) {
+			} catch (IndexOutOfBoundsException iOOBE) {
 				// expected
 			}
-			
+
 		} catch (Exception e) {
 			Assert.assertTrue(false);
 		}
 	}
-	
+
 	@Test
 	public void testPactNull() {
-		
+
 		final NullValue pn1 = new NullValue();
 		final NullValue pn2 = new NullValue();
-		
+
 		Assert.assertEquals("PactNull not equal to other PactNulls.", pn1, pn2);
 		Assert.assertEquals("PactNull not equal to other PactNulls.", pn2, pn1);
-		
+
 		Assert.assertFalse("PactNull equal to other null.", pn1.equals(null));
-		
+
 		// test serialization
 		final NullValue pn = new NullValue();
 		final int numWrites = 13;
-		
+
 		try {
 			// write it multiple times
 			for (int i = 0; i < numWrites; i++) {
 				pn.write(mOut);
 			}
-			
+
 			// read it multiple times
 			for (int i = 0; i < numWrites; i++) {
 				pn.read(mIn);
 			}
-			
-			
+
+
 			Assert.assertEquals("Reading PactNull does not consume the same data as was written.", 0, in.available());
-		}
-		catch (IOException ioex) {
+		} catch (IOException ioex) {
 			Assert.fail("An exception occurred in the testcase: " + ioex.getMessage());
 		}
 	}

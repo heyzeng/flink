@@ -62,6 +62,6 @@ public class JavaEitherSerializerSnapshot<L, R> extends CompositeTypeSerializerS
 
 	@Override
 	protected TypeSerializer<?>[] getNestedSerializers(EitherSerializer<L, R> outerSerializer) {
-		return new TypeSerializer<?>[]{ outerSerializer.getLeftSerializer(), outerSerializer.getRightSerializer() };
+		return new TypeSerializer<?>[]{outerSerializer.getLeftSerializer(), outerSerializer.getRightSerializer()};
 	}
 }

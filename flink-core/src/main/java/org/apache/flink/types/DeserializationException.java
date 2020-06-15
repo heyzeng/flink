@@ -26,10 +26,9 @@ import org.apache.flink.annotation.Public;
  * An exception specifying that the deserialization caused an error.
  */
 @Public
-public class DeserializationException extends RuntimeException
-{
+public class DeserializationException extends RuntimeException {
 	/**
-	 * UID for serialization interoperability. 
+	 * UID for serialization interoperability.
 	 */
 	private static final long serialVersionUID = -8725950711347033148L;
 
@@ -44,9 +43,9 @@ public class DeserializationException extends RuntimeException
 	/**
 	 * Constructs an {@code DeserializationException} with the specified detail message
 	 * and cause.
-	 * 
+	 *
 	 * @param message The detail message.
-	 * @param cause The cause of the exception.
+	 * @param cause   The cause of the exception.
 	 */
 	public DeserializationException(String message, Throwable cause) {
 		super(message, cause);
@@ -63,7 +62,7 @@ public class DeserializationException extends RuntimeException
 
 	/**
 	 * Constructs an {@code DeserializationException} with the specified cause.
-	 * 
+	 *
 	 * @param cause The cause of the exception.
 	 */
 	public DeserializationException(Throwable cause) {

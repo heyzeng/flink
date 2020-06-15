@@ -166,7 +166,7 @@ public final class ValueSerializer<T extends Value> extends TypeSerializer<T> {
 		}
 	}
 
-	private  Class<T> getValueType() {
+	private Class<T> getValueType() {
 		return type;
 	}
 
@@ -186,8 +186,11 @@ public final class ValueSerializer<T extends Value> extends TypeSerializer<T> {
 
 		private static final int VERSION = 1;
 
-		/** This empty nullary constructor is required for deserializing the configuration. */
-		public ValueSerializerConfigSnapshot() {}
+		/**
+		 * This empty nullary constructor is required for deserializing the configuration.
+		 */
+		public ValueSerializerConfigSnapshot() {
+		}
 
 		public ValueSerializerConfigSnapshot(Class<T> valueTypeClass) {
 			super(valueTypeClass, asKryoRegistrations(valueTypeClass));

@@ -154,7 +154,7 @@ public final class LinkedOptionalMap<K, V> {
 	 */
 	@FunctionalInterface
 	public interface ConsumerWithException<K, V, E extends Throwable> {
-		void accept(@Nonnull String keyName, @Nullable K key , @Nullable V value) throws E;
+		void accept(@Nonnull String keyName, @Nullable K key, @Nullable V value) throws E;
 	}
 
 	public <E extends Throwable> void forEach(ConsumerWithException<K, V, E> consumer) throws E {

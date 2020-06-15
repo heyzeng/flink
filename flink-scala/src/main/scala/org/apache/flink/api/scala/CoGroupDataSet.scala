@@ -62,29 +62,30 @@ import scala.reflect.ClassTag
  */
 @Public
 class CoGroupDataSet[L, R](
-    defaultCoGroup: CoGroupOperator[L, R, (Array[L], Array[R])],
-    leftInput: DataSet[L],
-    rightInput: DataSet[R],
-    leftKeys: Keys[L],
-    rightKeys: Keys[R])
+                            defaultCoGroup: CoGroupOperator[L, R, (Array[L], Array[R])],
+                            leftInput: DataSet[L],
+                            rightInput: DataSet[R],
+                            leftKeys: Keys[L],
+                            rightKeys: Keys[R])
   extends DataSet(defaultCoGroup) {
 
   private val groupSortKeyPositionsFirst = mutable.MutableList[Either[Int, String]]()
   private val groupSortKeyPositionsSecond = mutable.MutableList[Either[Int, String]]()
   private val groupSortOrdersFirst = mutable.MutableList[Order]()
   private val groupSortOrdersSecond = mutable.MutableList[Order]()
-  
-  private var customPartitioner : Partitioner[_] = _
-  
+
+  private var customPartitioner: Partitioner[_] = _
+
   /**
    * Creates a new [[DataSet]] where the result for each pair of co-grouped element lists is the
    * result of the given function.
    */
-  def apply[O: TypeInformation: ClassTag](
-      fun: (Iterator[L], Iterator[R]) => O): DataSet[O] = {
+  def apply[O: TypeInformation : ClassTag](
+                                            fun: (Iterator[L], Iterator[R]) => O): DataSet[O] = {
     require(fun != null, "CoGroup function must not be null.")
     val coGrouper = new CoGroupFunction[L, R, O] {
       val cleanFun = clean(fun)
+
       def coGroup(left: java.lang.Iterable[L], right: java.lang.Iterable[R], out: Collector[O]) = {
         out.collect(cleanFun(left.iterator().asScala, right.iterator().asScala))
       }
@@ -101,7 +102,7 @@ class CoGroupDataSet[L, R](
       customPartitioner,
       getCallLocationName())
 
-    
+
     wrap(coGroupOperator)
   }
 
@@ -110,11 +111,12 @@ class CoGroupDataSet[L, R](
    * result of the given function. The function can output zero or more elements using the
    * [[Collector]] which will form the result.
    */
-  def apply[O: TypeInformation: ClassTag](
-      fun: (Iterator[L], Iterator[R], Collector[O]) => Unit): DataSet[O] = {
+  def apply[O: TypeInformation : ClassTag](
+                                            fun: (Iterator[L], Iterator[R], Collector[O]) => Unit): DataSet[O] = {
     require(fun != null, "CoGroup function must not be null.")
     val coGrouper = new CoGroupFunction[L, R, O] {
       val cleanFun = clean(fun)
+
       def coGroup(left: java.lang.Iterable[L], right: java.lang.Iterable[R], out: Collector[O]) = {
         cleanFun(left.iterator.asScala, right.iterator.asScala, out)
       }
@@ -142,7 +144,7 @@ class CoGroupDataSet[L, R](
    * A [[RichCoGroupFunction]] can be used to access the
    * broadcast variables and the [[org.apache.flink.api.common.functions.RuntimeContext]].
    */
-  def apply[O: TypeInformation: ClassTag](coGrouper: CoGroupFunction[L, R, O]): DataSet[O] = {
+  def apply[O: TypeInformation : ClassTag](coGrouper: CoGroupFunction[L, R, O]): DataSet[O] = {
     require(coGrouper != null, "CoGroup function must not be null.")
     val coGroupOperator = new CoGroupOperator[L, R, O](
       leftInput.javaSet,
@@ -158,21 +160,21 @@ class CoGroupDataSet[L, R](
 
     wrap(coGroupOperator)
   }
-  
+
   // ----------------------------------------------------------------------------------------------
   //  Properties
   // ----------------------------------------------------------------------------------------------
-  
-  def withPartitioner[K : TypeInformation](partitioner : Partitioner[K]) : CoGroupDataSet[L, R] = {
+
+  def withPartitioner[K: TypeInformation](partitioner: Partitioner[K]): CoGroupDataSet[L, R] = {
     if (partitioner != null) {
-      val typeInfo : TypeInformation[K] = implicitly[TypeInformation[K]]
-      
+      val typeInfo: TypeInformation[K] = implicitly[TypeInformation[K]]
+
       leftKeys.validateCustomPartitioner(partitioner, typeInfo)
       rightKeys.validateCustomPartitioner(partitioner, typeInfo)
     }
     this.customPartitioner = partitioner
     defaultCoGroup.withPartitioner(partitioner)
-    
+
     this
   }
 
@@ -180,10 +182,10 @@ class CoGroupDataSet[L, R](
    * Gets the custom partitioner used by this join, or null, if none is set.
    */
   @Internal
-  def getPartitioner[K]() : Partitioner[K] = {
+  def getPartitioner[K](): Partitioner[K] = {
     customPartitioner.asInstanceOf[Partitioner[K]]
   }
-  
+
   /**
    * Adds a secondary sort key to the first input of this [[CoGroupDataSet]].
    *
@@ -210,7 +212,7 @@ class CoGroupDataSet[L, R](
     groupSortOrdersFirst += order
     this
   }
-  
+
   /**
    * Adds a secondary sort key to the second input of this [[CoGroupDataSet]].
    *
@@ -237,32 +239,31 @@ class CoGroupDataSet[L, R](
     groupSortOrdersSecond += order
     this
   }
-  
+
   private def buildGroupSortList[T](typeInfo: TypeInformation[T],
                                     keys: mutable.MutableList[Either[Int, String]],
                                     orders: mutable.MutableList[Order])
-          : java.util.List[Pair[java.lang.Integer, Order]] =
-  {
+  : java.util.List[Pair[java.lang.Integer, Order]] = {
     if (keys.isEmpty) {
       null
     }
     else {
       val result = new java.util.ArrayList[Pair[java.lang.Integer, Order]]
-      
+
       keys.zip(orders).foreach {
-        case ( Left(position), order )  => result.add(
-                                      new ImmutablePair[java.lang.Integer, Order](position, order))
-        
-        case ( Right(expression), order ) =>
+        case (Left(position), order) => result.add(
+          new ImmutablePair[java.lang.Integer, Order](position, order))
+
+        case (Right(expression), order) =>
 
           val ek = new ExpressionKeys[T](Array[String](expression), typeInfo)
-          val groupOrderKeys : Array[Int] = ek.computeLogicalKeyPositions()
+          val groupOrderKeys: Array[Int] = ek.computeLogicalKeyPositions()
 
           for (k <- groupOrderKeys) {
             result.add(new ImmutablePair[java.lang.Integer, Order](k, order))
           }
       }
-      
+
       result
     }
   }

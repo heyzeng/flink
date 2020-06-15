@@ -25,6 +25,7 @@ import org.apache.flink.util.Collector;
 
 /**
  * Reducer that only emits the first N elements in a group.
+ *
  * @param <T>
  */
 @Internal

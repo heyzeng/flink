@@ -95,6 +95,7 @@ public class RestOptions {
 
 	/**
 	 * The number of retries the client will attempt if a retryable operations fails.
+	 *
 	 * @see #RETRY_DELAY
 	 */
 	@Documentation.Section(Documentation.Sections.EXPERT_REST)
@@ -106,6 +107,7 @@ public class RestOptions {
 
 	/**
 	 * The time in ms that the client waits between retries.
+	 *
 	 * @see #RETRY_MAX_ATTEMPTS
 	 */
 	@Documentation.Section(Documentation.Sections.EXPERT_REST)
@@ -161,6 +163,6 @@ public class RestOptions {
 	public static final ConfigOption<Integer> SERVER_THREAD_PRIORITY = key("rest.server.thread-priority")
 		.defaultValue(Thread.NORM_PRIORITY)
 		.withDescription("Thread priority of the REST server's executor for processing asynchronous requests. " +
-				"Lowering the thread priority will give Flink's main components more CPU time whereas " +
-				"increasing will allocate more time for the REST server's processing.");
+			"Lowering the thread priority will give Flink's main components more CPU time whereas " +
+			"increasing will allocate more time for the REST server's processing.");
 }

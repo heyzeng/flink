@@ -31,18 +31,20 @@ import java.util.Collection;
  * Configuration snapshot of a serializer for collection types.
  *
  * @param <T> Type of the element.
- *
  * @deprecated this snapshot class should no longer be used by any serializers as their snapshot.
  */
 @Internal
 @Deprecated
 public final class CollectionSerializerConfigSnapshot<C extends Collection<T>, T>
-		extends CompositeTypeSerializerConfigSnapshot<C> {
+	extends CompositeTypeSerializerConfigSnapshot<C> {
 
 	private static final int VERSION = 1;
 
-	/** This empty nullary constructor is required for deserializing the configuration. */
-	public CollectionSerializerConfigSnapshot() {}
+	/**
+	 * This empty nullary constructor is required for deserializing the configuration.
+	 */
+	public CollectionSerializerConfigSnapshot() {
+	}
 
 	public CollectionSerializerConfigSnapshot(TypeSerializer<T> elementSerializer) {
 		super(elementSerializer);

@@ -74,7 +74,7 @@ public class DistinctOperator<T> extends SingleInputOperator<T, T, DistinctOpera
 			int[] logicalKeyPositions = keys.computeLogicalKeyPositions();
 			UnaryOperatorInformation<T, T> operatorInfo = new UnaryOperatorInformation<>(getInputType(), getResultType());
 			ReduceOperatorBase<T, ReduceFunction<T>> po =
-					new ReduceOperatorBase<>(function, operatorInfo, logicalKeyPositions, name);
+				new ReduceOperatorBase<>(function, operatorInfo, logicalKeyPositions, name);
 
 			po.setCombineHint(hint);
 			po.setInput(input);
@@ -92,8 +92,7 @@ public class DistinctOperator<T> extends SingleInputOperator<T, T, DistinctOpera
 			}
 
 			return po;
-		}
-		else if (keys instanceof SelectorFunctionKeys) {
+		} else if (keys instanceof SelectorFunctionKeys) {
 
 			@SuppressWarnings("unchecked")
 			SelectorFunctionKeys<T, ?> selectorKeys = (SelectorFunctionKeys<T, ?>) keys;
@@ -102,8 +101,7 @@ public class DistinctOperator<T> extends SingleInputOperator<T, T, DistinctOpera
 				translateSelectorFunctionDistinct(selectorKeys, function, getResultType(), name, input, parallelism, hint);
 
 			return po;
-		}
-		else {
+		} else {
 			throw new UnsupportedOperationException("Unrecognized key type.");
 		}
 	}
@@ -126,21 +124,20 @@ public class DistinctOperator<T> extends SingleInputOperator<T, T, DistinctOpera
 	// --------------------------------------------------------------------------------------------
 
 	private static <IN, K> org.apache.flink.api.common.operators.SingleInputOperator<?, IN, ?> translateSelectorFunctionDistinct(
-			SelectorFunctionKeys<IN, ?> rawKeys,
-			ReduceFunction<IN> function,
-			TypeInformation<IN> outputType,
-			String name,
-			Operator<IN> input,
-			int parallelism,
-			CombineHint hint) {
-		@SuppressWarnings("unchecked")
-		final SelectorFunctionKeys<IN, K> keys = (SelectorFunctionKeys<IN, K>) rawKeys;
+		SelectorFunctionKeys<IN, ?> rawKeys,
+		ReduceFunction<IN> function,
+		TypeInformation<IN> outputType,
+		String name,
+		Operator<IN> input,
+		int parallelism,
+		CombineHint hint) {
+		@SuppressWarnings("unchecked") final SelectorFunctionKeys<IN, K> keys = (SelectorFunctionKeys<IN, K>) rawKeys;
 
 		TypeInformation<Tuple2<K, IN>> typeInfoWithKey = KeyFunctions.createTypeWithKey(keys);
 		Operator<Tuple2<K, IN>> keyedInput = KeyFunctions.appendKeyExtractor(input, keys);
 
 		PlanUnwrappingReduceOperator<IN, K> reducer =
-				new PlanUnwrappingReduceOperator<>(function, keys, name, outputType, typeInfoWithKey);
+			new PlanUnwrappingReduceOperator<>(function, keys, name, outputType, typeInfoWithKey);
 		reducer.setInput(keyedInput);
 		reducer.setCombineHint(hint);
 		reducer.setParallelism(parallelism);

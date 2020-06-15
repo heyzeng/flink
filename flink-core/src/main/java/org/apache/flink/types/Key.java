@@ -32,9 +32,8 @@ import org.apache.flink.annotation.PublicEvolving;
  * @see org.apache.flink.types.Value
  * @see org.apache.flink.core.io.IOReadableWritable
  * @see java.lang.Comparable
- *
  * @deprecated The Key type is a relict of a deprecated and removed API and will be removed
- *             in future (2.0) versions as well.
+ * in future (2.0) versions as well.
  */
 @Deprecated
 @PublicEvolving
@@ -52,7 +51,6 @@ public interface Key<T> extends Value, Comparable<T> {
 	 * Compares the object on equality with another object.
 	 *
 	 * @param other The other object to compare against.
-	 *
 	 * @return True, iff this object is identical to the other object, false otherwise.
 	 */
 	public boolean equals(Object other);

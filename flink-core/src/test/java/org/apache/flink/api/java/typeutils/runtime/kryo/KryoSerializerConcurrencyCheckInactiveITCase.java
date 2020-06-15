@@ -51,12 +51,11 @@ public class KryoSerializerConcurrencyCheckInactiveITCase {
 		try {
 			new KryoSerializerConcurrencyTest().testConcurrentUseOfSerializer();
 			assertionError = false;
-		}
-		catch (AssertionError e) {
+		} catch (AssertionError e) {
 			assertionError = true;
 		}
 
 		assertTrue("testConcurrentUseOfSerializer() should have failed if " +
-				"concurrency checks are off by default", assertionError);
+			"concurrency checks are off by default", assertionError);
 	}
 }

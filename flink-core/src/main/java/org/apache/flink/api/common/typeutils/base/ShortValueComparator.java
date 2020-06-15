@@ -42,7 +42,7 @@ public class ShortValueComparator extends TypeComparator<ShortValue> {
 
 	private final ShortValue tempReference = new ShortValue();
 
-	private final TypeComparator<?>[] comparators = new TypeComparator[] {this};
+	private final TypeComparator<?>[] comparators = new TypeComparator[]{this};
 
 	public ShortValueComparator(boolean ascending) {
 		this.ascendingComparison = ascending;

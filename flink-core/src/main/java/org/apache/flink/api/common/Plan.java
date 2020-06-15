@@ -55,19 +55,29 @@ public class Plan implements Visitable<Operator<?>>, Pipeline {
 	 */
 	protected final List<GenericDataSinkBase<?>> sinks = new ArrayList<>(4);
 
-	/** The name of the job. */
+	/**
+	 * The name of the job.
+	 */
 	protected String jobName;
 
-	/** The default parallelism to use for nodes that have no explicitly specified parallelism. */
+	/**
+	 * The default parallelism to use for nodes that have no explicitly specified parallelism.
+	 */
 	protected int defaultParallelism = ExecutionConfig.PARALLELISM_DEFAULT;
 
-	/** Hash map for files in the distributed cache: registered name to cache entry. */
+	/**
+	 * Hash map for files in the distributed cache: registered name to cache entry.
+	 */
 	protected HashMap<String, DistributedCacheEntry> cacheFile = new HashMap<>();
 
-	/** Config object for runtime execution parameters. */
+	/**
+	 * Config object for runtime execution parameters.
+	 */
 	protected ExecutionConfig executionConfig;
 
-	/** The ID of the Job that this dataflow plan belongs to. */
+	/**
+	 * The ID of the Job that this dataflow plan belongs to.
+	 */
 	private JobID jobId;
 
 	// ------------------------------------------------------------------------
@@ -79,7 +89,7 @@ public class Plan implements Visitable<Operator<?>>, Pipeline {
 	 * <p>If not all of the sinks of a data flow are given to the plan, the flow might
 	 * not be translated entirely.</p>
 	 *
-	 * @param sinks The collection will the sinks of the job's data flow.
+	 * @param sinks   The collection will the sinks of the job's data flow.
 	 * @param jobName The name to display for the job.
 	 */
 	public Plan(Collection<? extends GenericDataSinkBase<?>> sinks, String jobName) {
@@ -93,14 +103,14 @@ public class Plan implements Visitable<Operator<?>>, Pipeline {
 	 * <p>If not all of the sinks of a data flow are given to the plan, the flow might not be
 	 * translated entirely.
 	 *
-	 * @param sinks The collection will the sinks of the job's data flow.
-	 * @param jobName The name to display for the job.
+	 * @param sinks              The collection will the sinks of the job's data flow.
+	 * @param jobName            The name to display for the job.
 	 * @param defaultParallelism The default parallelism for the job.
 	 */
 	public Plan(
-			Collection<? extends GenericDataSinkBase<?>> sinks,
-			String jobName,
-			int defaultParallelism) {
+		Collection<? extends GenericDataSinkBase<?>> sinks,
+		String jobName,
+		int defaultParallelism) {
 		this.sinks.addAll(sinks);
 		this.jobName = jobName;
 		this.defaultParallelism = defaultParallelism;
@@ -113,7 +123,7 @@ public class Plan implements Visitable<Operator<?>>, Pipeline {
 	 * entirely, but only the parts of the flow reachable by traversing backwards from the given
 	 * data sinks.
 	 *
-	 * @param sink The data sink of the data flow.
+	 * @param sink    The data sink of the data flow.
 	 * @param jobName The name to display for the job.
 	 */
 	public Plan(GenericDataSinkBase<?> sink, String jobName) {
@@ -128,8 +138,8 @@ public class Plan implements Visitable<Operator<?>>, Pipeline {
 	 * entirely, but only the parts of the flow reachable by traversing backwards from the given
 	 * data sinks.
 	 *
-	 * @param sink The data sink of the data flow.
-	 * @param jobName The name to display for the job.
+	 * @param sink               The data sink of the data flow.
+	 * @param jobName            The name to display for the job.
 	 * @param defaultParallelism The default parallelism for the job.
 	 */
 	public Plan(GenericDataSinkBase<?> sink, String jobName, int defaultParallelism) {
@@ -158,7 +168,7 @@ public class Plan implements Visitable<Operator<?>>, Pipeline {
 	 * entirely,
 	 * but only the parts of the flow reachable by traversing backwards from the given data sinks.
 	 *
-	 * @param sinks The collection will the sinks of the data flow.
+	 * @param sinks              The collection will the sinks of the data flow.
 	 * @param defaultParallelism The default parallelism for the job.
 	 */
 	public Plan(Collection<? extends GenericDataSinkBase<?>> sinks, int defaultParallelism) {
@@ -185,7 +195,7 @@ public class Plan implements Visitable<Operator<?>>, Pipeline {
 	 * <p>If not all of the sinks of a data flow are given to the plan, the flow might not be
 	 * translated entirely.
 	 *
-	 * @param sink The data sink of the data flow.
+	 * @param sink               The data sink of the data flow.
 	 * @param defaultParallelism The default parallelism for the job.
 	 */
 	public Plan(GenericDataSinkBase<?> sink, int defaultParallelism) {
@@ -273,8 +283,8 @@ public class Plan implements Visitable<Operator<?>>, Pipeline {
 	 */
 	public void setDefaultParallelism(int defaultParallelism) {
 		checkArgument(
-				defaultParallelism >= 1 || defaultParallelism == ExecutionConfig.PARALLELISM_DEFAULT,
-				"The default parallelism must be positive, or ExecutionConfig.PARALLELISM_DEFAULT if the system should use the globally configured default.");
+			defaultParallelism >= 1 || defaultParallelism == ExecutionConfig.PARALLELISM_DEFAULT,
+			"The default parallelism must be positive, or ExecutionConfig.PARALLELISM_DEFAULT if the system should use the globally configured default.");
 
 		this.defaultParallelism = defaultParallelism;
 	}
@@ -329,7 +339,7 @@ public class Plan implements Visitable<Operator<?>>, Pipeline {
 	 * Register cache files at program level.
 	 *
 	 * @param entry contains all relevant information
-	 * @param name user defined name of that file
+	 * @param name  user defined name of that file
 	 * @throws java.io.IOException
 	 */
 	public void registerCachedFile(String name, DistributedCacheEntry entry) throws IOException {

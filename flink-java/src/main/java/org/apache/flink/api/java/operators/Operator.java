@@ -30,7 +30,7 @@ import org.apache.flink.api.java.ExecutionEnvironment;
  * Base class of all operators in the Java API.
  *
  * @param <OUT> The type of the data set produced by this operator.
- * @param <O> The type of the operator, so that we can return it.
+ * @param <O>   The type of the operator, so that we can return it.
  */
 @Public
 public abstract class Operator<OUT, O extends Operator<OUT, O>> extends DataSet<OUT> {
@@ -115,7 +115,7 @@ public abstract class Operator<OUT, O extends Operator<OUT, O>> extends DataSet<
 	 * The parallelism must be 1 or more.
 	 *
 	 * @param parallelism The parallelism for this operator. A value equal to {@link ExecutionConfig#PARALLELISM_DEFAULT}
-	 *        will use the system default.
+	 *                    will use the system default.
 	 * @return The operator with set parallelism.
 	 */
 	public O setParallelism(int parallelism) {
@@ -137,7 +137,7 @@ public abstract class Operator<OUT, O extends Operator<OUT, O>> extends DataSet<
 	 * Sets the minimum and preferred resources for this operator. This overrides the default resources.
 	 * The lower and upper resource limits will be considered in dynamic resource resize feature for future plan.
 	 *
-	 * @param minResources The minimum resources for this operator.
+	 * @param minResources       The minimum resources for this operator.
 	 * @param preferredResources The preferred resources for this operator.
 	 * @return The operator with set minimum and preferred resources.
 	 */

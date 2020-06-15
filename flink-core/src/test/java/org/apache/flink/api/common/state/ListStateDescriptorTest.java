@@ -45,7 +45,7 @@ public class ListStateDescriptorTest {
 		TypeSerializer<String> serializer = new KryoSerializer<>(String.class, new ExecutionConfig());
 
 		ListStateDescriptor<String> descr =
-				new ListStateDescriptor<>("testName", serializer);
+			new ListStateDescriptor<>("testName", serializer);
 
 		assertEquals("testName", descr.getName());
 		assertNotNull(descr.getSerializer());

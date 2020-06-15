@@ -44,18 +44,18 @@ public class PartitionOperatorBase<IN> extends SingleInputOperator<IN, IN, NoOpF
 		RANGE,
 		CUSTOM;
 	}
-	
+
 	// --------------------------------------------------------------------------------------------
-	
+
 	private final PartitionMethod partitionMethod;
-	
+
 	private Partitioner<?> customPartitioner;
-	
+
 	private DataDistribution distribution;
 
 	private Ordering ordering;
-	
-	
+
+
 	public PartitionOperatorBase(UnaryOperatorInformation<IN, IN> operatorInfo, PartitionMethod pMethod, int[] keys, String name) {
 		super(new UserCodeObjectWrapper<NoOpFunction>(new NoOpFunction()), operatorInfo, keys, name);
 		this.partitionMethod = pMethod;
@@ -65,19 +65,19 @@ public class PartitionOperatorBase<IN> extends SingleInputOperator<IN, IN, NoOpF
 		super(new UserCodeObjectWrapper<NoOpFunction>(new NoOpFunction()), operatorInfo, name);
 		this.partitionMethod = pMethod;
 	}
-	
+
 	// --------------------------------------------------------------------------------------------
-	
+
 	public PartitionMethod getPartitionMethod() {
 		return this.partitionMethod;
 	}
-	
+
 	public Partitioner<?> getCustomPartitioner() {
 		return customPartitioner;
 	}
-	
+
 	public DataDistribution getDistribution() {
-		return  this.distribution;
+		return this.distribution;
 	}
 
 	public void setOrdering(Ordering ordering) {
@@ -104,14 +104,14 @@ public class PartitionOperatorBase<IN> extends SingleInputOperator<IN, IN, NoOpF
 		}
 		this.customPartitioner = customPartitioner;
 	}
-	
+
 	@Override
 	public SingleInputSemanticProperties getSemanticProperties() {
 		return new SingleInputSemanticProperties.AllFieldsForwardedProperties();
 	}
 
 	// --------------------------------------------------------------------------------------------
-	
+
 	@Override
 	protected List<IN> executeOnCollections(List<IN> inputData, RuntimeContext runtimeContext, ExecutionConfig executionConfig) {
 		return inputData;

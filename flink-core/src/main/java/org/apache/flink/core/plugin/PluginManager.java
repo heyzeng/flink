@@ -36,13 +36,19 @@ import java.util.Iterator;
 @ThreadSafe
 public class PluginManager {
 
-	/** Parent-classloader to all classloader that are used for plugin loading. We expect that this is thread-safe. */
+	/**
+	 * Parent-classloader to all classloader that are used for plugin loading. We expect that this is thread-safe.
+	 */
 	private final ClassLoader parentClassLoader;
 
-	/** A collection of descriptions of all plugins known to this plugin manager. */
+	/**
+	 * A collection of descriptions of all plugins known to this plugin manager.
+	 */
 	private final Collection<PluginDescriptor> pluginDescriptors;
 
-	/** List of patterns for classes that should always be resolved from the parent ClassLoader. */
+	/**
+	 * List of patterns for classes that should always be resolved from the parent ClassLoader.
+	 */
 	private final String[] alwaysParentFirstPatterns;
 
 	public PluginManager(Collection<PluginDescriptor> pluginDescriptors, String[] alwaysParentFirstPatterns) {
@@ -60,7 +66,7 @@ public class PluginManager {
 	 * known to this plugin manager instance.
 	 *
 	 * @param service the service interface (SPI) for which implementations are requested.
-	 * @param <P> Type of the requested plugin service.
+	 * @param <P>     Type of the requested plugin service.
 	 * @return Iterator over all implementations of the given service that could be loaded from all known plugins.
 	 */
 	public <P extends Plugin> Iterator<P> load(Class<P> service) {

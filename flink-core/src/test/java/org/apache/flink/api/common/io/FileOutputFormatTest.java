@@ -38,7 +38,7 @@ public class FileOutputFormatTest {
 	public void testCreateNonParallelLocalFS() throws IOException {
 
 		File tmpOutPath = File.createTempFile("fileOutputFormatTest", "Test1");
-		File tmpOutFile = new File(tmpOutPath.getAbsolutePath()+"/1");
+		File tmpOutFile = new File(tmpOutPath.getAbsolutePath() + "/1");
 
 		String tmpFilePath = tmpOutPath.toURI().toString();
 
@@ -97,7 +97,7 @@ public class FileOutputFormatTest {
 
 		// check fail for path with tailing '/'
 		dfof = new DummyFileOutputFormat();
-		dfof.setOutputFilePath(new Path(tmpFilePath+"/"));
+		dfof.setOutputFilePath(new Path(tmpFilePath + "/"));
 		dfof.setWriteMode(WriteMode.NO_OVERWRITE);
 		dfof.setOutputDirectoryMode(OutputDirectoryMode.PARONLY);
 
@@ -151,7 +151,7 @@ public class FileOutputFormatTest {
 		}
 		Assert.assertTrue(tmpOutPath.exists() && tmpOutPath.isDirectory());
 		Assert.assertTrue(tmpOutFile.exists() && tmpOutFile.isFile());
-		(new File(tmpOutPath.getAbsoluteFile()+"/1")).delete();
+		(new File(tmpOutPath.getAbsoluteFile() + "/1")).delete();
 
 		// check custom file name inside directory if directory exists
 		dfof = new DummyFileOutputFormat();
@@ -168,14 +168,14 @@ public class FileOutputFormatTest {
 		} catch (Exception e) {
 			fail();
 		}
-		File customOutFile = new File(tmpOutPath.getAbsolutePath()+"/fancy-1-0.avro");
+		File customOutFile = new File(tmpOutPath.getAbsolutePath() + "/fancy-1-0.avro");
 		Assert.assertTrue(tmpOutPath.exists() && tmpOutPath.isDirectory());
 		Assert.assertTrue(customOutFile.exists() && customOutFile.isFile());
 		customOutFile.delete();
 
 		// check fail if file in directory exists
 		// create file for test
-		customOutFile = new File(tmpOutPath.getAbsolutePath()+"/1");
+		customOutFile = new File(tmpOutPath.getAbsolutePath() + "/1");
 		customOutFile.createNewFile();
 
 		dfof = new DummyFileOutputFormat();
@@ -184,7 +184,7 @@ public class FileOutputFormatTest {
 		dfof.setOutputDirectoryMode(OutputDirectoryMode.ALWAYS);
 
 		dfof.configure(new Configuration());
-		
+
 		try {
 			dfof.open(0, 1);
 			dfof.close();
@@ -192,7 +192,7 @@ public class FileOutputFormatTest {
 		} catch (Exception e) {
 			// exception expected
 		}
-		(new File(tmpOutPath.getAbsoluteFile()+"/1")).delete();
+		(new File(tmpOutPath.getAbsoluteFile() + "/1")).delete();
 		tmpOutPath.delete();
 
 		// check success if no file exists
@@ -202,7 +202,7 @@ public class FileOutputFormatTest {
 		dfof.setOutputDirectoryMode(OutputDirectoryMode.ALWAYS);
 
 		dfof.configure(new Configuration());
-		
+
 		try {
 			dfof.open(0, 1);
 			dfof.close();
@@ -211,12 +211,12 @@ public class FileOutputFormatTest {
 		}
 		Assert.assertTrue(tmpOutPath.exists() && tmpOutPath.isDirectory());
 		Assert.assertTrue(tmpOutFile.exists() && tmpOutFile.isFile());
-		(new File(tmpOutPath.getAbsoluteFile()+"/1")).delete();
+		(new File(tmpOutPath.getAbsoluteFile() + "/1")).delete();
 		tmpOutPath.delete();
 
 		// check success for path with tailing '/'
 		dfof = new DummyFileOutputFormat();
-		dfof.setOutputFilePath(new Path(tmpFilePath+'/'));
+		dfof.setOutputFilePath(new Path(tmpFilePath + '/'));
 		dfof.setWriteMode(WriteMode.NO_OVERWRITE);
 		dfof.setOutputDirectoryMode(OutputDirectoryMode.ALWAYS);
 
@@ -230,19 +230,19 @@ public class FileOutputFormatTest {
 		}
 		Assert.assertTrue(tmpOutPath.exists() && tmpOutPath.isDirectory());
 		Assert.assertTrue(tmpOutFile.exists() && tmpOutFile.isFile());
-		(new File(tmpOutPath.getAbsoluteFile()+"/1")).delete();
+		(new File(tmpOutPath.getAbsoluteFile() + "/1")).delete();
 		tmpOutPath.delete();
 
 	}
-	
+
 	@Test
 	public void testCreateParallelLocalFS() throws IOException {
-		
+
 		File tmpOutPath = null;
 		File tmpOutFile = null;
 
 		tmpOutPath = File.createTempFile("fileOutputFormatTest", "Test1");
-		tmpOutFile = new File(tmpOutPath.getAbsolutePath()+"/1");
+		tmpOutFile = new File(tmpOutPath.getAbsolutePath() + "/1");
 
 		String tmpFilePath = tmpOutPath.toURI().toString();
 
@@ -253,7 +253,7 @@ public class FileOutputFormatTest {
 		dfof.setOutputDirectoryMode(OutputDirectoryMode.PARONLY);
 
 		dfof.configure(new Configuration());
-		
+
 		try {
 			dfof.open(0, 2);
 			dfof.close();
@@ -272,7 +272,7 @@ public class FileOutputFormatTest {
 		dfof.setOutputDirectoryMode(OutputDirectoryMode.PARONLY);
 
 		dfof.configure(new Configuration());
-		
+
 		try {
 			dfof.open(0, 2);
 			dfof.close();
@@ -294,7 +294,7 @@ public class FileOutputFormatTest {
 		dfof.setOutputDirectoryMode(OutputDirectoryMode.PARONLY);
 
 		dfof.configure(new Configuration());
-		
+
 		try {
 			dfof.open(0, 2);
 			dfof.close();
@@ -312,7 +312,7 @@ public class FileOutputFormatTest {
 		dfof.setOutputDirectoryMode(OutputDirectoryMode.PARONLY);
 
 		dfof.configure(new Configuration());
-		
+
 		try {
 			dfof.open(0, 2);
 			dfof.close();
@@ -326,7 +326,7 @@ public class FileOutputFormatTest {
 
 		// check success for path with tailing '/'
 		dfof = new DummyFileOutputFormat();
-		dfof.setOutputFilePath(new Path(tmpFilePath+"/"));
+		dfof.setOutputFilePath(new Path(tmpFilePath + "/"));
 		dfof.setWriteMode(WriteMode.NO_OVERWRITE);
 		dfof.setOutputDirectoryMode(OutputDirectoryMode.PARONLY);
 
@@ -344,15 +344,15 @@ public class FileOutputFormatTest {
 		tmpOutPath.delete();
 
 	}
-	
+
 	@Test
 	public void testOverwriteNonParallelLocalFS() throws IOException {
-		
+
 		File tmpOutPath = null;
 		File tmpOutFile = null;
 
 		tmpOutPath = File.createTempFile("fileOutputFormatTest", "Test1");
-		tmpOutFile = new File(tmpOutPath.getAbsolutePath()+"/1");
+		tmpOutFile = new File(tmpOutPath.getAbsolutePath() + "/1");
 
 		String tmpFilePath = tmpOutPath.toURI().toString();
 
@@ -363,7 +363,7 @@ public class FileOutputFormatTest {
 		dfof.setOutputDirectoryMode(OutputDirectoryMode.PARONLY);
 
 		dfof.configure(new Configuration());
-		
+
 		try {
 			dfof.open(0, 1);
 			dfof.close();
@@ -382,7 +382,7 @@ public class FileOutputFormatTest {
 		dfof.setOutputDirectoryMode(OutputDirectoryMode.PARONLY);
 
 		dfof.configure(new Configuration());
-		
+
 		try {
 			dfof.open(0, 1);
 			dfof.close();
@@ -399,7 +399,7 @@ public class FileOutputFormatTest {
 		dfof.setOutputDirectoryMode(OutputDirectoryMode.PARONLY);
 
 		dfof.configure(new Configuration());
-		
+
 		try {
 			dfof.open(0, 1);
 			dfof.close();
@@ -411,7 +411,7 @@ public class FileOutputFormatTest {
 
 		// check fail for path with tailing '/'
 		dfof = new DummyFileOutputFormat();
-		dfof.setOutputFilePath(new Path(tmpFilePath+"/"));
+		dfof.setOutputFilePath(new Path(tmpFilePath + "/"));
 		dfof.setWriteMode(WriteMode.OVERWRITE);
 		dfof.setOutputDirectoryMode(OutputDirectoryMode.PARONLY);
 
@@ -427,7 +427,7 @@ public class FileOutputFormatTest {
 		tmpOutPath.delete();
 
 		// ----------- test again with always directory mode
-		
+
 		// check success if file exists
 		tmpOutPath.createNewFile();
 
@@ -437,7 +437,7 @@ public class FileOutputFormatTest {
 		dfof.setOutputDirectoryMode(OutputDirectoryMode.ALWAYS);
 
 		dfof.configure(new Configuration());
-		
+
 		try {
 			dfof.open(0, 1);
 			dfof.close();
@@ -459,7 +459,7 @@ public class FileOutputFormatTest {
 		dfof.setOutputDirectoryMode(OutputDirectoryMode.ALWAYS);
 
 		dfof.configure(new Configuration());
-		
+
 		try {
 			dfof.open(0, 1);
 			dfof.close();
@@ -481,7 +481,7 @@ public class FileOutputFormatTest {
 		dfof.setOutputDirectoryMode(OutputDirectoryMode.ALWAYS);
 
 		dfof.configure(new Configuration());
-		
+
 		try {
 			dfof.open(0, 1);
 			dfof.close();
@@ -500,7 +500,7 @@ public class FileOutputFormatTest {
 		dfof.setOutputDirectoryMode(OutputDirectoryMode.ALWAYS);
 
 		dfof.configure(new Configuration());
-		
+
 		try {
 			dfof.open(0, 1);
 			dfof.close();
@@ -514,7 +514,7 @@ public class FileOutputFormatTest {
 
 		// check success for path with tailing '/'
 		dfof = new DummyFileOutputFormat();
-		dfof.setOutputFilePath(new Path(tmpFilePath+"/"));
+		dfof.setOutputFilePath(new Path(tmpFilePath + "/"));
 		dfof.setWriteMode(WriteMode.OVERWRITE);
 		dfof.setOutputDirectoryMode(OutputDirectoryMode.ALWAYS);
 
@@ -531,15 +531,15 @@ public class FileOutputFormatTest {
 		tmpOutFile.delete();
 		tmpOutPath.delete();
 	}
-	
+
 	@Test
 	public void testOverwriteParallelLocalFS() throws IOException {
-		
+
 		File tmpOutPath = null;
 		File tmpOutFile = null;
 
 		tmpOutPath = File.createTempFile("fileOutputFormatTest", "Test1");
-		tmpOutFile = new File(tmpOutPath.getAbsolutePath()+"/1");
+		tmpOutFile = new File(tmpOutPath.getAbsolutePath() + "/1");
 
 		String tmpFilePath = tmpOutPath.toURI().toString();
 
@@ -550,7 +550,7 @@ public class FileOutputFormatTest {
 		dfof.setOutputDirectoryMode(OutputDirectoryMode.PARONLY);
 
 		dfof.configure(new Configuration());
-		
+
 		try {
 			dfof.open(0, 2);
 			dfof.close();
@@ -571,7 +571,7 @@ public class FileOutputFormatTest {
 		dfof.setOutputDirectoryMode(OutputDirectoryMode.PARONLY);
 
 		dfof.configure(new Configuration());
-		
+
 		try {
 			dfof.open(0, 2);
 			dfof.close();
@@ -593,7 +593,7 @@ public class FileOutputFormatTest {
 		dfof.setOutputDirectoryMode(OutputDirectoryMode.PARONLY);
 
 		dfof.configure(new Configuration());
-		
+
 		try {
 			dfof.open(0, 2);
 			dfof.close();
@@ -602,7 +602,7 @@ public class FileOutputFormatTest {
 		}
 		Assert.assertTrue(tmpOutPath.exists() && tmpOutPath.isDirectory());
 		Assert.assertTrue(tmpOutFile.exists() && tmpOutFile.isFile());
-		(new File(tmpOutPath.getAbsoluteFile()+"/1")).delete();
+		(new File(tmpOutPath.getAbsoluteFile() + "/1")).delete();
 		tmpOutPath.delete();
 
 		// check success if no file exists
@@ -612,7 +612,7 @@ public class FileOutputFormatTest {
 		dfof.setOutputDirectoryMode(OutputDirectoryMode.PARONLY);
 
 		dfof.configure(new Configuration());
-		
+
 		try {
 			dfof.open(0, 2);
 			dfof.close();
@@ -626,7 +626,7 @@ public class FileOutputFormatTest {
 
 		// check success for path with tailing '/'
 		dfof = new DummyFileOutputFormat();
-		dfof.setOutputFilePath(new Path(tmpFilePath+"/"));
+		dfof.setOutputFilePath(new Path(tmpFilePath + "/"));
 		dfof.setWriteMode(WriteMode.OVERWRITE);
 		dfof.setOutputDirectoryMode(OutputDirectoryMode.PARONLY);
 
@@ -644,9 +644,9 @@ public class FileOutputFormatTest {
 		tmpOutPath.delete();
 
 	}
-	
+
 	// -------------------------------------------------------------------------------------------
-	
+
 	public static class DummyFileOutputFormat extends FileOutputFormat<IntValue> {
 
 		private static final long serialVersionUID = 1L;
@@ -659,12 +659,12 @@ public class FileOutputFormatTest {
 
 		@Override
 		protected String getDirectoryFileName(int taskNumber) {
-			if(testFileName) {
-				return "fancy-"+(taskNumber+1)+"-"+taskNumber+".avro";
+			if (testFileName) {
+				return "fancy-" + (taskNumber + 1) + "-" + taskNumber + ".avro";
 			} else {
 				return super.getDirectoryFileName(taskNumber);
 			}
 		}
 	}
-	
+
 }

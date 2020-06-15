@@ -46,8 +46,10 @@ public abstract class SimpleTypeSerializerSnapshot<T> implements TypeSerializerS
 	 */
 	private static final int CURRENT_VERSION = 3;
 
-	/** The class of the serializer for this snapshot.
-	 * The field is null if the serializer was created for read and has not been read, yet. */
+	/**
+	 * The class of the serializer for this snapshot.
+	 * The field is null if the serializer was created for read and has not been read, yet.
+	 */
 	@Nonnull
 	private Supplier<? extends TypeSerializer<T>> serializerSupplier;
 
@@ -76,8 +78,8 @@ public abstract class SimpleTypeSerializerSnapshot<T> implements TypeSerializerS
 	public TypeSerializerSchemaCompatibility<T> resolveSchemaCompatibility(TypeSerializer<T> newSerializer) {
 
 		return newSerializer.getClass() == serializerSupplier.get().getClass() ?
-				TypeSerializerSchemaCompatibility.compatibleAsIs() :
-				TypeSerializerSchemaCompatibility.incompatible();
+			TypeSerializerSchemaCompatibility.compatibleAsIs() :
+			TypeSerializerSchemaCompatibility.incompatible();
 	}
 
 	@Override

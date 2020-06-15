@@ -77,7 +77,9 @@ public abstract class AbstractDeserializationSchema<T> implements Deserializatio
 
 	private static final long serialVersionUID = 2L;
 
-	/** The type produced by this {@code DeserializationSchema}. */
+	/**
+	 * The type produced by this {@code DeserializationSchema}.
+	 */
 	private final TypeInformation<T> type;
 
 	// ------------------------------------------------------------------------
@@ -101,11 +103,10 @@ public abstract class AbstractDeserializationSchema<T> implements Deserializatio
 	protected AbstractDeserializationSchema() {
 		try {
 			this.type = TypeExtractor.createTypeInfo(
-					AbstractDeserializationSchema.class, getClass(), 0, null, null);
-		}
-		catch (InvalidTypesException e) {
+				AbstractDeserializationSchema.class, getClass(), 0, null, null);
+		} catch (InvalidTypesException e) {
 			throw new FlinkRuntimeException(
-					"The implementation of AbstractDeserializationSchema is using a generic variable. " +
+				"The implementation of AbstractDeserializationSchema is using a generic variable. " +
 					"This is not supported, because due to Java's generic type erasure, it will not be possible to " +
 					"determine the full type at runtime. For generic implementations, please pass the TypeInformation " +
 					"or type class explicitly to the constructor.");

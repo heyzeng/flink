@@ -20,6 +20,7 @@ package org.apache.flink.api.common.typeutils.base;
 
 import java.io.IOException;
 import java.util.Date;
+
 import org.apache.flink.annotation.Internal;
 import org.apache.flink.api.common.typeutils.SimpleTypeSerializerSnapshot;
 import org.apache.flink.api.common.typeutils.TypeSerializerSnapshot;
@@ -45,7 +46,7 @@ public final class DateSerializer extends TypeSerializerSingleton<Date> {
 
 	@Override
 	public Date copy(Date from) {
-		if(from == null) {
+		if (from == null) {
 			return null;
 		}
 		return new Date(from.getTime());
@@ -83,7 +84,7 @@ public final class DateSerializer extends TypeSerializerSingleton<Date> {
 			return new Date(v);
 		}
 	}
-	
+
 	@Override
 	public Date deserialize(Date reuse, DataInputView source) throws IOException {
 		final long v = source.readLong();

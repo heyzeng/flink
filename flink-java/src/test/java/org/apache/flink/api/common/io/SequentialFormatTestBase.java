@@ -194,7 +194,7 @@ public abstract class SequentialFormatTestBase<T> extends TestLogger {
 		configuration.setLong(BinaryOutputFormat.BLOCK_SIZE_PARAMETER_KEY, this.blockSize);
 		if (this.parallelism == 1) {
 			BinaryOutputFormat<T> output = createOutputFormat(this.tempFile.toURI().toString(),
-					configuration);
+				configuration);
 			for (int index = 0; index < this.numberOfTuples; index++) {
 				output.writeRecord(this.getRecord(index));
 			}
@@ -205,7 +205,7 @@ public abstract class SequentialFormatTestBase<T> extends TestLogger {
 			int recordIndex = 0;
 			for (int fileIndex = 0; fileIndex < this.parallelism; fileIndex++) {
 				BinaryOutputFormat<T> output = createOutputFormat(this.tempFile.toURI() + "/" +
-						(fileIndex + 1), configuration);
+					(fileIndex + 1), configuration);
 				for (int fileCount = 0; fileCount < this.getNumberOfTuplesPerFile(fileIndex); fileCount++, recordIndex++) {
 					output.writeRecord(this.getRecord(recordIndex));
 				}
@@ -223,7 +223,7 @@ public abstract class SequentialFormatTestBase<T> extends TestLogger {
 	 */
 	@Test
 	public void checkLength() {
-		File[] files = this.tempFile.isDirectory() ? this.tempFile.listFiles() : new File[] { this.tempFile };
+		File[] files = this.tempFile.isDirectory() ? this.tempFile.listFiles() : new File[]{this.tempFile};
 		Arrays.sort(files);
 		for (int fileIndex = 0; fileIndex < this.parallelism; fileIndex++) {
 			long lastBlockLength = this.rawDataSizes[fileIndex] % (this.blockSize - getInfoSize());
@@ -237,7 +237,7 @@ public abstract class SequentialFormatTestBase<T> extends TestLogger {
 	protected abstract BinaryInputFormat<T> createInputFormat();
 
 	protected abstract BinaryOutputFormat<T> createOutputFormat(String path, Configuration configuration)
-			throws IOException;
+		throws IOException;
 
 	protected abstract int getInfoSize();
 
@@ -258,7 +258,7 @@ public abstract class SequentialFormatTestBase<T> extends TestLogger {
 	private int getExpectedBlockCount(int fileIndex) {
 		int expectedBlockCount =
 			(int) Math.ceil((double) this.rawDataSizes[fileIndex] / (this.blockSize -
-					getInfoSize()));
+				getInfoSize()));
 		return expectedBlockCount;
 	}
 
@@ -267,18 +267,17 @@ public abstract class SequentialFormatTestBase<T> extends TestLogger {
 		ArrayList<Object[]> params = new ArrayList<Object[]>();
 		for (int parallelism = 1; parallelism <= 2; parallelism++) {
 			// numberOfTuples, blockSize, parallelism
-			params.add(new Object[] { 100, BinaryOutputFormat.NATIVE_BLOCK_SIZE, parallelism });
-			params.add(new Object[] { 100, 1000, parallelism });
-			params.add(new Object[] { 100, 1 << 20, parallelism });
-			params.add(new Object[] { 10000, 1000, parallelism });
-			params.add(new Object[] { 10000, 1 << 20, parallelism });
+			params.add(new Object[]{100, BinaryOutputFormat.NATIVE_BLOCK_SIZE, parallelism});
+			params.add(new Object[]{100, 1000, parallelism});
+			params.add(new Object[]{100, 1 << 20, parallelism});
+			params.add(new Object[]{10000, 1000, parallelism});
+			params.add(new Object[]{10000, 1 << 20, parallelism});
 		}
 		return params;
 	}
 
 	/**
 	 * Counts the bytes that would be written.
-	 *
 	 */
 	private static final class ByteCounter extends OutputStream {
 		int length = 0;

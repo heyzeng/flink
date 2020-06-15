@@ -31,8 +31,7 @@ public interface LegacySerializerSnapshotTransformer<T> {
 	 * Transform a {@link TypeSerializerSnapshot} that was previously associated with {@code this} {@link TypeSerializer}.
 	 *
 	 * @param legacySnapshot the snapshot to transform.
-	 * @param <U> the legacy snapshot's serializer data type.
-	 *
+	 * @param <U>            the legacy snapshot's serializer data type.
 	 * @return a possibly transformed snapshot.
 	 */
 	<U> TypeSerializerSnapshot<T> transformLegacySerializerSnapshot(TypeSerializerSnapshot<U> legacySnapshot);

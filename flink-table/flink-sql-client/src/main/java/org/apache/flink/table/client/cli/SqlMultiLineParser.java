@@ -63,14 +63,14 @@ public class SqlMultiLineParser extends DefaultParser {
 	private class SqlArgumentList extends DefaultParser.ArgumentList {
 
 		public SqlArgumentList(
-				String line,
-				List<String> words,
-				int wordIndex,
-				int wordCursor,
-				int cursor,
-				String openingQuote,
-				int rawWordCursor,
-				int rawWordLength) {
+			String line,
+			List<String> words,
+			int wordIndex,
+			int wordCursor,
+			int cursor,
+			String openingQuote,
+			int rawWordCursor,
+			int rawWordLength) {
 
 			super(
 				line,

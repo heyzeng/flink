@@ -60,7 +60,7 @@ public class TypeSerializerFormatTest extends SequentialFormatTestBase<Tuple2<In
 	}
 
 	@Before
-	public void setup(){
+	public void setup() {
 		block = createInputFormat().createBlockInfo();
 	}
 
@@ -69,7 +69,7 @@ public class TypeSerializerFormatTest extends SequentialFormatTestBase<Tuple2<In
 		Configuration configuration = new Configuration();
 
 		final TypeSerializerInputFormat<Tuple2<Integer, String>> inputFormat = new
-				TypeSerializerInputFormat<Tuple2<Integer, String>>(resultType);
+			TypeSerializerInputFormat<Tuple2<Integer, String>>(resultType);
 		inputFormat.setFilePath(this.tempFile.toURI().toString());
 		inputFormat.setBlockSize(this.blockSize);
 
@@ -80,7 +80,7 @@ public class TypeSerializerFormatTest extends SequentialFormatTestBase<Tuple2<In
 	@Override
 	protected BinaryOutputFormat<Tuple2<Integer, String>> createOutputFormat(String path, Configuration configuration) throws IOException {
 		TypeSerializerOutputFormat<Tuple2<Integer, String>> outputFormat = new
-				TypeSerializerOutputFormat<Tuple2<Integer, String>>();
+			TypeSerializerOutputFormat<Tuple2<Integer, String>>();
 
 		outputFormat.setSerializer(serializer);
 		outputFormat.setOutputFilePath(new Path(path));

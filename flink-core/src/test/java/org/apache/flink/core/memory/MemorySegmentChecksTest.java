@@ -46,26 +46,28 @@ public class MemorySegmentChecksTest {
 
 	@Test(expected = NullPointerException.class)
 	public void testHybridOffHeapNullBuffer2() {
-		new HybridMemorySegment(null, new Object(), () -> {});
+		new HybridMemorySegment(null, new Object(), () -> {
+		});
 	}
 
 	@Test(expected = IllegalArgumentException.class)
 	public void testHybridNonDirectBuffer() {
-		new HybridMemorySegment(ByteBuffer.allocate(1024), new Object(), () -> {});
+		new HybridMemorySegment(ByteBuffer.allocate(1024), new Object(), () -> {
+		});
 	}
 
 	@Test(expected = IllegalArgumentException.class)
-	public void testZeroAddress(){
+	public void testZeroAddress() {
 		new MockSegment(0L, 4 * 1024, null);
 	}
 
 	@Test(expected = IllegalArgumentException.class)
-	public void testNegativeAddress(){
+	public void testNegativeAddress() {
 		new MockSegment(-1L, 4 * 1024, null);
 	}
 
 	@Test(expected = IllegalArgumentException.class)
-	public void testTooLargeAddress(){
+	public void testTooLargeAddress() {
 		new MockSegment(Long.MAX_VALUE - 8 * 1024, 4 * 1024, null);
 	}
 
@@ -88,19 +90,24 @@ public class MemorySegmentChecksTest {
 		}
 
 		@Override
-		public void put(int index, byte b) {}
+		public void put(int index, byte b) {
+		}
 
 		@Override
-		public void get(int index, byte[] dst) {}
+		public void get(int index, byte[] dst) {
+		}
 
 		@Override
-		public void put(int index, byte[] src) {}
+		public void put(int index, byte[] src) {
+		}
 
 		@Override
-		public void get(int index, byte[] dst, int offset, int length) {}
+		public void get(int index, byte[] dst, int offset, int length) {
+		}
 
 		@Override
-		public void put(int index, byte[] src, int offset, int length) {}
+		public void put(int index, byte[] src, int offset, int length) {
+		}
 
 		@Override
 		public boolean getBoolean(int index) {
@@ -108,18 +115,23 @@ public class MemorySegmentChecksTest {
 		}
 
 		@Override
-		public void putBoolean(int index, boolean value) {}
+		public void putBoolean(int index, boolean value) {
+		}
 
 		@Override
-		public void get(DataOutput out, int offset, int length) {}
+		public void get(DataOutput out, int offset, int length) {
+		}
 
 		@Override
-		public void put(DataInput in, int offset, int length) {}
+		public void put(DataInput in, int offset, int length) {
+		}
 
 		@Override
-		public void get(int offset, ByteBuffer target, int numBytes) {}
+		public void get(int offset, ByteBuffer target, int numBytes) {
+		}
 
 		@Override
-		public void put(int offset, ByteBuffer source, int numBytes) {}
+		public void put(int offset, ByteBuffer source, int numBytes) {
+		}
 	}
 }

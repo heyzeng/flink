@@ -87,9 +87,8 @@ public class CsvOutputFormat<T extends Tuple> extends FileOutputFormat<T> implem
 	 * Creates an instance of CsvOutputFormat. Lines are separated by the newline character '\n',
 	 * fields by the given field delimiter.
 	 *
-	 * @param outputPath The path where the CSV file is written.
-	 * @param fieldDelimiter
-	 *            The delimiter that is used to separate fields in a tuple.
+	 * @param outputPath     The path where the CSV file is written.
+	 * @param fieldDelimiter The delimiter that is used to separate fields in a tuple.
 	 */
 	public CsvOutputFormat(Path outputPath, String fieldDelimiter) {
 		this(outputPath, DEFAULT_LINE_DELIMITER, fieldDelimiter);
@@ -98,11 +97,9 @@ public class CsvOutputFormat<T extends Tuple> extends FileOutputFormat<T> implem
 	/**
 	 * Creates an instance of CsvOutputFormat.
 	 *
-	 * @param outputPath The path where the CSV file is written.
-	 * @param recordDelimiter
-	 *            The delimiter that is used to separate the tuples.
-	 * @param fieldDelimiter
-	 *            The delimiter that is used to separate fields in a tuple.
+	 * @param outputPath      The path where the CSV file is written.
+	 * @param recordDelimiter The delimiter that is used to separate the tuples.
+	 * @param fieldDelimiter  The delimiter that is used to separate fields in a tuple.
 	 */
 	public CsvOutputFormat(Path outputPath, String recordDelimiter, String fieldDelimiter) {
 		super(outputPath);
@@ -160,7 +157,7 @@ public class CsvOutputFormat<T extends Tuple> extends FileOutputFormat<T> implem
 	public void open(int taskNumber, int numTasks) throws IOException {
 		super.open(taskNumber, numTasks);
 		this.wrt = this.charsetName == null ? new OutputStreamWriter(new BufferedOutputStream(this.stream, 4096)) :
-				new OutputStreamWriter(new BufferedOutputStream(this.stream, 4096), this.charsetName);
+			new OutputStreamWriter(new BufferedOutputStream(this.stream, 4096), this.charsetName);
 	}
 
 	@Override
@@ -215,7 +212,7 @@ public class CsvOutputFormat<T extends Tuple> extends FileOutputFormat<T> implem
 		return "CsvOutputFormat (path: " + this.getOutputFilePath() + ", delimiter: " + this.fieldDelimiter + ")";
 	}
 
-    /**
+	/**
 	 * The purpose of this method is solely to check whether the data type to be processed
 	 * is in fact a tuple type.
 	 */

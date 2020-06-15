@@ -82,64 +82,56 @@ public abstract class MemorySegmentTestBase {
 		try {
 			segment.put(-1, (byte) 0);
 			fail("IndexOutOfBoundsException expected");
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			assertTrue(e instanceof IndexOutOfBoundsException);
 		}
 
 		try {
 			segment.put(pageSize, (byte) 0);
 			fail("IndexOutOfBoundsException expected");
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			assertTrue(e instanceof IndexOutOfBoundsException);
 		}
 
 		try {
 			segment.put(Integer.MAX_VALUE, (byte) 0);
 			fail("IndexOutOfBoundsException expected");
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			assertTrue(e instanceof IndexOutOfBoundsException);
 		}
 
 		try {
 			segment.put(Integer.MIN_VALUE, (byte) 0);
 			fail("IndexOutOfBoundsException expected");
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			assertTrue(e instanceof IndexOutOfBoundsException);
 		}
 
 		try {
 			segment.get(-1);
 			fail("IndexOutOfBoundsException expected");
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			assertTrue(e instanceof IndexOutOfBoundsException);
 		}
 
 		try {
 			segment.get(pageSize);
 			fail("IndexOutOfBoundsException expected");
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			assertTrue(e instanceof IndexOutOfBoundsException);
 		}
 
 		try {
 			segment.get(Integer.MAX_VALUE);
 			fail("IndexOutOfBoundsException expected");
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			assertTrue(e instanceof IndexOutOfBoundsException);
 		}
 
 		try {
 			segment.get(Integer.MIN_VALUE);
 			fail("IndexOutOfBoundsException expected");
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			assertTrue(e instanceof IndexOutOfBoundsException);
 		}
 
@@ -199,64 +191,56 @@ public abstract class MemorySegmentTestBase {
 		try {
 			segment.putBoolean(-1, false);
 			fail("IndexOutOfBoundsException expected");
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			assertTrue(e instanceof IndexOutOfBoundsException);
 		}
 
 		try {
 			segment.putBoolean(pageSize, false);
 			fail("IndexOutOfBoundsException expected");
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			assertTrue(e instanceof IndexOutOfBoundsException);
 		}
 
 		try {
 			segment.putBoolean(Integer.MAX_VALUE, false);
 			fail("IndexOutOfBoundsException expected");
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			assertTrue(e instanceof IndexOutOfBoundsException);
 		}
 
 		try {
 			segment.putBoolean(Integer.MIN_VALUE, false);
 			fail("IndexOutOfBoundsException expected");
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			assertTrue(e instanceof IndexOutOfBoundsException);
 		}
 
 		try {
 			segment.getBoolean(-1);
 			fail("IndexOutOfBoundsException expected");
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			assertTrue(e instanceof IndexOutOfBoundsException);
 		}
 
 		try {
 			segment.getBoolean(pageSize);
 			fail("IndexOutOfBoundsException expected");
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			assertTrue(e instanceof IndexOutOfBoundsException);
 		}
 
 		try {
 			segment.getBoolean(Integer.MAX_VALUE);
 			fail("IndexOutOfBoundsException expected");
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			assertTrue(e instanceof IndexOutOfBoundsException);
 		}
 
 		try {
 			segment.getBoolean(Integer.MIN_VALUE);
 			fail("IndexOutOfBoundsException expected");
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			assertTrue(e instanceof IndexOutOfBoundsException);
 		}
 
@@ -315,14 +299,14 @@ public abstract class MemorySegmentTestBase {
 		try {
 			segment.copyToUnsafe(1, bytes, 0, pageSize);
 			fail("should fail with an IndexOutOfBoundsException");
+		} catch (IndexOutOfBoundsException ignored) {
 		}
-		catch (IndexOutOfBoundsException ignored) {}
 
 		try {
 			segment.copyFromUnsafe(1, bytes, 0, pageSize);
 			fail("should fail with an IndexOutOfBoundsException");
+		} catch (IndexOutOfBoundsException ignored) {
 		}
-		catch (IndexOutOfBoundsException ignored) {}
 	}
 
 	@Test
@@ -355,80 +339,70 @@ public abstract class MemorySegmentTestBase {
 		try {
 			segment.putChar(-1, 'a');
 			fail("IndexOutOfBoundsException expected");
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			assertTrue(e instanceof IndexOutOfBoundsException);
 		}
 
 		try {
 			segment.putChar(pageSize, 'a');
 			fail("IndexOutOfBoundsException expected");
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			assertTrue(e instanceof IndexOutOfBoundsException);
 		}
 
 		try {
 			segment.putChar(Integer.MIN_VALUE, 'a');
 			fail("IndexOutOfBoundsException expected");
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			assertTrue(e instanceof IndexOutOfBoundsException);
 		}
 
 		try {
 			segment.putChar(Integer.MAX_VALUE, 'a');
 			fail("IndexOutOfBoundsException expected");
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			assertTrue(e instanceof IndexOutOfBoundsException);
 		}
 
 		try {
 			segment.putChar(Integer.MAX_VALUE - 1, 'a');
 			fail("IndexOutOfBoundsException expected");
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			assertTrue(e instanceof IndexOutOfBoundsException);
 		}
 
 		try {
 			segment.getChar(-1);
 			fail("IndexOutOfBoundsException expected");
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			assertTrue(e instanceof IndexOutOfBoundsException);
 		}
 
 		try {
 			segment.getChar(pageSize);
 			fail("IndexOutOfBoundsException expected");
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			assertTrue(e instanceof IndexOutOfBoundsException);
 		}
 
 		try {
 			segment.getChar(Integer.MIN_VALUE);
 			fail("IndexOutOfBoundsException expected");
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			assertTrue(e instanceof IndexOutOfBoundsException);
 		}
 
 		try {
 			segment.getChar(Integer.MAX_VALUE);
 			fail("IndexOutOfBoundsException expected");
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			assertTrue(e instanceof IndexOutOfBoundsException);
 		}
 
 		try {
 			segment.getChar(Integer.MAX_VALUE - 1);
 			fail("IndexOutOfBoundsException expected");
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			assertTrue(e instanceof IndexOutOfBoundsException);
 		}
 
@@ -490,80 +464,70 @@ public abstract class MemorySegmentTestBase {
 		try {
 			segment.putShort(-1, (short) 0);
 			fail("IndexOutOfBoundsException expected");
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			assertTrue(e instanceof IndexOutOfBoundsException);
 		}
 
 		try {
 			segment.putShort(pageSize, (short) 0);
 			fail("IndexOutOfBoundsException expected");
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			assertTrue(e instanceof IndexOutOfBoundsException);
 		}
 
 		try {
 			segment.putShort(Integer.MIN_VALUE, (short) 0);
 			fail("IndexOutOfBoundsException expected");
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			assertTrue(e instanceof IndexOutOfBoundsException);
 		}
 
 		try {
 			segment.putShort(Integer.MAX_VALUE, (short) 0);
 			fail("IndexOutOfBoundsException expected");
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			assertTrue(e instanceof IndexOutOfBoundsException);
 		}
 
 		try {
 			segment.putShort(Integer.MAX_VALUE - 1, (short) 0);
 			fail("IndexOutOfBoundsException expected");
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			assertTrue(e instanceof IndexOutOfBoundsException);
 		}
 
 		try {
 			segment.getShort(-1);
 			fail("IndexOutOfBoundsException expected");
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			assertTrue(e instanceof IndexOutOfBoundsException);
 		}
 
 		try {
 			segment.getShort(pageSize);
 			fail("IndexOutOfBoundsException expected");
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			assertTrue(e instanceof IndexOutOfBoundsException);
 		}
 
 		try {
 			segment.getShort(Integer.MIN_VALUE);
 			fail("IndexOutOfBoundsException expected");
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			assertTrue(e instanceof IndexOutOfBoundsException);
 		}
 
 		try {
 			segment.getShort(Integer.MAX_VALUE);
 			fail("IndexOutOfBoundsException expected");
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			assertTrue(e instanceof IndexOutOfBoundsException);
 		}
 
 		try {
 			segment.getShort(Integer.MAX_VALUE - 1);
 			fail("IndexOutOfBoundsException expected");
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			assertTrue(e instanceof IndexOutOfBoundsException);
 		}
 
@@ -625,96 +589,84 @@ public abstract class MemorySegmentTestBase {
 		try {
 			segment.putInt(-1, 0);
 			fail("IndexOutOfBoundsException expected");
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			assertTrue(e instanceof IndexOutOfBoundsException);
 		}
 
 		try {
 			segment.putInt(pageSize, 0);
 			fail("IndexOutOfBoundsException expected");
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			assertTrue(e instanceof IndexOutOfBoundsException);
 		}
 
 		try {
 			segment.putInt(pageSize - 3, 0);
 			fail("IndexOutOfBoundsException expected");
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			assertTrue(e instanceof IndexOutOfBoundsException);
 		}
 
 		try {
 			segment.putInt(Integer.MIN_VALUE, 0);
 			fail("IndexOutOfBoundsException expected");
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			assertTrue(e instanceof IndexOutOfBoundsException);
 		}
 
 		try {
 			segment.putInt(Integer.MAX_VALUE, 0);
 			fail("IndexOutOfBoundsException expected");
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			assertTrue(e instanceof IndexOutOfBoundsException);
 		}
 
 		try {
 			segment.putInt(Integer.MAX_VALUE - 3, 0);
 			fail("IndexOutOfBoundsException expected");
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			assertTrue(e instanceof IndexOutOfBoundsException);
 		}
 
 		try {
 			segment.getInt(-1);
 			fail("IndexOutOfBoundsException expected");
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			assertTrue(e instanceof IndexOutOfBoundsException);
 		}
 
 		try {
 			segment.getInt(pageSize);
 			fail("IndexOutOfBoundsException expected");
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			assertTrue(e instanceof IndexOutOfBoundsException);
 		}
 
 		try {
 			segment.getInt(pageSize - 3);
 			fail("IndexOutOfBoundsException expected");
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			assertTrue(e instanceof IndexOutOfBoundsException);
 		}
 
 		try {
 			segment.getInt(Integer.MIN_VALUE);
 			fail("IndexOutOfBoundsException expected");
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			assertTrue(e instanceof IndexOutOfBoundsException);
 		}
 
 		try {
 			segment.getInt(Integer.MAX_VALUE);
 			fail("IndexOutOfBoundsException expected");
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			assertTrue(e instanceof IndexOutOfBoundsException);
 		}
 
 		try {
 			segment.getInt(Integer.MAX_VALUE - 3);
 			fail("IndexOutOfBoundsException expected");
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			assertTrue(e instanceof IndexOutOfBoundsException);
 		}
 
@@ -780,96 +732,84 @@ public abstract class MemorySegmentTestBase {
 		try {
 			segment.putLong(-1, 0L);
 			fail("IndexOutOfBoundsException expected");
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			assertTrue(e instanceof IndexOutOfBoundsException);
 		}
 
 		try {
 			segment.putLong(pageSize, 0L);
 			fail("IndexOutOfBoundsException expected");
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			assertTrue(e instanceof IndexOutOfBoundsException);
 		}
 
 		try {
 			segment.putLong(pageSize - 7, 0L);
 			fail("IndexOutOfBoundsException expected");
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			assertTrue(e instanceof IndexOutOfBoundsException);
 		}
 
 		try {
 			segment.putLong(Integer.MIN_VALUE, 0L);
 			fail("IndexOutOfBoundsException expected");
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			assertTrue(e instanceof IndexOutOfBoundsException);
 		}
 
 		try {
 			segment.putLong(Integer.MAX_VALUE, 0L);
 			fail("IndexOutOfBoundsException expected");
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			assertTrue(e instanceof IndexOutOfBoundsException);
 		}
 
 		try {
 			segment.putLong(Integer.MAX_VALUE - 7, 0L);
 			fail("IndexOutOfBoundsException expected");
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			assertTrue(e instanceof IndexOutOfBoundsException);
 		}
 
 		try {
 			segment.getLong(-1);
 			fail("IndexOutOfBoundsException expected");
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			assertTrue(e instanceof IndexOutOfBoundsException);
 		}
 
 		try {
 			segment.getLong(pageSize);
 			fail("IndexOutOfBoundsException expected");
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			assertTrue(e instanceof IndexOutOfBoundsException);
 		}
 
 		try {
 			segment.getLong(pageSize - 7);
 			fail("IndexOutOfBoundsException expected");
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			assertTrue(e instanceof IndexOutOfBoundsException);
 		}
 
 		try {
 			segment.getLong(Integer.MIN_VALUE);
 			fail("IndexOutOfBoundsException expected");
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			assertTrue(e instanceof IndexOutOfBoundsException);
 		}
 
 		try {
 			segment.getLong(Integer.MAX_VALUE);
 			fail("IndexOutOfBoundsException expected");
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			assertTrue(e instanceof IndexOutOfBoundsException);
 		}
 
 		try {
 			segment.getLong(Integer.MAX_VALUE - 7);
 			fail("IndexOutOfBoundsException expected");
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			assertTrue(e instanceof IndexOutOfBoundsException);
 		}
 
@@ -896,10 +836,9 @@ public abstract class MemorySegmentTestBase {
 			int pos = random.nextInt(pageSize - 7);
 
 			if (occupied[pos] || occupied[pos + 1] || occupied[pos + 2] || occupied[pos + 3] ||
-					occupied[pos + 4] || occupied[pos + 5] || occupied[pos + 6] || occupied[pos + 7]) {
+				occupied[pos + 4] || occupied[pos + 5] || occupied[pos + 6] || occupied[pos + 7]) {
 				continue;
-			}
-			else {
+			} else {
 				occupied[pos] = true;
 				occupied[pos + 1] = true;
 				occupied[pos + 2] = true;
@@ -920,10 +859,9 @@ public abstract class MemorySegmentTestBase {
 			int pos = random.nextInt(pageSize - 7);
 
 			if (occupied[pos] || occupied[pos + 1] || occupied[pos + 2] || occupied[pos + 3] ||
-					occupied[pos + 4] || occupied[pos + 5] || occupied[pos + 6] || occupied[pos + 7]) {
+				occupied[pos + 4] || occupied[pos + 5] || occupied[pos + 6] || occupied[pos + 7]) {
 				continue;
-			}
-			else {
+			} else {
 				occupied[pos] = true;
 				occupied[pos + 1] = true;
 				occupied[pos + 2] = true;
@@ -947,96 +885,84 @@ public abstract class MemorySegmentTestBase {
 		try {
 			segment.putFloat(-1, 0.0f);
 			fail("IndexOutOfBoundsException expected");
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			assertTrue(e instanceof IndexOutOfBoundsException);
 		}
 
 		try {
 			segment.putFloat(pageSize, 0.0f);
 			fail("IndexOutOfBoundsException expected");
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			assertTrue(e instanceof IndexOutOfBoundsException);
 		}
 
 		try {
 			segment.putFloat(pageSize - 3, 0.0f);
 			fail("IndexOutOfBoundsException expected");
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			assertTrue(e instanceof IndexOutOfBoundsException);
 		}
 
 		try {
 			segment.putFloat(Integer.MIN_VALUE, 0.0f);
 			fail("IndexOutOfBoundsException expected");
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			assertTrue(e instanceof IndexOutOfBoundsException);
 		}
 
 		try {
 			segment.putFloat(Integer.MAX_VALUE, 0.0f);
 			fail("IndexOutOfBoundsException expected");
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			assertTrue(e instanceof IndexOutOfBoundsException);
 		}
 
 		try {
 			segment.putFloat(Integer.MAX_VALUE - 3, 0.0f);
 			fail("IndexOutOfBoundsException expected");
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			assertTrue(e instanceof IndexOutOfBoundsException);
 		}
 
 		try {
 			segment.getFloat(-1);
 			fail("IndexOutOfBoundsException expected");
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			assertTrue(e instanceof IndexOutOfBoundsException);
 		}
 
 		try {
 			segment.getFloat(pageSize);
 			fail("IndexOutOfBoundsException expected");
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			assertTrue(e instanceof IndexOutOfBoundsException);
 		}
 
 		try {
 			segment.getFloat(pageSize - 3);
 			fail("IndexOutOfBoundsException expected");
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			assertTrue(e instanceof IndexOutOfBoundsException);
 		}
 
 		try {
 			segment.getFloat(Integer.MIN_VALUE);
 			fail("IndexOutOfBoundsException expected");
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			assertTrue(e instanceof IndexOutOfBoundsException);
 		}
 
 		try {
 			segment.getFloat(Integer.MAX_VALUE);
 			fail("IndexOutOfBoundsException expected");
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			assertTrue(e instanceof IndexOutOfBoundsException);
 		}
 
 		try {
 			segment.getFloat(Integer.MAX_VALUE - 3);
 			fail("IndexOutOfBoundsException expected");
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			assertTrue(e instanceof IndexOutOfBoundsException);
 		}
 
@@ -1101,96 +1027,84 @@ public abstract class MemorySegmentTestBase {
 		try {
 			segment.putDouble(-1, 0.0);
 			fail("IndexOutOfBoundsException expected");
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			assertTrue(e instanceof IndexOutOfBoundsException);
 		}
 
 		try {
 			segment.putDouble(pageSize, 0.0);
 			fail("IndexOutOfBoundsException expected");
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			assertTrue(e instanceof IndexOutOfBoundsException);
 		}
 
 		try {
 			segment.putDouble(pageSize - 7, 0.0);
 			fail("IndexOutOfBoundsException expected");
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			assertTrue(e instanceof IndexOutOfBoundsException);
 		}
 
 		try {
 			segment.putDouble(Integer.MIN_VALUE, 0.0);
 			fail("IndexOutOfBoundsException expected");
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			assertTrue(e instanceof IndexOutOfBoundsException);
 		}
 
 		try {
 			segment.putDouble(Integer.MAX_VALUE, 0.0);
 			fail("IndexOutOfBoundsException expected");
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			assertTrue(e instanceof IndexOutOfBoundsException);
 		}
 
 		try {
 			segment.putDouble(Integer.MAX_VALUE - 7, 0.0);
 			fail("IndexOutOfBoundsException expected");
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			assertTrue(e instanceof IndexOutOfBoundsException);
 		}
 
 		try {
 			segment.getDouble(-1);
 			fail("IndexOutOfBoundsException expected");
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			assertTrue(e instanceof IndexOutOfBoundsException);
 		}
 
 		try {
 			segment.getDouble(pageSize);
 			fail("IndexOutOfBoundsException expected");
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			assertTrue(e instanceof IndexOutOfBoundsException);
 		}
 
 		try {
 			segment.getDouble(pageSize - 7);
 			fail("IndexOutOfBoundsException expected");
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			assertTrue(e instanceof IndexOutOfBoundsException);
 		}
 
 		try {
 			segment.getDouble(Integer.MIN_VALUE);
 			fail("IndexOutOfBoundsException expected");
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			assertTrue(e instanceof IndexOutOfBoundsException);
 		}
 
 		try {
 			segment.getDouble(Integer.MAX_VALUE);
 			fail("IndexOutOfBoundsException expected");
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			assertTrue(e instanceof IndexOutOfBoundsException);
 		}
 
 		try {
 			segment.getDouble(Integer.MAX_VALUE - 7);
 			fail("IndexOutOfBoundsException expected");
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			assertTrue(e instanceof IndexOutOfBoundsException);
 		}
 
@@ -1217,10 +1131,9 @@ public abstract class MemorySegmentTestBase {
 			int pos = random.nextInt(pageSize - 7);
 
 			if (occupied[pos] || occupied[pos + 1] || occupied[pos + 2] || occupied[pos + 3] ||
-					occupied[pos + 4] || occupied[pos + 5] || occupied[pos + 6] || occupied[pos + 7]) {
+				occupied[pos + 4] || occupied[pos + 5] || occupied[pos + 6] || occupied[pos + 7]) {
 				continue;
-			}
-			else {
+			} else {
 				occupied[pos] = true;
 				occupied[pos + 1] = true;
 				occupied[pos + 2] = true;
@@ -1241,10 +1154,9 @@ public abstract class MemorySegmentTestBase {
 			int pos = random.nextInt(pageSize - 7);
 
 			if (occupied[pos] || occupied[pos + 1] || occupied[pos + 2] || occupied[pos + 3] ||
-					occupied[pos + 4] || occupied[pos + 5] || occupied[pos + 6] || occupied[pos + 7]) {
+				occupied[pos + 4] || occupied[pos + 5] || occupied[pos + 6] || occupied[pos + 7]) {
 				continue;
-			}
-			else {
+			} else {
 				occupied[pos] = true;
 				occupied[pos + 1] = true;
 				occupied[pos + 2] = true;
@@ -1275,120 +1187,105 @@ public abstract class MemorySegmentTestBase {
 		try {
 			segment.put(-1, bytes);
 			fail("IndexOutOfBoundsException expected");
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			assertTrue(e instanceof IndexOutOfBoundsException);
 		}
 
 		try {
 			segment.put(-1, bytes, 4, 5);
 			fail("IndexOutOfBoundsException expected");
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			assertTrue(e instanceof IndexOutOfBoundsException);
 		}
 
 		try {
 			segment.put(Integer.MIN_VALUE, bytes);
 			fail("IndexOutOfBoundsException expected");
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			assertTrue(e instanceof IndexOutOfBoundsException);
 		}
 
 		try {
 			segment.put(Integer.MIN_VALUE, bytes, 4, 5);
 			fail("IndexOutOfBoundsException expected");
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			assertTrue(e instanceof IndexOutOfBoundsException);
 		}
 
 		try {
 			segment.put(pageSize, bytes);
 			fail("IndexOutOfBoundsException expected");
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			assertTrue(e instanceof IndexOutOfBoundsException);
 		}
 
 		try {
 			segment.put(pageSize, bytes, 6, 44);
 			fail("IndexOutOfBoundsException expected");
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			assertTrue(e instanceof IndexOutOfBoundsException);
 		}
 
 		try {
 			segment.put(pageSize - bytes.length + 1, bytes);
 			fail("IndexOutOfBoundsException expected");
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			assertTrue(e instanceof IndexOutOfBoundsException);
 		}
 
 		try {
 			segment.put(pageSize - 5, bytes, 3, 6);
 			fail("IndexOutOfBoundsException expected");
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			assertTrue(e instanceof IndexOutOfBoundsException);
 		}
 
 		try {
 			segment.put(Integer.MAX_VALUE, bytes);
 			fail("IndexOutOfBoundsException expected");
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			assertTrue(e instanceof IndexOutOfBoundsException);
 		}
 
 		try {
 			segment.put(Integer.MAX_VALUE, bytes, 10, 20);
 			fail("IndexOutOfBoundsException expected");
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			assertTrue(e instanceof IndexOutOfBoundsException);
 		}
 
 		try {
 			segment.put(Integer.MAX_VALUE - bytes.length + 1, bytes);
 			fail("IndexOutOfBoundsException expected");
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			assertTrue(e instanceof IndexOutOfBoundsException);
 		}
 
 		try {
 			segment.put(Integer.MAX_VALUE - 11, bytes, 11, 11);
 			fail("IndexOutOfBoundsException expected");
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			assertTrue(e instanceof IndexOutOfBoundsException);
 		}
 
 		try {
 			segment.put(3 * (pageSize / 4) + 1, bytes);
 			fail("IndexOutOfBoundsException expected");
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			assertTrue(e instanceof IndexOutOfBoundsException);
 		}
 
 		try {
 			segment.put(3 * (pageSize / 4) + 2, bytes, 0, bytes.length - 1);
 			fail("IndexOutOfBoundsException expected");
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			assertTrue(e instanceof IndexOutOfBoundsException);
 		}
 
 		try {
 			segment.put(7 * (pageSize / 8) + 1, bytes, 0, bytes.length / 2);
 			fail("IndexOutOfBoundsException expected");
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			assertTrue(e instanceof IndexOutOfBoundsException);
 		}
 
@@ -1397,40 +1294,35 @@ public abstract class MemorySegmentTestBase {
 		try {
 			segment.put(0, bytes, -1, 1);
 			fail("IndexOutOfBoundsException expected");
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			assertTrue(e instanceof IndexOutOfBoundsException);
 		}
 
 		try {
 			segment.put(0, bytes, -1, bytes.length + 1);
 			fail("IndexOutOfBoundsException expected");
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			assertTrue(e instanceof IndexOutOfBoundsException);
 		}
 
 		try {
 			segment.put(0, bytes, Integer.MIN_VALUE, bytes.length);
 			fail("IndexOutOfBoundsException expected");
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			assertTrue(e instanceof IndexOutOfBoundsException);
 		}
 
 		try {
 			segment.put(0, bytes, Integer.MAX_VALUE, bytes.length);
 			fail("IndexOutOfBoundsException expected");
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			assertTrue(e instanceof IndexOutOfBoundsException);
 		}
 
 		try {
 			segment.put(0, bytes, Integer.MAX_VALUE - bytes.length + 1, bytes.length);
 			fail("IndexOutOfBoundsException expected");
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			assertTrue(e instanceof IndexOutOfBoundsException);
 		}
 
@@ -1438,8 +1330,7 @@ public abstract class MemorySegmentTestBase {
 		try {
 			segment.put(-2, bytes, -1, bytes.length / 2);
 			fail("IndexOutOfBoundsException expected");
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			assertTrue(e instanceof IndexOutOfBoundsException);
 		}
 	}
@@ -1455,120 +1346,105 @@ public abstract class MemorySegmentTestBase {
 		try {
 			segment.get(-1, bytes);
 			fail("IndexOutOfBoundsException expected");
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			assertTrue(e instanceof IndexOutOfBoundsException);
 		}
 
 		try {
 			segment.get(-1, bytes, 4, 5);
 			fail("IndexOutOfBoundsException expected");
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			assertTrue(e instanceof IndexOutOfBoundsException);
 		}
 
 		try {
 			segment.get(Integer.MIN_VALUE, bytes);
 			fail("IndexOutOfBoundsException expected");
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			assertTrue(e instanceof IndexOutOfBoundsException);
 		}
 
 		try {
 			segment.get(Integer.MIN_VALUE, bytes, 4, 5);
 			fail("IndexOutOfBoundsException expected");
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			assertTrue(e instanceof IndexOutOfBoundsException);
 		}
 
 		try {
 			segment.get(pageSize, bytes);
 			fail("IndexOutOfBoundsException expected");
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			assertTrue(e instanceof IndexOutOfBoundsException);
 		}
 
 		try {
 			segment.get(pageSize, bytes, 6, 44);
 			fail("IndexOutOfBoundsException expected");
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			assertTrue(e instanceof IndexOutOfBoundsException);
 		}
 
 		try {
 			segment.get(pageSize - bytes.length + 1, bytes);
 			fail("IndexOutOfBoundsException expected");
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			assertTrue(e instanceof IndexOutOfBoundsException);
 		}
 
 		try {
 			segment.get(pageSize - 5, bytes, 3, 6);
 			fail("IndexOutOfBoundsException expected");
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			assertTrue(e instanceof IndexOutOfBoundsException);
 		}
 
 		try {
 			segment.get(Integer.MAX_VALUE, bytes);
 			fail("IndexOutOfBoundsException expected");
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			assertTrue(e instanceof IndexOutOfBoundsException);
 		}
 
 		try {
 			segment.get(Integer.MAX_VALUE, bytes, 10, 20);
 			fail("IndexOutOfBoundsException expected");
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			assertTrue(e instanceof IndexOutOfBoundsException);
 		}
 
 		try {
 			segment.get(Integer.MAX_VALUE - bytes.length + 1, bytes);
 			fail("IndexOutOfBoundsException expected");
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			assertTrue(e instanceof IndexOutOfBoundsException);
 		}
 
 		try {
 			segment.get(Integer.MAX_VALUE - 11, bytes, 11, 11);
 			fail("IndexOutOfBoundsException expected");
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			assertTrue(e instanceof IndexOutOfBoundsException);
 		}
 
 		try {
 			segment.get(3 * (pageSize / 4) + 1, bytes);
 			fail("IndexOutOfBoundsException expected");
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			assertTrue(e instanceof IndexOutOfBoundsException);
 		}
 
 		try {
 			segment.get(3 * (pageSize / 4) + 2, bytes, 0, bytes.length - 1);
 			fail("IndexOutOfBoundsException expected");
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			assertTrue(e instanceof IndexOutOfBoundsException);
 		}
 
 		try {
 			segment.get(7 * (pageSize / 8) + 1, bytes, 0, bytes.length / 2);
 			fail("IndexOutOfBoundsException expected");
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			assertTrue(e instanceof IndexOutOfBoundsException);
 		}
 
@@ -1577,40 +1453,35 @@ public abstract class MemorySegmentTestBase {
 		try {
 			segment.get(0, bytes, -1, 1);
 			fail("IndexOutOfBoundsException expected");
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			assertTrue(e instanceof IndexOutOfBoundsException);
 		}
 
 		try {
 			segment.get(0, bytes, -1, bytes.length + 1);
 			fail("IndexOutOfBoundsException expected");
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			assertTrue(e instanceof IndexOutOfBoundsException);
 		}
 
 		try {
 			segment.get(0, bytes, Integer.MIN_VALUE, bytes.length);
 			fail("IndexOutOfBoundsException expected");
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			assertTrue(e instanceof IndexOutOfBoundsException);
 		}
 
 		try {
 			segment.get(0, bytes, Integer.MAX_VALUE, bytes.length);
 			fail("IndexOutOfBoundsException expected");
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			assertTrue(e instanceof IndexOutOfBoundsException);
 		}
 
 		try {
 			segment.get(0, bytes, Integer.MAX_VALUE - bytes.length + 1, bytes.length);
 			fail("IndexOutOfBoundsException expected");
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			assertTrue(e instanceof IndexOutOfBoundsException);
 		}
 
@@ -1618,8 +1489,7 @@ public abstract class MemorySegmentTestBase {
 		try {
 			segment.get(-2, bytes, -1, bytes.length / 2);
 			fail("IndexOutOfBoundsException expected");
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			assertTrue(e instanceof IndexOutOfBoundsException);
 		}
 	}
@@ -1657,13 +1527,13 @@ public abstract class MemorySegmentTestBase {
 
 			for (int i = 0; i < 16; i++) {
 				segment.put(i * (pageSize / 16), expected, i * (pageSize / 16),
-						pageSize / 16);
+					pageSize / 16);
 			}
 
 			byte[] actual = new byte[pageSize];
 			for (int i = 0; i < 16; i++) {
 				segment.get(i * (pageSize / 16), actual, i * (pageSize / 16),
-						pageSize / 16);
+					pageSize / 16);
 			}
 
 			assertArrayEquals(expected, actual);
@@ -1782,40 +1652,35 @@ public abstract class MemorySegmentTestBase {
 			try {
 				seg.get(out, -1, segmentSize / 2);
 				fail("IndexOutOfBoundsException expected");
-			}
-			catch (Exception e) {
+			} catch (Exception e) {
 				assertTrue(e instanceof IndexOutOfBoundsException);
 			}
 
 			try {
 				seg.get(out, segmentSize, segmentSize / 2);
 				fail("IndexOutOfBoundsException expected");
-			}
-			catch (Exception e) {
+			} catch (Exception e) {
 				assertTrue(e instanceof IndexOutOfBoundsException);
 			}
 
 			try {
 				seg.get(out, -segmentSize, segmentSize / 2);
 				fail("IndexOutOfBoundsException expected");
-			}
-			catch (Exception e) {
+			} catch (Exception e) {
 				assertTrue(e instanceof IndexOutOfBoundsException);
 			}
 
 			try {
 				seg.get(out, Integer.MIN_VALUE, segmentSize / 2);
 				fail("IndexOutOfBoundsException expected");
-			}
-			catch (Exception e) {
+			} catch (Exception e) {
 				assertTrue(e instanceof IndexOutOfBoundsException);
 			}
 
 			try {
 				seg.get(out, Integer.MAX_VALUE, segmentSize / 2);
 				fail("IndexOutOfBoundsException expected");
-			}
-			catch (Exception e) {
+			} catch (Exception e) {
 				assertTrue(e instanceof IndexOutOfBoundsException);
 			}
 		}
@@ -1827,40 +1692,35 @@ public abstract class MemorySegmentTestBase {
 			try {
 				seg.put(in, -1, segmentSize / 2);
 				fail("IndexOutOfBoundsException expected");
-			}
-			catch (Exception e) {
+			} catch (Exception e) {
 				assertTrue(e instanceof IndexOutOfBoundsException);
 			}
 
 			try {
 				seg.put(in, segmentSize, segmentSize / 2);
 				fail("IndexOutOfBoundsException expected");
-			}
-			catch (Exception e) {
+			} catch (Exception e) {
 				assertTrue(e instanceof IndexOutOfBoundsException);
 			}
 
 			try {
 				seg.put(in, -segmentSize, segmentSize / 2);
 				fail("IndexOutOfBoundsException expected");
-			}
-			catch (Exception e) {
+			} catch (Exception e) {
 				assertTrue(e instanceof IndexOutOfBoundsException);
 			}
 
 			try {
 				seg.put(in, Integer.MIN_VALUE, segmentSize / 2);
 				fail("IndexOutOfBoundsException expected");
-			}
-			catch (Exception e) {
+			} catch (Exception e) {
 				assertTrue(e instanceof IndexOutOfBoundsException);
 			}
 
 			try {
 				seg.put(in, Integer.MAX_VALUE, segmentSize / 2);
 				fail("IndexOutOfBoundsException expected");
-			}
-			catch (Exception e) {
+			} catch (Exception e) {
 				assertTrue(e instanceof IndexOutOfBoundsException);
 			}
 		}
@@ -1880,6 +1740,7 @@ public abstract class MemorySegmentTestBase {
 		DataOutputStream out = new DataOutputStream(new OutputStream() {
 
 			int bytesSoFar = 0;
+
 			@Override
 			public void write(int b) throws IOException {
 				bytesSoFar++;
@@ -1899,8 +1760,7 @@ public abstract class MemorySegmentTestBase {
 				pos += len;
 			}
 			fail("Should fail with an IOException");
-		}
-		catch (IOException e) {
+		} catch (IOException e) {
 			// expected
 		}
 
@@ -1915,8 +1775,7 @@ public abstract class MemorySegmentTestBase {
 				pos += len;
 			}
 			fail("Should fail with an EOFException");
-		}
-		catch (EOFException e) {
+		} catch (EOFException e) {
 			// expected
 		}
 	}
@@ -1938,8 +1797,8 @@ public abstract class MemorySegmentTestBase {
 		seg.put(0, bytes);
 
 		ByteBuffer target = directBuffer ?
-				ByteBuffer.allocateDirect(3 * pageSize) :
-				ByteBuffer.allocate(3 * pageSize);
+			ByteBuffer.allocateDirect(3 * pageSize) :
+			ByteBuffer.allocate(3 * pageSize);
 		target.position(2 * pageSize);
 
 		// transfer the segment in chunks into the byte buffer
@@ -1973,11 +1832,8 @@ public abstract class MemorySegmentTestBase {
 	 * Tries to write into a {@link ByteBuffer} instance which is read-only. This should fail with a
 	 * {@link ReadOnlyBufferException}.
 	 *
-	 * @param directBuffer
-	 * 		whether the {@link ByteBuffer} instance should be a direct byte buffer or not
-	 *
-	 * @throws ReadOnlyBufferException
-	 * 		expected exception due to writing to a read-only buffer
+	 * @param directBuffer whether the {@link ByteBuffer} instance should be a direct byte buffer or not
+	 * @throws ReadOnlyBufferException expected exception due to writing to a read-only buffer
 	 */
 	private void testByteBufferGetReadOnly(boolean directBuffer) throws ReadOnlyBufferException {
 		MemorySegment seg = createSegment(pageSize);
@@ -2043,8 +1899,8 @@ public abstract class MemorySegmentTestBase {
 		seg.put(0, bytes);
 
 		ByteBuffer target = directBuffer ?
-				ByteBuffer.allocateDirect(pageSize + 49) :
-				ByteBuffer.allocate(pageSize + 49);
+			ByteBuffer.allocateDirect(pageSize + 49) :
+			ByteBuffer.allocate(pageSize + 49);
 
 		target.position(19).limit(19 + pageSize);
 
@@ -2078,8 +1934,8 @@ public abstract class MemorySegmentTestBase {
 		random.nextBytes(bytes);
 
 		ByteBuffer source = directBuffer ?
-				ByteBuffer.allocateDirect(pageSize + 49) :
-				ByteBuffer.allocate(pageSize + 49);
+			ByteBuffer.allocateDirect(pageSize + 49) :
+			ByteBuffer.allocate(pageSize + 49);
 
 		source.put(bytes);
 		source.position(19).limit(19 + pageSize);
@@ -2114,30 +1970,30 @@ public abstract class MemorySegmentTestBase {
 	public void testByteBufferOutOfBounds() {
 		final int bbCapacity = pageSize / 10;
 
-		final int[] validOffsets = { 0, 1, pageSize / 10 * 9 };
-		final int[] invalidOffsets = { -1, pageSize + 1, -pageSize, Integer.MAX_VALUE, Integer.MIN_VALUE };
+		final int[] validOffsets = {0, 1, pageSize / 10 * 9};
+		final int[] invalidOffsets = {-1, pageSize + 1, -pageSize, Integer.MAX_VALUE, Integer.MIN_VALUE};
 
-		final int[] validLengths = { 0, 1, bbCapacity, pageSize };
-		final int[] invalidLengths = { -1, -pageSize, Integer.MAX_VALUE, Integer.MIN_VALUE };
+		final int[] validLengths = {0, 1, bbCapacity, pageSize};
+		final int[] invalidLengths = {-1, -pageSize, Integer.MAX_VALUE, Integer.MIN_VALUE};
 
 		final MemorySegment seg = createSegment(pageSize);
 
-		for (ByteBuffer bb : new ByteBuffer[] {
-						ByteBuffer.allocate(bbCapacity),
-						ByteBuffer.allocateDirect(bbCapacity) }) {
+		for (ByteBuffer bb : new ByteBuffer[]{
+			ByteBuffer.allocate(bbCapacity),
+			ByteBuffer.allocateDirect(bbCapacity)}) {
 			for (int off : validOffsets) {
 				for (int len : invalidLengths) {
 					try {
 						seg.put(off, bb, len);
 						fail("should fail with an IndexOutOfBoundsException");
+					} catch (IndexOutOfBoundsException | BufferUnderflowException ignored) {
 					}
-					catch (IndexOutOfBoundsException | BufferUnderflowException ignored) {}
 
 					try {
 						seg.get(off, bb, len);
 						fail("should fail with an IndexOutOfBoundsException");
+					} catch (IndexOutOfBoundsException | BufferOverflowException ignored) {
 					}
-					catch (IndexOutOfBoundsException | BufferOverflowException ignored) {}
 
 					// position/limit may not have changed
 					assertEquals(0, bb.position());
@@ -2150,14 +2006,14 @@ public abstract class MemorySegmentTestBase {
 					try {
 						seg.put(off, bb, len);
 						fail("should fail with an IndexOutOfBoundsException");
+					} catch (IndexOutOfBoundsException | BufferUnderflowException ignored) {
 					}
-					catch (IndexOutOfBoundsException | BufferUnderflowException ignored) {}
 
 					try {
 						seg.get(off, bb, len);
 						fail("should fail with an IndexOutOfBoundsException");
+					} catch (IndexOutOfBoundsException | BufferOverflowException ignored) {
 					}
-					catch (IndexOutOfBoundsException | BufferOverflowException ignored) {}
 
 					// position/limit may not have changed
 					assertEquals(0, bb.position());
@@ -2171,14 +2027,14 @@ public abstract class MemorySegmentTestBase {
 						try {
 							seg.put(off, bb, len);
 							fail("should fail with an IndexOutOfBoundsException");
+						} catch (IndexOutOfBoundsException | BufferUnderflowException ignored) {
 						}
-						catch (IndexOutOfBoundsException | BufferUnderflowException ignored) {}
 
 						try {
 							seg.get(off, bb, len);
 							fail("should fail with an IndexOutOfBoundsException");
+						} catch (IndexOutOfBoundsException | BufferOverflowException ignored) {
 						}
-						catch (IndexOutOfBoundsException | BufferOverflowException ignored) {}
 
 						// position/limit may not have changed
 						assertEquals(0, bb.position());
@@ -2199,8 +2055,8 @@ public abstract class MemorySegmentTestBase {
 		try {
 			seg.get(pageSize / 5, bb, pageSize / 10 + 2);
 			fail("should fail with an exception");
+		} catch (BufferOverflowException ignored) {
 		}
-		catch (BufferOverflowException ignored) {}
 
 		// position / limit should not have been modified
 		assertEquals(0, bb.position());
@@ -2209,8 +2065,8 @@ public abstract class MemorySegmentTestBase {
 		try {
 			seg.put(pageSize / 5, bb, pageSize / 10 + 2);
 			fail("should fail with an exception");
+		} catch (BufferUnderflowException ignored) {
 		}
-		catch (BufferUnderflowException ignored) {}
 
 		// position / limit should not have been modified
 		assertEquals(0, bb.position());
@@ -2224,8 +2080,8 @@ public abstract class MemorySegmentTestBase {
 		try {
 			seg.get(20, bb, bb.capacity() / 3 + 3);
 			fail("should fail with an exception");
+		} catch (BufferOverflowException ignored) {
 		}
-		catch (BufferOverflowException ignored) {}
 
 		// position / limit should not have been modified
 		assertEquals(pos, bb.position());
@@ -2234,8 +2090,8 @@ public abstract class MemorySegmentTestBase {
 		try {
 			seg.put(20, bb, bb.capacity() / 3 + 3);
 			fail("should fail with an exception");
+		} catch (BufferUnderflowException ignored) {
 		}
-		catch (BufferUnderflowException ignored) {}
 
 		// position / limit should not have been modified
 		assertEquals(pos, bb.position());
@@ -2273,14 +2129,13 @@ public abstract class MemorySegmentTestBase {
 			int pos2 = random.nextInt(bytes2.length);
 
 			int len = Math.min(Math.min(bytes1.length - pos1, bytes2.length - pos2),
-					random.nextInt(pageSize / 50));
+				random.nextInt(pageSize / 50));
 
 			int cmp = seg1.compare(seg2, pos1, pos2, len);
 
 			if (pos1 < pos2 - shift) {
 				assertTrue(cmp <= 0);
-			}
-			else {
+			} else {
 				assertTrue(cmp >= 0);
 			}
 		}
@@ -2288,8 +2143,8 @@ public abstract class MemorySegmentTestBase {
 
 	@Test
 	public void testCompareBytesWithDifferentLength() {
-		final byte[] bytes1 = new byte[] {'a', 'b', 'c'};
-		final byte[] bytes2 = new byte[] {'a', 'b', 'c', 'd'};
+		final byte[] bytes1 = new byte[]{'a', 'b', 'c'};
+		final byte[] bytes2 = new byte[]{'a', 'b', 'c', 'd'};
 
 		MemorySegment seg1 = createSegment(4);
 		MemorySegment seg2 = createSegment(4);
@@ -2347,24 +2202,21 @@ public abstract class MemorySegmentTestBase {
 		try {
 			seg.get(0);
 			fail("Expecting an IllegalStateException");
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			assertTrue(e instanceof IllegalStateException || e instanceof NullPointerException);
 		}
 
 		try {
 			seg.get(Integer.MAX_VALUE);
 			fail("Expecting an IllegalStateException");
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			assertTrue(e instanceof IllegalStateException || e instanceof NullPointerException);
 		}
 
 		try {
 			seg.get(Integer.MIN_VALUE);
 			fail("Expecting an IllegalStateException");
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			assertTrue(e instanceof IllegalStateException || e instanceof NullPointerException);
 		}
 
@@ -2372,24 +2224,21 @@ public abstract class MemorySegmentTestBase {
 		try {
 			seg.getLong(0);
 			fail("Expecting an IllegalStateException");
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			assertTrue(e instanceof IllegalStateException || e instanceof NullPointerException);
 		}
 
 		try {
 			seg.getLong(Integer.MAX_VALUE);
 			fail("Expecting an IllegalStateException");
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			assertTrue(e instanceof IllegalStateException || e instanceof NullPointerException);
 		}
 
 		try {
 			seg.getLong(Integer.MIN_VALUE);
 			fail("Expecting an IllegalStateException");
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			assertTrue(e instanceof IllegalStateException || e instanceof NullPointerException);
 		}
 	}
@@ -2430,20 +2279,20 @@ public abstract class MemorySegmentTestBase {
 		try {
 			seg.wrap(-1, 20);
 			fail("should throw an exception");
+		} catch (IndexOutOfBoundsException | IllegalArgumentException ignored) {
 		}
-		catch (IndexOutOfBoundsException | IllegalArgumentException ignored) {}
 
 		try {
 			seg.wrap(10, -20);
 			fail("should throw an exception");
+		} catch (IndexOutOfBoundsException | IllegalArgumentException ignored) {
 		}
-		catch (IndexOutOfBoundsException | IllegalArgumentException ignored) {}
 
 		try {
 			seg.wrap(10, 1024);
 			fail("should throw an exception");
+		} catch (IndexOutOfBoundsException | IllegalArgumentException ignored) {
 		}
-		catch (IndexOutOfBoundsException | IllegalArgumentException ignored) {}
 
 		// after freeing, no wrapping should be possible any more.
 		seg.free();
@@ -2451,8 +2300,7 @@ public abstract class MemorySegmentTestBase {
 		try {
 			seg.wrap(13, 47);
 			fail("should fail with an exception");
-		}
-		catch (IllegalStateException e) {
+		} catch (IllegalStateException e) {
 			// expected
 		}
 
@@ -2498,10 +2346,10 @@ public abstract class MemorySegmentTestBase {
 	// ------------------------------------------------------------------------
 
 	@Parameterized.Parameters(name = "segment-size = {0}")
-	public static Collection<Object[]> executionModes(){
+	public static Collection<Object[]> executionModes() {
 		return Arrays.asList(
-				new Object[] { 32 * 1024 },
-				new Object[] { 4 * 1024 },
-				new Object[] { 512 * 1024 });
+			new Object[]{32 * 1024},
+			new Object[]{4 * 1024},
+			new Object[]{512 * 1024});
 	}
 }

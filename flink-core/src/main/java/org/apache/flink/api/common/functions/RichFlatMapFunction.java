@@ -27,7 +27,7 @@ import org.apache.flink.util.Collector;
  * {@link RichFunction#open(org.apache.flink.configuration.Configuration)} and
  * {@link RichFunction#close()}.
  *
- * @param <IN> Type of the input elements.
+ * @param <IN>  Type of the input elements.
  * @param <OUT> Type of the returned elements.
  */
 @Public

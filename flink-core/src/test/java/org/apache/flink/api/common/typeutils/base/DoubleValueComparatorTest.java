@@ -36,7 +36,7 @@ public class DoubleValueComparatorTest extends ComparatorTestBase<DoubleValue> {
 	protected TypeSerializer<DoubleValue> createSerializer() {
 		return new DoubleValueSerializer();
 	}
-	
+
 	@Override
 	protected DoubleValue[] getSortedTestData() {
 		Random rnd = new Random(874597969123412338L);

@@ -28,9 +28,9 @@ import org.apache.flink.types.FloatValue;
  */
 @PublicEvolving
 public class FloatValueParser extends FieldParser<FloatValue> {
-	
+
 	private FloatValue result;
-	
+
 	@Override
 	public int parseField(byte[] bytes, int startPos, int limit, byte[] delimiter, FloatValue reusable) {
 		final int endPos = nextStringEndPos(bytes, startPos, limit, delimiter);
@@ -39,7 +39,7 @@ public class FloatValueParser extends FieldParser<FloatValue> {
 		}
 
 		if (endPos > startPos &&
-				(Character.isWhitespace(bytes[startPos]) || Character.isWhitespace(bytes[endPos - 1]))) {
+			(Character.isWhitespace(bytes[startPos]) || Character.isWhitespace(bytes[endPos - 1]))) {
 			setErrorState(ParseErrorState.NUMERIC_VALUE_ILLEGAL_CHARACTER);
 			return -1;
 		}
@@ -50,13 +50,12 @@ public class FloatValueParser extends FieldParser<FloatValue> {
 			reusable.setValue(value);
 			this.result = reusable;
 			return (endPos == limit) ? limit : endPos + delimiter.length;
-		}
-		catch (NumberFormatException e) {
+		} catch (NumberFormatException e) {
 			setErrorState(ParseErrorState.NUMERIC_VALUE_FORMAT_ERROR);
 			return -1;
 		}
 	}
-	
+
 	@Override
 	public FloatValue createValue() {
 		return new FloatValue();

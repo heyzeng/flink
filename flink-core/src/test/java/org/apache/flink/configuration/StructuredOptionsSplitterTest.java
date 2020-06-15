@@ -107,7 +107,8 @@ public class StructuredOptionsSplitterTest {
 	private static class TestSpec {
 		private final String string;
 		private final char delimiter;
-		@Nullable private String expectedException = null;
+		@Nullable
+		private String expectedException = null;
 		private List<String> expectedSplits = null;
 
 		private TestSpec(String string, char delimiter) {

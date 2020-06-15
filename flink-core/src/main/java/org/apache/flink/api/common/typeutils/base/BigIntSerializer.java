@@ -51,7 +51,7 @@ public final class BigIntSerializer extends TypeSerializerSingleton<BigInteger> 
 	public BigInteger copy(BigInteger from) {
 		return from;
 	}
-	
+
 	@Override
 	public BigInteger copy(BigInteger from, BigInteger reuse) {
 		return from;
@@ -71,7 +71,7 @@ public final class BigIntSerializer extends TypeSerializerSingleton<BigInteger> 
 	public BigInteger deserialize(DataInputView source) throws IOException {
 		return readBigInteger(source);
 	}
-	
+
 	@Override
 	public BigInteger deserialize(BigInteger reuse, DataInputView source) throws IOException {
 		return readBigInteger(source);
@@ -97,12 +97,10 @@ public final class BigIntSerializer extends TypeSerializerSingleton<BigInteger> 
 		else if (record == BigInteger.ZERO) {
 			target.writeInt(1);
 			return;
-		}
-		else if (record == BigInteger.ONE) {
+		} else if (record == BigInteger.ONE) {
 			target.writeInt(2);
 			return;
-		}
-		else if (record == BigInteger.TEN) {
+		} else if (record == BigInteger.TEN) {
 			target.writeInt(3);
 			return;
 		}

@@ -28,8 +28,8 @@ import org.apache.flink.api.java.functions.FunctionAnnotation.ForwardedFields;
 import org.apache.flink.util.Collector;
 
 /**
- * @see FilterOperatorBase
  * @param <T>
+ * @see FilterOperatorBase
  */
 @Internal
 @ForwardedFields("*")
@@ -40,8 +40,8 @@ public class PlanFilterOperator<T> extends FilterOperatorBase<T, FlatMapFunction
 	}
 
 	/**
-	 * @see FlatMapFunction
 	 * @param <T>
+	 * @see FlatMapFunction
 	 */
 	public static final class FlatMapFilter<T> extends WrappingFunction<FilterFunction<T>>
 		implements FlatMapFunction<T, T> {

@@ -58,8 +58,7 @@ public class CsvOutputFormatTest {
 			csvOutputFormat.setAllowNullValues(true);
 			csvOutputFormat.open(0, 1);
 			csvOutputFormat.writeRecord(new Tuple3<String, String, Integer>("One", null, 8));
-		}
-		finally {
+		} finally {
 			csvOutputFormat.close();
 		}
 
@@ -84,8 +83,7 @@ public class CsvOutputFormatTest {
 				// expected
 			}
 
-		}
-		finally {
+		} finally {
 			csvOutputFormat.close();
 		}
 	}

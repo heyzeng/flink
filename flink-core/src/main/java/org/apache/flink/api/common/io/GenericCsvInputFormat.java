@@ -40,15 +40,15 @@ import static org.apache.flink.util.Preconditions.checkNotNull;
 public abstract class GenericCsvInputFormat<OT> extends DelimitedInputFormat<OT> {
 
 	private static final long serialVersionUID = 1L;
-	
-	
+
+
 	private static final Logger LOG = LoggerFactory.getLogger(GenericCsvInputFormat.class);
 
 	private static final Class<?>[] EMPTY_TYPES = new Class<?>[0];
-	
+
 	private static final boolean[] EMPTY_INCLUDED = new boolean[0];
-	
-	private static final byte[] DEFAULT_FIELD_DELIMITER = new byte[] {','};
+
+	private static final byte[] DEFAULT_FIELD_DELIMITER = new byte[]{','};
 
 	private static final byte BACKSLASH = 92;
 
@@ -65,14 +65,14 @@ public abstract class GenericCsvInputFormat<OT> extends DelimitedInputFormat<OT>
 
 	protected transient int commentCount;
 	protected transient int invalidLineCount;
-	
-	
+
+
 	// --------------------------------------------------------------------------------------------
 	//  The configuration parameters. Configured on the instance and serialized to be shipped.
 	// --------------------------------------------------------------------------------------------
-	
+
 	private Class<?>[] fieldTypes = EMPTY_TYPES;
-	
+
 	protected boolean[] fieldIncluded = EMPTY_INCLUDED;
 
 	// The byte representation of the delimiter is updated consistent with
@@ -81,7 +81,7 @@ public abstract class GenericCsvInputFormat<OT> extends DelimitedInputFormat<OT>
 	private String fieldDelimString = null;
 
 	private boolean lenient;
-	
+
 	private boolean skipFirstLineAsHeader;
 
 	private boolean quotedStringParsing = false;
@@ -116,7 +116,7 @@ public abstract class GenericCsvInputFormat<OT> extends DelimitedInputFormat<OT>
 	public int getNumberOfFieldsTotal() {
 		return this.fieldIncluded.length;
 	}
-	
+
 	public int getNumberOfNonNullFields() {
 		return this.fieldTypes.length;
 	}
@@ -167,7 +167,7 @@ public abstract class GenericCsvInputFormat<OT> extends DelimitedInputFormat<OT>
 	public void setLenient(boolean lenient) {
 		this.lenient = lenient;
 	}
-	
+
 	public boolean isSkippingFirstLineAsHeader() {
 		return skipFirstLineAsHeader;
 	}
@@ -178,48 +178,47 @@ public abstract class GenericCsvInputFormat<OT> extends DelimitedInputFormat<OT>
 
 	public void enableQuotedStringParsing(char quoteCharacter) {
 		quotedStringParsing = true;
-		this.quoteCharacter = (byte)quoteCharacter;
+		this.quoteCharacter = (byte) quoteCharacter;
 	}
-	
+
 	// --------------------------------------------------------------------------------------------
-	
+
 	protected FieldParser<?>[] getFieldParsers() {
 		return this.fieldParsers;
 	}
-	
+
 	protected Class<?>[] getGenericFieldTypes() {
 		// check if we are dense, i.e., we read all fields
 		if (this.fieldIncluded.length == this.fieldTypes.length) {
 			return this.fieldTypes;
-		}
-		else {
+		} else {
 			// sparse type array which we made dense for internal book keeping.
 			// create a sparse copy to return
 			Class<?>[] types = new Class<?>[this.fieldIncluded.length];
-			
+
 			for (int i = 0, k = 0; i < this.fieldIncluded.length; i++) {
 				if (this.fieldIncluded[i]) {
 					types[i] = this.fieldTypes[k++];
 				}
 			}
-			
+
 			return types;
 		}
 	}
-	
-	
-	protected void setFieldTypesGeneric(Class<?> ... fieldTypes) {
+
+
+	protected void setFieldTypesGeneric(Class<?>... fieldTypes) {
 		if (fieldTypes == null) {
 			throw new IllegalArgumentException("Field types must not be null.");
 		}
-		
+
 		this.fieldIncluded = new boolean[fieldTypes.length];
 		ArrayList<Class<?>> types = new ArrayList<Class<?>>();
-		
+
 		// check if we support parsers for these types
 		for (int i = 0; i < fieldTypes.length; i++) {
 			Class<?> type = fieldTypes[i];
-			
+
 			if (type != null) {
 				if (FieldParser.getParserForType(type) == null) {
 					throw new IllegalArgumentException("The type '" + type.getName() + "' is not supported for the CSV input format.");
@@ -231,7 +230,7 @@ public abstract class GenericCsvInputFormat<OT> extends DelimitedInputFormat<OT>
 
 		this.fieldTypes = types.toArray(new Class<?>[types.size()]);
 	}
-	
+
 	protected void setFieldsGeneric(int[] sourceFieldIndices, Class<?>[] fieldTypes) {
 		checkNotNull(sourceFieldIndices);
 		checkNotNull(fieldTypes);
@@ -264,7 +263,7 @@ public abstract class GenericCsvInputFormat<OT> extends DelimitedInputFormat<OT>
 
 		this.fieldTypes = types.toArray(new Class<?>[types.size()]);
 	}
-	
+
 	protected void setFieldsGeneric(boolean[] includedMask, Class<?>[] fieldTypes) {
 		checkNotNull(includedMask);
 		checkNotNull(fieldTypes);
@@ -300,14 +299,14 @@ public abstract class GenericCsvInputFormat<OT> extends DelimitedInputFormat<OT>
 	// --------------------------------------------------------------------------------------------
 	//  Runtime methods
 	// --------------------------------------------------------------------------------------------
-	
+
 	@Override
 	public void open(FileInputSplit split) throws IOException {
 		super.open(split);
 
 		// instantiate the parsers
 		FieldParser<?>[] parsers = new FieldParser<?>[fieldTypes.length];
-		
+
 		for (int i = 0; i < fieldTypes.length; i++) {
 			if (fieldTypes[i] != null) {
 				Class<? extends FieldParser<?>> parserType = FieldParser.getParserForType(fieldTypes[i]);
@@ -320,9 +319,9 @@ public abstract class GenericCsvInputFormat<OT> extends DelimitedInputFormat<OT>
 				p.setCharset(getCharset());
 				if (this.quotedStringParsing) {
 					if (p instanceof StringParser) {
-						((StringParser)p).enableQuotedStringParsing(this.quoteCharacter);
+						((StringParser) p).enableQuotedStringParsing(this.quoteCharacter);
 					} else if (p instanceof StringValueParser) {
-						((StringValueParser)p).enableQuotedStringParsing(this.quoteCharacter);
+						((StringValueParser) p).enableQuotedStringParsing(this.quoteCharacter);
 					}
 				}
 
@@ -330,7 +329,7 @@ public abstract class GenericCsvInputFormat<OT> extends DelimitedInputFormat<OT>
 			}
 		}
 		this.fieldParsers = parsers;
-		
+
 		// skip the first line, if we are at the beginning of a file and have the option set
 		if (this.skipFirstLineAsHeader && this.splitStart == 0) {
 			readLine(); // read and ignore
@@ -341,27 +340,27 @@ public abstract class GenericCsvInputFormat<OT> extends DelimitedInputFormat<OT>
 	public void close() throws IOException {
 		if (this.invalidLineCount > 0) {
 			if (LOG.isWarnEnabled()) {
-				LOG.warn("In file \"" + currentSplit.getPath() + "\" (split start: " + this.splitStart + ") " + this.invalidLineCount +" invalid line(s) were skipped.");
+				LOG.warn("In file \"" + currentSplit.getPath() + "\" (split start: " + this.splitStart + ") " + this.invalidLineCount + " invalid line(s) were skipped.");
 			}
 		}
 
 		if (this.commentCount > 0) {
 			if (LOG.isInfoEnabled()) {
-				LOG.info("In file \"" + currentSplit.getPath() + "\" (split start: " + this.splitStart + ") " + this.commentCount +" comment line(s) were skipped.");
+				LOG.info("In file \"" + currentSplit.getPath() + "\" (split start: " + this.splitStart + ") " + this.commentCount + " comment line(s) were skipped.");
 			}
 		}
 		super.close();
 	}
 
 	protected boolean parseRecord(Object[] holders, byte[] bytes, int offset, int numBytes) throws ParseException {
-		
+
 		boolean[] fieldIncluded = this.fieldIncluded;
-		
+
 		int startPos = offset;
 		final int limit = offset + numBytes;
-		
+
 		for (int field = 0, output = 0; field < fieldIncluded.length; field++) {
-			
+
 			// check valid start position
 			if (startPos > limit || (startPos == limit && field != fieldIncluded.length - 1)) {
 				if (lenient) {
@@ -387,14 +386,13 @@ public abstract class GenericCsvInputFormat<OT> extends DelimitedInputFormat<OT>
 					} else {
 						String lineAsString = new String(bytes, offset, numBytes, getCharset());
 						throw new ParseException("Line could not be parsed: '" + lineAsString + "'\n"
-								+ "ParserError " + parser.getErrorState() + " \n"
-								+ "Expect field types: "+fieldTypesToString() + " \n"
-								+ "in file: " + currentSplit.getPath());
+							+ "ParserError " + parser.getErrorState() + " \n"
+							+ "Expect field types: " + fieldTypesToString() + " \n"
+							+ "in file: " + currentSplit.getPath());
 					}
-				}
-				else if (startPos == limit
-						&& field != fieldIncluded.length - 1
-						&& !FieldParser.endsWithDelimiter(bytes, startPos - 1, fieldDelim)) {
+				} else if (startPos == limit
+					&& field != fieldIncluded.length - 1
+					&& !FieldParser.endsWithDelimiter(bytes, startPos - 1, fieldDelim)) {
 					// We are at the end of the record, but not all fields have been read
 					// and the end is not a field delimiter indicating an empty last field.
 					if (lenient) {
@@ -404,23 +402,21 @@ public abstract class GenericCsvInputFormat<OT> extends DelimitedInputFormat<OT>
 					}
 				}
 				output++;
-			}
-			else {
+			} else {
 				// skip field
 				startPos = skipFields(bytes, startPos, limit, this.fieldDelim);
 				if (startPos < 0) {
 					if (!lenient) {
 						String lineAsString = new String(bytes, offset, numBytes, getCharset());
-						throw new ParseException("Line could not be parsed: '" + lineAsString+"'\n"
-								+ "Expect field types: "+fieldTypesToString()+" \n"
-								+ "in file: " + currentSplit.getPath());
+						throw new ParseException("Line could not be parsed: '" + lineAsString + "'\n"
+							+ "Expect field types: " + fieldTypesToString() + " \n"
+							+ "in file: " + currentSplit.getPath());
 					} else {
 						return false;
 					}
-				}
-				else if (startPos == limit
-						&& field != fieldIncluded.length - 1
-						&& !FieldParser.endsWithDelimiter(bytes, startPos - 1, fieldDelim)) {
+				} else if (startPos == limit
+					&& field != fieldIncluded.length - 1
+					&& !FieldParser.endsWithDelimiter(bytes, startPos - 1, fieldDelim)) {
 					// We are at the end of the record, but not all fields have been read
 					// and the end is not a field delimiter indicating an empty last field.
 					if (lenient) {
@@ -433,7 +429,7 @@ public abstract class GenericCsvInputFormat<OT> extends DelimitedInputFormat<OT>
 		}
 		return true;
 	}
-	
+
 	private String fieldTypesToString() {
 		StringBuilder string = new StringBuilder();
 		string.append(this.fieldTypes[0].toString());
@@ -441,7 +437,7 @@ public abstract class GenericCsvInputFormat<OT> extends DelimitedInputFormat<OT>
 		for (int i = 1; i < this.fieldTypes.length; i++) {
 			string.append(", ").append(this.fieldTypes[i]);
 		}
-		
+
 		return string.toString();
 	}
 
@@ -457,7 +453,7 @@ public abstract class GenericCsvInputFormat<OT> extends DelimitedInputFormat<OT>
 			// search for ending quote character, continue when it is escaped
 			i++;
 
-			while (i < limit && (bytes[i] != quoteCharacter || bytes[i-1] == BACKSLASH)) {
+			while (i < limit && (bytes[i] != quoteCharacter || bytes[i - 1] == BACKSLASH)) {
 				i++;
 			}
 			i++;
@@ -465,7 +461,7 @@ public abstract class GenericCsvInputFormat<OT> extends DelimitedInputFormat<OT>
 			if (i == limit) {
 				// we are at the end of the record
 				return limit;
-			} else if ( i < delimLimit && FieldParser.delimiterNext(bytes, i, delim)) {
+			} else if (i < delimLimit && FieldParser.delimiterNext(bytes, i, delim)) {
 				// we are not at the end, check if delimiter comes next
 				return i + delim.length;
 			} else {
@@ -474,7 +470,7 @@ public abstract class GenericCsvInputFormat<OT> extends DelimitedInputFormat<OT>
 			}
 		} else {
 			// field is not quoted
-			while(i < delimLimit && !FieldParser.delimiterNext(bytes, i, delim)) {
+			while (i < delimLimit && !FieldParser.delimiterNext(bytes, i, delim)) {
 				i++;
 			}
 
@@ -541,12 +537,12 @@ public abstract class GenericCsvInputFormat<OT> extends DelimitedInputFormat<OT>
 			lastPos = positions[i];
 		}
 	}
-	
+
 	private static int max(int[] ints) {
 		checkArgument(ints.length > 0);
-		
+
 		int max = ints[0];
-		for (int i = 1 ; i < ints.length; i++) {
+		for (int i = 1; i < ints.length; i++) {
 			max = Math.max(max, ints[i]);
 		}
 		return max;

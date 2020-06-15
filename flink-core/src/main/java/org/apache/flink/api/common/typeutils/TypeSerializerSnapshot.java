@@ -87,9 +87,7 @@ public interface TypeSerializerSnapshot<T> {
 	 * is specified by the {@link #getCurrentVersion()} method.
 	 *
 	 * @param out the {@link DataOutputView} to write the snapshot to.
-	 *
 	 * @throws IOException Thrown if the snapshot data could not be written.
-	 *
 	 * @see #writeVersionedSnapshot(DataOutputView, TypeSerializerSnapshot)
 	 */
 	void writeSnapshot(DataOutputView out) throws IOException;
@@ -100,12 +98,10 @@ public interface TypeSerializerSnapshot<T> {
 	 * with is provided. This version can be used to determine how the serializer
 	 * snapshot should be read.
 	 *
-	 * @param readVersion version of the serializer snapshot's written binary format
-	 * @param in the {@link DataInputView} to read the snapshot from.
+	 * @param readVersion         version of the serializer snapshot's written binary format
+	 * @param in                  the {@link DataInputView} to read the snapshot from.
 	 * @param userCodeClassLoader the user code classloader
-	 *
 	 * @throws IOException Thrown if the snapshot data could be read or parsed.
-	 *
 	 * @see #readVersionedSnapshot(DataInputView, ClassLoader)
 	 */
 	void readSnapshot(int readVersion, DataInputView in, ClassLoader userCodeClassLoader) throws IOException;
@@ -132,7 +128,6 @@ public interface TypeSerializerSnapshot<T> {
 	 * the format during the restore operation.
 	 *
 	 * @param newSerializer the new serializer to check.
-	 *
 	 * @return the serializer compatibility result.
 	 */
 	TypeSerializerSchemaCompatibility<T> resolveSchemaCompatibility(TypeSerializer<T> newSerializer);
@@ -160,7 +155,7 @@ public interface TypeSerializerSnapshot<T> {
 	 */
 	static <T> TypeSerializerSnapshot<T> readVersionedSnapshot(DataInputView in, ClassLoader cl) throws IOException {
 		final TypeSerializerSnapshot<T> snapshot =
-				TypeSerializerSnapshotSerializationUtil.readAndInstantiateSnapshotClass(in, cl);
+			TypeSerializerSnapshotSerializationUtil.readAndInstantiateSnapshotClass(in, cl);
 
 		int version = in.readInt();
 

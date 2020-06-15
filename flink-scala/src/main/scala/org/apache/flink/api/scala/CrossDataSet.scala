@@ -46,19 +46,20 @@ import scala.reflect.ClassTag
  */
 @Public
 class CrossDataSet[L, R](
-    defaultCross: CrossOperator[L, R, (L, R)],
-    leftInput: DataSet[L],
-    rightInput: DataSet[R])
+                          defaultCross: CrossOperator[L, R, (L, R)],
+                          leftInput: DataSet[L],
+                          rightInput: DataSet[R])
   extends DataSet(defaultCross) {
 
   /**
    * Creates a new [[DataSet]] where the result for each pair of elements is the result
    * of the given function.
    */
-  def apply[O: TypeInformation: ClassTag](fun: (L, R) => O): DataSet[O] = {
+  def apply[O: TypeInformation : ClassTag](fun: (L, R) => O): DataSet[O] = {
     require(fun != null, "Cross function must not be null.")
     val crosser = new CrossFunction[L, R, O] {
       val cleanFun = clean(fun)
+
       def cross(left: L, right: R): O = {
         cleanFun(left, right)
       }
@@ -81,7 +82,7 @@ class CrossDataSet[L, R](
    * A [[RichCrossFunction]] can be used to access the
    * broadcast variables and the [[org.apache.flink.api.common.functions.RuntimeContext]].
    */
-  def apply[O: TypeInformation: ClassTag](crosser: CrossFunction[L, R, O]): DataSet[O] = {
+  def apply[O: TypeInformation : ClassTag](crosser: CrossFunction[L, R, O]): DataSet[O] = {
     require(crosser != null, "Cross function must not be null.")
     val crossOperator = new CrossOperator[L, R, O](
       leftInput.javaSet,
@@ -101,10 +102,10 @@ private[flink] object CrossDataSet {
    * Creates a default cross operation with Tuple2 as result.
    */
   def createCrossOperator[L, R](
-      leftInput: DataSet[L],
-      rightInput: DataSet[R],
-      crossHint: CrossHint) = {
-    
+                                 leftInput: DataSet[L],
+                                 rightInput: DataSet[R],
+                                 crossHint: CrossHint) = {
+
     val crosser = new CrossFunction[L, R, (L, R)] {
       def cross(left: L, right: R) = {
         (left, right)

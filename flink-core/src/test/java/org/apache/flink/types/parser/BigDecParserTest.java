@@ -26,7 +26,7 @@ public class BigDecParserTest extends ParserTestBase<BigDecimal> {
 
 	@Override
 	public String[] getValidTestValues() {
-		return new String[] {
+		return new String[]{
 			"-12.5E1000", "-12.5E100", "-10000", "-1.1", "-1", "-0.44",
 			"0", "0000000", "0e0", "0.000000000000000000000000001", "0.0000001",
 			"0.1234123413478523984729447", "1", "10000", "10E100000", "10E1000000000"
@@ -35,7 +35,7 @@ public class BigDecParserTest extends ParserTestBase<BigDecimal> {
 
 	@Override
 	public BigDecimal[] getValidTestResults() {
-		return new BigDecimal[] {
+		return new BigDecimal[]{
 			new BigDecimal("-12.5E1000"),
 			new BigDecimal("-12.5E100"),
 			new BigDecimal("-10000"),
@@ -57,7 +57,7 @@ public class BigDecParserTest extends ParserTestBase<BigDecimal> {
 
 	@Override
 	public String[] getInvalidTestValues() {
-		return new String[] {
+		return new String[]{
 			"a", "123abc4", "-57-6", "7-877678", " 1", "2 ", " ", "\t"
 		};
 	}

@@ -77,7 +77,7 @@ public class DescriptionHtmlTest {
 
 		assertEquals(
 			"This is some list: <ul><li><a href=\"http://first_link\">http://first_link" +
-			"</a></li><li>this is second element of list " +
+				"</a></li><li>this is second element of list " +
 				"with a <a href=\"https://link\">https://link</a></li></ul>",
 			formattedDescription);
 	}

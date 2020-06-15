@@ -88,10 +88,9 @@ import java.util.Arrays;
 /**
  * A {@link DataSet} that is the result of a Join transformation.
  *
- * @param <I1> The type of the first input DataSet of the Join transformation.
- * @param <I2> The type of the second input DataSet of the Join transformation.
+ * @param <I1>  The type of the first input DataSet of the Join transformation.
+ * @param <I2>  The type of the second input DataSet of the Join transformation.
  * @param <OUT> The type of the result of the Join transformation.
- *
  * @see DataSet
  */
 @Public
@@ -106,8 +105,8 @@ public abstract class JoinOperator<I1, I2, OUT> extends TwoInputUdfOperator<I1, 
 	private Partitioner<?> customPartitioner;
 
 	protected JoinOperator(DataSet<I1> input1, DataSet<I2> input2,
-			Keys<I1> keys1, Keys<I2> keys2,
-			TypeInformation<OUT> returnType, JoinHint hint, JoinType type) {
+						   Keys<I1> keys1, Keys<I2> keys2,
+						   TypeInformation<OUT> returnType, JoinHint hint, JoinType type) {
 		super(input1, input2, returnType);
 
 		Preconditions.checkNotNull(keys1);
@@ -117,8 +116,7 @@ public abstract class JoinOperator<I1, I2, OUT> extends TwoInputUdfOperator<I1, 
 			if (!keys1.areCompatible(keys2)) {
 				throw new InvalidProgramException("The types of the key fields do not match.");
 			}
-		}
-		catch (IncompatibleKeysException ike) {
+		} catch (IncompatibleKeysException ike) {
 			throw new InvalidProgramException("The types of the key fields do not match: " + ike.getMessage(), ike);
 		}
 
@@ -212,10 +210,9 @@ public abstract class JoinOperator<I1, I2, OUT> extends TwoInputUdfOperator<I1, 
 	 *
 	 * <p>It also represents the {@link DataSet} that is the result of a Join transformation.
 	 *
-	 * @param <I1> The type of the first input DataSet of the Join transformation.
-	 * @param <I2> The type of the second input DataSet of the Join transformation.
+	 * @param <I1>  The type of the first input DataSet of the Join transformation.
+	 * @param <I2>  The type of the second input DataSet of the Join transformation.
 	 * @param <OUT> The type of the result of the Join transformation.
-	 *
 	 * @see org.apache.flink.api.common.functions.RichFlatJoinFunction
 	 * @see DataSet
 	 */
@@ -232,20 +229,20 @@ public abstract class JoinOperator<I1, I2, OUT> extends TwoInputUdfOperator<I1, 
 		private final String joinLocationName;
 
 		public EquiJoin(DataSet<I1> input1, DataSet<I2> input2,
-				Keys<I1> keys1, Keys<I2> keys2, FlatJoinFunction<I1, I2, OUT> function,
-				TypeInformation<OUT> returnType, JoinHint hint, String joinLocationName) {
+						Keys<I1> keys1, Keys<I2> keys2, FlatJoinFunction<I1, I2, OUT> function,
+						TypeInformation<OUT> returnType, JoinHint hint, String joinLocationName) {
 			this(input1, input2, keys1, keys2, function, returnType, hint, joinLocationName, JoinType.INNER);
 		}
 
 		public EquiJoin(DataSet<I1> input1, DataSet<I2> input2,
-				Keys<I1> keys1, Keys<I2> keys2, FlatJoinFunction<I1, I2, OUT> generatedFunction, JoinFunction<I1, I2, OUT> function,
-				TypeInformation<OUT> returnType, JoinHint hint, String joinLocationName) {
+						Keys<I1> keys1, Keys<I2> keys2, FlatJoinFunction<I1, I2, OUT> generatedFunction, JoinFunction<I1, I2, OUT> function,
+						TypeInformation<OUT> returnType, JoinHint hint, String joinLocationName) {
 			this(input1, input2, keys1, keys2, generatedFunction, function, returnType, hint, joinLocationName, JoinType.INNER);
 		}
 
 		public EquiJoin(DataSet<I1> input1, DataSet<I2> input2,
-				Keys<I1> keys1, Keys<I2> keys2, FlatJoinFunction<I1, I2, OUT> function,
-				TypeInformation<OUT> returnType, JoinHint hint, String joinLocationName, JoinType type) {
+						Keys<I1> keys1, Keys<I2> keys2, FlatJoinFunction<I1, I2, OUT> function,
+						TypeInformation<OUT> returnType, JoinHint hint, String joinLocationName, JoinType type) {
 			super(input1, input2, keys1, keys2, returnType, hint, type);
 
 			if (function == null) {
@@ -257,8 +254,8 @@ public abstract class JoinOperator<I1, I2, OUT> extends TwoInputUdfOperator<I1, 
 		}
 
 		public EquiJoin(DataSet<I1> input1, DataSet<I2> input2,
-				Keys<I1> keys1, Keys<I2> keys2, FlatJoinFunction<I1, I2, OUT> generatedFunction, JoinFunction<I1, I2, OUT> function,
-				TypeInformation<OUT> returnType, JoinHint hint, String joinLocationName, JoinType type) {
+						Keys<I1> keys1, Keys<I2> keys2, FlatJoinFunction<I1, I2, OUT> generatedFunction, JoinFunction<I1, I2, OUT> function,
+						TypeInformation<OUT> returnType, JoinHint hint, String joinLocationName, JoinType type) {
 			super(input1, input2, keys1, keys2, returnType, hint, type);
 
 			this.joinLocationName = joinLocationName;
@@ -283,15 +280,15 @@ public abstract class JoinOperator<I1, I2, OUT> extends TwoInputUdfOperator<I1, 
 
 			// offset semantic information by extracted key fields
 			if (props != null &&
-					(this.keys1 instanceof SelectorFunctionKeys ||
-							this.keys2 instanceof SelectorFunctionKeys)) {
+				(this.keys1 instanceof SelectorFunctionKeys ||
+					this.keys2 instanceof SelectorFunctionKeys)) {
 
 				int numFields1 = this.getInput1Type().getTotalFields();
 				int numFields2 = this.getInput2Type().getTotalFields();
 				int offset1 = (this.keys1 instanceof SelectorFunctionKeys) ?
-						((SelectorFunctionKeys<?, ?>) this.keys1).getKeyType().getTotalFields() : 0;
+					((SelectorFunctionKeys<?, ?>) this.keys1).getKeyType().getTotalFields() : 0;
 				int offset2 = (this.keys2 instanceof SelectorFunctionKeys) ?
-						((SelectorFunctionKeys<?, ?>) this.keys2).getKeyType().getTotalFields() : 0;
+					((SelectorFunctionKeys<?, ?>) this.keys2).getKeyType().getTotalFields() : 0;
 
 				props = SemanticPropUtil.addSourceFieldOffsets(props, numFields1, numFields2, offset1, offset2);
 			}
@@ -333,10 +330,10 @@ public abstract class JoinOperator<I1, I2, OUT> extends TwoInputUdfOperator<I1, 
 			String name = getName() != null ? getName() : "Join at " + joinLocationName;
 
 			JoinOperatorBaseBuilder<OUT> builder = new JoinOperatorBaseBuilder<OUT>(name, joinType)
-					.withParallelism(getParallelism())
-					.withPartitioner(getPartitioner())
-					.withJoinHint(getJoinHint())
-					.withResultType(getResultType());
+				.withParallelism(getParallelism())
+				.withPartitioner(getPartitioner())
+				.withJoinHint(getJoinHint())
+				.withResultType(getResultType());
 
 			final boolean requiresTupleUnwrapping = keys1 instanceof SelectorFunctionKeys || keys2 instanceof SelectorFunctionKeys;
 			if (requiresTupleUnwrapping) {
@@ -350,9 +347,9 @@ public abstract class JoinOperator<I1, I2, OUT> extends TwoInputUdfOperator<I1, 
 					SelectorFunctionKeys<I2, ?> selectorKeys2 = (SelectorFunctionKeys<I2, ?>) keys2;
 
 					builder = builder
-							.withUdf(new TupleUnwrappingJoiner<>(function))
-							.withWrappedInput1(input1, selectorKeys1)
-							.withWrappedInput2(input2, selectorKeys2);
+						.withUdf(new TupleUnwrappingJoiner<>(function))
+						.withWrappedInput1(input1, selectorKeys1)
+						.withWrappedInput2(input2, selectorKeys2);
 				} else if (keys2 instanceof SelectorFunctionKeys) {
 					// The right side of the join needs the tuple wrapping/unwrapping
 
@@ -360,9 +357,9 @@ public abstract class JoinOperator<I1, I2, OUT> extends TwoInputUdfOperator<I1, 
 					SelectorFunctionKeys<I2, ?> selectorKeys2 = (SelectorFunctionKeys<I2, ?>) keys2;
 
 					builder = builder
-							.withUdf(new TupleRightUnwrappingJoiner<>(function))
-							.withInput1(input1, getInput1Type(), keys1)
-							.withWrappedInput2(input2, selectorKeys2);
+						.withUdf(new TupleRightUnwrappingJoiner<>(function))
+						.withInput1(input1, getInput1Type(), keys1)
+						.withWrappedInput2(input2, selectorKeys2);
 				} else {
 					// The left side of the join needs the tuple wrapping/unwrapping
 
@@ -370,17 +367,17 @@ public abstract class JoinOperator<I1, I2, OUT> extends TwoInputUdfOperator<I1, 
 					SelectorFunctionKeys<I1, ?> selectorKeys1 = (SelectorFunctionKeys<I1, ?>) keys1;
 
 					builder = builder
-							.withUdf(new TupleLeftUnwrappingJoiner<>(function))
-							.withWrappedInput1(input1, selectorKeys1)
-							.withInput2(input2, getInput2Type(), keys2);
+						.withUdf(new TupleLeftUnwrappingJoiner<>(function))
+						.withWrappedInput1(input1, selectorKeys1)
+						.withInput2(input2, getInput2Type(), keys2);
 				}
 			} else if (keys1 instanceof Keys.ExpressionKeys && keys2 instanceof Keys.ExpressionKeys) {
 				// Neither side needs the tuple wrapping/unwrapping
 
 				builder = builder
-						.withUdf(function)
-						.withInput1(input1, getInput1Type(), keys1)
-						.withInput2(input2, getInput2Type(), keys2);
+					.withUdf(function)
+					.withInput1(input1, getInput1Type(), keys1)
+					.withInput2(input2, getInput2Type(), keys2);
 			} else {
 				throw new UnsupportedOperationException("Unrecognized or incompatible key types.");
 			}
@@ -414,8 +411,8 @@ public abstract class JoinOperator<I1, I2, OUT> extends TwoInputUdfOperator<I1, 
 			}
 
 			public <I1, K> JoinOperatorBaseBuilder<OUT> withWrappedInput1(
-					Operator<I1> input1,
-					SelectorFunctionKeys<I1, ?> rawKeys1) {
+				Operator<I1> input1,
+				SelectorFunctionKeys<I1, ?> rawKeys1) {
 
 				@SuppressWarnings("unchecked")
 				SelectorFunctionKeys<I1, K> keys1 = (SelectorFunctionKeys<I1, K>) rawKeys1;
@@ -426,8 +423,8 @@ public abstract class JoinOperator<I1, I2, OUT> extends TwoInputUdfOperator<I1, 
 			}
 
 			public <I2, K> JoinOperatorBaseBuilder<OUT> withWrappedInput2(
-					Operator<I2> input2,
-					SelectorFunctionKeys<I2, ?> rawKeys2) {
+				Operator<I2> input2,
+				SelectorFunctionKeys<I2, ?> rawKeys2) {
 
 				@SuppressWarnings("unchecked")
 				SelectorFunctionKeys<I2, K> keys2 = (SelectorFunctionKeys<I2, K>) rawKeys2;
@@ -438,9 +435,9 @@ public abstract class JoinOperator<I1, I2, OUT> extends TwoInputUdfOperator<I1, 
 			}
 
 			public <I1> JoinOperatorBaseBuilder<OUT> withInput1(
-					Operator<I1> input1,
-					TypeInformation<I1> input1Type,
-					Keys<?> keys1) {
+				Operator<I1> input1,
+				TypeInformation<I1> input1Type,
+				Keys<?> keys1) {
 				this.input1 = input1;
 				this.input1Type = input1Type;
 				this.keys1 = keys1;
@@ -448,9 +445,9 @@ public abstract class JoinOperator<I1, I2, OUT> extends TwoInputUdfOperator<I1, 
 			}
 
 			public <I2> JoinOperatorBaseBuilder<OUT> withInput2(
-					Operator<I2> input2,
-					TypeInformation<I2> input2Type,
-					Keys<?> keys2) {
+				Operator<I2> input2,
+				TypeInformation<I2> input2Type,
+				Keys<?> keys2) {
 				this.input2 = input2;
 				this.input2Type = input2Type;
 				this.keys2 = keys2;
@@ -487,19 +484,19 @@ public abstract class JoinOperator<I1, I2, OUT> extends TwoInputUdfOperator<I1, 
 				JoinOperatorBase<?, ?, OUT, ?> operator;
 				if (joinType.isOuter()) {
 					operator = new OuterJoinOperatorBase<>(
-							udf,
-							new BinaryOperatorInformation(input1Type, input2Type, resultType),
-							this.keys1.computeLogicalKeyPositions(),
-							this.keys2.computeLogicalKeyPositions(),
-							this.name,
-							getOuterJoinType());
+						udf,
+						new BinaryOperatorInformation(input1Type, input2Type, resultType),
+						this.keys1.computeLogicalKeyPositions(),
+						this.keys2.computeLogicalKeyPositions(),
+						this.name,
+						getOuterJoinType());
 				} else {
 					operator = new InnerJoinOperatorBase<>(
-							udf,
-							new BinaryOperatorInformation(input1Type, input2Type, resultType),
-							this.keys1.computeLogicalKeyPositions(),
-							this.keys2.computeLogicalKeyPositions(),
-							this.name);
+						udf,
+						new BinaryOperatorInformation(input1Type, input2Type, resultType),
+						this.keys1.computeLogicalKeyPositions(),
+						this.keys2.computeLogicalKeyPositions(),
+						this.name);
 				}
 
 				operator.setFirstInput(input1);
@@ -532,7 +529,6 @@ public abstract class JoinOperator<I1, I2, OUT> extends TwoInputUdfOperator<I1, 
 	 *
 	 * @param <I1> The type of the first input DataSet of the Join transformation.
 	 * @param <I2> The type of the second input DataSet of the Join transformation.
-	 *
 	 * @see Tuple2
 	 * @see DataSet
 	 */
@@ -540,7 +536,7 @@ public abstract class JoinOperator<I1, I2, OUT> extends TwoInputUdfOperator<I1, 
 	public static final class DefaultJoin<I1, I2> extends EquiJoin<I1, I2, Tuple2<I1, I2>> implements JoinFunctionAssigner<I1, I2> {
 
 		public DefaultJoin(DataSet<I1> input1, DataSet<I2> input2,
-				Keys<I1> keys1, Keys<I2> keys2, JoinHint hint, String joinLocationName, JoinType type) {
+						   Keys<I1> keys1, Keys<I2> keys2, JoinHint hint, String joinLocationName, JoinType type) {
 			super(input1, input2, keys1, keys2,
 				new DefaultFlatJoinFunction<I1, I2>(),
 				new TupleTypeInfo<Tuple2<I1, I2>>(input1.getType(), input2.getType()), hint, joinLocationName, type);
@@ -553,7 +549,6 @@ public abstract class JoinOperator<I1, I2, OUT> extends TwoInputUdfOperator<I1, 
 		 *
 		 * @param function The JoinFunction that is called for each pair of joined elements.
 		 * @return An EquiJoin that represents the joined result DataSet
-		 *
 		 * @see org.apache.flink.api.common.functions.RichFlatJoinFunction
 		 * @see org.apache.flink.api.java.operators.JoinOperator.EquiJoin
 		 * @see DataSet
@@ -610,10 +605,9 @@ public abstract class JoinOperator<I1, I2, OUT> extends TwoInputUdfOperator<I1, 
 		 * <b>Note: With the current implementation, the Project transformation loses type information.</b>
 		 *
 		 * @param firstFieldIndexes If the first input is a Tuple DataSet, the indexes of the selected fields.
-		 * 					   For a non-Tuple DataSet, do not provide parameters.
-		 * 					   The order of fields in the output tuple is defined by to the order of field indexes.
+		 *                          For a non-Tuple DataSet, do not provide parameters.
+		 *                          The order of fields in the output tuple is defined by to the order of field indexes.
 		 * @return A ProjectJoin which represents the projected join result.
-		 *
 		 * @see Tuple
 		 * @see DataSet
 		 * @see org.apache.flink.api.java.operators.JoinOperator.ProjectJoin
@@ -637,10 +631,9 @@ public abstract class JoinOperator<I1, I2, OUT> extends TwoInputUdfOperator<I1, 
 		 * <p><b>Note: With the current implementation, the Project transformation loses type information.</b>
 		 *
 		 * @param secondFieldIndexes If the second input is a Tuple DataSet, the indexes of the selected fields.
-		 * 					   For a non-Tuple DataSet, do not provide parameters.
-		 * 					   The order of fields in the output tuple is defined by to the order of field indexes.
+		 *                           For a non-Tuple DataSet, do not provide parameters.
+		 *                           The order of fields in the output tuple is defined by to the order of field indexes.
 		 * @return A ProjectJoin which represents the projected join result.
-		 *
 		 * @see Tuple
 		 * @see DataSet
 		 * @see org.apache.flink.api.java.operators.JoinOperator.ProjectJoin
@@ -674,10 +667,9 @@ public abstract class JoinOperator<I1, I2, OUT> extends TwoInputUdfOperator<I1, 
 	 *
 	 * <p>It also represents the {@link DataSet} that is the result of a Join transformation.
 	 *
-	 * @param <I1> The type of the first input DataSet of the Join transformation.
-	 * @param <I2> The type of the second input DataSet of the Join transformation.
+	 * @param <I1>  The type of the first input DataSet of the Join transformation.
+	 * @param <I2>  The type of the second input DataSet of the Join transformation.
 	 * @param <OUT> The type of the result of the Join transformation.
-	 *
 	 * @see Tuple
 	 * @see DataSet
 	 */
@@ -688,16 +680,16 @@ public abstract class JoinOperator<I1, I2, OUT> extends TwoInputUdfOperator<I1, 
 
 		protected ProjectJoin(DataSet<I1> input1, DataSet<I2> input2, Keys<I1> keys1, Keys<I2> keys2, JoinHint hint, int[] fields, boolean[] isFromFirst, TupleTypeInfo<OUT> returnType) {
 			super(input1, input2, keys1, keys2,
-					new ProjectFlatJoinFunction<I1, I2, OUT>(fields, isFromFirst, returnType.createSerializer(input1.getExecutionEnvironment().getConfig()).createInstance()),
-					returnType, hint, Utils.getCallLocationName(4)); // We need to use the 4th element in the stack because the call comes through .types().
+				new ProjectFlatJoinFunction<I1, I2, OUT>(fields, isFromFirst, returnType.createSerializer(input1.getExecutionEnvironment().getConfig()).createInstance()),
+				returnType, hint, Utils.getCallLocationName(4)); // We need to use the 4th element in the stack because the call comes through .types().
 
 			joinProj = null;
 		}
 
 		protected ProjectJoin(DataSet<I1> input1, DataSet<I2> input2, Keys<I1> keys1, Keys<I2> keys2, JoinHint hint, int[] fields, boolean[] isFromFirst, TupleTypeInfo<OUT> returnType, JoinProjection<I1, I2> joinProj) {
 			super(input1, input2, keys1, keys2,
-					new ProjectFlatJoinFunction<I1, I2, OUT>(fields, isFromFirst, returnType.createSerializer(input1.getExecutionEnvironment().getConfig()).createInstance()),
-					returnType, hint, Utils.getCallLocationName(4));
+				new ProjectFlatJoinFunction<I1, I2, OUT>(fields, isFromFirst, returnType.createSerializer(input1.getExecutionEnvironment().getConfig()).createInstance()),
+				returnType, hint, Utils.getCallLocationName(4));
 
 			this.joinProj = joinProj;
 		}
@@ -720,10 +712,9 @@ public abstract class JoinOperator<I1, I2, OUT> extends TwoInputUdfOperator<I1, 
 		 * <p><b>Note: With the current implementation, the Project transformation loses type information.</b>
 		 *
 		 * @param firstFieldIndexes If the first input is a Tuple DataSet, the indexes of the selected fields.
-		 * 					   For a non-Tuple DataSet, do not provide parameters.
-		 * 					   The order of fields in the output tuple is defined by to the order of field indexes.
+		 *                          For a non-Tuple DataSet, do not provide parameters.
+		 *                          The order of fields in the output tuple is defined by to the order of field indexes.
 		 * @return A ProjectJoin which represents the projected join result.
-		 *
 		 * @see Tuple
 		 * @see DataSet
 		 * @see org.apache.flink.api.java.operators.JoinOperator.ProjectJoin
@@ -748,10 +739,9 @@ public abstract class JoinOperator<I1, I2, OUT> extends TwoInputUdfOperator<I1, 
 		 * <p><b>Note: With the current implementation, the Project transformation loses type information.</b>
 		 *
 		 * @param secondFieldIndexes If the second input is a Tuple DataSet, the indexes of the selected fields.
-		 * 					   For a non-Tuple DataSet, do not provide parameters.
-		 * 					   The order of fields in the output tuple is defined by to the order of field indexes.
+		 *                           For a non-Tuple DataSet, do not provide parameters.
+		 *                           The order of fields in the output tuple is defined by to the order of field indexes.
 		 * @return A ProjectJoin which represents the projected join result.
-		 *
 		 * @see Tuple
 		 * @see DataSet
 		 * @see org.apache.flink.api.java.operators.JoinOperator.ProjectJoin
@@ -764,11 +754,10 @@ public abstract class JoinOperator<I1, I2, OUT> extends TwoInputUdfOperator<I1, 
 		}
 
 		/**
-		 * @deprecated Deprecated method only kept for compatibility.
-		 *
 		 * @param types
+		 * @deprecated Deprecated method only kept for compatibility.
 		 */
-		@SuppressWarnings({ "unchecked", "hiding" })
+		@SuppressWarnings({"unchecked", "hiding"})
 		@Deprecated
 		@PublicEvolving
 		public <OUT extends Tuple> JoinOperator<I1, I2, OUT> types(Class<?>... types) {
@@ -800,7 +789,7 @@ public abstract class JoinOperator<I1, I2, OUT> extends TwoInputUdfOperator<I1, 
 		protected DualInputSemanticProperties extractSemanticAnnotationsFromUdf(Class<?> udfClass) {
 			// we do not extract the annotation, we construct the properties from the projection#
 			return SemanticPropUtil.createProjectionPropertiesDual(getFunction().getFields(), getFunction().getIsFromFirst(),
-					getInput1Type(), getInput2Type());
+				getInput1Type(), getInput2Type());
 		}
 
 	}
@@ -888,9 +877,9 @@ public abstract class JoinOperator<I1, I2, OUT> extends TwoInputUdfOperator<I1, 
 		 * {@inheritDoc}
 		 *
 		 * @return An incomplete Join transformation.
-		 *           Call {@link org.apache.flink.api.java.operators.JoinOperator.JoinOperatorSets.JoinOperatorSetsPredicate#equalTo(int...)} or
-		 *           {@link org.apache.flink.api.java.operators.JoinOperator.JoinOperatorSets.JoinOperatorSetsPredicate#equalTo(KeySelector)}
-		 *           to continue the Join.
+		 * Call {@link org.apache.flink.api.java.operators.JoinOperator.JoinOperatorSets.JoinOperatorSetsPredicate#equalTo(int...)} or
+		 * {@link org.apache.flink.api.java.operators.JoinOperator.JoinOperatorSets.JoinOperatorSetsPredicate#equalTo(KeySelector)}
+		 * to continue the Join.
 		 */
 		@Override
 		public JoinOperatorSetsPredicate where(int... fields) {
@@ -901,9 +890,9 @@ public abstract class JoinOperator<I1, I2, OUT> extends TwoInputUdfOperator<I1, 
 		 * {@inheritDoc}
 		 *
 		 * @return An incomplete Join transformation.
-		 *           Call {@link org.apache.flink.api.java.operators.JoinOperator.JoinOperatorSets.JoinOperatorSetsPredicate#equalTo(int...)} or
-		 *           {@link org.apache.flink.api.java.operators.JoinOperator.JoinOperatorSets.JoinOperatorSetsPredicate#equalTo(KeySelector)}
-		 *           to continue the Join.
+		 * Call {@link org.apache.flink.api.java.operators.JoinOperator.JoinOperatorSets.JoinOperatorSetsPredicate#equalTo(int...)} or
+		 * {@link org.apache.flink.api.java.operators.JoinOperator.JoinOperatorSets.JoinOperatorSetsPredicate#equalTo(KeySelector)}
+		 * to continue the Join.
 		 */
 		@Override
 		public JoinOperatorSetsPredicate where(String... fields) {
@@ -914,9 +903,9 @@ public abstract class JoinOperator<I1, I2, OUT> extends TwoInputUdfOperator<I1, 
 		 * {@inheritDoc}
 		 *
 		 * @return An incomplete Join transformation.
-		 *           Call {@link org.apache.flink.api.java.operators.JoinOperator.JoinOperatorSets.JoinOperatorSetsPredicate#equalTo(int...)} or
-		 *           {@link org.apache.flink.api.java.operators.JoinOperator.JoinOperatorSets.JoinOperatorSetsPredicate#equalTo(KeySelector)}
-		 *           to continue the Join.
+		 * Call {@link org.apache.flink.api.java.operators.JoinOperator.JoinOperatorSets.JoinOperatorSetsPredicate#equalTo(int...)} or
+		 * {@link org.apache.flink.api.java.operators.JoinOperator.JoinOperatorSets.JoinOperatorSetsPredicate#equalTo(KeySelector)}
+		 * to continue the Join.
 		 */
 		@Override
 		public <K> JoinOperatorSetsPredicate where(KeySelector<I1, K> keySelector) {
@@ -1026,9 +1015,9 @@ public abstract class JoinOperator<I1, I2, OUT> extends TwoInputUdfOperator<I1, 
 		 * Instantiates and configures a ProjectJoinFunction.
 		 * Creates output tuples by copying fields of joined input tuples (or a full input object) into an output tuple.
 		 *
-		 * @param fields List of indexes fields that should be copied to the output tuple.
-		 * 					If the full input object should be copied (for example in case of a non-tuple input) the index should be -1.
-		 * @param isFromFirst List of flags indicating whether the field should be copied from the first (true) or the second (false) input.
+		 * @param fields           List of indexes fields that should be copied to the output tuple.
+		 *                         If the full input object should be copied (for example in case of a non-tuple input) the index should be -1.
+		 * @param isFromFirst      List of flags indicating whether the field should be copied from the first (true) or the second (false) input.
 		 * @param outTupleInstance An instance of an output tuple.
 		 */
 		private ProjectFlatJoinFunction(int[] fields, boolean[] isFromFirst, R outTupleInstance) {
@@ -1178,10 +1167,9 @@ public abstract class JoinOperator<I1, I2, OUT> extends TwoInputUdfOperator<I1, 
 		 * {@link org.apache.flink.api.java.operators.JoinOperator.JoinProjection#projectSecond(int...)}.
 		 *
 		 * @param firstFieldIndexes If the first input is a Tuple DataSet, the indexes of the selected fields.
-		 * 					   For a non-Tuple DataSet, do not provide parameters.
-		 * 					   The order of fields in the output tuple is defined by to the order of field indexes.
+		 *                          For a non-Tuple DataSet, do not provide parameters.
+		 *                          The order of fields in the output tuple is defined by to the order of field indexes.
 		 * @return An extended JoinProjection.
-		 *
 		 * @see Tuple
 		 * @see DataSet
 		 */
@@ -1239,10 +1227,9 @@ public abstract class JoinOperator<I1, I2, OUT> extends TwoInputUdfOperator<I1, 
 		 * {@link org.apache.flink.api.java.operators.JoinOperator.JoinProjection#projectSecond(int...)}.
 		 *
 		 * @param secondFieldIndexes If the second input is a Tuple DataSet, the indexes of the selected fields.
-		 * 					   For a non-Tuple DataSet, do not provide parameters.
-		 * 					   The order of fields in the output tuple is defined by to the order of field indexes.
+		 *                           For a non-Tuple DataSet, do not provide parameters.
+		 *                           The order of fields in the output tuple is defined by to the order of field indexes.
 		 * @return An extended JoinProjection.
-		 *
 		 * @see Tuple
 		 * @see DataSet
 		 */
@@ -1293,14 +1280,13 @@ public abstract class JoinOperator<I1, I2, OUT> extends TwoInputUdfOperator<I1, 
 		// The following lines are generated.
 		// --------------------------------------------------------------------------------------------
 		// BEGIN_OF_TUPLE_DEPENDENT_CODE
-	// GENERATED FROM org.apache.flink.api.java.tuple.TupleGenerator.
+		// GENERATED FROM org.apache.flink.api.java.tuple.TupleGenerator.
 
 		/**
 		 * Chooses a projectTupleX according to the length of
 		 * {@link org.apache.flink.api.java.operators.JoinOperator.JoinProjection#fieldIndexes}.
 		 *
 		 * @return The projected DataSet.
-		 *
 		 * @see org.apache.flink.api.java.operators.JoinOperator.ProjectJoin
 		 */
 		@SuppressWarnings("unchecked")
@@ -1308,32 +1294,83 @@ public abstract class JoinOperator<I1, I2, OUT> extends TwoInputUdfOperator<I1, 
 			ProjectJoin<I1, I2, OUT> projectJoin = null;
 
 			switch (fieldIndexes.length) {
-			case 1: projectJoin = (ProjectJoin<I1, I2, OUT>) projectTuple1(); break;
-			case 2: projectJoin = (ProjectJoin<I1, I2, OUT>) projectTuple2(); break;
-			case 3: projectJoin = (ProjectJoin<I1, I2, OUT>) projectTuple3(); break;
-			case 4: projectJoin = (ProjectJoin<I1, I2, OUT>) projectTuple4(); break;
-			case 5: projectJoin = (ProjectJoin<I1, I2, OUT>) projectTuple5(); break;
-			case 6: projectJoin = (ProjectJoin<I1, I2, OUT>) projectTuple6(); break;
-			case 7: projectJoin = (ProjectJoin<I1, I2, OUT>) projectTuple7(); break;
-			case 8: projectJoin = (ProjectJoin<I1, I2, OUT>) projectTuple8(); break;
-			case 9: projectJoin = (ProjectJoin<I1, I2, OUT>) projectTuple9(); break;
-			case 10: projectJoin = (ProjectJoin<I1, I2, OUT>) projectTuple10(); break;
-			case 11: projectJoin = (ProjectJoin<I1, I2, OUT>) projectTuple11(); break;
-			case 12: projectJoin = (ProjectJoin<I1, I2, OUT>) projectTuple12(); break;
-			case 13: projectJoin = (ProjectJoin<I1, I2, OUT>) projectTuple13(); break;
-			case 14: projectJoin = (ProjectJoin<I1, I2, OUT>) projectTuple14(); break;
-			case 15: projectJoin = (ProjectJoin<I1, I2, OUT>) projectTuple15(); break;
-			case 16: projectJoin = (ProjectJoin<I1, I2, OUT>) projectTuple16(); break;
-			case 17: projectJoin = (ProjectJoin<I1, I2, OUT>) projectTuple17(); break;
-			case 18: projectJoin = (ProjectJoin<I1, I2, OUT>) projectTuple18(); break;
-			case 19: projectJoin = (ProjectJoin<I1, I2, OUT>) projectTuple19(); break;
-			case 20: projectJoin = (ProjectJoin<I1, I2, OUT>) projectTuple20(); break;
-			case 21: projectJoin = (ProjectJoin<I1, I2, OUT>) projectTuple21(); break;
-			case 22: projectJoin = (ProjectJoin<I1, I2, OUT>) projectTuple22(); break;
-			case 23: projectJoin = (ProjectJoin<I1, I2, OUT>) projectTuple23(); break;
-			case 24: projectJoin = (ProjectJoin<I1, I2, OUT>) projectTuple24(); break;
-			case 25: projectJoin = (ProjectJoin<I1, I2, OUT>) projectTuple25(); break;
-			default: throw new IllegalStateException("Excessive arity in tuple.");
+				case 1:
+					projectJoin = (ProjectJoin<I1, I2, OUT>) projectTuple1();
+					break;
+				case 2:
+					projectJoin = (ProjectJoin<I1, I2, OUT>) projectTuple2();
+					break;
+				case 3:
+					projectJoin = (ProjectJoin<I1, I2, OUT>) projectTuple3();
+					break;
+				case 4:
+					projectJoin = (ProjectJoin<I1, I2, OUT>) projectTuple4();
+					break;
+				case 5:
+					projectJoin = (ProjectJoin<I1, I2, OUT>) projectTuple5();
+					break;
+				case 6:
+					projectJoin = (ProjectJoin<I1, I2, OUT>) projectTuple6();
+					break;
+				case 7:
+					projectJoin = (ProjectJoin<I1, I2, OUT>) projectTuple7();
+					break;
+				case 8:
+					projectJoin = (ProjectJoin<I1, I2, OUT>) projectTuple8();
+					break;
+				case 9:
+					projectJoin = (ProjectJoin<I1, I2, OUT>) projectTuple9();
+					break;
+				case 10:
+					projectJoin = (ProjectJoin<I1, I2, OUT>) projectTuple10();
+					break;
+				case 11:
+					projectJoin = (ProjectJoin<I1, I2, OUT>) projectTuple11();
+					break;
+				case 12:
+					projectJoin = (ProjectJoin<I1, I2, OUT>) projectTuple12();
+					break;
+				case 13:
+					projectJoin = (ProjectJoin<I1, I2, OUT>) projectTuple13();
+					break;
+				case 14:
+					projectJoin = (ProjectJoin<I1, I2, OUT>) projectTuple14();
+					break;
+				case 15:
+					projectJoin = (ProjectJoin<I1, I2, OUT>) projectTuple15();
+					break;
+				case 16:
+					projectJoin = (ProjectJoin<I1, I2, OUT>) projectTuple16();
+					break;
+				case 17:
+					projectJoin = (ProjectJoin<I1, I2, OUT>) projectTuple17();
+					break;
+				case 18:
+					projectJoin = (ProjectJoin<I1, I2, OUT>) projectTuple18();
+					break;
+				case 19:
+					projectJoin = (ProjectJoin<I1, I2, OUT>) projectTuple19();
+					break;
+				case 20:
+					projectJoin = (ProjectJoin<I1, I2, OUT>) projectTuple20();
+					break;
+				case 21:
+					projectJoin = (ProjectJoin<I1, I2, OUT>) projectTuple21();
+					break;
+				case 22:
+					projectJoin = (ProjectJoin<I1, I2, OUT>) projectTuple22();
+					break;
+				case 23:
+					projectJoin = (ProjectJoin<I1, I2, OUT>) projectTuple23();
+					break;
+				case 24:
+					projectJoin = (ProjectJoin<I1, I2, OUT>) projectTuple24();
+					break;
+				case 25:
+					projectJoin = (ProjectJoin<I1, I2, OUT>) projectTuple25();
+					break;
+				default:
+					throw new IllegalStateException("Excessive arity in tuple.");
 			}
 
 			return projectJoin;
@@ -1344,7 +1381,6 @@ public abstract class JoinOperator<I1, I2, OUT> extends TwoInputUdfOperator<I1, 
 		 * Requires the classes of the fields of the resulting tuples.
 		 *
 		 * @return The projected data set.
-		 *
 		 * @see Tuple
 		 * @see DataSet
 		 */
@@ -1360,7 +1396,6 @@ public abstract class JoinOperator<I1, I2, OUT> extends TwoInputUdfOperator<I1, 
 		 * Requires the classes of the fields of the resulting tuples.
 		 *
 		 * @return The projected data set.
-		 *
 		 * @see Tuple
 		 * @see DataSet
 		 */
@@ -1376,7 +1411,6 @@ public abstract class JoinOperator<I1, I2, OUT> extends TwoInputUdfOperator<I1, 
 		 * Requires the classes of the fields of the resulting tuples.
 		 *
 		 * @return The projected data set.
-		 *
 		 * @see Tuple
 		 * @see DataSet
 		 */
@@ -1392,7 +1426,6 @@ public abstract class JoinOperator<I1, I2, OUT> extends TwoInputUdfOperator<I1, 
 		 * Requires the classes of the fields of the resulting tuples.
 		 *
 		 * @return The projected data set.
-		 *
 		 * @see Tuple
 		 * @see DataSet
 		 */
@@ -1408,7 +1441,6 @@ public abstract class JoinOperator<I1, I2, OUT> extends TwoInputUdfOperator<I1, 
 		 * Requires the classes of the fields of the resulting tuples.
 		 *
 		 * @return The projected data set.
-		 *
 		 * @see Tuple
 		 * @see DataSet
 		 */
@@ -1424,7 +1456,6 @@ public abstract class JoinOperator<I1, I2, OUT> extends TwoInputUdfOperator<I1, 
 		 * Requires the classes of the fields of the resulting tuples.
 		 *
 		 * @return The projected data set.
-		 *
 		 * @see Tuple
 		 * @see DataSet
 		 */
@@ -1440,7 +1471,6 @@ public abstract class JoinOperator<I1, I2, OUT> extends TwoInputUdfOperator<I1, 
 		 * Requires the classes of the fields of the resulting tuples.
 		 *
 		 * @return The projected data set.
-		 *
 		 * @see Tuple
 		 * @see DataSet
 		 */
@@ -1456,7 +1486,6 @@ public abstract class JoinOperator<I1, I2, OUT> extends TwoInputUdfOperator<I1, 
 		 * Requires the classes of the fields of the resulting tuples.
 		 *
 		 * @return The projected data set.
-		 *
 		 * @see Tuple
 		 * @see DataSet
 		 */
@@ -1472,7 +1501,6 @@ public abstract class JoinOperator<I1, I2, OUT> extends TwoInputUdfOperator<I1, 
 		 * Requires the classes of the fields of the resulting tuples.
 		 *
 		 * @return The projected data set.
-		 *
 		 * @see Tuple
 		 * @see DataSet
 		 */
@@ -1488,7 +1516,6 @@ public abstract class JoinOperator<I1, I2, OUT> extends TwoInputUdfOperator<I1, 
 		 * Requires the classes of the fields of the resulting tuples.
 		 *
 		 * @return The projected data set.
-		 *
 		 * @see Tuple
 		 * @see DataSet
 		 */
@@ -1504,7 +1531,6 @@ public abstract class JoinOperator<I1, I2, OUT> extends TwoInputUdfOperator<I1, 
 		 * Requires the classes of the fields of the resulting tuples.
 		 *
 		 * @return The projected data set.
-		 *
 		 * @see Tuple
 		 * @see DataSet
 		 */
@@ -1520,7 +1546,6 @@ public abstract class JoinOperator<I1, I2, OUT> extends TwoInputUdfOperator<I1, 
 		 * Requires the classes of the fields of the resulting tuples.
 		 *
 		 * @return The projected data set.
-		 *
 		 * @see Tuple
 		 * @see DataSet
 		 */
@@ -1536,7 +1561,6 @@ public abstract class JoinOperator<I1, I2, OUT> extends TwoInputUdfOperator<I1, 
 		 * Requires the classes of the fields of the resulting tuples.
 		 *
 		 * @return The projected data set.
-		 *
 		 * @see Tuple
 		 * @see DataSet
 		 */
@@ -1552,7 +1576,6 @@ public abstract class JoinOperator<I1, I2, OUT> extends TwoInputUdfOperator<I1, 
 		 * Requires the classes of the fields of the resulting tuples.
 		 *
 		 * @return The projected data set.
-		 *
 		 * @see Tuple
 		 * @see DataSet
 		 */
@@ -1568,7 +1591,6 @@ public abstract class JoinOperator<I1, I2, OUT> extends TwoInputUdfOperator<I1, 
 		 * Requires the classes of the fields of the resulting tuples.
 		 *
 		 * @return The projected data set.
-		 *
 		 * @see Tuple
 		 * @see DataSet
 		 */
@@ -1584,7 +1606,6 @@ public abstract class JoinOperator<I1, I2, OUT> extends TwoInputUdfOperator<I1, 
 		 * Requires the classes of the fields of the resulting tuples.
 		 *
 		 * @return The projected data set.
-		 *
 		 * @see Tuple
 		 * @see DataSet
 		 */
@@ -1600,7 +1621,6 @@ public abstract class JoinOperator<I1, I2, OUT> extends TwoInputUdfOperator<I1, 
 		 * Requires the classes of the fields of the resulting tuples.
 		 *
 		 * @return The projected data set.
-		 *
 		 * @see Tuple
 		 * @see DataSet
 		 */
@@ -1616,7 +1636,6 @@ public abstract class JoinOperator<I1, I2, OUT> extends TwoInputUdfOperator<I1, 
 		 * Requires the classes of the fields of the resulting tuples.
 		 *
 		 * @return The projected data set.
-		 *
 		 * @see Tuple
 		 * @see DataSet
 		 */
@@ -1632,7 +1651,6 @@ public abstract class JoinOperator<I1, I2, OUT> extends TwoInputUdfOperator<I1, 
 		 * Requires the classes of the fields of the resulting tuples.
 		 *
 		 * @return The projected data set.
-		 *
 		 * @see Tuple
 		 * @see DataSet
 		 */
@@ -1648,7 +1666,6 @@ public abstract class JoinOperator<I1, I2, OUT> extends TwoInputUdfOperator<I1, 
 		 * Requires the classes of the fields of the resulting tuples.
 		 *
 		 * @return The projected data set.
-		 *
 		 * @see Tuple
 		 * @see DataSet
 		 */
@@ -1664,7 +1681,6 @@ public abstract class JoinOperator<I1, I2, OUT> extends TwoInputUdfOperator<I1, 
 		 * Requires the classes of the fields of the resulting tuples.
 		 *
 		 * @return The projected data set.
-		 *
 		 * @see Tuple
 		 * @see DataSet
 		 */
@@ -1680,7 +1696,6 @@ public abstract class JoinOperator<I1, I2, OUT> extends TwoInputUdfOperator<I1, 
 		 * Requires the classes of the fields of the resulting tuples.
 		 *
 		 * @return The projected data set.
-		 *
 		 * @see Tuple
 		 * @see DataSet
 		 */
@@ -1696,7 +1711,6 @@ public abstract class JoinOperator<I1, I2, OUT> extends TwoInputUdfOperator<I1, 
 		 * Requires the classes of the fields of the resulting tuples.
 		 *
 		 * @return The projected data set.
-		 *
 		 * @see Tuple
 		 * @see DataSet
 		 */
@@ -1712,7 +1726,6 @@ public abstract class JoinOperator<I1, I2, OUT> extends TwoInputUdfOperator<I1, 
 		 * Requires the classes of the fields of the resulting tuples.
 		 *
 		 * @return The projected data set.
-		 *
 		 * @see Tuple
 		 * @see DataSet
 		 */
@@ -1728,7 +1741,6 @@ public abstract class JoinOperator<I1, I2, OUT> extends TwoInputUdfOperator<I1, 
 		 * Requires the classes of the fields of the resulting tuples.
 		 *
 		 * @return The projected data set.
-		 *
 		 * @see Tuple
 		 * @see DataSet
 		 */

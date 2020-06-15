@@ -157,11 +157,10 @@ public class SortedGrouping<T> extends Grouping<T> {
 	 *
 	 * <p>The transformation calls a {@link org.apache.flink.api.common.functions.RichGroupReduceFunction} for each group of the DataSet.
 	 * A GroupReduceFunction can iterate over all elements of a group and emit any
-	 *   number of output elements including none.
+	 * number of output elements including none.
 	 *
 	 * @param reducer The GroupReduceFunction that is applied on each group of the DataSet.
 	 * @return A GroupReduceOperator that represents the reduced DataSet.
-	 *
 	 * @see org.apache.flink.api.common.functions.RichGroupReduceFunction
 	 * @see GroupReduceOperator
 	 * @see DataSet
@@ -171,7 +170,7 @@ public class SortedGrouping<T> extends Grouping<T> {
 			throw new NullPointerException("GroupReduce function must not be null.");
 		}
 		TypeInformation<R> resultType = TypeExtractor.getGroupReduceReturnTypes(reducer,
-				inputDataSet.getType(), Utils.getCallLocationName(), true);
+			inputDataSet.getType(), Utils.getCallLocationName(), true);
 		return new GroupReduceOperator<>(this, resultType, inputDataSet.clean(reducer), Utils.getCallLocationName());
 	}
 
@@ -184,6 +183,7 @@ public class SortedGrouping<T> extends Grouping<T> {
 	 * a combiner by implementing the RichGroupReduce function. The combine method of the RichGroupReduce function
 	 * demands input and output type to be the same. The CombineFunction, on the other side, can have an arbitrary
 	 * output type.
+	 *
 	 * @param combiner The GroupCombineFunction that is applied on the DataSet.
 	 * @return A GroupCombineOperator which represents the combined DataSet.
 	 */
@@ -192,16 +192,17 @@ public class SortedGrouping<T> extends Grouping<T> {
 			throw new NullPointerException("GroupCombine function must not be null.");
 		}
 		TypeInformation<R> resultType = TypeExtractor.getGroupCombineReturnTypes(combiner,
-				this.getInputDataSet().getType(), Utils.getCallLocationName(), true);
+			this.getInputDataSet().getType(), Utils.getCallLocationName(), true);
 
 		return new GroupCombineOperator<>(this, resultType, inputDataSet.clean(combiner), Utils.getCallLocationName());
 	}
 
 	/**
 	 * Returns a new set containing the first n elements in this grouped and sorted {@link DataSet}.
+	 *
 	 * @param n The desired number of elements for each group.
 	 * @return A GroupReduceOperator that represents the DataSet containing the elements.
-	*/
+	 */
 	public GroupReduceOperator<T, T> first(int n) {
 		if (n < 1) {
 			throw new InvalidProgramException("Parameter n of first(n) must be at least 1.");
@@ -224,7 +225,6 @@ public class SortedGrouping<T> extends Grouping<T> {
 	 * @param field The Tuple field on which the group is sorted.
 	 * @param order The Order in which the specified Tuple field is sorted.
 	 * @return A SortedGrouping with specified order of group element.
-	 *
 	 * @see org.apache.flink.api.java.tuple.Tuple
 	 * @see Order
 	 */
@@ -252,7 +252,6 @@ public class SortedGrouping<T> extends Grouping<T> {
 	 * @param field The Tuple or Pojo field on which the group is sorted.
 	 * @param order The Order in which the specified field is sorted.
 	 * @return A SortedGrouping with specified order of group element.
-	 *
 	 * @see org.apache.flink.api.java.tuple.Tuple
 	 * @see Order
 	 */

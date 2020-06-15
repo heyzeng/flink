@@ -92,8 +92,7 @@ exclude:
 array: []
 
 defaults:
-  -
-    scope:
+  - scope:
       path: ""
     values:
       layout: plain

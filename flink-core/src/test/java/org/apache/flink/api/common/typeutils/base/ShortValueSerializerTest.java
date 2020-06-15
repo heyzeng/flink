@@ -28,30 +28,30 @@ import org.apache.flink.types.ShortValue;
  * A test for the {@link ShortValueSerializer}.
  */
 public class ShortValueSerializerTest extends SerializerTestBase<ShortValue> {
-	
+
 	@Override
 	protected TypeSerializer<ShortValue> createSerializer() {
 		return new ShortValueSerializer();
 	}
-	
+
 	@Override
 	protected int getLength() {
 		return 2;
 	}
-	
+
 	@Override
 	protected Class<ShortValue> getTypeClass() {
 		return ShortValue.class;
 	}
-	
+
 	@Override
 	protected ShortValue[] getTestData() {
 		Random rnd = new Random(874597969123412341L);
 		int rndInt = rnd.nextInt(32767);
-		
-		return new ShortValue[] {new ShortValue((short) 0), new ShortValue((short) 1), new ShortValue((short) -1),
-							new ShortValue((short) rndInt), new ShortValue((short) -rndInt),
-							new ShortValue((short) -32767), new ShortValue((short) 32768)};
+
+		return new ShortValue[]{new ShortValue((short) 0), new ShortValue((short) 1), new ShortValue((short) -1),
+			new ShortValue((short) rndInt), new ShortValue((short) -rndInt),
+			new ShortValue((short) -32767), new ShortValue((short) 32768)};
 	}
 }
 	

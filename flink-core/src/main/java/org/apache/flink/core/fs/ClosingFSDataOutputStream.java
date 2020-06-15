@@ -31,8 +31,8 @@ import java.io.IOException;
  */
 @Internal
 public class ClosingFSDataOutputStream
-		extends FSDataOutputStreamWrapper
-		implements WrappingProxyCloseable<FSDataOutputStream> {
+	extends FSDataOutputStreamWrapper
+	implements WrappingProxyCloseable<FSDataOutputStream> {
 
 	private final SafetyNetCloseableRegistry registry;
 	private final String debugString;
@@ -40,12 +40,12 @@ public class ClosingFSDataOutputStream
 	private volatile boolean closed;
 
 	public ClosingFSDataOutputStream(
-			FSDataOutputStream delegate, SafetyNetCloseableRegistry registry) throws IOException {
+		FSDataOutputStream delegate, SafetyNetCloseableRegistry registry) throws IOException {
 		this(delegate, registry, "");
 	}
 
 	private ClosingFSDataOutputStream(
-			FSDataOutputStream delegate, SafetyNetCloseableRegistry registry, String debugString) throws IOException {
+		FSDataOutputStream delegate, SafetyNetCloseableRegistry registry, String debugString) throws IOException {
 		super(delegate);
 		this.registry = Preconditions.checkNotNull(registry);
 		this.debugString = Preconditions.checkNotNull(debugString);
@@ -90,12 +90,12 @@ public class ClosingFSDataOutputStream
 	}
 
 	public static ClosingFSDataOutputStream wrapSafe(
-			FSDataOutputStream delegate, SafetyNetCloseableRegistry registry) throws IOException {
+		FSDataOutputStream delegate, SafetyNetCloseableRegistry registry) throws IOException {
 		return wrapSafe(delegate, registry, "");
 	}
 
 	public static ClosingFSDataOutputStream wrapSafe(
-			FSDataOutputStream delegate, SafetyNetCloseableRegistry registry, String debugInfo) throws IOException {
+		FSDataOutputStream delegate, SafetyNetCloseableRegistry registry, String debugInfo) throws IOException {
 
 		ClosingFSDataOutputStream inputStream = new ClosingFSDataOutputStream(delegate, registry, debugInfo);
 		registry.registerCloseable(inputStream);

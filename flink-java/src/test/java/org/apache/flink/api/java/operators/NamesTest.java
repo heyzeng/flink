@@ -71,6 +71,7 @@ public class NamesTest implements Serializable {
 		DataSet<String> strs = env.fromCollection(Arrays.asList("a", "b"));
 		strs.filter(new FilterFunction<String>() {
 			private static final long serialVersionUID = 1L;
+
 			@Override
 			public boolean filter(String value) throws Exception {
 				return value.equals("a");
@@ -96,7 +97,7 @@ public class NamesTest implements Serializable {
 				//
 			}
 		})
-				.output(new DiscardingOutputFormat<String>());
+			.output(new DiscardingOutputFormat<String>());
 		Plan plan = env.createProgramPlan();
 		plan.accept(new Visitor<Operator<?>>() {
 			@Override
@@ -108,7 +109,8 @@ public class NamesTest implements Serializable {
 			}
 
 			@Override
-			public void postVisit(Operator<?> visitable) {}
+			public void postVisit(Operator<?> visitable) {
+			}
 		});
 	}
 

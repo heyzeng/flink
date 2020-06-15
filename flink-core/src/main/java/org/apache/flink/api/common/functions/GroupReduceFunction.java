@@ -55,8 +55,7 @@ public interface GroupReduceFunction<T, O> extends Function, Serializable {
 	 * The reduce method. The function receives one call per group of elements.
 	 *
 	 * @param values All records that belong to the given input key.
-	 * @param out The collector to hand results to.
-	 *
+	 * @param out    The collector to hand results to.
 	 * @throws Exception This method may throw exceptions. Throwing an exception will cause the operation
 	 *                   to fail and may trigger recovery.
 	 */

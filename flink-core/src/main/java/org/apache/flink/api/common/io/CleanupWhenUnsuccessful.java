@@ -25,10 +25,10 @@ import org.apache.flink.annotation.Public;
  */
 @Public
 public interface CleanupWhenUnsuccessful {
-	
+
 	/**
 	 * Hook that is called upon an unsuccessful execution.
-	 * 
+	 *
 	 * @throws Exception The method may forward exceptions when the cleanup fails.
 	 */
 	void tryCleanupOnError() throws Exception;

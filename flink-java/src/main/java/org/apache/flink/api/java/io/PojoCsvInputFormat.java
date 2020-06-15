@@ -32,6 +32,7 @@ import java.util.Map;
 
 /**
  * Input format that reads csv into POJOs.
+ *
  * @param <OUT> resulting POJO type
  */
 @Internal
@@ -77,8 +78,8 @@ public class PojoCsvInputFormat<OUT> extends CsvInputFormat<OUT> {
 	public PojoCsvInputFormat(Path filePath, String lineDelimiter, String fieldDelimiter, PojoTypeInfo<OUT> pojoTypeInfo, String[] fieldNames, int[] includedFieldsMask) {
 		super(filePath);
 		boolean[] mask = (includedFieldsMask == null)
-				? createDefaultMask(fieldNames.length)
-				: toBooleanMask(includedFieldsMask);
+			? createDefaultMask(fieldNames.length)
+			: toBooleanMask(includedFieldsMask);
 		configure(lineDelimiter, fieldDelimiter, pojoTypeInfo, fieldNames, mask);
 	}
 
@@ -144,12 +145,12 @@ public class PojoCsvInputFormat<OUT> extends CsvInputFormat<OUT> {
 		}
 
 		Preconditions.checkArgument(includedCount == fieldNames.length, includedCount
-				+ " CSV fields and " + fieldNames.length + " POJO fields selected. The number of selected CSV and POJO fields must be equal.");
+			+ " CSV fields and " + fieldNames.length + " POJO fields selected. The number of selected CSV and POJO fields must be equal.");
 
 		for (String field : fieldNames) {
 			Preconditions.checkNotNull(field, "The field name cannot be null.");
 			Preconditions.checkArgument(pojoTypeInfo.getFieldIndex(field) != -1,
-					"Field \"" + field + "\" is not a member of POJO class " + pojoTypeClass.getName());
+				"Field \"" + field + "\" is not a member of POJO class " + pojoTypeClass.getName());
 		}
 
 		pojoFieldNames = Arrays.copyOfRange(fieldNames, 0, fieldNames.length);
@@ -179,7 +180,7 @@ public class PojoCsvInputFormat<OUT> extends CsvInputFormat<OUT> {
 	/**
 	 * Finds all declared fields in a class and all its super classes.
 	 *
-	 * @param clazz Class for which all declared fields are found
+	 * @param clazz     Class for which all declared fields are found
 	 * @param allFields Map containing all found fields so far
 	 */
 	private void findAllFields(Class<?> clazz, Map<String, Field> allFields) {

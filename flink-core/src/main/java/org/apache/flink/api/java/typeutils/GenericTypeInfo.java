@@ -34,7 +34,7 @@ import static org.apache.flink.util.Preconditions.checkNotNull;
 public class GenericTypeInfo<T> extends TypeInformation<T> implements AtomicType<T> {
 
 	private static final long serialVersionUID = -7959114120287706504L;
-	
+
 	private final Class<T> typeClass;
 
 	@PublicEvolving
@@ -59,7 +59,7 @@ public class GenericTypeInfo<T> extends TypeInformation<T> implements AtomicType
 	public int getArity() {
 		return 1;
 	}
-	
+
 	@Override
 	@PublicEvolving
 	public int getTotalFields() {
@@ -71,7 +71,7 @@ public class GenericTypeInfo<T> extends TypeInformation<T> implements AtomicType
 	public Class<T> getTypeClass() {
 		return typeClass;
 	}
-	
+
 	@Override
 	@PublicEvolving
 	public boolean isKeyType() {
@@ -84,7 +84,7 @@ public class GenericTypeInfo<T> extends TypeInformation<T> implements AtomicType
 		if (config.hasGenericTypesDisabled()) {
 			throw new UnsupportedOperationException(
 				"Generic types have been disabled in the ExecutionConfig and type " + this.typeClass.getName() +
-				" is treated as a generic type.");
+					" is treated as a generic type.");
 		}
 
 		return new KryoSerializer<T>(this.typeClass, config);
@@ -126,7 +126,7 @@ public class GenericTypeInfo<T> extends TypeInformation<T> implements AtomicType
 			return false;
 		}
 	}
-	
+
 	@Override
 	public String toString() {
 		return "GenericType<" + typeClass.getCanonicalName() + ">";

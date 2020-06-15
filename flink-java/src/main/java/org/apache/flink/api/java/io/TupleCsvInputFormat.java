@@ -49,8 +49,8 @@ public class TupleCsvInputFormat<OUT> extends CsvInputFormat<OUT> {
 	public TupleCsvInputFormat(Path filePath, String lineDelimiter, String fieldDelimiter, TupleTypeInfoBase<OUT> tupleTypeInfo, int[] includedFieldsMask) {
 		super(filePath);
 		boolean[] mask = (includedFieldsMask == null)
-				? createDefaultMask(tupleTypeInfo.getArity())
-				: toBooleanMask(includedFieldsMask);
+			? createDefaultMask(tupleTypeInfo.getArity())
+			: toBooleanMask(includedFieldsMask);
 		configure(lineDelimiter, fieldDelimiter, tupleTypeInfo, mask);
 	}
 
@@ -64,7 +64,7 @@ public class TupleCsvInputFormat<OUT> extends CsvInputFormat<OUT> {
 	}
 
 	private void configure(String lineDelimiter, String fieldDelimiter,
-			TupleTypeInfoBase<OUT> tupleTypeInfo, boolean[] includedFieldsMask) {
+						   TupleTypeInfoBase<OUT> tupleTypeInfo, boolean[] includedFieldsMask) {
 
 		if (tupleTypeInfo.getArity() == 0) {
 			throw new IllegalArgumentException("Tuple size must be greater than 0.");

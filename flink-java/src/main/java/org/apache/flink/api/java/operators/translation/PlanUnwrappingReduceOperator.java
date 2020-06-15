@@ -34,7 +34,7 @@ import org.apache.flink.api.java.tuple.Tuple2;
 public class PlanUnwrappingReduceOperator<T, K> extends ReduceOperatorBase<Tuple2<K, T>, ReduceFunction<Tuple2<K, T>>> {
 
 	public PlanUnwrappingReduceOperator(ReduceFunction<T> udf, Keys.SelectorFunctionKeys<T, K> key, String name,
-			TypeInformation<T> type, TypeInformation<Tuple2<K, T>> typeInfoWithKey) {
+										TypeInformation<T> type, TypeInformation<Tuple2<K, T>> typeInfoWithKey) {
 		super(new ReduceWrapper<T, K>(udf), new UnaryOperatorInformation<Tuple2<K, T>, Tuple2<K, T>>(typeInfoWithKey, typeInfoWithKey), key.computeLogicalKeyPositions(), name);
 	}
 

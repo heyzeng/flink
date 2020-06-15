@@ -34,25 +34,25 @@ import org.apache.flink.util.InstantiationUtil;
  */
 @Internal
 public class CopyableValueComparator<T extends CopyableValue<T> & Comparable<T>> extends TypeComparator<T> {
-	
+
 	private static final long serialVersionUID = 1L;
-	
+
 	private final Class<T> type;
-	
+
 	private final boolean ascendingComparison;
-	
+
 	private transient T reference;
-	
+
 	private transient T tempReference;
 
-	private final TypeComparator<?>[] comparators = new TypeComparator[] {this};
+	private final TypeComparator<?>[] comparators = new TypeComparator[]{this};
 
 	public CopyableValueComparator(boolean ascending, Class<T> type) {
 		this.type = type;
 		this.ascendingComparison = ascending;
 		this.reference = InstantiationUtil.instantiate(type, CopyableValue.class);
 	}
-	
+
 	@Override
 	public int hash(T record) {
 		return record.hashCode();
@@ -74,19 +74,19 @@ public class CopyableValueComparator<T extends CopyableValue<T> & Comparable<T>>
 		int comp = otherRef.compareTo(reference);
 		return ascendingComparison ? comp : -comp;
 	}
-	
+
 	@Override
 	public int compare(T first, T second) {
 		int comp = first.compareTo(second);
 		return ascendingComparison ? comp : -comp;
 	}
-	
+
 	@Override
 	public int compareSerialized(DataInputView firstSource, DataInputView secondSource) throws IOException {
 		if (tempReference == null) {
 			tempReference = InstantiationUtil.instantiate(type, CopyableValue.class);
 		}
-		
+
 		reference.read(firstSource);
 		tempReference.read(secondSource);
 		int comp = reference.compareTo(tempReference);
@@ -119,7 +119,7 @@ public class CopyableValueComparator<T extends CopyableValue<T> & Comparable<T>>
 	public boolean invertNormalizedKey() {
 		return !ascendingComparison;
 	}
-	
+
 	@Override
 	public TypeComparator<T> duplicate() {
 		return new CopyableValueComparator<T>(ascendingComparison, type);
@@ -135,11 +135,11 @@ public class CopyableValueComparator<T extends CopyableValue<T> & Comparable<T>>
 	public TypeComparator<?>[] getFlatComparators() {
 		return comparators;
 	}
-	
+
 	// --------------------------------------------------------------------------------------------
 	// unsupported normalization
 	// --------------------------------------------------------------------------------------------
-	
+
 	@Override
 	public boolean supportsSerializationWithKeyNormalization() {
 		return false;
@@ -153,16 +153,16 @@ public class CopyableValueComparator<T extends CopyableValue<T> & Comparable<T>>
 	@Override
 	public T readWithKeyDenormalization(T reuse, DataInputView source) throws IOException {
 		throw new UnsupportedOperationException();
-	}	
-	
+	}
+
 	// --------------------------------------------------------------------------------------------
 	// serialization
 	// --------------------------------------------------------------------------------------------
-	
+
 	private void readObject(java.io.ObjectInputStream s) throws java.io.IOException, ClassNotFoundException {
 		// read basic object and the type
 		s.defaultReadObject();
-		
+
 		this.reference = InstantiationUtil.instantiate(type, CopyableValue.class);
 		this.tempReference = null;
 	}

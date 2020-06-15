@@ -26,24 +26,24 @@ import org.apache.flink.api.common.typeutils.base.StringSerializer;
  * A test for the {@link StringSerializer}.
  */
 public class StringSerializerTest extends SerializerTestBase<String> {
-	
+
 	@Override
 	protected TypeSerializer<String> createSerializer() {
 		return new StringSerializer();
 	}
-	
+
 	@Override
 	protected int getLength() {
 		return -1;
 	}
-	
+
 	@Override
 	protected Class<String> getTypeClass() {
 		return String.class;
 	}
-	
+
 	@Override
 	protected String[] getTestData() {
-		return new String[] {"a", "", "bcd", "jbmbmner8 jhk hj \n \t üäßß@µ", "", "non-empty"};
+		return new String[]{"a", "", "bcd", "jbmbmner8 jhk hj \n \t üäßß@µ", "", "non-empty"};
 	}
 }

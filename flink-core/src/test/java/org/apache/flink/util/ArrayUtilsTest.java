@@ -31,8 +31,8 @@ public class ArrayUtilsTest extends TestLogger {
 
 	@Test
 	public void concatWithEmptyArray() {
-		String[] emptyArray = new String[] {};
-		String[] nonEmptyArray = new String[] {"some value"};
+		String[] emptyArray = new String[]{};
+		String[] nonEmptyArray = new String[]{"some value"};
 
 		assertThat("Should return the non empty array",
 			ArrayUtils.concat(emptyArray, nonEmptyArray), sameInstance(nonEmptyArray));
@@ -43,8 +43,8 @@ public class ArrayUtilsTest extends TestLogger {
 
 	@Test
 	public void concatArrays() {
-		String[] array1 = new String[] {"A", "B", "C", "D", "E", "F", "G"};
-		String[] array2 = new String[] {"1", "2", "3"};
+		String[] array1 = new String[]{"A", "B", "C", "D", "E", "F", "G"};
+		String[] array2 = new String[]{"1", "2", "3"};
 
 		assertThat(ArrayUtils.concat(array1, array2), is(new String[]{"A", "B", "C", "D", "E", "F", "G", "1", "2", "3"}));
 

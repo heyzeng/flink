@@ -33,16 +33,22 @@ class OptionTypeInfo[A, T <: Option[A]](private val elemTypeInfo: TypeInformatio
 
   @PublicEvolving
   override def isBasicType: Boolean = false
+
   @PublicEvolving
   override def isTupleType: Boolean = false
+
   @PublicEvolving
   override def isKeyType: Boolean = elemTypeInfo.isKeyType
+
   @PublicEvolving
   override def getTotalFields: Int = 1
+
   @PublicEvolving
   override def getArity: Int = 1
+
   @PublicEvolving
   override def getTypeClass = classOf[Option[_]].asInstanceOf[Class[T]]
+
   @PublicEvolving
   override def getGenericParameters = Map[String, TypeInformation[_]]("A" -> elemTypeInfo).asJava
 

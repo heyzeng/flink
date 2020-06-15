@@ -32,7 +32,7 @@ import org.apache.flink.annotation.Public;
  * </pre>
  *
  * <p>This is conceptually the same as the code below.
-
+ *
  * <pre>
  * {@code
  * ClassLoader original = Thread.currentThread().getContextClassLoader();

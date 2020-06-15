@@ -42,20 +42,20 @@ public class CharComparatorTest extends ComparatorTestBase<Character> {
 	protected Character[] getSortedTestData() {
 		Random rnd = new Random(874597969123412338L);
 		int rndChar = rnd.nextInt(Character.MAX_VALUE);
-		if(rndChar<0){
-			rndChar=-rndChar;
+		if (rndChar < 0) {
+			rndChar = -rndChar;
 		}
-		if(rndChar==(int)Character.MIN_VALUE){
-			rndChar+=2;
+		if (rndChar == (int) Character.MIN_VALUE) {
+			rndChar += 2;
 		}
-		if(rndChar==(int)Character.MAX_VALUE){
-			rndChar-=2;
+		if (rndChar == (int) Character.MAX_VALUE) {
+			rndChar -= 2;
 		}
 		return new Character[]{
 			Character.MIN_VALUE,
-			(char)rndChar,
-			(char)(rndChar+1),
-			Character.MAX_VALUE			
+			(char) rndChar,
+			(char) (rndChar + 1),
+			Character.MAX_VALUE
 		};
 	}
 }

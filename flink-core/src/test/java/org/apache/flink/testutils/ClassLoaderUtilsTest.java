@@ -60,8 +60,8 @@ public class ClassLoaderUtilsTest {
 		try {
 			Class.forName(o.getClass().getName());
 			fail("should not be able to load class from the system class loader");
+		} catch (ClassNotFoundException ignored) {
 		}
-		catch (ClassNotFoundException ignored) {}
 	}
 
 	private static <X> void testObjectFromNewClassLoaderClassLoaders(Supplier<ClassLoaderUtils.ObjectAndClassLoader<X>> supplier) {

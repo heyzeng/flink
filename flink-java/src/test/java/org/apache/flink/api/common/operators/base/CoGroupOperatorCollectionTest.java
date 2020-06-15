@@ -57,25 +57,25 @@ public class CoGroupOperatorCollectionTest implements Serializable {
 	public void testExecuteOnCollection() {
 		try {
 			List<Tuple2<String, Integer>> input1 = Arrays.asList(
-					new Tuple2Builder<String, Integer>()
-							.add("foo", 1)
-							.add("foobar", 1)
-							.add("foo", 1)
-							.add("bar", 1)
-							.add("foo", 1)
-							.add("foo", 1)
-							.build()
+				new Tuple2Builder<String, Integer>()
+					.add("foo", 1)
+					.add("foobar", 1)
+					.add("foo", 1)
+					.add("bar", 1)
+					.add("foo", 1)
+					.add("foo", 1)
+					.build()
 			);
 
 			List<Tuple2<String, Integer>> input2 = Arrays.asList(
-					new Tuple2Builder<String, Integer>()
-							.add("foo", 1)
-							.add("foo", 1)
-							.add("bar", 1)
-							.add("foo", 1)
-							.add("barfoo", 1)
-							.add("foo", 1)
-							.build()
+				new Tuple2Builder<String, Integer>()
+					.add("foo", 1)
+					.add("foo", 1)
+					.add("bar", 1)
+					.add("foo", 1)
+					.add("barfoo", 1)
+					.add("foo", 1)
+					.build()
 			);
 
 			ExecutionConfig executionConfig = new ExecutionConfig();
@@ -83,7 +83,7 @@ public class CoGroupOperatorCollectionTest implements Serializable {
 			final HashMap<String, Future<Path>> cpTasks = new HashMap<>();
 			final TaskInfo taskInfo = new TaskInfo("Test UDF", 4, 0, 4, 0);
 			final RuntimeContext ctx = new RuntimeUDFContext(
-					taskInfo, null, executionConfig, cpTasks, accumulators, new UnregisteredMetricsGroup());
+				taskInfo, null, executionConfig, cpTasks, accumulators, new UnregisteredMetricsGroup());
 
 			{
 				SumCoGroup udf1 = new SumCoGroup();
@@ -91,22 +91,22 @@ public class CoGroupOperatorCollectionTest implements Serializable {
 
 				executionConfig.disableObjectReuse();
 				List<Tuple2<String, Integer>> resultSafe = getCoGroupOperator(udf1)
-						.executeOnCollections(input1, input2, ctx, executionConfig);
+					.executeOnCollections(input1, input2, ctx, executionConfig);
 				executionConfig.enableObjectReuse();
 				List<Tuple2<String, Integer>> resultRegular = getCoGroupOperator(udf2)
-						.executeOnCollections(input1, input2, ctx, executionConfig);
+					.executeOnCollections(input1, input2, ctx, executionConfig);
 
 				Assert.assertTrue(udf1.isClosed);
 				Assert.assertTrue(udf2.isClosed);
 
 				Set<Tuple2<String, Integer>> expected = new HashSet<Tuple2<String, Integer>>(
-						Arrays.asList(new Tuple2Builder<String, Integer>()
-										.add("foo", 8)
-										.add("bar", 2)
-										.add("foobar", 1)
-										.add("barfoo", 1)
-										.build()
-						)
+					Arrays.asList(new Tuple2Builder<String, Integer>()
+						.add("foo", 8)
+						.add("bar", 2)
+						.add("foobar", 1)
+						.add("barfoo", 1)
+						.build()
+					)
 				);
 
 				Assert.assertEquals(expected, new HashSet<Tuple2<String, Integer>>(resultSafe));
@@ -116,13 +116,13 @@ public class CoGroupOperatorCollectionTest implements Serializable {
 			{
 				executionConfig.disableObjectReuse();
 				List<Tuple2<String, Integer>> resultSafe = getCoGroupOperator(new SumCoGroup())
-						.executeOnCollections(Collections.<Tuple2<String, Integer>>emptyList(),
-								Collections.<Tuple2<String, Integer>>emptyList(), ctx, executionConfig);
+					.executeOnCollections(Collections.<Tuple2<String, Integer>>emptyList(),
+						Collections.<Tuple2<String, Integer>>emptyList(), ctx, executionConfig);
 
 				executionConfig.enableObjectReuse();
 				List<Tuple2<String, Integer>> resultRegular = getCoGroupOperator(new SumCoGroup())
-						.executeOnCollections(Collections.<Tuple2<String, Integer>>emptyList(),
-								Collections.<Tuple2<String, Integer>>emptyList(), ctx, executionConfig);
+					.executeOnCollections(Collections.<Tuple2<String, Integer>>emptyList(),
+						Collections.<Tuple2<String, Integer>>emptyList(), ctx, executionConfig);
 
 				Assert.assertEquals(0, resultSafe.size());
 				Assert.assertEquals(0, resultRegular.size());
@@ -150,9 +150,9 @@ public class CoGroupOperatorCollectionTest implements Serializable {
 
 		@Override
 		public void coGroup(
-				Iterable<Tuple2<String, Integer>> first,
-				Iterable<Tuple2<String, Integer>> second,
-				Collector<Tuple2<String, Integer>> out) throws Exception {
+			Iterable<Tuple2<String, Integer>> first,
+			Iterable<Tuple2<String, Integer>> second,
+			Collector<Tuple2<String, Integer>> out) throws Exception {
 
 			Assert.assertTrue(isOpened);
 			Assert.assertFalse(isClosed);
@@ -180,18 +180,19 @@ public class CoGroupOperatorCollectionTest implements Serializable {
 	}
 
 	private CoGroupOperatorBase<Tuple2<String, Integer>, Tuple2<String, Integer>,
-			Tuple2<String, Integer>, CoGroupFunction<Tuple2<String, Integer>, Tuple2<String, Integer>,
-			Tuple2<String, Integer>>> getCoGroupOperator(
-			RichCoGroupFunction<Tuple2<String, Integer>, Tuple2<String, Integer>, Tuple2<String, Integer>> udf) {
+		Tuple2<String, Integer>, CoGroupFunction<Tuple2<String, Integer>, Tuple2<String, Integer>,
+		Tuple2<String, Integer>>> getCoGroupOperator(
+		RichCoGroupFunction<Tuple2<String, Integer>, Tuple2<String, Integer>, Tuple2<String, Integer>> udf) {
 
-		TypeInformation<Tuple2<String, Integer>> tuple2Info = TypeInformation.of(new TypeHint<Tuple2<String, Integer>>(){});
+		TypeInformation<Tuple2<String, Integer>> tuple2Info = TypeInformation.of(new TypeHint<Tuple2<String, Integer>>() {
+		});
 
 		return new CoGroupOperatorBase<>(
-				udf,
-				new BinaryOperatorInformation<>(tuple2Info, tuple2Info, tuple2Info),
-				new int[]{0},
-				new int[]{0},
-				"coGroup on Collections"
+			udf,
+			new BinaryOperatorInformation<>(tuple2Info, tuple2Info, tuple2Info),
+			new int[]{0},
+			new int[]{0},
+			"coGroup on Collections"
 		);
 	}
 }

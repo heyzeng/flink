@@ -51,10 +51,12 @@ import static org.junit.Assert.assertTrue;
 public class LambdaExtractionTest {
 
 	private static final TypeInformation<Tuple2<Tuple1<Integer>, Boolean>> NESTED_TUPLE_BOOLEAN_TYPE =
-			new TypeHint<Tuple2<Tuple1<Integer>, Boolean>>(){}.getTypeInfo();
+		new TypeHint<Tuple2<Tuple1<Integer>, Boolean>>() {
+		}.getTypeInfo();
 
 	private static final TypeInformation<Tuple2<Tuple1<Integer>, Double>> NESTED_TUPLE_DOUBLE_TYPE =
-			new TypeHint<Tuple2<Tuple1<Integer>, Double>>(){}.getTypeInfo();
+		new TypeHint<Tuple2<Tuple1<Integer>, Double>>() {
+		}.getTypeInfo();
 
 	@Test
 	@SuppressWarnings({"Convert2Lambda", "Anonymous2MethodRef"})
@@ -173,7 +175,8 @@ public class LambdaExtractionTest {
 
 	@Test
 	public void testMapPartitionLambda() {
-		MapPartitionFunction<Tuple2<Tuple1<Integer>, Boolean>, Tuple2<Tuple1<Integer>, String>> f = (i, o) -> {};
+		MapPartitionFunction<Tuple2<Tuple1<Integer>, Boolean>, Tuple2<Tuple1<Integer>, String>> f = (i, o) -> {
+		};
 
 		TypeInformation<?> ti = TypeExtractor.getMapPartitionReturnTypes(f, NESTED_TUPLE_BOOLEAN_TYPE, null, true);
 		if (!(ti instanceof MissingTypeInfo)) {
@@ -199,7 +202,8 @@ public class LambdaExtractionTest {
 
 	@Test
 	public void testCoGroupLambda() {
-		CoGroupFunction<Tuple2<Tuple1<Integer>, Boolean>, Tuple2<Tuple1<Integer>, Double>, Tuple2<Tuple1<Integer>, String>> f = (i1, i2, o) -> {};
+		CoGroupFunction<Tuple2<Tuple1<Integer>, Boolean>, Tuple2<Tuple1<Integer>, Double>, Tuple2<Tuple1<Integer>, String>> f = (i1, i2, o) -> {
+		};
 
 		TypeInformation<?> ti = TypeExtractor.getCoGroupReturnTypes(f, NESTED_TUPLE_BOOLEAN_TYPE, NESTED_TUPLE_DOUBLE_TYPE, null, true);
 		if (!(ti instanceof MissingTypeInfo)) {
@@ -227,7 +231,8 @@ public class LambdaExtractionTest {
 	@Test
 	public void testLambdaTypeErasure() {
 		MapFunction<Tuple1<Integer>, Tuple1> f = (i) -> null;
-		TypeInformation<?> ti = TypeExtractor.getMapReturnTypes(f, new TypeHint<Tuple1<Integer>>(){}.getTypeInfo(), null, true);
+		TypeInformation<?> ti = TypeExtractor.getMapReturnTypes(f, new TypeHint<Tuple1<Integer>>() {
+		}.getTypeInfo(), null, true);
 		assertTrue(ti instanceof MissingTypeInfo);
 	}
 

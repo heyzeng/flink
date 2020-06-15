@@ -46,8 +46,8 @@ public class TypeExtractionTest {
 		};
 
 		TypeInformation<?> info = ExecutionEnvironment.getExecutionEnvironment()
-				.fromElements("arbitrary", "data")
-				.map(function).returns(Types.STRING).getResultType();
+			.fromElements("arbitrary", "data")
+			.map(function).returns(Types.STRING).getResultType();
 
 		assertEquals(Types.STRING, info);
 	}
@@ -64,6 +64,7 @@ public class TypeExtractionTest {
 
 	/**
 	 * Representation of Vertex with maximum of 2 keys and a value.
+	 *
 	 * @param <K> keys type
 	 * @param <V> value type
 	 */
@@ -73,7 +74,8 @@ public class TypeExtractionTest {
 		private K key2;
 		private V value;
 
-		public Vertex() {}
+		public Vertex() {
+		}
 
 		public Vertex(K key, V value) {
 			this.key1 = key;
@@ -115,7 +117,7 @@ public class TypeExtractionTest {
 	/**
 	 * A {@link Vertex} with {@link Long} as key and {@link Double} as value.
 	 */
-	public static class VertexTyped extends Vertex<Long, Double>{
+	public static class VertexTyped extends Vertex<Long, Double> {
 		public VertexTyped(Long l, Double d) {
 			super(l, d);
 		}

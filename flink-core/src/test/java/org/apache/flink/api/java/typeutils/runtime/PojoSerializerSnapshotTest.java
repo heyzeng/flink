@@ -53,7 +53,8 @@ public class PojoSerializerSnapshotTest {
 		public String name;
 		public double height;
 
-		public TestPojo() {}
+		public TestPojo() {
+		}
 
 		public TestPojo(int id, String name, double height) {
 			this.id = id;
@@ -87,6 +88,7 @@ public class PojoSerializerSnapshotTest {
 	}
 
 	private final static Map<String, Field> FIELDS = new HashMap<>(3);
+
 	static {
 		try {
 			FIELDS.put("id", TestPojo.class.getDeclaredField("id"));
@@ -100,6 +102,7 @@ public class PojoSerializerSnapshotTest {
 	private static TestPojoField ID_FIELD;
 	private static TestPojoField NAME_FIELD;
 	private static TestPojoField HEIGHT_FIELD;
+
 	static {
 		try {
 			ID_FIELD = new TestPojoField("id", IntSerializer.INSTANCE);
@@ -127,12 +130,12 @@ public class PojoSerializerSnapshotTest {
 
 		final Field[] restoredFields = restoredPojoSerializer.getFields();
 		assertArrayEquals(
-			new Field[] { ID_FIELD.field, NAME_FIELD.field, HEIGHT_FIELD.field },
+			new Field[]{ID_FIELD.field, NAME_FIELD.field, HEIGHT_FIELD.field},
 			restoredFields);
 
 		final TypeSerializer<?>[] restoredFieldSerializers = restoredPojoSerializer.getFieldSerializers();
 		assertArrayEquals(
-			new TypeSerializer[] { IntSerializer.INSTANCE, StringSerializer.INSTANCE, DoubleSerializer.INSTANCE },
+			new TypeSerializer[]{IntSerializer.INSTANCE, StringSerializer.INSTANCE, DoubleSerializer.INSTANCE},
 			restoredFieldSerializers);
 	}
 
@@ -150,12 +153,12 @@ public class PojoSerializerSnapshotTest {
 
 		final Field[] restoredFields = restoredPojoSerializer.getFields();
 		assertArrayEquals(
-			new Field[] { null, NAME_FIELD.field, null },
+			new Field[]{null, NAME_FIELD.field, null},
 			restoredFields);
 
 		final TypeSerializer<?>[] restoredFieldSerializers = restoredPojoSerializer.getFieldSerializers();
 		assertArrayEquals(
-			new TypeSerializer[] { IntSerializer.INSTANCE, StringSerializer.INSTANCE, DoubleSerializer.INSTANCE },
+			new TypeSerializer[]{IntSerializer.INSTANCE, StringSerializer.INSTANCE, DoubleSerializer.INSTANCE},
 			restoredFieldSerializers);
 	}
 
@@ -169,12 +172,12 @@ public class PojoSerializerSnapshotTest {
 
 		final Field[] restoredFields = restoredPojoSerializer.getFields();
 		assertArrayEquals(
-			new Field[] { HEIGHT_FIELD.field },
+			new Field[]{HEIGHT_FIELD.field},
 			restoredFields);
 
 		final TypeSerializer<?>[] restoredFieldSerializers = restoredPojoSerializer.getFieldSerializers();
 		assertArrayEquals(
-			new TypeSerializer[] { DoubleSerializer.INSTANCE },
+			new TypeSerializer[]{DoubleSerializer.INSTANCE},
 			restoredFieldSerializers);
 	}
 
@@ -320,10 +323,10 @@ public class PojoSerializerSnapshotTest {
 
 		final TypeSerializer<?>[] reconfiguredFieldSerializers = reconfiguredPojoSerializer.getFieldSerializers();
 		assertArrayEquals(
-			new TypeSerializer[] {
+			new TypeSerializer[]{
 				new SchemaCompatibilityTestingSerializer(),
 				StringSerializer.INSTANCE,
-				DoubleSerializer.INSTANCE },
+				DoubleSerializer.INSTANCE},
 			reconfiguredFieldSerializers);
 	}
 

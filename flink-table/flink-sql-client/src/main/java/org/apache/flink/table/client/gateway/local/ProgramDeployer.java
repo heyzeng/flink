@@ -45,14 +45,14 @@ public class ProgramDeployer {
 	/**
 	 * Deploys a table program on the cluster.
 	 *
-	 * @param configuration  the {@link Configuration} that is used for deployment
-	 * @param jobName        job name of the Flink job to be submitted
-	 * @param pipeline       Flink {@link Pipeline} to execute
+	 * @param configuration the {@link Configuration} that is used for deployment
+	 * @param jobName       job name of the Flink job to be submitted
+	 * @param pipeline      Flink {@link Pipeline} to execute
 	 */
 	public ProgramDeployer(
-			Configuration configuration,
-			String jobName,
-			Pipeline pipeline) {
+		Configuration configuration,
+		String jobName,
+		Pipeline pipeline) {
 		this.configuration = configuration;
 		this.pipeline = pipeline;
 		this.jobName = jobName;

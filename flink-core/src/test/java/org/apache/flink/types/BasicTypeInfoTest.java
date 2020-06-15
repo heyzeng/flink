@@ -38,7 +38,7 @@ public class BasicTypeInfoTest extends TestLogger {
 
 	@Test
 	public void testBasicTypeInfoEquality() {
-		for (Class<?> clazz: classes) {
+		for (Class<?> clazz : classes) {
 			BasicTypeInfo<?> tpeInfo1 = BasicTypeInfo.getInfoFor(clazz);
 			BasicTypeInfo<?> tpeInfo2 = BasicTypeInfo.getInfoFor(clazz);
 
@@ -49,8 +49,8 @@ public class BasicTypeInfoTest extends TestLogger {
 
 	@Test
 	public void testBasicTypeInfoInequality() {
-		for (Class<?> clazz1: classes) {
-			for (Class<?> clazz2: classes) {
+		for (Class<?> clazz1 : classes) {
+			for (Class<?> clazz2 : classes) {
 				if (!clazz1.equals(clazz2)) {
 					BasicTypeInfo<?> tpeInfo1 = BasicTypeInfo.getInfoFor(clazz1);
 					BasicTypeInfo<?> tpeInfo2 = BasicTypeInfo.getInfoFor(clazz2);

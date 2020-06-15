@@ -28,25 +28,25 @@ import org.apache.flink.api.common.typeutils.TypeSerializer;
 public class JoinHashMap<BT> extends AbstractHashedMap {
 
 	private final TypeSerializer<BT> buildSerializer;
-	
+
 	private final TypeComparator<BT> buildComparator;
-	
-	
+
+
 	public JoinHashMap(TypeSerializer<BT> buildSerializer, TypeComparator<BT> buildComparator) {
 		super(64);
 		this.buildSerializer = buildSerializer;
 		this.buildComparator = buildComparator;
 	}
-	
-	
+
+
 	public TypeSerializer<BT> getBuildSerializer() {
 		return buildSerializer;
 	}
-	
+
 	public TypeComparator<BT> getBuildComparator() {
 		return buildComparator;
 	}
-	
+
 	public <PT> Prober<PT> createProber(TypeComparator<PT> probeComparator, TypePairComparator<PT, BT> pairComparator) {
 		return new Prober<PT>(probeComparator, pairComparator);
 	}
@@ -64,23 +64,22 @@ public class JoinHashMap<BT> extends AbstractHashedMap {
 			}
 			entry = entryNext(entry);
 		}
-		
+
 		addMapping(index, hashCode, null, record);
 	}
-	
 
-	
+
 	public class Prober<PT> {
-		
+
 		public Prober(TypeComparator<PT> probeComparator, TypePairComparator<PT, BT> pairComparator) {
 			this.probeComparator = probeComparator;
 			this.pairComparator = pairComparator;
 		}
 
 		private final TypeComparator<PT> probeComparator;
-		
+
 		private final TypePairComparator<PT, BT> pairComparator;
-		
+
 		@SuppressWarnings("unchecked")
 		public BT lookupMatch(PT record) {
 			int hashCode = hash(probeComparator.hash(record));

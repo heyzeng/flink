@@ -44,10 +44,10 @@ public class CollectStreamTableSink implements RetractStreamTableSink<Row> {
 	private final TableSchema tableSchema;
 
 	public CollectStreamTableSink(
-			InetAddress targetAddress,
-			int targetPort,
-			TypeSerializer<Tuple2<Boolean, Row>> serializer,
-			TableSchema tableSchema) {
+		InetAddress targetAddress,
+		int targetPort,
+		TypeSerializer<Tuple2<Boolean, Row>> serializer,
+		TableSchema tableSchema) {
 		this.targetAddress = targetAddress;
 		this.targetPort = targetPort;
 		this.serializer = serializer;

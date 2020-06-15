@@ -58,13 +58,13 @@ public class ExecutionConfigTest extends TestLogger {
 		List<Class<?>> types = Arrays.<Class<?>>asList(Double.class, Integer.class, Double.class);
 		List<Class<?>> expectedTypes = Arrays.<Class<?>>asList(Double.class, Integer.class);
 
-		for (Class<?> tpe: types) {
+		for (Class<?> tpe : types) {
 			config.registerKryoType(tpe);
 		}
 
 		int counter = 0;
 
-		for (Class<?> tpe: config.getRegisteredKryoTypes()){
+		for (Class<?> tpe : config.getRegisteredKryoTypes()) {
 			assertEquals(tpe, expectedTypes.get(counter++));
 		}
 
@@ -102,8 +102,7 @@ public class ExecutionConfigTest extends TestLogger {
 		try {
 			typeInfo.createSerializer(conf);
 			fail("should have failed with an exception");
-		}
-		catch (UnsupportedOperationException e) {
+		} catch (UnsupportedOperationException e) {
 			// expected
 		}
 	}
@@ -113,11 +112,11 @@ public class ExecutionConfigTest extends TestLogger {
 		final Random r = new Random();
 
 		final int parallelism = 1 + r.nextInt(10);
-		final boolean closureCleanerEnabled = r.nextBoolean(), 
-				forceAvroEnabled = r.nextBoolean(),
-				forceKryoEnabled = r.nextBoolean(),
-				disableGenericTypes = r.nextBoolean(),
-				objectReuseEnabled = r.nextBoolean();
+		final boolean closureCleanerEnabled = r.nextBoolean(),
+			forceAvroEnabled = r.nextBoolean(),
+			forceKryoEnabled = r.nextBoolean(),
+			disableGenericTypes = r.nextBoolean(),
+			objectReuseEnabled = r.nextBoolean();
 
 		final ExecutionConfig config = new ExecutionConfig();
 
@@ -202,7 +201,7 @@ public class ExecutionConfigTest extends TestLogger {
 
 		Configuration configuration = new Configuration();
 		configuration.setString("pipeline.registered-kryo-types", "org.apache.flink.api.common.ExecutionConfigTest;" +
-					"org.apache.flink.api.common.ExecutionConfigTest$TestSerializer1");
+			"org.apache.flink.api.common.ExecutionConfigTest$TestSerializer1");
 
 		// mutate config according to configuration
 		configFromConfiguration.configure(configuration, Thread.currentThread().getContextClassLoader());

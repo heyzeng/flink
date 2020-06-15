@@ -57,10 +57,11 @@ public class UnionTranslationTest {
 			DataSet<Tuple3<Double, StringValue, LongValue>> dataset2 = getSourceDataSet(env, 2);
 
 			dataset1.union(dataset2)
-					.groupBy((KeySelector<Tuple3<Double, StringValue, LongValue>, String>) value -> "")
-					.reduceGroup((GroupReduceFunction<Tuple3<Double, StringValue, LongValue>, String>) (values, out) -> {})
-					.returns(String.class)
-					.output(new DiscardingOutputFormat<>());
+				.groupBy((KeySelector<Tuple3<Double, StringValue, LongValue>, String>) value -> "")
+				.reduceGroup((GroupReduceFunction<Tuple3<Double, StringValue, LongValue>, String>) (values, out) -> {
+				})
+				.returns(String.class)
+				.output(new DiscardingOutputFormat<>());
 
 			Plan p = env.createProgramPlan();
 
@@ -83,8 +84,7 @@ public class UnionTranslationTest {
 
 			// The union should always have the default parallelism.
 			assertEquals(unionOperator.getParallelism(), ExecutionConfig.PARALLELISM_DEFAULT);
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			System.err.println(e.getMessage());
 			e.printStackTrace();
 			fail("Test caused an error: " + e.getMessage());
@@ -104,11 +104,12 @@ public class UnionTranslationTest {
 			DataSet<Tuple3<Double, StringValue, LongValue>> dataset3 = getSourceDataSet(env, -1);
 
 			dataset1.union(dataset2).union(dataset3)
-					.groupBy((KeySelector<Tuple3<Double, StringValue, LongValue>, String>) value -> "")
-					.sortGroup((KeySelector<Tuple3<Double, StringValue, LongValue>, String>) value -> "", Order.ASCENDING)
-					.reduceGroup((GroupReduceFunction<Tuple3<Double, StringValue, LongValue>, String>) (values, out) -> {})
-					.returns(String.class)
-					.output(new DiscardingOutputFormat<>());
+				.groupBy((KeySelector<Tuple3<Double, StringValue, LongValue>, String>) value -> "")
+				.sortGroup((KeySelector<Tuple3<Double, StringValue, LongValue>, String>) value -> "", Order.ASCENDING)
+				.reduceGroup((GroupReduceFunction<Tuple3<Double, StringValue, LongValue>, String>) (values, out) -> {
+				})
+				.returns(String.class)
+				.output(new DiscardingOutputFormat<>());
 
 			Plan p = env.createProgramPlan();
 
@@ -141,8 +142,7 @@ public class UnionTranslationTest {
 			// The union should always have the default parallelism.
 			assertEquals(secondUnionOperator.getParallelism(), ExecutionConfig.PARALLELISM_DEFAULT);
 			assertEquals(firstUnionOperator.getParallelism(), ExecutionConfig.PARALLELISM_DEFAULT);
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			System.err.println(e.getMessage());
 			e.printStackTrace();
 			fail("Test caused an error: " + e.getMessage());
@@ -152,7 +152,7 @@ public class UnionTranslationTest {
 	@SuppressWarnings("unchecked")
 	private static DataSet<Tuple3<Double, StringValue, LongValue>> getSourceDataSet(ExecutionEnvironment env, int parallelism) {
 		return env
-				.fromElements(new Tuple3<>(0.0, new StringValue(""), new LongValue(1L)))
-				.setParallelism(parallelism);
+			.fromElements(new Tuple3<>(0.0, new StringValue(""), new LongValue(1L)))
+			.setParallelism(parallelism);
 	}
 }

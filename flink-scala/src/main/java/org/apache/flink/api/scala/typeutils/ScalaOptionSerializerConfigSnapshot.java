@@ -34,15 +34,18 @@ import scala.Option;
  * for the default empty constructor.
  *
  * @deprecated this snapshot class is no longer in use, and is maintained only for backwards compatibility.
- *             It is fully replaced by {@link ScalaOptionSerializerSnapshot}.
+ * It is fully replaced by {@link ScalaOptionSerializerSnapshot}.
  */
 @Deprecated
 public final class ScalaOptionSerializerConfigSnapshot<E> extends CompositeTypeSerializerConfigSnapshot<Option<E>> {
 
 	private static final int VERSION = 1;
 
-	/** This empty nullary constructor is required for deserializing the configuration. */
-	public ScalaOptionSerializerConfigSnapshot() {}
+	/**
+	 * This empty nullary constructor is required for deserializing the configuration.
+	 */
+	public ScalaOptionSerializerConfigSnapshot() {
+	}
 
 	public ScalaOptionSerializerConfigSnapshot(TypeSerializer<E> elementSerializer) {
 		super(elementSerializer);

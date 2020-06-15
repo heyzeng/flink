@@ -58,7 +58,8 @@ public class CoGroupSortTranslationTest implements java.io.Serializable {
 				.with(new CoGroupFunction<Tuple2<Long, Long>, Tuple3<Long, Long, Long>, Long>() {
 					@Override
 					public void coGroup(Iterable<Tuple2<Long, Long>> first, Iterable<Tuple3<Long, Long, Long>> second,
-							Collector<Long> out) {}
+										Collector<Long> out) {
+					}
 				})
 
 				.output(new DiscardingOutputFormat<Long>());
@@ -80,8 +81,7 @@ public class CoGroupSortTranslationTest implements java.io.Serializable {
 			assertEquals(0, coGroup.getGroupOrderForInputTwo().getFieldNumber(1).intValue());
 			assertEquals(Order.ASCENDING, coGroup.getGroupOrderForInputTwo().getOrder(0));
 			assertEquals(Order.DESCENDING, coGroup.getGroupOrderForInputTwo().getOrder(1));
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 			fail(e.getMessage());
 		}
@@ -102,7 +102,8 @@ public class CoGroupSortTranslationTest implements java.io.Serializable {
 
 				.with(new CoGroupFunction<Tuple2<Long, Long>, TestPoJo, Long>() {
 					@Override
-					public void coGroup(Iterable<Tuple2<Long, Long>> first, Iterable<TestPoJo> second, Collector<Long> out) {}
+					public void coGroup(Iterable<Tuple2<Long, Long>> first, Iterable<TestPoJo> second, Collector<Long> out) {
+					}
 				})
 
 				.output(new DiscardingOutputFormat<Long>());
@@ -124,8 +125,7 @@ public class CoGroupSortTranslationTest implements java.io.Serializable {
 			assertEquals(0, coGroup.getGroupOrderForInputTwo().getFieldNumber(1).intValue());
 			assertEquals(Order.ASCENDING, coGroup.getGroupOrderForInputTwo().getOrder(0));
 			assertEquals(Order.DESCENDING, coGroup.getGroupOrderForInputTwo().getOrder(1));
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 			fail(e.getMessage());
 		}

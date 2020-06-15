@@ -40,82 +40,82 @@ import java.util.stream.Collectors;
 public class CliOptionsParser {
 
 	public static final Option OPTION_HELP = Option
-			.builder("h")
-			.required(false)
-			.longOpt("help")
-			.desc(
-				"Show the help message with descriptions of all options.")
-			.build();
+		.builder("h")
+		.required(false)
+		.longOpt("help")
+		.desc(
+			"Show the help message with descriptions of all options.")
+		.build();
 
 	public static final Option OPTION_SESSION = Option
-			.builder("s")
-			.required(false)
-			.longOpt("session")
-			.numberOfArgs(1)
-			.argName("session identifier")
-			.desc(
-				"The identifier for a session. 'default' is the default identifier.")
-			.build();
+		.builder("s")
+		.required(false)
+		.longOpt("session")
+		.numberOfArgs(1)
+		.argName("session identifier")
+		.desc(
+			"The identifier for a session. 'default' is the default identifier.")
+		.build();
 
 	public static final Option OPTION_ENVIRONMENT = Option
-			.builder("e")
-			.required(false)
-			.longOpt("environment")
-			.numberOfArgs(1)
-			.argName("environment file")
-			.desc(
-				"The environment properties to be imported into the session. " +
+		.builder("e")
+		.required(false)
+		.longOpt("environment")
+		.numberOfArgs(1)
+		.argName("environment file")
+		.desc(
+			"The environment properties to be imported into the session. " +
 				"It might overwrite default environment properties.")
-			.build();
+		.build();
 
 	public static final Option OPTION_DEFAULTS = Option
-			.builder("d")
-			.required(false)
-			.longOpt("defaults")
-			.numberOfArgs(1)
-			.argName("environment file")
-			.desc(
-				"The environment properties with which every new session is initialized. " +
+		.builder("d")
+		.required(false)
+		.longOpt("defaults")
+		.numberOfArgs(1)
+		.argName("environment file")
+		.desc(
+			"The environment properties with which every new session is initialized. " +
 				"Properties might be overwritten by session properties.")
-			.build();
+		.build();
 
 	public static final Option OPTION_JAR = Option
-			.builder("j")
-			.required(false)
-			.longOpt("jar")
-			.numberOfArgs(1)
-			.argName("JAR file")
-			.desc(
-				"A JAR file to be imported into the session. The file might contain " +
+		.builder("j")
+		.required(false)
+		.longOpt("jar")
+		.numberOfArgs(1)
+		.argName("JAR file")
+		.desc(
+			"A JAR file to be imported into the session. The file might contain " +
 				"user-defined classes needed for the execution of statements such as " +
 				"functions, table sources, or sinks. Can be used multiple times.")
-			.build();
+		.build();
 
 	public static final Option OPTION_LIBRARY = Option
-			.builder("l")
-			.required(false)
-			.longOpt("library")
-			.numberOfArgs(1)
-			.argName("JAR directory")
-			.desc(
-				"A JAR file directory with which every new session is initialized. The files might " +
+		.builder("l")
+		.required(false)
+		.longOpt("library")
+		.numberOfArgs(1)
+		.argName("JAR directory")
+		.desc(
+			"A JAR file directory with which every new session is initialized. The files might " +
 				"contain user-defined classes needed for the execution of statements such as " +
 				"functions, table sources, or sinks. Can be used multiple times.")
-			.build();
+		.build();
 
 	public static final Option OPTION_UPDATE = Option
-			.builder("u")
-			.required(false)
-			.longOpt("update")
-			.numberOfArgs(1)
-			.argName("SQL update statement")
-			.desc(
-				"Experimental (for testing only!): Instructs the SQL Client to immediately execute " +
+		.builder("u")
+		.required(false)
+		.longOpt("update")
+		.numberOfArgs(1)
+		.argName("SQL update statement")
+		.desc(
+			"Experimental (for testing only!): Instructs the SQL Client to immediately execute " +
 				"the given update statement after starting up. The process is shut down after the " +
 				"statement has been submitted to the cluster and returns an appropriate return code. " +
 				"Currently, this feature is only supported for INSERT INTO statements that declare " +
 				"the target sink table.")
-			.build();
+		.build();
 
 	private static final Options EMBEDDED_MODE_CLIENT_OPTIONS = getEmbeddedModeClientOptions(new Options());
 	private static final Options GATEWAY_MODE_CLIENT_OPTIONS = getGatewayModeClientOptions(new Options());
@@ -237,8 +237,7 @@ public class CliOptionsParser {
 				checkUrls(line, CliOptionsParser.OPTION_LIBRARY),
 				line.getOptionValue(CliOptionsParser.OPTION_UPDATE.getOpt())
 			);
-		}
-		catch (ParseException e) {
+		} catch (ParseException e) {
 			throw new SqlClientException(e.getMessage());
 		}
 	}
@@ -256,8 +255,7 @@ public class CliOptionsParser {
 				checkUrls(line, CliOptionsParser.OPTION_LIBRARY),
 				line.getOptionValue(CliOptionsParser.OPTION_UPDATE.getOpt())
 			);
-		}
-		catch (ParseException e) {
+		} catch (ParseException e) {
 			throw new SqlClientException(e.getMessage());
 		}
 	}
@@ -275,8 +273,7 @@ public class CliOptionsParser {
 				checkUrls(line, CliOptionsParser.OPTION_LIBRARY),
 				null
 			);
-		}
-		catch (ParseException e) {
+		} catch (ParseException e) {
 			throw new SqlClientException(e.getMessage());
 		}
 	}

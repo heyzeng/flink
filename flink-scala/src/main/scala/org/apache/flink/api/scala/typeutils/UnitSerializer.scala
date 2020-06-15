@@ -67,18 +67,19 @@ class UnitSerializer extends TypeSerializerSingleton[Unit] {
   }
 
   /**
-    * Serializer configuration snapshot for compatibility and format evolution.
-    */
+   * Serializer configuration snapshot for compatibility and format evolution.
+   */
 }
 
 object UnitSerializer {
 
   /**
-    * Serializer configuration snapshot for compatibility and format evolution.
-    */
+   * Serializer configuration snapshot for compatibility and format evolution.
+   */
   final class UnitSerializerSnapshot
-        extends SimpleTypeSerializerSnapshot[Unit](
-    new Supplier[TypeSerializer[Unit]] {
-      override def get() = new UnitSerializer()
-    })
+    extends SimpleTypeSerializerSnapshot[Unit](
+      new Supplier[TypeSerializer[Unit]] {
+        override def get() = new UnitSerializer()
+      })
+
 }

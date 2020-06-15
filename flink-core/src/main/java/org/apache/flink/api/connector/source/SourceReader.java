@@ -28,7 +28,7 @@ import java.util.concurrent.CompletableFuture;
  * The interface for a source reader which is responsible for reading the records from
  * the source splits assigned by {@link SplitEnumerator}.
  *
- * @param <T> The type of the record emitted by this source reader.
+ * @param <T>      The type of the record emitted by this source reader.
  * @param <SplitT> The type of the the source splits.
  */
 @Public
@@ -83,11 +83,17 @@ public interface SourceReader<T, SplitT extends SourceSplit> extends Serializabl
 	 * The status of this reader.
 	 */
 	enum Status {
-		/** The next record is available right now. */
+		/**
+		 * The next record is available right now.
+		 */
 		AVAILABLE_NOW,
-		/** The next record will be available later. */
+		/**
+		 * The next record will be available later.
+		 */
 		AVAILABLE_LATER,
-		/** The source reader has completed all the reading work. */
+		/**
+		 * The source reader has completed all the reading work.
+		 */
 		FINISHED
 	}
 }

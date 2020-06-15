@@ -29,14 +29,14 @@ import org.apache.flink.types.StringValue;
 public final class StringComparator extends BasicTypeComparator<String> {
 
 	private static final long serialVersionUID = 1L;
-	
+
 	private static final int HIGH_BIT = 0x1 << 7;
-	
+
 	private static final int HIGH_BIT2 = 0x1 << 13;
-	
+
 	private static final int HIGH_BIT2_MASK = 0x3 << 6;
-	
-	
+
+
 	public StringComparator(boolean ascending) {
 		super(ascending);
 	}
@@ -45,7 +45,7 @@ public final class StringComparator extends BasicTypeComparator<String> {
 	public int compareSerialized(DataInputView firstSource, DataInputView secondSource) throws IOException {
 		String s1 = StringValue.readString(firstSource);
 		String s2 = StringValue.readString(secondSource);
-		int comp = s1.compareTo(s2); 
+		int comp = s1.compareTo(s2);
 		return ascendingComparison ? comp : -comp;
 	}
 
@@ -77,19 +77,17 @@ public final class StringComparator extends BasicTypeComparator<String> {
 		final int limit = offset + len;
 		final int end = record.length();
 		int pos = 0;
-		
+
 		while (pos < end && offset < limit) {
 			char c = record.charAt(pos++);
 			if (c < HIGH_BIT) {
 				target.put(offset++, (byte) c);
-			}
-			else if (c < HIGH_BIT2) {
+			} else if (c < HIGH_BIT2) {
 				target.put(offset++, (byte) ((c >>> 7) | HIGH_BIT));
 				if (offset < limit) {
 					target.put(offset++, (byte) c);
 				}
-			}
-			else {
+			} else {
 				target.put(offset++, (byte) ((c >>> 10) | HIGH_BIT2_MASK));
 				if (offset < limit) {
 					target.put(offset++, (byte) (c >>> 2));

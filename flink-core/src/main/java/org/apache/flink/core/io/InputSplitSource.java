@@ -37,12 +37,11 @@ public interface InputSplitSource<T extends InputSplit> extends Serializable {
 	 *
 	 * @param minNumSplits Number of minimal input splits, as a hint.
 	 * @return An array of input splits.
-	 * 
 	 * @throws Exception Exceptions when creating the input splits may be forwarded and will cause the
 	 *                   execution to permanently fail.
 	 */
 	T[] createInputSplits(int minNumSplits) throws Exception;
-	
+
 	/**
 	 * Returns the assigner for the input splits. Assigner determines which parallel instance of the
 	 * input format gets which input split.

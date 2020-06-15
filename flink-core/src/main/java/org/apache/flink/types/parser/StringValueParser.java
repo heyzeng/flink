@@ -25,7 +25,7 @@ import org.apache.flink.types.StringValue;
  * Converts a variable length field of a byte array into a {@link StringValue}. The byte contents between
  * delimiters is interpreted as an ASCII string. The string may be quoted in double quotes. For quoted
  * strings, whitespaces (space and tab) leading and trailing before and after the quotes are removed.
- * 
+ *
  * @see StringValue
  */
 @PublicEvolving
@@ -41,7 +41,7 @@ public class StringValueParser extends FieldParser<StringValue> {
 		this.quotedStringParsing = true;
 		this.quoteCharacter = quoteCharacter;
 	}
-	
+
 	@Override
 	public int parseField(byte[] bytes, int startPos, int limit, byte[] delimiter, StringValue reusable) {
 
@@ -56,7 +56,7 @@ public class StringValueParser extends FieldParser<StringValue> {
 
 		final int delimLimit = limit - delimiter.length + 1;
 
-		if(quotedStringParsing && bytes[i] == quoteCharacter) {
+		if (quotedStringParsing && bytes[i] == quoteCharacter) {
 			// quoted string parsing enabled and first character is a quote
 			i++;
 
@@ -75,7 +75,7 @@ public class StringValueParser extends FieldParser<StringValue> {
 					// either by end of line
 					reusable.setValueAscii(bytes, startPos + 1, i - startPos - 2);
 					return limit;
-				} else if ( i < delimLimit && delimiterNext(bytes, i, delimiter)) {
+				} else if (i < delimLimit && delimiterNext(bytes, i, delimiter)) {
 					// or following field delimiter
 					reusable.setValueAscii(bytes, startPos + 1, i - startPos - 2);
 					return i + delimiter.length;
@@ -90,7 +90,7 @@ public class StringValueParser extends FieldParser<StringValue> {
 		} else {
 
 			// look for delimiter
-			while( i < delimLimit && !delimiterNext(bytes, i, delimiter)) {
+			while (i < delimLimit && !delimiterNext(bytes, i, delimiter)) {
 				i++;
 			}
 
@@ -107,7 +107,7 @@ public class StringValueParser extends FieldParser<StringValue> {
 			}
 		}
 	}
-	
+
 	@Override
 	public StringValue createValue() {
 		return new StringValue();

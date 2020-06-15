@@ -100,12 +100,12 @@ public class EntropyInjectorTest {
 		Path path = new Path(Path.fromLocalFile(folder), "_entropy_/file");
 
 		OutputStreamAndPath out = EntropyInjector.createEntropyAware(
-				LocalFileSystem.getSharedInstance(), path, WriteMode.NO_OVERWRITE);
+			LocalFileSystem.getSharedInstance(), path, WriteMode.NO_OVERWRITE);
 
 		out.stream().close();
 
 		assertEquals(path, out.path());
-		assertTrue(new File (new File(folder, "_entropy_"), "file").exists());
+		assertTrue(new File(new File(folder, "_entropy_"), "file").exists());
 	}
 
 	@Test
@@ -121,7 +121,7 @@ public class EntropyInjectorTest {
 		out.stream().close();
 
 		assertEquals(new Path(Path.fromLocalFile(folder), "test-entropy/file"), out.path());
-		assertTrue(new File (new File(folder, "test-entropy"), "file").exists());
+		assertTrue(new File(new File(folder, "test-entropy"), "file").exists());
 	}
 
 	@Test
@@ -140,15 +140,14 @@ public class EntropyInjectorTest {
 
 		FileSystemSafetyNet.initializeSafetyNetForThread();
 		FileSystem fs = FileSystemSafetyNet.wrapWithSafetyNetWhenActivated(efs);
-		try  {
+		try {
 			OutputStreamAndPath streamAndPath = EntropyInjector.createEntropyAware(
-					fs, path, WriteMode.NO_OVERWRITE);
+				fs, path, WriteMode.NO_OVERWRITE);
 
 			out = streamAndPath.stream();
 
 			assertEquals(pathWithEntropy, streamAndPath.path());
-		}
-		finally {
+		} finally {
 			FileSystemSafetyNet.closeSafetyNetAndGuardedResourcesForThread();
 		}
 
@@ -157,7 +156,8 @@ public class EntropyInjectorTest {
 			out.write(42);
 			out.flush();
 			fail("stream should be already close and hence fail with an exception");
-		} catch (IOException ignored) {}
+		} catch (IOException ignored) {
+		}
 	}
 
 	// ------------------------------------------------------------------------

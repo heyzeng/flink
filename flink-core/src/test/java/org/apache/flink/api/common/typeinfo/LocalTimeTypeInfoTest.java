@@ -27,10 +27,10 @@ public class LocalTimeTypeInfoTest extends TypeInformationTestBase<LocalTimeType
 
 	@Override
 	protected LocalTimeTypeInfo<?>[] getTestData() {
-		return new LocalTimeTypeInfo<?>[] {
-				LocalTimeTypeInfo.LOCAL_DATE,
-				LocalTimeTypeInfo.LOCAL_TIME,
-				LocalTimeTypeInfo.LOCAL_DATE_TIME
+		return new LocalTimeTypeInfo<?>[]{
+			LocalTimeTypeInfo.LOCAL_DATE,
+			LocalTimeTypeInfo.LOCAL_TIME,
+			LocalTimeTypeInfo.LOCAL_DATE_TIME
 		};
 	}
 }

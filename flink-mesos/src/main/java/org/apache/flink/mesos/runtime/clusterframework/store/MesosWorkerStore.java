@@ -48,6 +48,7 @@ public interface MesosWorkerStore {
 
 	/**
 	 * Stop the worker store.
+	 *
 	 * @param cleanup if true, cleanup any stored information.
 	 */
 	void stop(boolean cleanup) throws Exception;
@@ -79,6 +80,7 @@ public interface MesosWorkerStore {
 
 	/**
 	 * Remove a worker from storage.
+	 *
 	 * @return true if the worker existed.
 	 */
 	boolean removeWorker(Protos.TaskID taskID) throws Exception;
@@ -104,7 +106,7 @@ public interface MesosWorkerStore {
 		private final WorkerState state;
 
 		private Worker(Protos.TaskID taskID, ResourceProfile profile,
-				Option<Protos.SlaveID> slaveID, Option<String> hostname, WorkerState state) {
+					   Option<Protos.SlaveID> slaveID, Option<String> hostname, WorkerState state) {
 			this.taskID = requireNonNull(taskID, "taskID");
 			this.profile = requireNonNull(profile, "profile");
 			this.slaveID = requireNonNull(slaveID, "slaveID");
@@ -121,6 +123,7 @@ public interface MesosWorkerStore {
 
 		/**
 		 * Get the resource profile associated with the worker.
+		 *
 		 * @return
 		 */
 		public ResourceProfile profile() {
@@ -152,6 +155,7 @@ public interface MesosWorkerStore {
 
 		/**
 		 * Create a new worker with the given taskID.
+		 *
 		 * @return a new worker instance.
 		 */
 		public static Worker newWorker(Protos.TaskID taskID) {
@@ -164,6 +168,7 @@ public interface MesosWorkerStore {
 
 		/**
 		 * Create a new worker with the given taskID.
+		 *
 		 * @return a new worker instance.
 		 */
 		public static Worker newWorker(Protos.TaskID taskID, ResourceProfile profile) {
@@ -176,6 +181,7 @@ public interface MesosWorkerStore {
 
 		/**
 		 * Transition the worker to a launched state.
+		 *
 		 * @return a new worker instance (does not mutate the current instance).
 		 */
 		public Worker launchWorker(Protos.SlaveID slaveID, String hostname) {
@@ -184,6 +190,7 @@ public interface MesosWorkerStore {
 
 		/**
 		 * Transition the worker to a released state.
+		 *
 		 * @return a new worker instance (does not mutate the current instance).
 		 */
 		public Worker releaseWorker() {

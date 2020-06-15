@@ -26,8 +26,9 @@ import scala.reflect.macros.Context
 import scala.util.DynamicVariable
 
 @Internal
-private[flink] trait TypeAnalyzer[C <: Context] { this: MacroContextHolder[C]
-  with TypeDescriptors[C] =>
+private[flink] trait TypeAnalyzer[C <: Context] {
+  this: MacroContextHolder[C]
+    with TypeDescriptors[C] =>
 
   import c.universe._
 
@@ -38,7 +39,9 @@ private[flink] trait TypeAnalyzer[C <: Context] { this: MacroContextHolder[C]
 
   def getUDTDescriptor(tpe: Type): UDTDescriptor = new UDTAnalyzerInstance().analyze(tpe)
 
-  private def typeArgs(tpe: Type) = tpe match { case TypeRef(_, _, args) => args }
+  private def typeArgs(tpe: Type) = tpe match {
+    case TypeRef(_, _, args) => args
+  }
 
   private class UDTAnalyzerInstance {
 
@@ -95,9 +98,9 @@ private[flink] trait TypeAnalyzer[C <: Context] { this: MacroContextHolder[C]
     }
 
     private def analyzeFactoryType(
-        id: Int,
-        tpe: Type,
-        baseType: Type): UDTDescriptor = {
+                                    id: Int,
+                                    tpe: Type,
+                                    baseType: Type): UDTDescriptor = {
       val params: Seq[UDTDescriptor] = baseType match {
         case TypeRef(_, _, args) =>
           args.map(analyze)
@@ -108,26 +111,26 @@ private[flink] trait TypeAnalyzer[C <: Context] { this: MacroContextHolder[C]
     }
 
     private def analyzeArray(
-        id: Int,
-        tpe: Type,
-        elemTpe: Type): UDTDescriptor = analyze(elemTpe) match {
+                              id: Int,
+                              tpe: Type,
+                              elemTpe: Type): UDTDescriptor = analyze(elemTpe) match {
       case UnsupportedDescriptor(_, _, errs) => UnsupportedDescriptor(id, tpe, errs)
       case desc => ArrayDescriptor(id, tpe, desc)
     }
 
     private def analyzeTraversable(
-        id: Int,
-        tpe: Type,
-        elemTpe: Type): UDTDescriptor = analyze(elemTpe) match {
+                                    id: Int,
+                                    tpe: Type,
+                                    elemTpe: Type): UDTDescriptor = analyze(elemTpe) match {
       case UnsupportedDescriptor(_, _, errs) => UnsupportedDescriptor(id, tpe, errs)
       case desc => TraversableDescriptor(id, tpe, desc)
     }
 
     private def analyzeEither(
-        id: Int,
-        tpe: Type,
-        leftTpe: Type,
-        rightTpe: Type): UDTDescriptor = analyze(leftTpe) match {
+                               id: Int,
+                               tpe: Type,
+                               leftTpe: Type,
+                               rightTpe: Type): UDTDescriptor = analyze(leftTpe) match {
       case UnsupportedDescriptor(_, _, errs) => UnsupportedDescriptor(id, tpe, errs)
       case leftDesc => analyze(rightTpe) match {
         case UnsupportedDescriptor(_, _, errs) => UnsupportedDescriptor(id, tpe, errs)
@@ -136,25 +139,25 @@ private[flink] trait TypeAnalyzer[C <: Context] { this: MacroContextHolder[C]
     }
 
     private def analyzeTry(
-        id: Int,
-        tpe: Type,
-        elemTpe: Type): UDTDescriptor = analyze(elemTpe) match {
+                            id: Int,
+                            tpe: Type,
+                            elemTpe: Type): UDTDescriptor = analyze(elemTpe) match {
       case UnsupportedDescriptor(_, _, errs) => UnsupportedDescriptor(id, tpe, errs)
       case elemDesc => TryDescriptor(id, tpe, elemDesc)
     }
 
     private def analyzeOption(
-        id: Int,
-        tpe: Type,
-        elemTpe: Type): UDTDescriptor = analyze(elemTpe) match {
+                               id: Int,
+                               tpe: Type,
+                               elemTpe: Type): UDTDescriptor = analyze(elemTpe) match {
       case UnsupportedDescriptor(_, _, errs) => UnsupportedDescriptor(id, tpe, errs)
       case elemDesc => OptionDescriptor(id, tpe, elemDesc)
     }
 
     private def analyzeJavaTuple(id: Int, tpe: Type): UDTDescriptor = {
       // check how many tuple fields we have and determine type
-      val fields = (0 until org.apache.flink.api.java.tuple.Tuple.MAX_ARITY ) flatMap { i =>
-        tpe.members find { m => m.name.toString.equals("f" + i)} match {
+      val fields = (0 until org.apache.flink.api.java.tuple.Tuple.MAX_ARITY) flatMap { i =>
+        tpe.members find { m => m.name.toString.equals("f" + i) } match {
           case Some(m) => Some(analyze(m.typeSignatureIn(tpe)))
 
           case _ => None
@@ -166,18 +169,34 @@ private[flink] trait TypeAnalyzer[C <: Context] { this: MacroContextHolder[C]
 
 
     private def analyzePojo(id: Int, tpe: Type): UDTDescriptor = {
-      val immutableFields = tpe.members filter { _.isTerm } map { _.asTerm } filter { _.isVal }
+      val immutableFields = tpe.members filter {
+        _.isTerm
+      } map {
+        _.asTerm
+      } filter {
+        _.isVal
+      }
       if (immutableFields.nonEmpty) {
         // We don't support POJOs with immutable fields
         return GenericClassDescriptor(id, tpe)
       }
 
       val fields = tpe.members
-        .filter { _.isTerm }
-        .map { _.asTerm }
-        .filter { _.isVar }
-        .filter { !_.isStatic }
-        .filterNot { _.annotations.exists( _.tpe <:< typeOf[scala.transient]) }
+        .filter {
+          _.isTerm
+        }
+        .map {
+          _.asTerm
+        }
+        .filter {
+          _.isVar
+        }
+        .filter {
+          !_.isStatic
+        }
+        .filterNot {
+          _.annotations.exists(_.tpe <:< typeOf[scala.transient])
+        }
 
       if (fields.isEmpty) {
         c.warning(c.enclosingPosition, s"Type $tpe has no fields that are visible from Scala Type" +
@@ -197,7 +216,7 @@ private[flink] trait TypeAnalyzer[C <: Context] { this: MacroContextHolder[C]
       }
 
       // check whether we have a zero-parameter ctor
-      val hasZeroCtor = tpe.declarations exists  {
+      val hasZeroCtor = tpe.declarations exists {
         case m: MethodSymbol
           if m.isConstructor && m.paramss.length == 1 && m.paramss(0).length == 0 => true
         case _ => false
@@ -238,14 +257,13 @@ private[flink] trait TypeAnalyzer[C <: Context] { this: MacroContextHolder[C]
                 Seq("Multiple constructors found, this is not supported."))
             case ctor :: Nil =>
               val caseFields = ctor.paramss.flatten.map {
-                sym =>
-                  {
-                    val methodSym = tpe.member(sym.name).asMethod
-                    val getter = methodSym.getter
-                    val setter = methodSym.setter
-                    val returnType = methodSym.returnType.asSeenFrom(tpe, tpe.typeSymbol)
-                    (getter, setter, returnType)
-                  }
+                sym => {
+                  val methodSym = tpe.member(sym.name).asMethod
+                  val getter = methodSym.getter
+                  val setter = methodSym.setter
+                  val returnType = methodSym.returnType.asSeenFrom(tpe, tpe.typeSymbol)
+                  (getter, setter, returnType)
+                }
               }
               val fields = caseFields map {
                 case (fgetter, fsetter, fTpe) =>
@@ -255,12 +273,14 @@ private[flink] trait TypeAnalyzer[C <: Context] { this: MacroContextHolder[C]
               if (mutable) {
                 mutableTypes.add(tpe)
               }
-              fields filter { _.desc.isInstanceOf[UnsupportedDescriptor] } match {
-                case errs @ _ :: _ =>
+              fields filter {
+                _.desc.isInstanceOf[UnsupportedDescriptor]
+              } match {
+                case errs@_ :: _ =>
                   val msgs = errs flatMap { f =>
                     (f: @unchecked) match {
                       case FieldDescriptor(
-                        fName, _, _, _, UnsupportedDescriptor(_, fTpe, errors)) =>
+                      fName, _, _, _, UnsupportedDescriptor(_, fTpe, errors)) =>
                         errors map { err => "Field " + fName + ": " + fTpe + " - " + err }
                     }
                   }
@@ -306,9 +326,9 @@ private[flink] trait TypeAnalyzer[C <: Context] { this: MacroContextHolder[C]
           None
 
         case _ if tpe <:< typeOf[TraversableOnce[_]] =>
-//          val traversable = tpe.baseClasses
-//            .map(tpe.baseType)
-//            .find(t => t.erasure =:= typeOf[TraversableOnce[_]].erasure)
+          //          val traversable = tpe.baseClasses
+          //            .map(tpe.baseType)
+          //            .find(t => t.erasure =:= typeOf[TraversableOnce[_]].erasure)
 
           val traversable = tpe.baseType(typeOf[TraversableOnce[_]].typeSymbol)
 
@@ -475,7 +495,9 @@ private[flink] trait TypeAnalyzer[C <: Context] { this: MacroContextHolder[C]
         val id = idGen.next
         val cache = caches.value
 
-        cache.get(tpe) map { _.copy(id = id) } getOrElse {
+        cache.get(tpe) map {
+          _.copy(id = id)
+        } getOrElse {
           val ref = RecursiveDescriptor(id, tpe, id)
           caches.withValue(cache + (tpe -> ref)) {
             orElse(id)
@@ -483,6 +505,7 @@ private[flink] trait TypeAnalyzer[C <: Context] { this: MacroContextHolder[C]
         }
       }
     }
+
   }
 
   lazy val primitives = Map[Symbol, (Literal, Type)](

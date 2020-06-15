@@ -265,8 +265,8 @@ public class DependencyTest {
 				);
 				// create a table to test parameterized types
 				hiveCatalog.createTable(new ObjectPath("default", TABLE_WITH_PARAMETERIZED_TYPES),
-						tableWithParameterizedTypes(),
-						false);
+					tableWithParameterizedTypes(),
+					false);
 			} catch (DatabaseAlreadyExistException | TableAlreadyExistException | DatabaseNotExistException e) {
 				throw new CatalogException(e);
 			}
@@ -276,7 +276,7 @@ public class DependencyTest {
 
 		private CatalogTable tableWithParameterizedTypes() {
 			TableSchema tableSchema = TableSchema.builder().fields(new String[]{"dec", "ch", "vch"},
-					new DataType[]{DataTypes.DECIMAL(10, 10), DataTypes.CHAR(5), DataTypes.VARCHAR(15)}).build();
+				new DataType[]{DataTypes.DECIMAL(10, 10), DataTypes.CHAR(5), DataTypes.VARCHAR(15)}).build();
 			return new CatalogTableImpl(
 				tableSchema,
 				new HashMap<String, String>() {{

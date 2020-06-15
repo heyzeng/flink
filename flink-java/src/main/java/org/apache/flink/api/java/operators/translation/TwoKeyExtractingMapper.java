@@ -26,7 +26,8 @@ import org.apache.flink.api.java.tuple.Tuple3;
 
 /**
  * Mapper that extracts two keys of a value.
- * @param <T> type of the values
+ *
+ * @param <T>  type of the values
  * @param <K1> type of the first key
  * @param <K2> type of the second key
  */

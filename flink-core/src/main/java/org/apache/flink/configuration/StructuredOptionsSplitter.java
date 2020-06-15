@@ -44,7 +44,8 @@ class StructuredOptionsSplitter {
 	 * </ul>
 	 *
 	 * <p>For more examples check the tests.
-	 * @param string a string to split
+	 *
+	 * @param string    a string to split
 	 * @param delimiter delimiter to split on
 	 * @return a list of splits
 	 */
@@ -68,7 +69,7 @@ class StructuredOptionsSplitter {
 	 *     <li>AB'"D:B => 'AB''"D:B'</li>
 	 * </ul>
 	 *
-	 * @param string a string which needs to be escaped
+	 * @param string        a string which needs to be escaped
 	 * @param charsToEscape escape chars for the escape conditions
 	 * @return escaped string by single quote
 	 */

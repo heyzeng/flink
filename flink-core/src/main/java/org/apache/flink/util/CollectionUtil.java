@@ -61,7 +61,9 @@ public final class CollectionUtil {
 		return input.stream().map(element -> mapper.apply(element, count.getAndIncrement()));
 	}
 
-	/** Partition a collection into approximately n buckets. */
+	/**
+	 * Partition a collection into approximately n buckets.
+	 */
 	public static <T> Collection<List<T>> partition(Collection<T> elements, int numBuckets) {
 		Map<Integer, List<T>> buckets = new HashMap<>(numBuckets);
 

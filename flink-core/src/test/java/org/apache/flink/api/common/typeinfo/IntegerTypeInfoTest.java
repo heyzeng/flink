@@ -27,7 +27,7 @@ public class IntegerTypeInfoTest extends TypeInformationTestBase<IntegerTypeInfo
 
 	@Override
 	protected IntegerTypeInfo<?>[] getTestData() {
-		return new IntegerTypeInfo<?>[] {
+		return new IntegerTypeInfo<?>[]{
 			(IntegerTypeInfo<?>) BasicTypeInfo.BYTE_TYPE_INFO,
 			(IntegerTypeInfo<?>) BasicTypeInfo.SHORT_TYPE_INFO,
 			(IntegerTypeInfo<?>) BasicTypeInfo.INT_TYPE_INFO,

@@ -51,11 +51,11 @@ public class ExtendedSqlCollectionTypeNameSpec extends SqlCollectionTypeNameSpec
 	 * @param pos                the parser position
 	 */
 	public ExtendedSqlCollectionTypeNameSpec(
-			SqlTypeNameSpec elementTypeName,
-			boolean elementNullable,
-			SqlTypeName collectionTypeName,
-			boolean unparseAsStandard,
-			SqlParserPos pos) {
+		SqlTypeNameSpec elementTypeName,
+		boolean elementNullable,
+		SqlTypeName collectionTypeName,
+		boolean unparseAsStandard,
+		SqlParserPos pos) {
 		super(elementTypeName, collectionTypeName, pos);
 		this.elementNullable = elementNullable;
 		this.collectionTypeName = collectionTypeName;
@@ -112,18 +112,18 @@ public class ExtendedSqlCollectionTypeNameSpec extends SqlCollectionTypeNameSpec
 	 * @param elementType Type of the collection element
 	 * @param typeFactory Type factory
 	 * @return The collection data type, or throw exception if the collection
-	 *         type name does not belong to {@code SqlTypeName} enumerations
+	 * type name does not belong to {@code SqlTypeName} enumerations
 	 */
 	private RelDataType createCollectionType(RelDataType elementType,
-			RelDataTypeFactory typeFactory) {
+											 RelDataTypeFactory typeFactory) {
 		switch (collectionTypeName) {
-		case MULTISET:
-			return typeFactory.createMultisetType(elementType, -1);
-		case ARRAY:
-			return typeFactory.createArrayType(elementType, -1);
+			case MULTISET:
+				return typeFactory.createMultisetType(elementType, -1);
+			case ARRAY:
+				return typeFactory.createArrayType(elementType, -1);
 
-		default:
-			throw Util.unexpected(collectionTypeName);
+			default:
+				throw Util.unexpected(collectionTypeName);
 		}
 	}
 }

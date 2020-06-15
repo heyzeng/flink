@@ -35,16 +35,22 @@ class EnumValueTypeInfo[E <: Enumeration](val enum: E, val clazz: Class[E#Value]
 
   @PublicEvolving
   override def isBasicType: Boolean = false
+
   @PublicEvolving
   override def isTupleType: Boolean = false
+
   @PublicEvolving
   override def isKeyType: Boolean = true
+
   @PublicEvolving
   override def getTotalFields: Int = 1
+
   @PublicEvolving
   override def getArity: Int = 1
+
   @PublicEvolving
   override def getTypeClass = clazz
+
   @PublicEvolving
   override def getGenericParameters = Map.empty[String, TypeInformation[_]].asJava
 

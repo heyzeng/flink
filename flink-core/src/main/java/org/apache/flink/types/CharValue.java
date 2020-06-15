@@ -33,7 +33,7 @@ import org.apache.flink.core.memory.MemorySegment;
 @Public
 public class CharValue implements NormalizableKey<CharValue>, ResettableValue<CharValue>, CopyableValue<CharValue> {
 	private static final long serialVersionUID = 1L;
-	
+
 	private char value;
 
 	/**
@@ -45,16 +45,16 @@ public class CharValue implements NormalizableKey<CharValue>, ResettableValue<Ch
 
 	/**
 	 * Initializes the encapsulated char with the provided value.
-	 * 
+	 *
 	 * @param value Initial value of the encapsulated char.
 	 */
 	public CharValue(char value) {
 		this.value = value;
 	}
-	
+
 	/**
 	 * Returns the value of the encapsulated char.
-	 * 
+	 *
 	 * @return the value of the encapsulated char.
 	 */
 	public char getValue() {
@@ -63,9 +63,8 @@ public class CharValue implements NormalizableKey<CharValue>, ResettableValue<Ch
 
 	/**
 	 * Sets the encapsulated char to the specified value.
-	 * 
-	 * @param value
-	 *        the new value of the encapsulated char.
+	 *
+	 * @param value the new value of the encapsulated char.
 	 */
 	public void setValue(char value) {
 		this.value = value;
@@ -82,7 +81,7 @@ public class CharValue implements NormalizableKey<CharValue>, ResettableValue<Ch
 	}
 
 	// --------------------------------------------------------------------------------------------
-	
+
 	@Override
 	public void read(DataInputView in) throws IOException {
 		this.value = in.readChar();
@@ -94,7 +93,7 @@ public class CharValue implements NormalizableKey<CharValue>, ResettableValue<Ch
 	}
 
 	// --------------------------------------------------------------------------------------------
-	
+
 	@Override
 	public int compareTo(CharValue o) {
 		final int other = o.value;
@@ -113,7 +112,7 @@ public class CharValue implements NormalizableKey<CharValue>, ResettableValue<Ch
 		}
 		return false;
 	}
-	
+
 	// --------------------------------------------------------------------------------------------
 
 	@Override
@@ -128,17 +127,14 @@ public class CharValue implements NormalizableKey<CharValue>, ResettableValue<Ch
 		// that is equivalent to unsigned, when compared byte by byte
 		if (len == 2) {
 			// default case, full normalized key
-			target.put(offset,     (byte) ((value >>> 8) & 0xff));
-			target.put(offset + 1, (byte) ((value      ) & 0xff));
-		}
-		else if (len <= 0) {
-		}
-		else if (len == 1) {
-			target.put(offset,     (byte) ((value >>> 8) & 0xff));
-		}
-		else {
-			target.put(offset,     (byte) ((value >>> 8) & 0xff));
-			target.put(offset + 1, (byte) ((value      ) & 0xff));
+			target.put(offset, (byte) ((value >>> 8) & 0xff));
+			target.put(offset + 1, (byte) ((value) & 0xff));
+		} else if (len <= 0) {
+		} else if (len == 1) {
+			target.put(offset, (byte) ((value >>> 8) & 0xff));
+		} else {
+			target.put(offset, (byte) ((value >>> 8) & 0xff));
+			target.put(offset + 1, (byte) ((value) & 0xff));
 			for (int i = 2; i < len; i++) {
 				target.put(offset + i, (byte) 0);
 			}
@@ -146,7 +142,7 @@ public class CharValue implements NormalizableKey<CharValue>, ResettableValue<Ch
 	}
 
 	// --------------------------------------------------------------------------------------------
-	
+
 	@Override
 	public int getBinaryLength() {
 		return 2;

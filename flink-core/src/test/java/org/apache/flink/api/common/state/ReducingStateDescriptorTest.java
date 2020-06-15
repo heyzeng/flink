@@ -44,7 +44,7 @@ public class ReducingStateDescriptorTest extends TestLogger {
 		TypeSerializer<String> serializer = new KryoSerializer<>(String.class, new ExecutionConfig());
 
 		ReducingStateDescriptor<String> descr =
-				new ReducingStateDescriptor<>("testName", reducer, serializer);
+			new ReducingStateDescriptor<>("testName", reducer, serializer);
 
 		assertEquals("testName", descr.getName());
 		assertNotNull(descr.getSerializer());

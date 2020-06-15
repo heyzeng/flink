@@ -35,10 +35,10 @@ public final class DetachedJobExecutionResult extends JobExecutionResult {
 	public static final String DETACHED_MESSAGE = "Job was submitted in detached mode. ";
 
 	public static final String EAGER_FUNCTION_MESSAGE = "Please make sure your program doesn't call " +
-			"an eager execution function [collect, print, printToErr, count]. ";
+		"an eager execution function [collect, print, printToErr, count]. ";
 
 	public static final String JOB_RESULT_MESSAGE = "Results of job execution, such as accumulators," +
-			" runtime, etc. are not available. ";
+		" runtime, etc. are not available. ";
 
 	public DetachedJobExecutionResult(final JobID jobID) {
 		super(jobID, -1, null);

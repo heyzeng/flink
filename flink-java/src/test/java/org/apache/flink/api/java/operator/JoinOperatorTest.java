@@ -53,41 +53,41 @@ public class JoinOperatorTest {
 
 	// TUPLE DATA
 	private static final List<Tuple5<Integer, Long, String, Long, Integer>> emptyTupleData =
-			new ArrayList<Tuple5<Integer, Long, String, Long, Integer>>();
+		new ArrayList<Tuple5<Integer, Long, String, Long, Integer>>();
 
 	private final TupleTypeInfo<Tuple5<Integer, Long, String, Long, Integer>> tupleTypeInfo =
-			new TupleTypeInfo<Tuple5<Integer, Long, String, Long, Integer>>(
-					BasicTypeInfo.INT_TYPE_INFO,
-					BasicTypeInfo.LONG_TYPE_INFO,
-					BasicTypeInfo.STRING_TYPE_INFO,
-					BasicTypeInfo.LONG_TYPE_INFO,
-					BasicTypeInfo.INT_TYPE_INFO
-			);
+		new TupleTypeInfo<Tuple5<Integer, Long, String, Long, Integer>>(
+			BasicTypeInfo.INT_TYPE_INFO,
+			BasicTypeInfo.LONG_TYPE_INFO,
+			BasicTypeInfo.STRING_TYPE_INFO,
+			BasicTypeInfo.LONG_TYPE_INFO,
+			BasicTypeInfo.INT_TYPE_INFO
+		);
 	// TUPLE DATA with nested Tuple2
 	private static final List<Tuple5<Tuple2<Integer, String>, Long, String, Long, Integer>> emptyNestedTupleData =
-			new ArrayList<Tuple5<Tuple2<Integer, String>, Long, String, Long, Integer>>();
+		new ArrayList<Tuple5<Tuple2<Integer, String>, Long, String, Long, Integer>>();
 
 	private final TupleTypeInfo<Tuple5<Tuple2<Integer, String>, Long, String, Long, Integer>> nestedTupleTypeInfo =
-			new TupleTypeInfo<Tuple5<Tuple2<Integer, String>, Long, String, Long, Integer>>(
-					new TupleTypeInfo<Tuple2<Integer, String>> (BasicTypeInfo.INT_TYPE_INFO, BasicTypeInfo.STRING_TYPE_INFO),
-					BasicTypeInfo.LONG_TYPE_INFO,
-					BasicTypeInfo.STRING_TYPE_INFO,
-					BasicTypeInfo.LONG_TYPE_INFO,
-					BasicTypeInfo.INT_TYPE_INFO
-			);
+		new TupleTypeInfo<Tuple5<Tuple2<Integer, String>, Long, String, Long, Integer>>(
+			new TupleTypeInfo<Tuple2<Integer, String>>(BasicTypeInfo.INT_TYPE_INFO, BasicTypeInfo.STRING_TYPE_INFO),
+			BasicTypeInfo.LONG_TYPE_INFO,
+			BasicTypeInfo.STRING_TYPE_INFO,
+			BasicTypeInfo.LONG_TYPE_INFO,
+			BasicTypeInfo.INT_TYPE_INFO
+		);
 
 	// TUPLE DATA with nested CustomType
 	private static final List<Tuple5<CustomType, Long, String, Long, Integer>> emptyNestedCustomTupleData =
-			new ArrayList<Tuple5<CustomType, Long, String, Long, Integer>>();
+		new ArrayList<Tuple5<CustomType, Long, String, Long, Integer>>();
 
 	private final TupleTypeInfo<Tuple5<CustomType, Long, String, Long, Integer>> nestedCustomTupleTypeInfo =
-			new TupleTypeInfo<Tuple5<CustomType, Long, String, Long, Integer>>(
-					TypeExtractor.getForClass(CustomType.class),
-					BasicTypeInfo.LONG_TYPE_INFO,
-					BasicTypeInfo.STRING_TYPE_INFO,
-					BasicTypeInfo.LONG_TYPE_INFO,
-					BasicTypeInfo.INT_TYPE_INFO
-			);
+		new TupleTypeInfo<Tuple5<CustomType, Long, String, Long, Integer>>(
+			TypeExtractor.getForClass(CustomType.class),
+			BasicTypeInfo.LONG_TYPE_INFO,
+			BasicTypeInfo.STRING_TYPE_INFO,
+			BasicTypeInfo.LONG_TYPE_INFO,
+			BasicTypeInfo.INT_TYPE_INFO
+		);
 
 	private static List<CustomTypeWithTuple> customTypeWithTupleData = new ArrayList<CustomTypeWithTuple>();
 	private static List<CustomType> customTypeData = new ArrayList<CustomType>();
@@ -467,24 +467,24 @@ public class JoinOperatorTest {
 		// should work
 		try {
 			ds1.join(ds2)
-			.where(
+				.where(
 					new KeySelector<CustomType, Long>() {
 
-							@Override
-							public Long getKey(CustomType value) {
-								return value.myLong;
-							}
+						@Override
+						public Long getKey(CustomType value) {
+							return value.myLong;
 						}
-					)
-			.equalTo(
+					}
+				)
+				.equalTo(
 					new KeySelector<CustomType, Long>() {
 
-							@Override
-							public Long getKey(CustomType value) {
-								return value.myLong;
-							}
+						@Override
+						public Long getKey(CustomType value) {
+							return value.myLong;
 						}
-					);
+					}
+				);
 		} catch (Exception e) {
 			Assert.fail();
 		}
@@ -500,16 +500,16 @@ public class JoinOperatorTest {
 		// should work
 		try {
 			ds1.join(ds2)
-			.where(
+				.where(
 					new KeySelector<CustomType, Long>() {
 
-							@Override
-							public Long getKey(CustomType value) {
-								return value.myLong;
-							}
+						@Override
+						public Long getKey(CustomType value) {
+							return value.myLong;
 						}
-					)
-			.equalTo(3);
+					}
+				)
+				.equalTo(3);
 		} catch (Exception e) {
 			e.printStackTrace();
 			Assert.fail();
@@ -526,16 +526,16 @@ public class JoinOperatorTest {
 		// should work
 		try {
 			ds1.join(ds2)
-			.where(3)
-			.equalTo(
+				.where(3)
+				.equalTo(
 					new KeySelector<CustomType, Long>() {
 
-							@Override
-							public Long getKey(CustomType value) {
-								return value.myLong;
-							}
+						@Override
+						public Long getKey(CustomType value) {
+							return value.myLong;
 						}
-					);
+					}
+				);
 		} catch (Exception e) {
 			Assert.fail();
 		}
@@ -550,16 +550,16 @@ public class JoinOperatorTest {
 
 		// should not work, incompatible types
 		ds1.join(ds2)
-		.where(2)
-		.equalTo(
+			.where(2)
+			.equalTo(
 				new KeySelector<CustomType, Long>() {
 
-						@Override
-						public Long getKey(CustomType value) {
-							return value.myLong;
-						}
+					@Override
+					public Long getKey(CustomType value) {
+						return value.myLong;
 					}
-				);
+				}
+			);
 	}
 
 	@Test(expected = InvalidProgramException.class)
@@ -571,16 +571,16 @@ public class JoinOperatorTest {
 
 		// should not work, more than one key field position
 		ds1.join(ds2)
-		.where(1, 3)
-		.equalTo(
+			.where(1, 3)
+			.equalTo(
 				new KeySelector<CustomType, Long>() {
 
-						@Override
-						public Long getKey(CustomType value) {
-							return value.myLong;
-						}
+					@Override
+					public Long getKey(CustomType value) {
+						return value.myLong;
 					}
-				);
+				}
+			);
 	}
 
 	@Test
@@ -665,7 +665,7 @@ public class JoinOperatorTest {
 		// should work
 		try {
 			ds1.join(ds2).where(0).equalTo(0)
-			.projectFirst(0);
+				.projectFirst(0);
 		} catch (Exception e) {
 			Assert.fail();
 		}
@@ -681,7 +681,7 @@ public class JoinOperatorTest {
 		// should work
 		try {
 			ds1.join(ds2).where(0).equalTo(0)
-			.projectFirst(0);
+				.projectFirst(0);
 		} catch (Exception e) {
 			Assert.fail();
 		}
@@ -717,7 +717,7 @@ public class JoinOperatorTest {
 		// should work
 		try {
 			ds1.join(ds2).where(0).equalTo(0)
-			.projectFirst(0, 3);
+				.projectFirst(0, 3);
 		} catch (Exception e) {
 			Assert.fail();
 		}
@@ -733,8 +733,8 @@ public class JoinOperatorTest {
 		// should work
 		try {
 			ds1.join(ds2).where(0).equalTo(0)
-			.projectFirst(0)
-			.projectSecond(3);
+				.projectFirst(0)
+				.projectSecond(3);
 		} catch (Exception e) {
 			Assert.fail();
 		}
@@ -750,9 +750,9 @@ public class JoinOperatorTest {
 		// should work
 		try {
 			ds1.join(ds2).where(0).equalTo(0)
-			.projectFirst(0, 2)
-			.projectSecond(1, 4)
-			.projectFirst(1);
+				.projectFirst(0, 2)
+				.projectSecond(1, 4)
+				.projectFirst(1);
 		} catch (Exception e) {
 			Assert.fail();
 		}
@@ -769,9 +769,9 @@ public class JoinOperatorTest {
 		// should work
 		try {
 			ds1.join(ds2).where(0).equalTo(0)
-			.projectSecond(0, 2)
-			.projectFirst(1, 4)
-			.projectFirst(1);
+				.projectSecond(0, 2)
+				.projectFirst(1, 4)
+				.projectFirst(1);
 		} catch (Exception e) {
 			Assert.fail();
 		}
@@ -786,24 +786,24 @@ public class JoinOperatorTest {
 		// should work
 		try {
 			ds1.join(ds2)
-			.where(
-				new KeySelector<CustomType, Long>() {
-					@Override
-					public Long getKey(CustomType value) {
-						return value.myLong;
+				.where(
+					new KeySelector<CustomType, Long>() {
+						@Override
+						public Long getKey(CustomType value) {
+							return value.myLong;
+						}
 					}
-				}
-			)
-			.equalTo(
-				new KeySelector<CustomType, Long>() {
-					@Override
-					public Long getKey(CustomType value) {
-						return value.myLong;
+				)
+				.equalTo(
+					new KeySelector<CustomType, Long>() {
+						@Override
+						public Long getKey(CustomType value) {
+							return value.myLong;
+						}
 					}
-				}
-			)
-			.projectFirst()
-			.projectSecond();
+				)
+				.projectFirst()
+				.projectSecond();
 		} catch (Exception e) {
 			System.out.println("FAILED: " + e);
 			e.printStackTrace();
@@ -820,24 +820,24 @@ public class JoinOperatorTest {
 		// should work
 		try {
 			ds1.join(ds2)
-			.where(
-				new KeySelector<CustomType, Long>() {
-					@Override
-					public Long getKey(CustomType value) {
-						return value.myLong;
+				.where(
+					new KeySelector<CustomType, Long>() {
+						@Override
+						public Long getKey(CustomType value) {
+							return value.myLong;
+						}
 					}
-				}
-			)
-			.equalTo(
-				new KeySelector<CustomType, Long>() {
-					@Override
-					public Long getKey(CustomType value) {
-						return value.myLong;
+				)
+				.equalTo(
+					new KeySelector<CustomType, Long>() {
+						@Override
+						public Long getKey(CustomType value) {
+							return value.myLong;
+						}
 					}
-				}
-			)
-			.projectFirst()
-			.projectSecond();
+				)
+				.projectFirst()
+				.projectSecond();
 		} catch (Exception e) {
 			System.out.println("FAILED: " + e);
 			e.printStackTrace();
@@ -855,8 +855,8 @@ public class JoinOperatorTest {
 		// should work
 		try {
 			ds1.join(ds2).where(0).equalTo(0)
-			.projectSecond()
-			.projectFirst(1, 4);
+				.projectSecond()
+				.projectFirst(1, 4);
 		} catch (Exception e) {
 			Assert.fail();
 		}
@@ -872,8 +872,8 @@ public class JoinOperatorTest {
 		// should work
 		try {
 			ds1.join(ds2).where(0).equalTo(0)
-			.projectSecond()
-			.projectFirst(1, 4);
+				.projectSecond()
+				.projectFirst(1, 4);
 		} catch (Exception e) {
 			Assert.fail();
 		}
@@ -888,7 +888,7 @@ public class JoinOperatorTest {
 
 		// should not work, index out of range
 		ds1.join(ds2).where(0).equalTo(0)
-		.projectFirst(5);
+			.projectFirst(5);
 	}
 
 	@Test(expected = IndexOutOfBoundsException.class)
@@ -900,7 +900,7 @@ public class JoinOperatorTest {
 
 		// should not work, index out of range
 		ds1.join(ds2).where(0).equalTo(0)
-		.projectFirst(5);
+			.projectFirst(5);
 	}
 
 	@Test(expected = IndexOutOfBoundsException.class)
@@ -912,7 +912,7 @@ public class JoinOperatorTest {
 
 		// should not work, index out of range
 		ds1.join(ds2).where(0).equalTo(0)
-		.projectSecond(5);
+			.projectSecond(5);
 	}
 
 	@Test(expected = IndexOutOfBoundsException.class)
@@ -924,7 +924,7 @@ public class JoinOperatorTest {
 
 		// should not work, index out of range
 		ds1.join(ds2).where(0).equalTo(0)
-		.projectSecond(5);
+			.projectSecond(5);
 	}
 
 	public void testJoinProjection10() {
@@ -935,7 +935,7 @@ public class JoinOperatorTest {
 
 		// should work
 		ds1.join(ds2).where(0).equalTo(0)
-		.projectFirst(2);
+			.projectFirst(2);
 	}
 
 	@Test(expected = IndexOutOfBoundsException.class)
@@ -947,7 +947,7 @@ public class JoinOperatorTest {
 
 		// should not work, type does not match
 		ds1.join(ds2).where(0).equalTo(0)
-		.projectFirst(-1);
+			.projectFirst(-1);
 	}
 
 	public void testJoinProjection11() {
@@ -958,7 +958,7 @@ public class JoinOperatorTest {
 
 		// should not work, type does not match
 		ds1.join(ds2).where(0).equalTo(0)
-		.projectSecond(2);
+			.projectSecond(2);
 	}
 
 	public void testJoinProjection12() {
@@ -969,8 +969,8 @@ public class JoinOperatorTest {
 
 		// should  work
 		ds1.join(ds2).where(0).equalTo(0)
-		.projectSecond(2)
-		.projectFirst(1);
+			.projectSecond(2)
+			.projectFirst(1);
 	}
 
 	@Test(expected = IndexOutOfBoundsException.class)
@@ -982,8 +982,8 @@ public class JoinOperatorTest {
 
 		// should not work, index out of range
 		ds1.join(ds2).where(0).equalTo(0)
-		.projectSecond(0)
-		.projectFirst(5);
+			.projectSecond(0)
+			.projectFirst(5);
 	}
 
 	@Test(expected = IndexOutOfBoundsException.class)
@@ -995,8 +995,8 @@ public class JoinOperatorTest {
 
 		// should not work, index out of range
 		ds1.join(ds2).where(0).equalTo(0)
-		.projectSecond(-1)
-		.projectFirst(3);
+			.projectSecond(-1)
+			.projectFirst(3);
 	}
 
 	@Test(expected = IndexOutOfBoundsException.class)
@@ -1008,8 +1008,8 @@ public class JoinOperatorTest {
 
 		// should not work, index out of range
 		ds1.join(ds2).where(0).equalTo(0)
-		.projectFirst(0)
-		.projectSecond(5);
+			.projectFirst(0)
+			.projectSecond(5);
 	}
 
 	@Test(expected = IndexOutOfBoundsException.class)
@@ -1021,8 +1021,8 @@ public class JoinOperatorTest {
 
 		// should not work, index out of range
 		ds1.join(ds2).where(0).equalTo(0)
-		.projectFirst(0)
-		.projectSecond(-1);
+			.projectFirst(0)
+			.projectSecond(-1);
 	}
 
 	@Test
@@ -1033,8 +1033,8 @@ public class JoinOperatorTest {
 		DataSet<Tuple5<Integer, Long, String, Long, Integer>> tupleDs2 = env.fromCollection(emptyTupleData, tupleTypeInfo);
 
 		JoinOperator<?, ?, ?> joinOp = tupleDs1.join(tupleDs2)
-				.where(new DummyTestKeySelector()).equalTo(new DummyTestKeySelector())
-				.with(new DummyTestJoinFunction1());
+			.where(new DummyTestKeySelector()).equalTo(new DummyTestKeySelector())
+			.with(new DummyTestJoinFunction1());
 
 		SemanticProperties semProps = joinOp.getSemanticProperties();
 
@@ -1077,10 +1077,10 @@ public class JoinOperatorTest {
 		DataSet<Tuple5<Integer, Long, String, Long, Integer>> tupleDs2 = env.fromCollection(emptyTupleData, tupleTypeInfo);
 
 		JoinOperator<?, ?, ?> joinOp = tupleDs1.join(tupleDs2)
-				.where(new DummyTestKeySelector()).equalTo(new DummyTestKeySelector())
-				.with(new DummyTestJoinFunction2())
-					.withForwardedFieldsFirst("2;4->0")
-					.withForwardedFieldsSecond("0->4;1;1->3");
+			.where(new DummyTestKeySelector()).equalTo(new DummyTestKeySelector())
+			.with(new DummyTestJoinFunction2())
+			.withForwardedFieldsFirst("2;4->0")
+			.withForwardedFieldsSecond("0->4;1;1->3");
 
 		SemanticProperties semProps = joinOp.getSemanticProperties();
 
@@ -1121,11 +1121,11 @@ public class JoinOperatorTest {
 		DataSet<Tuple5<Integer, Long, String, Long, Integer>> tupleDs2 = env.fromCollection(emptyTupleData, tupleTypeInfo);
 
 		JoinOperator<?, ?, ? extends Tuple> joinOp = tupleDs1.join(tupleDs2)
-				.where(new DummyTestKeySelector()).equalTo(new DummyTestKeySelector())
-				.projectFirst(2)
-				.projectSecond(0, 0, 3)
-				.projectFirst(0, 4)
-				.projectSecond(2);
+			.where(new DummyTestKeySelector()).equalTo(new DummyTestKeySelector())
+			.projectFirst(2)
+			.projectSecond(0, 0, 3)
+			.projectFirst(0, 4)
+			.projectSecond(2);
 
 		SemanticProperties semProps = joinOp.getSemanticProperties();
 
@@ -1167,7 +1167,8 @@ public class JoinOperatorTest {
 
 		public int myInt;
 
-		public Nested() {}
+		public Nested() {
+		}
 
 		public Nested(int i, long l, String s) {
 			myInt = i;
@@ -1279,26 +1280,26 @@ public class JoinOperatorTest {
 	@FunctionAnnotation.ReadFieldsFirst("0;2;4")
 	@FunctionAnnotation.ReadFieldsSecond("1;3")
 	private static class DummyTestJoinFunction1
-			implements JoinFunction<Tuple5<Integer, Long, String, Long, Integer>,
-									Tuple5<Integer, Long, String, Long, Integer>,
-									Tuple5<Integer, Long, String, Long, Integer>> {
+		implements JoinFunction<Tuple5<Integer, Long, String, Long, Integer>,
+		Tuple5<Integer, Long, String, Long, Integer>,
+		Tuple5<Integer, Long, String, Long, Integer>> {
 		@Override
 		public Tuple5<Integer, Long, String, Long, Integer> join(
-				Tuple5<Integer, Long, String, Long, Integer> first,
-				Tuple5<Integer, Long, String, Long, Integer> second) throws Exception {
+			Tuple5<Integer, Long, String, Long, Integer> first,
+			Tuple5<Integer, Long, String, Long, Integer> second) throws Exception {
 			return new Tuple5<Integer, Long, String, Long, Integer>();
 		}
 	}
 
 	@FunctionAnnotation.ReadFieldsFirst("0;1;2")
 	private static class DummyTestJoinFunction2
-			implements JoinFunction<Tuple5<Integer, Long, String, Long, Integer>,
-			Tuple5<Integer, Long, String, Long, Integer>,
-			Tuple5<Integer, Long, String, Long, Integer>> {
+		implements JoinFunction<Tuple5<Integer, Long, String, Long, Integer>,
+		Tuple5<Integer, Long, String, Long, Integer>,
+		Tuple5<Integer, Long, String, Long, Integer>> {
 		@Override
 		public Tuple5<Integer, Long, String, Long, Integer> join(
-				Tuple5<Integer, Long, String, Long, Integer> first,
-				Tuple5<Integer, Long, String, Long, Integer> second) throws Exception {
+			Tuple5<Integer, Long, String, Long, Integer> first,
+			Tuple5<Integer, Long, String, Long, Integer> second) throws Exception {
 			return new Tuple5<Integer, Long, String, Long, Integer>();
 		}
 	}

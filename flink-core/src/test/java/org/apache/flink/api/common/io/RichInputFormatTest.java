@@ -43,14 +43,14 @@ public class RichInputFormatTest {
 		final SerializedInputFormat<Value> inputFormat = new SerializedInputFormat<Value>();
 		final TaskInfo taskInfo = new TaskInfo("test name", 3, 1, 3, 0);
 		inputFormat.setRuntimeContext(
-				new RuntimeUDFContext(
-						taskInfo, getClass().getClassLoader(), new ExecutionConfig(),
-						new HashMap<String, Future<Path>>(),
-						new HashMap<String, Accumulator<?, ?>>(),
-						new UnregisteredMetricsGroup()));
+			new RuntimeUDFContext(
+				taskInfo, getClass().getClassLoader(), new ExecutionConfig(),
+				new HashMap<String, Future<Path>>(),
+				new HashMap<String, Accumulator<?, ?>>(),
+				new UnregisteredMetricsGroup()));
 
 		assertEquals(inputFormat.getRuntimeContext().getIndexOfThisSubtask(), 1);
-		assertEquals(inputFormat.getRuntimeContext().getNumberOfParallelSubtasks(),3);
+		assertEquals(inputFormat.getRuntimeContext().getNumberOfParallelSubtasks(), 3);
 	}
 
 }

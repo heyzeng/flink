@@ -37,7 +37,7 @@ public class BooleanPrimitiveArraySerializerTest extends SerializerTestBase<bool
 	protected Class<boolean[]> getTypeClass() {
 		return boolean[].class;
 	}
-	
+
 	@Override
 	protected int getLength() {
 		return -1;
@@ -45,10 +45,10 @@ public class BooleanPrimitiveArraySerializerTest extends SerializerTestBase<bool
 
 	@Override
 	protected boolean[][] getTestData() {
-		return new boolean[][] {
-			new boolean[] {true, false, true, true, true, true, false, true},
-			new boolean[] {},
-			new boolean[] {false, true, false, false, false, false, true, false}
+		return new boolean[][]{
+			new boolean[]{true, false, true, true, true, true, false, true},
+			new boolean[]{},
+			new boolean[]{false, true, false, false, false, false, true, false}
 		};
 	}
 }

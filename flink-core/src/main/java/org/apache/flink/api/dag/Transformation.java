@@ -127,14 +127,14 @@ public abstract class Transformation<T> {
 	private int maxParallelism = -1;
 
 	/**
-	 *  The minimum resources for this stream transformation. It defines the lower limit for
-	 *  dynamic resources resize in future plan.
+	 * The minimum resources for this stream transformation. It defines the lower limit for
+	 * dynamic resources resize in future plan.
 	 */
 	private ResourceSpec minResources = ResourceSpec.DEFAULT;
 
 	/**
-	 *  The preferred resources for this stream transformation. It defines the upper limit for
-	 *  dynamic resource resize in future plan.
+	 * The preferred resources for this stream transformation. It defines the upper limit for
+	 * dynamic resource resize in future plan.
 	 */
 	private ResourceSpec preferredResources = ResourceSpec.DEFAULT;
 
@@ -166,8 +166,8 @@ public abstract class Transformation<T> {
 	/**
 	 * Creates a new {@code Transformation} with the given name, output type and parallelism.
 	 *
-	 * @param name The name of the {@code Transformation}, this will be shown in Visualizations and the Log
-	 * @param outputType The output type of this {@code Transformation}
+	 * @param name        The name of the {@code Transformation}, this will be shown in Visualizations and the Log
+	 * @param outputType  The output type of this {@code Transformation}
 	 * @param parallelism The parallelism of this {@code Transformation}
 	 */
 	public Transformation(String name, TypeInformation<T> outputType, int parallelism) {
@@ -238,7 +238,7 @@ public abstract class Transformation<T> {
 	/**
 	 * Sets the minimum and preferred resources for this stream transformation.
 	 *
-	 * @param minResources The minimum resource of this transformation.
+	 * @param minResources       The minimum resource of this transformation.
 	 * @param preferredResources The preferred resource of this transformation.
 	 */
 	public void setResources(ResourceSpec minResources, ResourceSpec preferredResources) {
@@ -273,7 +273,6 @@ public abstract class Transformation<T> {
 	 * of UNKNOWN resources.
 	 *
 	 * @param managedMemoryWeight The managed memory weight of this transformation
-	 *
 	 * @throws IllegalArgumentException Thrown, if non-UNKNOWN resources are already set to this transformation
 	 */
 	public void setManagedMemoryWeight(int managedMemoryWeight) {
@@ -312,13 +311,13 @@ public abstract class Transformation<T> {
 	 * mapping from states to their target operator.
 	 *
 	 * @param uidHash The user provided hash for this operator. This will become the JobVertexID, which is shown in the
-	 *                 logs and web ui.
+	 *                logs and web ui.
 	 */
 	public void setUidHash(String uidHash) {
 
 		Preconditions.checkNotNull(uidHash);
 		Preconditions.checkArgument(uidHash.matches("^[0-9A-Fa-f]{32}$"),
-				"Node hash must be a 32 character String that describes a hex code. Found: " + uidHash);
+			"Node hash must be a 32 character String that describes a hex code. Found: " + uidHash);
 
 		this.userProvidedNodeHash = uidHash;
 	}
@@ -418,16 +417,15 @@ public abstract class Transformation<T> {
 	 * type information.
 	 *
 	 * @param outputType The type information to fill in.
-	 *
 	 * @throws IllegalStateException Thrown, if the type information has been accessed before.
 	 */
 	public void setOutputType(TypeInformation<T> outputType) {
 		if (typeUsed) {
 			throw new IllegalStateException(
-					"TypeInformation cannot be filled in for the type after it has been used. "
-							+ "Please make sure that the type info hints are the first call after"
-							+ " the transformation function, "
-							+ "before any access to types or semantic properties, etc.");
+				"TypeInformation cannot be filled in for the type after it has been used. "
+					+ "Please make sure that the type info hints are the first call after"
+					+ " the transformation function, "
+					+ "before any access to types or semantic properties, etc.");
 		}
 		this.outputType = outputType;
 	}
@@ -442,13 +440,13 @@ public abstract class Transformation<T> {
 		if (outputType instanceof MissingTypeInfo) {
 			MissingTypeInfo typeInfo = (MissingTypeInfo) this.outputType;
 			throw new InvalidTypesException(
-					"The return type of function '"
-							+ typeInfo.getFunctionName()
-							+ "' could not be determined automatically, due to type erasure. "
-							+ "You can give type information hints by using the returns(...) "
-							+ "method on the result of the transformation call, or by letting "
-							+ "your function implement the 'ResultTypeQueryable' "
-							+ "interface.", typeInfo.getTypeException());
+				"The return type of function '"
+					+ typeInfo.getFunctionName()
+					+ "' could not be determined automatically, due to type erasure. "
+					+ "You can give type information hints by using the returns(...) "
+					+ "method on the result of the transformation call, or by letting "
+					+ "your function implement the 'ResultTypeQueryable' "
+					+ "interface.", typeInfo.getTypeException());
 		}
 		typeUsed = true;
 		return this.outputType;
@@ -491,11 +489,11 @@ public abstract class Transformation<T> {
 	@Override
 	public String toString() {
 		return getClass().getSimpleName() + "{" +
-				"id=" + id +
-				", name='" + name + '\'' +
-				", outputType=" + outputType +
-				", parallelism=" + parallelism +
-				'}';
+			"id=" + id +
+			", name='" + name + '\'' +
+			", outputType=" + outputType +
+			", parallelism=" + parallelism +
+			'}';
 	}
 
 	@Override

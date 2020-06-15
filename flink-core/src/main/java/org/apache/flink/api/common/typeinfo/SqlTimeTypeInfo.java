@@ -44,13 +44,13 @@ public class SqlTimeTypeInfo<T> extends TypeInformation<T> implements AtomicType
 
 	private static final long serialVersionUID = -132955295409131880L;
 
-	@SuppressWarnings({ "rawtypes", "unchecked" })
+	@SuppressWarnings({"rawtypes", "unchecked"})
 	public static final SqlTimeTypeInfo<Date> DATE = new SqlTimeTypeInfo<>(Date.class, SqlDateSerializer.INSTANCE, (Class) DateComparator.class);
 
-	@SuppressWarnings({ "rawtypes", "unchecked" })
+	@SuppressWarnings({"rawtypes", "unchecked"})
 	public static final SqlTimeTypeInfo<Time> TIME = new SqlTimeTypeInfo<>(Time.class, SqlTimeSerializer.INSTANCE, (Class) DateComparator.class);
 
-	@SuppressWarnings({ "rawtypes", "unchecked" })
+	@SuppressWarnings({"rawtypes", "unchecked"})
 	public static final SqlTimeTypeInfo<Timestamp> TIMESTAMP = new SqlTimeTypeInfo<>(Timestamp.class, SqlTimestampSerializer.INSTANCE, (Class) SqlTimestampComparator.class);
 
 	// --------------------------------------------------------------------------------------------
@@ -145,8 +145,7 @@ public class SqlTimeTypeInfo<T> extends TypeInformation<T> implements AtomicType
 		try {
 			Constructor<? extends TypeComparator<X>> constructor = comparatorClass.getConstructor(boolean.class);
 			return constructor.newInstance(ascendingOrder);
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			throw new RuntimeException("Could not initialize comparator " + comparatorClass.getName(), e);
 		}
 	}
@@ -157,11 +156,9 @@ public class SqlTimeTypeInfo<T> extends TypeInformation<T> implements AtomicType
 
 		if (type == Date.class) {
 			return (SqlTimeTypeInfo<X>) DATE;
-		}
-		else if (type == Time.class) {
+		} else if (type == Time.class) {
 			return (SqlTimeTypeInfo<X>) TIME;
-		}
-		else if (type == Timestamp.class) {
+		} else if (type == Timestamp.class) {
 			return (SqlTimeTypeInfo<X>) TIMESTAMP;
 		}
 		return null;

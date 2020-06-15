@@ -82,5 +82,6 @@ public abstract class NonRichGenericInputFormat<OT> implements InputFormat<OT, G
 	}
 
 	@Override
-	public void close() throws IOException {}
+	public void close() throws IOException {
+	}
 }

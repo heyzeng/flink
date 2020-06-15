@@ -42,7 +42,9 @@ import java.util.Map;
 @Internal
 public class OperatorTranslation {
 
-	/** The already translated operations. */
+	/**
+	 * The already translated operations.
+	 */
 	private Map<DataSet<?>, Operator<?>> translated = new HashMap<>();
 
 	public Plan translateToPlan(List<DataSink<?>> sinks, String jobName) {
@@ -96,34 +98,28 @@ public class OperatorTranslation {
 			DataSource<T> dataSource = (DataSource<T>) dataSet;
 			dataFlowOp = dataSource.translateToDataFlow();
 			dataFlowOp.setResources(dataSource.getMinResources(), dataSource.getPreferredResources());
-		}
-		else if (dataSet instanceof SingleInputOperator) {
+		} else if (dataSet instanceof SingleInputOperator) {
 			SingleInputOperator<?, ?, ?> singleInputOperator = (SingleInputOperator<?, ?, ?>) dataSet;
 			dataFlowOp = translateSingleInputOperator(singleInputOperator);
 			dataFlowOp.setResources(singleInputOperator.getMinResources(), singleInputOperator.getPreferredResources());
-		}
-		else if (dataSet instanceof TwoInputOperator) {
+		} else if (dataSet instanceof TwoInputOperator) {
 			TwoInputOperator<?, ?, ?, ?> twoInputOperator = (TwoInputOperator<?, ?, ?, ?>) dataSet;
 			dataFlowOp = translateTwoInputOperator(twoInputOperator);
 			dataFlowOp.setResources(twoInputOperator.getMinResources(), twoInputOperator.getPreferredResources());
-		}
-		else if (dataSet instanceof BulkIterationResultSet) {
+		} else if (dataSet instanceof BulkIterationResultSet) {
 			BulkIterationResultSet<?> bulkIterationResultSet = (BulkIterationResultSet<?>) dataSet;
 			dataFlowOp = translateBulkIteration(bulkIterationResultSet);
 			dataFlowOp.setResources(bulkIterationResultSet.getIterationHead().getMinResources(),
-					bulkIterationResultSet.getIterationHead().getPreferredResources());
-		}
-		else if (dataSet instanceof DeltaIterationResultSet) {
+				bulkIterationResultSet.getIterationHead().getPreferredResources());
+		} else if (dataSet instanceof DeltaIterationResultSet) {
 			DeltaIterationResultSet<?, ?> deltaIterationResultSet = (DeltaIterationResultSet<?, ?>) dataSet;
 			dataFlowOp = translateDeltaIteration(deltaIterationResultSet);
 			dataFlowOp.setResources(deltaIterationResultSet.getIterationHead().getMinResources(),
-					deltaIterationResultSet.getIterationHead().getPreferredResources());
-		}
-		else if (dataSet instanceof DeltaIteration.SolutionSetPlaceHolder || dataSet instanceof DeltaIteration.WorksetPlaceHolder) {
+				deltaIterationResultSet.getIterationHead().getPreferredResources());
+		} else if (dataSet instanceof DeltaIteration.SolutionSetPlaceHolder || dataSet instanceof DeltaIteration.WorksetPlaceHolder) {
 			throw new InvalidProgramException("A data set that is part of a delta iteration was used as a sink or action."
 				+ " Did you forget to close the iteration?");
-		}
-		else {
+		} else {
 			throw new RuntimeException("Error while creating the data flow plan for the program: Unknown operator or data set type: " + dataSet);
 		}
 
@@ -159,7 +155,7 @@ public class OperatorTranslation {
 
 			if (dataFlowOp instanceof org.apache.flink.api.common.operators.SingleInputOperator) {
 				org.apache.flink.api.common.operators.SingleInputOperator<?, O, ?> unaryOp =
-						(org.apache.flink.api.common.operators.SingleInputOperator<?, O, ?>) dataFlowOp;
+					(org.apache.flink.api.common.operators.SingleInputOperator<?, O, ?>) dataFlowOp;
 				// set the semantic properties
 				unaryOp.setSemanticProperties(udfOp.getSemanticProperties());
 			}
@@ -194,8 +190,8 @@ public class OperatorTranslation {
 			}
 
 			if (dataFlowOp instanceof org.apache.flink.api.common.operators.DualInputOperator) {
-				org.apache.flink.api.common.operators.DualInputOperator<?, ?,  O, ?> binaryOp =
-						(org.apache.flink.api.common.operators.DualInputOperator<?, ?, O, ?>) dataFlowOp;
+				org.apache.flink.api.common.operators.DualInputOperator<?, ?, O, ?> binaryOp =
+					(org.apache.flink.api.common.operators.DualInputOperator<?, ?, O, ?>) dataFlowOp;
 				// set the semantic properties
 				binaryOp.setSemanticProperties(udfOp.getSemanticProperties());
 			}
@@ -209,7 +205,7 @@ public class OperatorTranslation {
 		BulkIterationResultSet<T> iterationEnd = (BulkIterationResultSet<T>) untypedIterationEnd;
 		IterativeDataSet<T> iterationHead = iterationEnd.getIterationHead();
 		BulkIterationBase<T> iterationOperator =
-				new BulkIterationBase<>(new UnaryOperatorInformation<>(iterationEnd.getType(), iterationEnd.getType()), "Bulk Iteration");
+			new BulkIterationBase<>(new UnaryOperatorInformation<>(iterationEnd.getType(), iterationEnd.getType()), "Bulk Iteration");
 
 		if (iterationHead.getParallelism() > 0) {
 			iterationOperator.setParallelism(iterationHead.getParallelism());
@@ -239,7 +235,7 @@ public class OperatorTranslation {
 		String name = iterationHead.getName() == null ? "Unnamed Delta Iteration" : iterationHead.getName();
 
 		DeltaIterationBase<D, W> iterationOperator = new DeltaIterationBase<>(new BinaryOperatorInformation<>(iterationEnd.getType(), iterationEnd.getWorksetType(), iterationEnd.getType()),
-				iterationEnd.getKeyPositions(), name);
+			iterationEnd.getKeyPositions(), name);
 
 		iterationOperator.setMaximumNumberOfIterations(iterationEnd.getMaxIterations());
 

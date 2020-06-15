@@ -54,7 +54,7 @@ public class ListSerializerTest extends SerializerTestBase<List<Long>> {
 		final Random rnd = new Random(123654789);
 
 		// empty lists
-		final List<Long> list1 = Collections.emptyList(); 
+		final List<Long> list1 = Collections.emptyList();
 		final List<Long> list2 = new LinkedList<>();
 		final List<Long> list3 = new ArrayList<>();
 
@@ -77,8 +77,8 @@ public class ListSerializerTest extends SerializerTestBase<List<Long>> {
 			list8.add(rnd.nextLong());
 		}
 
-		return (List<Long>[]) new List[] {
-				list1, list2, list3, list4, list5, list6, list7, list8
+		return (List<Long>[]) new List[]{
+			list1, list2, list3, list4, list5, list6, list7, list8
 		};
 	}
 }

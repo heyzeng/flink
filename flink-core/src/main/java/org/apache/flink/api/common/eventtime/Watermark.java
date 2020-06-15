@@ -48,18 +48,24 @@ public final class Watermark implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
-	/** Thread local formatter for stringifying the timestamps. */
+	/**
+	 * Thread local formatter for stringifying the timestamps.
+	 */
 	private static final ThreadLocal<SimpleDateFormat> TS_FORMATTER = ThreadLocal.withInitial(
 		() -> new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS"));
 
 	// ------------------------------------------------------------------------
 
-	/** The watermark that signifies end-of-event-time. */
+	/**
+	 * The watermark that signifies end-of-event-time.
+	 */
 	public static final Watermark MAX_WATERMARK = new Watermark(Long.MAX_VALUE);
 
 	// ------------------------------------------------------------------------
 
-	/** The timestamp of the watermark in milliseconds. */
+	/**
+	 * The timestamp of the watermark in milliseconds.
+	 */
 	private final long timestamp;
 
 	/**
@@ -89,7 +95,7 @@ public final class Watermark implements Serializable {
 	@Override
 	public boolean equals(Object o) {
 		return this == o ||
-				o != null &&
+			o != null &&
 				o.getClass() == Watermark.class &&
 				((Watermark) o).timestamp == this.timestamp;
 	}

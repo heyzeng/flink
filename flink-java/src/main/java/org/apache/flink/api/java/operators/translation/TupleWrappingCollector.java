@@ -41,7 +41,7 @@ public class TupleWrappingCollector<IN, K> implements Collector<IN>, java.io.Ser
 	}
 
 	public void set(Collector<Tuple2<K, IN>> wrappedCollector) {
-			this.wrappedCollector = wrappedCollector;
+		this.wrappedCollector = wrappedCollector;
 	}
 
 	@Override

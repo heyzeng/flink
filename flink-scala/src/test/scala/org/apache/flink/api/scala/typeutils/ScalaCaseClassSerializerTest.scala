@@ -24,10 +24,10 @@ import org.apache.flink.api.scala.createTypeInformation
 import org.apache.flink.api.scala.typeutils.ScalaCaseClassSerializerTest.SimpleCaseClass
 
 /**
-  * Test [[ScalaCaseClassSerializer]].
-  */
+ * Test [[ScalaCaseClassSerializer]].
+ */
 class ScalaCaseClassSerializerTest
-    extends SerializerTestBase[SimpleCaseClass] {
+  extends SerializerTestBase[SimpleCaseClass] {
 
   val serializer = createTypeInformation[SimpleCaseClass]
     .createSerializer(new ExecutionConfig)
@@ -46,5 +46,7 @@ class ScalaCaseClassSerializerTest
 }
 
 object ScalaCaseClassSerializerTest {
+
   case class SimpleCaseClass(name: String, var age: Int, genericField: Map[String, Any])
+
 }

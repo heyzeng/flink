@@ -41,13 +41,14 @@ public class FromElementsTest {
 	private static class ParentType {
 		int num;
 		String string;
+
 		public ParentType(int num, String string) {
 			this.num = num;
 			this.string = string;
 		}
 	}
 
-	private static class SubType extends ParentType{
+	private static class SubType extends ParentType {
 		public SubType(int num, String string) {
 			super(num, string);
 		}

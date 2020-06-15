@@ -41,6 +41,7 @@ import java.util.Arrays;
 
 /**
  * An operation that allows storing data results.
+ *
  * @param <T>
  */
 @Public
@@ -99,6 +100,7 @@ public class DataSink<T> {
 
 	/**
 	 * Pass a configuration to the OutputFormat.
+	 *
 	 * @param parameters Configuration parameters
 	 */
 	public DataSink<T> withParameters(Configuration parameters) {
@@ -118,10 +120,8 @@ public class DataSink<T> {
 	 * @param field The Tuple field on which the data set is locally sorted.
 	 * @param order The Order in which the specified Tuple field is locally sorted.
 	 * @return This data sink operator with specified output order.
-	 *
 	 * @see org.apache.flink.api.java.tuple.Tuple
 	 * @see Order
-	 *
 	 * @deprecated Use {@link DataSet#sortPartition(int, Order)} instead
 	 */
 	@Deprecated
@@ -168,11 +168,9 @@ public class DataSink<T> {
 	 * by chaining {@link #sortLocalOutput(String, Order)} calls.
 	 *
 	 * @param fieldExpression The field expression for the field(s) on which the data set is locally sorted.
-	 * @param order The Order in which the specified field(s) are locally sorted.
+	 * @param order           The Order in which the specified field(s) are locally sorted.
 	 * @return This data sink operator with specified output order.
-	 *
 	 * @see Order
-	 *
 	 * @deprecated Use {@link DataSet#sortPartition(String, Order)} instead
 	 */
 	@Deprecated
@@ -282,7 +280,7 @@ public class DataSink<T> {
 	 * The degree must be 1 or more.
 	 *
 	 * @param parallelism The parallelism for this data sink. A value equal to {@link ExecutionConfig#PARALLELISM_DEFAULT}
-	 *        will use the system default.
+	 *                    will use the system default.
 	 * @return This data sink with set parallelism.
 	 */
 	public DataSink<T> setParallelism(int parallelism) {
@@ -324,7 +322,7 @@ public class DataSink<T> {
 	 * Sets the minimum and preferred resources for this data sink. and the lower and upper resource limits
 	 * will be considered in resource resize feature for future plan.
 	 *
-	 * @param minResources The minimum resources for this data sink.
+	 * @param minResources       The minimum resources for this data sink.
 	 * @param preferredResources The preferred resources for this data sink.
 	 * @return The data sink with set minimum and preferred resources.
 	 */

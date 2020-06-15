@@ -32,18 +32,19 @@ import org.apache.flink.core.memory.MemorySegment;
  */
 @Public
 public class BooleanValue implements NormalizableKey<BooleanValue>, ResettableValue<BooleanValue>, CopyableValue<BooleanValue> {
-	
+
 	private static final long serialVersionUID = 1L;
-	
+
 	public static final BooleanValue TRUE = new BooleanValue(true);
-	
+
 	public static final BooleanValue FALSE = new BooleanValue(false);
 
 	private boolean value;
 
-	
-	public BooleanValue() {}
-	
+
+	public BooleanValue() {
+	}
+
 	public BooleanValue(boolean value) {
 		this.value = value;
 	}
@@ -55,7 +56,7 @@ public class BooleanValue implements NormalizableKey<BooleanValue>, ResettableVa
 	public void set(boolean value) {
 		this.value = value;
 	}
-	
+
 	public boolean getValue() {
 		return value;
 	}
@@ -80,12 +81,12 @@ public class BooleanValue implements NormalizableKey<BooleanValue>, ResettableVa
 	public void read(DataInputView in) throws IOException {
 		this.value = in.readBoolean();
 	}
-	
+
 	@Override
 	public int hashCode() {
 		return this.value ? 1 : 0;
 	}
-	
+
 	@Override
 	public boolean equals(Object obj) {
 		if (obj instanceof BooleanValue) {
@@ -100,7 +101,7 @@ public class BooleanValue implements NormalizableKey<BooleanValue>, ResettableVa
 		final int tv = this.value ? 1 : 0;
 		return tv - ov;
 	}
-	
+
 	@Override
 	public String toString() {
 		return this.value ? "true" : "false";
@@ -135,7 +136,7 @@ public class BooleanValue implements NormalizableKey<BooleanValue>, ResettableVa
 	public void copyNormalizedKey(MemorySegment target, int offset, int len) {
 		if (len > 0) {
 			target.put(offset, (byte) (this.value ? 1 : 0));
-			
+
 			for (offset = offset + 1; len > 1; len--) {
 				target.put(offset++, (byte) 0);
 			}

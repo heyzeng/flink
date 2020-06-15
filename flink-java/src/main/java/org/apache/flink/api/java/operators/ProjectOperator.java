@@ -64,7 +64,7 @@ import java.util.Arrays;
  * This operator represents the application of a projection operation on a data set, and the
  * result data set produced by the function.
  *
- * @param <IN> The type of the data set projected by the operator.
+ * @param <IN>  The type of the data set projected by the operator.
  * @param <OUT> The type of data set that is the result of the projection.
  */
 @Public
@@ -165,32 +165,83 @@ public class ProjectOperator<IN, OUT extends Tuple>
 			ProjectOperator<T, OUT> projOperator;
 
 			switch (fieldIndexes.length) {
-			case 1: projOperator = (ProjectOperator<T, OUT>) projectTuple1(); break;
-			case 2: projOperator = (ProjectOperator<T, OUT>) projectTuple2(); break;
-			case 3: projOperator = (ProjectOperator<T, OUT>) projectTuple3(); break;
-			case 4: projOperator = (ProjectOperator<T, OUT>) projectTuple4(); break;
-			case 5: projOperator = (ProjectOperator<T, OUT>) projectTuple5(); break;
-			case 6: projOperator = (ProjectOperator<T, OUT>) projectTuple6(); break;
-			case 7: projOperator = (ProjectOperator<T, OUT>) projectTuple7(); break;
-			case 8: projOperator = (ProjectOperator<T, OUT>) projectTuple8(); break;
-			case 9: projOperator = (ProjectOperator<T, OUT>) projectTuple9(); break;
-			case 10: projOperator = (ProjectOperator<T, OUT>) projectTuple10(); break;
-			case 11: projOperator = (ProjectOperator<T, OUT>) projectTuple11(); break;
-			case 12: projOperator = (ProjectOperator<T, OUT>) projectTuple12(); break;
-			case 13: projOperator = (ProjectOperator<T, OUT>) projectTuple13(); break;
-			case 14: projOperator = (ProjectOperator<T, OUT>) projectTuple14(); break;
-			case 15: projOperator = (ProjectOperator<T, OUT>) projectTuple15(); break;
-			case 16: projOperator = (ProjectOperator<T, OUT>) projectTuple16(); break;
-			case 17: projOperator = (ProjectOperator<T, OUT>) projectTuple17(); break;
-			case 18: projOperator = (ProjectOperator<T, OUT>) projectTuple18(); break;
-			case 19: projOperator = (ProjectOperator<T, OUT>) projectTuple19(); break;
-			case 20: projOperator = (ProjectOperator<T, OUT>) projectTuple20(); break;
-			case 21: projOperator = (ProjectOperator<T, OUT>) projectTuple21(); break;
-			case 22: projOperator = (ProjectOperator<T, OUT>) projectTuple22(); break;
-			case 23: projOperator = (ProjectOperator<T, OUT>) projectTuple23(); break;
-			case 24: projOperator = (ProjectOperator<T, OUT>) projectTuple24(); break;
-			case 25: projOperator = (ProjectOperator<T, OUT>) projectTuple25(); break;
-			default: throw new IllegalStateException("Excessive arity in tuple.");
+				case 1:
+					projOperator = (ProjectOperator<T, OUT>) projectTuple1();
+					break;
+				case 2:
+					projOperator = (ProjectOperator<T, OUT>) projectTuple2();
+					break;
+				case 3:
+					projOperator = (ProjectOperator<T, OUT>) projectTuple3();
+					break;
+				case 4:
+					projOperator = (ProjectOperator<T, OUT>) projectTuple4();
+					break;
+				case 5:
+					projOperator = (ProjectOperator<T, OUT>) projectTuple5();
+					break;
+				case 6:
+					projOperator = (ProjectOperator<T, OUT>) projectTuple6();
+					break;
+				case 7:
+					projOperator = (ProjectOperator<T, OUT>) projectTuple7();
+					break;
+				case 8:
+					projOperator = (ProjectOperator<T, OUT>) projectTuple8();
+					break;
+				case 9:
+					projOperator = (ProjectOperator<T, OUT>) projectTuple9();
+					break;
+				case 10:
+					projOperator = (ProjectOperator<T, OUT>) projectTuple10();
+					break;
+				case 11:
+					projOperator = (ProjectOperator<T, OUT>) projectTuple11();
+					break;
+				case 12:
+					projOperator = (ProjectOperator<T, OUT>) projectTuple12();
+					break;
+				case 13:
+					projOperator = (ProjectOperator<T, OUT>) projectTuple13();
+					break;
+				case 14:
+					projOperator = (ProjectOperator<T, OUT>) projectTuple14();
+					break;
+				case 15:
+					projOperator = (ProjectOperator<T, OUT>) projectTuple15();
+					break;
+				case 16:
+					projOperator = (ProjectOperator<T, OUT>) projectTuple16();
+					break;
+				case 17:
+					projOperator = (ProjectOperator<T, OUT>) projectTuple17();
+					break;
+				case 18:
+					projOperator = (ProjectOperator<T, OUT>) projectTuple18();
+					break;
+				case 19:
+					projOperator = (ProjectOperator<T, OUT>) projectTuple19();
+					break;
+				case 20:
+					projOperator = (ProjectOperator<T, OUT>) projectTuple20();
+					break;
+				case 21:
+					projOperator = (ProjectOperator<T, OUT>) projectTuple21();
+					break;
+				case 22:
+					projOperator = (ProjectOperator<T, OUT>) projectTuple22();
+					break;
+				case 23:
+					projOperator = (ProjectOperator<T, OUT>) projectTuple23();
+					break;
+				case 24:
+					projOperator = (ProjectOperator<T, OUT>) projectTuple24();
+					break;
+				case 25:
+					projOperator = (ProjectOperator<T, OUT>) projectTuple25();
+					break;
+				default:
+					throw new IllegalStateException("Excessive arity in tuple.");
 			}
 
 			return projOperator;

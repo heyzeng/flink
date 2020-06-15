@@ -30,7 +30,8 @@ public class IntCounter implements SimpleAccumulator<Integer> {
 
 	private int localValue = 0;
 
-	public IntCounter() {}
+	public IntCounter() {
+	}
 
 	public IntCounter(int value) {
 		this.localValue = value;
@@ -74,7 +75,7 @@ public class IntCounter implements SimpleAccumulator<Integer> {
 	//  Primitive Specializations
 	// ------------------------------------------------------------------------
 
-	public void add(int value){
+	public void add(int value) {
 		localValue += value;
 	}
 

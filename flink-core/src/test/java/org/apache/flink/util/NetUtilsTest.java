@@ -58,8 +58,7 @@ public class NetUtilsTest extends TestLogger {
 
 			InetAddress address = InetAddress.getByName(addressString);
 			assertEquals(addressString, NetUtils.ipAddressToUrlString(address));
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 			fail(e.getMessage());
 		}
@@ -73,8 +72,7 @@ public class NetUtilsTest extends TestLogger {
 
 			InetAddress address = InetAddress.getByName(addressString);
 			assertEquals(normalizedAddress, NetUtils.ipAddressToUrlString(address));
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 			fail(e.getMessage());
 		}
@@ -92,8 +90,7 @@ public class NetUtilsTest extends TestLogger {
 			assertEquals(addressString, NetUtils.ipAddressToUrlString(address));
 			assertEquals(addressString + ':' + port, NetUtils.ipAddressAndPortToUrlString(address, port));
 			assertEquals(addressString + ':' + port, NetUtils.socketAddressToUrlString(socketAddress));
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 			fail(e.getMessage());
 		}
@@ -112,8 +109,7 @@ public class NetUtilsTest extends TestLogger {
 			assertEquals(bracketedAddressString, NetUtils.ipAddressToUrlString(address));
 			assertEquals(bracketedAddressString + ':' + port, NetUtils.ipAddressAndPortToUrlString(address, port));
 			assertEquals(bracketedAddressString + ':' + port, NetUtils.socketAddressToUrlString(socketAddress));
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 			fail(e.getMessage());
 		}
@@ -230,13 +226,15 @@ public class NetUtilsTest extends TestLogger {
 			try {
 				NetUtils.unresolvedHostAndPortToNormalizedString(host, port);
 				fail();
-			} catch (Exception ignored) {}
+			} catch (Exception ignored) {
+			}
 			// Illegal hostnames
 			host = "illegalhost:fasf";
 			try {
 				NetUtils.unresolvedHostAndPortToNormalizedString(host, port);
 				fail();
-			} catch (Exception ignored) {}
+			} catch (Exception ignored) {
+			}
 		}
 		{
 			// Illegal port ranges
@@ -245,7 +243,8 @@ public class NetUtilsTest extends TestLogger {
 			try {
 				NetUtils.unresolvedHostAndPortToNormalizedString(host, port);
 				fail();
-			} catch (Exception ignored) {}
+			} catch (Exception ignored) {
+			}
 		}
 		{
 			// lower case conversion of hostnames

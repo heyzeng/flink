@@ -46,17 +46,17 @@ package object utils {
   implicit class DataSetUtils[T: TypeInformation : ClassTag](val self: DataSet[T]) {
 
     /**
-      * Method that goes over all the elements in each partition in order to retrieve
-      * the total number of elements.
-      *
-      * @return a data set of tuple2 consisting of (subtask index, number of elements mappings)
-      */
+     * Method that goes over all the elements in each partition in order to retrieve
+     * the total number of elements.
+     *
+     * @return a data set of tuple2 consisting of (subtask index, number of elements mappings)
+     */
     def countElementsPerPartition: DataSet[(Int, Long)] = {
       implicit val typeInfo = createTuple2TypeInformation[Int, Long](
         BasicTypeInfo.INT_TYPE_INFO.asInstanceOf[TypeInformation[Int]],
         BasicTypeInfo.LONG_TYPE_INFO.asInstanceOf[TypeInformation[Long]]
       )
-      wrap(jutils.countElementsPerPartition(self.javaSet)).map { t => (t.f0.toInt, t.f1.toLong)}
+      wrap(jutils.countElementsPerPartition(self.javaSet)).map { t => (t.f0.toInt, t.f1.toLong) }
     }
 
     /**
@@ -86,7 +86,7 @@ package object utils {
         implicitly[TypeInformation[T]]
       )
       wrap(jutils.zipWithUniqueId(self.javaSet)).map {
-        t: org.apache.flink.api.java.tuple.Tuple2[java.lang.Long, T]=> (t.f0.toLong, t.f1)
+        t: org.apache.flink.api.java.tuple.Tuple2[java.lang.Long, T] => (t.f0.toLong, t.f1)
       }
     }
 
@@ -105,10 +105,10 @@ package object utils {
      * @return The sampled DataSet
      */
     def sample(
-        withReplacement: Boolean,
-        fraction: Double,
-        seed: Long = Utils.RNG.nextLong())
-      : DataSet[T] = {
+                withReplacement: Boolean,
+                fraction: Double,
+                seed: Long = Utils.RNG.nextLong())
+    : DataSet[T] = {
       wrap(jutils.sample(self.javaSet, withReplacement, fraction, seed))
     }
 
@@ -120,15 +120,15 @@ package object utils {
      * <p/>
      *
      * @param withReplacement Whether element can be selected more than once.
-     * @param numSamples       The expected sample size.
+     * @param numSamples      The expected sample size.
      * @param seed            Random number generator seed.
      * @return The sampled DataSet
      */
     def sampleWithSize(
-        withReplacement: Boolean,
-        numSamples: Int,
-        seed: Long = Utils.RNG.nextLong())
-      : DataSet[T] = {
+                        withReplacement: Boolean,
+                        numSamples: Int,
+                        seed: Long = Utils.RNG.nextLong())
+    : DataSet[T] = {
       wrap(jutils.sampleWithSize(self.javaSet, withReplacement, numSamples, seed))
     }
 
@@ -171,6 +171,7 @@ package object utils {
                                              fun: T => K): DataSet[T] = {
       val keyExtractor = new KeySelector[T, K] {
         val cleanFun = self.javaSet.clean(fun)
+
         def getKey(in: T) = cleanFun(in)
       }
       val op = new PartitionOperator[T](
@@ -190,12 +191,12 @@ package object utils {
     // --------------------------------------------------------------------------------------------
 
     /**
-      * Convenience method to get the count (number of elements) of a DataSet
-      * as well as the checksum (sum over element hashes).
-      *
-      * @return A ChecksumHashCode with the count and checksum of elements in the data set.
-      * @see [[org.apache.flink.api.java.Utils.ChecksumHashCodeHelper]]
-      */
+     * Convenience method to get the count (number of elements) of a DataSet
+     * as well as the checksum (sum over element hashes).
+     *
+     * @return A ChecksumHashCode with the count and checksum of elements in the data set.
+     * @see [[org.apache.flink.api.java.Utils.ChecksumHashCodeHelper]]
+     */
     def checksumHashCode(): ChecksumHashCode = {
       val id = new AbstractID().toString
       self.javaSet.output(new Utils.ChecksumHashCodeHelper[T](id))

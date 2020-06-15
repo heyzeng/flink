@@ -47,6 +47,7 @@ public class SummaryAggregatorFactory {
 
 	/**
 	 * Create a SummaryAggregator for the supplied type.
+	 *
 	 * @param <T> the type to aggregate
 	 * @param <R> the result type of the aggregation
 	 */
@@ -54,47 +55,33 @@ public class SummaryAggregatorFactory {
 	public static <T, R> Aggregator<T, R> create(Class<T> type) {
 		if (type == Long.class) {
 			return (Aggregator<T, R>) new LongSummaryAggregator();
-		}
-		else if (type == LongValue.class) {
+		} else if (type == LongValue.class) {
 			return (Aggregator<T, R>) new ValueSummaryAggregator.LongValueSummaryAggregator();
-		}
-		else if (type == Integer.class) {
+		} else if (type == Integer.class) {
 			return (Aggregator<T, R>) new IntegerSummaryAggregator();
-		}
-		else if (type == IntValue.class) {
+		} else if (type == IntValue.class) {
 			return (Aggregator<T, R>) new ValueSummaryAggregator.IntegerValueSummaryAggregator();
-		}
-		else if (type == Double.class) {
+		} else if (type == Double.class) {
 			return (Aggregator<T, R>) new DoubleSummaryAggregator();
-		}
-		else if (type == DoubleValue.class) {
+		} else if (type == DoubleValue.class) {
 			return (Aggregator<T, R>) new ValueSummaryAggregator.DoubleValueSummaryAggregator();
-		}
-		else if (type == Float.class) {
+		} else if (type == Float.class) {
 			return (Aggregator<T, R>) new FloatSummaryAggregator();
-		}
-		else if (type == FloatValue.class) {
+		} else if (type == FloatValue.class) {
 			return (Aggregator<T, R>) new ValueSummaryAggregator.FloatValueSummaryAggregator();
-		}
-		else if (type == Short.class) {
+		} else if (type == Short.class) {
 			return (Aggregator<T, R>) new ShortSummaryAggregator();
-		}
-		else if (type == ShortValue.class) {
+		} else if (type == ShortValue.class) {
 			return (Aggregator<T, R>) new ValueSummaryAggregator.ShortValueSummaryAggregator();
-		}
-		else if (type == Boolean.class) {
+		} else if (type == Boolean.class) {
 			return (Aggregator<T, R>) new BooleanSummaryAggregator();
-		}
-		else if (type == BooleanValue.class) {
+		} else if (type == BooleanValue.class) {
 			return (Aggregator<T, R>) new ValueSummaryAggregator.BooleanValueSummaryAggregator();
-		}
-		else if (type == String.class) {
+		} else if (type == String.class) {
 			return (Aggregator<T, R>) new StringSummaryAggregator();
-		}
-		else if (type == StringValue.class) {
+		} else if (type == StringValue.class) {
 			return (Aggregator<T, R>) new ValueSummaryAggregator.StringValueSummaryAggregator();
-		}
-		else {
+		} else {
 			// rather than error for unsupported types do something very generic
 			return (Aggregator<T, R>) new ObjectSummaryAggregator();
 		}

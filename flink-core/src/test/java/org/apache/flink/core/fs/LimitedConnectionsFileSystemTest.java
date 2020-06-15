@@ -47,12 +47,12 @@ public class LimitedConnectionsFileSystemTest {
 	@Test
 	public void testConstructionNumericOverflow() {
 		final LimitedConnectionsFileSystem limitedFs = new LimitedConnectionsFileSystem(
-				LocalFileSystem.getSharedInstance(),
-				Integer.MAX_VALUE,  // unlimited total
-				Integer.MAX_VALUE,  // limited outgoing
-				Integer.MAX_VALUE,  // unlimited incoming
-				Long.MAX_VALUE - 1, // long timeout, close to overflow
-				Long.MAX_VALUE - 1); // long timeout, close to overflow
+			LocalFileSystem.getSharedInstance(),
+			Integer.MAX_VALUE,  // unlimited total
+			Integer.MAX_VALUE,  // limited outgoing
+			Integer.MAX_VALUE,  // unlimited incoming
+			Long.MAX_VALUE - 1, // long timeout, close to overflow
+			Long.MAX_VALUE - 1); // long timeout, close to overflow
 
 		assertEquals(Integer.MAX_VALUE, limitedFs.getMaxNumOpenStreamsTotal());
 		assertEquals(Integer.MAX_VALUE, limitedFs.getMaxNumOpenOutputStreams());
@@ -68,12 +68,12 @@ public class LimitedConnectionsFileSystemTest {
 		final int numThreads = 61;
 
 		final LimitedConnectionsFileSystem limitedFs = new LimitedConnectionsFileSystem(
-				LocalFileSystem.getSharedInstance(),
-				Integer.MAX_VALUE,  // unlimited total
-				maxConcurrentOpen,  // limited outgoing
-				Integer.MAX_VALUE,  // unlimited incoming
-				0,
-				0);
+			LocalFileSystem.getSharedInstance(),
+			Integer.MAX_VALUE,  // unlimited total
+			maxConcurrentOpen,  // limited outgoing
+			Integer.MAX_VALUE,  // unlimited incoming
+			0,
+			0);
 
 		final WriterThread[] threads = new WriterThread[numThreads];
 		for (int i = 0; i < numThreads; i++) {
@@ -96,12 +96,12 @@ public class LimitedConnectionsFileSystemTest {
 		final int numThreads = 61;
 
 		final LimitedConnectionsFileSystem limitedFs = new LimitedConnectionsFileSystem(
-				LocalFileSystem.getSharedInstance(),
-				Integer.MAX_VALUE,  // unlimited total
-				Integer.MAX_VALUE,  // unlimited outgoing
-				maxConcurrentOpen,  // limited incoming
-				0,
-				0);
+			LocalFileSystem.getSharedInstance(),
+			Integer.MAX_VALUE,  // unlimited total
+			Integer.MAX_VALUE,  // unlimited outgoing
+			maxConcurrentOpen,  // limited incoming
+			0,
+			0);
 
 		final Random rnd = new Random();
 
@@ -128,8 +128,8 @@ public class LimitedConnectionsFileSystemTest {
 		final int numThreads = 61;
 
 		final LimitedConnectionsFileSystem limitedFs = new LimitedConnectionsFileSystem(
-				LocalFileSystem.getSharedInstance(),
-				maxConcurrentOpen);  // limited total
+			LocalFileSystem.getSharedInstance(),
+			maxConcurrentOpen);  // limited total
 
 		final Random rnd = new Random();
 
@@ -142,8 +142,7 @@ public class LimitedConnectionsFileSystemTest {
 				// reader thread
 				createRandomContents(file, rnd);
 				threads[i] = new ReaderThread(limitedFs, path, Integer.MAX_VALUE, maxConcurrentOpen);
-			}
-			else {
+			} else {
 				threads[i] = new WriterThread(limitedFs, path, Integer.MAX_VALUE, maxConcurrentOpen);
 			}
 		}
@@ -163,10 +162,10 @@ public class LimitedConnectionsFileSystemTest {
 		final int maxConcurrentOpen = 2;
 
 		final LimitedConnectionsFileSystem limitedFs = new LimitedConnectionsFileSystem(
-				LocalFileSystem.getSharedInstance(),
-				maxConcurrentOpen, // limited total
-				openTimeout,       // small opening timeout
-				0L);               // infinite inactivity timeout
+			LocalFileSystem.getSharedInstance(),
+			maxConcurrentOpen, // limited total
+			openTimeout,       // small opening timeout
+			0L);               // infinite inactivity timeout
 
 		// create the threads that block all streams
 		final BlockingWriterThread[] threads = new BlockingWriterThread[maxConcurrentOpen];
@@ -185,8 +184,7 @@ public class LimitedConnectionsFileSystemTest {
 		try {
 			limitedFs.create(new Path(tempFolder.newFile().toURI()), WriteMode.OVERWRITE);
 			fail("this should have timed out");
-		}
-		catch (IOException e) {
+		} catch (IOException e) {
 			// expected
 		}
 
@@ -203,10 +201,10 @@ public class LimitedConnectionsFileSystemTest {
 		final int maxConcurrentOpen = 2;
 
 		final LimitedConnectionsFileSystem limitedFs = new LimitedConnectionsFileSystem(
-				LocalFileSystem.getSharedInstance(),
-				maxConcurrentOpen, // limited total
-				openTimeout,       // small opening timeout
-				0L);               // infinite inactivity timeout
+			LocalFileSystem.getSharedInstance(),
+			maxConcurrentOpen, // limited total
+			openTimeout,       // small opening timeout
+			0L);               // infinite inactivity timeout
 
 		// create the threads that block all streams
 		final Random rnd = new Random();
@@ -230,8 +228,7 @@ public class LimitedConnectionsFileSystemTest {
 		try {
 			limitedFs.open(new Path(file.toURI()));
 			fail("this should have timed out");
-		}
-		catch (IOException e) {
+		} catch (IOException e) {
 			// expected
 		}
 
@@ -249,12 +246,12 @@ public class LimitedConnectionsFileSystemTest {
 
 		// this testing file system has a 50 ms stream inactivity timeout
 		final LimitedConnectionsFileSystem limitedFs = new LimitedConnectionsFileSystem(
-				LocalFileSystem.getSharedInstance(),
-				Integer.MAX_VALUE,  // no limit on total streams
-				maxConcurrentOpen,  // limit on output streams
-				Integer.MAX_VALUE,  // no limit on input streams
-				0,
-				50);               // timeout of 50 ms
+			LocalFileSystem.getSharedInstance(),
+			Integer.MAX_VALUE,  // no limit on total streams
+			maxConcurrentOpen,  // limit on output streams
+			Integer.MAX_VALUE,  // no limit on input streams
+			0,
+			50);               // timeout of 50 ms
 
 		final WriterThread[] threads = new WriterThread[numThreads];
 		final BlockingWriterThread[] blockers = new BlockingWriterThread[numThreads];
@@ -292,8 +289,8 @@ public class LimitedConnectionsFileSystemTest {
 		for (BlockingThread t : blockers) {
 			try {
 				t.sync();
+			} catch (LimitedConnectionsFileSystem.StreamTimeoutException ignored) {
 			}
-			catch (LimitedConnectionsFileSystem.StreamTimeoutException ignored) {}
 		}
 	}
 
@@ -304,12 +301,12 @@ public class LimitedConnectionsFileSystemTest {
 
 		// this testing file system has a 50 ms stream inactivity timeout
 		final LimitedConnectionsFileSystem limitedFs = new LimitedConnectionsFileSystem(
-				LocalFileSystem.getSharedInstance(),
-				Integer.MAX_VALUE,  // no limit on total streams
-				Integer.MAX_VALUE,  // limit on output streams
-				maxConcurrentOpen,  // no limit on input streams
-				0,
-				50);               // timeout of 50 ms
+			LocalFileSystem.getSharedInstance(),
+			Integer.MAX_VALUE,  // no limit on total streams
+			Integer.MAX_VALUE,  // limit on output streams
+			maxConcurrentOpen,  // no limit on input streams
+			0,
+			50);               // timeout of 50 ms
 
 		final Random rnd = new Random();
 
@@ -355,8 +352,8 @@ public class LimitedConnectionsFileSystemTest {
 		for (BlockingThread t : blockers) {
 			try {
 				t.sync();
+			} catch (LimitedConnectionsFileSystem.StreamTimeoutException ignored) {
 			}
-			catch (LimitedConnectionsFileSystem.StreamTimeoutException ignored) {}
 		}
 	}
 
@@ -366,10 +363,10 @@ public class LimitedConnectionsFileSystemTest {
 		final int numThreads = 20;
 
 		final LimitedConnectionsFileSystem limitedFs = new LimitedConnectionsFileSystem(
-				LocalFileSystem.getSharedInstance(),
-				maxConcurrentOpen,  // limited total
-				0L,                 // no opening timeout
-				50L);               // inactivity timeout of 50 ms
+			LocalFileSystem.getSharedInstance(),
+			maxConcurrentOpen,  // limited total
+			0L,                 // no opening timeout
+			50L);               // inactivity timeout of 50 ms
 
 		final Random rnd = new Random();
 
@@ -387,8 +384,7 @@ public class LimitedConnectionsFileSystemTest {
 				createRandomContents(file2, rnd);
 				threads[i] = new ReaderThread(limitedFs, path1, maxConcurrentOpen, Integer.MAX_VALUE);
 				blockers[i] = new BlockingReaderThread(limitedFs, path2, maxConcurrentOpen, Integer.MAX_VALUE);
-			}
-			else {
+			} else {
 				threads[i] = new WriterThread(limitedFs, path1, maxConcurrentOpen, Integer.MAX_VALUE);
 				blockers[i] = new BlockingWriterThread(limitedFs, path2, maxConcurrentOpen, Integer.MAX_VALUE);
 			}
@@ -419,8 +415,8 @@ public class LimitedConnectionsFileSystemTest {
 		for (BlockingThread t : blockers) {
 			try {
 				t.sync();
+			} catch (LimitedConnectionsFileSystem.StreamTimeoutException ignored) {
 			}
-			catch (LimitedConnectionsFileSystem.StreamTimeoutException ignored) {}
 		}
 	}
 
@@ -458,7 +454,7 @@ public class LimitedConnectionsFileSystemTest {
 	@Test
 	public void testSlowOutputStreamNotClosed() throws Exception {
 		final LimitedConnectionsFileSystem fs = new LimitedConnectionsFileSystem(
-				LocalFileSystem.getSharedInstance(), 1, 0L, 1000L);
+			LocalFileSystem.getSharedInstance(), 1, 0L, 1000L);
 
 		// some competing threads
 		final Random rnd = new Random();
@@ -502,7 +498,7 @@ public class LimitedConnectionsFileSystemTest {
 		createRandomContents(file, new Random(), 50);
 
 		final LimitedConnectionsFileSystem fs = new LimitedConnectionsFileSystem(
-				LocalFileSystem.getSharedInstance(), 1, 0L, 1000L);
+			LocalFileSystem.getSharedInstance(), 1, 0L, 1000L);
 
 		// some competing threads
 		final WriterThread[] threads = new WriterThread[10];
@@ -564,10 +560,10 @@ public class LimitedConnectionsFileSystemTest {
 		private final int maxConcurrentStreamsTotal;
 
 		WriterThread(
-				LimitedConnectionsFileSystem fs,
-				Path path,
-				int maxConcurrentOutputStreams,
-				int maxConcurrentStreamsTotal) {
+			LimitedConnectionsFileSystem fs,
+			Path path,
+			int maxConcurrentOutputStreams,
+			int maxConcurrentStreamsTotal) {
 
 			this.fs = fs;
 			this.path = path;
@@ -601,10 +597,10 @@ public class LimitedConnectionsFileSystemTest {
 		private final int maxConcurrentStreamsTotal;
 
 		ReaderThread(
-				LimitedConnectionsFileSystem fs,
-				Path path,
-				int maxConcurrentInputStreams,
-				int maxConcurrentStreamsTotal) {
+			LimitedConnectionsFileSystem fs,
+			Path path,
+			int maxConcurrentInputStreams,
+			int maxConcurrentStreamsTotal) {
 
 			this.fs = fs;
 			this.path = path;
@@ -622,7 +618,8 @@ public class LimitedConnectionsFileSystemTest {
 				final byte[] readBuffer = new byte[4096];
 
 				//noinspection StatementWithEmptyBody
-				while (stream.read(readBuffer) != -1) {}
+				while (stream.read(readBuffer) != -1) {
+				}
 			}
 		}
 	}
@@ -651,10 +648,10 @@ public class LimitedConnectionsFileSystemTest {
 		private final int maxConcurrentStreamsTotal;
 
 		BlockingWriterThread(
-				LimitedConnectionsFileSystem fs,
-				Path path,
-				int maxConcurrentOutputStreams,
-				int maxConcurrentStreamsTotal) {
+			LimitedConnectionsFileSystem fs,
+			Path path,
+			int maxConcurrentOutputStreams,
+			int maxConcurrentStreamsTotal) {
 
 			this.fs = fs;
 			this.path = path;
@@ -693,10 +690,10 @@ public class LimitedConnectionsFileSystemTest {
 		private final int maxConcurrentStreamsTotal;
 
 		BlockingReaderThread(
-				LimitedConnectionsFileSystem fs,
-				Path path,
-				int maxConcurrentInputStreams,
-				int maxConcurrentStreamsTotal) {
+			LimitedConnectionsFileSystem fs,
+			Path path,
+			int maxConcurrentInputStreams,
+			int maxConcurrentStreamsTotal) {
 
 			this.fs = fs;
 			this.path = path;

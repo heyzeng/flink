@@ -263,7 +263,7 @@ public class ExecutionContextTest {
 	}
 
 	@Test
-	public void testInitCatalogs() throws Exception{
+	public void testInitCatalogs() throws Exception {
 		final Map<String, String> replaceVars = createDefaultReplaceVars();
 		Environment env = EnvironmentFileUtil.parseModified(DEFAULTS_ENVIRONMENT_FILE, replaceVars);
 
@@ -274,12 +274,12 @@ public class ExecutionContextTest {
 		env.getCatalogs().put("test", CatalogEntry.create(catalogProps));
 		Configuration flinkConfig = new Configuration();
 		ExecutionContext.builder(env,
-				new SessionContext("test-session", new Environment()),
-				Collections.emptyList(),
-				flinkConfig,
-				new DefaultClusterClientServiceLoader(),
-				new Options(),
-				Collections.singletonList(new DefaultCLI(flinkConfig))).build();
+			new SessionContext("test-session", new Environment()),
+			Collections.emptyList(),
+			flinkConfig,
+			new DefaultClusterClientServiceLoader(),
+			new Options(),
+			Collections.singletonList(new DefaultCLI(flinkConfig))).build();
 	}
 
 	@SuppressWarnings("unchecked")
@@ -289,14 +289,14 @@ public class ExecutionContextTest {
 			replaceVars);
 		final Configuration flinkConfig = new Configuration();
 		return (ExecutionContext<T>) ExecutionContext.builder(
-				env,
-				new SessionContext("test-session", new Environment()),
-				Collections.emptyList(),
-				flinkConfig,
-				new DefaultClusterClientServiceLoader(),
-				new Options(),
-				Collections.singletonList(new DefaultCLI(flinkConfig)))
-				.build();
+			env,
+			new SessionContext("test-session", new Environment()),
+			Collections.emptyList(),
+			flinkConfig,
+			new DefaultClusterClientServiceLoader(),
+			new Options(),
+			Collections.singletonList(new DefaultCLI(flinkConfig)))
+			.build();
 	}
 
 	private Map<String, String> createDefaultReplaceVars() {
@@ -351,9 +351,9 @@ public class ExecutionContextTest {
 	private static class TestClassLoaderCatalog extends GenericInMemoryCatalog {
 
 		private static final Class parentFirstCL = FlinkUserCodeClassLoaders.parentFirst(
-				new URL[0], TestClassLoaderCatalog.class.getClassLoader()).getClass();
+			new URL[0], TestClassLoaderCatalog.class.getClassLoader()).getClass();
 		private static final Class childFirstCL = FlinkUserCodeClassLoaders.childFirst(
-				new URL[0], TestClassLoaderCatalog.class.getClassLoader(), new String[0]).getClass();
+			new URL[0], TestClassLoaderCatalog.class.getClassLoader(), new String[0]).getClass();
 
 		TestClassLoaderCatalog(String name) {
 			super(name);

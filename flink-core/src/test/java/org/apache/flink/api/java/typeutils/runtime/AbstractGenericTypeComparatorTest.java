@@ -31,26 +31,26 @@ abstract public class AbstractGenericTypeComparatorTest {
 	@Test
 	public void testString() {
 		runTests("",
-				"Lorem Ipsum Dolor Omit Longer",
-				"aaaa",
-				"abcd",
-				"abce",
-				"abdd",
-				"accd",
-				"bbcd");
+			"Lorem Ipsum Dolor Omit Longer",
+			"aaaa",
+			"abcd",
+			"abce",
+			"abdd",
+			"accd",
+			"bbcd");
 	}
 
 	@Test
 	public void testSimpleTypesObjects() {
 		runTests(
-				new SimpleTypes(0, 1, (byte) 2, "", (short) 3, 4.0),
-				new SimpleTypes(1, 1, (byte) 2, "", (short) 3, 4.0),
-				new SimpleTypes(1, 2, (byte) 2, "", (short) 3, 4.0),
-				new SimpleTypes(1, 2, (byte) 3, "", (short) 3, 4.0),
-				new SimpleTypes(1, 2, (byte) 3, "a", (short) 3, 4.0),
-				new SimpleTypes(1, 2, (byte) 3, "b", (short) 3, 4.0),
-				new SimpleTypes(1, 2, (byte) 3, "b", (short) 4, 4.0),
-				new SimpleTypes(1, 2, (byte) 3, "b", (short) 4, 6.0)
+			new SimpleTypes(0, 1, (byte) 2, "", (short) 3, 4.0),
+			new SimpleTypes(1, 1, (byte) 2, "", (short) 3, 4.0),
+			new SimpleTypes(1, 2, (byte) 2, "", (short) 3, 4.0),
+			new SimpleTypes(1, 2, (byte) 3, "", (short) 3, 4.0),
+			new SimpleTypes(1, 2, (byte) 3, "a", (short) 3, 4.0),
+			new SimpleTypes(1, 2, (byte) 3, "b", (short) 3, 4.0),
+			new SimpleTypes(1, 2, (byte) 3, "b", (short) 4, 4.0),
+			new SimpleTypes(1, 2, (byte) 3, "b", (short) 4, 6.0)
 		);
 	}
 
@@ -124,10 +124,10 @@ abstract public class AbstractGenericTypeComparatorTest {
 		}
 
 		@Override
-		@SuppressWarnings({ "unchecked", "rawtypes" })
+		@SuppressWarnings({"unchecked", "rawtypes"})
 		protected TypeComparator<T> createComparator(boolean ascending) {
 			return new GenericTypeComparator(ascending, AbstractGenericTypeComparatorTest.this.createSerializer(this
-					.type), this.type);
+				.type), this.type);
 		}
 
 		@Override
@@ -191,11 +191,11 @@ abstract public class AbstractGenericTypeComparatorTest {
 				SimpleTypes other = (SimpleTypes) obj;
 
 				return other.iVal == this.iVal &&
-						other.lVal == this.lVal &&
-						other.bVal == this.bVal &&
-						other.sVal.equals(this.sVal) &&
-						other.rVal == this.rVal &&
-						other.dVal == this.dVal;
+					other.lVal == this.lVal &&
+					other.bVal == this.bVal &&
+					other.sVal.equals(this.sVal) &&
+					other.rVal == this.rVal &&
+					other.dVal == this.dVal;
 			} else {
 				return false;
 			}
@@ -347,7 +347,7 @@ abstract public class AbstractGenericTypeComparatorTest {
 			if (obj.getClass() == BookAuthor.class) {
 				BookAuthor other = (BookAuthor) obj;
 				return other.authorName.equals(this.authorName) && other.authorId == this.authorId &&
-						other.bookTitles.equals(this.bookTitles);
+					other.bookTitles.equals(this.bookTitles);
 			} else {
 				return false;
 			}

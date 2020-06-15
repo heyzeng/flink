@@ -46,7 +46,7 @@ public class MapStateDescriptorTest {
 		TypeSerializer<String> valueSerializer = new KryoSerializer<>(String.class, new ExecutionConfig());
 
 		MapStateDescriptor<Integer, String> descr =
-				new MapStateDescriptor<>("testName", keySerializer, valueSerializer);
+			new MapStateDescriptor<>("testName", keySerializer, valueSerializer);
 
 		assertEquals("testName", descr.getName());
 		assertNotNull(descr.getSerializer());
@@ -75,7 +75,7 @@ public class MapStateDescriptorTest {
 		MapStateDescriptor<String, String> original = new MapStateDescriptor<>(name, String.class, String.class);
 		MapStateDescriptor<String, String> same = new MapStateDescriptor<>(name, String.class, String.class);
 		MapStateDescriptor<String, String> sameBySerializer =
-				new MapStateDescriptor<>(name, StringSerializer.INSTANCE, StringSerializer.INSTANCE);
+			new MapStateDescriptor<>(name, StringSerializer.INSTANCE, StringSerializer.INSTANCE);
 
 		// test that hashCode() works on state descriptors with initialized and uninitialized serializers
 		assertEquals(original.hashCode(), same.hashCode());

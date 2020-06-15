@@ -28,7 +28,7 @@ public class EnumTypeInfoTest extends TypeInformationTestBase<EnumTypeInfo<?>> {
 	@Override
 	@SuppressWarnings("unchecked")
 	protected EnumTypeInfo<?>[] getTestData() {
-		return new EnumTypeInfo<?>[] {
+		return new EnumTypeInfo<?>[]{
 			(EnumTypeInfo<?>) new EnumTypeInfo(TestEnum.class),
 			(EnumTypeInfo<?>) new EnumTypeInfo(AlternativeEnum.class)
 		};

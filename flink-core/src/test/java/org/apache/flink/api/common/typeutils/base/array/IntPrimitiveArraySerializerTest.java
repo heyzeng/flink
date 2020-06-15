@@ -37,7 +37,7 @@ public class IntPrimitiveArraySerializerTest extends SerializerTestBase<int[]> {
 	protected Class<int[]> getTypeClass() {
 		return int[].class;
 	}
-	
+
 	@Override
 	protected int getLength() {
 		return -1;
@@ -45,10 +45,10 @@ public class IntPrimitiveArraySerializerTest extends SerializerTestBase<int[]> {
 
 	@Override
 	protected int[][] getTestData() {
-		return new int[][] {
-			new int[] {0, 1, 2, 3, -1, -2, -3, Integer.MAX_VALUE, Integer.MIN_VALUE},
-			new int[] {},
-			new int[] {-1, -2, 96769243, 26782, 0, 0, 0}
+		return new int[][]{
+			new int[]{0, 1, 2, 3, -1, -2, -3, Integer.MAX_VALUE, Integer.MIN_VALUE},
+			new int[]{},
+			new int[]{-1, -2, 96769243, 26782, 0, 0, 0}
 		};
 	}
 }

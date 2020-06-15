@@ -56,7 +56,7 @@ public class InstantiationUtilTest extends TestLogger {
 	public static TemporaryFolder temporaryFolder = new TemporaryFolder();
 
 	private static final String PROXY_DEFINITION_FORMAT =
-			"import java.lang.reflect.InvocationHandler;" +
+		"import java.lang.reflect.InvocationHandler;" +
 			"import java.lang.reflect.Method;" +
 			"import java.io.Serializable;" +
 			"public class %s implements InvocationHandler, Serializable {\n" +
@@ -99,21 +99,21 @@ public class InstantiationUtilTest extends TestLogger {
 	@Test
 	public void testInstantiationOfStringValue() {
 		StringValue stringValue = InstantiationUtil.instantiate(
-				StringValue.class, null);
+			StringValue.class, null);
 		assertNotNull(stringValue);
 	}
 
 	@Test
 	public void testInstantiationOfStringValueAndCastToValue() {
 		StringValue stringValue = InstantiationUtil.instantiate(
-				StringValue.class, Value.class);
+			StringValue.class, Value.class);
 		assertNotNull(stringValue);
 	}
 
 	@Test
 	public void testHasNullaryConstructor() {
 		assertTrue(InstantiationUtil
-				.hasPublicNullaryConstructor(StringValue.class));
+			.hasPublicNullaryConstructor(StringValue.class));
 	}
 
 	@Test
@@ -153,11 +153,9 @@ public class InstantiationUtilTest extends TestLogger {
 			try {
 				InstantiationUtil.writeObjectToConfig(new TestClassWriteFails(), config, "irgnored");
 				fail("should throw an exception");
-			}
-			catch (TestException e) {
+			} catch (TestException e) {
 				// expected
-			}
-			catch (Exception e) {
+			} catch (Exception e) {
 				fail("Wrong exception type - exception not properly forwarded");
 			}
 
@@ -167,26 +165,21 @@ public class InstantiationUtilTest extends TestLogger {
 			try {
 				InstantiationUtil.readObjectFromConfig(config, key1, getClass().getClassLoader());
 				fail("should throw an exception");
-			}
-			catch (TestException e) {
+			} catch (TestException e) {
 				// expected
-			}
-			catch (Exception e) {
+			} catch (Exception e) {
 				fail("Wrong exception type - exception not properly forwarded");
 			}
 
 			try {
 				InstantiationUtil.readObjectFromConfig(config, key2, getClass().getClassLoader());
 				fail("should throw an exception");
-			}
-			catch (ClassNotFoundException e) {
+			} catch (ClassNotFoundException e) {
 				// expected
-			}
-			catch (Exception e) {
+			} catch (Exception e) {
 				fail("Wrong exception type - exception not properly forwarded");
 			}
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 			fail(e.getMessage());
 		}
@@ -203,7 +196,8 @@ public class InstantiationUtilTest extends TestLogger {
 
 	// --------------------------------------------------------------------------------------------
 
-	private class TestClass {}
+	private class TestClass {
+	}
 
 	private static class TestException extends IOException {
 		private static final long serialVersionUID = 1L;
@@ -236,7 +230,9 @@ public class InstantiationUtilTest extends TestLogger {
 		}
 	}
 
-	/** A simple test type. */
+	/**
+	 * A simple test type.
+	 */
 	public static final class WritableType implements IOReadableWritable {
 
 		private int aInt;
@@ -257,12 +253,10 @@ public class InstantiationUtilTest extends TestLogger {
 		public boolean equals(Object obj) {
 			if (obj == this) {
 				return true;
-			}
-			else if (obj != null && obj.getClass() == WritableType.class) {
+			} else if (obj != null && obj.getClass() == WritableType.class) {
 				WritableType that = (WritableType) obj;
 				return this.aLong == that.aLong && this.aInt == that.aInt;
-			}
-			else {
+			} else {
 				return false;
 			}
 		}

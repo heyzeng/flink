@@ -40,7 +40,7 @@ public class UnsupportedFileSystemSchemeException extends IOException {
 	 * Creates a new exception with the given message and cause.
 	 *
 	 * @param message The exception message
-	 * @param cause The exception cause
+	 * @param cause   The exception cause
 	 */
 	public UnsupportedFileSystemSchemeException(String message, Throwable cause) {
 		super(message, cause);

@@ -36,7 +36,7 @@ import org.apache.flink.util.InstantiationUtil;
 
 @Internal
 public final class PojoComparator<T> extends CompositeTypeComparator<T> implements java.io.Serializable {
-	
+
 	private static final long serialVersionUID = 1L;
 
 	// Reflection fields for the comp fields
@@ -72,10 +72,10 @@ public final class PojoComparator<T> extends CompositeTypeComparator<T> implemen
 
 		for (int i = 0; i < this.comparators.length; i++) {
 			TypeComparator<?> k = this.comparators[i];
-			if(k == null) {
+			if (k == null) {
 				throw new IllegalArgumentException("One of the passed comparators is null");
 			}
-			if(keyFields[i] == null) {
+			if (keyFields[i] == null) {
 				throw new IllegalArgumentException("One of the passed reflection fields is null");
 			}
 
@@ -84,8 +84,7 @@ public final class PojoComparator<T> extends CompositeTypeComparator<T> implemen
 				if (i == 0) {
 					// the first comparator decides whether we need to invert the key direction
 					inverted = k.invertNormalizedKey();
-				}
-				else if (k.invertNormalizedKey() != inverted) {
+				} else if (k.invertNormalizedKey() != inverted) {
 					// if a successor does not agree on the inversion direction, it cannot be part of the normalized key
 					break;
 				}
@@ -130,23 +129,23 @@ public final class PojoComparator<T> extends CompositeTypeComparator<T> implemen
 
 		try {
 			this.serializer = (TypeSerializer<T>) InstantiationUtil.deserializeObject(
-					InstantiationUtil.serializeObject(toClone.serializer), Thread.currentThread().getContextClassLoader());
+				InstantiationUtil.serializeObject(toClone.serializer), Thread.currentThread().getContextClassLoader());
 		} catch (IOException | ClassNotFoundException e) {
 			throw new RuntimeException("Cannot copy serializer", e);
 		}
 	}
 
 	private void writeObject(ObjectOutputStream out)
-			throws IOException, ClassNotFoundException {
+		throws IOException, ClassNotFoundException {
 		out.defaultWriteObject();
 		out.writeInt(keyFields.length);
-		for (Field field: keyFields) {
+		for (Field field : keyFields) {
 			FieldSerializer.serializeField(field, out);
 		}
 	}
 
 	private void readObject(ObjectInputStream in)
-			throws IOException, ClassNotFoundException {
+		throws IOException, ClassNotFoundException {
 		in.defaultReadObject();
 		int numKeyFields = in.readInt();
 		keyFields = new Field[numKeyFields];
@@ -159,18 +158,18 @@ public final class PojoComparator<T> extends CompositeTypeComparator<T> implemen
 		return this.keyFields;
 	}
 
-	@SuppressWarnings({ "rawtypes", "unchecked" })
+	@SuppressWarnings({"rawtypes", "unchecked"})
 	@Override
 	public void getFlatComparator(List<TypeComparator> flatComparators) {
-		for(int i = 0; i < comparators.length; i++) {
-			if(comparators[i] instanceof CompositeTypeComparator) {
-				((CompositeTypeComparator)comparators[i]).getFlatComparator(flatComparators);
+		for (int i = 0; i < comparators.length; i++) {
+			if (comparators[i] instanceof CompositeTypeComparator) {
+				((CompositeTypeComparator) comparators[i]).getFlatComparator(flatComparators);
 			} else {
 				flatComparators.add(comparators[i]);
 			}
 		}
 	}
-	
+
 	/**
 	 * This method is handling the IllegalAccess exceptions of Field.get()
 	 */
@@ -178,10 +177,10 @@ public final class PojoComparator<T> extends CompositeTypeComparator<T> implemen
 		try {
 			object = field.get(object);
 		} catch (NullPointerException npex) {
-			throw new NullKeyFieldException("Unable to access field "+field+" on object "+object);
+			throw new NullKeyFieldException("Unable to access field " + field + " on object " + object);
 		} catch (IllegalAccessException iaex) {
 			throw new RuntimeException("This should not happen since we call setAccesssible(true) in PojoTypeInfo."
-			+ " fields: " + field + " obj: " + object);
+				+ " fields: " + field + " obj: " + object);
 		}
 		return object;
 	}
@@ -194,9 +193,9 @@ public final class PojoComparator<T> extends CompositeTypeComparator<T> implemen
 			code *= TupleComparatorBase.HASH_SALT[i & 0x1F];
 			try {
 				code += this.comparators[i].hash(accessField(keyFields[i], value));
-			}catch(NullPointerException npe) {
+			} catch (NullPointerException npe) {
 				throw new RuntimeException("A NullPointerException occured while accessing a key field in a POJO. " +
-						"Most likely, the value grouped/joined on is null. Field name: "+keyFields[i].getName(), npe);
+					"Most likely, the value grouped/joined on is null. Field name: " + keyFields[i].getName(), npe);
 			}
 		}
 		return code;
@@ -235,8 +234,7 @@ public final class PojoComparator<T> extends CompositeTypeComparator<T> implemen
 				}
 			}
 			return 0;
-		}
-		catch (NullPointerException npex) {
+		} catch (NullPointerException npex) {
 			throw new NullKeyFieldException(this.keyFields[i].toString());
 		}
 	}
@@ -254,7 +252,7 @@ public final class PojoComparator<T> extends CompositeTypeComparator<T> implemen
 		return 0;
 	}
 
-	
+
 	@Override
 	public int compareSerialized(DataInputView firstSource, DataInputView secondSource) throws IOException {
 		T first = this.serializer.createInstance();
@@ -279,15 +277,14 @@ public final class PojoComparator<T> extends CompositeTypeComparator<T> implemen
 	@Override
 	public boolean isNormalizedKeyPrefixOnly(int keyBytes) {
 		return this.numLeadingNormalizableKeys < this.keyFields.length ||
-				this.normalizableKeyPrefixLen == Integer.MAX_VALUE ||
-				this.normalizableKeyPrefixLen > keyBytes;
+			this.normalizableKeyPrefixLen == Integer.MAX_VALUE ||
+			this.normalizableKeyPrefixLen > keyBytes;
 	}
 
 	@Override
 	public void putNormalizedKey(T value, MemorySegment target, int offset, int numBytes) {
 		int i = 0;
-		for (; i < this.numLeadingNormalizableKeys && numBytes > 0; i++)
-		{
+		for (; i < this.numLeadingNormalizableKeys && numBytes > 0; i++) {
 			int len = this.normalizedKeyLengths[i];
 			len = numBytes >= len ? len : numBytes;
 			this.comparators[i].putNormalizedKey(accessField(keyFields[i], value), target, offset, len);

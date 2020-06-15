@@ -30,7 +30,8 @@ public class IntMaximum implements SimpleAccumulator<Integer> {
 
 	private int max = Integer.MIN_VALUE;
 
-	public IntMaximum() {}
+	public IntMaximum() {
+	}
 
 	public IntMaximum(int value) {
 		this.max = value;

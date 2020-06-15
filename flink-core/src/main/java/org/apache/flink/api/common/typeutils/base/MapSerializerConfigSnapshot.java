@@ -41,8 +41,11 @@ public final class MapSerializerConfigSnapshot<K, V> extends CompositeTypeSerial
 
 	private static final int VERSION = 1;
 
-	/** This empty nullary constructor is required for deserializing the configuration. */
-	public MapSerializerConfigSnapshot() {}
+	/**
+	 * This empty nullary constructor is required for deserializing the configuration.
+	 */
+	public MapSerializerConfigSnapshot() {
+	}
 
 	public MapSerializerConfigSnapshot(TypeSerializer<K> keySerializer, TypeSerializer<V> valueSerializer) {
 		super(keySerializer, valueSerializer);
@@ -59,8 +62,7 @@ public final class MapSerializerConfigSnapshot<K, V> extends CompositeTypeSerial
 				new MapSerializerSnapshot<>(),
 				nestedSerializersAndConfigs.get(0).f1,
 				nestedSerializersAndConfigs.get(1).f1);
-		}
-		else {
+		} else {
 			return super.resolveSchemaCompatibility(newSerializer);
 		}
 	}

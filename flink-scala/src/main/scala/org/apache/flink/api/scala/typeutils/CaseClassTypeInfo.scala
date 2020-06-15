@@ -39,10 +39,10 @@ import scala.collection.mutable.ArrayBuffer
  */
 @Public
 abstract class CaseClassTypeInfo[T <: Product](
-    clazz: Class[T],
-    val typeParamTypeInfos: Array[TypeInformation[_]],
-    fieldTypes: Seq[TypeInformation[_]],
-    val fieldNames: Seq[String])
+                                                clazz: Class[T],
+                                                val typeParamTypeInfos: Array[TypeInformation[_]],
+                                                fieldTypes: Seq[TypeInformation[_]],
+                                                val fieldNames: Seq[String])
   extends TupleTypeInfoBase[T](clazz, fieldTypes: _*) {
 
   @PublicEvolving
@@ -71,9 +71,9 @@ abstract class CaseClassTypeInfo[T <: Product](
 
   @PublicEvolving
   override def getFlatFields(
-      fieldExpression: String,
-      offset: Int,
-      result: java.util.List[FlatFieldDescriptor]): Unit = {
+                              fieldExpression: String,
+                              offset: Int,
+                              result: java.util.List[FlatFieldDescriptor]): Unit = {
     val matcher: Matcher = PATTERN_NESTED_FIELDS_WILDCARD.matcher(fieldExpression)
 
     if (!matcher.matches) {
@@ -100,7 +100,7 @@ abstract class CaseClassTypeInfo[T <: Product](
       field = matcher.group(1)
 
       val intFieldMatcher = PATTERN_INT_FIELD.matcher(field)
-      if(intFieldMatcher.matches()) {
+      if (intFieldMatcher.matches()) {
         // convert 0-indexed integer field into 1-indexed name field
         field = "_" + (Integer.valueOf(field) + 1)
       }
@@ -152,7 +152,7 @@ abstract class CaseClassTypeInfo[T <: Product](
   }
 
   @PublicEvolving
-  override def getTypeAt[X](fieldExpression: String) : TypeInformation[X] = {
+  override def getTypeAt[X](fieldExpression: String): TypeInformation[X] = {
 
     val matcher: Matcher = PATTERN_NESTED_FIELDS.matcher(fieldExpression)
     if (!matcher.matches) {
@@ -170,7 +170,7 @@ abstract class CaseClassTypeInfo[T <: Product](
     val tail = matcher.group(3)
 
     val intFieldMatcher = PATTERN_INT_FIELD.matcher(field)
-    if(intFieldMatcher.matches()) {
+    if (intFieldMatcher.matches()) {
       // convert 0-indexed integer field into 1-indexed name field
       field = "_" + (Integer.valueOf(field) + 1)
     }
@@ -249,9 +249,9 @@ abstract class CaseClassTypeInfo[T <: Product](
     obj match {
       case caseClass: CaseClassTypeInfo[_] =>
         caseClass.canEqual(this) &&
-        super.equals(caseClass) &&
-        typeParamTypeInfos.sameElements(caseClass.typeParamTypeInfos) &&
-        fieldNames.equals(caseClass.fieldNames)
+          super.equals(caseClass) &&
+          typeParamTypeInfos.sameElements(caseClass.typeParamTypeInfos) &&
+          fieldNames.equals(caseClass.fieldNames)
       case _ => false
     }
   }

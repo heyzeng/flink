@@ -36,10 +36,10 @@ import com.esotericsoftware.kryo.io.Output;
 
 @SuppressWarnings("unchecked")
 public class KryoWithCustomSerializersTest extends AbstractGenericTypeSerializerTest {
-	
+
 
 	@Test
-	public void testJodaTime(){
+	public void testJodaTime() {
 		Collection<LocalDate> b = new HashSet<LocalDate>();
 
 		b.add(new LocalDate(1L));

@@ -20,6 +20,7 @@ package org.apache.flink.api.java.typeutils.runtime;
 
 import org.apache.flink.annotation.Internal;
 import org.apache.flink.core.memory.DataOutputView;
+
 import java.io.IOException;
 import java.io.OutputStream;
 
@@ -27,7 +28,7 @@ import java.io.OutputStream;
 public class DataOutputViewStream extends OutputStream {
 	protected DataOutputView outputView;
 
-	public DataOutputViewStream(DataOutputView outputView){
+	public DataOutputViewStream(DataOutputView outputView) {
 		this.outputView = outputView;
 	}
 

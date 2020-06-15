@@ -33,7 +33,7 @@ public class ListAccumulator<T> implements Accumulator<T, ArrayList<T>> {
 	private static final long serialVersionUID = 1L;
 
 	private ArrayList<T> localValue = new ArrayList<T>();
-	
+
 	@Override
 	public void add(T value) {
 		localValue.add(value);

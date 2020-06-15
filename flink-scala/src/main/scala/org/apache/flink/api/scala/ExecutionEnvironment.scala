@@ -52,10 +52,10 @@ import scala.reflect.ClassTag
  *  - [[ExecutionEnvironment#createLocalEnvironment]]
  *  - [[ExecutionEnvironment#createRemoteEnvironment]]
  *
- *  Use [[ExecutionEnvironment#getExecutionEnvironment]] to get the correct environment depending
- *  on where the program is executed. If it is run inside an IDE a local environment will be
+ * Use [[ExecutionEnvironment#getExecutionEnvironment]] to get the correct environment depending
+ * on where the program is executed. If it is run inside an IDE a local environment will be
  *  created. If the program is submitted to a cluster a remote execution environment will
- *  be created.
+ * be created.
  */
 @Public
 class ExecutionEnvironment(javaEnv: JavaEnv) {
@@ -89,34 +89,34 @@ class ExecutionEnvironment(javaEnv: JavaEnv) {
   def getParallelism = javaEnv.getParallelism
 
   /**
-    * Sets the restart strategy configuration. The configuration specifies which restart strategy
-    * will be used for the execution graph in case of a restart.
-    *
-    * @param restartStrategyConfiguration Restart strategy configuration to be set
-    */
+   * Sets the restart strategy configuration. The configuration specifies which restart strategy
+   * will be used for the execution graph in case of a restart.
+   *
+   * @param restartStrategyConfiguration Restart strategy configuration to be set
+   */
   @PublicEvolving
   def setRestartStrategy(restartStrategyConfiguration: RestartStrategyConfiguration): Unit = {
     javaEnv.setRestartStrategy(restartStrategyConfiguration)
   }
 
   /**
-    * Returns the specified restart strategy configuration.
-    *
-    * @return The restart strategy configuration to be used
-    */
+   * Returns the specified restart strategy configuration.
+   *
+   * @return The restart strategy configuration to be used
+   */
   @PublicEvolving
   def getRestartStrategy: RestartStrategyConfiguration = {
     javaEnv.getRestartStrategy
   }
 
   /**
-    * Sets the number of times that failed tasks are re-executed. A value of zero
-    * effectively disables fault tolerance. A value of "-1" indicates that the system
-    * default value (as defined in the configuration) should be used.
-    *
-    * @deprecated This method will be replaced by [[setRestartStrategy()]]. The
-    *            FixedDelayRestartStrategyConfiguration contains the number of execution retries.
-    */
+   * Sets the number of times that failed tasks are re-executed. A value of zero
+   * effectively disables fault tolerance. A value of "-1" indicates that the system
+   * default value (as defined in the configuration) should be used.
+   *
+   * @deprecated This method will be replaced by [[setRestartStrategy()]]. The
+   *             FixedDelayRestartStrategyConfiguration contains the number of execution retries.
+   */
   @Deprecated
   @PublicEvolving
   def setNumberOfExecutionRetries(numRetries: Int): Unit = {
@@ -124,13 +124,13 @@ class ExecutionEnvironment(javaEnv: JavaEnv) {
   }
 
   /**
-    * Gets the number of times the system will try to re-execute failed tasks. A value
-    * of "-1" indicates that the system default value (as defined in the configuration)
-    * should be used.
-    *
-    * @deprecated This method will be replaced by [[getRestartStrategy]]. The
-    *            FixedDelayRestartStrategyConfiguration contains the number of execution retries.
-    */
+   * Gets the number of times the system will try to re-execute failed tasks. A value
+   * of "-1" indicates that the system default value (as defined in the configuration)
+   * should be used.
+   *
+   * @deprecated This method will be replaced by [[getRestartStrategy]]. The
+   *             FixedDelayRestartStrategyConfiguration contains the number of execution retries.
+   */
   @Deprecated
   @PublicEvolving
   def getNumberOfExecutionRetries = javaEnv.getNumberOfExecutionRetries
@@ -147,9 +147,9 @@ class ExecutionEnvironment(javaEnv: JavaEnv) {
    * because it may be distributed to the worker nodes by java serialization.
    */
   def registerTypeWithKryoSerializer[T <: Serializer[_] with Serializable](
-      clazz: Class[_],
-      serializer: T)
-    : Unit = {
+                                                                            clazz: Class[_],
+                                                                            serializer: T)
+  : Unit = {
     javaEnv.registerTypeWithKryoSerializer(clazz, serializer)
   }
 
@@ -175,9 +175,9 @@ class ExecutionEnvironment(javaEnv: JavaEnv) {
    * because it may be distributed to the worker nodes by java serialization.
    */
   def addDefaultKryoSerializer[T <: Serializer[_] with Serializable](
-      clazz: Class[_],
-      serializer: T)
-    : Unit = {
+                                                                      clazz: Class[_],
+                                                                      serializer: T)
+  : Unit = {
     javaEnv.addDefaultKryoSerializer(clazz, serializer)
   }
 
@@ -212,8 +212,8 @@ class ExecutionEnvironment(javaEnv: JavaEnv) {
   /**
    * Creates a DataSet of Strings produced by reading the given file line wise.
    *
-   * @param filePath The path of the file, as a URI (e.g., "file:///some/local/file" or
-   *                 "hdfs://host:port/file/path").
+   * @param filePath    The path of the file, as a URI (e.g., "file:///some/local/file" or
+   *                    "hdfs://host:port/file/path").
    * @param charsetName The name of the character set used to read the file. Default is UTF-0
    */
   def readTextFile(filePath: String, charsetName: String = "UTF-8"): DataSet[String] = {
@@ -231,13 +231,13 @@ class ExecutionEnvironment(javaEnv: JavaEnv) {
    * [[StringValue]] objects, rather than Java Strings. StringValues can be used to tune
    * implementations to be less object and garbage collection heavy.
    *
-   * @param filePath The path of the file, as a URI (e.g., "file:///some/local/file" or
-   *                 "hdfs://host:port/file/path").
+   * @param filePath    The path of the file, as a URI (e.g., "file:///some/local/file" or
+   *                    "hdfs://host:port/file/path").
    * @param charsetName The name of the character set used to read the file. Default is UTF-0
    */
   def readTextFileWithValue(
-      filePath: String,
-      charsetName: String = "UTF-8"): DataSet[StringValue] = {
+                             filePath: String,
+                             charsetName: String = "UTF-8"): DataSet[StringValue] = {
     require(filePath != null, "The file path may not be null.")
     val format = new TextValueInputFormat(new Path(filePath))
     format.setCharsetName(charsetName)
@@ -252,28 +252,28 @@ class ExecutionEnvironment(javaEnv: JavaEnv) {
    * number of fields in the CSV file is not the same, the `includedFields` parameter can be used
    * to only read specific fields.
    *
-   * @param filePath The path of the file, as a URI (e.g., "file:///some/local/file" or
-   *                 "hdfs://host:port/file/path").
-   * @param lineDelimiter The string that separates lines, defaults to newline.
-   * @param fieldDelimiter The string that separates individual fields, defaults to ",".
-   * @param quoteCharacter The character to use for quoted String parsing, disabled by default.
+   * @param filePath        The path of the file, as a URI (e.g., "file:///some/local/file" or
+   *                        "hdfs://host:port/file/path").
+   * @param lineDelimiter   The string that separates lines, defaults to newline.
+   * @param fieldDelimiter  The string that separates individual fields, defaults to ",".
+   * @param quoteCharacter  The character to use for quoted String parsing, disabled by default.
    * @param ignoreFirstLine Whether the first line in the file should be ignored.
-   * @param ignoreComments Lines that start with the given String are ignored, disabled by default.
-   * @param lenient Whether the parser should silently ignore malformed lines.
-   * @param includedFields The fields in the file that should be read. Per default all fields
-   *                       are read.
-   * @param pojoFields The fields of the POJO which are mapped to CSV fields.
+   * @param ignoreComments  Lines that start with the given String are ignored, disabled by default.
+   * @param lenient         Whether the parser should silently ignore malformed lines.
+   * @param includedFields  The fields in the file that should be read. Per default all fields
+   *                        are read.
+   * @param pojoFields      The fields of the POJO which are mapped to CSV fields.
    */
-  def readCsvFile[T : ClassTag : TypeInformation](
-      filePath: String,
-      lineDelimiter: String = "\n",
-      fieldDelimiter: String = ",",
-      quoteCharacter: Character = null,
-      ignoreFirstLine: Boolean = false,
-      ignoreComments: String = null,
-      lenient: Boolean = false,
-      includedFields: Array[Int] = null,
-      pojoFields: Array[String] = null): DataSet[T] = {
+  def readCsvFile[T: ClassTag : TypeInformation](
+                                                  filePath: String,
+                                                  lineDelimiter: String = "\n",
+                                                  fieldDelimiter: String = ",",
+                                                  quoteCharacter: Character = null,
+                                                  ignoreFirstLine: Boolean = false,
+                                                  ignoreComments: String = null,
+                                                  lenient: Boolean = false,
+                                                  includedFields: Array[Int] = null,
+                                                  pojoFields: Array[String] = null): DataSet[T] = {
 
     val typeInfo = implicitly[TypeInformation[T]]
 
@@ -319,13 +319,13 @@ class ExecutionEnvironment(javaEnv: JavaEnv) {
    * single field, but it produces a DataSet not through Tuple.
    * The type parameter must be used to specify the primitive type.
    *
-   * @param filePath The path of the file, as a URI (e.g., "file:///some/local/file" or
-   *                 "hdfs://host:port/file/path").
+   * @param filePath  The path of the file, as a URI (e.g., "file:///some/local/file" or
+   *                  "hdfs://host:port/file/path").
    * @param delimiter The string that separates primitives , defaults to newline.
    */
-  def readFileOfPrimitives[T : ClassTag : TypeInformation](
-      filePath : String,
-      delimiter : String = "\n") : DataSet[T] = {
+  def readFileOfPrimitives[T: ClassTag : TypeInformation](
+                                                           filePath: String,
+                                                           delimiter: String = "\n"): DataSet[T] = {
     require(filePath != null, "File path must not be null.")
     val typeInfo = implicitly[TypeInformation[T]]
     val datasource = new DataSource[T](
@@ -340,9 +340,9 @@ class ExecutionEnvironment(javaEnv: JavaEnv) {
    * Creates a new DataSource by reading the specified file using the custom
    * [[org.apache.flink.api.common.io.FileInputFormat]].
    */
-  def readFile[T : ClassTag : TypeInformation](
-      inputFormat: FileInputFormat[T],
-      filePath: String): DataSet[T] = {
+  def readFile[T: ClassTag : TypeInformation](
+                                               inputFormat: FileInputFormat[T],
+                                               filePath: String): DataSet[T] = {
     require(inputFormat != null, "InputFormat must not be null.")
     require(filePath != null, "File path must not be null.")
     inputFormat.setFilePath(new Path(filePath))
@@ -353,7 +353,7 @@ class ExecutionEnvironment(javaEnv: JavaEnv) {
    * Generic method to create an input DataSet with an
    * [[org.apache.flink.api.common.io.InputFormat]].
    */
-  def createInput[T : ClassTag : TypeInformation](inputFormat: InputFormat[T, _]): DataSet[T] = {
+  def createInput[T: ClassTag : TypeInformation](inputFormat: InputFormat[T, _]): DataSet[T] = {
     if (inputFormat == null) {
       throw new IllegalArgumentException("InputFormat must not be null.")
     }
@@ -365,8 +365,8 @@ class ExecutionEnvironment(javaEnv: JavaEnv) {
    * [[org.apache.flink.api.common.io.InputFormat]].
    */
   private def createInput[T: ClassTag](
-      inputFormat: InputFormat[T, _],
-      producedType: TypeInformation[T]): DataSet[T] = {
+                                        inputFormat: InputFormat[T, _],
+                                        producedType: TypeInformation[T]): DataSet[T] = {
     if (inputFormat == null) {
       throw new IllegalArgumentException("InputFormat must not be null.")
     }
@@ -381,7 +381,7 @@ class ExecutionEnvironment(javaEnv: JavaEnv) {
    * a parallelism of one.
    */
   def fromCollection[T: ClassTag : TypeInformation](
-      data: Iterable[T]): DataSet[T] = {
+                                                     data: Iterable[T]): DataSet[T] = {
     require(data != null, "Data must not be null.")
 
     val typeInfo = implicitly[TypeInformation[T]]
@@ -400,8 +400,8 @@ class ExecutionEnvironment(javaEnv: JavaEnv) {
    * Note that this operation will result in a non-parallel data source, i.e. a data source with
    * a parallelism of one.
    */
-  def fromCollection[T: ClassTag : TypeInformation] (
-    data: Iterator[T]): DataSet[T] = {
+  def fromCollection[T: ClassTag : TypeInformation](
+                                                     data: Iterator[T]): DataSet[T] = {
     require(data != null, "Data must not be null.")
 
     val typeInfo = implicitly[TypeInformation[T]]
@@ -431,7 +431,7 @@ class ExecutionEnvironment(javaEnv: JavaEnv) {
    * iterator.
    */
   def fromParallelCollection[T: ClassTag : TypeInformation](
-      iterator: SplittableIterator[T]): DataSet[T] = {
+                                                             iterator: SplittableIterator[T]): DataSet[T] = {
     val typeInfo = implicitly[TypeInformation[T]]
     wrap(new DataSource[T](javaEnv,
       new ParallelIteratorInputFormat[T](iterator),
@@ -444,7 +444,7 @@ class ExecutionEnvironment(javaEnv: JavaEnv) {
    * parallel, so there is no guarantee about the oder of the elements.
    *
    * @param from The number to start at (inclusive).
-   * @param to The number to stop at (inclusive).
+   * @param to   The number to stop at (inclusive).
    */
   def generateSequence(from: Long, to: Long): DataSet[Long] = {
     val iterator = new NumberSequenceIterator(from, to)
@@ -457,7 +457,7 @@ class ExecutionEnvironment(javaEnv: JavaEnv) {
   }
 
   def union[T](sets: Seq[DataSet[T]]): DataSet[T] = {
-    sets.reduce( (l, r) => l.union(r) )
+    sets.reduce((l, r) => l.union(r))
   }
 
   /**
@@ -472,9 +472,9 @@ class ExecutionEnvironment(javaEnv: JavaEnv) {
    * access via
    * [[org.apache.flink.api.common.functions.RuntimeContext#getDistributedCache]]
    *
-   * @param filePath The path of the file, as a URI (e.g. "file:///some/path" or
-   *                 "hdfs://host:port/and/path")
-   * @param name The name under which the file is registered.
+   * @param filePath   The path of the file, as a URI (e.g. "file:///some/path" or
+   *                   "hdfs://host:port/and/path")
+   * @param name       The name under which the file is registered.
    * @param executable Flag indicating whether the file should be executable
    */
   def registerCachedFile(filePath: String, name: String, executable: Boolean = false): Unit = {
@@ -600,7 +600,7 @@ object ExecutionEnvironment {
    * @param parallelism The default parallelism to use for local execution.
    */
   @PublicEvolving
-  def setDefaultLocalParallelism(parallelism: Int) : Unit =
+  def setDefaultLocalParallelism(parallelism: Int): Unit =
     JavaEnv.setDefaultLocalParallelism(parallelism)
 
   /**
@@ -635,8 +635,8 @@ object ExecutionEnvironment {
    * This method sets the environment's default parallelism to given parameter, which
    * defaults to the value set via [[setDefaultLocalParallelism(Int)]].
    */
-  def createLocalEnvironment(parallelism: Int = JavaEnv.getDefaultLocalParallelism): 
-      ExecutionEnvironment = {
+  def createLocalEnvironment(parallelism: Int = JavaEnv.getDefaultLocalParallelism):
+  ExecutionEnvironment = {
     new ExecutionEnvironment(JavaEnv.createLocalEnvironment(parallelism))
   }
 
@@ -692,9 +692,9 @@ object ExecutionEnvironment {
    * the cluster. The execution will use the cluster's default parallelism, unless the
    * parallelism is set explicitly via [[ExecutionEnvironment.setParallelism()]].
    *
-   * @param host The host name or address of the master (JobManager),
-   *             where the program should be executed.
-   * @param port The port of the master (JobManager), where the program should be executed.
+   * @param host     The host name or address of the master (JobManager),
+   *                 where the program should be executed.
+   * @param port     The port of the master (JobManager), where the program should be executed.
    * @param jarFiles The JAR files with code that needs to be shipped to the cluster. If the
    *                 program uses
    *                 user-defined functions, user-defined input formats, or any libraries,
@@ -710,21 +710,21 @@ object ExecutionEnvironment {
    * to a cluster for execution. Note that all file paths used in the program must be accessible
    * from the cluster. The execution will use the specified parallelism.
    *
-   * @param host The host name or address of the master (JobManager),
-   *             where the program should be executed.
-   * @param port The port of the master (JobManager), where the program should be executed.
+   * @param host        The host name or address of the master (JobManager),
+   *                    where the program should be executed.
+   * @param port        The port of the master (JobManager), where the program should be executed.
    * @param parallelism The parallelism to use during the execution.
-   * @param jarFiles The JAR files with code that needs to be shipped to the cluster. If the
-   *                 program uses
-   *                 user-defined functions, user-defined input formats, or any libraries,
-   *                 those must be
-   *                 provided in the JAR files.
+   * @param jarFiles    The JAR files with code that needs to be shipped to the cluster. If the
+   *                    program uses
+   *                    user-defined functions, user-defined input formats, or any libraries,
+   *                    those must be
+   *                    provided in the JAR files.
    */
   def createRemoteEnvironment(
-      host: String,
-      port: Int,
-      parallelism: Int,
-      jarFiles: String*): ExecutionEnvironment = {
+                               host: String,
+                               port: Int,
+                               parallelism: Int,
+                               jarFiles: String*): ExecutionEnvironment = {
     val javaEnv = JavaEnv.createRemoteEnvironment(host, port, jarFiles: _*)
     javaEnv.setParallelism(parallelism)
     new ExecutionEnvironment(javaEnv)
@@ -739,20 +739,20 @@ object ExecutionEnvironment {
    *
    * ClusterClient configuration has to be done in the remotely running Flink instance.
    *
-   * @param host The host name or address of the master (JobManager), where the program should be
-   *             executed.
-   * @param port The port of the master (JobManager), where the program should be executed.
+   * @param host                The host name or address of the master (JobManager), where the program should be
+   *                            executed.
+   * @param port                The port of the master (JobManager), where the program should be executed.
    * @param clientConfiguration Pass a custom configuration to the Client.
-   * @param jarFiles The JAR files with code that needs to be shipped to the cluster. If the
-   *                 program uses user-defined functions, user-defined input formats, or any
-   *                 libraries, those must be provided in the JAR files.
+   * @param jarFiles            The JAR files with code that needs to be shipped to the cluster. If the
+   *                            program uses user-defined functions, user-defined input formats, or any
+   *                            libraries, those must be provided in the JAR files.
    * @return A remote environment that executes the program on a cluster.
    */
   def createRemoteEnvironment(
-      host: String,
-      port: Int,
-      clientConfiguration: Configuration,
-      jarFiles: String*): ExecutionEnvironment = {
+                               host: String,
+                               port: Int,
+                               clientConfiguration: Configuration,
+                               jarFiles: String*): ExecutionEnvironment = {
     val javaEnv = JavaEnv.createRemoteEnvironment(host, port, clientConfiguration, jarFiles: _*)
     new ExecutionEnvironment(javaEnv)
   }

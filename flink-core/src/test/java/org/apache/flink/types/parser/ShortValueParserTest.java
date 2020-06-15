@@ -26,23 +26,23 @@ public class ShortValueParserTest extends ParserTestBase<ShortValue> {
 
 	@Override
 	public String[] getValidTestValues() {
-		return new String[] {
+		return new String[]{
 			"0", "1", "576", "-8778", String.valueOf(Short.MAX_VALUE), String.valueOf(Short.MIN_VALUE), "1239"
 		};
 	}
-	
+
 	@Override
 	public ShortValue[] getValidTestResults() {
-		return new ShortValue[] {
+		return new ShortValue[]{
 			new ShortValue((short) 0), new ShortValue((short) 1), new ShortValue((short) 576),
 			new ShortValue((short) -8778), new ShortValue(Short.MAX_VALUE), new ShortValue(Short.MIN_VALUE),
-			new ShortValue((short)1239)
+			new ShortValue((short) 1239)
 		};
 	}
 
 	@Override
 	public String[] getInvalidTestValues() {
-		return new String[] {
+		return new String[]{
 			"a", "1569a86", "-57-6", "7-877678", String.valueOf(Short.MAX_VALUE) + "0", String.valueOf(Integer.MIN_VALUE),
 			String.valueOf(Short.MAX_VALUE + 1), String.valueOf(Short.MIN_VALUE - 1), " 1", "2 ", " ", "\t"
 		};

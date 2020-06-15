@@ -43,11 +43,11 @@ public class YarnTestUtils {
 	}
 
 	public static YarnClusterDescriptor createClusterDescriptorWithLogging(
-			final String flinkConfDir,
-			final Configuration flinkConfiguration,
-			final YarnConfiguration yarnConfiguration,
-			final YarnClient yarnClient,
-			final boolean sharedYarnClient) {
+		final String flinkConfDir,
+		final Configuration flinkConfiguration,
+		final YarnConfiguration yarnConfiguration,
+		final YarnClient yarnClient,
+		final boolean sharedYarnClient) {
 		final Configuration effectiveConfiguration = configureLogFile(flinkConfiguration, flinkConfDir);
 		return new YarnClusterDescriptor(
 			effectiveConfiguration,

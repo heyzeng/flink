@@ -34,19 +34,16 @@ import org.apache.flink.util.ReflectionUtil;
 /**
  * Generic list base type for PACT programs that implements the Value and List interfaces.
  * PactList encapsulates a Java ArrayList object.
- * 
+ *
+ * @param <V> Type of the list elements.
  * @see org.apache.flink.types.Value
  * @see java.util.List
  * @see java.util.ArrayList
- * 
- * @param <V> Type of the list elements.
- * 
- * 
  */
 @Public
 public abstract class ListValue<V extends Value> implements Value, List<V> {
 	private static final long serialVersionUID = 1L;
-	
+
 	// Type of list elements
 	private final Class<V> valueClass;
 	// Encapsulated list
@@ -54,25 +51,24 @@ public abstract class ListValue<V extends Value> implements Value, List<V> {
 
 	/**
 	 * Initializes the encapsulated list with an empty ArrayList.
-	 * 
+	 *
 	 * @see java.util.ArrayList
 	 */
 	public ListValue() {
-		this.valueClass = ReflectionUtil.<V> getTemplateType1(this.getClass());
+		this.valueClass = ReflectionUtil.<V>getTemplateType1(this.getClass());
 
 		this.list = new ArrayList<V>();
 	}
 
 	/**
 	 * Initializes the encapsulated list with an ArrayList filled with all object contained in the specified Collection object.
-	 * 
+	 *
+	 * @param c Collection of initial element of the encapsulated list.
 	 * @see java.util.ArrayList
 	 * @see java.util.Collection
-	 * 
-	 * @param c Collection of initial element of the encapsulated list.
 	 */
 	public ListValue(final Collection<V> c) {
-		this.valueClass = ReflectionUtil.<V> getTemplateType1(this.getClass());
+		this.valueClass = ReflectionUtil.<V>getTemplateType1(this.getClass());
 
 		this.list = new ArrayList<V>(c);
 	}
@@ -204,11 +200,12 @@ public abstract class ListValue<V extends Value> implements Value, List<V> {
 	public boolean contains(final Object o) {
 		return this.list.contains(o);
 	}
-	
+
 	@Override
 	public String toString() {
 		return this.list.toString();
 	}
+
 	/*
 	 * (non-Javadoc)
 	 * @see java.util.List#containsAll(java.util.Collection)
@@ -262,7 +259,7 @@ public abstract class ListValue<V extends Value> implements Value, List<V> {
 	public ListIterator<V> listIterator() {
 		return this.list.listIterator();
 	}
-	
+
 	/*
 	 * (non-Javadoc)
 	 * @see java.util.List#listIterator(int)
@@ -325,7 +322,7 @@ public abstract class ListValue<V extends Value> implements Value, List<V> {
 	public int size() {
 		return this.list.size();
 	}
-	
+
 	/*
 	 * (non-Javadoc)
 	 * @see java.util.List#subList(int, int)

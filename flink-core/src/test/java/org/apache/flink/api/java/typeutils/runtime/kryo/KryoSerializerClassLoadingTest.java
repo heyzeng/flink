@@ -38,9 +38,11 @@ import static org.junit.Assert.fail;
  */
 public class KryoSerializerClassLoadingTest extends SerializerTestBase<Object> {
 
-	/** Class loader and object that is not in the test class path. */
+	/**
+	 * Class loader and object that is not in the test class path.
+	 */
 	private static final ClassLoaderUtils.ObjectAndClassLoader<Serializable> OUTSIDE_CLASS_LOADING =
-			ClassLoaderUtils.createSerializableObjectFromNewClassLoader();
+		ClassLoaderUtils.createSerializableObjectFromNewClassLoader();
 
 	// ------------------------------------------------------------------------
 
@@ -64,8 +66,7 @@ public class KryoSerializerClassLoadingTest extends SerializerTestBase<Object> {
 		try {
 			Class.forName(OUTSIDE_CLASS_LOADING.getObject().getClass().getName());
 			fail("This test's assumptions are broken");
-		}
-		catch (ClassNotFoundException ignored) {
+		} catch (ClassNotFoundException ignored) {
 			// expected
 		}
 	}
@@ -89,15 +90,15 @@ public class KryoSerializerClassLoadingTest extends SerializerTestBase<Object> {
 
 	@Override
 	protected Object[] getTestData() {
-		return new Object[] {
-				new Integer(7),
+		return new Object[]{
+			new Integer(7),
 
-				// an object whose class is not on the classpath
-				OUTSIDE_CLASS_LOADING.getObject(),
+			// an object whose class is not on the classpath
+			OUTSIDE_CLASS_LOADING.getObject(),
 
-				// an object whose class IS on the classpath with a nested object whose class
-				// is NOT on the classpath
-				new Tuple1<>(OUTSIDE_CLASS_LOADING.getObject())
+			// an object whose class IS on the classpath with a nested object whose class
+			// is NOT on the classpath
+			new Tuple1<>(OUTSIDE_CLASS_LOADING.getObject())
 		};
 	}
 

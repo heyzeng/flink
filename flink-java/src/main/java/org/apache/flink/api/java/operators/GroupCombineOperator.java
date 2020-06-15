@@ -42,7 +42,7 @@ import org.apache.flink.api.java.tuple.Tuple3;
  * locally in their partitions. The combine part can return an arbitrary data type. This is useful to pre-combine values
  * into an intermediate representation before applying a proper reduce operation.
  *
- * @param <IN> The type of the data set consumed by the operator.
+ * @param <IN>  The type of the data set consumed by the operator.
  * @param <OUT> The type of the data set created by the operator.
  */
 @Public
@@ -57,9 +57,9 @@ public class GroupCombineOperator<IN, OUT> extends SingleInputUdfOperator<IN, OU
 	/**
 	 * Constructor for a non-grouped reduce (all reduce).
 	 *
-	 * @param input The input data set to the groupReduce function.
-	 * @param resultType The type information for the resulting type.
-	 * @param function The user-defined GroupReduce function.
+	 * @param input       The input data set to the groupReduce function.
+	 * @param resultType  The type information for the resulting type.
+	 * @param function    The user-defined GroupReduce function.
 	 * @param defaultName The operator's name.
 	 */
 	public GroupCombineOperator(DataSet<IN> input, TypeInformation<OUT> resultType, GroupCombineFunction<IN, OUT> function, String defaultName) {
@@ -72,7 +72,7 @@ public class GroupCombineOperator<IN, OUT> extends SingleInputUdfOperator<IN, OU
 	/**
 	 * Constructor for a grouped reduce.
 	 *
-	 * @param input The grouped input to be processed group-wise by the groupReduce function.
+	 * @param input    The grouped input to be processed group-wise by the groupReduce function.
 	 * @param function The user-defined GroupReduce function.
 	 */
 	public GroupCombineOperator(Grouping<IN> input, TypeInformation<OUT> resultType, GroupCombineFunction<IN, OUT> function, String defaultName) {
@@ -96,8 +96,8 @@ public class GroupCombineOperator<IN, OUT> extends SingleInputUdfOperator<IN, OU
 
 		// offset semantic information by extracted key fields
 		if (props != null &&
-				this.grouper != null &&
-				this.grouper.keys instanceof SelectorFunctionKeys) {
+			this.grouper != null &&
+			this.grouper.keys instanceof SelectorFunctionKeys) {
 
 			int offset = ((SelectorFunctionKeys<?, ?>) this.grouper.keys).getKeyType().getTotalFields();
 			if (this.grouper instanceof SortedGrouping) {
@@ -124,7 +124,7 @@ public class GroupCombineOperator<IN, OUT> extends SingleInputUdfOperator<IN, OU
 			// non grouped reduce
 			UnaryOperatorInformation<IN, OUT> operatorInfo = new UnaryOperatorInformation<>(getInputType(), getResultType());
 			GroupCombineOperatorBase<IN, OUT, GroupCombineFunction<IN, OUT>> po =
-					new GroupCombineOperatorBase<>(function, operatorInfo, new int[0], name);
+				new GroupCombineOperatorBase<>(function, operatorInfo, new int[0], name);
 
 			po.setInput(input);
 			// the parallelism for a non grouped reduce can only be 1
@@ -150,18 +150,17 @@ public class GroupCombineOperator<IN, OUT> extends SingleInputUdfOperator<IN, OU
 				return po;
 			} else {
 				PlanUnwrappingGroupCombineOperator<IN, OUT, ?> po = translateSelectorFunctionReducer(
-						selectorKeys, function, getResultType(), name, input);
+					selectorKeys, function, getResultType(), name, input);
 
 				po.setParallelism(this.getParallelism());
 				return po;
 			}
-		}
-		else if (grouper.getKeys() instanceof Keys.ExpressionKeys) {
+		} else if (grouper.getKeys() instanceof Keys.ExpressionKeys) {
 
 			int[] logicalKeyPositions = grouper.getKeys().computeLogicalKeyPositions();
 			UnaryOperatorInformation<IN, OUT> operatorInfo = new UnaryOperatorInformation<>(getInputType(), getResultType());
 			GroupCombineOperatorBase<IN, OUT, GroupCombineFunction<IN, OUT>> po =
-					new GroupCombineOperatorBase<>(function, operatorInfo, logicalKeyPositions, name);
+				new GroupCombineOperatorBase<>(function, operatorInfo, logicalKeyPositions, name);
 
 			po.setInput(input);
 			po.setParallelism(getParallelism());
@@ -181,8 +180,7 @@ public class GroupCombineOperator<IN, OUT> extends SingleInputUdfOperator<IN, OU
 			}
 
 			return po;
-		}
-		else {
+		} else {
 			throw new UnsupportedOperationException("Unrecognized key type.");
 		}
 	}
@@ -191,11 +189,11 @@ public class GroupCombineOperator<IN, OUT> extends SingleInputUdfOperator<IN, OU
 
 	@SuppressWarnings("unchecked")
 	private static <IN, OUT, K> PlanUnwrappingGroupCombineOperator<IN, OUT, K> translateSelectorFunctionReducer(
-			SelectorFunctionKeys<IN, ?> rawKeys,
-			GroupCombineFunction<IN, OUT> function,
-			TypeInformation<OUT> outputType,
-			String name,
-			Operator<IN> input) {
+		SelectorFunctionKeys<IN, ?> rawKeys,
+		GroupCombineFunction<IN, OUT> function,
+		TypeInformation<OUT> outputType,
+		String name,
+		Operator<IN> input) {
 		final SelectorFunctionKeys<IN, K> keys = (SelectorFunctionKeys<IN, K>) rawKeys;
 
 		TypeInformation<Tuple2<K, IN>> typeInfoWithKey = KeyFunctions.createTypeWithKey(keys);
@@ -210,13 +208,13 @@ public class GroupCombineOperator<IN, OUT> extends SingleInputUdfOperator<IN, OU
 
 	@SuppressWarnings("unchecked")
 	private static <IN, OUT, K1, K2> PlanUnwrappingSortedGroupCombineOperator<IN, OUT, K1, K2> translateSelectorFunctionSortedReducer(
-			SelectorFunctionKeys<IN, ?> rawGroupingKey,
-			SelectorFunctionKeys<IN, ?> rawSortingKeys,
-			Ordering groupOrder,
-			GroupCombineFunction<IN, OUT> function,
-			TypeInformation<OUT> outputType,
-			String name,
-			Operator<IN> input) {
+		SelectorFunctionKeys<IN, ?> rawGroupingKey,
+		SelectorFunctionKeys<IN, ?> rawSortingKeys,
+		Ordering groupOrder,
+		GroupCombineFunction<IN, OUT> function,
+		TypeInformation<OUT> outputType,
+		String name,
+		Operator<IN> input) {
 		final SelectorFunctionKeys<IN, K1> groupingKey = (SelectorFunctionKeys<IN, K1>) rawGroupingKey;
 		final SelectorFunctionKeys<IN, K2> sortingKey = (SelectorFunctionKeys<IN, K2>) rawSortingKeys;
 		TypeInformation<Tuple3<K1, K2, IN>> typeInfoWithKey = KeyFunctions.createTypeWithKey(groupingKey, sortingKey);

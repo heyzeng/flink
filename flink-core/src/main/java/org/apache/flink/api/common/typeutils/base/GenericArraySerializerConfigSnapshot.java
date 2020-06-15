@@ -39,9 +39,8 @@ import static org.apache.flink.util.Preconditions.checkState;
  * Point-in-time configuration of a {@link GenericArraySerializer}.
  *
  * @param <C> The component type.
- *
  * @deprecated this is deprecated and no longer used by the {@link GenericArraySerializer}.
- *             It has been replaced by {@link GenericArraySerializerSnapshot}.
+ * It has been replaced by {@link GenericArraySerializerSnapshot}.
  */
 @Internal
 @Deprecated
@@ -49,11 +48,15 @@ public final class GenericArraySerializerConfigSnapshot<C> implements TypeSerial
 
 	private static final int CURRENT_VERSION = 2;
 
-	/** The class of the components of the serializer's array type. */
+	/**
+	 * The class of the components of the serializer's array type.
+	 */
 	@Nullable
 	private Class<C> componentClass;
 
-	/** Snapshot handling for the component serializer snapshot. */
+	/**
+	 * Snapshot handling for the component serializer snapshot.
+	 */
 	@Nullable
 	private NestedSerializersSnapshotDelegate nestedSnapshot;
 
@@ -61,7 +64,8 @@ public final class GenericArraySerializerConfigSnapshot<C> implements TypeSerial
 	 * Constructor for read instantiation.
 	 */
 	@SuppressWarnings("unused")
-	public GenericArraySerializerConfigSnapshot() {}
+	public GenericArraySerializerConfigSnapshot() {
+	}
 
 	/**
 	 * Constructor to create the snapshot for writing.
@@ -104,8 +108,7 @@ public final class GenericArraySerializerConfigSnapshot<C> implements TypeSerial
 
 		try (DataInputViewStream inViewWrapper = new DataInputViewStream(in)) {
 			componentClass = InstantiationUtil.deserializeObject(inViewWrapper, classLoader);
-		}
-		catch (ClassNotFoundException e) {
+		} catch (ClassNotFoundException e) {
 			throw new IOException("Could not find requested element class in classpath.", e);
 		}
 	}

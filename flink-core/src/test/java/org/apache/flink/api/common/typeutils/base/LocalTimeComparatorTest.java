@@ -38,11 +38,11 @@ public class LocalTimeComparatorTest extends ComparatorTestBase<LocalTime> {
 
 	@Override
 	protected LocalTime[] getSortedTestData() {
-		return new LocalTime[] {
-				LocalTime.of(0, 0, 0),
-				LocalTime.of(2, 42, 25),
-				LocalTime.of(14, 15, 59),
-				LocalTime.of(18, 0, 45)
+		return new LocalTime[]{
+			LocalTime.of(0, 0, 0),
+			LocalTime.of(2, 42, 25),
+			LocalTime.of(14, 15, 59),
+			LocalTime.of(18, 0, 45)
 		};
 	}
 }

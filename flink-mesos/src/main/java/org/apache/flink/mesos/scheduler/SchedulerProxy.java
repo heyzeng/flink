@@ -46,7 +46,9 @@ import java.util.List;
  */
 public class SchedulerProxy implements Scheduler {
 
-	/** The actor to which we report the callbacks. */
+	/**
+	 * The actor to which we report the callbacks.
+	 */
 	private final ActorRef mesosActor;
 
 	public SchedulerProxy(ActorRef mesosActor) {

@@ -66,7 +66,7 @@ public class VersionedIOWriteableTest {
 		testWriteable = new TestWriteable(2) {
 			@Override
 			public int[] getCompatibleVersions() {
-				return new int[] {1, 2};
+				return new int[]{1, 2};
 			}
 		};
 		try (ByteArrayInputStreamWithPos in = new ByteArrayInputStreamWithPos(serialized)) {

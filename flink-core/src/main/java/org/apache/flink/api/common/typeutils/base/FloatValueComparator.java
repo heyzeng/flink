@@ -42,7 +42,7 @@ public class FloatValueComparator extends TypeComparator<FloatValue> {
 
 	private final FloatValue tempReference = new FloatValue();
 
-	private final TypeComparator<?>[] comparators = new TypeComparator[] {this};
+	private final TypeComparator<?>[] comparators = new TypeComparator[]{this};
 
 	public FloatValueComparator(boolean ascending) {
 		this.ascendingComparison = ascending;

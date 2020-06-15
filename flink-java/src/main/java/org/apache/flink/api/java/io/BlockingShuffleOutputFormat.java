@@ -28,6 +28,7 @@ import java.io.IOException;
 
 /**
  * This is the inner OutputFormat used for specify the BLOCKING_PERSISTENT result partition type of coming edge.
+ *
  * @param <T>
  */
 @Internal

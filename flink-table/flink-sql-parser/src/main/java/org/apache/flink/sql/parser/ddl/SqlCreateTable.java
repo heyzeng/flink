@@ -76,15 +76,15 @@ public class SqlCreateTable extends SqlCreate implements ExtendedSqlNode {
 	private final SqlCharStringLiteral comment;
 
 	public SqlCreateTable(
-			SqlParserPos pos,
-			SqlIdentifier tableName,
-			SqlNodeList columnList,
-			SqlNodeList primaryKeyList,
-			List<SqlNodeList> uniqueKeysList,
-			SqlNodeList propertyList,
-			SqlNodeList partitionKeyList,
-			SqlWatermark watermark,
-			SqlCharStringLiteral comment) {
+		SqlParserPos pos,
+		SqlIdentifier tableName,
+		SqlNodeList columnList,
+		SqlNodeList primaryKeyList,
+		List<SqlNodeList> uniqueKeysList,
+		SqlNodeList propertyList,
+		SqlNodeList partitionKeyList,
+		SqlWatermark watermark,
+		SqlCharStringLiteral comment) {
 		super(OPERATOR, pos, false, false);
 		this.tableName = requireNonNull(tableName, "tableName should not be null");
 		this.columnList = requireNonNull(columnList, "columnList should not be null");
@@ -159,13 +159,13 @@ public class SqlCreateTable extends SqlCreate implements ExtendedSqlNode {
 			}
 		}
 
-		for (SqlNodeList uniqueKeys: this.uniqueKeysList) {
+		for (SqlNodeList uniqueKeys : this.uniqueKeysList) {
 			for (SqlNode uniqueKeyNode : uniqueKeys) {
 				String uniqueKey = ((SqlIdentifier) uniqueKeyNode).getSimple();
 				if (!validator.contains(uniqueKey)) {
 					throw new SqlValidateException(
-							uniqueKeyNode.getParserPosition(),
-							"Unique key [" + uniqueKey + "] not defined in columns, at " + uniqueKeyNode.getParserPosition());
+						uniqueKeyNode.getParserPosition(),
+						"Unique key [" + uniqueKey + "] not defined in columns, at " + uniqueKeyNode.getParserPosition());
 				}
 			}
 		}
@@ -239,9 +239,9 @@ public class SqlCreateTable extends SqlCreate implements ExtendedSqlNode {
 
 	@Override
 	public void unparse(
-			SqlWriter writer,
-			int leftPrec,
-			int rightPrec) {
+		SqlWriter writer,
+		int leftPrec,
+		int rightPrec) {
 		writer.keyword("CREATE TABLE");
 		tableName.unparse(writer, leftPrec, rightPrec);
 		SqlWriter.Frame frame = writer.startList(SqlWriter.FrameTypeEnum.create("sds"), "(", ")");
@@ -322,7 +322,8 @@ public class SqlCreateTable extends SqlCreate implements ExtendedSqlNode {
 		public List<SqlNode> columnList = new ArrayList<>();
 		public SqlNodeList primaryKeyList = SqlNodeList.EMPTY;
 		public List<SqlNodeList> uniqueKeysList = new ArrayList<>();
-		@Nullable public SqlWatermark watermark;
+		@Nullable
+		public SqlWatermark watermark;
 	}
 
 	public String[] fullTableName() {

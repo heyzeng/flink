@@ -34,7 +34,9 @@ public final class ByteSerializer extends TypeSerializerSingleton<Byte> {
 
 	private static final long serialVersionUID = 1L;
 
-	/** Sharable instance of the ByteSerializer. */
+	/**
+	 * Sharable instance of the ByteSerializer.
+	 */
 	public static final ByteSerializer INSTANCE = new ByteSerializer();
 
 	private static final Byte ZERO = (byte) 0;

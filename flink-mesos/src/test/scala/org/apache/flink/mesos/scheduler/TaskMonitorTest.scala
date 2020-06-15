@@ -78,6 +78,7 @@ class TaskMonitorTest
   }
 
   def inState = afterWord("in state")
+
   def handle = afterWord("handle")
 
   def handlesStatusUpdate(state: TaskMonitorState) = {
@@ -85,14 +86,14 @@ class TaskMonitorTest
       "transitions to Staging when goal state is Launched and status is staging" in new Context {
         fsm.setState(state, StateData(Launched(task._1, slave._1)))
         fsm ! new StatusUpdate(task._2.toBuilder.setState(TASK_STAGING).build())
-        fsm.stateName should be (Staging)
-        fsm.stateData should be (StateData(Launched(task._1, slave._1)))
+        fsm.stateName should be(Staging)
+        fsm.stateData should be(StateData(Launched(task._1, slave._1)))
       }
       "transitions to Running when goal state is Launched and status is running" in new Context {
         fsm.setState(state, StateData(Launched(task._1, slave._1)))
         fsm ! new StatusUpdate(task._2.toBuilder.setState(TASK_RUNNING).build())
-        fsm.stateName should be (Running)
-        fsm.stateData should be (StateData(Launched(task._1, slave._1)))
+        fsm.stateName should be(Running)
+        fsm.stateData should be(StateData(Launched(task._1, slave._1)))
       }
       "stops when goal state is Launched and status is TASK_KILLED" in new Context {
         fsm.setState(state, StateData(Launched(task._1, slave._1)))
@@ -106,8 +107,8 @@ class TaskMonitorTest
       "transitions to Killing when goal state is Released and status is running" in new Context {
         fsm.setState(state, StateData(Released(task._1, slave._1)))
         fsm ! new StatusUpdate(task._2.toBuilder.setState(TASK_RUNNING).build())
-        fsm.stateName should be (Killing)
-        fsm.stateData should be (StateData(Released(task._1, slave._1)))
+        fsm.stateName should be(Killing)
+        fsm.stateData should be(StateData(Released(task._1, slave._1)))
       }
       "stops when goal state is Released and status is killed" in new Context {
         fsm.setState(state, StateData(Released(task._1, slave._1)))
@@ -126,8 +127,8 @@ class TaskMonitorTest
       "transitions to Suspended" in new Context {
         fsm.setState(state, StateData(New(task._1)))
         fsm ! new Disconnected()
-        fsm.stateName should be (Suspended)
-        fsm.stateData should be (StateData(New(task._1)))
+        fsm.stateName should be(Suspended)
+        fsm.stateData should be(StateData(New(task._1)))
       }
     }
   }
@@ -137,8 +138,8 @@ class TaskMonitorTest
       "transitions to Killing when the new goal state is Released" in new Context {
         fsm.setState(state, StateData(Launched(task._1, slave._1)))
         fsm ! TaskGoalStateUpdated(Released(task._1, slave._1))
-        fsm.stateName should be (Killing)
-        fsm.stateData.goal should be (Released(task._1, slave._1))
+        fsm.stateName should be(Killing)
+        fsm.stateData.goal should be(Released(task._1, slave._1))
       }
     }
   }
@@ -150,35 +151,35 @@ class TaskMonitorTest
         "stays in Suspended with updated state data" in new Context {
           fsm.setState(Suspended, StateData(Launched(task._1, slave._1)))
           fsm ! TaskGoalStateUpdated(Released(task._1, slave._1))
-          fsm.stateName should be (Suspended)
-          fsm.stateData.goal should be (Released(task._1, slave._1))
+          fsm.stateName should be(Suspended)
+          fsm.stateData.goal should be(Released(task._1, slave._1))
         }
       }
       "StatusUpdate" which {
         "is disregarded" in new Context {
           fsm.setState(Suspended, StateData(Launched(task._1, slave._1)))
           fsm ! new StatusUpdate(task._2)
-          fsm.stateName should be (Suspended)
+          fsm.stateName should be(Suspended)
         }
       }
       "Connected" which {
         "transitions to New when the goal state is New" in new Context {
           fsm.setState(Suspended, StateData(New(task._1)))
           fsm ! new Connected() {}
-          fsm.stateName should be (New)
-          fsm.stateData should be (StateData(New(task._1)))
+          fsm.stateName should be(New)
+          fsm.stateData should be(StateData(New(task._1)))
         }
         "transitions to Reconciling when the goal state is Launched" in new Context {
           fsm.setState(Suspended, StateData(Launched(task._1, slave._1)))
           fsm ! new Connected() {}
-          fsm.stateName should be (Reconciling)
-          fsm.stateData should be (StateData(Launched(task._1, slave._1)))
+          fsm.stateName should be(Reconciling)
+          fsm.stateData should be(StateData(Launched(task._1, slave._1)))
         }
         "transitions to Killing when the goal state is Released" in new Context {
           fsm.setState(Suspended, StateData(Released(task._1, slave._1)))
           fsm ! new Connected() {}
-          fsm.stateName should be (Killing)
-          fsm.stateData should be (StateData(Released(task._1, slave._1)))
+          fsm.stateName should be(Killing)
+          fsm.stateData should be(StateData(Released(task._1, slave._1)))
         }
       }
     }
@@ -188,8 +189,8 @@ class TaskMonitorTest
         "transitions to Staging when the new goal state is Launched" in new Context {
           fsm.setState(New, StateData(New(task._1)))
           fsm ! TaskGoalStateUpdated(Launched(task._1, slave._1))
-          fsm.stateName should be (Staging)
-          fsm.stateData should be (StateData(Launched(task._1, slave._1)))
+          fsm.stateName should be(Staging)
+          fsm.stateData should be(StateData(Launched(task._1, slave._1)))
         }
       }
       behave like handlesDisconnect(New)
@@ -212,8 +213,8 @@ class TaskMonitorTest
         "transitions to Reconciling" in new Context {
           fsm.setState(Staging, StateData(Launched(task._1, slave._1)))
           fsm ! StateTimeout
-          fsm.stateName should be (Reconciling)
-          fsm.stateData should be (StateData(Launched(task._1, slave._1)))
+          fsm.stateName should be(Reconciling)
+          fsm.stateData should be(StateData(Launched(task._1, slave._1)))
         }
       }
       behave like handlesStatusUpdate(Staging)
@@ -238,8 +239,8 @@ class TaskMonitorTest
         "stays in Killing when the new goal state is Released" in new Context {
           fsm.setState(Killing, StateData(Launched(task._1, slave._1)))
           fsm ! TaskGoalStateUpdated(Released(task._1, slave._1))
-          fsm.stateName should be (Killing)
-          fsm.stateData.goal should be (Released(task._1, slave._1))
+          fsm.stateName should be(Killing)
+          fsm.stateData.goal should be(Released(task._1, slave._1))
         }
       }
       "StateTimeout" which {
@@ -248,7 +249,7 @@ class TaskMonitorTest
           reset(schedulerDriver)
           fsm ! StateTimeout
           verify(schedulerDriver).killTask(task._1)
-          fsm.stateName should be (Killing)
+          fsm.stateName should be(Killing)
         }
       }
       behave like handlesStatusUpdate(Killing)

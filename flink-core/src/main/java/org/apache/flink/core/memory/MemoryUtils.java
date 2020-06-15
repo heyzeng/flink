@@ -33,11 +33,15 @@ import java.nio.ByteOrder;
 @Internal
 public class MemoryUtils {
 
-	/** The "unsafe", which can be used to perform native memory accesses. */
+	/**
+	 * The "unsafe", which can be used to perform native memory accesses.
+	 */
 	@SuppressWarnings({"restriction", "UseOfSunClasses"})
 	public static final sun.misc.Unsafe UNSAFE = getUnsafe();
 
-	/** The native byte order of the platform on which the system currently runs. */
+	/**
+	 * The native byte order of the platform on which the system currently runs.
+	 */
 	public static final ByteOrder NATIVE_BYTE_ORDER = ByteOrder.nativeOrder();
 
 	private static final long BUFFER_ADDRESS_FIELD_OFFSET = getClassFieldOffset(Buffer.class, "address");
@@ -76,7 +80,7 @@ public class MemoryUtils {
 	}
 
 	private static String getClassFieldOffsetErrorMessage(Class<?> cl, String fieldName) {
-		return  "Could not get field '" + fieldName + "' offset in class '" + cl + "' for unsafe operations";
+		return "Could not get field '" + fieldName + "' offset in class '" + cl + "' for unsafe operations";
 	}
 
 	private static Class<?> getClassByName(@SuppressWarnings("SameParameterValue") String className) {
@@ -103,7 +107,7 @@ public class MemoryUtils {
 	 * <p>When memory owner becomes <a href="package-summary.html#reachability">phantom reachable</a>,
 	 * GC will release the underlying unsafe memory if not released yet.
 	 *
-	 * @param owner memory owner which phantom reaching is to monitor by GC and release the unsafe memory
+	 * @param owner   memory owner which phantom reaching is to monitor by GC and release the unsafe memory
 	 * @param address address of the unsafe memory to release
 	 * @return action to run to release the unsafe memory manually
 	 */
@@ -119,7 +123,7 @@ public class MemoryUtils {
 	 * Wraps the unsafe native memory with a {@link ByteBuffer}.
 	 *
 	 * @param address address of the unsafe memory to wrap
-	 * @param size size of the unsafe memory to wrap
+	 * @param size    size of the unsafe memory to wrap
 	 * @return a {@link ByteBuffer} which is a view of the given unsafe memory
 	 */
 	static ByteBuffer wrapUnsafeMemoryWithByteBuffer(long address, int size) {
@@ -151,6 +155,9 @@ public class MemoryUtils {
 		}
 	}
 
-	/** Should not be instantiated. */
-	private MemoryUtils() {}
+	/**
+	 * Should not be instantiated.
+	 */
+	private MemoryUtils() {
+	}
 }

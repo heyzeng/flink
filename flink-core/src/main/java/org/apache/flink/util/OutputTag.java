@@ -52,7 +52,7 @@ public class OutputTag<T> implements Serializable {
 	 * Creates a new named {@code OutputTag} with the given id.
 	 *
 	 * @param id The id of the created {@code OutputTag}.
-     */
+	 */
 	public OutputTag(String id) {
 		Preconditions.checkNotNull(id, "OutputTag id cannot be null.");
 		Preconditions.checkArgument(!id.isEmpty(), "OutputTag id must not be empty.");
@@ -60,18 +60,17 @@ public class OutputTag<T> implements Serializable {
 
 		try {
 			this.typeInfo = TypeExtractor.createTypeInfo(this, OutputTag.class, getClass(), 0);
-		}
-		catch (InvalidTypesException e) {
+		} catch (InvalidTypesException e) {
 			throw new InvalidTypesException("Could not determine TypeInformation for the OutputTag type. " +
-					"The most common reason is forgetting to make the OutputTag an anonymous inner class. " +
-					"It is also not possible to use generic type variables with OutputTags, such as 'Tuple2<A, B>'.", e);
+				"The most common reason is forgetting to make the OutputTag an anonymous inner class. " +
+				"It is also not possible to use generic type variables with OutputTags, such as 'Tuple2<A, B>'.", e);
 		}
 	}
 
 	/**
 	 * Creates a new named {@code OutputTag} with the given id and output {@link TypeInformation}.
 	 *
-	 * @param id The id of the created {@code OutputTag}.
+	 * @param id       The id of the created {@code OutputTag}.
 	 * @param typeInfo The {@code TypeInformation} for the side output.
 	 */
 	public OutputTag(String id, TypeInformation<T> typeInfo) {

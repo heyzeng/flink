@@ -49,13 +49,13 @@ public class StringUtilsTest extends TestLogger {
 	public void testStringToHexArray() {
 		String hex = "019f314a";
 		byte[] hexArray = StringUtils.hexStringToByte(hex);
-		byte[] expectedArray = new byte[]{1, -97, 49, 74 };
+		byte[] expectedArray = new byte[]{1, -97, 49, 74};
 		assertArrayEquals(expectedArray, hexArray);
 	}
 
 	@Test
 	public void testHexArrayToString() {
-		byte[] byteArray = new byte[]{1, -97, 49, 74 };
+		byte[] byteArray = new byte[]{1, -97, 49, 74};
 		String hex = StringUtils.byteToHexString(byteArray);
 		assertEquals("019f314a", hex);
 	}

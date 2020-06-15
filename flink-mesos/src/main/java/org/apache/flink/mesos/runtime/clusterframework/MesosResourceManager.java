@@ -96,40 +96,62 @@ import scala.concurrent.duration.FiniteDuration;
 public class MesosResourceManager extends ResourceManager<RegisteredMesosWorkerNode> {
 	protected static final Logger LOG = LoggerFactory.getLogger(MesosResourceManager.class);
 
-	/** The Flink configuration. */
+	/**
+	 * The Flink configuration.
+	 */
 	private final Configuration flinkConfig;
 
-	/** The Mesos configuration (master and framework info). */
+	/**
+	 * The Mesos configuration (master and framework info).
+	 */
 	private final MesosConfiguration mesosConfig;
 
-	/** The Mesos services needed by the resource manager. */
+	/**
+	 * The Mesos services needed by the resource manager.
+	 */
 	private final MesosServices mesosServices;
 
-	/** The TaskManager container parameters (like container memory size). */
+	/**
+	 * The TaskManager container parameters (like container memory size).
+	 */
 	private final MesosTaskManagerParameters taskManagerParameters;
 
-	/** Container specification for launching a TM. */
+	/**
+	 * Container specification for launching a TM.
+	 */
 	private final ContainerSpecification taskManagerContainerSpec;
 
-	/** Server for HTTP artifacts. */
+	/**
+	 * Server for HTTP artifacts.
+	 */
 	private final MesosArtifactServer artifactServer;
 
-	/** Persistent storage of allocated containers. */
+	/**
+	 * Persistent storage of allocated containers.
+	 */
 	private MesosWorkerStore workerStore;
 
-	/** A local actor system for using the helper actors. */
+	/**
+	 * A local actor system for using the helper actors.
+	 */
 	private final ActorSystem actorSystem;
 
-	/** Web url to show in mesos page. */
+	/**
+	 * Web url to show in mesos page.
+	 */
 	@Nullable
 	private final String webUiUrl;
 
 	private final Collection<ResourceProfile> slotsPerWorker;
 
-	/** Mesos scheduler driver. */
+	/**
+	 * Mesos scheduler driver.
+	 */
 	private SchedulerDriver schedulerDriver;
 
-	/** an adapter to receive messages from Akka actors. */
+	/**
+	 * an adapter to receive messages from Akka actors.
+	 */
 	private ActorRef selfActor;
 
 	private ActorRef connectionMonitor;
@@ -140,7 +162,9 @@ public class MesosResourceManager extends ResourceManager<RegisteredMesosWorkerN
 
 	private ActorRef reconciliationCoordinator;
 
-	/** planning state related to workers - package private for unit test purposes. */
+	/**
+	 * planning state related to workers - package private for unit test purposes.
+	 */
 	final Map<ResourceID, MesosWorkerStore.Worker> workersInNew;
 	final Map<ResourceID, MesosWorkerStore.Worker> workersInLaunch;
 	final Map<ResourceID, MesosWorkerStore.Worker> workersBeingReturned;
@@ -148,24 +172,24 @@ public class MesosResourceManager extends ResourceManager<RegisteredMesosWorkerN
 	private MesosConfiguration initializedMesosConfig;
 
 	public MesosResourceManager(
-			// base class
-			RpcService rpcService,
-			String resourceManagerEndpointId,
-			ResourceID resourceId,
-			HighAvailabilityServices highAvailabilityServices,
-			HeartbeatServices heartbeatServices,
-			SlotManager slotManager,
-			JobLeaderIdService jobLeaderIdService,
-			ClusterInformation clusterInformation,
-			FatalErrorHandler fatalErrorHandler,
-			// Mesos specifics
-			Configuration flinkConfig,
-			MesosServices mesosServices,
-			MesosConfiguration mesosConfig,
-			MesosTaskManagerParameters taskManagerParameters,
-			ContainerSpecification taskManagerContainerSpec,
-			@Nullable String webUiUrl,
-			ResourceManagerMetricGroup resourceManagerMetricGroup) {
+		// base class
+		RpcService rpcService,
+		String resourceManagerEndpointId,
+		ResourceID resourceId,
+		HighAvailabilityServices highAvailabilityServices,
+		HeartbeatServices heartbeatServices,
+		SlotManager slotManager,
+		JobLeaderIdService jobLeaderIdService,
+		ClusterInformation clusterInformation,
+		FatalErrorHandler fatalErrorHandler,
+		// Mesos specifics
+		Configuration flinkConfig,
+		MesosServices mesosServices,
+		MesosConfiguration mesosConfig,
+		MesosTaskManagerParameters taskManagerParameters,
+		ContainerSpecification taskManagerContainerSpec,
+		@Nullable String webUiUrl,
+		ResourceManagerMetricGroup resourceManagerMetricGroup) {
 		super(
 			rpcService,
 			resourceManagerEndpointId,
@@ -218,8 +242,8 @@ public class MesosResourceManager extends ResourceManager<RegisteredMesosWorkerN
 	}
 
 	protected ActorRef createLaunchCoordinator(
-			SchedulerDriver schedulerDriver,
-			ActorRef selfActor) {
+		SchedulerDriver schedulerDriver,
+		ActorRef selfActor) {
 		return actorSystem.actorOf(
 			LaunchCoordinator.createActorProps(LaunchCoordinator.class, selfActor, flinkConfig, schedulerDriver, createOptimizer()),
 			"launchCoordinator");
@@ -273,8 +297,7 @@ public class MesosResourceManager extends ResourceManager<RegisteredMesosWorkerN
 		// configure the artifact server to serve the TM container artifacts
 		try {
 			LaunchableMesosWorker.configureArtifactServer(artifactServer, taskManagerContainerSpec);
-		}
-		catch (IOException e) {
+		} catch (IOException e) {
 			throw new ResourceManagerException("Unable to configure the artifact server with TaskManager artifacts.", e);
 		}
 	}
@@ -345,9 +368,9 @@ public class MesosResourceManager extends ResourceManager<RegisteredMesosWorkerN
 	 * @see #getWorkersAsync()
 	 */
 	private void recoverWorkers(final List<MesosWorkerStore.Worker> tasksFromPreviousAttempts) {
-		assert(workersInNew.isEmpty());
-		assert(workersInLaunch.isEmpty());
-		assert(workersBeingReturned.isEmpty());
+		assert (workersInNew.isEmpty());
+		assert (workersInLaunch.isEmpty());
+		assert (workersBeingReturned.isEmpty());
 
 		if (!tasksFromPreviousAttempts.isEmpty()) {
 			LOG.info("Retrieved {} TaskManagers from previous attempt", tasksFromPreviousAttempts.size());
@@ -355,7 +378,7 @@ public class MesosResourceManager extends ResourceManager<RegisteredMesosWorkerN
 			List<Tuple2<TaskRequest, String>> toAssign = new ArrayList<>(tasksFromPreviousAttempts.size());
 
 			for (final MesosWorkerStore.Worker worker : tasksFromPreviousAttempts) {
-				switch(worker.state()) {
+				switch (worker.state()) {
 					case Launched:
 						workersInLaunch.put(extractResourceID(worker.taskID()), worker);
 						final LaunchableMesosWorker launchable = createLaunchableMesosWorker(worker.taskID());
@@ -404,8 +427,8 @@ public class MesosResourceManager extends ResourceManager<RegisteredMesosWorkerN
 
 	@Override
 	protected void internalDeregisterApplication(
-			ApplicationStatus finalStatus,
-			@Nullable String diagnostics) throws ResourceManagerException {
+		ApplicationStatus finalStatus,
+		@Nullable String diagnostics) throws ResourceManagerException {
 
 		LOG.info("Shutting down and unregistering as a Mesos framework.");
 
@@ -480,15 +503,12 @@ public class MesosResourceManager extends ResourceManager<RegisteredMesosWorkerN
 					// tell the launch coordinator that the task is being unassigned from the host, for planning purposes
 					launchCoordinator.tell(new LaunchCoordinator.Unassign(worker.taskID(), worker.hostname().get()), selfActor);
 				}
-			}
-			else if (workersBeingReturned.containsKey(workerNode.getResourceID())) {
+			} else if (workersBeingReturned.containsKey(workerNode.getResourceID())) {
 				LOG.info("Ignoring request to stop worker {} because it is already being stopped.", workerNode.getResourceID());
-			}
-			else {
+			} else {
 				LOG.warn("Unrecognized worker {}.", workerNode.getResourceID());
 			}
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			onFatalError(new ResourceManagerException("Unable to release a worker.", e));
 		}
 
@@ -575,11 +595,14 @@ public class MesosResourceManager extends ResourceManager<RegisteredMesosWorkerN
 		schedulerDriver.acknowledgeStatusUpdate(message.status());
 	}
 
-	protected void frameworkMessage(FrameworkMessage message) {}
+	protected void frameworkMessage(FrameworkMessage message) {
+	}
 
-	protected void slaveLost(SlaveLost message) {}
+	protected void slaveLost(SlaveLost message) {
+	}
 
-	protected void executorLost(ExecutorLost message) {}
+	protected void executorLost(ExecutorLost message) {
+	}
 
 	/**
 	 * Accept offers as advised by the launch coordinator.
@@ -654,7 +677,7 @@ public class MesosResourceManager extends ResourceManager<RegisteredMesosWorkerN
 		}
 
 		// check if this is a failed task or a released task
-		assert(!workersInNew.containsKey(id));
+		assert (!workersInNew.containsKey(id));
 		if (workersBeingReturned.remove(id) != null) {
 			// regular finished worker that we released
 			LOG.info("Worker {} finished successfully with message: {}",
@@ -662,7 +685,7 @@ public class MesosResourceManager extends ResourceManager<RegisteredMesosWorkerN
 		} else {
 			// failed worker, either at startup, or running
 			final MesosWorkerStore.Worker launched = workersInLaunch.remove(id);
-			assert(launched != null);
+			assert (launched != null);
 			LOG.info("Worker {} failed with status: {}, reason: {}, message: {}.",
 				id, status.getState(), status.getReason(), status.getMessage());
 			startNewWorker(launched.profile());
@@ -735,11 +758,15 @@ public class MesosResourceManager extends ResourceManager<RegisteredMesosWorkerN
 	 * @return goal state information for the {@Link TaskMonitor}.
 	 */
 	static TaskMonitor.TaskGoalState extractGoalState(MesosWorkerStore.Worker worker) {
-		switch(worker.state()) {
-			case New: return new TaskMonitor.New(worker.taskID());
-			case Launched: return new TaskMonitor.Launched(worker.taskID(), worker.slaveID().get());
-			case Released: return new TaskMonitor.Released(worker.taskID(), worker.slaveID().get());
-			default: throw new IllegalArgumentException("unsupported worker state");
+		switch (worker.state()) {
+			case New:
+				return new TaskMonitor.New(worker.taskID());
+			case Launched:
+				return new TaskMonitor.Launched(worker.taskID(), worker.slaveID().get());
+			case Released:
+				return new TaskMonitor.Released(worker.taskID(), worker.slaveID().get());
+			default:
+				throw new IllegalArgumentException("unsupported worker state");
 		}
 	}
 

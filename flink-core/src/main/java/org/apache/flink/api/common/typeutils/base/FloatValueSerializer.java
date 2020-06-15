@@ -31,7 +31,7 @@ import org.apache.flink.types.FloatValue;
 public class FloatValueSerializer extends TypeSerializerSingleton<FloatValue> {
 
 	private static final long serialVersionUID = 1L;
-	
+
 	public static final FloatValueSerializer INSTANCE = new FloatValueSerializer();
 
 	@Override
@@ -48,7 +48,7 @@ public class FloatValueSerializer extends TypeSerializerSingleton<FloatValue> {
 	public FloatValue copy(FloatValue from) {
 		return copy(from, new FloatValue());
 	}
-	
+
 	@Override
 	public FloatValue copy(FloatValue from, FloatValue reuse) {
 		reuse.setValue(from.getValue());
@@ -69,7 +69,7 @@ public class FloatValueSerializer extends TypeSerializerSingleton<FloatValue> {
 	public FloatValue deserialize(DataInputView source) throws IOException {
 		return deserialize(new FloatValue(), source);
 	}
-	
+
 	@Override
 	public FloatValue deserialize(FloatValue reuse, DataInputView source) throws IOException {
 		reuse.read(source);

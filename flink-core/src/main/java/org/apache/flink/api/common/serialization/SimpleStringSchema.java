@@ -38,8 +38,10 @@ public class SimpleStringSchema implements DeserializationSchema<String>, Serial
 
 	private static final long serialVersionUID = 1L;
 
-	/** The charset to use to convert between strings and bytes.
-	 * The field is transient because we serialize a different delegate object instead */
+	/**
+	 * The charset to use to convert between strings and bytes.
+	 * The field is transient because we serialize a different delegate object instead
+	 */
 	private transient Charset charset;
 
 	/**
@@ -60,6 +62,7 @@ public class SimpleStringSchema implements DeserializationSchema<String>, Serial
 
 	/**
 	 * Gets the charset used by this schema for serialization.
+	 *
 	 * @return The charset used by this schema for serialization.
 	 */
 	public Charset getCharset() {
@@ -94,7 +97,7 @@ public class SimpleStringSchema implements DeserializationSchema<String>, Serial
 	//  Java Serialization
 	// ------------------------------------------------------------------------
 
-	private void writeObject (ObjectOutputStream out) throws IOException {
+	private void writeObject(ObjectOutputStream out) throws IOException {
 		out.defaultWriteObject();
 		out.writeUTF(charset.name());
 	}

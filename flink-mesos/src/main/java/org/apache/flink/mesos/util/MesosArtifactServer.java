@@ -109,8 +109,8 @@ public class MesosArtifactServer implements MesosArtifactResolver {
 
 		// Config to enable https access to the artifact server
 		final boolean enableSSL = config.getBoolean(
-				MesosOptions.ARTIFACT_SERVER_SSL_ENABLED) &&
-				SSLUtils.isRestSSLEnabled(config);
+			MesosOptions.ARTIFACT_SERVER_SSL_ENABLED) &&
+			SSLUtils.isRestSSLEnabled(config);
 
 		final SSLHandlerFactory sslFactory;
 		if (enableSSL) {
@@ -190,7 +190,8 @@ public class MesosArtifactServer implements MesosArtifactResolver {
 
 	/**
 	 * Adds a file to the artifact server.
-	 * @param localFile the local file to serve.
+	 *
+	 * @param localFile  the local file to serve.
 	 * @param remoteFile the remote path with which to locate the file.
 	 * @return the fully-qualified remote path to the file.
 	 * @throws MalformedURLException if the remote path is invalid.
@@ -201,7 +202,8 @@ public class MesosArtifactServer implements MesosArtifactResolver {
 
 	/**
 	 * Adds a path to the artifact server.
-	 * @param path the qualified FS path to serve (local, hdfs, etc).
+	 *
+	 * @param path       the qualified FS path to serve (local, hdfs, etc).
 	 * @param remoteFile the remote path with which to locate the file.
 	 * @return the fully-qualified remote path to the file.
 	 * @throws MalformedURLException if the remote path is invalid.
@@ -241,6 +243,7 @@ public class MesosArtifactServer implements MesosArtifactResolver {
 
 	/**
 	 * Stops the artifact server.
+	 *
 	 * @throws Exception
 	 */
 	public synchronized void stop() throws Exception {
@@ -293,8 +296,7 @@ public class MesosArtifactServer implements MesosArtifactResolver {
 			final FileStatus status;
 			try {
 				status = fs.getFileStatus(path);
-			}
-			catch (IOException e) {
+			} catch (IOException e) {
 				LOG.error("unable to stat file", e);
 				sendError(ctx, GONE);
 				return;

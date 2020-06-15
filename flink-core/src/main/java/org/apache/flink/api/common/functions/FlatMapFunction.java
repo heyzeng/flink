@@ -48,8 +48,7 @@ public interface FlatMapFunction<T, O> extends Function, Serializable {
 	 * it into zero, one, or more elements.
 	 *
 	 * @param value The input value.
-	 * @param out The collector for returning result values.
-	 *
+	 * @param out   The collector for returning result values.
 	 * @throws Exception This method may throw exceptions. Throwing an exception will cause the operation
 	 *                   to fail and may trigger recovery.
 	 */

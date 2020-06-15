@@ -44,8 +44,8 @@ public class CliUtilsTest {
 
 	@Test
 	public void testCharFullWidth() {
-		char[] chars = new char[] {'A', 'a', ',', '中', '，', 'こ'};
-		boolean[] expected = new boolean[] {false, false, false, true, true, true};
+		char[] chars = new char[]{'A', 'a', ',', '中', '，', 'こ'};
+		boolean[] expected = new boolean[]{false, false, false, true, true, true};
 
 		for (int i = 0; i < chars.length; i++) {
 			assertEquals(expected[i], CliUtils.isFullWidth(Character.codePointAt(chars, i)));
@@ -59,7 +59,7 @@ public class CliUtilsTest {
 			"to be or not to be that's a question.",
 			"这是一段中文",
 			"これは日本語をテストするための文です");
-		int[] expected = new int[] {17, 37, 12, 36};
+		int[] expected = new int[]{17, 37, 12, 36};
 
 		for (int i = 0; i < data.size(); i++) {
 			assertEquals(expected[i], CliUtils.getStringDisplayWidth(data.get(i)));

@@ -142,8 +142,7 @@ public class KryoSerializerSnapshotTest {
 			DataOutputSerializer out = new DataOutputSerializer(4096);
 			TypeSerializerSnapshot.writeVersionedSnapshot(out, previousSnapshot);
 			return out.getCopyOfBuffer();
-		}
-		finally {
+		} finally {
 			Thread.currentThread().setContextClassLoader(originalClassLoader);
 		}
 	}

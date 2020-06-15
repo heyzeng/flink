@@ -44,7 +44,7 @@ public class MaterializedCollectStreamResultTest {
 	@Test
 	public void testSnapshot() throws UnknownHostException {
 		TableSchema tableSchema = TableSchema.builder().fields(
-				new String[]{"f0", "f1"}, new DataType[]{DataTypes.STRING(), DataTypes.BIGINT()}).build();
+			new String[]{"f0", "f1"}, new DataType[]{DataTypes.STRING(), DataTypes.BIGINT()}).build();
 
 		TestMaterializedCollectStreamResult<?> result = null;
 		try {
@@ -93,7 +93,7 @@ public class MaterializedCollectStreamResultTest {
 	@Test
 	public void testLimitedSnapshot() throws UnknownHostException {
 		TableSchema tableSchema = TableSchema.builder().fields(
-				new String[]{"f0", "f1"}, new DataType[]{DataTypes.STRING(), DataTypes.BIGINT()}).build();
+			new String[]{"f0", "f1"}, new DataType[]{DataTypes.STRING(), DataTypes.BIGINT()}).build();
 
 		TestMaterializedCollectStreamResult<?> result = null;
 		try {
@@ -148,12 +148,12 @@ public class MaterializedCollectStreamResultTest {
 		public boolean isRetrieving;
 
 		public TestMaterializedCollectStreamResult(
-				TableSchema tableSchema,
-				ExecutionConfig config,
-				InetAddress gatewayAddress,
-				int gatewayPort,
-				int maxRowCount,
-				int overcommitThreshold) {
+			TableSchema tableSchema,
+			ExecutionConfig config,
+			InetAddress gatewayAddress,
+			int gatewayPort,
+			int maxRowCount,
+			int overcommitThreshold) {
 
 			super(
 				tableSchema,
@@ -166,11 +166,11 @@ public class MaterializedCollectStreamResultTest {
 		}
 
 		public TestMaterializedCollectStreamResult(
-				TableSchema tableSchema,
-				ExecutionConfig config,
-				InetAddress gatewayAddress,
-				int gatewayPort,
-				int maxRowCount) {
+			TableSchema tableSchema,
+			ExecutionConfig config,
+			InetAddress gatewayAddress,
+			int gatewayPort,
+			int maxRowCount) {
 
 			super(
 				tableSchema,

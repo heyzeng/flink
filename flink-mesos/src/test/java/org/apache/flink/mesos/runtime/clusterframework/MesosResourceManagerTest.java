@@ -465,7 +465,7 @@ public class MesosResourceManagerTest extends TestLogger {
 		/**
 		 * Register a job master with the RM.
 		 */
-		public void registerJobMaster(MockJobMaster jobMaster) throws Exception  {
+		public void registerJobMaster(MockJobMaster jobMaster) throws Exception {
 			CompletableFuture<RegistrationResponse> registration = resourceManager.registerJobManager(
 				jobMaster.jobMasterId, jobMaster.resourceID, jobMaster.address, jobMaster.jobID, timeout);
 			assertTrue(registration.get() instanceof JobMasterRegistrationSuccess);
@@ -499,7 +499,7 @@ public class MesosResourceManagerTest extends TestLogger {
 
 		/**
 		 * Prepares a launch operation.
-         */
+		 */
 		public Protos.Offer.Operation launch(Protos.TaskInfo... taskInfo) {
 			return Protos.Offer.Operation.newBuilder()
 				.setType(Protos.Offer.Operation.Type.LAUNCH)

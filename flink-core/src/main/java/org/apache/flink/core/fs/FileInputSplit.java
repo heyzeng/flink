@@ -30,13 +30,19 @@ public class FileInputSplit extends LocatableInputSplit {
 
 	private static final long serialVersionUID = 1L;
 
-	/** The path of the file this file split refers to. */
+	/**
+	 * The path of the file this file split refers to.
+	 */
 	private final Path file;
 
-	/** The position of the first byte in the file to process. */
+	/**
+	 * The position of the first byte in the file to process.
+	 */
 	private final long start;
 
-	/** The number of bytes in the file to process. */
+	/**
+	 * The number of bytes in the file to process.
+	 */
 	private final long length;
 
 	// --------------------------------------------------------------------------------------------
@@ -44,16 +50,11 @@ public class FileInputSplit extends LocatableInputSplit {
 	/**
 	 * Constructs a split with host information.
 	 *
-	 * @param num
-	 *        the number of this input split
-	 * @param file
-	 *        the file name
-	 * @param start
-	 *        the position of the first byte in the file to process
-	 * @param length
-	 *        the number of bytes in the file to process (-1 is flag for "read whole file")
-	 * @param hosts
-	 *        the list of hosts containing the block, possibly <code>null</code>
+	 * @param num    the number of this input split
+	 * @param file   the file name
+	 * @param start  the position of the first byte in the file to process
+	 * @param length the number of bytes in the file to process (-1 is flag for "read whole file")
+	 * @param hosts  the list of hosts containing the block, possibly <code>null</code>
 	 */
 	public FileInputSplit(int num, Path file, long start, long length, String[] hosts) {
 		super(num, hosts);
@@ -103,15 +104,13 @@ public class FileInputSplit extends LocatableInputSplit {
 	public boolean equals(Object obj) {
 		if (obj == this) {
 			return true;
-		}
-		else if (obj instanceof FileInputSplit && super.equals(obj)) {
+		} else if (obj instanceof FileInputSplit && super.equals(obj)) {
 			FileInputSplit other = (FileInputSplit) obj;
 
 			return this.start == other.start &&
-					this.length == other.length &&
-					(this.file == null ? other.file == null : (other.file != null && this.file.equals(other.file)));
-		}
-		else {
+				this.length == other.length &&
+				(this.file == null ? other.file == null : (other.file != null && this.file.equals(other.file)));
+		} else {
 			return false;
 		}
 	}

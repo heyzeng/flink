@@ -30,7 +30,8 @@ public class LongCounter implements SimpleAccumulator<Long> {
 
 	private long localValue;
 
-	public LongCounter() {}
+	public LongCounter() {
+	}
 
 	public LongCounter(long value) {
 		this.localValue = value;
@@ -74,7 +75,7 @@ public class LongCounter implements SimpleAccumulator<Long> {
 	//  Primitive Specializations
 	// ------------------------------------------------------------------------
 
-	public void add(long value){
+	public void add(long value) {
 		this.localValue += value;
 	}
 

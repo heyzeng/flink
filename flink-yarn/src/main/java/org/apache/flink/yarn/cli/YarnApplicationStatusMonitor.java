@@ -51,9 +51,9 @@ public class YarnApplicationStatusMonitor implements AutoCloseable {
 	private volatile ApplicationStatus applicationStatus;
 
 	public YarnApplicationStatusMonitor(
-			YarnClient yarnClient,
-			ApplicationId yarnApplicationId,
-			ScheduledExecutor scheduledExecutor) {
+		YarnClient yarnClient,
+		ApplicationId yarnApplicationId,
+		ScheduledExecutor scheduledExecutor) {
 		this.yarnClient = Preconditions.checkNotNull(yarnClient);
 		this.yarnApplicationId = Preconditions.checkNotNull(yarnApplicationId);
 

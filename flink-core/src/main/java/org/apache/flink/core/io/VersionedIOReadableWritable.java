@@ -65,7 +65,7 @@ public abstract class VersionedIOReadableWritable implements IOReadableWritable,
 	 * @return an array of integers representing the compatible version values.
 	 */
 	public int[] getCompatibleVersions() {
-		return new int[] {getVersion()};
+		return new int[]{getVersion()};
 	}
 
 	private void resolveVersionRead(int readVersion) throws VersionMismatchException {

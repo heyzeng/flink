@@ -159,43 +159,50 @@ public class MemorySizeTest {
 		try {
 			MemorySize.parseBytes(null);
 			fail("exception expected");
-		} catch (NullPointerException ignored) {}
+		} catch (NullPointerException ignored) {
+		}
 
 		// empty
 		try {
 			MemorySize.parseBytes("");
 			fail("exception expected");
-		} catch (IllegalArgumentException ignored) {}
+		} catch (IllegalArgumentException ignored) {
+		}
 
 		// blank
 		try {
 			MemorySize.parseBytes("     ");
 			fail("exception expected");
-		} catch (IllegalArgumentException ignored) {}
+		} catch (IllegalArgumentException ignored) {
+		}
 
 		// no number
 		try {
 			MemorySize.parseBytes("foobar or fubar or foo bazz");
 			fail("exception expected");
-		} catch (IllegalArgumentException ignored) {}
+		} catch (IllegalArgumentException ignored) {
+		}
 
 		// wrong unit
 		try {
 			MemorySize.parseBytes("16 gjah");
 			fail("exception expected");
-		} catch (IllegalArgumentException ignored) {}
+		} catch (IllegalArgumentException ignored) {
+		}
 
 		// multiple numbers
 		try {
 			MemorySize.parseBytes("16 16 17 18 bytes");
 			fail("exception expected");
-		} catch (IllegalArgumentException ignored) {}
+		} catch (IllegalArgumentException ignored) {
+		}
 
 		// negative number
 		try {
 			MemorySize.parseBytes("-100 bytes");
 			fail("exception expected");
-		} catch (IllegalArgumentException ignored) {}
+		} catch (IllegalArgumentException ignored) {
+		}
 	}
 
 	@Test(expected = IllegalArgumentException.class)

@@ -37,13 +37,16 @@ import scala.collection.TraversableOnce;
  */
 @Deprecated
 public class TraversableSerializerConfigSnapshot<T extends TraversableOnce<E>, E>
-		extends CompositeTypeSerializerConfigSnapshot<T> {
+	extends CompositeTypeSerializerConfigSnapshot<T> {
 
 	private static final int VERSION = 1;
 
-	/** This empty nullary constructor is required for deserializing the configuration. */
+	/**
+	 * This empty nullary constructor is required for deserializing the configuration.
+	 */
 	@SuppressWarnings("unused")
-	public TraversableSerializerConfigSnapshot() {}
+	public TraversableSerializerConfigSnapshot() {
+	}
 
 	@SuppressWarnings("unused")
 	public TraversableSerializerConfigSnapshot(TypeSerializer<E> elementSerializer) {
@@ -59,12 +62,12 @@ public class TraversableSerializerConfigSnapshot<T extends TraversableOnce<E>, E
 	public TypeSerializerSchemaCompatibility<T> resolveSchemaCompatibility(TypeSerializer<T> newSerializer) {
 		TraversableSerializer<T, E> previousSerializer = (TraversableSerializer<T, E>) restoreSerializer();
 		TraversableSerializerSnapshot<T, E> newCompositeSnapshot =
-				new TraversableSerializerSnapshot<>(previousSerializer.cbfCode());
+			new TraversableSerializerSnapshot<>(previousSerializer.cbfCode());
 
 		return CompositeTypeSerializerUtil.delegateCompatibilityCheckToNewSnapshot(
-				newSerializer,
-				newCompositeSnapshot,
-				getSingleNestedSerializerAndConfig().f1
+			newSerializer,
+			newCompositeSnapshot,
+			getSingleNestedSerializerAndConfig().f1
 		);
 	}
 }

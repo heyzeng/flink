@@ -42,6 +42,7 @@ public class CompensatedSum implements java.io.Serializable {
 
 	/**
 	 * Used to calculate sums using the Kahan summation algorithm.
+	 *
 	 * @param value the sum
 	 * @param delta correction term
 	 */

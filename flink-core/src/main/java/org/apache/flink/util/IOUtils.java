@@ -31,7 +31,9 @@ import java.net.Socket;
  */
 public final class IOUtils {
 
-	/** The block size for byte operations in byte. */
+	/**
+	 * The block size for byte operations in byte.
+	 */
 	private static final int BLOCKSIZE = 4096;
 
 	// ------------------------------------------------------------------------
@@ -41,23 +43,17 @@ public final class IOUtils {
 	/**
 	 * Copies from one stream to another.
 	 *
-	 * @param in
-	 *        InputStream to read from
-	 * @param out
-	 *        OutputStream to write to
-	 * @param buffSize
-	 *        the size of the buffer
-	 * @param close
-	 *        whether or not close the InputStream and OutputStream at the end. The streams are closed in the finally
-	 *        clause.
-	 * @throws IOException
-	 *         thrown if an error occurred while writing to the output stream
+	 * @param in       InputStream to read from
+	 * @param out      OutputStream to write to
+	 * @param buffSize the size of the buffer
+	 * @param close    whether or not close the InputStream and OutputStream at the end. The streams are closed in the finally
+	 *                 clause.
+	 * @throws IOException thrown if an error occurred while writing to the output stream
 	 */
 	public static void copyBytes(final InputStream in, final OutputStream out, final int buffSize, final boolean close)
-			throws IOException {
+		throws IOException {
 
-		@SuppressWarnings("resource")
-		final PrintStream ps = out instanceof PrintStream ? (PrintStream) out : null;
+		@SuppressWarnings("resource") final PrintStream ps = out instanceof PrintStream ? (PrintStream) out : null;
 		final byte[] buf = new byte[buffSize];
 		try {
 			int bytesRead = in.read(buf);
@@ -80,12 +76,9 @@ public final class IOUtils {
 	 * Copies from one stream to another. <strong>closes the input and output
 	 * streams at the end</strong>.
 	 *
-	 * @param in
-	 *        InputStream to read from
-	 * @param out
-	 *        OutputStream to write to
-	 * @throws IOException
-	 *         thrown if an I/O error occurs while copying
+	 * @param in  InputStream to read from
+	 * @param out OutputStream to write to
+	 * @throws IOException thrown if an I/O error occurs while copying
 	 */
 	public static void copyBytes(final InputStream in, final OutputStream out) throws IOException {
 		copyBytes(in, out, BLOCKSIZE, true);
@@ -94,15 +87,11 @@ public final class IOUtils {
 	/**
 	 * Copies from one stream to another.
 	 *
-	 * @param in
-	 *        InputStream to read from
-	 * @param out
-	 *        OutputStream to write to
-	 * @param close
-	 *        whether or not close the InputStream and OutputStream at the
-	 *        end. The streams are closed in the finally clause.
-	 * @throws IOException
-	 *         thrown if an I/O error occurs while copying
+	 * @param in    InputStream to read from
+	 * @param out   OutputStream to write to
+	 * @param close whether or not close the InputStream and OutputStream at the
+	 *              end. The streams are closed in the finally clause.
+	 * @throws IOException thrown if an I/O error occurs while copying
 	 */
 	public static void copyBytes(final InputStream in, final OutputStream out, final boolean close) throws IOException {
 		copyBytes(in, out, BLOCKSIZE, close);
@@ -115,19 +104,14 @@ public final class IOUtils {
 	/**
 	 * Reads len bytes in a loop.
 	 *
-	 * @param in
-	 *        The InputStream to read from
-	 * @param buf
-	 *        The buffer to fill
-	 * @param off
-	 *        offset from the buffer
-	 * @param len
-	 *        the length of bytes to read
-	 * @throws IOException
-	 *         if it could not read requested number of bytes for any reason (including EOF)
+	 * @param in  The InputStream to read from
+	 * @param buf The buffer to fill
+	 * @param off offset from the buffer
+	 * @param len the length of bytes to read
+	 * @throws IOException if it could not read requested number of bytes for any reason (including EOF)
 	 */
 	public static void readFully(final InputStream in, final byte[] buf, int off, final int len)
-			throws IOException {
+		throws IOException {
 		int toRead = len;
 		while (toRead > 0) {
 			final int ret = in.read(buf, off, toRead);
@@ -142,12 +126,9 @@ public final class IOUtils {
 	/**
 	 * Similar to readFully(). Skips bytes in a loop.
 	 *
-	 * @param in
-	 *        The InputStream to skip bytes from
-	 * @param len
-	 *        number of bytes to skip
-	 * @throws IOException
-	 *         if it could not skip requested number of bytes for any reason (including EOF)
+	 * @param in  The InputStream to skip bytes from
+	 * @param len number of bytes to skip
+	 * @throws IOException if it could not skip requested number of bytes for any reason (including EOF)
 	 */
 	public static void skipFully(final InputStream in, long len) throws IOException {
 		while (len > 0) {
@@ -167,10 +148,8 @@ public final class IOUtils {
 	 * Close the AutoCloseable objects and <b>ignore</b> any {@link Exception} or
 	 * null pointers. Must only be used for cleanup in exception handlers.
 	 *
-	 * @param log
-	 *        the log to record problems to at debug level. Can be <code>null</code>.
-	 * @param closeables
-	 *        the objects to close
+	 * @param log        the log to record problems to at debug level. Can be <code>null</code>.
+	 * @param closeables the objects to close
 	 */
 	public static void cleanup(final Logger log, final AutoCloseable... closeables) {
 		for (AutoCloseable c : closeables) {
@@ -190,8 +169,7 @@ public final class IOUtils {
 	 * Closes the stream ignoring {@link IOException}. Must only be called in
 	 * cleaning up from exception handlers.
 	 *
-	 * @param stream
-	 *        the stream to close
+	 * @param stream the stream to close
 	 */
 	public static void closeStream(final java.io.Closeable stream) {
 		cleanup(null, stream);
@@ -200,8 +178,7 @@ public final class IOUtils {
 	/**
 	 * Closes the socket ignoring {@link IOException}.
 	 *
-	 * @param sock
-	 *        the socket to close
+	 * @param sock the socket to close
 	 */
 	public static void closeSocket(final Socket sock) {
 		// avoids try { close() } dance
@@ -262,7 +239,8 @@ public final class IOUtils {
 			if (closeable != null) {
 				closeable.close();
 			}
-		} catch (Throwable ignored) {}
+		} catch (Throwable ignored) {
+		}
 	}
 
 	// ------------------------------------------------------------------------
@@ -270,5 +248,6 @@ public final class IOUtils {
 	/**
 	 * Private constructor to prevent instantiation.
 	 */
-	private IOUtils() {}
+	private IOUtils() {
+	}
 }

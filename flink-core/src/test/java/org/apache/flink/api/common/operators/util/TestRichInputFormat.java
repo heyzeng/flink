@@ -27,7 +27,7 @@ import org.apache.flink.api.common.io.NonParallelInput;
 /**
  * Same as the non rich test input format, except it provide access to runtime context.
  */
-public class TestRichInputFormat extends GenericInputFormat<String> implements NonParallelInput{
+public class TestRichInputFormat extends GenericInputFormat<String> implements NonParallelInput {
 
 	private static final long serialVersionUID = 1L;
 	private static final int NUM = 5;
@@ -45,7 +45,7 @@ public class TestRichInputFormat extends GenericInputFormat<String> implements N
 	public String nextRecord(String reuse) throws IOException {
 		count++;
 		return NAMES[count - 1] + getRuntimeContext().getIndexOfThisSubtask() + "" +
-				getRuntimeContext().getNumberOfParallelSubtasks();
+			getRuntimeContext().getNumberOfParallelSubtasks();
 	}
 
 	public void reset() {

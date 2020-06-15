@@ -48,8 +48,8 @@ public interface BiFunctionWithException<T, U, R, E extends Throwable> {
 	 * Convert at {@link BiFunctionWithException} into a {@link BiFunction}.
 	 *
 	 * @param biFunctionWithException function with exception to convert into a function
-	 * @param <A> input type
-	 * @param <B> output type
+	 * @param <A>                     input type
+	 * @param <B>                     output type
 	 * @return {@link BiFunction} which throws all checked exception as an unchecked exception.
 	 */
 	static <A, B, C> BiFunction<A, B, C> unchecked(BiFunctionWithException<A, B, C, ?> biFunctionWithException) {

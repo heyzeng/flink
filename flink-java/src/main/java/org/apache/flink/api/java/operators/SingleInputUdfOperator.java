@@ -47,7 +47,8 @@ import static java.util.Objects.requireNonNull;
  *
  * <p>This class encapsulates utilities for the UDFs, such as broadcast variables, parameterization
  * through configuration objects, and semantic properties.
- * @param <IN> The data type of the input data set.
+ *
+ * @param <IN>  The data type of the input data set.
  * @param <OUT> The data type of the returned data set.
  */
 @Public
@@ -68,7 +69,7 @@ public abstract class SingleInputUdfOperator<IN, OUT, O extends SingleInputUdfOp
 	 * Creates a new operators with the given data set as input. The given result type
 	 * describes the data type of the elements in the data set produced by the operator.
 	 *
-	 * @param input The data set that is the input to the operator.
+	 * @param input      The data set that is the input to the operator.
 	 * @param resultType The type of the elements in the resulting data set.
 	 */
 	protected SingleInputUdfOperator(DataSet<IN> input, TypeInformation<OUT> resultType) {
@@ -142,7 +143,6 @@ public abstract class SingleInputUdfOperator<IN, OUT, O extends SingleInputUdfOp
 	 *
 	 * @param forwardedFields A list of field forward expressions.
 	 * @return This operator with annotated forwarded field information.
-	 *
 	 * @see org.apache.flink.api.java.functions.FunctionAnnotation
 	 * @see org.apache.flink.api.java.functions.FunctionAnnotation.ForwardedFields
 	 */
@@ -154,15 +154,15 @@ public abstract class SingleInputUdfOperator<IN, OUT, O extends SingleInputUdfOp
 		}
 
 		if (this.udfSemantics == null
-				|| this.analyzedUdfSemantics) { // discard analyzed semantic properties
+			|| this.analyzedUdfSemantics) { // discard analyzed semantic properties
 			setSemanticProperties(new SingleInputSemanticProperties());
 			SemanticPropUtil.getSemanticPropsSingleFromString(this.udfSemantics, forwardedFields, null, null, this.getInputType(), this.getResultType());
 		} else {
 			if (udfWithForwardedFieldsAnnotation(getFunction().getClass())) {
 				// refuse semantic information as it would override the function annotation
 				throw new SemanticProperties.InvalidSemanticAnnotationException("Forwarded field information " +
-						"has already been added by a function annotation for this operator. " +
-						"Cannot overwrite function annotations.");
+					"has already been added by a function annotation for this operator. " +
+					"Cannot overwrite function annotations.");
 			} else {
 				SemanticPropUtil.getSemanticPropsSingleFromString(this.udfSemantics, forwardedFields, null, null, this.getInputType(), this.getResultType());
 			}
@@ -202,11 +202,10 @@ public abstract class SingleInputUdfOperator<IN, OUT, O extends SingleInputUdfOp
 
 		try {
 			return returns(TypeInformation.of(typeClass));
-		}
-		catch (InvalidTypesException e) {
+		} catch (InvalidTypesException e) {
 			throw new InvalidTypesException("Cannot infer the type information from the class alone." +
-					"This is most likely because the class represents a generic type. In that case," +
-					"please use the 'returns(TypeHint)' method instead.", e);
+				"This is most likely because the class represents a generic type. In that case," +
+				"please use the 'returns(TypeHint)' method instead.", e);
 		}
 	}
 
@@ -231,10 +230,9 @@ public abstract class SingleInputUdfOperator<IN, OUT, O extends SingleInputUdfOp
 
 		try {
 			return returns(TypeInformation.of(typeHint));
-		}
-		catch (InvalidTypesException e) {
+		} catch (InvalidTypesException e) {
 			throw new InvalidTypesException("Cannot infer the type information from the type hint. " +
-					"Make sure that the TypeHint does not use any generic type variables.");
+				"Make sure that the TypeHint does not use any generic type variables.");
 		}
 	}
 
@@ -267,8 +265,8 @@ public abstract class SingleInputUdfOperator<IN, OUT, O extends SingleInputUdfOp
 	@Internal
 	public Map<String, DataSet<?>> getBroadcastSets() {
 		return this.broadcastVariables == null ?
-				Collections.<String, DataSet<?>>emptyMap() :
-				Collections.unmodifiableMap(this.broadcastVariables);
+			Collections.<String, DataSet<?>>emptyMap() :
+			Collections.unmodifiableMap(this.broadcastVariables);
 	}
 
 	@Override
@@ -320,6 +318,6 @@ public abstract class SingleInputUdfOperator<IN, OUT, O extends SingleInputUdfOp
 
 	protected boolean udfWithForwardedFieldsAnnotation(Class<?> udfClass) {
 		return udfClass.getAnnotation(FunctionAnnotation.ForwardedFields.class) != null ||
-				udfClass.getAnnotation(FunctionAnnotation.NonForwardedFields.class) != null;
+			udfClass.getAnnotation(FunctionAnnotation.NonForwardedFields.class) != null;
 	}
 }

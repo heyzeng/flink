@@ -93,16 +93,16 @@ public class PipelineOptions {
 		key("pipeline.closure-cleaner-level")
 			.enumType(ClosureCleanerLevel.class)
 			.defaultValue(ClosureCleanerLevel.RECURSIVE)
-		.withDescription(Description.builder()
-			.text("Configures the mode in which the closure cleaner works")
-			.list(
-				text("%s - disables the closure cleaner completely", code(ClosureCleanerLevel.NONE.toString())),
-				text(
-					"%s - cleans only the top-level class without recursing into fields",
-					code(ClosureCleanerLevel.TOP_LEVEL.toString())),
-				text("%s - cleans all the fields recursively", code(ClosureCleanerLevel.RECURSIVE.toString()))
-			)
-			.build());
+			.withDescription(Description.builder()
+				.text("Configures the mode in which the closure cleaner works")
+				.list(
+					text("%s - disables the closure cleaner completely", code(ClosureCleanerLevel.NONE.toString())),
+					text(
+						"%s - cleans only the top-level class without recursing into fields",
+						code(ClosureCleanerLevel.TOP_LEVEL.toString())),
+					text("%s - cleans all the fields recursively", code(ClosureCleanerLevel.RECURSIVE.toString()))
+				)
+				.build());
 
 	public static final ConfigOption<Boolean> FORCE_AVRO =
 		key("pipeline.force-avro")
@@ -164,9 +164,9 @@ public class PipelineOptions {
 		key("pipeline.object-reuse")
 			.booleanType()
 			.defaultValue(false)
-		.withDescription("When enabled objects that Flink internally uses for deserialization and passing" +
-			" data to user-code functions will be reused. Keep in mind that this can lead to bugs when the" +
-			" user-code function of an operation is not aware of this behaviour.");
+			.withDescription("When enabled objects that Flink internally uses for deserialization and passing" +
+				" data to user-code functions will be reused. Keep in mind that this can lead to bugs when the" +
+				" user-code function of an operation is not aware of this behaviour.");
 
 	public static final ConfigOption<List<String>> KRYO_DEFAULT_SERIALIZERS =
 		key("pipeline.default-kryo-serializers")

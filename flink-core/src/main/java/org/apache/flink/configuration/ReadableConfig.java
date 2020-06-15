@@ -34,7 +34,7 @@ public interface ReadableConfig {
 	 * {@link ConfigOption#defaultValue()} if value key not present in the configuration.
 	 *
 	 * @param option metadata of the option to read
-	 * @param <T> type of the value to read
+	 * @param <T>    type of the value to read
 	 * @return read value or {@link ConfigOption#defaultValue()} if not found
 	 * @see #getOptional(ConfigOption)
 	 */
@@ -45,7 +45,7 @@ public interface ReadableConfig {
 	 * {@link #get(ConfigOption)} returns {@link Optional#empty()} if value not present.
 	 *
 	 * @param option metadata of the option to read
-	 * @param <T> type of the value to read
+	 * @param <T>    type of the value to read
 	 * @return read value or {@link Optional#empty()} if not found
 	 * @see #get(ConfigOption)
 	 */

@@ -36,18 +36,20 @@ import java.util.Arrays;
  * <p>
  * Row is in principle serializable. However, it may contain non-serializable fields,
  * in which case serialization will fail.
- *
  */
 @PublicEvolving
-public class Row implements Serializable{
+public class Row implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 
-	/** The array to store actual values. */
+	/**
+	 * The array to store actual values.
+	 */
 	private final Object[] fields;
 
 	/**
 	 * Create a new Row instance.
+	 *
 	 * @param arity The number of fields in the Row
 	 */
 	public Row(int arity) {
@@ -56,6 +58,7 @@ public class Row implements Serializable{
 
 	/**
 	 * Get the number of fields in the Row.
+	 *
 	 * @return The number of fields in the Row.
 	 */
 	public int getArity() {
@@ -64,6 +67,7 @@ public class Row implements Serializable{
 
 	/**
 	 * Gets the field at the specified position.
+	 *
 	 * @param pos The position of the field, 0-based.
 	 * @return The field at the specified position.
 	 * @throws IndexOutOfBoundsException Thrown, if the position is negative, or equal to, or larger than the number of fields.
@@ -75,7 +79,7 @@ public class Row implements Serializable{
 	/**
 	 * Sets the field at the specified position.
 	 *
-	 * @param pos The position of the field, 0-based.
+	 * @param pos   The position of the field, 0-based.
 	 * @param value The value to be assigned to the field at the specified position.
 	 * @throws IndexOutOfBoundsException Thrown, if the position is negative, or equal to, or larger than the number of fields.
 	 */
@@ -130,7 +134,6 @@ public class Row implements Serializable{
 	 *     row.setField(1, true);
 	 *     row.setField(2, 1L);
 	 * </pre>
-	 *
 	 */
 	public static Row of(Object... values) {
 		Row row = new Row(values.length);
@@ -172,7 +175,7 @@ public class Row implements Serializable{
 	 * Creates a new Row which fields are copied from the other rows.
 	 * This method does not perform a deep copy.
 	 *
-	 * @param first The first row being copied.
+	 * @param first      The first row being copied.
 	 * @param remainings The other rows being copied.
 	 * @return the joined new Row
 	 */

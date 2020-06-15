@@ -83,17 +83,18 @@ public class LaunchableMesosWorker implements LaunchableTask {
 
 	/**
 	 * Construct a launchable Mesos worker.
-	 * @param resolver The resolver for retrieving artifacts (e.g. jars, configuration)
-	 * @param params the TM parameters such as memory, cpu to acquire.
+	 *
+	 * @param resolver      The resolver for retrieving artifacts (e.g. jars, configuration)
+	 * @param params        the TM parameters such as memory, cpu to acquire.
 	 * @param containerSpec an abstract container specification for launch time.
-	 * @param taskID the taskID for this worker.
+	 * @param taskID        the taskID for this worker.
 	 */
 	public LaunchableMesosWorker(
-			MesosArtifactResolver resolver,
-			MesosTaskManagerParameters params,
-			ContainerSpecification containerSpec,
-			Protos.TaskID taskID,
-			MesosConfiguration mesosConfiguration) {
+		MesosArtifactResolver resolver,
+		MesosTaskManagerParameters params,
+		ContainerSpecification containerSpec,
+		Protos.TaskID taskID,
+		MesosConfiguration mesosConfiguration) {
 		this.resolver = Preconditions.checkNotNull(resolver);
 		this.containerSpec = Preconditions.checkNotNull(containerSpec);
 		this.params = Preconditions.checkNotNull(params);
@@ -198,7 +199,8 @@ public class LaunchableMesosWorker implements LaunchableTask {
 
 	/**
 	 * Construct the TaskInfo needed to launch the worker.
-	 * @param slaveId the assigned slave.
+	 *
+	 * @param slaveId    the assigned slave.
 	 * @param allocation the resource allocation (available resources).
 	 * @return a fully-baked TaskInfo.
 	 */
@@ -320,7 +322,7 @@ public class LaunchableMesosWorker implements LaunchableTask {
 				break;
 
 			case DOCKER:
-				assert(params.containerImageName().isDefined());
+				assert (params.containerImageName().isDefined());
 				containerInfo
 					.setType(Protos.ContainerInfo.Type.DOCKER)
 					.setDocker(Protos.ContainerInfo.DockerInfo.newBuilder()
@@ -375,7 +377,8 @@ public class LaunchableMesosWorker implements LaunchableTask {
 
 	/**
 	 * Configures an artifact server to serve the artifacts associated with a container specification.
-	 * @param server the server to configure.
+	 *
+	 * @param server    the server to configure.
 	 * @param container the container with artifacts to serve.
 	 * @throws IOException if the artifacts cannot be accessed.
 	 */

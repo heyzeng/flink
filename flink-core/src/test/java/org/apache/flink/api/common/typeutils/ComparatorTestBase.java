@@ -59,29 +59,28 @@ public abstract class ComparatorTestBase<T> extends TestLogger {
 	protected abstract T[] getSortedTestData();
 
 	// -------------------------------- test duplication ------------------------------------------
-	
+
 	@Test
 	public void testDuplicate() {
 		try {
 			TypeComparator<T> comparator = getComparator(true);
 			TypeComparator<T> clone = comparator.duplicate();
-			
+
 			T[] data = getSortedData();
 			comparator.setReference(data[0]);
 			clone.setReference(data[1]);
-			
-			assertTrue("Comparator duplication does not work: Altering the reference in a duplicated comparator alters the original comparator's reference.", 
-					comparator.equalToReference(data[0]) && clone.equalToReference(data[1]));
-		}
-		catch (Exception e) {
+
+			assertTrue("Comparator duplication does not work: Altering the reference in a duplicated comparator alters the original comparator's reference.",
+				comparator.equalToReference(data[0]) && clone.equalToReference(data[1]));
+		} catch (Exception e) {
 			System.err.println(e.getMessage());
 			e.printStackTrace();
 			Assert.fail(e.getMessage());
 		}
 	}
-	
+
 	// --------------------------------- equality tests -------------------------------------------
-	
+
 	@Test
 	public void testEquality() {
 		testEquals(true);
@@ -237,7 +236,7 @@ public abstract class ComparatorTestBase<T> extends TestLogger {
 	}
 
 	// --------------------------------- Normalized key tests -------------------------------------
-	
+
 	// Help Function for setting up a memory segment and normalize the keys of the data array in it
 	public MemorySegment setupNormalizedKeysMemSegment(T[] data, int normKeyLen, TypeComparator<T> comparator) {
 		MemorySegment memSeg = MemorySegmentFactory.allocateUnpooledSegment(2048);
@@ -250,10 +249,10 @@ public abstract class ComparatorTestBase<T> extends TestLogger {
 		}
 		return memSeg;
 	}
-	
+
 	// Help Function which return a normalizedKeyLength, either as done in the NormalizedKeySorter or it's half
 	private int getNormKeyLen(boolean halfLength, T[] data,
-			TypeComparator<T> comparator) throws Exception {
+							  TypeComparator<T> comparator) throws Exception {
 		// Same as in the NormalizedKeySorter
 		int keyLen = Math.min(comparator.getNormalizeKeyLen(), DEFAULT_MAX_NORMALIZED_KEY_LEN);
 		if (keyLen < comparator.getNormalizeKeyLen()) {
@@ -285,7 +284,7 @@ public abstract class ComparatorTestBase<T> extends TestLogger {
 		}
 		testNormalizedKeysEquals(true);
 	}
-	
+
 	public void testNormalizedKeysEquals(boolean halfLength) {
 		try {
 			TypeComparator<T> comparator = getComparator(true);
@@ -339,7 +338,7 @@ public abstract class ComparatorTestBase<T> extends TestLogger {
 			MemorySegment memSegHigh = setupNormalizedKeysMemSegment(data, normKeyLen, comparator);
 
 			boolean fullyDetermines = !comparator.isNormalizedKeyPrefixOnly(normKeyLen);
-			
+
 			// Compare every element with every bigger element
 			for (int l = 0; l < data.length - 1; l++) {
 				for (int h = l + 1; h < data.length; h++) {
@@ -375,7 +374,7 @@ public abstract class ComparatorTestBase<T> extends TestLogger {
 			T reuse = getSortedData()[0];
 
 			TypeComparator<T> comp1 = getComparator(true);
-			if(!comp1.supportsSerializationWithKeyNormalization()){
+			if (!comp1.supportsSerializationWithKeyNormalization()) {
 				return;
 			}
 			TypeComparator<T> comp2 = comp1.duplicate();
@@ -389,7 +388,7 @@ public abstract class ComparatorTestBase<T> extends TestLogger {
 				comp1.writeWithKeyNormalization(value, out);
 				in = out.getInputView();
 				comp1.readWithKeyDenormalization(reuse, in);
-				
+
 				assertTrue(comp1.compareToReference(comp2) == 0);
 			}
 		} catch (Exception e) {
@@ -448,7 +447,7 @@ public abstract class ComparatorTestBase<T> extends TestLogger {
 		if (data.length < 2) {
 			throw new RuntimeException("Test case does not provide enough sorted test data.");
 		}
-		
+
 		return data;
 	}
 

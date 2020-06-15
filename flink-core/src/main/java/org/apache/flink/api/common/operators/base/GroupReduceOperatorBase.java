@@ -54,26 +54,28 @@ import static org.apache.flink.util.Preconditions.checkArgument;
 @Internal
 public class GroupReduceOperatorBase<IN, OUT, FT extends GroupReduceFunction<IN, OUT>> extends SingleInputOperator<IN, OUT, FT> {
 
-	/** The ordering for the order inside a reduce group. */
+	/**
+	 * The ordering for the order inside a reduce group.
+	 */
 	private Ordering groupOrder;
 
 	private boolean combinable;
-	
+
 	private Partitioner<?> customPartitioner;
-	
-	
+
+
 	public GroupReduceOperatorBase(UserCodeWrapper<FT> udf, UnaryOperatorInformation<IN, OUT> operatorInfo, int[] keyPositions, String name) {
 		super(udf, operatorInfo, keyPositions, name);
 	}
-	
+
 	public GroupReduceOperatorBase(FT udf, UnaryOperatorInformation<IN, OUT> operatorInfo, int[] keyPositions, String name) {
 		super(new UserCodeObjectWrapper<FT>(udf), operatorInfo, keyPositions, name);
 	}
-	
+
 	public GroupReduceOperatorBase(Class<? extends FT> udf, UnaryOperatorInformation<IN, OUT> operatorInfo, int[] keyPositions, String name) {
 		super(new UserCodeClassWrapper<FT>(udf), operatorInfo, keyPositions, name);
 	}
-	
+
 	public GroupReduceOperatorBase(UserCodeWrapper<FT> udf, UnaryOperatorInformation<IN, OUT> operatorInfo, String name) {
 		super(udf, operatorInfo, name);
 	}
@@ -81,16 +83,16 @@ public class GroupReduceOperatorBase<IN, OUT, FT extends GroupReduceFunction<IN,
 	public GroupReduceOperatorBase(FT udf, UnaryOperatorInformation<IN, OUT> operatorInfo, String name) {
 		super(new UserCodeObjectWrapper<FT>(udf), operatorInfo, name);
 	}
-	
+
 	public GroupReduceOperatorBase(Class<? extends FT> udf, UnaryOperatorInformation<IN, OUT> operatorInfo, String name) {
 		super(new UserCodeClassWrapper<FT>(udf), operatorInfo, name);
 	}
-	
+
 	// --------------------------------------------------------------------------------------------
-	
+
 	/**
 	 * Sets the order of the elements within a reduce group.
-	 * 
+	 *
 	 * @param order The order for the elements in a reduce group.
 	 */
 	public void setGroupOrder(Ordering order) {
@@ -100,35 +102,34 @@ public class GroupReduceOperatorBase<IN, OUT, FT extends GroupReduceFunction<IN,
 	/**
 	 * Gets the order of elements within a reduce group. If no such order has been
 	 * set, this method returns null.
-	 * 
+	 *
 	 * @return The secondary order.
 	 */
 	public Ordering getGroupOrder() {
 		return this.groupOrder;
 	}
-	
+
 	/**
 	 * Marks the group reduce operation as combinable. Combinable operations may pre-reduce the
 	 * data before the actual group reduce operations. Combinable user-defined functions
 	 * must implement the interface {@link GroupCombineFunction}.
-	 * 
+	 *
 	 * @param combinable Flag to mark the group reduce operation as combinable.
 	 */
 	public void setCombinable(boolean combinable) {
 		// sanity check
 		if (combinable && !GroupCombineFunction.class.isAssignableFrom(this.userFunction.getUserCodeClass())) {
 			throw new IllegalArgumentException("Cannot set a UDF as combinable if it does not implement the interface " +
-					GroupCombineFunction.class.getName());
+				GroupCombineFunction.class.getName());
 		} else {
 			this.combinable = combinable;
 		}
 	}
-	
+
 	/**
 	 * Checks whether the operation is combinable.
-	 * 
+	 *
 	 * @return True, if the UDF is combinable, false if not.
-	 * 
 	 * @see #setCombinable(boolean)
 	 */
 	public boolean isCombinable() {
@@ -147,7 +148,7 @@ public class GroupReduceOperatorBase<IN, OUT, FT extends GroupReduceFunction<IN,
 		}
 		this.customPartitioner = customPartitioner;
 	}
-	
+
 	public Partitioner<?> getCustomPartitioner() {
 		return customPartitioner;
 	}
@@ -161,7 +162,7 @@ public class GroupReduceOperatorBase<IN, OUT, FT extends GroupReduceFunction<IN,
 
 		throw new InvalidProgramException("Input type of GroupReduce must be one of composite types or atomic types.");
 	}
-	
+
 	// --------------------------------------------------------------------------------------------
 
 	@Override
@@ -180,7 +181,7 @@ public class GroupReduceOperatorBase<IN, OUT, FT extends GroupReduceFunction<IN,
 			sortOrderings = ArrayUtils.addAll(sortOrderings, groupOrder.getFieldSortDirections());
 		}
 
-		if(sortColumns.length == 0) { // => all reduce. No comparator
+		if (sortColumns.length == 0) { // => all reduce. No comparator
 			checkArgument(sortOrderings.length == 0);
 		} else {
 			final TypeComparator<IN> sortComparator = getTypeComparator(inputType, sortColumns, sortOrderings, executionConfig);
@@ -194,7 +195,7 @@ public class GroupReduceOperatorBase<IN, OUT, FT extends GroupReduceFunction<IN,
 
 		FunctionUtils.setFunctionRuntimeContext(function, ctx);
 		FunctionUtils.openFunction(function, this.parameters);
-		
+
 		ArrayList<OUT> result = new ArrayList<OUT>();
 
 		if (inputData.size() > 0) {

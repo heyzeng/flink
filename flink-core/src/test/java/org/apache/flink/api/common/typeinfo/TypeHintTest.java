@@ -39,8 +39,10 @@ public class TypeHintTest {
 	public void testTypeInfoDirect() {
 
 		// simple (non-generic case)
-		TypeHint<String> stringInfo1 = new TypeHint<String>(){};
-		TypeHint<String> stringInfo2 = new TypeHint<String>(){};
+		TypeHint<String> stringInfo1 = new TypeHint<String>() {
+		};
+		TypeHint<String> stringInfo2 = new TypeHint<String>() {
+		};
 
 		assertEquals(BasicTypeInfo.STRING_TYPE_INFO, stringInfo1.getTypeInfo());
 
@@ -49,10 +51,11 @@ public class TypeHintTest {
 		assertTrue(stringInfo1.toString().equals(stringInfo2.toString()));
 
 		// generic case
-		TypeHint<Tuple3<String, Double, Boolean>> generic = new TypeHint<Tuple3<String, Double, Boolean>>(){};
+		TypeHint<Tuple3<String, Double, Boolean>> generic = new TypeHint<Tuple3<String, Double, Boolean>>() {
+		};
 
 		TypeInformation<Tuple3<String, Double, Boolean>> tupleInfo =
-				new TupleTypeInfo<>(BasicTypeInfo.STRING_TYPE_INFO, BasicTypeInfo.DOUBLE_TYPE_INFO, BasicTypeInfo.BOOLEAN_TYPE_INFO);
+			new TupleTypeInfo<>(BasicTypeInfo.STRING_TYPE_INFO, BasicTypeInfo.DOUBLE_TYPE_INFO, BasicTypeInfo.BOOLEAN_TYPE_INFO);
 
 		assertEquals(tupleInfo, generic.getTypeInfo());
 	}
@@ -60,13 +63,15 @@ public class TypeHintTest {
 	@Test
 	public <T> void testWithGenericParameter() {
 		try {
-			new TypeHint<T>(){};
+			new TypeHint<T>() {
+			};
 			fail();
+		} catch (FlinkRuntimeException ignored) {
 		}
-		catch (FlinkRuntimeException ignored) {}
 
 		// this works, because "List" goes to the GenericType (blackbox) which does
 		// not care about generic parametrization
-		new TypeHint<List<T>>(){};
+		new TypeHint<List<T>>() {
+		};
 	}
 }

@@ -91,6 +91,6 @@ public final class GenericArraySerializerSnapshot<C> extends CompositeTypeSerial
 
 	@Override
 	protected TypeSerializer<?>[] getNestedSerializers(GenericArraySerializer<C> outerSerializer) {
-		return new TypeSerializer<?>[] { outerSerializer.getComponentSerializer() };
+		return new TypeSerializer<?>[]{outerSerializer.getComponentSerializer()};
 	}
 }

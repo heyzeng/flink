@@ -38,12 +38,15 @@ public class ScalaTrySerializerConfigSnapshot<E> extends CompositeTypeSerializer
 
 	private static final int VERSION = 1;
 
-	/** This empty nullary constructor is required for deserializing the configuration. */
-	public ScalaTrySerializerConfigSnapshot() {}
+	/**
+	 * This empty nullary constructor is required for deserializing the configuration.
+	 */
+	public ScalaTrySerializerConfigSnapshot() {
+	}
 
 	public ScalaTrySerializerConfigSnapshot(
-			TypeSerializer<E> elementSerializer,
-			TypeSerializer<Throwable> throwableSerializer) {
+		TypeSerializer<E> elementSerializer,
+		TypeSerializer<Throwable> throwableSerializer) {
 
 		super(elementSerializer, throwableSerializer);
 	}

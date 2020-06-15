@@ -41,7 +41,7 @@ public abstract class TypeInfoFactory<T> {
 	 * Creates type information for the type the factory is targeted for. The parameters provide
 	 * additional information about the type itself as well as the type's generic type parameters.
 	 *
-	 * @param t the exact type the type information is created for; might also be a subclass of &lt;T&gt;
+	 * @param t                 the exact type the type information is created for; might also be a subclass of &lt;T&gt;
 	 * @param genericParameters mapping of the type's generic type parameters to type information
 	 *                          extracted with Flink's type extraction facilities; null values
 	 *                          indicate that type information could not be extracted for this parameter

@@ -29,7 +29,7 @@ public final class FloatComparator extends BasicTypeComparator<Float> {
 
 	private static final long serialVersionUID = 1L;
 
-	
+
 	public FloatComparator(boolean ascending) {
 		super(ascending);
 	}
@@ -38,8 +38,8 @@ public final class FloatComparator extends BasicTypeComparator<Float> {
 	public int compareSerialized(DataInputView firstSource, DataInputView secondSource) throws IOException {
 		float l1 = firstSource.readFloat();
 		float l2 = secondSource.readFloat();
-		int comp = (l1 < l2 ? -1 : (l1 > l2 ? 1 : 0)); 
-		return ascendingComparison ? comp : -comp; 
+		int comp = (l1 < l2 ? -1 : (l1 > l2 ? 1 : 0));
+		return ascendingComparison ? comp : -comp;
 	}
 
 

@@ -38,15 +38,15 @@ public class TestFileSystem extends LocalFileSystem {
 	public static final String SCHEME = "test";
 
 	private static int streamOpenCounter;
-	
+
 	public static int getNumtimeStreamOpened() {
 		return streamOpenCounter;
 	}
-	
+
 	public static void resetStreamOpenCounter() {
 		streamOpenCounter = 0;
 	}
-	
+
 	@Override
 	public FSDataInputStream open(Path f, int bufferSize) throws IOException {
 		streamOpenCounter++;
@@ -58,13 +58,13 @@ public class TestFileSystem extends LocalFileSystem {
 		streamOpenCounter++;
 		return super.open(f);
 	}
-	
+
 	@Override
 	public FileStatus getFileStatus(Path f) throws IOException {
 		LocalFileStatus status = (LocalFileStatus) super.getFileStatus(f);
 		return new LocalFileStatus(status.getFile(), this);
 	}
-	
+
 	@Override
 	public FileStatus[] listStatus(Path f) throws IOException {
 		FileStatus[] stati = super.listStatus(f);

@@ -42,7 +42,7 @@ public class IntValueComparator extends TypeComparator<IntValue> {
 
 	private final IntValue tempReference = new IntValue();
 
-	private final TypeComparator<?>[] comparators = new TypeComparator[] {this};
+	private final TypeComparator<?>[] comparators = new TypeComparator[]{this};
 
 	public IntValueComparator(boolean ascending) {
 		this.ascendingComparison = ascending;

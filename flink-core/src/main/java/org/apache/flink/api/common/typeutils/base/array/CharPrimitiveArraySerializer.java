@@ -31,10 +31,10 @@ import org.apache.flink.core.memory.DataOutputView;
  * A serializer for char arrays.
  */
 @Internal
-public final class CharPrimitiveArraySerializer extends TypeSerializerSingleton<char[]>{
+public final class CharPrimitiveArraySerializer extends TypeSerializerSingleton<char[]> {
 
 	private static final long serialVersionUID = 1L;
-	
+
 	private static final char[] EMPTY = new char[0];
 
 	public static final CharPrimitiveArraySerializer INSTANCE = new CharPrimitiveArraySerializer();
@@ -55,7 +55,7 @@ public final class CharPrimitiveArraySerializer extends TypeSerializerSingleton<
 		System.arraycopy(from, 0, copy, 0, from.length);
 		return copy;
 	}
-	
+
 	@Override
 	public char[] copy(char[] from, char[] reuse) {
 		return copy(from);
@@ -72,7 +72,7 @@ public final class CharPrimitiveArraySerializer extends TypeSerializerSingleton<
 		if (record == null) {
 			throw new IllegalArgumentException("The record must not be null.");
 		}
-		
+
 		final int len = record.length;
 		target.writeInt(len);
 		for (int i = 0; i < len; i++) {
@@ -84,11 +84,11 @@ public final class CharPrimitiveArraySerializer extends TypeSerializerSingleton<
 	public char[] deserialize(DataInputView source) throws IOException {
 		final int len = source.readInt();
 		char[] result = new char[len];
-		
+
 		for (int i = 0; i < len; i++) {
 			result[i] = source.readChar();
 		}
-		
+
 		return result;
 	}
 

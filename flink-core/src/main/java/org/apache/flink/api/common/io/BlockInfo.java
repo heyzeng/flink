@@ -29,7 +29,7 @@ import org.apache.flink.core.memory.DataOutputView;
  * A block of 24 bytes written at the <i>end</i> of a block in a binary file, and containing
  * i) the number of records in the block, ii) the accumulated number of records, and
  * iii) the offset of the first record in the block.
- * */
+ */
 @Public
 public class BlockInfo implements IOReadableWritable {
 
@@ -45,7 +45,7 @@ public class BlockInfo implements IOReadableWritable {
 
 	/**
 	 * Returns the firstRecordStart.
-	 * 
+	 *
 	 * @return the firstRecordStart
 	 */
 	public long getFirstRecordStart() {
@@ -54,9 +54,8 @@ public class BlockInfo implements IOReadableWritable {
 
 	/**
 	 * Sets the firstRecordStart to the specified value.
-	 * 
-	 * @param firstRecordStart
-	 *        the firstRecordStart to set
+	 *
+	 * @param firstRecordStart the firstRecordStart to set
 	 */
 	public void setFirstRecordStart(long firstRecordStart) {
 		this.firstRecordStart = firstRecordStart;
@@ -78,7 +77,7 @@ public class BlockInfo implements IOReadableWritable {
 
 	/**
 	 * Returns the recordCount.
-	 * 
+	 *
 	 * @return the recordCount
 	 */
 	public long getRecordCount() {
@@ -87,7 +86,7 @@ public class BlockInfo implements IOReadableWritable {
 
 	/**
 	 * Returns the accumulated record count.
-	 * 
+	 *
 	 * @return the accumulated record count
 	 */
 	public long getAccumulatedRecordCount() {
@@ -96,9 +95,8 @@ public class BlockInfo implements IOReadableWritable {
 
 	/**
 	 * Sets the accumulatedRecordCount to the specified value.
-	 * 
-	 * @param accumulatedRecordCount
-	 *        the accumulatedRecordCount to set
+	 *
+	 * @param accumulatedRecordCount the accumulatedRecordCount to set
 	 */
 	public void setAccumulatedRecordCount(long accumulatedRecordCount) {
 		this.accumulatedRecordCount = accumulatedRecordCount;
@@ -106,9 +104,8 @@ public class BlockInfo implements IOReadableWritable {
 
 	/**
 	 * Sets the recordCount to the specified value.
-	 * 
-	 * @param recordCount
-	 *        the recordCount to set
+	 *
+	 * @param recordCount the recordCount to set
 	 */
 	public void setRecordCount(long recordCount) {
 		this.recordCount = recordCount;

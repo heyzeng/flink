@@ -32,7 +32,7 @@ public interface ResultTypeQueryable<T> {
 
 	/**
 	 * Gets the data type (as a {@link TypeInformation}) produced by this function or input format.
-	 * 
+	 *
 	 * @return The data type produced by this function or input format.
 	 */
 	TypeInformation<T> getProducedType();

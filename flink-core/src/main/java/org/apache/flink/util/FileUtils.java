@@ -64,14 +64,20 @@ import static org.apache.flink.util.Preconditions.checkNotNull;
  */
 public final class FileUtils {
 
-	/** Global lock to prevent concurrent directory deletes under Windows. */
+	/**
+	 * Global lock to prevent concurrent directory deletes under Windows.
+	 */
 	private static final Object WINDOWS_DELETE_LOCK = new Object();
 
-	/** The alphabet to construct the random part of the filename from. */
+	/**
+	 * The alphabet to construct the random part of the filename from.
+	 */
 	private static final char[] ALPHABET =
-			{ '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '0', 'a', 'b', 'c', 'd', 'e', 'f' };
+		{'0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '0', 'a', 'b', 'c', 'd', 'e', 'f'};
 
-	/** The length of the random part of the filename. */
+	/**
+	 * The length of the random part of the filename.
+	 */
 	private static final int RANDOM_FILE_NAME_LENGTH = 12;
 
 	/**
@@ -80,7 +86,9 @@ public final class FileUtils {
 	 */
 	private static final int MAX_BUFFER_SIZE = Integer.MAX_VALUE - 8;
 
-	/** The size of the buffer used for reading. */
+	/**
+	 * The size of the buffer used for reading.
+	 */
 	private static final int BUFFER_SIZE = 4096;
 
 	private static final String JAR_FILE_EXTENSION = "jar";
@@ -115,8 +123,7 @@ public final class FileUtils {
 	 * Constructs a random filename with the given prefix and
 	 * a random part generated from hex characters.
 	 *
-	 * @param prefix
-	 *        the prefix to the filename to be constructed
+	 * @param prefix the prefix to the filename to be constructed
 	 * @return the generated random filename with the given prefix
 	 */
 	public static String getRandomFilename(final String prefix) {
@@ -162,19 +169,15 @@ public final class FileUtils {
 	 * direct-buffer OutOfMemoryError. When {@link java.nio.file.Files#readAllBytes(java.nio.file.Path)}
 	 * or other interfaces in java API can do this in the future, we should remove it.
 	 *
-	 * @param path
-	 *        the path to the file
+	 * @param path the path to the file
 	 * @return a byte array containing the bytes read from the file
-	 *
-	 * @throws IOException
-	 *         if an I/O error occurs reading from the stream
-	 * @throws OutOfMemoryError
-	 *         if an array of the required size cannot be allocated, for
-	 *         example the file is larger that {@code 2GB}
+	 * @throws IOException      if an I/O error occurs reading from the stream
+	 * @throws OutOfMemoryError if an array of the required size cannot be allocated, for
+	 *                          example the file is larger that {@code 2GB}
 	 */
 	public static byte[] readAllBytes(java.nio.file.Path path) throws IOException {
 		try (SeekableByteChannel channel = Files.newByteChannel(path);
-			InputStream in = Channels.newInputStream(channel)) {
+			 InputStream in = Channels.newInputStream(channel)) {
 
 			long size = channel.size();
 			if (size > (long) MAX_BUFFER_SIZE) {
@@ -190,16 +193,11 @@ public final class FileUtils {
 	 * about how many bytes the stream will have and uses {@code directBufferSize}
 	 * to limit the size of the direct buffer used to read.
 	 *
-	 * @param source
-	 *        the input stream to read from
-	 * @param initialSize
-	 *        the initial size of the byte array to allocate
+	 * @param source      the input stream to read from
+	 * @param initialSize the initial size of the byte array to allocate
 	 * @return a byte array containing the bytes read from the file
-	 *
-	 * @throws IOException
-	 *         if an I/O error occurs reading from the stream
-	 * @throws OutOfMemoryError
-	 *         if an array of the required size cannot be allocated
+	 * @throws IOException      if an I/O error occurs reading from the stream
+	 * @throws OutOfMemoryError if an array of the required size cannot be allocated
 	 */
 	private static byte[] read(InputStream source, int initialSize) throws IOException {
 		int capacity = initialSize;
@@ -207,7 +205,7 @@ public final class FileUtils {
 		int nread = 0;
 		int n;
 
-		for (; ;) {
+		for (; ; ) {
 			// read to EOF which may read more or less than initialSize (eg: file
 			// is truncated while we are reading)
 			while ((n = source.read(buf, nread, Math.min(capacity - nread, BUFFER_SIZE))) > 0) {
@@ -248,7 +246,6 @@ public final class FileUtils {
 	 * <p>This method is safe against other concurrent deletion attempts.
 	 *
 	 * @param file The file or directory to delete.
-	 *
 	 * @throws IOException Thrown if the directory could not be cleaned for some reason, for example
 	 *                     due to missing access/write permissions.
 	 */
@@ -293,7 +290,8 @@ public final class FileUtils {
 		// delete and do not report if it fails
 		try {
 			deleteDirectory(directory);
-		} catch (Exception ignored) {}
+		} catch (Exception ignored) {
+		}
 	}
 
 	/**
@@ -302,11 +300,10 @@ public final class FileUtils {
 	 * <p>This method is safe against other concurrent deletion attempts.
 	 *
 	 * @param directory The directory to remove all files from.
-	 *
 	 * @throws FileNotFoundException Thrown if the directory itself does not exist.
-	 * @throws IOException Thrown if the file indicates a proper file and not a directory, or if
-	 *                     the directory could not be cleaned for some reason, for example
-	 *                     due to missing access/write permissions.
+	 * @throws IOException           Thrown if the file indicates a proper file and not a directory, or if
+	 *                               the directory could not be cleaned for some reason, for example
+	 *                               due to missing access/write permissions.
 	 */
 	public static void cleanDirectory(File directory) throws IOException {
 		checkNotNull(directory, "directory");
@@ -318,8 +315,7 @@ public final class FileUtils {
 		if (file.isDirectory()) {
 			// file exists and is directory
 			deleteDirectoryInternal(file);
-		}
-		else {
+		} else {
 			// if the file is already gone (concurrently), we don't mind
 			Files.deleteIfExists(file.toPath());
 		}
@@ -333,8 +329,7 @@ public final class FileUtils {
 			// empty the directory first
 			try {
 				cleanDirectoryInternal(directory);
-			}
-			catch (FileNotFoundException ignored) {
+			} catch (FileNotFoundException ignored) {
 				// someone concurrently deleted the directory, nothing to do for us
 				return;
 			}
@@ -344,8 +339,7 @@ public final class FileUtils {
 			// if someone else deleted the empty directory concurrently, we don't mind
 			// the result is the same for us, after all
 			Files.deleteIfExists(directory.toPath());
-		}
-		else if (directory.exists()) {
+		} else if (directory.exists()) {
 			// exists but is file, not directory
 			// either an error from the caller, or concurrently a file got created
 			throw new IOException(directory + " is not a directory");
@@ -376,11 +370,9 @@ public final class FileUtils {
 					deleteFileOrDirectory(file);
 				}
 			}
-		}
-		else if (directory.exists()) {
+		} else if (directory.exists()) {
 			throw new IOException(directory + " is not a directory but a regular file");
-		}
-		else {
+		} else {
 			// else does not exist at all
 			throw new FileNotFoundException(directory.toString());
 		}
@@ -389,8 +381,7 @@ public final class FileUtils {
 	private static void guardIfWindows(ThrowingConsumer<File, IOException> toRun, File file) throws IOException {
 		if (!OperatingSystem.isWindows()) {
 			toRun.accept(file);
-		}
-		else {
+		} else {
 			// for windows, we synchronize on a global lock, to prevent concurrent delete issues
 			// >
 			// in the future, we may want to find either a good way of working around file visibility
@@ -401,8 +392,7 @@ public final class FileUtils {
 					try {
 						toRun.accept(file);
 						break;
-					}
-					catch (AccessDeniedException e) {
+					} catch (AccessDeniedException e) {
 						// ah, windows...
 					}
 
@@ -428,7 +418,7 @@ public final class FileUtils {
 	 * not contain any other directories/files.
 	 *
 	 * @param fileSystem to use
-	 * @param path to be deleted if empty
+	 * @param path       to be deleted if empty
 	 * @return true if the path could be deleted; otherwise false
 	 * @throws IOException if the delete operation fails
 	 */
@@ -437,12 +427,10 @@ public final class FileUtils {
 
 		try {
 			fileStatuses = fileSystem.listStatus(path);
-		}
-		catch (FileNotFoundException e) {
+		} catch (FileNotFoundException e) {
 			// path already deleted
 			return true;
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			// could not access directory, cannot delete
 			return false;
 		}
@@ -451,19 +439,18 @@ public final class FileUtils {
 		if (fileStatuses == null) {
 			// another indicator of "file not found"
 			return true;
-		}
-		else if (fileStatuses.length == 0) {
+		} else if (fileStatuses.length == 0) {
 			// attempt to delete the path (will fail and be ignored if the path now contains
 			// some files (possibly added concurrently))
 			return fileSystem.delete(path, false);
-		}
-		else {
+		} else {
 			return false;
 		}
 	}
 
 	/**
 	 * Copies all files from source to target and sets executable flag. Paths might be on different systems.
+	 *
 	 * @param sourcePath source path to copy from
 	 * @param targetPath target path to copy to
 	 * @param executable if target file should be executable
@@ -565,10 +552,9 @@ public final class FileUtils {
 	/**
 	 * List the {@code directory} recursively and return the files that satisfy the {@code fileFilter}.
 	 *
-	 * @param directory the directory to be listed
+	 * @param directory  the directory to be listed
 	 * @param fileFilter a file filter
 	 * @return a collection of {@code File}s
-	 *
 	 * @throws IOException if an I/O error occurs while listing the files in the given directory
 	 */
 	public static Collection<java.nio.file.Path> listFilesInDirectory(final java.nio.file.Path directory, final Predicate<java.nio.file.Path> fileFilter) throws IOException {
@@ -611,7 +597,7 @@ public final class FileUtils {
 	/**
 	 * Relativize the given path with respect to the given base path if it is absolute.
 	 *
-	 * @param basePath to relativize against
+	 * @param basePath         to relativize against
 	 * @param pathToRelativize path which is being relativized if it is an absolute path
 	 * @return the relativized path
 	 */
@@ -654,6 +640,7 @@ public final class FileUtils {
 
 	/**
 	 * Remove the extension of the file name.
+	 *
 	 * @param fileName to strip
 	 * @return the file name without extension
 	 */
@@ -710,5 +697,6 @@ public final class FileUtils {
 	/**
 	 * Private default constructor to avoid instantiation.
 	 */
-	private FileUtils() {}
+	private FileUtils() {
+	}
 }

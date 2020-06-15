@@ -38,8 +38,7 @@ public class StringSummaryAggregator implements Aggregator<String, StringColumnS
 	public void aggregate(String value) {
 		if (value == null) {
 			nullCount++;
-		}
-		else {
+		} else {
 			nonNullCount++;
 
 			if (value.isEmpty()) {
@@ -70,8 +69,7 @@ public class StringSummaryAggregator implements Aggregator<String, StringColumnS
 			emptyCount = other.emptyCount;
 			meanLength = other.meanLength;
 
-		}
-		else if (other.nonNullCount != 0) {
+		} else if (other.nonNullCount != 0) {
 			long combinedCount = nonNullCount + other.nonNullCount;
 
 			emptyCount += other.emptyCount;

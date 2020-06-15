@@ -26,28 +26,44 @@ import org.apache.flink.annotation.PublicEvolving;
 @PublicEvolving
 public enum JobStatus {
 
-	/** Job is newly created, no task has started to run. */
+	/**
+	 * Job is newly created, no task has started to run.
+	 */
 	CREATED(TerminalState.NON_TERMINAL),
 
-	/** Some tasks are scheduled or running, some may be pending, some may be finished. */
+	/**
+	 * Some tasks are scheduled or running, some may be pending, some may be finished.
+	 */
 	RUNNING(TerminalState.NON_TERMINAL),
 
-	/** The job has failed and is currently waiting for the cleanup to complete. */
+	/**
+	 * The job has failed and is currently waiting for the cleanup to complete.
+	 */
 	FAILING(TerminalState.NON_TERMINAL),
 
-	/** The job has failed with a non-recoverable task failure. */
+	/**
+	 * The job has failed with a non-recoverable task failure.
+	 */
 	FAILED(TerminalState.GLOBALLY),
 
-	/** Job is being cancelled. */
+	/**
+	 * Job is being cancelled.
+	 */
 	CANCELLING(TerminalState.NON_TERMINAL),
 
-	/** Job has been cancelled. */
+	/**
+	 * Job has been cancelled.
+	 */
 	CANCELED(TerminalState.GLOBALLY),
 
-	/** All of the job's tasks have successfully finished. */
+	/**
+	 * All of the job's tasks have successfully finished.
+	 */
 	FINISHED(TerminalState.GLOBALLY),
 
-	/** The job is currently undergoing a reset and total restart. */
+	/**
+	 * The job is currently undergoing a reset and total restart.
+	 */
 	RESTARTING(TerminalState.NON_TERMINAL),
 
 	/**
@@ -56,7 +72,9 @@ public enum JobStatus {
 	 */
 	SUSPENDED(TerminalState.LOCALLY),
 
-	/** The job is currently reconciling and waits for task execution report to recover state. */
+	/**
+	 * The job is currently reconciling and waits for task execution report to recover state.
+	 */
 	RECONCILING(TerminalState.NON_TERMINAL);
 
 	// --------------------------------------------------------------------------------------------

@@ -70,20 +70,26 @@ public class PrimitiveArrayTypeInfo<T> extends TypeInformation<T> implements Ato
 
 	// --------------------------------------------------------------------------------------------
 
-	/** The class of the array (such as int[].class). */
+	/**
+	 * The class of the array (such as int[].class).
+	 */
 	private final Class<T> arrayClass;
 
-	/** The serializer for the array. */
+	/**
+	 * The serializer for the array.
+	 */
 	private final TypeSerializer<T> serializer;
 
-	/** The class of the comparator for the array. */
+	/**
+	 * The class of the comparator for the array.
+	 */
 	private final Class<? extends PrimitiveArrayComparator<T, ?>> comparatorClass;
 
 	/**
 	 * Creates a new type info for the primitive type array.
 	 *
-	 * @param arrayClass The class of the array (such as int[].class)
-	 * @param serializer The serializer for the array.
+	 * @param arrayClass      The class of the array (such as int[].class)
+	 * @param serializer      The serializer for the array.
 	 * @param comparatorClass The class of the array comparator
 	 */
 	private PrimitiveArrayTypeInfo(Class<T> arrayClass, TypeSerializer<T> serializer, Class<? extends PrimitiveArrayComparator<T, ?>> comparatorClass) {
@@ -142,6 +148,7 @@ public class PrimitiveArrayTypeInfo<T> extends TypeInformation<T> implements Ato
 
 	/**
 	 * Gets the class that represents the component type.
+	 *
 	 * @return The class of the component type.
 	 */
 	@PublicEvolving
@@ -151,6 +158,7 @@ public class PrimitiveArrayTypeInfo<T> extends TypeInformation<T> implements Ato
 
 	/**
 	 * Gets the type information of the component type.
+	 *
 	 * @return The type information of the component type.
 	 */
 	@PublicEvolving
@@ -209,7 +217,9 @@ public class PrimitiveArrayTypeInfo<T> extends TypeInformation<T> implements Ato
 		return (PrimitiveArrayTypeInfo<X>) TYPES.get(type);
 	}
 
-	/** Static map from array class to type info. */
+	/**
+	 * Static map from array class to type info.
+	 */
 	private static final Map<Class<?>, PrimitiveArrayTypeInfo<?>> TYPES = new HashMap<>();
 
 	// initialization of the static map

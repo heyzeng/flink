@@ -52,8 +52,7 @@ public abstract class HybridOffHeapMemorySegmentTest extends MemorySegmentTestBa
 			//noinspection ResultOfMethodCallIgnored
 			seg.getArray();
 			fail("should throw an exception");
-		}
-		catch (IllegalStateException e) {
+		} catch (IllegalStateException e) {
 			// expected
 		}
 

@@ -47,35 +47,35 @@ import org.apache.flink.util.Collector;
 import org.apache.flink.util.Visitor;
 
 /**
- * 
+ *
  */
 @Internal
 public class BulkIterationBase<T> extends SingleInputOperator<T, T, AbstractRichFunction> implements IterationOperator {
-	
+
 	private static final String DEFAULT_NAME = "<Unnamed Bulk Iteration>";
-	
+
 	public static final String TERMINATION_CRITERION_AGGREGATOR_NAME = "terminationCriterion.aggregator";
-	
-	
+
+
 	private Operator<T> iterationResult;
-	
+
 	private final Operator<T> inputPlaceHolder;
-	
+
 	private final AggregatorRegistry aggregators = new AggregatorRegistry();
-	
+
 	private int numberOfIterations = -1;
-	
+
 	protected Operator<?> terminationCriterion;
-	
+
 	// --------------------------------------------------------------------------------------------
-	
+
 	/**
-	 * 
+	 *
 	 */
 	public BulkIterationBase(UnaryOperatorInformation<T, T> operatorInfo) {
 		this(operatorInfo, DEFAULT_NAME);
 	}
-	
+
 	/**
 	 * @param name
 	 */
@@ -85,14 +85,14 @@ public class BulkIterationBase<T> extends SingleInputOperator<T, T, AbstractRich
 	}
 
 	// --------------------------------------------------------------------------------------------
-	
+
 	/**
 	 * @return The operator representing the partial solution.
 	 */
 	public Operator<T> getPartialSolution() {
 		return this.inputPlaceHolder;
 	}
-	
+
 	/**
 	 * @param result
 	 */
@@ -102,39 +102,39 @@ public class BulkIterationBase<T> extends SingleInputOperator<T, T, AbstractRich
 		}
 		this.iterationResult = result;
 	}
-	
+
 	/**
 	 * @return The operator representing the next partial solution.
 	 */
 	public Operator<T> getNextPartialSolution() {
 		return this.iterationResult;
 	}
-	
+
 	/**
 	 * @return The operator representing the termination criterion.
 	 */
 	public Operator<?> getTerminationCriterion() {
 		return this.terminationCriterion;
 	}
-	
+
 	/**
 	 * @param criterion
 	 */
 	public <X> void setTerminationCriterion(Operator<X> criterion) {
-		
+
 		TypeInformation<X> type = criterion.getOperatorInfo().getOutputType();
-		
+
 		FlatMapOperatorBase<X, X, TerminationCriterionMapper<X>> mapper =
-				new FlatMapOperatorBase<X, X, TerminationCriterionMapper<X>>(
-						new TerminationCriterionMapper<X>(),
-						new UnaryOperatorInformation<X, X>(type, type),
-						"Termination Criterion Aggregation Wrapper");
+			new FlatMapOperatorBase<X, X, TerminationCriterionMapper<X>>(
+				new TerminationCriterionMapper<X>(),
+				new UnaryOperatorInformation<X, X>(type, type),
+				"Termination Criterion Aggregation Wrapper");
 		mapper.setInput(criterion);
-		
+
 		this.terminationCriterion = mapper;
 		this.getAggregators().registerAggregationConvergenceCriterion(TERMINATION_CRITERION_AGGREGATOR_NAME, new TerminationCriterionAggregator(), new TerminationCriterionAggregationConvergence());
 	}
-	
+
 	/**
 	 * @param num
 	 */
@@ -144,16 +144,16 @@ public class BulkIterationBase<T> extends SingleInputOperator<T, T, AbstractRich
 		}
 		this.numberOfIterations = num;
 	}
-	
+
 	public int getMaximumNumberOfIterations() {
 		return this.numberOfIterations;
 	}
-	
+
 	@Override
 	public AggregatorRegistry getAggregators() {
 		return this.aggregators;
 	}
-	
+
 	/**
 	 * @throws InvalidProgramException
 	 */
@@ -163,63 +163,63 @@ public class BulkIterationBase<T> extends SingleInputOperator<T, T, AbstractRich
 		}
 		if (this.iterationResult == null) {
 			throw new InvalidProgramException("Operator producing the next version of the partial " +
-					"solution (iteration result) is not set.");
+				"solution (iteration result) is not set.");
 		}
 		if (this.terminationCriterion == null && this.numberOfIterations <= 0) {
 			throw new InvalidProgramException("No termination condition is set " +
-					"(neither fix number of iteration nor termination criterion).");
+				"(neither fix number of iteration nor termination criterion).");
 		}
 	}
-	
+
 	/**
 	 * The BulkIteration meta operator cannot have broadcast inputs.
-	 * 
+	 *
 	 * @return An empty map.
 	 */
 	public Map<String, Operator<?>> getBroadcastInputs() {
 		return Collections.emptyMap();
 	}
-	
+
 	/**
 	 * The BulkIteration meta operator cannot have broadcast inputs.
 	 * This method always throws an exception.
-	 * 
+	 *
 	 * @param name Ignored.
 	 * @param root Ignored.
 	 */
 	public void setBroadcastVariable(String name, Operator<?> root) {
 		throw new UnsupportedOperationException("The BulkIteration meta operator cannot have broadcast inputs.");
 	}
-	
+
 	/**
 	 * The BulkIteration meta operator cannot have broadcast inputs.
 	 * This method always throws an exception.
-	 * 
+	 *
 	 * @param inputs Ignored
 	 */
 	public <X> void setBroadcastVariables(Map<String, Operator<X>> inputs) {
 		throw new UnsupportedOperationException("The BulkIteration meta operator cannot have broadcast inputs.");
 	}
-	
+
 	// --------------------------------------------------------------------------------------------
-	
+
 	/**
 	 * Specialized operator to use as a recognizable place-holder for the input to the
 	 * step function when composing the nested data flow.
 	 */
 	public static class PartialSolutionPlaceHolder<OT> extends Operator<OT> {
-		
+
 		private final BulkIterationBase<OT> containingIteration;
-		
+
 		public PartialSolutionPlaceHolder(BulkIterationBase<OT> container, OperatorInformation<OT> operatorInfo) {
 			super(operatorInfo, "Partial Solution");
 			this.containingIteration = container;
 		}
-		
+
 		public BulkIterationBase<OT> getContainingBulkIteration() {
 			return this.containingIteration;
 		}
-		
+
 		@Override
 		public void accept(Visitor<Operator<?>> visitor) {
 			visitor.preVisit(this);
@@ -231,26 +231,26 @@ public class BulkIterationBase<T> extends SingleInputOperator<T, T, AbstractRich
 			return null;
 		}
 	}
-	
+
 	/**
 	 * Special Mapper that is added before a termination criterion and is only a container for an special aggregator
 	 */
 	public static class TerminationCriterionMapper<X> extends AbstractRichFunction implements FlatMapFunction<X, X> {
 		private static final long serialVersionUID = 1L;
-		
+
 		private TerminationCriterionAggregator aggregator;
-		
+
 		@Override
 		public void open(Configuration parameters) {
 			aggregator = getIterationRuntimeContext().getIterationAggregator(TERMINATION_CRITERION_AGGREGATOR_NAME);
 		}
-		
+
 		@Override
 		public void flatMap(X in, Collector<X> out) {
 			aggregator.aggregate(1L);
 		}
 	}
-	
+
 	/**
 	 * Aggregator that basically only adds 1 for every output tuple of the termination criterion branch
 	 */
@@ -285,7 +285,7 @@ public class BulkIterationBase<T> extends SingleInputOperator<T, T, AbstractRich
 	public static class TerminationCriterionAggregationConvergence implements ConvergenceCriterion<LongValue> {
 
 		private static final long serialVersionUID = 1L;
-		
+
 		private static final Logger log = LoggerFactory.getLogger(TerminationCriterionAggregationConvergence.class);
 
 		@Override

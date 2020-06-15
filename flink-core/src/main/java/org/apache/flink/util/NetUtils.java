@@ -46,7 +46,9 @@ public class NetUtils {
 
 	private static final Logger LOG = LoggerFactory.getLogger(NetUtils.class);
 
-	/** The wildcard address to listen on all interfaces (either 0.0.0.0 or ::). */
+	/**
+	 * The wildcard address to listen on all interfaces (either 0.0.0.0 or ::).
+	 */
 	private static final String WILDCARD_ADDRESS = new InetSocketAddress(0).getAddress().getHostAddress();
 
 	/**
@@ -129,8 +131,8 @@ public class NetUtils {
 				if (port != 0) {
 					return port;
 				}
+			} catch (IOException ignored) {
 			}
-			catch (IOException ignored) {}
 		}
 
 		throw new RuntimeException("Could not find a free permitted port on the machine.");
@@ -145,6 +147,7 @@ public class NetUtils {
 	 * Returns an address in a normalized format for Akka.
 	 * When an IPv6 address is specified, it normalizes the IPv6 address to avoid
 	 * complications with the exact URL match policy of Akka.
+	 *
 	 * @param host The hostname, IPv4 or IPv6 address
 	 * @return host which will be normalized if it is an IPv6 address
 	 */
@@ -185,6 +188,7 @@ public class NetUtils {
 	 * Returns a valid address for Akka. It returns a String of format 'host:port'.
 	 * When an IPv6 address is specified, it normalizes the IPv6 address to avoid
 	 * complications with the exact URL match policy of Akka.
+	 *
 	 * @param host The hostname, IPv4 or IPv6 address
 	 * @param port The port
 	 * @return host:port where host will be normalized if it is an IPv6 address
@@ -205,14 +209,11 @@ public class NetUtils {
 	public static String ipAddressToUrlString(InetAddress address) {
 		if (address == null) {
 			throw new NullPointerException("address is null");
-		}
-		else if (address instanceof Inet4Address) {
+		} else if (address instanceof Inet4Address) {
 			return address.getHostAddress();
-		}
-		else if (address instanceof Inet6Address) {
+		} else if (address instanceof Inet6Address) {
 			return getIPv6UrlRepresentation((Inet6Address) address);
-		}
-		else {
+		} else {
 			throw new IllegalArgumentException("Unrecognized type of InetAddress: " + address);
 		}
 	}
@@ -222,7 +223,7 @@ public class NetUtils {
 	 * sure that IPv6 addresses have the proper formatting to be included in URLs.
 	 *
 	 * @param address The address to be included in the URL.
-	 * @param port The port for the URL address.
+	 * @param port    The port for the URL address.
 	 * @return The proper URL string encoded IP address and port.
 	 */
 	public static String ipAddressAndPortToUrlString(InetAddress address, int port) {
@@ -343,7 +344,7 @@ public class NetUtils {
 
 		UnionIterator<Integer> iterators = new UnionIterator<>();
 
-		for (String rawRange: ranges) {
+		for (String rawRange : ranges) {
 			Iterator<Integer> rangeIterator;
 			String range = rawRange.trim();
 			int dashIdx = range.indexOf('-');
@@ -369,6 +370,7 @@ public class NetUtils {
 				}
 				rangeIterator = new Iterator<Integer>() {
 					int i = start;
+
 					@Override
 					public boolean hasNext() {
 						return i <= end;
@@ -395,7 +397,7 @@ public class NetUtils {
 	 * Tries to allocate a socket from the given sets of ports.
 	 *
 	 * @param portsIterator A set of ports to choose from.
-	 * @param factory A factory for creating the SocketServer
+	 * @param factory       A factory for creating the SocketServer
 	 * @return null if no port was available or an allocated socket.
 	 */
 	public static ServerSocket createSocketFromPorts(Iterator<Integer> portsIterator, SocketFactory factory) {
@@ -417,6 +419,7 @@ public class NetUtils {
 
 	/**
 	 * Returns the wildcard address to listen on all interfaces.
+	 *
 	 * @return Either 0.0.0.0 or :: depending on the IP setup.
 	 */
 	public static String getWildcardIPAddress() {

@@ -33,7 +33,7 @@ import org.junit.Assert;
 
 public class PojoComparatorTest extends ComparatorTestBase<PojoContainingTuple> {
 	TypeInformation<PojoContainingTuple> type = TypeExtractor.getForClass(PojoContainingTuple.class);
-	
+
 	PojoContainingTuple[] data = new PojoContainingTuple[]{
 		new PojoContainingTuple(1, 1L, 1L),
 		new PojoContainingTuple(2, 2L, 2L),
@@ -45,7 +45,7 @@ public class PojoComparatorTest extends ComparatorTestBase<PojoContainingTuple> 
 	protected TypeComparator<PojoContainingTuple> createComparator(boolean ascending) {
 		Assert.assertTrue(type instanceof CompositeType);
 		CompositeType<PojoContainingTuple> cType = (CompositeType<PojoContainingTuple>) type;
-		ExpressionKeys<PojoContainingTuple> keys = new ExpressionKeys<PojoContainingTuple>(new String[] {"theTuple.*"}, cType);
+		ExpressionKeys<PojoContainingTuple> keys = new ExpressionKeys<PojoContainingTuple>(new String[]{"theTuple.*"}, cType);
 		boolean[] orders = new boolean[keys.getNumberOfKeyFields()];
 		Arrays.fill(orders, ascending);
 		return cType.createComparator(keys.computeLogicalKeyPositions(), orders, 0, new ExecutionConfig());

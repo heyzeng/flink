@@ -55,11 +55,11 @@ public class CollectionInputFormatTest {
 	private static class ElementType {
 		private final int id;
 
-		public ElementType(){
+		public ElementType() {
 			this(-1);
 		}
 
-		public ElementType(int id){
+		public ElementType(int id) {
 			this.id = id;
 		}
 
@@ -93,7 +93,7 @@ public class CollectionInputFormatTest {
 	@Test
 	public void testSerializability() {
 		try (ByteArrayOutputStream buffer = new ByteArrayOutputStream();
-			ObjectOutputStream out = new ObjectOutputStream(buffer)) {
+			 ObjectOutputStream out = new ObjectOutputStream(buffer)) {
 
 			Collection<ElementType> inputCollection = new ArrayList<ElementType>();
 			ElementType element1 = new ElementType(1);
@@ -107,7 +107,7 @@ public class CollectionInputFormatTest {
 			TypeInformation<ElementType> info = (TypeInformation<ElementType>) TypeExtractor.createTypeInfo(ElementType.class);
 
 			CollectionInputFormat<ElementType> inputFormat = new CollectionInputFormat<ElementType>(inputCollection,
-					info.createSerializer(new ExecutionConfig()));
+				info.createSerializer(new ExecutionConfig()));
 
 			out.writeObject(inputFormat);
 
@@ -125,14 +125,13 @@ public class CollectionInputFormatTest {
 			inputFormat.open(inputSplit);
 			result.open(inputSplit);
 
-			while (!inputFormat.reachedEnd() && !result.reachedEnd()){
+			while (!inputFormat.reachedEnd() && !result.reachedEnd()) {
 				ElementType expectedElement = inputFormat.nextRecord(null);
 				ElementType actualElement = result.nextRecord(null);
 
 				assertEquals(expectedElement, actualElement);
 			}
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 			fail(e.toString());
 		}
@@ -142,42 +141,42 @@ public class CollectionInputFormatTest {
 	@Test
 	public void testSerializabilityStrings() {
 
-		final String[] data = new String[] {
-				"To be, or not to be,--that is the question:--",
-				"Whether 'tis nobler in the mind to suffer",
-				"The slings and arrows of outrageous fortune",
-				"Or to take arms against a sea of troubles,",
-				"And by opposing end them?--To die,--to sleep,--",
-				"No more; and by a sleep to say we end",
-				"The heartache, and the thousand natural shocks",
-				"That flesh is heir to,--'tis a consummation",
-				"Devoutly to be wish'd. To die,--to sleep;--",
-				"To sleep! perchance to dream:--ay, there's the rub;",
-				"For in that sleep of death what dreams may come,",
-				"When we have shuffled off this mortal coil,",
-				"Must give us pause: there's the respect",
-				"That makes calamity of so long life;",
-				"For who would bear the whips and scorns of time,",
-				"The oppressor's wrong, the proud man's contumely,",
-				"The pangs of despis'd love, the law's delay,",
-				"The insolence of office, and the spurns",
-				"That patient merit of the unworthy takes,",
-				"When he himself might his quietus make",
-				"With a bare bodkin? who would these fardels bear,",
-				"To grunt and sweat under a weary life,",
-				"But that the dread of something after death,--",
-				"The undiscover'd country, from whose bourn",
-				"No traveller returns,--puzzles the will,",
-				"And makes us rather bear those ills we have",
-				"Than fly to others that we know not of?",
-				"Thus conscience does make cowards of us all;",
-				"And thus the native hue of resolution",
-				"Is sicklied o'er with the pale cast of thought;",
-				"And enterprises of great pith and moment,",
-				"With this regard, their currents turn awry,",
-				"And lose the name of action.--Soft you now!",
-				"The fair Ophelia!--Nymph, in thy orisons",
-				"Be all my sins remember'd."
+		final String[] data = new String[]{
+			"To be, or not to be,--that is the question:--",
+			"Whether 'tis nobler in the mind to suffer",
+			"The slings and arrows of outrageous fortune",
+			"Or to take arms against a sea of troubles,",
+			"And by opposing end them?--To die,--to sleep,--",
+			"No more; and by a sleep to say we end",
+			"The heartache, and the thousand natural shocks",
+			"That flesh is heir to,--'tis a consummation",
+			"Devoutly to be wish'd. To die,--to sleep;--",
+			"To sleep! perchance to dream:--ay, there's the rub;",
+			"For in that sleep of death what dreams may come,",
+			"When we have shuffled off this mortal coil,",
+			"Must give us pause: there's the respect",
+			"That makes calamity of so long life;",
+			"For who would bear the whips and scorns of time,",
+			"The oppressor's wrong, the proud man's contumely,",
+			"The pangs of despis'd love, the law's delay,",
+			"The insolence of office, and the spurns",
+			"That patient merit of the unworthy takes,",
+			"When he himself might his quietus make",
+			"With a bare bodkin? who would these fardels bear,",
+			"To grunt and sweat under a weary life,",
+			"But that the dread of something after death,--",
+			"The undiscover'd country, from whose bourn",
+			"No traveller returns,--puzzles the will,",
+			"And makes us rather bear those ills we have",
+			"Than fly to others that we know not of?",
+			"Thus conscience does make cowards of us all;",
+			"And thus the native hue of resolution",
+			"Is sicklied o'er with the pale cast of thought;",
+			"And enterprises of great pith and moment,",
+			"With this regard, their currents turn awry,",
+			"And lose the name of action.--Soft you now!",
+			"The fair Ophelia!--Nymph, in thy orisons",
+			"Be all my sins remember'd."
 		};
 
 		try {
@@ -207,8 +206,7 @@ public class CollectionInputFormatTest {
 			}
 
 			assertEquals(data.length, i);
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 			fail(e.getMessage());
 		}
@@ -217,23 +215,20 @@ public class CollectionInputFormatTest {
 	@Test
 	public void testSerializationFailure() {
 		try (ByteArrayOutputStream buffer = new ByteArrayOutputStream();
-			ObjectOutputStream out = new ObjectOutputStream(buffer)) {
+			 ObjectOutputStream out = new ObjectOutputStream(buffer)) {
 			// a mock serializer that fails when writing
 			CollectionInputFormat<ElementType> inFormat = new CollectionInputFormat<ElementType>(
-					Collections.singleton(new ElementType()), new TestSerializer(false, true));
+				Collections.singleton(new ElementType()), new TestSerializer(false, true));
 
 			try {
 				out.writeObject(inFormat);
 				fail("should throw an exception");
-			}
-			catch (TestException e) {
+			} catch (TestException e) {
 				// expected
-			}
-			catch (Exception e) {
+			} catch (Exception e) {
 				fail("Exception not properly forwarded");
 			}
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 			fail(e.getMessage());
 		}
@@ -242,10 +237,10 @@ public class CollectionInputFormatTest {
 	@Test
 	public void testDeserializationFailure() {
 		try (ByteArrayOutputStream buffer = new ByteArrayOutputStream();
-			ObjectOutputStream out = new ObjectOutputStream(buffer)) {
+			 ObjectOutputStream out = new ObjectOutputStream(buffer)) {
 			// a mock serializer that fails when writing
 			CollectionInputFormat<ElementType> inFormat = new CollectionInputFormat<ElementType>(
-					Collections.singleton(new ElementType()), new TestSerializer(true, false));
+				Collections.singleton(new ElementType()), new TestSerializer(true, false));
 
 			out.writeObject(inFormat);
 			out.close();
@@ -256,12 +251,10 @@ public class CollectionInputFormatTest {
 			try {
 				in.readObject();
 				fail("should throw an exception");
-			}
-			catch (Exception e) {
+			} catch (Exception e) {
 				assertTrue(e.getCause() instanceof TestException);
 			}
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 			fail(e.getMessage());
 		}
@@ -293,11 +286,11 @@ public class CollectionInputFormatTest {
 
 		assertEquals(
 			"[ElementType{id=0}, ElementType{id=1}, ElementType{id=2}, " +
-			"ElementType{id=3}, ElementType{id=4}, ElementType{id=5}, ...]",
+				"ElementType{id=3}, ElementType{id=4}, ElementType{id=5}, ...]",
 			inputFormat.toString());
 	}
 
-	private static class TestException extends IOException{
+	private static class TestException extends IOException {
 		private static final long serialVersionUID = 1L;
 	}
 

@@ -53,7 +53,7 @@ public class OperatorTest {
 	}
 
 	@Test
-	public void testConfigurationOfResource() throws Exception{
+	public void testConfigurationOfResource() throws Exception {
 		Operator operator = new MockOperator();
 
 		Method opMethod = Operator.class.getDeclaredMethod("setResources", ResourceSpec.class, ResourceSpec.class);

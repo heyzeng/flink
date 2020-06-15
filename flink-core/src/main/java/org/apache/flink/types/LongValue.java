@@ -44,8 +44,8 @@ public class LongValue implements NormalizableKey<LongValue>, ResettableValue<Lo
 	}
 
 	/**
-	 * Initializes the encapsulated long with the specified value. 
-	 * 
+	 * Initializes the encapsulated long with the specified value.
+	 *
 	 * @param value Initial value of the encapsulated long.
 	 */
 	public LongValue(final long value) {
@@ -54,7 +54,7 @@ public class LongValue implements NormalizableKey<LongValue>, ResettableValue<Lo
 
 	/**
 	 * Returns the value of the encapsulated long.
-	 * 
+	 *
 	 * @return The value of the encapsulated long.
 	 */
 	public long getValue() {
@@ -63,9 +63,8 @@ public class LongValue implements NormalizableKey<LongValue>, ResettableValue<Lo
 
 	/**
 	 * Sets the value of the encapsulated long to the specified value.
-	 * 
-	 * @param value
-	 *        The new value of the encapsulated long.
+	 *
+	 * @param value The new value of the encapsulated long.
 	 */
 	public void setValue(final long value) {
 		this.value = value;
@@ -75,7 +74,7 @@ public class LongValue implements NormalizableKey<LongValue>, ResettableValue<Lo
 	public void setValue(LongValue value) {
 		this.value = value.value;
 	}
-	
+
 	/*
 	 * (non-Javadoc)
 	 * @see java.lang.Object#toString()
@@ -86,7 +85,7 @@ public class LongValue implements NormalizableKey<LongValue>, ResettableValue<Lo
 	}
 
 	// --------------------------------------------------------------------------------------------
-	
+
 	@Override
 	public void read(final DataInputView in) throws IOException {
 		this.value = in.readLong();
@@ -98,7 +97,7 @@ public class LongValue implements NormalizableKey<LongValue>, ResettableValue<Lo
 	}
 
 	// --------------------------------------------------------------------------------------------
-	
+
 	@Override
 	public int compareTo(LongValue o) {
 		final long other = o.value;
@@ -121,13 +120,12 @@ public class LongValue implements NormalizableKey<LongValue>, ResettableValue<Lo
 		}
 		return false;
 	}
-	
+
 	// --------------------------------------------------------------------------------------------
-	
+
 
 	@Override
-	public int getMaxNormalizedKeyLen()
-	{
+	public int getMaxNormalizedKeyLen() {
 		return 8;
 	}
 
@@ -137,25 +135,22 @@ public class LongValue implements NormalizableKey<LongValue>, ResettableValue<Lo
 		if (len == 8) {
 			// default case, full normalized key
 			target.putLongBigEndian(offset, value - Long.MIN_VALUE);
-		}
-		else if (len <= 0) {
-		}
-		else if (len < 8) {
+		} else if (len <= 0) {
+		} else if (len < 8) {
 			long value = this.value - Long.MIN_VALUE;
 			for (int i = 0; len > 0; len--, i++) {
-				target.put(offset + i, (byte) (value >>> ((7-i)<<3)));
+				target.put(offset + i, (byte) (value >>> ((7 - i) << 3)));
 			}
-		}
-		else {
+		} else {
 			target.putLongBigEndian(offset, value - Long.MIN_VALUE);
 			for (int i = 8; i < len; i++) {
 				target.put(offset + i, (byte) 0);
 			}
 		}
 	}
-	
+
 	// --------------------------------------------------------------------------------------------
-	
+
 	@Override
 	public int getBinaryLength() {
 		return 8;

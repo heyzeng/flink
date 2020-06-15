@@ -28,29 +28,29 @@ import org.apache.flink.types.LongValue;
  * A test for the {@link LongValueSerializer}.
  */
 public class LongValueSerializerTest extends SerializerTestBase<LongValue> {
-	
+
 	@Override
 	protected TypeSerializer<LongValue> createSerializer() {
 		return new LongValueSerializer();
 	}
-	
+
 	@Override
 	protected int getLength() {
 		return 8;
 	}
-	
+
 	@Override
 	protected Class<LongValue> getTypeClass() {
 		return LongValue.class;
 	}
-	
+
 	@Override
 	protected LongValue[] getTestData() {
 		Random rnd = new Random(874597969123412341L);
 		long rndLong = rnd.nextLong();
-		
-		return new LongValue[] {new LongValue(0L), new LongValue(1L), new LongValue(-1L),
-							new LongValue(Long.MAX_VALUE), new LongValue(Long.MIN_VALUE),
-							new LongValue(rndLong), new LongValue(-rndLong)};
+
+		return new LongValue[]{new LongValue(0L), new LongValue(1L), new LongValue(-1L),
+			new LongValue(Long.MAX_VALUE), new LongValue(Long.MIN_VALUE),
+			new LongValue(rndLong), new LongValue(-rndLong)};
 	}
 }	

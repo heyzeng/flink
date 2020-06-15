@@ -30,14 +30,15 @@ public interface LaunchableTask {
 
 	/**
 	 * Get a representation of the task requirements as understood by Fenzo.
-     */
+	 */
 	TaskRequest taskRequest();
 
 	/**
 	 * Prepare to launch the task by producing a Mesos TaskInfo record.
-	 * @param slaveId the slave assigned to the task.
+	 *
+	 * @param slaveId    the slave assigned to the task.
 	 * @param allocation the resource allocation to take from.
-     * @return a TaskInfo.
-     */
+	 * @return a TaskInfo.
+	 */
 	Protos.TaskInfo launch(Protos.SlaveID slaveId, MesosResourceAllocation allocation);
 }

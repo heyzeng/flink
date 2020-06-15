@@ -27,7 +27,9 @@ import org.apache.calcite.runtime.Resources;
  */
 public interface ParserResource {
 
-	/** Resources. */
+	/**
+	 * Resources.
+	 */
 	ParserResource RESOURCE = Resources.create(ParserResource.class);
 
 	@Resources.BaseMessage("Multiple WATERMARK statements is not supported yet.")

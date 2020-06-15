@@ -278,7 +278,7 @@ public class PathTest {
 	public void testMakeQualified() throws IOException {
 		// make relative path qualified
 		String path = "test/test";
-		Path p  = new Path(path).makeQualified(FileSystem.getLocalFileSystem());
+		Path p = new Path(path).makeQualified(FileSystem.getLocalFileSystem());
 		URI u = p.toUri();
 
 		assertEquals("file", u.getScheme());

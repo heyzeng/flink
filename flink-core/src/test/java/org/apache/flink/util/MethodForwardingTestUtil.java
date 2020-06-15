@@ -41,10 +41,10 @@ public class MethodForwardingTestUtil {
 	 * This is a best effort automatic test for method forwarding between a delegate and its wrapper, where the wrapper
 	 * class is a subtype of the delegate. This ignores methods that are inherited from Object.
 	 *
-	 * @param delegateClass the class for the delegate.
+	 * @param delegateClass  the class for the delegate.
 	 * @param wrapperFactory factory that produces a wrapper from a delegate.
-	 * @param <D> type of the delegate
-	 * @param <W> type of the wrapper
+	 * @param <D>            type of the delegate
+	 * @param <W>            type of the wrapper
 	 */
 	public static <D, W> void testMethodForwarding(
 		Class<D> delegateClass,
@@ -57,12 +57,12 @@ public class MethodForwardingTestUtil {
 	 * This is a best effort automatic test for method forwarding between a delegate and its wrapper, where the wrapper
 	 * class is a subtype of the delegate. This ignores methods that are inherited from Object.
 	 *
-	 * @param delegateClass the class for the delegate.
-	 * @param wrapperFactory factory that produces a wrapper from a delegate.
+	 * @param delegateClass          the class for the delegate.
+	 * @param wrapperFactory         factory that produces a wrapper from a delegate.
 	 * @param delegateObjectSupplier supplier for the delegate object passed to the wrapper factory.
-	 * @param <D> type of the delegate
-	 * @param <W> type of the wrapper
-	 * @param <I> type of the object created as delegate, is a subtype of D.
+	 * @param <D>                    type of the delegate
+	 * @param <W>                    type of the wrapper
+	 * @param <I>                    type of the object created as delegate, is a subtype of D.
 	 */
 	public static <D, W, I extends D> void testMethodForwarding(
 		Class<D> delegateClass,
@@ -77,13 +77,13 @@ public class MethodForwardingTestUtil {
 	 * class is a subtype of the delegate. Methods can be remapped in case that the implementation does not call the
 	 * original method. Remapping to null skips the method. This ignores methods that are inherited from Object.
 	 *
-	 * @param delegateClass the class for the delegate.
-	 * @param wrapperFactory factory that produces a wrapper from a delegate.
+	 * @param delegateClass          the class for the delegate.
+	 * @param wrapperFactory         factory that produces a wrapper from a delegate.
 	 * @param delegateObjectSupplier supplier for the delegate object passed to the wrapper factory.
-	 * @param skipMethodSet set of methods to ignore.
-	 * @param <D> type of the delegate
-	 * @param <W> type of the wrapper
-	 * @param <I> type of the object created as delegate, is a subtype of D.
+	 * @param skipMethodSet          set of methods to ignore.
+	 * @param <D>                    type of the delegate
+	 * @param <W>                    type of the wrapper
+	 * @param <I>                    type of the object created as delegate, is a subtype of D.
 	 */
 	public static <D, W, I extends D> void testMethodForwarding(
 		Class<D> delegateClass,

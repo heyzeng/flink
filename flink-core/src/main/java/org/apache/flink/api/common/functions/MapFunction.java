@@ -49,7 +49,6 @@ public interface MapFunction<T, O> extends Function, Serializable {
 	 *
 	 * @param value The input value.
 	 * @return The transformed value
-	 *
 	 * @throws Exception This method may throw exceptions. Throwing an exception will cause the operation
 	 *                   to fail and may trigger recovery.
 	 */

@@ -48,7 +48,8 @@ under the License.
 			<outputDirectory>lib</outputDirectory>
 			<unpack>false</unpack>
 			<includes>
-				<include>org.apache.flink:flink-shaded-zookeeper-3:jar:${zookeeper.version}-${flink.shaded.version}</include>
+				<include>org.apache.flink:flink-shaded-zookeeper-3:jar:${zookeeper.version}-${flink.shaded.version}
+				</include>
 			</includes>
 			<outputFileNameMapping>flink-shaded-zookeeper-${zookeeper.version}.jar</outputFileNameMapping>
 		</dependencySet>
@@ -71,14 +72,18 @@ under the License.
 
 		<!-- Table/SQL Uber JAR -->
 		<file>
-			<source>../flink-table/flink-table-uber/target/flink-table-uber_${scala.binary.version}-${project.version}.jar</source>
+			<source>
+				../flink-table/flink-table-uber/target/flink-table-uber_${scala.binary.version}-${project.version}.jar
+			</source>
 			<outputDirectory>lib/</outputDirectory>
 			<destName>flink-table_${scala.binary.version}-${project.version}.jar</destName>
 			<fileMode>0644</fileMode>
 		</file>
 
 		<file>
-			<source>../flink-table/flink-table-uber-blink/target/flink-table-uber-blink_${scala.binary.version}-${project.version}.jar</source>
+			<source>
+				../flink-table/flink-table-uber-blink/target/flink-table-uber-blink_${scala.binary.version}-${project.version}.jar
+			</source>
 			<outputDirectory>lib/</outputDirectory>
 			<destName>flink-table-blink_${scala.binary.version}-${project.version}.jar</destName>
 			<fileMode>0644</fileMode>
@@ -161,7 +166,7 @@ under the License.
 			<outputDirectory>bin</outputDirectory>
 			<fileMode>0755</fileMode>
 		</fileSet>
-		
+
 		<!-- copy default configuration -->
 		<fileSet>
 			<directory>src/main/flink-bin/conf</directory>
@@ -248,7 +253,8 @@ under the License.
 			</excludes>
 		</fileSet>
 		<fileSet>
-			<directory>../flink-examples/flink-examples-build-helper/flink-examples-streaming-state-machine/target</directory>
+			<directory>../flink-examples/flink-examples-build-helper/flink-examples-streaming-state-machine/target
+			</directory>
 			<outputDirectory>examples/streaming</outputDirectory>
 			<fileMode>0644</fileMode>
 			<includes>

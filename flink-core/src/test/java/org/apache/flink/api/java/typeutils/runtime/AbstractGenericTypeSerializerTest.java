@@ -39,27 +39,27 @@ abstract public class AbstractGenericTypeSerializerTest {
 	@Test
 	public void testString() {
 		runTests("abc", "",
-				StringUtils.getRandomString(new Random(289347567856686223L), 10, 100),
-				StringUtils.getRandomString(new Random(289347567856686223L), 1000, 5000),
-				StringUtils.getRandomString(new Random(289347567856686223L), 30000, 35000),
-				StringUtils.getRandomString(new Random(289347567856686223L), 100 * 1024, 105 * 1024));
+			StringUtils.getRandomString(new Random(289347567856686223L), 10, 100),
+			StringUtils.getRandomString(new Random(289347567856686223L), 1000, 5000),
+			StringUtils.getRandomString(new Random(289347567856686223L), 30000, 35000),
+			StringUtils.getRandomString(new Random(289347567856686223L), 100 * 1024, 105 * 1024));
 	}
 
 	@Test
 	public void testSimpleTypesObjects() {
 		SimpleTypes a = new SimpleTypes();
 		SimpleTypes b = new SimpleTypes(rnd.nextInt(), rnd.nextLong(), (byte) rnd.nextInt(),
-				StringUtils.getRandomString(rnd, 10, 100), (short) rnd.nextInt(), rnd.nextDouble());
+			StringUtils.getRandomString(rnd, 10, 100), (short) rnd.nextInt(), rnd.nextDouble());
 		SimpleTypes c = new SimpleTypes(rnd.nextInt(), rnd.nextLong(), (byte) rnd.nextInt(),
-				StringUtils.getRandomString(rnd, 10, 100), (short) rnd.nextInt(), rnd.nextDouble());
+			StringUtils.getRandomString(rnd, 10, 100), (short) rnd.nextInt(), rnd.nextDouble());
 		SimpleTypes d = new SimpleTypes(rnd.nextInt(), rnd.nextLong(), (byte) rnd.nextInt(),
-				StringUtils.getRandomString(rnd, 10, 100), (short) rnd.nextInt(), rnd.nextDouble());
+			StringUtils.getRandomString(rnd, 10, 100), (short) rnd.nextInt(), rnd.nextDouble());
 		SimpleTypes e = new SimpleTypes(rnd.nextInt(), rnd.nextLong(), (byte) rnd.nextInt(),
-				StringUtils.getRandomString(rnd, 10, 100), (short) rnd.nextInt(), rnd.nextDouble());
+			StringUtils.getRandomString(rnd, 10, 100), (short) rnd.nextInt(), rnd.nextDouble());
 		SimpleTypes f = new SimpleTypes(rnd.nextInt(), rnd.nextLong(), (byte) rnd.nextInt(),
-				StringUtils.getRandomString(rnd, 10, 100), (short) rnd.nextInt(), rnd.nextDouble());
+			StringUtils.getRandomString(rnd, 10, 100), (short) rnd.nextInt(), rnd.nextDouble());
 		SimpleTypes g = new SimpleTypes(rnd.nextInt(), rnd.nextLong(), (byte) rnd.nextInt(),
-				StringUtils.getRandomString(rnd, 10, 100), (short) rnd.nextInt(), rnd.nextDouble());
+			StringUtils.getRandomString(rnd, 10, 100), (short) rnd.nextInt(), rnd.nextDouble());
 
 		runTests(a, b, c, d, e, f, g);
 	}
@@ -181,13 +181,21 @@ abstract public class AbstractGenericTypeSerializerTest {
 
 		@Override
 		public boolean equals(Object o) {
-			if (this == o) { return true; }
-			if (o == null || getClass() != o.getClass()) { return false; }
+			if (this == o) {
+				return true;
+			}
+			if (o == null || getClass() != o.getClass()) {
+				return false;
+			}
 
 			SimpleWithNestedInterfaces that = (SimpleWithNestedInterfaces) o;
 
-			if (!list.equals(that.list)) { return false; }
-			if (!map1.equals(that.map1)) { return false; }
+			if (!list.equals(that.list)) {
+				return false;
+			}
+			if (!map1.equals(that.map1)) {
+				return false;
+			}
 
 			return true;
 		}
@@ -229,11 +237,11 @@ abstract public class AbstractGenericTypeSerializerTest {
 				SimpleTypes other = (SimpleTypes) obj;
 
 				return other.iVal == this.iVal &&
-						other.lVal == this.lVal &&
-						other.bVal == this.bVal &&
-						other.sVal.equals(this.sVal) &&
-						other.rVal == this.rVal &&
-						other.dVal == this.dVal;
+					other.lVal == this.lVal &&
+					other.bVal == this.bVal &&
+					other.sVal.equals(this.sVal) &&
+					other.rVal == this.rVal &&
+					other.dVal == this.dVal;
 
 			} else {
 				return false;
@@ -355,7 +363,7 @@ abstract public class AbstractGenericTypeSerializerTest {
 			if (obj.getClass() == BookAuthor.class) {
 				BookAuthor other = (BookAuthor) obj;
 				return other.authorName.equals(this.authorName) && other.authorId == this.authorId &&
-						other.bookTitles.equals(this.bookTitles);
+					other.bookTitles.equals(this.bookTitles);
 			} else {
 				return false;
 			}

@@ -38,8 +38,8 @@ public abstract class SqlAlterTable extends SqlCall {
 	protected final SqlIdentifier tableIdentifier;
 
 	public SqlAlterTable(
-			SqlParserPos pos,
-			SqlIdentifier tableName) {
+		SqlParserPos pos,
+		SqlIdentifier tableName) {
 		super(pos);
 		this.tableIdentifier = requireNonNull(tableName, "tableName should not be null");
 	}

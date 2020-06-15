@@ -28,8 +28,8 @@ import org.apache.flink.types.LongValue;
 @PublicEvolving
 public class LongSumAggregator implements Aggregator<LongValue> {
 
-	private long sum;	// the sum
-	
+	private long sum;    // the sum
+
 	@Override
 	public LongValue getAggregate() {
 		return new LongValue(sum);
@@ -39,10 +39,10 @@ public class LongSumAggregator implements Aggregator<LongValue> {
 	public void aggregate(LongValue element) {
 		sum += element.getValue();
 	}
-	
+
 	/**
 	 * Adds the given value to the current aggregate.
-	 * 
+	 *
 	 * @param value The value to add to the aggregate.
 	 */
 	public void aggregate(long value) {

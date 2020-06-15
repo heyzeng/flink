@@ -44,9 +44,8 @@ public class FloatValue implements Comparable<FloatValue>, ResettableValue<Float
 
 	/**
 	 * Initializes the encapsulated float with the provided value.
-	 * 
-	 * @param value
-	 *        Initial value of the encapsulated float.
+	 *
+	 * @param value Initial value of the encapsulated float.
 	 */
 	public FloatValue(float value) {
 		this.value = value;
@@ -54,7 +53,7 @@ public class FloatValue implements Comparable<FloatValue>, ResettableValue<Float
 
 	/**
 	 * Returns the value of the encapsulated primitive float.
-	 * 
+	 *
 	 * @return the value of the encapsulated primitive float.
 	 */
 	public float getValue() {
@@ -63,9 +62,8 @@ public class FloatValue implements Comparable<FloatValue>, ResettableValue<Float
 
 	/**
 	 * Sets the value of the encapsulated primitive float.
-	 * 
-	 * @param value
-	 *        the new value of the encapsulated primitive float.
+	 *
+	 * @param value the new value of the encapsulated primitive float.
 	 */
 	public void setValue(float value) {
 		this.value = value;
@@ -77,7 +75,7 @@ public class FloatValue implements Comparable<FloatValue>, ResettableValue<Float
 	}
 
 	// --------------------------------------------------------------------------------------------
-	
+
 	@Override
 	public void read(DataInputView in) throws IOException {
 		this.value = in.readFloat();
@@ -87,14 +85,14 @@ public class FloatValue implements Comparable<FloatValue>, ResettableValue<Float
 	public void write(DataOutputView out) throws IOException {
 		out.writeFloat(this.value);
 	}
-	
+
 	// --------------------------------------------------------------------------------------------
 
 	@Override
 	public String toString() {
 		return String.valueOf(this.value);
 	}
-	
+
 	@Override
 	public int compareTo(FloatValue o) {
 		final double other = o.value;
@@ -116,7 +114,7 @@ public class FloatValue implements Comparable<FloatValue>, ResettableValue<Float
 	}
 
 	// --------------------------------------------------------------------------------------------
-	
+
 	@Override
 	public int getBinaryLength() {
 		return 4;

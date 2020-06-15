@@ -44,9 +44,8 @@ public class DoubleValue implements Comparable<DoubleValue>, ResettableValue<Dou
 
 	/**
 	 * Initializes the encapsulated double with the provided value.
-	 * 
-	 * @param value
-	 *        Initial value of the encapsulated double.
+	 *
+	 * @param value Initial value of the encapsulated double.
 	 */
 	public DoubleValue(double value) {
 		this.value = value;
@@ -54,7 +53,7 @@ public class DoubleValue implements Comparable<DoubleValue>, ResettableValue<Dou
 
 	/**
 	 * Returns the value of the encapsulated primitive double.
-	 * 
+	 *
 	 * @return the value of the encapsulated primitive double.
 	 */
 	public double getValue() {
@@ -63,9 +62,8 @@ public class DoubleValue implements Comparable<DoubleValue>, ResettableValue<Dou
 
 	/**
 	 * Sets the value of the encapsulated primitive double.
-	 * 
-	 * @param value
-	 *        the new value of the encapsulated primitive double.
+	 *
+	 * @param value the new value of the encapsulated primitive double.
 	 */
 	public void setValue(double value) {
 		this.value = value;
@@ -77,7 +75,7 @@ public class DoubleValue implements Comparable<DoubleValue>, ResettableValue<Dou
 	}
 
 	// --------------------------------------------------------------------------------------------
-	
+
 	@Override
 	public void read(DataInputView in) throws IOException {
 		this.value = in.readDouble();
@@ -87,14 +85,14 @@ public class DoubleValue implements Comparable<DoubleValue>, ResettableValue<Dou
 	public void write(DataOutputView out) throws IOException {
 		out.writeDouble(this.value);
 	}
-	
+
 	// --------------------------------------------------------------------------------------------
 
 	@Override
 	public String toString() {
 		return String.valueOf(this.value);
 	}
-	
+
 	@Override
 	public int compareTo(DoubleValue o) {
 		final double other = o.value;
@@ -117,7 +115,7 @@ public class DoubleValue implements Comparable<DoubleValue>, ResettableValue<Dou
 	}
 
 	// --------------------------------------------------------------------------------------------
-	
+
 	@Override
 	public int getBinaryLength() {
 		return 8;

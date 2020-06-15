@@ -41,7 +41,7 @@ public class PojoSubclassSerializerTest extends SerializerTestBase<PojoSubclassS
 		ExecutionConfig conf = new ExecutionConfig();
 		conf.registerPojoType(TestUserClass1.class);
 		TypeSerializer<TestUserClassBase> serializer = type.createSerializer(conf);
-		assert(serializer instanceof PojoSerializer);
+		assert (serializer instanceof PojoSerializer);
 		return serializer;
 	}
 
@@ -60,9 +60,9 @@ public class PojoSubclassSerializerTest extends SerializerTestBase<PojoSubclassS
 		Random rnd = new Random(874597969123412341L);
 
 		return new TestUserClassBase[]{
-				new TestUserClass1(rnd.nextInt(), "foo", rnd.nextLong()),
-				new TestUserClass2(rnd.nextInt(), "bar", rnd.nextFloat()),
-				new TestUserClass3(rnd.nextInt(), "bar", rnd.nextFloat())
+			new TestUserClass1(rnd.nextInt(), "foo", rnd.nextLong()),
+			new TestUserClass2(rnd.nextInt(), "bar", rnd.nextFloat()),
+			new TestUserClass3(rnd.nextInt(), "bar", rnd.nextFloat())
 		};
 
 	}

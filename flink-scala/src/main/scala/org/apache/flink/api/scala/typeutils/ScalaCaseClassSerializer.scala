@@ -30,16 +30,16 @@ import scala.collection.JavaConverters._
 import scala.reflect.runtime.universe
 
 /**
-  * This is a non macro-generated, concrete Scala case class serializer.
-  *
-  * <p>We need this serializer to replace the previously macro generated,
-  * anonymous [[CaseClassSerializer]].
-  */
+ * This is a non macro-generated, concrete Scala case class serializer.
+ *
+ * <p>We need this serializer to replace the previously macro generated,
+ * anonymous [[CaseClassSerializer]].
+ */
 @SerialVersionUID(1L)
 class ScalaCaseClassSerializer[T <: Product](
-    clazz: Class[T],
-    scalaFieldSerializers: Array[TypeSerializer[_]]
-    ) extends CaseClassSerializer[T](clazz, scalaFieldSerializers)
+                                              clazz: Class[T],
+                                              scalaFieldSerializers: Array[TypeSerializer[_]]
+                                            ) extends CaseClassSerializer[T](clazz, scalaFieldSerializers)
   with SelfResolvingTypeSerializer[T] {
 
   @transient
@@ -54,7 +54,7 @@ class ScalaCaseClassSerializer[T <: Product](
   }
 
   override def resolveSchemaCompatibilityViaRedirectingToNewSnapshotClass(
-      s: TypeSerializerConfigSnapshot[T]): TypeSerializerSchemaCompatibility[T] = {
+                                                                           s: TypeSerializerConfigSnapshot[T]): TypeSerializerSchemaCompatibility[T] = {
 
     require(s.isInstanceOf[TupleSerializerConfigSnapshot[_]])
 

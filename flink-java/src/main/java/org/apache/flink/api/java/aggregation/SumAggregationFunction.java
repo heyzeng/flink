@@ -28,6 +28,7 @@ import org.apache.flink.types.ShortValue;
 
 /**
  * Definitions of sum functions for different numerical types.
+ *
  * @param <T> type of elements being summed
  */
 @Internal
@@ -307,41 +308,29 @@ public abstract class SumAggregationFunction<T> extends AggregationFunction<T> {
 		public <T> AggregationFunction<T> createAggregationFunction(Class<T> type) {
 			if (type == Long.class) {
 				return (AggregationFunction<T>) new LongSumAgg();
-			}
-			else if (type == LongValue.class) {
+			} else if (type == LongValue.class) {
 				return (AggregationFunction<T>) new LongValueSumAgg();
-			}
-			else if (type == Integer.class) {
+			} else if (type == Integer.class) {
 				return (AggregationFunction<T>) new IntSumAgg();
-			}
-			else if (type == IntValue.class) {
+			} else if (type == IntValue.class) {
 				return (AggregationFunction<T>) new IntValueSumAgg();
-			}
-			else if (type == Double.class) {
+			} else if (type == Double.class) {
 				return (AggregationFunction<T>) new DoubleSumAgg();
-			}
-			else if (type == DoubleValue.class) {
+			} else if (type == DoubleValue.class) {
 				return (AggregationFunction<T>) new DoubleValueSumAgg();
-			}
-			else if (type == Float.class) {
+			} else if (type == Float.class) {
 				return (AggregationFunction<T>) new FloatSumAgg();
-			}
-			else if (type == FloatValue.class) {
+			} else if (type == FloatValue.class) {
 				return (AggregationFunction<T>) new FloatValueSumAgg();
-			}
-			else if (type == Byte.class) {
+			} else if (type == Byte.class) {
 				return (AggregationFunction<T>) new ByteSumAgg();
-			}
-			else if (type == ByteValue.class) {
+			} else if (type == ByteValue.class) {
 				return (AggregationFunction<T>) new ByteValueSumAgg();
-			}
-			else if (type == Short.class) {
+			} else if (type == Short.class) {
 				return (AggregationFunction<T>) new ShortSumAgg();
-			}
-			else if (type == ShortValue.class) {
+			} else if (type == ShortValue.class) {
 				return (AggregationFunction<T>) new ShortValueSumAgg();
-			}
-			else {
+			} else {
 				throw new UnsupportedAggregationTypeException("The type " + type.getName() +
 					" is currently not supported for built-in sum aggregations.");
 			}

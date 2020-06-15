@@ -22,23 +22,23 @@
 #  - nightly builds
 
 schedules:
-- cron: "0 0 * * *"
-  displayName: nightly build
-  branches:
-    include:
-    - master
-  always: true # run even if there were no changes to the mentioned branches
+  - cron: "0 0 * * *"
+    displayName: nightly build
+    branches:
+      include:
+        - master
+    always: true # run even if there were no changes to the mentioned branches
 
 trigger:
   branches:
     include:
-    - '*'  # must quote since "*" is a YAML reserved character; we want a string
+      - '*'  # must quote since "*" is a YAML reserved character; we want a string
 
 resources:
   containers:
-  # Container with Maven 3.2.5, SSL to have the same environment everywhere.
-  - container: flink-build-container
-    image: rmetzger/flink-ci:ubuntu-amd64-3528acd
+    # Container with Maven 3.2.5, SSL to have the same environment everywhere.
+    - container: flink-build-container
+      image: rmetzger/flink-ci:ubuntu-amd64-3528acd
 
 variables:
   MAVEN_CACHE_FOLDER: $(Pipeline.Workspace)/.m2/repository
@@ -118,11 +118,11 @@ stages:
           container: flink-build-container
           jdk: jdk8
       - job: docs_404_check # run on a MSFT provided machine
-        pool: 
+        pool:
           vmImage: 'ubuntu-16.04'
         steps:
-        - task: UseRubyVersion@0
-          inputs:
-            versionSpec: '= 2.4'
-            addToPath: true
-        - script: ./tools/travis/docs.sh
+          - task: UseRubyVersion@0
+            inputs:
+              versionSpec: '= 2.4'
+              addToPath: true
+          - script: ./tools/travis/docs.sh

@@ -129,7 +129,7 @@ public class SemanticPropertiesTranslationTest {
 		@SuppressWarnings("unchecked")
 		DataSet<Tuple3<Long, Long, Long>> input = env.fromElements(new Tuple3<Long, Long, Long>(3L, 2L, 1L));
 		input.map(new NoAnnotationMapper<Tuple3<Long, Long, Long>>()).withForwardedFields("0->1; 2")
-				.output(new DiscardingOutputFormat<Tuple3<Long, Long, Long>>());
+			.output(new DiscardingOutputFormat<Tuple3<Long, Long, Long>>());
 		Plan plan = env.createProgramPlan();
 
 		GenericDataSinkBase<?> sink = plan.getDataSinks().iterator().next();
@@ -152,7 +152,7 @@ public class SemanticPropertiesTranslationTest {
 		@SuppressWarnings("unchecked")
 		DataSet<Tuple3<Long, Long, Long>> input = env.fromElements(new Tuple3<Long, Long, Long>(3L, 2L, 1L));
 		input.map(new ReadSetMapper<Tuple3<Long, Long, Long>>()).withForwardedFields("0->1; 2")
-				.output(new DiscardingOutputFormat<Tuple3<Long, Long, Long>>());
+			.output(new DiscardingOutputFormat<Tuple3<Long, Long, Long>>());
 		Plan plan = env.createProgramPlan();
 
 		GenericDataSinkBase<?> sink = plan.getDataSinks().iterator().next();
@@ -175,7 +175,7 @@ public class SemanticPropertiesTranslationTest {
 		@SuppressWarnings("unchecked")
 		DataSet<Tuple3<Long, Long, Long>> input = env.fromElements(new Tuple3<Long, Long, Long>(3L, 2L, 1L));
 		input.map(new ReadSetMapper<Tuple3<Long, Long, Long>>()).withForwardedFields("0->1; 2")
-				.output(new DiscardingOutputFormat<Tuple3<Long, Long, Long>>());
+			.output(new DiscardingOutputFormat<Tuple3<Long, Long, Long>>());
 		Plan plan = env.createProgramPlan();
 
 		GenericDataSinkBase<?> sink = plan.getDataSinks().iterator().next();
@@ -261,7 +261,7 @@ public class SemanticPropertiesTranslationTest {
 		@SuppressWarnings("unchecked")
 		DataSet<Tuple2<Long, Double>> input2 = env.fromElements(new Tuple2<Long, Double>(3L, 3.1415));
 		input1.join(input2).where(0).equalTo(0).with(new ForwardedBothAnnotationJoin<Long, String, Long, Double>())
-				.output(new DiscardingOutputFormat<Tuple2<String, Double>>());
+			.output(new DiscardingOutputFormat<Tuple2<String, Double>>());
 		Plan plan = env.createProgramPlan();
 
 		GenericDataSinkBase<?> sink = plan.getDataSinks().iterator().next();
@@ -287,8 +287,8 @@ public class SemanticPropertiesTranslationTest {
 		@SuppressWarnings("unchecked")
 		DataSet<Tuple2<Long, Long>> input2 = env.fromElements(new Tuple2<Long, Long>(3L, 2L));
 		input1.join(input2).where(0).equalTo(0).with(new NoAnnotationJoin<Long>())
-				.withForwardedFieldsFirst("0->1; 1->2").withForwardedFieldsSecond("1->0")
-				.output(new DiscardingOutputFormat<Tuple3<Long, Long, Long>>());
+			.withForwardedFieldsFirst("0->1; 1->2").withForwardedFieldsSecond("1->0")
+			.output(new DiscardingOutputFormat<Tuple3<Long, Long, Long>>());
 		Plan plan = env.createProgramPlan();
 
 		GenericDataSinkBase<?> sink = plan.getDataSinks().iterator().next();
@@ -314,8 +314,8 @@ public class SemanticPropertiesTranslationTest {
 		@SuppressWarnings("unchecked")
 		DataSet<Tuple2<Long, Long>> input2 = env.fromElements(new Tuple2<Long, Long>(3L, 2L));
 		input1.join(input2).where(0).equalTo(0).with(new ReadSetJoin<Long>())
-				.withForwardedFieldsFirst("0->1; 1->2").withForwardedFieldsSecond("1->0")
-				.output(new DiscardingOutputFormat<Tuple3<Long, Long, Long>>());
+			.withForwardedFieldsFirst("0->1; 1->2").withForwardedFieldsSecond("1->0")
+			.output(new DiscardingOutputFormat<Tuple3<Long, Long, Long>>());
 		Plan plan = env.createProgramPlan();
 
 		GenericDataSinkBase<?> sink = plan.getDataSinks().iterator().next();
@@ -347,8 +347,8 @@ public class SemanticPropertiesTranslationTest {
 		@SuppressWarnings("unchecked")
 		DataSet<Tuple2<Long, Long>> input2 = env.fromElements(new Tuple2<Long, Long>(3L, 2L));
 		input1.join(input2).where(0).equalTo(0).with(new ForwardedFirstAnnotationJoin<Long>())
-				.withForwardedFieldsSecond("1")
-				.output(new DiscardingOutputFormat<Tuple3<Long, Long, Long>>());
+			.withForwardedFieldsSecond("1")
+			.output(new DiscardingOutputFormat<Tuple3<Long, Long, Long>>());
 		Plan plan = env.createProgramPlan();
 
 		GenericDataSinkBase<?> sink = plan.getDataSinks().iterator().next();
@@ -377,8 +377,8 @@ public class SemanticPropertiesTranslationTest {
 		@SuppressWarnings("unchecked")
 		DataSet<Tuple2<Long, Long>> input2 = env.fromElements(new Tuple2<Long, Long>(3L, 2L));
 		input1.join(input2).where(0).equalTo(0).with(new ForwardedSecondAnnotationJoin<Long>())
-				.withForwardedFieldsFirst("0->1")
-				.output(new DiscardingOutputFormat<Tuple3<Long, Long, Long>>());
+			.withForwardedFieldsFirst("0->1")
+			.output(new DiscardingOutputFormat<Tuple3<Long, Long, Long>>());
 		Plan plan = env.createProgramPlan();
 
 		GenericDataSinkBase<?> sink = plan.getDataSinks().iterator().next();
@@ -406,7 +406,7 @@ public class SemanticPropertiesTranslationTest {
 		@SuppressWarnings("unchecked")
 		DataSet<Tuple3<Long, Long, Long>> input2 = env.fromElements(new Tuple3<Long, Long, Long>(3L, 2L, 1L));
 		input1.join(input2).where(0).equalTo(0).with(new AllForwardedExceptJoin<Long>())
-				.output(new DiscardingOutputFormat<Tuple3<Long, Long, Long>>());
+			.output(new DiscardingOutputFormat<Tuple3<Long, Long, Long>>());
 		Plan plan = env.createProgramPlan();
 
 		GenericDataSinkBase<?> sink = plan.getDataSinks().iterator().next();
@@ -436,7 +436,7 @@ public class SemanticPropertiesTranslationTest {
 		@SuppressWarnings("unchecked")
 		DataSet<Tuple2<Long, Long>> input2 = env.fromElements(new Tuple2<Long, Long>(3L, 2L));
 		input1.join(input2).where(0).equalTo(0).with(new ReadSetJoin<Long>())
-				.output(new DiscardingOutputFormat<Tuple3<Long, Long, Long>>());
+			.output(new DiscardingOutputFormat<Tuple3<Long, Long, Long>>());
 		Plan plan = env.createProgramPlan();
 
 		GenericDataSinkBase<?> sink = plan.getDataSinks().iterator().next();
@@ -460,7 +460,7 @@ public class SemanticPropertiesTranslationTest {
 		@SuppressWarnings("unchecked")
 		DataSet<Tuple2<Long, Long>> input2 = env.fromElements(new Tuple2<Long, Long>(3L, 2L));
 		input1.join(input2).where(0).equalTo(0).with(new ForwardedFirstAnnotationJoin<Long>())
-				.withForwardedFieldsFirst("0->1");
+			.withForwardedFieldsFirst("0->1");
 	}
 
 	@Test(expected = SemanticProperties.InvalidSemanticAnnotationException.class)
@@ -472,7 +472,7 @@ public class SemanticPropertiesTranslationTest {
 		@SuppressWarnings("unchecked")
 		DataSet<Tuple2<Long, Long>> input2 = env.fromElements(new Tuple2<Long, Long>(3L, 2L));
 		input1.join(input2).where(0).equalTo(0).with(new ForwardedSecondAnnotationJoin<Long>())
-				.withForwardedFieldsSecond("0->1");
+			.withForwardedFieldsSecond("0->1");
 	}
 
 	@Test(expected = SemanticProperties.InvalidSemanticAnnotationException.class)
@@ -484,7 +484,7 @@ public class SemanticPropertiesTranslationTest {
 		@SuppressWarnings("unchecked")
 		DataSet<Tuple2<Long, Long>> input2 = env.fromElements(new Tuple2<Long, Long>(3L, 2L));
 		input1.join(input2).where(0).equalTo(0).with(new ForwardedBothAnnotationJoin<Long, Long, Long, Long>())
-				.withForwardedFieldsFirst("0->1;");
+			.withForwardedFieldsFirst("0->1;");
 	}
 
 	@Test(expected = SemanticProperties.InvalidSemanticAnnotationException.class)
@@ -496,7 +496,7 @@ public class SemanticPropertiesTranslationTest {
 		@SuppressWarnings("unchecked")
 		DataSet<Tuple2<Long, Long>> input2 = env.fromElements(new Tuple2<Long, Long>(3L, 2L));
 		input1.join(input2).where(0).equalTo(0).with(new ForwardedBothAnnotationJoin<Long, Long, Long, Long>())
-				.withForwardedFieldsSecond("0->1;");
+			.withForwardedFieldsSecond("0->1;");
 	}
 
 	@Test(expected = SemanticProperties.InvalidSemanticAnnotationException.class)
@@ -508,7 +508,7 @@ public class SemanticPropertiesTranslationTest {
 		@SuppressWarnings("unchecked")
 		DataSet<Tuple3<Long, Long, Long>> input2 = env.fromElements(new Tuple3<Long, Long, Long>(3L, 2L, 1L));
 		input1.join(input2).where(0).equalTo(0).with(new AllForwardedExceptJoin<Long>())
-				.withForwardedFieldsFirst("0->1;");
+			.withForwardedFieldsFirst("0->1;");
 	}
 
 	@Test(expected = SemanticProperties.InvalidSemanticAnnotationException.class)
@@ -520,7 +520,7 @@ public class SemanticPropertiesTranslationTest {
 		@SuppressWarnings("unchecked")
 		DataSet<Tuple3<Long, Long, Long>> input2 = env.fromElements(new Tuple3<Long, Long, Long>(3L, 2L, 1L));
 		input1.join(input2).where(0).equalTo(0).with(new AllForwardedExceptJoin<Long>())
-				.withForwardedFieldsSecond("0->1;");
+			.withForwardedFieldsSecond("0->1;");
 	}
 
 	// --------------------------------------------------------------------------------------------
@@ -528,7 +528,7 @@ public class SemanticPropertiesTranslationTest {
 	private static class NoAnnotationMapper<T> implements MapFunction<T, T> {
 
 		@Override
-		public T map(T value)  {
+		public T map(T value) {
 			return value;
 		}
 	}
@@ -537,7 +537,7 @@ public class SemanticPropertiesTranslationTest {
 	private static class WildcardForwardedMapper<T> implements MapFunction<T, T> {
 
 		@Override
-		public T map(T value)  {
+		public T map(T value) {
 			return value;
 		}
 	}
@@ -564,7 +564,7 @@ public class SemanticPropertiesTranslationTest {
 	private static class AllForwardedExceptMapper<T> implements MapFunction<T, T> {
 
 		@Override
-		public T map(T value)  {
+		public T map(T value) {
 			return value;
 		}
 	}
@@ -573,7 +573,7 @@ public class SemanticPropertiesTranslationTest {
 	private static class ReadSetMapper<T> implements MapFunction<T, T> {
 
 		@Override
-		public T map(T value)  {
+		public T map(T value) {
 			return value;
 		}
 	}

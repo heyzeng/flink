@@ -26,9 +26,9 @@ import org.scalatest.junit.JUnitSuiteLike
 class EnumValueSerializerTest extends TestLogger with JUnitSuiteLike {
 
   /**
-    * Tests that the snapshot configuration can be created and that the serializer
-    * is compatible when being called with the created serializer snapshot
-    */
+   * Tests that the snapshot configuration can be created and that the serializer
+   * is compatible when being called with the created serializer snapshot
+   */
   @Test
   def testEnumValueSerializerEnsureCompatibilityIdempotency() {
     val enumSerializer = new EnumValueSerializer(Letters)

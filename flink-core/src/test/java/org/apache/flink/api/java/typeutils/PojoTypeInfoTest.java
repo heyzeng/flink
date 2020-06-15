@@ -23,11 +23,11 @@ import org.apache.flink.api.common.typeutils.TypeInformationTestBase;
 /**
  * Test for {@link PojoTypeInfo}.
  */
-public class PojoTypeInfoTest extends TypeInformationTestBase<PojoTypeInfo<?>>{
+public class PojoTypeInfoTest extends TypeInformationTestBase<PojoTypeInfo<?>> {
 
 	@Override
 	protected PojoTypeInfo<?>[] getTestData() {
-		return new PojoTypeInfo<?>[] {
+		return new PojoTypeInfo<?>[]{
 			(PojoTypeInfo<?>) TypeExtractor.getForClass(TestPojo.class),
 			(PojoTypeInfo<?>) TypeExtractor.getForClass(AlternatePojo.class),
 			(PojoTypeInfo<?>) TypeExtractor.getForClass(PrimitivePojo.class),
@@ -36,18 +36,18 @@ public class PojoTypeInfoTest extends TypeInformationTestBase<PojoTypeInfo<?>>{
 	}
 
 	public static final class TestPojo {
-		
+
 		public int someInt;
 
 		private String aString;
-		
+
 		public Double[] doubleArray;
-		
-		
+
+
 		public void setaString(String aString) {
 			this.aString = aString;
 		}
-		
+
 		public String getaString() {
 			return aString;
 		}

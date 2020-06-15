@@ -46,5 +46,6 @@ public interface Plugin {
 	 *
 	 * @param config The configuration to apply to the plugin.
 	 */
-	default void configure(Configuration config) {}
+	default void configure(Configuration config) {
+	}
 }

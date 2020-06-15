@@ -81,7 +81,7 @@ public class MesosResourceAllocation {
 	 * Takes some amount of scalar resources (e.g. cpus, mem).
 	 *
 	 * @param amount the (approximate) amount to take from the available quantity.
-	 * @param roles the roles to accept
+	 * @param roles  the roles to accept
 	 */
 	public List<Protos.Resource> takeScalar(String resourceName, double amount, Set<String> roles) {
 		if (LOG.isDebugEnabled()) {
@@ -89,7 +89,7 @@ public class MesosResourceAllocation {
 		}
 
 		List<Protos.Resource> result = new ArrayList<>(1);
-		for (ListIterator<Protos.Resource> i = resources.listIterator(); i.hasNext();) {
+		for (ListIterator<Protos.Resource> i = resources.listIterator(); i.hasNext(); ) {
 			if (amount <= EPSILON) {
 				break;
 			}
@@ -115,8 +115,7 @@ public class MesosResourceAllocation {
 			double remaining = available.getScalar().getValue() - taken.getScalar().getValue();
 			if (remaining > EPSILON) {
 				i.set(available.toBuilder().setScalar(Protos.Value.Scalar.newBuilder().setValue(remaining)).build());
-			}
-			else {
+			} else {
 				i.remove();
 			}
 		}
@@ -131,7 +130,7 @@ public class MesosResourceAllocation {
 	 * Takes some amount of range resources (e.g. ports).
 	 *
 	 * @param amount the number of values to take from the available range(s).
-	 * @param roles the roles to accept
+	 * @param roles  the roles to accept
 	 */
 	public List<Protos.Resource> takeRanges(String resourceName, int amount, Set<String> roles) {
 		if (LOG.isDebugEnabled()) {
@@ -139,7 +138,7 @@ public class MesosResourceAllocation {
 		}
 
 		List<Protos.Resource> result = new ArrayList<>(1);
-		for (ListIterator<Protos.Resource> i = resources.listIterator(); i.hasNext();) {
+		for (ListIterator<Protos.Resource> i = resources.listIterator(); i.hasNext(); ) {
 			if (amount <= 0) {
 				break;
 			}
@@ -155,7 +154,7 @@ public class MesosResourceAllocation {
 
 			List<Protos.Value.Range> takenRanges = new ArrayList<>();
 			List<Protos.Value.Range> remainingRanges = new ArrayList<>(available.getRanges().getRangeList());
-			for (ListIterator<Protos.Value.Range> j = remainingRanges.listIterator(); j.hasNext();) {
+			for (ListIterator<Protos.Value.Range> j = remainingRanges.listIterator(); j.hasNext(); ) {
 				if (amount <= 0) {
 					break;
 				}
@@ -171,8 +170,7 @@ public class MesosResourceAllocation {
 				long remaining = availableRange.getEnd() - takenRange.getEnd();
 				if (remaining > 0) {
 					j.set(availableRange.toBuilder().setBegin(takenRange.getEnd() + 1).build());
-				}
-				else {
+				} else {
 					j.remove();
 				}
 			}
@@ -185,8 +183,7 @@ public class MesosResourceAllocation {
 			// keep remaining ranges (if any)
 			if (remainingRanges.size() > 0) {
 				i.set(available.toBuilder().setRanges(Protos.Value.Ranges.newBuilder().addAllRange(remainingRanges)).build());
-			}
-			else {
+			} else {
 				i.remove();
 			}
 		}

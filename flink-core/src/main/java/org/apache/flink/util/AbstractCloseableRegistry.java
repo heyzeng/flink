@@ -44,14 +44,20 @@ import java.util.Map;
 @Internal
 public abstract class AbstractCloseableRegistry<C extends Closeable, T> implements Closeable {
 
-	/** Lock that guards state of this registry. **/
+	/**
+	 * Lock that guards state of this registry.
+	 **/
 	private final Object lock;
 
-	/** Map from tracked Closeables to some associated meta data. */
+	/**
+	 * Map from tracked Closeables to some associated meta data.
+	 */
 	@GuardedBy("lock")
 	protected final Map<Closeable, T> closeableToRef;
 
-	/** Indicates if this registry is closed. */
+	/**
+	 * Indicates if this registry is closed.
+	 */
 	@GuardedBy("lock")
 	private boolean closed;
 

@@ -29,14 +29,14 @@ import org.apache.flink.core.memory.DataOutputView;
  */
 @Public
 public interface CopyableValue<T> extends Value {
-	
+
 	/**
 	 * Gets the length of the data type when it is serialized, in bytes.
-	 * 
+	 *
 	 * @return The length of the data type, or {@code -1}, if variable length.
 	 */
 	int getBinaryLength();
-	
+
 	/**
 	 * Performs a deep copy of this object into the {@code target} instance.
 	 *
@@ -46,7 +46,7 @@ public interface CopyableValue<T> extends Value {
 
 	/**
 	 * Performs a deep copy of this object into a new instance.
-	 *
+	 * <p>
 	 * This method is useful for generic user-defined functions to clone a
 	 * {@link CopyableValue} when storing multiple objects. With object reuse
 	 * a deep copy must be created and type erasure prevents calling new.
@@ -57,14 +57,13 @@ public interface CopyableValue<T> extends Value {
 
 	/**
 	 * Copies the next serialized instance from {@code source} to {@code target}.
-	 *
+	 * <p>
 	 * This method is equivalent to calling {@code IOReadableWritable.read(DataInputView)}
 	 * followed by {@code IOReadableWritable.write(DataOutputView)} but does not require
 	 * intermediate deserialization.
 	 *
 	 * @param source Data source for serialized instance.
 	 * @param target Data target for serialized instance.
-	 *
 	 * @see org.apache.flink.core.io.IOReadableWritable
 	 */
 	void copy(DataInputView source, DataOutputView target) throws IOException;

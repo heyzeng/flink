@@ -27,8 +27,8 @@ import org.apache.flink.mesos.scheduler.messages._
 import scala.concurrent.duration._
 
 /**
-  * Actively monitors the Mesos connection.
-  */
+ * Actively monitors the Mesos connection.
+ */
 class ConnectionMonitor() extends Actor with FSM[FsmState, Unit] {
 
   val LOG = Logger(getClass)
@@ -86,11 +86,14 @@ object ConnectionMonitor {
   // ------------------------------------------------------------------------
 
   /**
-    * An FSM state of the connection monitor.
-    */
+   * An FSM state of the connection monitor.
+   */
   sealed trait FsmState
+
   case object StoppedState extends FsmState
+
   case object ConnectingState extends FsmState
+
   case object ConnectedState extends FsmState
 
   // ------------------------------------------------------------------------
@@ -98,13 +101,13 @@ object ConnectionMonitor {
   // ------------------------------------------------------------------------
 
   /**
-    * Starts the connection monitor.
-    */
+   * Starts the connection monitor.
+   */
   case class Start()
 
   /**
-    * Stops the connection monitor.
-    */
+   * Stops the connection monitor.
+   */
   case class Stop()
 
   // ------------------------------------------------------------------------
@@ -112,15 +115,15 @@ object ConnectionMonitor {
   // ------------------------------------------------------------------------
 
   /**
-    * Creates the properties for the ConnectionMonitor actor.
-    *
-    * @param actorClass the connection monitor actor class
-    * @param flinkConfig the Flink configuration.
-    * @tparam T the type of the connection monitor actor class
-    * @return the Props to create the connection monitor
-    */
+   * Creates the properties for the ConnectionMonitor actor.
+   *
+   * @param actorClass  the connection monitor actor class
+   * @param flinkConfig the Flink configuration.
+   * @tparam T the type of the connection monitor actor class
+   * @return the Props to create the connection monitor
+   */
   def createActorProps[T <: ConnectionMonitor](actorClass: Class[T],
-     flinkConfig: Configuration): Props = {
+                                               flinkConfig: Configuration): Props = {
     Props.create(actorClass)
   }
 }

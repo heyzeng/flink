@@ -63,7 +63,7 @@ public class MapSerializerSnapshot<K, V> extends CompositeTypeSerializerSnapshot
 
 	@Override
 	protected TypeSerializer<?>[] getNestedSerializers(MapSerializer<K, V> outerSerializer) {
-		return new TypeSerializer<?>[] { outerSerializer.getKeySerializer(), outerSerializer.getValueSerializer() };
+		return new TypeSerializer<?>[]{outerSerializer.getKeySerializer(), outerSerializer.getValueSerializer()};
 	}
 
 	@SuppressWarnings("unchecked")

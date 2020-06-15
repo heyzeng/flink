@@ -33,14 +33,14 @@ import org.apache.flink.core.io.GenericInputSplit;
 public abstract class GenericInputFormat<OT> extends RichInputFormat<OT, GenericInputSplit> {
 
 	private static final long serialVersionUID = 1L;
-	
+
 	/**
 	 * The partition of this split.
 	 */
 	protected int partitionNumber;
 
 	// --------------------------------------------------------------------------------------------
-	
+
 	@Override
 	public void configure(Configuration parameters) {
 		//	nothing by default
@@ -65,7 +65,7 @@ public abstract class GenericInputFormat<OT> extends RichInputFormat<OT, Generic
 		}
 		return splits;
 	}
-	
+
 	@Override
 	public DefaultInputSplitAssigner getInputSplitAssigner(GenericInputSplit[] splits) {
 		return new DefaultInputSplitAssigner(splits);
@@ -79,5 +79,6 @@ public abstract class GenericInputFormat<OT> extends RichInputFormat<OT, Generic
 	}
 
 	@Override
-	public void close() throws IOException {}
+	public void close() throws IOException {
+	}
 }

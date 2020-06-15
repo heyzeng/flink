@@ -68,14 +68,11 @@ public abstract class NumericSummaryAggregator<T extends Number> implements Aggr
 
 		if (value == null) {
 			nullCount++;
-		}
-		else if (isNan(value)) {
+		} else if (isNan(value)) {
 			nanCount++;
-		}
-		else if (isInfinite(value)) {
+		} else if (isInfinite(value)) {
 			infinityCount++;
-		}
-		else {
+		} else {
 			nonMissingCount++;
 
 			min.aggregate(value);
@@ -109,8 +106,7 @@ public abstract class NumericSummaryAggregator<T extends Number> implements Aggr
 			sum = other.sum;
 			mean = other.mean;
 			m2 = other.m2;
-		}
-		else if (other.nonMissingCount != 0) {
+		} else if (other.nonMissingCount != 0) {
 			long combinedCount = nonMissingCount + other.nonMissingCount;
 
 			min.combine(other.min);

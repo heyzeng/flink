@@ -45,15 +45,15 @@ public class ConfigUtils {
 	 * is {@code null} or empty, then nothing is put in the configuration.
 	 *
 	 * @param configuration the configuration object to put the list in
-	 * @param key the {@link ConfigOption option} to serve as the key for the list in the configuration
-	 * @param values the array of values to put as value for the {@code key}
-	 * @param mapper the transformation function from {@code IN} to {@code OUT}.
+	 * @param key           the {@link ConfigOption option} to serve as the key for the list in the configuration
+	 * @param values        the array of values to put as value for the {@code key}
+	 * @param mapper        the transformation function from {@code IN} to {@code OUT}.
 	 */
 	public static <IN, OUT> void encodeArrayToConfig(
-			final WritableConfig configuration,
-			final ConfigOption<List<OUT>> key,
-			@Nullable final IN[] values,
-			final Function<IN, OUT> mapper) {
+		final WritableConfig configuration,
+		final ConfigOption<List<OUT>> key,
+		@Nullable final IN[] values,
+		final Function<IN, OUT> mapper) {
 
 		checkNotNull(configuration);
 		checkNotNull(key);
@@ -72,15 +72,15 @@ public class ConfigUtils {
 	 * is {@code null} or empty, then nothing is put in the configuration.
 	 *
 	 * @param configuration the configuration object to put the list in
-	 * @param key the {@link ConfigOption option} to serve as the key for the list in the configuration
-	 * @param values the collection of values to put as value for the {@code key}
-	 * @param mapper the transformation function from {@code IN} to {@code OUT}.
+	 * @param key           the {@link ConfigOption option} to serve as the key for the list in the configuration
+	 * @param values        the collection of values to put as value for the {@code key}
+	 * @param mapper        the transformation function from {@code IN} to {@code OUT}.
 	 */
 	public static <IN, OUT> void encodeCollectionToConfig(
-			final WritableConfig configuration,
-			final ConfigOption<List<OUT>> key,
-			@Nullable final Collection<IN> values,
-			final Function<IN, OUT> mapper) {
+		final WritableConfig configuration,
+		final ConfigOption<List<OUT>> key,
+		@Nullable final Collection<IN> values,
+		final Function<IN, OUT> mapper) {
 
 		checkNotNull(configuration);
 		checkNotNull(key);
@@ -91,10 +91,10 @@ public class ConfigUtils {
 		}
 
 		final List<OUT> encodedOption = values.stream()
-				.filter(Objects::nonNull)
-				.map(mapper)
-				.filter(Objects::nonNull)
-				.collect(Collectors.toCollection(ArrayList::new));
+			.filter(Objects::nonNull)
+			.map(mapper)
+			.filter(Objects::nonNull)
+			.collect(Collectors.toCollection(ArrayList::new));
 
 		if (!encodedOption.isEmpty()) {
 			configuration.set(key, encodedOption);
@@ -106,14 +106,14 @@ public class ConfigUtils {
 	 * and transforms it to a {@link List} of type {@code OUT} based on the provided {@code mapper} function.
 	 *
 	 * @param configuration the configuration object to get the value out of
-	 * @param key the {@link ConfigOption option} to serve as the key for the list in the configuration
-	 * @param mapper the transformation function from {@code IN} to {@code OUT}.
+	 * @param key           the {@link ConfigOption option} to serve as the key for the list in the configuration
+	 * @param mapper        the transformation function from {@code IN} to {@code OUT}.
 	 * @return the transformed values in a list of type {@code OUT}.
 	 */
 	public static <IN, OUT> List<OUT> decodeListFromConfig(
-			final ReadableConfig configuration,
-			final ConfigOption<List<IN>> key,
-			final Function<IN, OUT> mapper) {
+		final ReadableConfig configuration,
+		final ConfigOption<List<IN>> key,
+		final Function<IN, OUT> mapper) {
 
 		checkNotNull(configuration);
 		checkNotNull(key);
@@ -121,8 +121,8 @@ public class ConfigUtils {
 
 		final List<IN> encodedString = configuration.get(key);
 		return encodedString != null
-				? encodedString.stream().map(mapper).collect(Collectors.toList())
-				: Collections.emptyList();
+			? encodedString.stream().map(mapper).collect(Collectors.toList())
+			: Collections.emptyList();
 	}
 
 	private ConfigUtils() {

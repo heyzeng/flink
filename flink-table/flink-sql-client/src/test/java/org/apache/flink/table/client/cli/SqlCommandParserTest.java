@@ -81,29 +81,29 @@ public class SqlCommandParserTest {
 		testValidSqlCommand("DROP VIEW  MyTable", new SqlCommandCall(SqlCommand.DROP_VIEW, new String[]{"MyTable"}));
 		testInvalidSqlCommand("DROP VIEW");
 		testValidSqlCommand("SET", new SqlCommandCall(SqlCommand.SET));
-		testValidSqlCommand("SET x=y", new SqlCommandCall(SqlCommand.SET, new String[] {"x", "y"}));
-		testValidSqlCommand("SET    x  = y", new SqlCommandCall(SqlCommand.SET, new String[] {"x", " y"}));
+		testValidSqlCommand("SET x=y", new SqlCommandCall(SqlCommand.SET, new String[]{"x", "y"}));
+		testValidSqlCommand("SET    x  = y", new SqlCommandCall(SqlCommand.SET, new String[]{"x", " y"}));
 		testValidSqlCommand("reset;", new SqlCommandCall(SqlCommand.RESET));
-		testValidSqlCommand("source /my/file", new SqlCommandCall(SqlCommand.SOURCE, new String[] {"/my/file"}));
+		testValidSqlCommand("source /my/file", new SqlCommandCall(SqlCommand.SOURCE, new String[]{"/my/file"}));
 		testInvalidSqlCommand("source"); // missing path
 		testValidSqlCommand("create CATALOG c1",
 			new SqlCommandCall(SqlCommand.CREATE_CATALOG, new String[]{"create CATALOG c1"}));
 		testValidSqlCommand("create CATALOG c1 WITH ('k'='v')",
 			new SqlCommandCall(SqlCommand.CREATE_CATALOG, new String[]{"create CATALOG c1 WITH ('k'='v')"}));
 		testValidSqlCommand("USE CATALOG default", new SqlCommandCall(SqlCommand.USE_CATALOG, new String[]{"default"}));
-		testValidSqlCommand("use default", new SqlCommandCall(SqlCommand.USE, new String[] {"default"}));
+		testValidSqlCommand("use default", new SqlCommandCall(SqlCommand.USE, new String[]{"default"}));
 		testInvalidSqlCommand("use catalog");
 		testValidSqlCommand("create database db1",
-				new SqlCommandCall(SqlCommand.CREATE_DATABASE, new String[] {"create database db1"}));
+			new SqlCommandCall(SqlCommand.CREATE_DATABASE, new String[]{"create database db1"}));
 		testValidSqlCommand("drop database db1",
-				new SqlCommandCall(SqlCommand.DROP_DATABASE, new String[] {"drop database db1"}));
+			new SqlCommandCall(SqlCommand.DROP_DATABASE, new String[]{"drop database db1"}));
 		testValidSqlCommand("alter database db1 set ('k1' = 'a')",
-				new SqlCommandCall(SqlCommand.ALTER_DATABASE, new String[] {"alter database db1 set ('k1' = 'a')"}));
+			new SqlCommandCall(SqlCommand.ALTER_DATABASE, new String[]{"alter database db1 set ('k1' = 'a')"}));
 		testValidSqlCommand("alter table cat1.db1.tb1 rename to tb2",
-				new SqlCommandCall(SqlCommand.ALTER_TABLE, new String[]{"alter table cat1.db1.tb1 rename to tb2"}));
+			new SqlCommandCall(SqlCommand.ALTER_TABLE, new String[]{"alter table cat1.db1.tb1 rename to tb2"}));
 		testValidSqlCommand("alter table cat1.db1.tb1 set ('k1'='v1', 'k2'='v2')",
-				new SqlCommandCall(SqlCommand.ALTER_TABLE,
-						new String[]{"alter table cat1.db1.tb1 set ('k1'='v1', 'k2'='v2')"}));
+			new SqlCommandCall(SqlCommand.ALTER_TABLE,
+				new String[]{"alter table cat1.db1.tb1 set ('k1'='v1', 'k2'='v2')"}));
 		// Test create table.
 		testInvalidSqlCommand("CREATE tables");
 		testInvalidSqlCommand("CREATE   tables");
@@ -111,21 +111,21 @@ public class SqlCommandParserTest {
 		testValidSqlCommand("create Table hello(a int)", new SqlCommandCall(SqlCommand.CREATE_TABLE, new String[]{"create Table hello(a int)"}));
 		testValidSqlCommand("  CREATE TABLE hello(a int)", new SqlCommandCall(SqlCommand.CREATE_TABLE, new String[]{"CREATE TABLE hello(a int)"}));
 		testValidSqlCommand("CREATE TABLE T(\n"
-						+ "  a int,\n"
-						+ "  b varchar(20),\n"
-						+ "  c as my_udf(b),\n"
-						+ "  watermark for b as my_udf(b, 1) - INTERVAL '5' second\n"
-						+ ") WITH (\n"
-						+ "  'k1' = 'v1',\n"
-						+ "  'k2' = 'v2')\n",
-				new SqlCommandCall(SqlCommand.CREATE_TABLE, new String[] {"CREATE TABLE T(\n"
-						+ "  a int,\n"
-						+ "  b varchar(20),\n"
-						+ "  c as my_udf(b),\n"
-						+ "  watermark for b as my_udf(b, 1) - INTERVAL '5' second\n"
-						+ ") WITH (\n"
-						+ "  'k1' = 'v1',\n"
-						+ "  'k2' = 'v2')"}));
+				+ "  a int,\n"
+				+ "  b varchar(20),\n"
+				+ "  c as my_udf(b),\n"
+				+ "  watermark for b as my_udf(b, 1) - INTERVAL '5' second\n"
+				+ ") WITH (\n"
+				+ "  'k1' = 'v1',\n"
+				+ "  'k2' = 'v2')\n",
+			new SqlCommandCall(SqlCommand.CREATE_TABLE, new String[]{"CREATE TABLE T(\n"
+				+ "  a int,\n"
+				+ "  b varchar(20),\n"
+				+ "  c as my_udf(b),\n"
+				+ "  watermark for b as my_udf(b, 1) - INTERVAL '5' second\n"
+				+ ") WITH (\n"
+				+ "  'k1' = 'v1',\n"
+				+ "  'k2' = 'v2')"}));
 		// Test drop table.
 		testInvalidSqlCommand("DROP table");
 		testInvalidSqlCommand("DROP tables");

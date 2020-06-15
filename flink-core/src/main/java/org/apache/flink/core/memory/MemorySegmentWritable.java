@@ -33,8 +33,8 @@ public interface MemorySegmentWritable {
 	 * to the output.
 	 *
 	 * @param segment memory segment to copy the bytes from.
-	 * @param off the start offset in the memory segment.
-	 * @param len The number of bytes to copy.
+	 * @param off     the start offset in the memory segment.
+	 * @param len     The number of bytes to copy.
 	 * @throws IOException if an I/O error occurs.
 	 */
 	void write(MemorySegment segment, int off, int len) throws IOException;

@@ -40,10 +40,14 @@ public abstract class FileSystemBehaviorTestSuite {
 
 	private static final Random RND = new Random();
 
-	/** The cached file system instance. */
+	/**
+	 * The cached file system instance.
+	 */
 	private FileSystem fs;
 
-	/** The cached base path. */
+	/**
+	 * The cached base path.
+	 */
 	private Path basePath;
 
 	// ------------------------------------------------------------------------
@@ -159,8 +163,7 @@ public abstract class FileSystemBehaviorTestSuite {
 		try {
 			fs.mkdirs(file);
 			fail("should fail with an IOException");
-		}
-		catch (IOException e) {
+		} catch (IOException e) {
 			// good!
 		}
 	}
@@ -178,8 +181,7 @@ public abstract class FileSystemBehaviorTestSuite {
 		try {
 			fs.mkdirs(dirUnderFile);
 			fail("should fail with an IOException");
-		}
-		catch (IOException e) {
+		} catch (IOException e) {
 			// good!
 		}
 	}
@@ -194,7 +196,7 @@ public abstract class FileSystemBehaviorTestSuite {
 
 	private void createFile(Path file) throws IOException {
 		try (FSDataOutputStream out = fs.create(file, WriteMode.NO_OVERWRITE)) {
-			out.write(new byte[] {1, 2, 3, 4, 5, 6, 7, 8});
+			out.write(new byte[]{1, 2, 3, 4, 5, 6, 7, 8});
 		}
 	}
 
@@ -205,6 +207,6 @@ public abstract class FileSystemBehaviorTestSuite {
 
 	private void assumeNotObjectStore() {
 		Assume.assumeTrue("Test does not apply to object stores",
-				getFileSystemKind() != FileSystemKind.OBJECT_STORE);
+			getFileSystemKind() != FileSystemKind.OBJECT_STORE);
 	}
 }

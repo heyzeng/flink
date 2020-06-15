@@ -30,9 +30,8 @@ import org.apache.flink.api.java.DataSet;
  * This operator represents the application of a "mapPartition" function on a data set, and the
  * result data set produced by the function.
  *
- * @param <IN> The type of the data set consumed by the operator.
+ * @param <IN>  The type of the data set consumed by the operator.
  * @param <OUT> The type of the data set created by the operator.
- *
  * @see MapPartitionFunction
  */
 @Public

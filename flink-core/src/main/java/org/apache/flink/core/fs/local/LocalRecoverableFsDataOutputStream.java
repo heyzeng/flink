@@ -149,13 +149,11 @@ class LocalRecoverableFsDataOutputStream extends RecoverableFsDataOutputStream {
 			// in order to improve error messages
 			try {
 				Files.move(src.toPath(), dest.toPath(), StandardCopyOption.ATOMIC_MOVE);
-			}
-			catch (UnsupportedOperationException | AtomicMoveNotSupportedException e) {
+			} catch (UnsupportedOperationException | AtomicMoveNotSupportedException e) {
 				if (!src.renameTo(dest)) {
 					throw new IOException("Committing file failed, could not rename " + src + " -> " + dest);
 				}
-			}
-			catch (FileAlreadyExistsException e) {
+			} catch (FileAlreadyExistsException e) {
 				throw new IOException("Committing file failed. Target file already exists: " + dest);
 			}
 		}
@@ -179,8 +177,7 @@ class LocalRecoverableFsDataOutputStream extends RecoverableFsDataOutputStream {
 
 				// source still exists, so no renaming happened yet. do it!
 				Files.move(src.toPath(), dest.toPath(), StandardCopyOption.ATOMIC_MOVE);
-			}
-			else if (!dest.exists()) {
+			} else if (!dest.exists()) {
 				// neither exists - that can be a sign of
 				//   - (1) a serious problem (file system loss of data)
 				//   - (2) a recovery of a savepoint that is some time old and the users

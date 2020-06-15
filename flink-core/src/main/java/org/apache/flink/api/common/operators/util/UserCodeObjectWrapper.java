@@ -36,21 +36,21 @@ import static org.apache.flink.util.Preconditions.checkNotNull;
 @Internal
 public class UserCodeObjectWrapper<T> implements UserCodeWrapper<T> {
 	private static final long serialVersionUID = 1L;
-	
+
 	private final T userCodeObject;
-	
+
 	public UserCodeObjectWrapper(T userCodeObject) {
 		checkNotNull(userCodeObject, "The user code object may not be null.");
 		checkArgument(userCodeObject instanceof Serializable, "User code object is not serializable: " + userCodeObject.getClass().getName());
-		
+
 		this.userCodeObject = userCodeObject;
-		
+
 		// Remove non serializable objects from the user code object as well as from outer objects
 		Object current = userCodeObject;
 		try {
 			while (null != current) {
 				Object newCurrent = null;
-				
+
 				/**
 				 * Check if the usercode class has custom serialization methods.
 				 * (See http://docs.oracle.com/javase/7/docs/api/java/io/Serializable.html for details).
@@ -65,7 +65,7 @@ public class UserCodeObjectWrapper<T> implements UserCodeWrapper<T> {
 				} catch (Exception e) {
 					// we can ignore exceptions here.
 				}
-				
+
 				if (customSerializer != null && customDeserializer != null) {
 					hasCustomSerialization = true;
 				}
@@ -81,50 +81,48 @@ public class UserCodeObjectWrapper<T> implements UserCodeWrapper<T> {
 						// field not relevant for serialization
 						continue;
 					}
-					
+
 					Object fieldContents = f.get(current);
-					if (fieldContents != null &&  !(fieldContents instanceof Serializable)) {
-						throw new NonSerializableUserCodeException("User-defined object " + userCodeObject + " (" + 
+					if (fieldContents != null && !(fieldContents instanceof Serializable)) {
+						throw new NonSerializableUserCodeException("User-defined object " + userCodeObject + " (" +
 							userCodeObject.getClass().getName() + ") contains non-serializable field " +
 							f.getName() + " = " + f.get(current));
 					}
 				}
 				current = newCurrent;
 			}
-		}
-		catch (NonSerializableUserCodeException e) {
+		} catch (NonSerializableUserCodeException e) {
 			// forward those
 			throw e;
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			// should never happen, since we make the fields accessible.
 			// anyways, do not swallow the exception, but report it
 			throw new RuntimeException("Could not access the fields of the user defined class while checking for serializability.", e);
 		}
 	}
-	
+
 	@Override
 	public T getUserCodeObject(Class<? super T> superClass, ClassLoader cl) {
 		return userCodeObject;
 	}
-	
+
 	@Override
 	public T getUserCodeObject() {
 		return userCodeObject;
-		
+
 	}
 
 	@Override
 	public <A extends Annotation> A getUserCodeAnnotation(Class<A> annotationClass) {
 		return userCodeObject.getClass().getAnnotation(annotationClass);
 	}
-	
+
 	@SuppressWarnings("unchecked")
 	@Override
 	public Class<? extends T> getUserCodeClass() {
 		return (Class<? extends T>) userCodeObject.getClass();
 	}
-	
+
 	@Override
 	public boolean hasObject() {
 		return true;

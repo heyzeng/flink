@@ -87,7 +87,7 @@ public final class ScalaCaseClassSerializerSnapshot<T extends scala.Product>
 
 	@Override
 	protected ScalaCaseClassSerializer<T> createOuterSerializerWithNestedSerializers(TypeSerializer<?>[] nestedSerializers) {
-			checkState(type != null, "type can not be NULL");
+		checkState(type != null, "type can not be NULL");
 		return new ScalaCaseClassSerializer<>(type, nestedSerializers);
 	}
 

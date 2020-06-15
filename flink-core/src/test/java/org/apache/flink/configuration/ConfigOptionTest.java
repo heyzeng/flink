@@ -94,7 +94,7 @@ public class ConfigOptionTest extends TestLogger {
 
 	@Test
 	public void testDeprecationForDeprecatedKeys() {
-		String[] deprecatedKeys = new String[] { "deprecated1", "deprecated2" };
+		String[] deprecatedKeys = new String[]{"deprecated1", "deprecated2"};
 		final Set<String> expectedDeprecatedKeys = new HashSet<>(Arrays.asList(deprecatedKeys));
 
 		final ConfigOption<Integer> optionWithDeprecatedKeys = ConfigOptions

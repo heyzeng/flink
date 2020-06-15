@@ -47,48 +47,48 @@ public class TableApiIdentifierParsingTest {
 
 	@Parameterized.Parameters(name = "Parsing: {0}. Expected identifier: {1}")
 	public static Object[][] parameters() {
-		return new Object[][] {
-			new Object[] {
+		return new Object[][]{
+			new Object[]{
 				"array",
 				singletonList("array")
 			},
 
-			new Object[] {
+			new Object[]{
 				"table",
 				singletonList("table")
 			},
 
-			new Object[] {
+			new Object[]{
 				"cat.db.array",
 				asList("cat", "db", "array")
 			},
 
-			new Object[] {
+			new Object[]{
 				"`cat.db`.table",
 				asList("cat.db", "table")
 			},
 
-			new Object[] {
+			new Object[]{
 				"db.table",
 				asList("db", "table")
 			},
 
-			new Object[] {
+			new Object[]{
 				"`ta``ble`",
 				singletonList("ta`ble")
 			},
 
-			new Object[] {
+			new Object[]{
 				"`c``at`.`d``b`.`ta``ble`",
 				asList("c`at", "d`b", "ta`ble")
 			},
 
-			new Object[] {
+			new Object[]{
 				"db.U&\"" + ANTHROPOS_IN_GREEK_IN_UNICODE + "\" UESCAPE '#'",
 				asList("db", ANTHROPOS_IN_GREEK)
 			},
 
-			new Object[] {
+			new Object[]{
 				"db.ανθρωπος",
 				asList("db", ANTHROPOS_IN_GREEK)
 			}

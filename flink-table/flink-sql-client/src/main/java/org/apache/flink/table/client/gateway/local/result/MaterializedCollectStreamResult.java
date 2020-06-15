@@ -39,16 +39,24 @@ import java.util.Map;
  */
 public class MaterializedCollectStreamResult<C> extends CollectStreamResult<C> implements MaterializedResult<C> {
 
-	/** Maximum initial capacity of the materialized table. */
+	/**
+	 * Maximum initial capacity of the materialized table.
+	 */
 	public static final int MATERIALIZED_TABLE_MAX_INITIAL_CAPACITY = 1_000_000;
 
-	/** Maximum overcommitment of the materialized table. */
+	/**
+	 * Maximum overcommitment of the materialized table.
+	 */
 	public static final int MATERIALIZED_TABLE_MAX_OVERCOMMIT = 1_000_000;
 
-	/** Factor for the initial capacity of the materialized table. */
+	/**
+	 * Factor for the initial capacity of the materialized table.
+	 */
 	public static final double MATERIALIZED_TABLE_CAPACITY_FACTOR = 0.05;
 
-	/** Factor for cleaning up deleted rows in the materialized table. */
+	/**
+	 * Factor for cleaning up deleted rows in the materialized table.
+	 */
 	public static final double MATERIALIZED_TABLE_OVERCOMMIT_FACTOR = 0.01;
 
 	/**
@@ -57,7 +65,9 @@ public class MaterializedCollectStreamResult<C> extends CollectStreamResult<C> i
 	 */
 	private final int maxRowCount;
 
-	/** Threshold for cleaning up deleted rows in the materialized table. */
+	/**
+	 * Threshold for cleaning up deleted rows in the materialized table.
+	 */
 	private final int overcommitThreshold;
 
 	/**
@@ -73,30 +83,40 @@ public class MaterializedCollectStreamResult<C> extends CollectStreamResult<C> i
 	 */
 	private final Map<Row, Integer> rowPositionCache;
 
-	/** Current snapshot of the materialized table. */
+	/**
+	 * Current snapshot of the materialized table.
+	 */
 	private final List<Row> snapshot;
 
-	/** Counter for deleted rows to be deleted at the beginning of the materialized table. */
+	/**
+	 * Counter for deleted rows to be deleted at the beginning of the materialized table.
+	 */
 	private int validRowPosition;
 
-	/** Page count of the snapshot (always >= 1). */
+	/**
+	 * Page count of the snapshot (always >= 1).
+	 */
 	private int pageCount;
 
-	/** Page size of the snapshot (always >= 1). */
+	/**
+	 * Page size of the snapshot (always >= 1).
+	 */
 	private int pageSize;
 
-	/** Indicator that this is the last snapshot possible (EOS afterwards). */
+	/**
+	 * Indicator that this is the last snapshot possible (EOS afterwards).
+	 */
 	private boolean isLastSnapshot;
 
 	@VisibleForTesting
 	public MaterializedCollectStreamResult(
-			TableSchema tableSchema,
-			ExecutionConfig config,
-			InetAddress gatewayAddress,
-			int gatewayPort,
-			int maxRowCount,
-			int overcommitThreshold,
-			ClassLoader classLoader) {
+		TableSchema tableSchema,
+		ExecutionConfig config,
+		InetAddress gatewayAddress,
+		int gatewayPort,
+		int maxRowCount,
+		int overcommitThreshold,
+		ClassLoader classLoader) {
 		super(tableSchema, config, gatewayAddress, gatewayPort, classLoader);
 
 		if (maxRowCount <= 0) {
@@ -118,12 +138,12 @@ public class MaterializedCollectStreamResult<C> extends CollectStreamResult<C> i
 	}
 
 	public MaterializedCollectStreamResult(
-			TableSchema tableSchema,
-			ExecutionConfig config,
-			InetAddress gatewayAddress,
-			int gatewayPort,
-			int maxRowCount,
-			ClassLoader classLoader) {
+		TableSchema tableSchema,
+		ExecutionConfig config,
+		InetAddress gatewayAddress,
+		int gatewayPort,
+		int maxRowCount,
+		ClassLoader classLoader) {
 
 		this(
 			tableSchema,

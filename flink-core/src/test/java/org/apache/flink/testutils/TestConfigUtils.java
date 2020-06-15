@@ -30,21 +30,21 @@ import org.apache.flink.configuration.GlobalConfiguration;
  * Utility class to help test the Flink configuration.
  */
 public final class TestConfigUtils {
-	
+
 	public static Configuration loadGlobalConf(String[] keys, String[] values, File tempDir) throws IOException {
 		return loadGlobalConf(getConfAsString(keys, values), tempDir);
 	}
-	
+
 	public static Configuration loadGlobalConf(String contents, File tempDir) throws IOException {
 		File confDir;
 		do {
 			confDir = new File(tempDir, TestFileUtils.randomFileName());
 		} while (confDir.exists());
-		
+
 		try {
 			confDir.mkdirs();
 			final File confFile = new File(confDir, GlobalConfiguration.FLINK_CONF_FILENAME);
-		
+
 			try {
 				BufferedWriter writer = new BufferedWriter(new FileWriter(confFile));
 				try {
@@ -56,8 +56,7 @@ public final class TestConfigUtils {
 			} finally {
 				confFile.delete();
 			}
-		}
-		finally {
+		} finally {
 			confDir.delete();
 		}
 	}
@@ -80,6 +79,7 @@ public final class TestConfigUtils {
 
 	// ------------------------------------------------------------------------
 
-	private TestConfigUtils() {}
+	private TestConfigUtils() {
+	}
 
 }

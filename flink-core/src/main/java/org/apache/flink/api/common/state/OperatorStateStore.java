@@ -46,9 +46,8 @@ public interface OperatorStateStore {
 	 *
 	 * @param stateDescriptor The descriptor for this state, providing a name, a serializer for the keys and one for the
 	 *                        values.
-	 * @param <K> The type of the keys in the broadcast state.
-	 * @param <V> The type of the values in the broadcast state.
-	 *
+	 * @param <K>             The type of the keys in the broadcast state.
+	 * @param <V>             The type of the values in the broadcast state.
 	 * @return The Broadcast State
 	 */
 	<K, V> BroadcastState<K, V> getBroadcastState(MapStateDescriptor<K, V> stateDescriptor) throws Exception;
@@ -69,8 +68,7 @@ public interface OperatorStateStore {
 	 * before the restore) is evenly divided into as many sublists as there are parallel operators.
 	 *
 	 * @param stateDescriptor The descriptor for this state, providing a name and serializer.
-	 * @param <S> The generic type of the state
-	 *
+	 * @param <S>             The generic type of the state
 	 * @return A list for all state partitions.
 	 */
 	<S> ListState<S> getListState(ListStateDescriptor<S> stateDescriptor) throws Exception;
@@ -92,8 +90,7 @@ public interface OperatorStateStore {
 	 * items before the restore.
 	 *
 	 * @param stateDescriptor The descriptor for this state, providing a name and serializer.
-	 * @param <S> The generic type of the state
-	 *
+	 * @param <S>             The generic type of the state
 	 * @return A list for all state partitions.
 	 */
 	<S> ListState<S> getUnionListState(ListStateDescriptor<S> stateDescriptor) throws Exception;
@@ -123,12 +120,10 @@ public interface OperatorStateStore {
 	 * <p>The items in the list are repartitionable by the system in case of changed operator parallelism.
 	 *
 	 * @param stateDescriptor The descriptor for this state, providing a name and serializer.
-	 * @param <S> The generic type of the state
-	 *
+	 * @param <S>             The generic type of the state
 	 * @return A list for all state partitions.
-	 *
 	 * @deprecated since 1.3.0. This was deprecated as part of a refinement to the function names.
-	 *             Please use {@link #getListState(ListStateDescriptor)} instead.
+	 * Please use {@link #getListState(ListStateDescriptor)} instead.
 	 */
 	@Deprecated
 	<S> ListState<S> getOperatorState(ListStateDescriptor<S> stateDescriptor) throws Exception;
@@ -142,9 +137,8 @@ public interface OperatorStateStore {
 	 *
 	 * @param stateName The name of state to create
 	 * @return A list state using Java serialization to serialize state objects.
-	 *
 	 * @deprecated since 1.3.0. Using Java serialization for persisting state is not encouraged.
-	 *             Please use {@link #getListState(ListStateDescriptor)} instead.
+	 * Please use {@link #getListState(ListStateDescriptor)} instead.
 	 */
 	@Deprecated
 	<T extends Serializable> ListState<T> getSerializableListState(String stateName) throws Exception;

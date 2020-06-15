@@ -42,9 +42,9 @@ public final class DelegatingConfiguration extends Configuration {
 
 	private static final long serialVersionUID = 1L;
 
-	private final Configuration backingConfig;		// the configuration actually storing the data
+	private final Configuration backingConfig;        // the configuration actually storing the data
 
-	private String prefix;							// the prefix key by which keys for this config are marked
+	private String prefix;                            // the prefix key by which keys for this config are marked
 
 	// --------------------------------------------------------------------------------------------
 
@@ -61,7 +61,7 @@ public final class DelegatingConfiguration extends Configuration {
 	 * configuration using the specifies key prefix.
 	 *
 	 * @param backingConfig The configuration holding the actual config data.
-	 * @param prefix The prefix prepended to all config keys.
+	 * @param prefix        The prefix prepended to all config keys.
 	 */
 	public DelegatingConfiguration(Configuration backingConfig, String prefix) {
 		this.backingConfig = Preconditions.checkNotNull(backingConfig);
@@ -77,12 +77,12 @@ public final class DelegatingConfiguration extends Configuration {
 
 	@Override
 	public String getString(ConfigOption<String> configOption) {
-		return  this.backingConfig.getString(prefixOption(configOption, prefix));
+		return this.backingConfig.getString(prefixOption(configOption, prefix));
 	}
 
 	@Override
 	public String getString(ConfigOption<String> configOption, String overrideDefault) {
-		return  this.backingConfig.getString(prefixOption(configOption, prefix), overrideDefault);
+		return this.backingConfig.getString(prefixOption(configOption, prefix), overrideDefault);
 	}
 
 	@Override
@@ -112,7 +112,7 @@ public final class DelegatingConfiguration extends Configuration {
 
 	@Override
 	public int getInteger(ConfigOption<Integer> configOption) {
-		return  this.backingConfig.getInteger(prefixOption(configOption, prefix));
+		return this.backingConfig.getInteger(prefixOption(configOption, prefix));
 	}
 
 	@Override
@@ -137,7 +137,7 @@ public final class DelegatingConfiguration extends Configuration {
 
 	@Override
 	public long getLong(ConfigOption<Long> configOption) {
-		return  this.backingConfig.getLong(prefixOption(configOption, prefix));
+		return this.backingConfig.getLong(prefixOption(configOption, prefix));
 	}
 
 	@Override
@@ -162,7 +162,7 @@ public final class DelegatingConfiguration extends Configuration {
 
 	@Override
 	public boolean getBoolean(ConfigOption<Boolean> configOption) {
-		return  this.backingConfig.getBoolean(prefixOption(configOption, prefix));
+		return this.backingConfig.getBoolean(prefixOption(configOption, prefix));
 	}
 
 	@Override
@@ -257,8 +257,8 @@ public final class DelegatingConfiguration extends Configuration {
 			for (Map.Entry<String, Object> entry : backingConfig.confData.entrySet()) {
 				if (entry.getKey().startsWith(prefix)) {
 					String keyWithoutPrefix =
-							entry.getKey().substring(prefix.length(),
-									entry.getKey().length());
+						entry.getKey().substring(prefix.length(),
+							entry.getKey().length());
 
 					props.put(keyWithoutPrefix, entry.getValue());
 				} else {
@@ -319,7 +319,7 @@ public final class DelegatingConfiguration extends Configuration {
 	}
 
 	@Override
-	public <T> boolean removeConfig(ConfigOption<T> configOption){
+	public <T> boolean removeConfig(ConfigOption<T> configOption) {
 		return backingConfig.removeConfig(configOption);
 	}
 

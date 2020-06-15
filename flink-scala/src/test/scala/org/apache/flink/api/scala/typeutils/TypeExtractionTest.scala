@@ -53,6 +53,7 @@ class TypeExtractionTest extends TestLogger with JUnitSuiteLike {
 }
 
 object TypeExtractionTest {
+
   class CustomTypeInputFormat extends FileInputFormat[String] with ResultTypeQueryable[Long] {
 
     override def getProducedType: TypeInformation[Long] =
@@ -64,8 +65,9 @@ object TypeExtractionTest {
   }
 
   class CustomBeanClass(
-      @BeanProperty var prop: Int,
-      var prop2: Long) {
+                         @BeanProperty var prop: Int,
+                         var prop2: Long) {
     def this() = this(0, 0L)
   }
+
 }

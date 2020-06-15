@@ -147,10 +147,8 @@ public class YarnFileStageTestS3ITCase extends TestLogger {
 	 * Verifies that nested directories are properly copied with to the given S3 path (using the
 	 * appropriate file system) during resource uploads for YARN.
 	 *
-	 * @param scheme
-	 * 		file system scheme
-	 * @param pathSuffix
-	 * 		test path suffix which will be the test's target path
+	 * @param scheme     file system scheme
+	 * @param pathSuffix test path suffix which will be the test's target path
 	 */
 	private void testRecursiveUploadForYarn(String scheme, String pathSuffix) throws Exception {
 		++numRecursiveUploadTests;

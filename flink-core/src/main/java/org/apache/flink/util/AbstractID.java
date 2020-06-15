@@ -32,21 +32,31 @@ public class AbstractID implements Comparable<AbstractID>, java.io.Serializable 
 
 	private static final Random RND = new Random();
 
-	/** The size of a long in bytes. */
+	/**
+	 * The size of a long in bytes.
+	 */
 	private static final int SIZE_OF_LONG = 8;
 
-	/** The size of the ID in byte. */
+	/**
+	 * The size of the ID in byte.
+	 */
 	public static final int SIZE = 2 * SIZE_OF_LONG;
 
 	// ------------------------------------------------------------------------
 
-	/** The upper part of the actual ID. */
+	/**
+	 * The upper part of the actual ID.
+	 */
 	protected final long upperPart;
 
-	/** The lower part of the actual ID. */
+	/**
+	 * The lower part of the actual ID.
+	 */
 	protected final long lowerPart;
 
-	/** The memoized value returned by toString(). */
+	/**
+	 * The memoized value returned by toString().
+	 */
 	private transient String hexString;
 
 	// --------------------------------------------------------------------------------------------
@@ -161,10 +171,10 @@ public class AbstractID implements Comparable<AbstractID>, java.io.Serializable 
 
 	@Override
 	public int hashCode() {
-		return ((int)  this.lowerPart) ^
-				((int) (this.lowerPart >>> 32)) ^
-				((int)  this.upperPart) ^
-				((int) (this.upperPart >>> 32));
+		return ((int) this.lowerPart) ^
+			((int) (this.lowerPart >>> 32)) ^
+			((int) this.upperPart) ^
+			((int) (this.upperPart >>> 32));
 	}
 
 	@Override
@@ -186,7 +196,7 @@ public class AbstractID implements Comparable<AbstractID>, java.io.Serializable 
 	/**
 	 * Converts the given byte array to a long.
 	 *
-	 * @param ba the byte array to be converted
+	 * @param ba     the byte array to be converted
 	 * @param offset the offset indicating at which byte inside the array the conversion shall begin
 	 * @return the long variable
 	 */
@@ -203,8 +213,8 @@ public class AbstractID implements Comparable<AbstractID>, java.io.Serializable 
 	/**
 	 * Converts a long to a byte array.
 	 *
-	 * @param l the long variable to be converted
-	 * @param ba the byte array to store the result the of the conversion
+	 * @param l      the long variable to be converted
+	 * @param ba     the byte array to store the result the of the conversion
 	 * @param offset offset indicating at what position inside the byte array the result of the conversion shall be stored
 	 */
 	private static void longToByteArray(long l, byte[] ba, int offset) {

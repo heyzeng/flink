@@ -70,8 +70,8 @@ public abstract class TwoInputUdfOperator<IN1, IN2, OUT, O extends TwoInputUdfOp
 	 * Creates a new operators with the two given data sets as inputs. The given result type
 	 * describes the data type of the elements in the data set produced by the operator.
 	 *
-	 * @param input1 The data set for the first input.
-	 * @param input2 The data set for the second input.
+	 * @param input1     The data set for the first input.
+	 * @param input2     The data set for the second input.
 	 * @param resultType The type of the elements in the resulting data set.
 	 */
 	protected TwoInputUdfOperator(DataSet<IN1> input1, DataSet<IN2> input2, TypeInformation<OUT> resultType) {
@@ -145,7 +145,6 @@ public abstract class TwoInputUdfOperator<IN1, IN2, OUT, O extends TwoInputUdfOp
 	 *
 	 * @param forwardedFieldsFirst A list of forwarded field expressions for the first input of the function.
 	 * @return This operator with annotated forwarded field information.
-	 *
 	 * @see org.apache.flink.api.java.functions.FunctionAnnotation
 	 * @see org.apache.flink.api.java.functions.FunctionAnnotation.ForwardedFieldsFirst
 	 */
@@ -159,16 +158,16 @@ public abstract class TwoInputUdfOperator<IN1, IN2, OUT, O extends TwoInputUdfOp
 		if (this.udfSemantics == null || this.analyzedUdfSemantics) {
 			setSemanticProperties(new DualInputSemanticProperties());
 			SemanticPropUtil.getSemanticPropsDualFromString(this.udfSemantics, forwardedFieldsFirst, null,
-					null, null, null, null, getInput1Type(), getInput2Type(), getResultType());
+				null, null, null, null, getInput1Type(), getInput2Type(), getResultType());
 		} else {
 			if (this.udfWithForwardedFieldsFirstAnnotation(getFunction().getClass())) {
 				// refuse semantic information as it would override the function annotation
 				throw new SemanticProperties.InvalidSemanticAnnotationException("Forwarded field information " +
-						"has already been added by a function annotation for the first input of this operator. " +
-						"Cannot overwrite function annotations.");
+					"has already been added by a function annotation for the first input of this operator. " +
+					"Cannot overwrite function annotations.");
 			} else {
 				SemanticPropUtil.getSemanticPropsDualFromString(this.udfSemantics, forwardedFieldsFirst, null,
-						null, null, null, null, getInput1Type(), getInput2Type(), getResultType());
+					null, null, null, null, getInput1Type(), getInput2Type(), getResultType());
 			}
 		}
 
@@ -208,7 +207,6 @@ public abstract class TwoInputUdfOperator<IN1, IN2, OUT, O extends TwoInputUdfOp
 	 *
 	 * @param forwardedFieldsSecond A list of forwarded field expressions for the second input of the function.
 	 * @return This operator with annotated forwarded field information.
-	 *
 	 * @see org.apache.flink.api.java.functions.FunctionAnnotation
 	 * @see org.apache.flink.api.java.functions.FunctionAnnotation.ForwardedFieldsSecond
 	 */
@@ -222,16 +220,16 @@ public abstract class TwoInputUdfOperator<IN1, IN2, OUT, O extends TwoInputUdfOp
 		if (this.udfSemantics == null || this.analyzedUdfSemantics) {
 			setSemanticProperties(new DualInputSemanticProperties());
 			SemanticPropUtil.getSemanticPropsDualFromString(this.udfSemantics, null, forwardedFieldsSecond,
-					null, null, null, null, getInput1Type(), getInput2Type(), getResultType());
+				null, null, null, null, getInput1Type(), getInput2Type(), getResultType());
 		} else {
 			if (udfWithForwardedFieldsSecondAnnotation(getFunction().getClass())) {
 				// refuse semantic information as it would override the function annotation
 				throw new SemanticProperties.InvalidSemanticAnnotationException("Forwarded field information " +
-						"has already been added by a function annotation for the second input of this operator. " +
-						"Cannot overwrite function annotations.");
+					"has already been added by a function annotation for the second input of this operator. " +
+					"Cannot overwrite function annotations.");
 			} else {
 				SemanticPropUtil.getSemanticPropsDualFromString(this.udfSemantics, null, forwardedFieldsSecond,
-						null, null, null, null, getInput1Type(), getInput2Type(), getResultType());
+					null, null, null, null, getInput1Type(), getInput2Type(), getResultType());
 			}
 		}
 
@@ -269,11 +267,10 @@ public abstract class TwoInputUdfOperator<IN1, IN2, OUT, O extends TwoInputUdfOp
 
 		try {
 			return returns(TypeInformation.of(typeClass));
-		}
-		catch (InvalidTypesException e) {
+		} catch (InvalidTypesException e) {
 			throw new InvalidTypesException("Cannot infer the type information from the class alone." +
-					"This is most likely because the class represents a generic type. In that case," +
-					"please use the 'returns(TypeHint)' method instead.", e);
+				"This is most likely because the class represents a generic type. In that case," +
+				"please use the 'returns(TypeHint)' method instead.", e);
 		}
 	}
 
@@ -299,10 +296,9 @@ public abstract class TwoInputUdfOperator<IN1, IN2, OUT, O extends TwoInputUdfOp
 
 		try {
 			return returns(TypeInformation.of(typeHint));
-		}
-		catch (InvalidTypesException e) {
+		} catch (InvalidTypesException e) {
 			throw new InvalidTypesException("Cannot infer the type information from the type hint. " +
-					"Make sure that the TypeHint does not use any generic type variables.");
+				"Make sure that the TypeHint does not use any generic type variables.");
 		}
 	}
 
@@ -335,8 +331,8 @@ public abstract class TwoInputUdfOperator<IN1, IN2, OUT, O extends TwoInputUdfOp
 	@Internal
 	public Map<String, DataSet<?>> getBroadcastSets() {
 		return this.broadcastVariables == null ?
-				Collections.<String, DataSet<?>>emptyMap() :
-				Collections.unmodifiableMap(this.broadcastVariables);
+			Collections.<String, DataSet<?>>emptyMap() :
+			Collections.unmodifiableMap(this.broadcastVariables);
 	}
 
 	@Override
@@ -389,7 +385,7 @@ public abstract class TwoInputUdfOperator<IN1, IN2, OUT, O extends TwoInputUdfOp
 	protected boolean udfWithForwardedFieldsFirstAnnotation(Class<?> udfClass) {
 
 		if (udfClass.getAnnotation(FunctionAnnotation.ForwardedFieldsFirst.class) != null ||
-				udfClass.getAnnotation(FunctionAnnotation.NonForwardedFieldsFirst.class) != null) {
+			udfClass.getAnnotation(FunctionAnnotation.NonForwardedFieldsFirst.class) != null) {
 			return true;
 		} else {
 			return false;
@@ -399,7 +395,7 @@ public abstract class TwoInputUdfOperator<IN1, IN2, OUT, O extends TwoInputUdfOp
 	protected boolean udfWithForwardedFieldsSecondAnnotation(Class<?> udfClass) {
 
 		if (udfClass.getAnnotation(FunctionAnnotation.ForwardedFieldsSecond.class) != null ||
-				udfClass.getAnnotation(FunctionAnnotation.NonForwardedFieldsSecond.class) != null) {
+			udfClass.getAnnotation(FunctionAnnotation.NonForwardedFieldsSecond.class) != null) {
 			return true;
 		} else {
 			return false;

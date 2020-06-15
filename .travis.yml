@@ -21,13 +21,13 @@ cache:
   # default timeout is too low
   timeout: 600
   directories:
-  - $HOME/.m2
-  - $HOME/flink_cache
-  # keep in sync with tools/travis/setup_maven.sh
-  - $HOME/maven_cache
-  # keep in sync with tools/travis/docs.sh
-  - $HOME/gem_cache
-  - $HOME/flink_download_cache
+    - $HOME/.m2
+    - $HOME/flink_cache
+    # keep in sync with tools/travis/setup_maven.sh
+    - $HOME/maven_cache
+    # keep in sync with tools/travis/docs.sh
+    - $HOME/gem_cache
+    - $HOME/flink_download_cache
 
 # do not cache our own artifacts
 before_cache:
@@ -53,13 +53,13 @@ env:
     - CHANGE_MINIKUBE_NONE_USER=true
 
 before_script:
-   - "export -f travis_nanoseconds"
-   - "export -f travis_time_start"
-   - "export -f travis_time_finish"
+  - "export -f travis_nanoseconds"
+  - "export -f travis_time_start"
+  - "export -f travis_time_finish"
 
 # Install maven 3.2.5 since xenial uses 3.3.9 for which shading is broken
 before_install:
-   - source ./tools/travis/setup_maven.sh
+  - source ./tools/travis/setup_maven.sh
 
 notifications:
   slack:

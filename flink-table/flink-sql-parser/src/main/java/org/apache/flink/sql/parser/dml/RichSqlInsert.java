@@ -34,19 +34,21 @@ import org.apache.calcite.util.NlsString;
 import java.util.LinkedHashMap;
 import java.util.List;
 
-/** A {@link SqlInsert} that have some extension functions like partition, overwrite. **/
+/**
+ * A {@link SqlInsert} that have some extension functions like partition, overwrite.
+ **/
 public class RichSqlInsert extends SqlInsert implements ExtendedSqlNode {
 	private final SqlNodeList staticPartitions;
 
 	private final SqlNodeList extendedKeywords;
 
 	public RichSqlInsert(SqlParserPos pos,
-			SqlNodeList keywords,
-			SqlNodeList extendedKeywords,
-			SqlNode targetTable,
-			SqlNode source,
-			SqlNodeList columnList,
-			SqlNodeList staticPartitions) {
+						 SqlNodeList keywords,
+						 SqlNodeList extendedKeywords,
+						 SqlNode targetTable,
+						 SqlNode source,
+						 SqlNodeList columnList,
+						 SqlNodeList staticPartitions) {
 		super(pos, keywords, targetTable, source, columnList);
 		this.extendedKeywords = extendedKeywords;
 		this.staticPartitions = staticPartitions;
@@ -60,7 +62,8 @@ public class RichSqlInsert extends SqlInsert implements ExtendedSqlNode {
 		return staticPartitions;
 	}
 
-	/** Get static partition key value pair as strings.
+	/**
+	 * Get static partition key value pair as strings.
 	 *
 	 * <p>For character literals we return the unquoted and unescaped values.
 	 * For other types we use {@link SqlLiteral#toString()} to get
@@ -84,7 +87,8 @@ public class RichSqlInsert extends SqlInsert implements ExtendedSqlNode {
 		return ret;
 	}
 
-	@Override public void unparse(SqlWriter writer, int leftPrec, int rightPrec) {
+	@Override
+	public void unparse(SqlWriter writer, int leftPrec, int rightPrec) {
 		writer.startList(SqlWriter.FrameTypeEnum.SELECT);
 		String insertKeyword = "INSERT INTO";
 		if (isUpsert()) {

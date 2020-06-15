@@ -83,8 +83,7 @@ public class ConfigOptionsDocsCompletenessITCase {
 
 				if (existingOptions.stream().allMatch(option -> option.isSuffixOption)) {
 					consolidated = existingOptions;
-				}
-				else {
+				} else {
 					Optional<ExistingOption> deduped = existingOptions.stream()
 						.reduce((option1, option2) -> {
 							if (option1.equals(option2)) {
@@ -121,8 +120,8 @@ public class ConfigOptionsDocsCompletenessITCase {
 	}
 
 	private static void compareDocumentedAndExistingOptions(
-			Map<String, List<DocumentedOption>> documentedOptions,
-			Map<String, List<ExistingOption>> existingOptions) {
+		Map<String, List<DocumentedOption>> documentedOptions,
+		Map<String, List<ExistingOption>> existingOptions) {
 
 		final Collection<String> problems = new ArrayList<>(0);
 
@@ -272,12 +271,12 @@ public class ConfigOptionsDocsCompletenessITCase {
 		private final boolean isSuffixOption;
 
 		private ExistingOption(
-				String key,
-				String defaultValue,
-				String typeValue,
-				String description,
-				Class<?> containingClass,
-				boolean isSuffixOption) {
+			String key,
+			String defaultValue,
+			String typeValue,
+			String description,
+			Class<?> containingClass,
+			boolean isSuffixOption) {
 			super(key, defaultValue, typeValue, description);
 			this.containingClass = containingClass;
 			this.isSuffixOption = isSuffixOption;
@@ -289,11 +288,11 @@ public class ConfigOptionsDocsCompletenessITCase {
 		private final Path containingFile;
 
 		private DocumentedOption(
-				String key,
-				String defaultValue,
-				String typeValue,
-				String description,
-				Path containingFile) {
+			String key,
+			String defaultValue,
+			String typeValue,
+			String description,
+			Path containingFile) {
 			super(key, defaultValue, typeValue, description);
 			this.containingFile = containingFile;
 		}

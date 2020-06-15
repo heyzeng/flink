@@ -57,7 +57,7 @@ public class ConfigurationTest extends TestLogger {
 			orig.setFloat("PI", 3.1415926f);
 			orig.setDouble("E", Math.E);
 			orig.setBoolean("shouldbetrue", true);
-			orig.setBytes("bytes sequence", new byte[] { 1, 2, 3, 4, 5 });
+			orig.setBytes("bytes sequence", new byte[]{1, 2, 3, 4, 5});
 			orig.setClass("myclass", this.getClass());
 
 			final Configuration copy = InstantiationUtil.createCopyWritable(orig);
@@ -67,7 +67,7 @@ public class ConfigurationTest extends TestLogger {
 			assertEquals(3.1415926f, copy.getFloat("PI", 3.1415926f), 0.0);
 			assertEquals(Math.E, copy.getDouble("E", 0.0), 0.0);
 			assertEquals(true, copy.getBoolean("shouldbetrue", false));
-			assertArrayEquals(new byte[] { 1, 2, 3, 4, 5 }, copy.getBytes("bytes sequence", null));
+			assertArrayEquals(new byte[]{1, 2, 3, 4, 5}, copy.getBytes("bytes sequence", null));
 			assertEquals(getClass(), copy.getClass("myclass", null, getClass().getClassLoader()));
 
 			assertEquals(orig, copy);
@@ -92,8 +92,7 @@ public class ConfigurationTest extends TestLogger {
 			cfg2.setString(key, "another value");
 
 			assertEquals("value", cfg1.getString(key, ""));
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 			fail(e.getMessage());
 		}
@@ -162,24 +161,24 @@ public class ConfigurationTest extends TestLogger {
 		cfg.setInteger("older-key", 13);
 
 		ConfigOption<Integer> matchesFirst = ConfigOptions
-				.key("the-key")
-				.defaultValue(-1)
-				.withDeprecatedKeys("old-key", "older-key");
+			.key("the-key")
+			.defaultValue(-1)
+			.withDeprecatedKeys("old-key", "older-key");
 
 		ConfigOption<Integer> matchesSecond = ConfigOptions
-				.key("does-not-exist")
-				.defaultValue(-1)
-				.withDeprecatedKeys("old-key", "older-key");
+			.key("does-not-exist")
+			.defaultValue(-1)
+			.withDeprecatedKeys("old-key", "older-key");
 
 		ConfigOption<Integer> matchesThird = ConfigOptions
-				.key("does-not-exist")
-				.defaultValue(-1)
-				.withDeprecatedKeys("foo", "older-key");
+			.key("does-not-exist")
+			.defaultValue(-1)
+			.withDeprecatedKeys("foo", "older-key");
 
 		ConfigOption<Integer> notContained = ConfigOptions
-				.key("does-not-exist")
-				.defaultValue(-1)
-				.withDeprecatedKeys("not-there", "also-not-there");
+			.key("does-not-exist")
+			.defaultValue(-1)
+			.withDeprecatedKeys("not-there", "also-not-there");
 
 		assertEquals(11, cfg.getInteger(matchesFirst));
 		assertEquals(12, cfg.getInteger(matchesSecond));
@@ -259,7 +258,7 @@ public class ConfigurationTest extends TestLogger {
 	}
 
 	@Test
-	public void testRemove(){
+	public void testRemove() {
 		Configuration cfg = new Configuration();
 		cfg.setInteger("a", 1);
 		cfg.setInteger("b", 2);

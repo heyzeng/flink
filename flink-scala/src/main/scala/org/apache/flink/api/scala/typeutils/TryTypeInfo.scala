@@ -35,16 +35,22 @@ class TryTypeInfo[A, T <: Try[A]](val elemTypeInfo: TypeInformation[A])
 
   @PublicEvolving
   override def isBasicType: Boolean = false
+
   @PublicEvolving
   override def isTupleType: Boolean = false
+
   @PublicEvolving
   override def isKeyType: Boolean = false
+
   @PublicEvolving
   override def getTotalFields: Int = 1
+
   @PublicEvolving
   override def getArity: Int = 1
+
   @PublicEvolving
   override def getTypeClass = classOf[Try[_]].asInstanceOf[Class[T]]
+
   @PublicEvolving
   override def getGenericParameters = Map[String, TypeInformation[_]]("T" -> elemTypeInfo).asJava
 
@@ -63,7 +69,7 @@ class TryTypeInfo[A, T <: Try[A]](val elemTypeInfo: TypeInformation[A])
     obj match {
       case tryTypeInfo: TryTypeInfo[_, _] =>
         tryTypeInfo.canEqual(this) &&
-        elemTypeInfo.equals(tryTypeInfo.elemTypeInfo)
+          elemTypeInfo.equals(tryTypeInfo.elemTypeInfo)
       case _ => false
     }
   }

@@ -31,7 +31,7 @@ public class DoubleSumAggregator implements Aggregator<DoubleValue> {
 
 	private DoubleValue wrapper = new DoubleValue();
 	private double sum;
-	
+
 	@Override
 	public DoubleValue getAggregate() {
 		wrapper.setValue(sum);
@@ -45,13 +45,13 @@ public class DoubleSumAggregator implements Aggregator<DoubleValue> {
 
 	/**
 	 * Adds the given value to the current aggregate.
-	 * 
+	 *
 	 * @param value The value to add to the aggregate.
 	 */
 	public void aggregate(double value) {
 		sum += value;
 	}
-	
+
 	@Override
 	public void reset() {
 		sum = 0;

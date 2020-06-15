@@ -27,25 +27,25 @@ import org.apache.flink.api.common.functions.RuntimeContext;
  */
 @Public
 public abstract class RichOutputFormat<IT> implements OutputFormat<IT> {
-	
+
 	private static final long serialVersionUID = 1L;
-	
+
 	// --------------------------------------------------------------------------------------------
 	//  Runtime context access
 	// --------------------------------------------------------------------------------------------
-	
+
 	private transient RuntimeContext runtimeContext;
 
 	public void setRuntimeContext(RuntimeContext t) {
 		this.runtimeContext = t;
 	}
-	
+
 	public RuntimeContext getRuntimeContext() {
 		if (this.runtimeContext != null) {
 			return this.runtimeContext;
 		} else {
 			throw new IllegalStateException("The runtime context has not been initialized yet. Try accessing " +
-					"it in one of the other life cycle methods.");
+				"it in one of the other life cycle methods.");
 		}
 	}
 }

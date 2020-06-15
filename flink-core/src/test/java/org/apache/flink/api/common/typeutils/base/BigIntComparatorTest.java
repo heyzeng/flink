@@ -19,6 +19,7 @@
 package org.apache.flink.api.common.typeutils.base;
 
 import java.math.BigInteger;
+
 import org.apache.flink.api.common.typeutils.ComparatorTestBase;
 import org.apache.flink.api.common.typeutils.TypeComparator;
 import org.apache.flink.api.common.typeutils.TypeSerializer;
@@ -37,7 +38,7 @@ public class BigIntComparatorTest extends ComparatorTestBase<BigInteger> {
 
 	@Override
 	protected BigInteger[] getSortedTestData() {
-		return new BigInteger[] {
+		return new BigInteger[]{
 			new BigInteger("-8745979691234123413478523984729447"),
 			BigInteger.valueOf(-10000),
 			BigInteger.valueOf(-1),

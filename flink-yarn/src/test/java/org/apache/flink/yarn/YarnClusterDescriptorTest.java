@@ -172,7 +172,7 @@ public class YarnClusterDescriptorTest extends TestLogger {
 		final String mainClass = clusterDescriptor.getYarnSessionClusterEntrypoint();
 		final String redirects =
 			"1> " + ApplicationConstants.LOG_DIR_EXPANSION_VAR + "/jobmanager.out " +
-			"2> " + ApplicationConstants.LOG_DIR_EXPANSION_VAR + "/jobmanager.err";
+				"2> " + ApplicationConstants.LOG_DIR_EXPANSION_VAR + "/jobmanager.err";
 		final int jobManagerMemory = 1024;
 
 		try {
@@ -521,11 +521,11 @@ public class YarnClusterDescriptorTest extends TestLogger {
 		closableYarnClient.start();
 
 		yarnClusterDescriptor = YarnTestUtils.createClusterDescriptorWithLogging(
-				temporaryFolder.getRoot().getAbsolutePath(),
-				new Configuration(),
-				yarnConfiguration,
-				closableYarnClient,
-				false);
+			temporaryFolder.getRoot().getAbsolutePath(),
+			new Configuration(),
+			yarnConfiguration,
+			closableYarnClient,
+			false);
 
 		yarnClusterDescriptor.close();
 

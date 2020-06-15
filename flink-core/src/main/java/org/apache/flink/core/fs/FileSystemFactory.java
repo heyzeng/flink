@@ -46,7 +46,6 @@ public interface FileSystemFactory extends Plugin {
 	 *
 	 * @param fsUri The URI that describes the file system.
 	 * @return A new instance of the specified file system.
-	 *
 	 * @throws IOException Thrown if the file system could not be instantiated.
 	 */
 	FileSystem create(URI fsUri) throws IOException;

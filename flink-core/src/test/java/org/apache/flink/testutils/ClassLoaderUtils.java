@@ -231,11 +231,9 @@ public class ClassLoaderUtils {
 			final T object = clazz.asSubclass(testClass).getDeclaredConstructor().newInstance();
 
 			return new ObjectAndClassLoader<>(object, classLoader);
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			throw new RuntimeException("Cannot create test class outside system class path", e);
-		}
-		finally {
+		} finally {
 			// we clean up eagerly, because it is fine to delete the class file once the class is loaded
 			// and we have no later life cycle hook here to do the cleanup
 			tryClose(classLoader);
@@ -251,8 +249,8 @@ public class ClassLoaderUtils {
 		if (closeable != null) {
 			try {
 				closeable.close();
+			} catch (Exception ignored) {
 			}
-			catch (Exception ignored) {}
 		}
 	}
 
@@ -273,7 +271,7 @@ public class ClassLoaderUtils {
 
 		try {
 			Files.walkFileTree(directory, deletingVisitor);
+		} catch (Exception ignored) {
 		}
-		catch (Exception ignored) {}
 	}
 }

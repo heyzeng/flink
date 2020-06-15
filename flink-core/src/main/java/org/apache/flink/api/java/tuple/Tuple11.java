@@ -35,72 +35,95 @@ import org.apache.flink.util.StringUtils;
  * with Tuples to reuse objects in order to reduce pressure on the garbage collector.</p>
  *
  * <p>Warning: If you subclass Tuple11, then be sure to either <ul>
- *  <li> not add any new fields, or </li>
- *  <li> make it a POJO, and always declare the element type of your DataStreams/DataSets to your descendant
- *       type. (That is, if you have a "class Foo extends Tuple11", then don't use instances of
- *       Foo in a DataStream&lt;Tuple11&gt; / DataSet&lt;Tuple11&gt;, but declare it as
- *       DataStream&lt;Foo&gt; / DataSet&lt;Foo&gt;.) </li>
+ * <li> not add any new fields, or </li>
+ * <li> make it a POJO, and always declare the element type of your DataStreams/DataSets to your descendant
+ * type. (That is, if you have a "class Foo extends Tuple11", then don't use instances of
+ * Foo in a DataStream&lt;Tuple11&gt; / DataSet&lt;Tuple11&gt;, but declare it as
+ * DataStream&lt;Foo&gt; / DataSet&lt;Foo&gt;.) </li>
  * </ul></p>
- * @see Tuple
  *
- * @param <T0> The type of field 0
- * @param <T1> The type of field 1
- * @param <T2> The type of field 2
- * @param <T3> The type of field 3
- * @param <T4> The type of field 4
- * @param <T5> The type of field 5
- * @param <T6> The type of field 6
- * @param <T7> The type of field 7
- * @param <T8> The type of field 8
- * @param <T9> The type of field 9
+ * @param <T0>  The type of field 0
+ * @param <T1>  The type of field 1
+ * @param <T2>  The type of field 2
+ * @param <T3>  The type of field 3
+ * @param <T4>  The type of field 4
+ * @param <T5>  The type of field 5
+ * @param <T6>  The type of field 6
+ * @param <T7>  The type of field 7
+ * @param <T8>  The type of field 8
+ * @param <T9>  The type of field 9
  * @param <T10> The type of field 10
+ * @see Tuple
  */
 @Public
 public class Tuple11<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> extends Tuple {
 
 	private static final long serialVersionUID = 1L;
 
-	/** Field 0 of the tuple. */
+	/**
+	 * Field 0 of the tuple.
+	 */
 	public T0 f0;
-	/** Field 1 of the tuple. */
+	/**
+	 * Field 1 of the tuple.
+	 */
 	public T1 f1;
-	/** Field 2 of the tuple. */
+	/**
+	 * Field 2 of the tuple.
+	 */
 	public T2 f2;
-	/** Field 3 of the tuple. */
+	/**
+	 * Field 3 of the tuple.
+	 */
 	public T3 f3;
-	/** Field 4 of the tuple. */
+	/**
+	 * Field 4 of the tuple.
+	 */
 	public T4 f4;
-	/** Field 5 of the tuple. */
+	/**
+	 * Field 5 of the tuple.
+	 */
 	public T5 f5;
-	/** Field 6 of the tuple. */
+	/**
+	 * Field 6 of the tuple.
+	 */
 	public T6 f6;
-	/** Field 7 of the tuple. */
+	/**
+	 * Field 7 of the tuple.
+	 */
 	public T7 f7;
-	/** Field 8 of the tuple. */
+	/**
+	 * Field 8 of the tuple.
+	 */
 	public T8 f8;
-	/** Field 9 of the tuple. */
+	/**
+	 * Field 9 of the tuple.
+	 */
 	public T9 f9;
-	/** Field 10 of the tuple. */
+	/**
+	 * Field 10 of the tuple.
+	 */
 	public T10 f10;
 
 	/**
 	 * Creates a new tuple where all fields are null.
 	 */
-	public Tuple11() {}
+	public Tuple11() {
+	}
 
 	/**
 	 * Creates a new tuple and assigns the given values to the tuple's fields.
 	 *
-	 * @param value0 The value for field 0
-	 * @param value1 The value for field 1
-	 * @param value2 The value for field 2
-	 * @param value3 The value for field 3
-	 * @param value4 The value for field 4
-	 * @param value5 The value for field 5
-	 * @param value6 The value for field 6
-	 * @param value7 The value for field 7
-	 * @param value8 The value for field 8
-	 * @param value9 The value for field 9
+	 * @param value0  The value for field 0
+	 * @param value1  The value for field 1
+	 * @param value2  The value for field 2
+	 * @param value3  The value for field 3
+	 * @param value4  The value for field 4
+	 * @param value5  The value for field 5
+	 * @param value6  The value for field 6
+	 * @param value7  The value for field 7
+	 * @param value8  The value for field 8
+	 * @param value9  The value for field 9
 	 * @param value10 The value for field 10
 	 */
 	public Tuple11(T0 value0, T1 value1, T2 value2, T3 value3, T4 value4, T5 value5, T6 value6, T7 value7, T8 value8, T9 value9, T10 value10) {
@@ -125,26 +148,38 @@ public class Tuple11<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> extends Tuple 
 	@Override
 	@SuppressWarnings("unchecked")
 	public <T> T getField(int pos) {
-		switch(pos) {
-			case 0: return (T) this.f0;
-			case 1: return (T) this.f1;
-			case 2: return (T) this.f2;
-			case 3: return (T) this.f3;
-			case 4: return (T) this.f4;
-			case 5: return (T) this.f5;
-			case 6: return (T) this.f6;
-			case 7: return (T) this.f7;
-			case 8: return (T) this.f8;
-			case 9: return (T) this.f9;
-			case 10: return (T) this.f10;
-			default: throw new IndexOutOfBoundsException(String.valueOf(pos));
+		switch (pos) {
+			case 0:
+				return (T) this.f0;
+			case 1:
+				return (T) this.f1;
+			case 2:
+				return (T) this.f2;
+			case 3:
+				return (T) this.f3;
+			case 4:
+				return (T) this.f4;
+			case 5:
+				return (T) this.f5;
+			case 6:
+				return (T) this.f6;
+			case 7:
+				return (T) this.f7;
+			case 8:
+				return (T) this.f8;
+			case 9:
+				return (T) this.f9;
+			case 10:
+				return (T) this.f10;
+			default:
+				throw new IndexOutOfBoundsException(String.valueOf(pos));
 		}
 	}
 
 	@Override
 	@SuppressWarnings("unchecked")
 	public <T> void setField(T value, int pos) {
-		switch(pos) {
+		switch (pos) {
 			case 0:
 				this.f0 = (T0) value;
 				break;
@@ -178,23 +213,24 @@ public class Tuple11<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> extends Tuple 
 			case 10:
 				this.f10 = (T10) value;
 				break;
-			default: throw new IndexOutOfBoundsException(String.valueOf(pos));
+			default:
+				throw new IndexOutOfBoundsException(String.valueOf(pos));
 		}
 	}
 
 	/**
 	 * Sets new values to all fields of the tuple.
 	 *
-	 * @param value0 The value for field 0
-	 * @param value1 The value for field 1
-	 * @param value2 The value for field 2
-	 * @param value3 The value for field 3
-	 * @param value4 The value for field 4
-	 * @param value5 The value for field 5
-	 * @param value6 The value for field 6
-	 * @param value7 The value for field 7
-	 * @param value8 The value for field 8
-	 * @param value9 The value for field 9
+	 * @param value0  The value for field 0
+	 * @param value1  The value for field 1
+	 * @param value2  The value for field 2
+	 * @param value3  The value for field 3
+	 * @param value4  The value for field 4
+	 * @param value5  The value for field 5
+	 * @param value6  The value for field 6
+	 * @param value7  The value for field 7
+	 * @param value8  The value for field 8
+	 * @param value9  The value for field 9
 	 * @param value10 The value for field 10
 	 */
 	public void setFields(T0 value0, T1 value1, T2 value2, T3 value3, T4 value4, T5 value5, T6 value6, T7 value7, T8 value8, T9 value9, T10 value10) {
@@ -220,6 +256,7 @@ public class Tuple11<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> extends Tuple 
 	 * Creates a string representation of the tuple in the form
 	 * (f0, f1, f2, f3, f4, f5, f6, f7, f8, f9, f10),
 	 * where the individual fields are the value returned by calling {@link Object#toString} on that field.
+	 *
 	 * @return The string representation of the tuple.
 	 */
 	@Override
@@ -240,6 +277,7 @@ public class Tuple11<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> extends Tuple 
 
 	/**
 	 * Deep equality for tuples by calling equals() on the tuple members.
+	 *
 	 * @param o the object checked for equality
 	 * @return true if this is equal to o.
 	 */
@@ -306,9 +344,10 @@ public class Tuple11<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> extends Tuple 
 	}
 
 	/**
-	* Shallow tuple copy.
-	* @return A new Tuple with the same fields as this.
-	*/
+	 * Shallow tuple copy.
+	 *
+	 * @return A new Tuple with the same fields as this.
+	 */
 	@Override
 	@SuppressWarnings("unchecked")
 	public Tuple11<T0, T1, T2, T3, T4, T5, T6, T7, T8, T9, T10> copy() {

@@ -86,10 +86,12 @@ public final class Utils {
 		}
 
 		@Override
-		public void configure(Configuration parameters) {}
+		public void configure(Configuration parameters) {
+		}
 
 		@Override
-		public void open(int taskNumber, int numTasks) {}
+		public void open(int taskNumber, int numTasks) {
+		}
 
 		@Override
 		public void writeRecord(T record) {
@@ -124,10 +126,11 @@ public final class Utils {
 		}
 
 		@Override
-		public void configure(Configuration parameters) {}
+		public void configure(Configuration parameters) {
+		}
 
 		@Override
-		public void open(int taskNumber, int numTasks)  {
+		public void open(int taskNumber, int numTasks) {
 			this.accumulator = new SerializedListAccumulator<>();
 		}
 
@@ -153,7 +156,8 @@ public final class Utils {
 		private long count;
 		private long checksum;
 
-		public ChecksumHashCode() {}
+		public ChecksumHashCode() {
+		}
 
 		public ChecksumHashCode(long count, long checksum) {
 			this.count = count;
@@ -218,6 +222,7 @@ public final class Utils {
 
 	/**
 	 * {@link RichOutputFormat} for {@link ChecksumHashCode}.
+	 *
 	 * @param <T>
 	 */
 	public static class ChecksumHashCodeHelper<T> extends RichOutputFormat<T> {
@@ -235,10 +240,12 @@ public final class Utils {
 		}
 
 		@Override
-		public void configure(Configuration parameters) {}
+		public void configure(Configuration parameters) {
+		}
 
 		@Override
-		public void open(int taskNumber, int numTasks) {}
+		public void open(int taskNumber, int numTasks) {
+		}
 
 		@Override
 		public void writeRecord(T record) throws IOException {
@@ -307,8 +314,8 @@ public final class Utils {
 	 * If none is set, the method returns {@link Optional#empty()}.
 	 *
 	 * @param threadLocalFactory containing the thread local factory
-	 * @param staticFactory containing the global factory
-	 * @param <T> type of factory
+	 * @param staticFactory      containing the global factory
+	 * @param <T>                type of factory
 	 * @return Optional containing the resolved factory if it exists, otherwise it's empty
 	 */
 	public static <T> Optional<T> resolveFactory(ThreadLocal<T> threadLocalFactory, @Nullable T staticFactory) {
@@ -320,7 +327,8 @@ public final class Utils {
 
 	/**
 	 * Get the key from the given args. Keys have to start with '-' or '--'. For example, --key1 value1 -key2 value2.
-	 * @param args all given args.
+	 *
+	 * @param args  all given args.
 	 * @param index the index of args to be parsed.
 	 * @return the key of the given arg.
 	 */

@@ -31,7 +31,7 @@ import org.apache.flink.types.CharValue;
 public class CharValueSerializer extends TypeSerializerSingleton<CharValue> {
 
 	private static final long serialVersionUID = 1L;
-	
+
 	public static final CharValueSerializer INSTANCE = new CharValueSerializer();
 
 	@Override
@@ -43,7 +43,7 @@ public class CharValueSerializer extends TypeSerializerSingleton<CharValue> {
 	public CharValue createInstance() {
 		return new CharValue();
 	}
-	
+
 	@Override
 	public CharValue copy(CharValue from) {
 		return copy(from, new CharValue());
@@ -64,7 +64,7 @@ public class CharValueSerializer extends TypeSerializerSingleton<CharValue> {
 	public void serialize(CharValue record, DataOutputView target) throws IOException {
 		record.write(target);
 	}
-	
+
 	@Override
 	public CharValue deserialize(DataInputView source) throws IOException {
 		return deserialize(new CharValue(), source);

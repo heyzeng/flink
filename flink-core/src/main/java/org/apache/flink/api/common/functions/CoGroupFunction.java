@@ -43,7 +43,7 @@ import java.io.Serializable;
  *
  * @param <IN1> The data type of the first input data set.
  * @param <IN2> The data type of the second input data set.
- * @param <O> The data type of the returned elements.
+ * @param <O>   The data type of the returned elements.
  */
 @Public
 @FunctionalInterface
@@ -54,10 +54,9 @@ public interface CoGroupFunction<IN1, IN2, O> extends Function, Serializable {
 	 * coGroup. It is called for each pair of element groups where the elements share the
 	 * same key.
 	 *
-	 * @param first The records from the first input.
+	 * @param first  The records from the first input.
 	 * @param second The records from the second.
-	 * @param out A collector to return elements.
-	 *
+	 * @param out    A collector to return elements.
 	 * @throws Exception The function may throw Exceptions, which will cause the program to cancel,
 	 *                   and may trigger the recovery logic.
 	 */

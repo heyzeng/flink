@@ -112,7 +112,7 @@ public class LocalExecutor implements Executor {
 
 	// insert into sql match pattern
 	private static final Pattern INSERT_SQL_PATTERN = Pattern.compile("(INSERT\\s+(INTO|OVERWRITE).*)",
-			Pattern.CASE_INSENSITIVE | Pattern.DOTALL);
+		Pattern.CASE_INSENSITIVE | Pattern.DOTALL);
 
 	/**
 	 * Creates a local executor for submitting table programs and retrieving results.
@@ -182,11 +182,11 @@ public class LocalExecutor implements Executor {
 	 * Constructor for testing purposes.
 	 */
 	public LocalExecutor(
-			Environment defaultEnvironment,
-			List<URL> dependencies,
-			Configuration flinkConfig,
-			CustomCommandLine commandLine,
-			ClusterClientServiceLoader clusterClientServiceLoader) {
+		Environment defaultEnvironment,
+		List<URL> dependencies,
+		Configuration flinkConfig,
+		CustomCommandLine commandLine,
+		ClusterClientServiceLoader clusterClientServiceLoader) {
 		this.defaultEnvironment = defaultEnvironment;
 		this.dependencies = dependencies;
 		this.flinkConfig = flinkConfig;
@@ -204,16 +204,18 @@ public class LocalExecutor implements Executor {
 		// nothing to do yet
 	}
 
-	/** Returns ExecutionContext.Builder with given {@link SessionContext} session context. */
+	/**
+	 * Returns ExecutionContext.Builder with given {@link SessionContext} session context.
+	 */
 	private ExecutionContext.Builder createExecutionContextBuilder(SessionContext sessionContext) {
 		return ExecutionContext.builder(
-				defaultEnvironment,
-				sessionContext,
-				this.dependencies,
-				this.flinkConfig,
-				this.clusterClientServiceLoader,
-				this.commandLineOptions,
-				this.commandLines);
+			defaultEnvironment,
+			sessionContext,
+			this.dependencies,
+			this.flinkConfig,
+			this.clusterClientServiceLoader,
+			this.commandLineOptions,
+			this.commandLines);
 	}
 
 	@Override
@@ -223,8 +225,8 @@ public class LocalExecutor implements Executor {
 			throw new SqlExecutionException("Found another session with the same session identifier: " + sessionId);
 		} else {
 			this.contextMap.put(
-					sessionId,
-					createExecutionContextBuilder(sessionContext).build());
+				sessionId,
+				createExecutionContextBuilder(sessionContext).build());
 		}
 		return sessionId;
 	}
@@ -270,9 +272,9 @@ public class LocalExecutor implements Executor {
 		// Book keep all the session states of current ExecutionContext then
 		// re-register them into the new one.
 		ExecutionContext<?> newContext = createExecutionContextBuilder(
-				context.getOriginalSessionContext())
-				.sessionState(context.getSessionState())
-				.build();
+			context.getOriginalSessionContext())
+			.sessionState(context.getSessionState())
+			.build();
 		this.contextMap.put(sessionId, newContext);
 	}
 
@@ -285,10 +287,10 @@ public class LocalExecutor implements Executor {
 		// Book keep all the session states of current ExecutionContext then
 		// re-register them into the new one.
 		ExecutionContext<?> newContext = createExecutionContextBuilder(
-				context.getOriginalSessionContext())
-				.env(newEnv)
-				.sessionState(context.getSessionState())
-				.build();
+			context.getOriginalSessionContext())
+			.env(newEnv)
+			.sessionState(context.getSessionState())
+			.build();
 		this.contextMap.put(sessionId, newContext);
 	}
 
@@ -315,9 +317,9 @@ public class LocalExecutor implements Executor {
 		if (newEnv.getTables().remove(name) != null) {
 			// Renew the ExecutionContext.
 			this.contextMap.put(
-					sessionId,
-					createExecutionContextBuilder(context.getOriginalSessionContext())
-							.env(newEnv).build());
+				sessionId,
+				createExecutionContextBuilder(context.getOriginalSessionContext())
+					.env(newEnv).build());
 		}
 	}
 
@@ -460,7 +462,7 @@ public class LocalExecutor implements Executor {
 
 		try {
 			return context.wrapClassLoader(() ->
-					Arrays.asList(tableEnv.getCompletionHints(statement, position)));
+				Arrays.asList(tableEnv.getCompletionHints(statement, position)));
 		} catch (Throwable t) {
 			// catch everything such that the query does not crash the executor
 			if (LOG.isDebugEnabled()) {
@@ -478,8 +480,8 @@ public class LocalExecutor implements Executor {
 
 	@Override
 	public TypedResult<List<Tuple2<Boolean, Row>>> retrieveResultChanges(
-			String sessionId,
-			String resultId) throws SqlExecutionException {
+		String sessionId,
+		String resultId) throws SqlExecutionException {
 		final DynamicResult<?> result = resultStore.getResult(resultId);
 		if (result == null) {
 			throw new SqlExecutionException("Could not find a result with result identifier '" + resultId + "'.");
@@ -569,9 +571,9 @@ public class LocalExecutor implements Executor {
 	}
 
 	private <C> ProgramTargetDescriptor executeUpdateInternal(
-			String sessionId,
-			ExecutionContext<C> context,
-			String statement) {
+		String sessionId,
+		ExecutionContext<C> context,
+		String statement) {
 
 		applyUpdate(context, statement);
 
@@ -613,10 +615,10 @@ public class LocalExecutor implements Executor {
 
 		// initialize result
 		final DynamicResult<C> result = resultStore.createResult(
-				context.getEnvironment(),
-				removeTimeAttributes(table.getSchema()),
-				context.getExecutionConfig(),
-				context.getClassLoader());
+			context.getEnvironment(),
+			removeTimeAttributes(table.getSchema()),
+			context.getExecutionConfig(),
+			context.getClassLoader());
 		final String jobName = sessionId + ": " + query;
 		final String tableName = String.format("_tmp_table_%s", Math.abs(query.hashCode()));
 		final Pipeline pipeline;
@@ -625,8 +627,8 @@ public class LocalExecutor implements Executor {
 			context.wrapClassLoader(() -> {
 				context.getTableEnvironment().registerTableSink(tableName, result.getTableSink());
 				table.insertInto(
-						context.getQueryConfig(),
-						tableName);
+					context.getQueryConfig(),
+					tableName);
 			});
 			pipeline = context.createPipeline(jobName);
 		} catch (Throwable t) {
@@ -655,16 +657,16 @@ public class LocalExecutor implements Executor {
 
 		// create execution
 		final ProgramDeployer deployer = new ProgramDeployer(
-				configuration, jobName, pipeline);
+			configuration, jobName, pipeline);
 
 		// start result retrieval
 		result.startRetrieval(deployer);
 
 		return new ResultDescriptor(
-				resultId,
-				removeTimeAttributes(table.getSchema()),
-				result.isMaterialized(),
-				context.getEnvironment().getExecution().isTableauMode());
+			resultId,
+			removeTimeAttributes(table.getSchema()),
+			result.isMaterialized(),
+			context.getEnvironment().getExecution().isTableauMode());
 	}
 
 	/**

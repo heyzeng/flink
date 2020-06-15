@@ -275,8 +275,7 @@ public class DataOutputSerializer implements DataOutputView, MemorySegmentWritab
 
 		if (utflen > 65535) {
 			throw new UTFDataFormatException("Encoded string is too long: " + utflen);
-		}
-		else if (this.position > this.buffer.length - utflen - 2) {
+		} else if (this.position > this.buffer.length - utflen - 2) {
 			resize(utflen + 2);
 		}
 
@@ -302,7 +301,7 @@ public class DataOutputSerializer implements DataOutputView, MemorySegmentWritab
 
 			} else if (c > 0x07FF) {
 				bytearr[count++] = (byte) (0xE0 | ((c >> 12) & 0x0F));
-				bytearr[count++] = (byte) (0x80 | ((c >>  6) & 0x3F));
+				bytearr[count++] = (byte) (0x80 | ((c >> 6) & 0x3F));
 				bytearr[count++] = (byte) (0x80 | (c & 0x3F));
 			} else {
 				bytearr[count++] = (byte) (0xC0 | ((c >> 6) & 0x1F));
@@ -318,25 +317,22 @@ public class DataOutputSerializer implements DataOutputView, MemorySegmentWritab
 		byte[] nb;
 		try {
 			nb = new byte[newLen];
-		}
-		catch (NegativeArraySizeException e) {
+		} catch (NegativeArraySizeException e) {
 			throw new IOException("Serialization failed because the record length would exceed 2GB (max addressable array size in Java).");
-		}
-		catch (OutOfMemoryError e) {
+		} catch (OutOfMemoryError e) {
 			// this was too large to allocate, try the smaller size (if possible)
 			if (newLen > this.buffer.length + minCapacityAdd) {
 				newLen = this.buffer.length + minCapacityAdd;
 				try {
 					nb = new byte[newLen];
-				}
-				catch (OutOfMemoryError ee) {
+				} catch (OutOfMemoryError ee) {
 					// still not possible. give an informative exception message that reports the size
 					throw new IOException("Failed to serialize element. Serialized size (> "
-							+ newLen + " bytes) exceeds JVM heap space", ee);
+						+ newLen + " bytes) exceeds JVM heap space", ee);
 				}
 			} else {
 				throw new IOException("Failed to serialize element. Serialized size (> "
-						+ newLen + " bytes) exceeds JVM heap space", e);
+					+ newLen + " bytes) exceeds JVM heap space", e);
 			}
 		}
 
@@ -347,7 +343,7 @@ public class DataOutputSerializer implements DataOutputView, MemorySegmentWritab
 
 	@Override
 	public void skipBytesToWrite(int numBytes) throws IOException {
-		if (buffer.length - this.position < numBytes){
+		if (buffer.length - this.position < numBytes) {
 			throw new EOFException("Could not skip " + numBytes + " bytes.");
 		}
 
@@ -356,7 +352,7 @@ public class DataOutputSerializer implements DataOutputView, MemorySegmentWritab
 
 	@Override
 	public void write(DataInputView source, int numBytes) throws IOException {
-		if (buffer.length - this.position < numBytes){
+		if (buffer.length - this.position < numBytes) {
 			throw new EOFException("Could not write " + numBytes + " bytes. Buffer overflow.");
 		}
 

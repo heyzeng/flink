@@ -62,7 +62,9 @@ import static org.apache.flink.util.Preconditions.checkState;
 @Internal
 public class FileSystemSafetyNet {
 
-	/** The map from thread to the safety net registry for that thread. */
+	/**
+	 * The map from thread to the safety net registry for that thread.
+	 */
 	private static final ThreadLocal<SafetyNetCloseableRegistry> REGISTRIES = new ThreadLocal<>();
 
 	// ------------------------------------------------------------------------
@@ -83,8 +85,8 @@ public class FileSystemSafetyNet {
 		SafetyNetCloseableRegistry oldRegistry = REGISTRIES.get();
 
 		checkState(null == oldRegistry, "Found an existing FileSystem safety net for this thread: %s " +
-				"This may indicate an accidental repeated initialization, or a leak of the" +
-				"(Inheritable)ThreadLocal through a ThreadPool.", oldRegistry);
+			"This may indicate an accidental repeated initialization, or a leak of the" +
+			"(Inheritable)ThreadLocal through a ThreadPool.", oldRegistry);
 
 		SafetyNetCloseableRegistry newRegistry = new SafetyNetCloseableRegistry();
 		REGISTRIES.set(newRegistry);

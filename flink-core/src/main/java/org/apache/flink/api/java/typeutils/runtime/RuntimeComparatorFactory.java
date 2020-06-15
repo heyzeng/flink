@@ -36,7 +36,8 @@ public final class RuntimeComparatorFactory<T> implements TypeComparatorFactory<
 	private TypeComparator<T> comparator;
 
 
-	public RuntimeComparatorFactory() {}
+	public RuntimeComparatorFactory() {
+	}
 
 	public RuntimeComparatorFactory(TypeComparator<T> comparator) {
 		this.comparator = comparator;
@@ -46,8 +47,7 @@ public final class RuntimeComparatorFactory<T> implements TypeComparatorFactory<
 	public void writeParametersToConfig(Configuration config) {
 		try {
 			InstantiationUtil.writeObjectToConfig(comparator, config, CONFIG_KEY);
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			throw new RuntimeException("Could not serialize comparator into the configuration.", e);
 		}
 	}
@@ -57,11 +57,9 @@ public final class RuntimeComparatorFactory<T> implements TypeComparatorFactory<
 	public void readParametersFromConfig(Configuration config, ClassLoader cl) throws ClassNotFoundException {
 		try {
 			comparator = (TypeComparator<T>) InstantiationUtil.readObjectFromConfig(config, CONFIG_KEY, cl);
-		}
-		catch (ClassNotFoundException e) {
+		} catch (ClassNotFoundException e) {
 			throw e;
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			throw new RuntimeException("Could not serialize serializer into the configuration.", e);
 		}
 	}

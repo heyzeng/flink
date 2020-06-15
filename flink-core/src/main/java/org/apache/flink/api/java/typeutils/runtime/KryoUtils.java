@@ -39,10 +39,10 @@ public class KryoUtils {
 	 * the record from is copied by serializing it into a byte buffer and deserializing it from
 	 * there.
 	 *
-	 * @param from Element to copy
-	 * @param kryo Kryo instance to use
+	 * @param from       Element to copy
+	 * @param kryo       Kryo instance to use
 	 * @param serializer TypeSerializer which is used in case of a Kryo failure
-	 * @param <T> Type of the element to be copied
+	 * @param <T>        Type of the element to be copied
 	 * @return Copied element
 	 */
 	public static <T> T copy(T from, Kryo kryo, TypeSerializer<T> serializer) {
@@ -66,11 +66,11 @@ public class KryoUtils {
 	 * the record from is copied by serializing it into a byte buffer and deserializing it from
 	 * there.
 	 *
-	 * @param from Element to copy
-	 * @param reuse Reuse element for the deserialization
-	 * @param kryo Kryo instance to use
+	 * @param from       Element to copy
+	 * @param reuse      Reuse element for the deserialization
+	 * @param kryo       Kryo instance to use
 	 * @param serializer TypeSerializer which is used in case of a Kryo failure
-	 * @param <T> Type of the element to be copied
+	 * @param <T>        Type of the element to be copied
 	 * @return Copied element
 	 */
 	public static <T> T copy(T from, T reuse, Kryo kryo, TypeSerializer<T> serializer) {
@@ -97,7 +97,7 @@ public class KryoUtils {
 	 * the next available id in the Kryo instance (providing the id just extra ensures nothing is
 	 * overwritten, and isn't strictly required);
 	 *
-	 * @param kryo the Kryo instance to apply the registrations
+	 * @param kryo                  the Kryo instance to apply the registrations
 	 * @param resolvedRegistrations the registrations, which should already be resolved of all possible registration overwrites
 	 */
 	public static void applyRegistrations(Kryo kryo, Collection<KryoRegistration> resolvedRegistrations) {

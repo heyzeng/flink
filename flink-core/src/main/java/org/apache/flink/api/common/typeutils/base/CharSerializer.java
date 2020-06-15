@@ -34,7 +34,9 @@ public final class CharSerializer extends TypeSerializerSingleton<Character> {
 
 	private static final long serialVersionUID = 1L;
 
-	/** Sharable instance of the CharSerializer. */
+	/**
+	 * Sharable instance of the CharSerializer.
+	 */
 	public static final CharSerializer INSTANCE = new CharSerializer();
 
 	private static final Character ZERO = (char) 0;

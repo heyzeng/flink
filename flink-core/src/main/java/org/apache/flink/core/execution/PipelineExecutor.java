@@ -37,7 +37,7 @@ public interface PipelineExecutor {
 	 * <p><b>ATTENTION:</b> The caller is responsible for managing the lifecycle of the returned {@link JobClient}. This
 	 * means that e.g. {@code close()} should be called explicitly at the call-site.
 	 *
-	 * @param pipeline the {@link Pipeline} to execute
+	 * @param pipeline      the {@link Pipeline} to execute
 	 * @param configuration the {@link Configuration} with the required execution parameters
 	 * @return a {@link CompletableFuture} with the {@link JobClient} corresponding to the pipeline.
 	 */

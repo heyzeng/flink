@@ -67,7 +67,7 @@ public abstract class Keys<T> {
 		} else {
 			for (int i = 0; i < thisKeyFieldTypes.length; i++) {
 				if (!thisKeyFieldTypes[i].equals(otherKeyFieldTypes[i])) {
-					throw new IncompatibleKeysException(thisKeyFieldTypes[i], otherKeyFieldTypes[i] );
+					throw new IncompatibleKeysException(thisKeyFieldTypes[i], otherKeyFieldTypes[i]);
 				}
 			}
 		}
@@ -77,8 +77,8 @@ public abstract class Keys<T> {
 	// --------------------------------------------------------------------------------------------
 	//  Specializations for expression-based / extractor-based grouping
 	// --------------------------------------------------------------------------------------------
-	
-	
+
+
 	public static class SelectorFunctionKeys<T, K> extends Keys<T> {
 
 		private final KeySelector<T, K> keyExtractor;
@@ -96,18 +96,17 @@ public abstract class Keys<T> {
 				throw new NullPointerException("Key type must not be null.");
 			}
 			if (!keyType.isKeyType()) {
-				throw new InvalidProgramException("Return type "+keyType+" of KeySelector "+keyExtractor.getClass()+" is not a valid key type");
+				throw new InvalidProgramException("Return type " + keyType + " of KeySelector " + keyExtractor.getClass() + " is not a valid key type");
 			}
 
 			this.keyExtractor = keyExtractor;
 			this.inputType = inputType;
 			this.keyType = keyType;
 
-			this.originalKeyTypes = new TypeInformation[] {keyType};
+			this.originalKeyTypes = new TypeInformation[]{keyType};
 			if (keyType instanceof CompositeType) {
-				this.keyFields = ((CompositeType<T>)keyType).getFlatFields(ExpressionKeys.SELECT_ALL_CHAR);
-			}
-			else {
+				this.keyFields = ((CompositeType<T>) keyType).getFlatFields(ExpressionKeys.SELECT_ALL_CHAR);
+			} else {
 				this.keyFields = new ArrayList<>(1);
 				this.keyFields.add(new FlatFieldDescriptor(0, keyType));
 			}
@@ -159,13 +158,12 @@ public abstract class Keys<T> {
 			if (keyFields.size() != 1) {
 				throw new InvalidProgramException("Custom partitioners can only be used with keys that have one key field.");
 			}
-			
+
 			if (typeInfo == null) {
 				// try to extract key type from partitioner
 				try {
 					typeInfo = TypeExtractor.getPartitionerTypes(partitioner);
-				}
-				catch (Throwable t) {
+				} catch (Throwable t) {
 					// best effort check, so we ignore exceptions
 				}
 			}
@@ -185,18 +183,18 @@ public abstract class Keys<T> {
 			return "Key function (Type: " + keyType + ")";
 		}
 	}
-	
-	
+
+
 	/**
 	 * Represents (nested) field access through string and integer-based keys
 	 */
 	public static class ExpressionKeys<T> extends Keys<T> {
-		
+
 		public static final String SELECT_ALL_CHAR = "*";
 		public static final String SELECT_ALL_CHAR_SCALA = "_";
 		private static final Pattern WILD_CARD_REGEX = Pattern.compile("[\\.]?("
-				+ "\\" + SELECT_ALL_CHAR + "|"
-				+ "\\" + SELECT_ALL_CHAR_SCALA +")$");
+			+ "\\" + SELECT_ALL_CHAR + "|"
+			+ "\\" + SELECT_ALL_CHAR_SCALA + ")$");
 
 		// Flattened fields representing keys fields
 		private List<FlatFieldDescriptor> keyFields;
@@ -230,7 +228,7 @@ public abstract class Keys<T> {
 
 			if (!type.isTupleType() || !(type instanceof CompositeType)) {
 				throw new InvalidProgramException("Specifying keys via field positions is only valid " +
-						"for tuple data types. Type: " + type);
+					"for tuple data types. Type: " + type);
 			}
 			if (type.getArity() == 0) {
 				throw new InvalidProgramException("Tuple size must be greater than 0. Size: " + type.getArity());
@@ -251,7 +249,7 @@ public abstract class Keys<T> {
 			checkArgument(keyPositions.length > 0, "Grouping fields can not be empty at this point");
 
 			// extract key field types
-			CompositeType<T> cType = (CompositeType<T>)type;
+			CompositeType<T> cType = (CompositeType<T>) type;
 			this.keyFields = new ArrayList<>(type.getTotalFields());
 
 			// for each key position, find all (nested) field types
@@ -265,8 +263,8 @@ public abstract class Keys<T> {
 				this.originalKeyTypes[i] = cType.getTypeAt(keyPos);
 				cType.getFlatFields(fieldNames[keyPos], 0, tmpList);
 				// check if fields are of key type
-				for(FlatFieldDescriptor ffd : tmpList) {
-					if(!ffd.getType().isKeyType()) {
+				for (FlatFieldDescriptor ffd : tmpList) {
+					if (!ffd.getType().isKeyType()) {
 						throw new InvalidProgramException("This type (" + ffd.getType() + ") cannot be used as key.");
 					}
 				}
@@ -289,7 +287,7 @@ public abstract class Keys<T> {
 
 			this.keyFields = new ArrayList<>(keyExpressions.length);
 
-			if (type instanceof CompositeType){
+			if (type instanceof CompositeType) {
 				CompositeType<T> cType = (CompositeType<T>) type;
 				this.originalKeyTypes = new TypeInformation<?>[keyExpressions.length];
 
@@ -324,8 +322,7 @@ public abstract class Keys<T> {
 						this.originalKeyTypes[i] = cType.getTypeAt(strippedKeyExpr);
 					}
 				}
-			}
-			else {
+			} else {
 				if (!type.isKeyType()) {
 					throw new InvalidProgramException("This type (" + type + ") cannot be used as key.");
 				}
@@ -345,13 +342,13 @@ public abstract class Keys<T> {
 					// add full type as key
 					keyFields.add(new FlatFieldDescriptor(0, type));
 				}
-				this.originalKeyTypes = new TypeInformation[] {type};
+				this.originalKeyTypes = new TypeInformation[]{type};
 			}
 		}
-		
+
 		@Override
 		public int getNumberOfKeyFields() {
-			if(keyFields == null) {
+			if (keyFields == null) {
 				return 0;
 			}
 			return keyFields.size();
@@ -391,8 +388,7 @@ public abstract class Keys<T> {
 				// try to extract key type from partitioner
 				try {
 					typeInfo = TypeExtractor.getPartitionerTypes(partitioner);
-				}
-				catch (Throwable t) {
+				} catch (Throwable t) {
 					// best effort check, so we ignore exceptions
 				}
 			}
@@ -403,7 +399,7 @@ public abstract class Keys<T> {
 				TypeInformation<?> keyType = keyFields.get(0).getType();
 				if (!keyType.equals(typeInfo)) {
 					throw new InvalidProgramException("The partitioner is incompatible with the key type. "
-										+ "Partitioner type: " + typeInfo + " , key type: " + keyType);
+						+ "Partitioner type: " + typeInfo + " , key type: " + keyType);
 				}
 			}
 		}
@@ -423,11 +419,11 @@ public abstract class Keys<T> {
 				throw new InvalidProgramException("Tuple size must be greater than 0. Size: " + type.getArity());
 			}
 
-			if(fieldPos < 0 || fieldPos >= type.getArity()) {
+			if (fieldPos < 0 || fieldPos >= type.getArity()) {
 				throw new IndexOutOfBoundsException("Tuple position is out of range: " + fieldPos);
 			}
 
-			TypeInformation<?> sortKeyType = ((CompositeType<?>)type).getTypeAt(fieldPos);
+			TypeInformation<?> sortKeyType = ((CompositeType<?>) type).getTypeAt(fieldPos);
 			return sortKeyType.isSortKeyType();
 		}
 
@@ -438,12 +434,10 @@ public abstract class Keys<T> {
 			fieldExpr = fieldExpr.trim();
 			if (SELECT_ALL_CHAR.equals(fieldExpr) || SELECT_ALL_CHAR_SCALA.equals(fieldExpr)) {
 				sortKeyType = type;
-			}
-			else {
+			} else {
 				if (type instanceof CompositeType) {
 					sortKeyType = ((CompositeType<?>) type).getTypeAt(fieldExpr);
-				}
-				else {
+				} else {
 					throw new InvalidProgramException(
 						"Field expression must be equal to '" + SELECT_ALL_CHAR + "' or '" + SELECT_ALL_CHAR_SCALA + "' for atomic types.");
 				}
@@ -455,7 +449,6 @@ public abstract class Keys<T> {
 	}
 
 	// --------------------------------------------------------------------------------------------
-
 
 
 	// --------------------------------------------------------------------------------------------
@@ -483,13 +476,13 @@ public abstract class Keys<T> {
 	public static class IncompatibleKeysException extends Exception {
 		private static final long serialVersionUID = 1L;
 		public static final String SIZE_MISMATCH_MESSAGE = "The number of specified keys is different.";
-		
+
 		public IncompatibleKeysException(String message) {
 			super(message);
 		}
 
 		public IncompatibleKeysException(TypeInformation<?> typeInformation, TypeInformation<?> typeInformation2) {
-			super(typeInformation+" and "+typeInformation2+" are not compatible");
+			super(typeInformation + " and " + typeInformation2 + " are not compatible");
 		}
 	}
 }

@@ -54,12 +54,12 @@ public class SqlCreateView extends SqlCreate implements ExtendedSqlNode {
 	private final SqlCharStringLiteral comment;
 
 	public SqlCreateView(
-			SqlParserPos pos,
-			SqlIdentifier viewName,
-			SqlNodeList fieldList,
-			SqlNode query,
-			boolean replace,
-			SqlCharStringLiteral comment) {
+		SqlParserPos pos,
+		SqlIdentifier viewName,
+		SqlNodeList fieldList,
+		SqlNode query,
+		boolean replace,
+		SqlCharStringLiteral comment) {
 		super(OPERATOR, pos, replace, false);
 		this.viewName = requireNonNull(viewName, "viewName should not be null");
 		this.fieldList = requireNonNull(fieldList, "fieldList should not be null");

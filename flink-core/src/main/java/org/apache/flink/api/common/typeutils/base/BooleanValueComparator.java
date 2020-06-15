@@ -42,7 +42,7 @@ public class BooleanValueComparator extends TypeComparator<BooleanValue> {
 
 	private final BooleanValue tempReference = new BooleanValue();
 
-	private final TypeComparator<?>[] comparators = new TypeComparator[] {this};
+	private final TypeComparator<?>[] comparators = new TypeComparator[]{this};
 
 	public BooleanValueComparator(boolean ascending) {
 		this.ascendingComparison = ascending;

@@ -261,9 +261,9 @@ public class CliTableResultView extends CliResultView<CliTableResultView.ResultT
 
 		// convert page
 		final List<String[]> stringRows = rows
-				.stream()
-				.map(CliUtils::rowToString)
-				.collect(Collectors.toList());
+			.stream()
+			.map(CliUtils::rowToString)
+			.collect(Collectors.toList());
 
 		// update results
 		if (previousResultsPage == retrievalPage) {

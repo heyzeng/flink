@@ -50,8 +50,8 @@ public class RemoteEnvironmentConfigUtils {
 	public static void validate(final String host, final int port) {
 		if (!ExecutionEnvironment.areExplicitEnvironmentsAllowed()) {
 			throw new InvalidProgramException(
-					"The RemoteEnvironment cannot be instantiated when running in a pre-defined context " +
-							"(such as Command Line Client, Scala Shell, or TestEnvironment)");
+				"The RemoteEnvironment cannot be instantiated when running in a pre-defined context " +
+					"(such as Command Line Client, Scala Shell, or TestEnvironment)");
 		}
 
 		checkNotNull(host);
@@ -73,8 +73,8 @@ public class RemoteEnvironmentConfigUtils {
 
 	private static List<URL> getJarFiles(final String[] jars) {
 		return jars == null
-				? Collections.emptyList()
-				: Arrays.stream(jars).map(jarPath -> {
+			? Collections.emptyList()
+			: Arrays.stream(jars).map(jarPath -> {
 			try {
 				final URL fileURL = new File(jarPath).getAbsoluteFile().toURI().toURL();
 				JarUtils.checkJarFile(fileURL);

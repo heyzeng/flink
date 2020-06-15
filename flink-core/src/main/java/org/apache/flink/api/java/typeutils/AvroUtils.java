@@ -66,7 +66,7 @@ public abstract class AvroUtils {
 	 * Registers a special Serializer for GenericData.Array.
 	 */
 	public abstract void addAvroGenericDataArrayRegistration(
-			LinkedHashMap<String,
+		LinkedHashMap<String,
 			KryoRegistration> kryoRegistrations);
 
 	/**

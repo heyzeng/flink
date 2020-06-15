@@ -32,11 +32,11 @@ public final class TypeSerializerUtils {
 	 * compatible code paths work.
 	 */
 	public static TypeSerializerSnapshot<?>[] snapshotBackwardsCompatible(
-			TypeSerializer<?>... originatingSerializers) {
+		TypeSerializer<?>... originatingSerializers) {
 
 		return Arrays.stream(originatingSerializers)
-				.map(TypeSerializerUtils::snapshotBackwardsCompatible)
-				.toArray(TypeSerializerSnapshot[]::new);
+			.map(TypeSerializerUtils::snapshotBackwardsCompatible)
+			.toArray(TypeSerializerSnapshot[]::new);
 	}
 
 	/**
@@ -55,8 +55,8 @@ public final class TypeSerializerUtils {
 	 */
 	@SuppressWarnings({"unchecked", "deprecation"})
 	private static <T> TypeSerializerSnapshot<T> configureForBackwardsCompatibility(
-			TypeSerializerSnapshot<?> snapshot,
-			TypeSerializer<?> serializer) {
+		TypeSerializerSnapshot<?> snapshot,
+		TypeSerializer<?> serializer) {
 
 		TypeSerializerSnapshot<T> typedSnapshot = (TypeSerializerSnapshot<T>) snapshot;
 		TypeSerializer<T> typedSerializer = (TypeSerializer<T>) serializer;
@@ -70,6 +70,9 @@ public final class TypeSerializerUtils {
 
 	// ------------------------------------------------------------------------
 
-	/** This class is not meanto to be instantiated. */
-	private TypeSerializerUtils() {}
+	/**
+	 * This class is not meanto to be instantiated.
+	 */
+	private TypeSerializerUtils() {
+	}
 }

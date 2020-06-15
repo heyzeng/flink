@@ -22,8 +22,7 @@ import org.apache.flink.annotation.Public;
 import org.apache.flink.api.java.DataSet;
 
 /**
- *
- * @param <IN> The type of the data set consumed by this operator.
+ * @param <IN>  The type of the data set consumed by this operator.
  * @param <OUT> The type of the data set produced by this operator.
  */
 @Public

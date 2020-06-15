@@ -78,8 +78,7 @@ public class EitherSerializer<L, R> extends TypeSerializer<Either<L, R>> {
 		if ((leftSerializer != duplicateLeft) || (rightSerializer != duplicateRight)) {
 			// stateful
 			return new EitherSerializer<L, R>(duplicateLeft, duplicateRight);
-		}
-		else {
+		} else {
 			return this;
 		}
 	}
@@ -97,8 +96,7 @@ public class EitherSerializer<L, R> extends TypeSerializer<Either<L, R>> {
 			L left = from.left();
 			L copyLeft = leftSerializer.copy(left);
 			return Left(copyLeft);
-		}
-		else {
+		} else {
 			R right = from.right();
 			R copyRight = rightSerializer.copy(right);
 			return Right(copyRight);
@@ -130,8 +128,7 @@ public class EitherSerializer<L, R> extends TypeSerializer<Either<L, R>> {
 		if (record.isLeft()) {
 			target.writeBoolean(true);
 			leftSerializer.serialize(record.left(), target);
-		}
-		else {
+		} else {
 			target.writeBoolean(false);
 			rightSerializer.serialize(record.right(), target);
 		}
@@ -142,8 +139,7 @@ public class EitherSerializer<L, R> extends TypeSerializer<Either<L, R>> {
 		boolean isLeft = source.readBoolean();
 		if (isLeft) {
 			return Left(leftSerializer.deserialize(source));
-		}
-		else {
+		} else {
 			return Right(rightSerializer.deserialize(source));
 		}
 	}
@@ -170,8 +166,7 @@ public class EitherSerializer<L, R> extends TypeSerializer<Either<L, R>> {
 		target.writeBoolean(isLeft);
 		if (isLeft) {
 			leftSerializer.copy(source, target);
-		}
-		else {
+		} else {
 			rightSerializer.copy(source, target);
 		}
 	}

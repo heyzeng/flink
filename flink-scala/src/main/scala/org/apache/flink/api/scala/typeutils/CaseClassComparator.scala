@@ -29,9 +29,9 @@ import org.apache.flink.types.{KeyFieldOutOfBoundsException, NullKeyFieldExcepti
  */
 @Internal
 class CaseClassComparator[T <: Product](
-    keys: Array[Int],
-    scalaComparators: Array[TypeComparator[_]],
-    scalaSerializers: Array[TypeSerializer[_]] )
+                                         keys: Array[Int],
+                                         scalaComparators: Array[TypeComparator[_]],
+                                         scalaSerializers: Array[TypeSerializer[_]])
   extends TupleComparatorBase[T](keys, scalaComparators, scalaSerializers) {
 
   private val extractedKeys = new Array[AnyRef](keys.length)
@@ -54,10 +54,10 @@ class CaseClassComparator[T <: Product](
     var code: Int = comparator.hash(value.productElement(keyPositions(0)))
     var i = 1
     try {
-      while(i < keyPositions.length) {
-          code *= TupleComparatorBase.HASH_SALT(i & 0x1F)
-          val comparator = comparators(i).asInstanceOf[TypeComparator[Any]]
-          code += comparator.hash(value.productElement(keyPositions(i)))
+      while (i < keyPositions.length) {
+        code *= TupleComparatorBase.HASH_SALT(i & 0x1F)
+        val comparator = comparators(i).asInstanceOf[TypeComparator[Any]]
+        code += comparator.hash(value.productElement(keyPositions(i)))
         i += 1
       }
     } catch {
@@ -72,7 +72,7 @@ class CaseClassComparator[T <: Product](
   def setReference(toCompare: T) {
     var i = 0
     try {
-      while(i < keyPositions.length) {
+      while (i < keyPositions.length) {
         val comparator = comparators(i).asInstanceOf[TypeComparator[Any]]
         comparator.setReference(toCompare.productElement(keyPositions(i)))
         i += 1
@@ -88,7 +88,7 @@ class CaseClassComparator[T <: Product](
   def equalToReference(candidate: T): Boolean = {
     var i = 0
     try {
-      while(i < keyPositions.length) {
+      while (i < keyPositions.length) {
         val comparator = comparators(i).asInstanceOf[TypeComparator[Any]]
         if (!comparator.equalToReference(candidate.productElement(keyPositions(i)))) {
           return false
@@ -107,7 +107,7 @@ class CaseClassComparator[T <: Product](
   def compare(first: T, second: T): Int = {
     var i = 0
     try {
-      while(i < keyPositions.length) {
+      while (i < keyPositions.length) {
         val keyPos: Int = keyPositions(i)
         val comparator = comparators(i).asInstanceOf[TypeComparator[Any]]
         val cmp: Int = comparator.compare(

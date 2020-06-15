@@ -99,24 +99,24 @@ public final class DataSetUtils {
 				super.open(parameters);
 
 				List<Tuple2<Integer, Long>> offsets = getRuntimeContext().getBroadcastVariableWithInitializer(
-						"counts",
-						new BroadcastVariableInitializer<Tuple2<Integer, Long>, List<Tuple2<Integer, Long>>>() {
-							@Override
-							public List<Tuple2<Integer, Long>> initializeBroadcastVariable(Iterable<Tuple2<Integer, Long>> data) {
-								// sort the list by task id to calculate the correct offset
-								List<Tuple2<Integer, Long>> sortedData = new ArrayList<>();
-								for (Tuple2<Integer, Long> datum : data) {
-									sortedData.add(datum);
-								}
-								Collections.sort(sortedData, new Comparator<Tuple2<Integer, Long>>() {
-									@Override
-									public int compare(Tuple2<Integer, Long> o1, Tuple2<Integer, Long> o2) {
-										return o1.f0.compareTo(o2.f0);
-									}
-								});
-								return sortedData;
+					"counts",
+					new BroadcastVariableInitializer<Tuple2<Integer, Long>, List<Tuple2<Integer, Long>>>() {
+						@Override
+						public List<Tuple2<Integer, Long>> initializeBroadcastVariable(Iterable<Tuple2<Integer, Long>> data) {
+							// sort the list by task id to calculate the correct offset
+							List<Tuple2<Integer, Long>> sortedData = new ArrayList<>();
+							for (Tuple2<Integer, Long> datum : data) {
+								sortedData.add(datum);
 							}
-						});
+							Collections.sort(sortedData, new Comparator<Tuple2<Integer, Long>>() {
+								@Override
+								public int compare(Tuple2<Integer, Long> o1, Tuple2<Integer, Long> o2) {
+									return o1.f0.compareTo(o2.f0);
+								}
+							});
+							return sortedData;
+						}
+					});
 
 				// compute the offset for each partition
 				for (int i = 0; i < getRuntimeContext().getIndexOfThisSubtask(); i++) {
@@ -126,7 +126,7 @@ public final class DataSetUtils {
 
 			@Override
 			public void mapPartition(Iterable<T> values, Collector<Tuple2<Long, T>> out) throws Exception {
-				for (T value: values) {
+				for (T value : values) {
 					out.collect(new Tuple2<>(start++, value));
 				}
 			}
@@ -146,7 +146,7 @@ public final class DataSetUtils {
 	 * @param input the input data set
 	 * @return a data set of tuple 2 consisting of ids and initial values.
 	 */
-	public static <T> DataSet<Tuple2<Long, T>> zipWithUniqueId (DataSet <T> input) {
+	public static <T> DataSet<Tuple2<Long, T>> zipWithUniqueId(DataSet<T> input) {
 
 		return input.mapPartition(new RichMapPartitionFunction<T, Tuple2<Long, T>>() {
 
@@ -193,7 +193,7 @@ public final class DataSetUtils {
 	 * @return The sampled DataSet
 	 */
 	public static <T> MapPartitionOperator<T, T> sample(
-		DataSet <T> input,
+		DataSet<T> input,
 		final boolean withReplacement,
 		final double fraction) {
 
@@ -211,7 +211,7 @@ public final class DataSetUtils {
 	 * @return The sampled DataSet
 	 */
 	public static <T> MapPartitionOperator<T, T> sample(
-		DataSet <T> input,
+		DataSet<T> input,
 		final boolean withReplacement,
 		final double fraction,
 		final long seed) {
@@ -226,11 +226,11 @@ public final class DataSetUtils {
 	 * fraction unless you need exact precision.
 	 *
 	 * @param withReplacement Whether element can be selected more than once.
-	 * @param numSamples       The expected sample size.
+	 * @param numSamples      The expected sample size.
 	 * @return The sampled DataSet
 	 */
 	public static <T> DataSet<T> sampleWithSize(
-		DataSet <T> input,
+		DataSet<T> input,
 		final boolean withReplacement,
 		final int numSamples) {
 
@@ -244,12 +244,12 @@ public final class DataSetUtils {
 	 * fraction unless you need exact precision.
 	 *
 	 * @param withReplacement Whether element can be selected more than once.
-	 * @param numSamples       The expected sample size.
+	 * @param numSamples      The expected sample size.
 	 * @param seed            Random number generator seed.
 	 * @return The sampled DataSet
 	 */
 	public static <T> DataSet<T> sampleWithSize(
-		DataSet <T> input,
+		DataSet<T> input,
 		final boolean withReplacement,
 		final int numSamples,
 		final long seed) {
@@ -306,6 +306,7 @@ public final class DataSetUtils {
 	 * summary.f1.getMaxLength()
 	 * }
 	 * </pre>
+	 *
 	 * @return the summary as a Tuple the same width as input rows
 	 */
 	public static <R extends Tuple, T extends Tuple> R summarize(DataSet<T> input) throws Exception {
@@ -350,7 +351,7 @@ public final class DataSetUtils {
 		input.output(new Utils.ChecksumHashCodeHelper<T>(id)).name("ChecksumHashCode");
 
 		JobExecutionResult res = input.getExecutionEnvironment().execute();
-		return res.<Utils.ChecksumHashCode> getAccumulatorResult(id);
+		return res.<Utils.ChecksumHashCode>getAccumulatorResult(id);
 	}
 
 	// *************************************************************************

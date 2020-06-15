@@ -33,7 +33,6 @@ import javax.annotation.Nullable;
  * it again with the new serializer) may be required before the new serializer can be used.
  *
  * @param <T> the type of data serialized by the serializer that was being checked.
- *
  * @see TypeSerializer
  * @see TypeSerializerSnapshot#resolveSchemaCompatibility(TypeSerializer)
  */
@@ -45,7 +44,9 @@ public class TypeSerializerSchemaCompatibility<T> {
 	 */
 	enum Type {
 
-		/** This indicates that the new serializer continued to be used as is. */
+		/**
+		 * This indicates that the new serializer continued to be used as is.
+		 */
 		COMPATIBLE_AS_IS,
 
 		/**
@@ -103,7 +104,7 @@ public class TypeSerializerSchemaCompatibility<T> {
 	 *
 	 * @param reconfiguredSerializer the reconfigured version of the new serializer.
 	 * @return a result that indicates a reconfigured version of the new serializer is compatible, and should be
-	 *         used instead of the original new serializer.
+	 * used instead of the original new serializer.
 	 */
 	public static <T> TypeSerializerSchemaCompatibility<T> compatibleWithReconfiguredSerializer(TypeSerializer<T> reconfiguredSerializer) {
 		return new TypeSerializerSchemaCompatibility<>(
@@ -181,8 +182,8 @@ public class TypeSerializerSchemaCompatibility<T> {
 	@Override
 	public String toString() {
 		return "TypeSerializerSchemaCompatibility{" +
-				"resultType=" + resultType +
-				", reconfiguredNewSerializer=" + reconfiguredNewSerializer +
-				'}';
+			"resultType=" + resultType +
+			", reconfiguredNewSerializer=" + reconfiguredNewSerializer +
+			'}';
 	}
 }

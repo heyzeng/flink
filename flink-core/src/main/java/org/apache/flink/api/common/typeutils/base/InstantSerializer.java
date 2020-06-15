@@ -42,7 +42,7 @@ public final class InstantSerializer extends TypeSerializerSingleton<Instant> {
 	//Nanos of normal Instant is between 0 and 999,999,999,
 	//therefore we can use Integer.MIN_VALUE to represent NULL Instant
 	//regardless supported range of seconds
-	private static final int  NULL_NANOS = Integer.MIN_VALUE;
+	private static final int NULL_NANOS = Integer.MIN_VALUE;
 
 	public static final InstantSerializer INSTANCE = new InstantSerializer();
 

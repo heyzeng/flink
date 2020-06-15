@@ -31,7 +31,7 @@ import static org.apache.flink.util.Preconditions.checkNotNull;
 
 /**
  * Special {@code TypeInformation} used by {@link org.apache.flink.api.common.state.MapStateDescriptor}.
- * 
+ *
  * @param <K> The type of the keys in the map.
  * @param <V> The type of the values in the map.
  */
@@ -48,7 +48,7 @@ public class MapTypeInfo<K, V> extends TypeInformation<Map<K, V>> {
 		this.keyTypeInfo = Preconditions.checkNotNull(keyTypeInfo, "The key type information cannot be null.");
 		this.valueTypeInfo = Preconditions.checkNotNull(valueTypeInfo, "The value type information cannot be null.");
 	}
-	
+
 	public MapTypeInfo(Class<K> keyClass, Class<V> valueClass) {
 		this.keyTypeInfo = of(checkNotNull(keyClass, "The key class cannot be null."));
 		this.valueTypeInfo = of(checkNotNull(valueClass, "The value class cannot be null."));
@@ -99,7 +99,7 @@ public class MapTypeInfo<K, V> extends TypeInformation<Map<K, V>> {
 	@SuppressWarnings("unchecked")
 	@Override
 	public Class<Map<K, V>> getTypeClass() {
-		return (Class<Map<K, V>>)(Class<?>)Map.class;
+		return (Class<Map<K, V>>) (Class<?>) Map.class;
 	}
 
 	@Override
@@ -111,7 +111,7 @@ public class MapTypeInfo<K, V> extends TypeInformation<Map<K, V>> {
 	public TypeSerializer<Map<K, V>> createSerializer(ExecutionConfig config) {
 		TypeSerializer<K> keyTypeSerializer = keyTypeInfo.createSerializer(config);
 		TypeSerializer<V> valueTypeSerializer = valueTypeInfo.createSerializer(config);
-		
+
 		return new MapSerializer<>(keyTypeSerializer, valueTypeSerializer);
 	}
 
@@ -127,9 +127,9 @@ public class MapTypeInfo<K, V> extends TypeInformation<Map<K, V>> {
 		} else if (obj instanceof MapTypeInfo) {
 			@SuppressWarnings("unchecked")
 			MapTypeInfo<K, V> other = (MapTypeInfo<K, V>) obj;
-			
-			return (other.canEqual(this) && 
-					keyTypeInfo.equals(other.keyTypeInfo) && valueTypeInfo.equals(other.valueTypeInfo));
+
+			return (other.canEqual(this) &&
+				keyTypeInfo.equals(other.keyTypeInfo) && valueTypeInfo.equals(other.valueTypeInfo));
 		} else {
 			return false;
 		}

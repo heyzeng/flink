@@ -59,7 +59,7 @@ public class GenericDataSinkBase<IN> extends Operator<Nothing> {
 	 * Creates a GenericDataSink with the provided {@link org.apache.flink.api.common.io.OutputFormat} implementation
 	 * and the given name.
 	 *
-	 * @param f The {@link org.apache.flink.api.common.io.OutputFormat} implementation used to sink the data.
+	 * @param f    The {@link org.apache.flink.api.common.io.OutputFormat} implementation used to sink the data.
 	 * @param name The given name for the sink, used in plans, logs and progress messages.
 	 */
 	public GenericDataSinkBase(OutputFormat<IN> f, UnaryOperatorInformation<IN, Nothing> operatorInfo, String name) {
@@ -73,7 +73,7 @@ public class GenericDataSinkBase<IN> extends Operator<Nothing> {
 	 * Creates a GenericDataSink with the provided {@link org.apache.flink.api.common.io.OutputFormat} implementation
 	 * and the given name.
 	 *
-	 * @param f The {@link org.apache.flink.api.common.io.OutputFormat} implementation used to sink the data.
+	 * @param f    The {@link org.apache.flink.api.common.io.OutputFormat} implementation used to sink the data.
 	 * @param name The given name for the sink, used in plans, logs and progress messages.
 	 */
 	public GenericDataSinkBase(UserCodeWrapper<? extends OutputFormat<IN>> f, UnaryOperatorInformation<IN, Nothing> operatorInfo, String name) {
@@ -156,61 +156,59 @@ public class GenericDataSinkBase<IN> extends Operator<Nothing> {
 	 * Gets the order, in which the data sink writes its data locally. Local order means that
 	 * with in each fragment of the file inside the distributed file system, the data is ordered,
 	 * but not across file fragments.
-	 * 
+	 *
 	 * @return NONE, if the sink writes data in any order, or ASCENDING (resp. DESCENDING),
-	 *         if the sink writes it data with a local ascending (resp. descending) order.
+	 * if the sink writes it data with a local ascending (resp. descending) order.
 	 */
 	public Ordering getLocalOrder() {
 		return this.localOrdering;
 	}
-	
+
 	/**
 	 * Sets the order in which the sink must write its data within each fragment in the distributed
 	 * file system. For any value other then <tt>NONE</tt>, this will cause the system to perform a
 	 * local sort, or try to reuse an order from a previous operation.
-	 * 
+	 *
 	 * @param localOrder The local order to write the data in.
 	 */
 	public void setLocalOrder(Ordering localOrder) {
 		this.localOrdering = localOrder;
 	}
 
-	
+
 	// --------------------------------------------------------------------------------------------
-	
+
 	/**
 	 * Gets the class describing this sinks output format.
-	 * 
+	 *
 	 * @return The output format class.
 	 */
 	public UserCodeWrapper<? extends OutputFormat<IN>> getFormatWrapper() {
 		return this.formatWrapper;
 	}
-	
+
 	/**
 	 * Gets the class describing the output format.
 	 * <p>
 	 * This method is basically identical to {@link #getFormatWrapper()}.
-	 * 
+	 *
 	 * @return The class describing the output format.
-	 * 
 	 * @see org.apache.flink.api.common.operators.Operator#getUserCodeWrapper()
 	 */
 	@Override
 	public UserCodeWrapper<? extends OutputFormat<IN>> getUserCodeWrapper() {
 		return this.formatWrapper;
 	}
-	
+
 	// --------------------------------------------------------------------------------------------
-	
+
 	/**
 	 * Accepts the visitor and applies it this instance. This method applies the visitor in a depth-first traversal.
-	 * The visitors pre-visit method is called and, if returning 
+	 * The visitors pre-visit method is called and, if returning
 	 * <tt>true</tt>, the visitor is recursively applied on the single input. After the recursion returned,
 	 * the post-visit method is called.
-	 * 
+	 *
 	 * @param visitor The visitor.
-	 *  
 	 * @see org.apache.flink.util.Visitable#accept(org.apache.flink.util.Visitor)
 	 */
 	@Override
@@ -223,7 +221,7 @@ public class GenericDataSinkBase<IN> extends Operator<Nothing> {
 	}
 
 	// --------------------------------------------------------------------------------------------
-	
+
 	@SuppressWarnings("unchecked")
 	protected void executeOnCollections(List<IN> inputData, RuntimeContext ctx, ExecutionConfig executionConfig) throws Exception {
 		OutputFormat<IN> format = this.formatWrapper.getUserCodeObject();
@@ -239,7 +237,7 @@ public class GenericDataSinkBase<IN> extends Operator<Nothing> {
 			} else if (inputType instanceof AtomicType) {
 				sortComparator = ((AtomicType<IN>) inputType).createComparator(sortOrderings[0], executionConfig);
 			} else {
-				throw new UnsupportedOperationException("Local output sorting does not support type "+inputType+" yet.");
+				throw new UnsupportedOperationException("Local output sorting does not support type " + inputType + " yet.");
 			}
 
 			Collections.sort(inputData, new Comparator<IN>() {
@@ -250,28 +248,28 @@ public class GenericDataSinkBase<IN> extends Operator<Nothing> {
 			});
 		}
 
-		if(format instanceof InitializeOnMaster) {
-			((InitializeOnMaster)format).initializeGlobal(1);
+		if (format instanceof InitializeOnMaster) {
+			((InitializeOnMaster) format).initializeGlobal(1);
 		}
 		format.configure(this.parameters);
 
-		if(format instanceof RichOutputFormat){
+		if (format instanceof RichOutputFormat) {
 			((RichOutputFormat<?>) format).setRuntimeContext(ctx);
 		}
 		format.open(0, 1);
 		for (IN element : inputData) {
 			format.writeRecord(element);
 		}
-		
+
 		format.close();
-		
-		if(format instanceof FinalizeOnMaster) {
-			((FinalizeOnMaster)format).finalizeGlobal(1);
+
+		if (format instanceof FinalizeOnMaster) {
+			((FinalizeOnMaster) format).finalizeGlobal(1);
 		}
 	}
-	
+
 	// --------------------------------------------------------------------------------------------
-	
+
 	@Override
 	public String toString() {
 		return this.name;

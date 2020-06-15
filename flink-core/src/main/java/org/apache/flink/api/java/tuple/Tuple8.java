@@ -35,13 +35,12 @@ import org.apache.flink.util.StringUtils;
  * with Tuples to reuse objects in order to reduce pressure on the garbage collector.</p>
  *
  * <p>Warning: If you subclass Tuple8, then be sure to either <ul>
- *  <li> not add any new fields, or </li>
- *  <li> make it a POJO, and always declare the element type of your DataStreams/DataSets to your descendant
- *       type. (That is, if you have a "class Foo extends Tuple8", then don't use instances of
- *       Foo in a DataStream&lt;Tuple8&gt; / DataSet&lt;Tuple8&gt;, but declare it as
- *       DataStream&lt;Foo&gt; / DataSet&lt;Foo&gt;.) </li>
+ * <li> not add any new fields, or </li>
+ * <li> make it a POJO, and always declare the element type of your DataStreams/DataSets to your descendant
+ * type. (That is, if you have a "class Foo extends Tuple8", then don't use instances of
+ * Foo in a DataStream&lt;Tuple8&gt; / DataSet&lt;Tuple8&gt;, but declare it as
+ * DataStream&lt;Foo&gt; / DataSet&lt;Foo&gt;.) </li>
  * </ul></p>
- * @see Tuple
  *
  * @param <T0> The type of field 0
  * @param <T1> The type of field 1
@@ -51,33 +50,51 @@ import org.apache.flink.util.StringUtils;
  * @param <T5> The type of field 5
  * @param <T6> The type of field 6
  * @param <T7> The type of field 7
+ * @see Tuple
  */
 @Public
 public class Tuple8<T0, T1, T2, T3, T4, T5, T6, T7> extends Tuple {
 
 	private static final long serialVersionUID = 1L;
 
-	/** Field 0 of the tuple. */
+	/**
+	 * Field 0 of the tuple.
+	 */
 	public T0 f0;
-	/** Field 1 of the tuple. */
+	/**
+	 * Field 1 of the tuple.
+	 */
 	public T1 f1;
-	/** Field 2 of the tuple. */
+	/**
+	 * Field 2 of the tuple.
+	 */
 	public T2 f2;
-	/** Field 3 of the tuple. */
+	/**
+	 * Field 3 of the tuple.
+	 */
 	public T3 f3;
-	/** Field 4 of the tuple. */
+	/**
+	 * Field 4 of the tuple.
+	 */
 	public T4 f4;
-	/** Field 5 of the tuple. */
+	/**
+	 * Field 5 of the tuple.
+	 */
 	public T5 f5;
-	/** Field 6 of the tuple. */
+	/**
+	 * Field 6 of the tuple.
+	 */
 	public T6 f6;
-	/** Field 7 of the tuple. */
+	/**
+	 * Field 7 of the tuple.
+	 */
 	public T7 f7;
 
 	/**
 	 * Creates a new tuple where all fields are null.
 	 */
-	public Tuple8() {}
+	public Tuple8() {
+	}
 
 	/**
 	 * Creates a new tuple and assigns the given values to the tuple's fields.
@@ -110,23 +127,32 @@ public class Tuple8<T0, T1, T2, T3, T4, T5, T6, T7> extends Tuple {
 	@Override
 	@SuppressWarnings("unchecked")
 	public <T> T getField(int pos) {
-		switch(pos) {
-			case 0: return (T) this.f0;
-			case 1: return (T) this.f1;
-			case 2: return (T) this.f2;
-			case 3: return (T) this.f3;
-			case 4: return (T) this.f4;
-			case 5: return (T) this.f5;
-			case 6: return (T) this.f6;
-			case 7: return (T) this.f7;
-			default: throw new IndexOutOfBoundsException(String.valueOf(pos));
+		switch (pos) {
+			case 0:
+				return (T) this.f0;
+			case 1:
+				return (T) this.f1;
+			case 2:
+				return (T) this.f2;
+			case 3:
+				return (T) this.f3;
+			case 4:
+				return (T) this.f4;
+			case 5:
+				return (T) this.f5;
+			case 6:
+				return (T) this.f6;
+			case 7:
+				return (T) this.f7;
+			default:
+				throw new IndexOutOfBoundsException(String.valueOf(pos));
 		}
 	}
 
 	@Override
 	@SuppressWarnings("unchecked")
 	public <T> void setField(T value, int pos) {
-		switch(pos) {
+		switch (pos) {
 			case 0:
 				this.f0 = (T0) value;
 				break;
@@ -151,7 +177,8 @@ public class Tuple8<T0, T1, T2, T3, T4, T5, T6, T7> extends Tuple {
 			case 7:
 				this.f7 = (T7) value;
 				break;
-			default: throw new IndexOutOfBoundsException(String.valueOf(pos));
+			default:
+				throw new IndexOutOfBoundsException(String.valueOf(pos));
 		}
 	}
 
@@ -187,6 +214,7 @@ public class Tuple8<T0, T1, T2, T3, T4, T5, T6, T7> extends Tuple {
 	 * Creates a string representation of the tuple in the form
 	 * (f0, f1, f2, f3, f4, f5, f6, f7),
 	 * where the individual fields are the value returned by calling {@link Object#toString} on that field.
+	 *
 	 * @return The string representation of the tuple.
 	 */
 	@Override
@@ -204,6 +232,7 @@ public class Tuple8<T0, T1, T2, T3, T4, T5, T6, T7> extends Tuple {
 
 	/**
 	 * Deep equality for tuples by calling equals() on the tuple members.
+	 *
 	 * @param o the object checked for equality
 	 * @return true if this is equal to o.
 	 */
@@ -258,9 +287,10 @@ public class Tuple8<T0, T1, T2, T3, T4, T5, T6, T7> extends Tuple {
 	}
 
 	/**
-	* Shallow tuple copy.
-	* @return A new Tuple with the same fields as this.
-	*/
+	 * Shallow tuple copy.
+	 *
+	 * @return A new Tuple with the same fields as this.
+	 */
 	@Override
 	@SuppressWarnings("unchecked")
 	public Tuple8<T0, T1, T2, T3, T4, T5, T6, T7> copy() {

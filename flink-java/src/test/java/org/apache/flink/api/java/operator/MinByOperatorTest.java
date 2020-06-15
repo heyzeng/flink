@@ -47,9 +47,9 @@ public class MinByOperatorTest {
 	private final List<Tuple5<Integer, Long, String, Long, Integer>> emptyTupleData = new ArrayList<Tuple5<Integer, Long, String, Long, Integer>>();
 
 	private final TupleTypeInfo<Tuple5<Integer, Long, String, Long, Integer>> tupleTypeInfo = new TupleTypeInfo<Tuple5<Integer, Long, String, Long, Integer>>(
-			BasicTypeInfo.INT_TYPE_INFO, BasicTypeInfo.LONG_TYPE_INFO,
-			BasicTypeInfo.STRING_TYPE_INFO, BasicTypeInfo.LONG_TYPE_INFO,
-			BasicTypeInfo.INT_TYPE_INFO);
+		BasicTypeInfo.INT_TYPE_INFO, BasicTypeInfo.LONG_TYPE_INFO,
+		BasicTypeInfo.STRING_TYPE_INFO, BasicTypeInfo.LONG_TYPE_INFO,
+		BasicTypeInfo.INT_TYPE_INFO);
 
 	/**
 	 * This test validates that no exceptions is thrown when an empty dataset
@@ -59,9 +59,9 @@ public class MinByOperatorTest {
 	public void testMinByKeyFieldsDataset() {
 
 		final ExecutionEnvironment env = ExecutionEnvironment
-				.getExecutionEnvironment();
+			.getExecutionEnvironment();
 		DataSet<Tuple5<Integer, Long, String, Long, Integer>> tupleDs = env
-				.fromCollection(emptyTupleData, tupleTypeInfo);
+			.fromCollection(emptyTupleData, tupleTypeInfo);
 
 		// should work
 		try {
@@ -217,13 +217,13 @@ public class MinByOperatorTest {
 	public void testMinByRowTypeInfoKeyFieldsDataset() {
 
 		final ExecutionEnvironment env = ExecutionEnvironment
-				.getExecutionEnvironment();
-		TypeInformation[] types = new TypeInformation[] {Types.INT, Types.INT};
+			.getExecutionEnvironment();
+		TypeInformation[] types = new TypeInformation[]{Types.INT, Types.INT};
 
 		String[] fieldNames = new String[]{"id", "value"};
 		RowTypeInfo rowTypeInfo = new RowTypeInfo(types, fieldNames);
 		DataSet tupleDs = env
-				.fromCollection(Collections.singleton(new Row(2)), rowTypeInfo);
+			.fromCollection(Collections.singleton(new Row(2)), rowTypeInfo);
 
 		tupleDs.minBy(0);
 	}

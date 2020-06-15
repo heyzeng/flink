@@ -46,7 +46,7 @@ public class EnumSerializerTest extends TestLogger {
 	@Test
 	public void testPrivateEnum() {
 		testEnumSerializer(PublicEnum.FOO, PublicEnum.BAR, PublicEnum.PETER, PublicEnum.NATHANIEL,
-				PublicEnum.EMMA, PublicEnum.PAULA);
+			PublicEnum.EMMA, PublicEnum.PAULA);
 	}
 
 	@Test(expected = IllegalArgumentException.class)
@@ -180,16 +180,14 @@ public class EnumSerializerTest extends TestLogger {
 
 	@SafeVarargs
 	public final <T extends Enum<T>> void testEnumSerializer(T... data) {
-		@SuppressWarnings("unchecked")
-		final Class<T> clazz = (Class<T>) data.getClass().getComponentType();
+		@SuppressWarnings("unchecked") final Class<T> clazz = (Class<T>) data.getClass().getComponentType();
 
 		SerializerTestInstance<T> tester = new SerializerTestInstance<>(
-				new EnumSerializer<T>(clazz), clazz, 4, data);
+			new EnumSerializer<T>(clazz), clazz, 4, data);
 
 		tester.testAll();
 	}
 
-	
 
 	// ------------------------------------------------------------------------
 	//  Test enums

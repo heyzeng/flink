@@ -57,7 +57,7 @@ public interface JobClient {
 	 * need to finish processing.
 	 *
 	 * @param advanceToEndOfEventTime flag indicating if the source should inject a {@code MAX_WATERMARK} in the pipeline
-	 * @param savepointDirectory directory the savepoint should be written to
+	 * @param savepointDirectory      directory the savepoint should be written to
 	 * @return a {@link CompletableFuture} containing the path where the savepoint is located
 	 */
 	CompletableFuture<String> stopWithSavepoint(boolean advanceToEndOfEventTime, @Nullable String savepointDirectory);

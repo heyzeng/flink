@@ -37,7 +37,9 @@ import static java.util.Objects.requireNonNull;
  * with both key and value as string literal.
  */
 public class SqlTableOption extends SqlCall {
-	/** Use this operator only if you don't have a better one. */
+	/**
+	 * Use this operator only if you don't have a better one.
+	 */
 	protected static final SqlOperator OPERATOR =
 		new SqlSpecialOperator("TableOption", SqlKind.OTHER);
 

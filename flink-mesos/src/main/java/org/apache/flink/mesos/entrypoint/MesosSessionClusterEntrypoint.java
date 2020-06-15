@@ -111,8 +111,7 @@ public class MesosSessionClusterEntrypoint extends SessionClusterEntrypoint {
 		CommandLine cmd;
 		try {
 			cmd = parser.parse(ALL_OPTIONS, args);
-		}
-		catch (Exception e){
+		} catch (Exception e) {
 			LOG.error("Could not parse the command-line options.", e);
 			System.exit(STARTUP_FAILURE_RETURN_CODE);
 			return;

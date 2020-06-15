@@ -31,8 +31,8 @@ import org.junit.Assert.{assertEquals, assertNotNull, assertTrue}
 import org.junit.Test
 
 /**
-  * Test for ensuring backwards compatibility of tuples and case classes across Scala versions.
-  */
+ * Test for ensuring backwards compatibility of tuples and case classes across Scala versions.
+ */
 class TupleSerializerCompatibilityTest {
 
   @Test

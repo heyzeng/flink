@@ -62,7 +62,7 @@ public class TaskManagerOptions {
 	 */
 	@Deprecated
 	public static final ConfigOption<Integer> TASK_MANAGER_HEAP_MEMORY_MB =
-			key("taskmanager.heap.mb")
+		key("taskmanager.heap.mb")
 			.intType()
 			.noDefaultValue()
 			.withDescription("JVM heap size (in megabytes) for the TaskManagers, which are the parallel workers of" +
@@ -74,7 +74,7 @@ public class TaskManagerOptions {
 	 */
 	@Documentation.Section(Documentation.Sections.ALL_TASK_MANAGER)
 	public static final ConfigOption<Boolean> KILL_ON_OUT_OF_MEMORY =
-			key("taskmanager.jvm-exit-on-oom")
+		key("taskmanager.jvm-exit-on-oom")
 			.booleanType()
 			.defaultValue(false)
 			.withDescription("Whether to kill the TaskManager when the task thread throws an OutOfMemoryError.");
@@ -86,7 +86,7 @@ public class TaskManagerOptions {
 	 */
 	@Deprecated
 	public static final ConfigOption<Boolean> EXIT_ON_FATAL_AKKA_ERROR =
-			key("taskmanager.exit-on-fatal-akka-error")
+		key("taskmanager.exit-on-fatal-akka-error")
 			.booleanType()
 			.defaultValue(false)
 			.withDescription("Whether the quarantine monitor for task managers shall be started. The quarantine monitor" +
@@ -229,7 +229,7 @@ public class TaskManagerOptions {
 	 */
 	@Documentation.Section(Documentation.Sections.ALL_TASK_MANAGER)
 	public static final ConfigOption<MemorySize> MEMORY_SEGMENT_SIZE =
-			key("taskmanager.memory.segment-size")
+		key("taskmanager.memory.segment-size")
 			.memoryType()
 			.defaultValue(MemorySize.parse("32kb"))
 			.withDescription("Size of memory buffers used by the network stack and the memory manager.");
@@ -494,7 +494,7 @@ public class TaskManagerOptions {
 	 */
 	@Documentation.Section(Documentation.Sections.ALL_TASK_MANAGER)
 	public static final ConfigOption<Long> TASK_CANCELLATION_INTERVAL =
-			key("task.cancellation.interval")
+		key("task.cancellation.interval")
 			.longType()
 			.defaultValue(30000L)
 			.withDeprecatedKeys("task.cancellation-interval")
@@ -507,7 +507,7 @@ public class TaskManagerOptions {
 	 */
 	@Documentation.Section(Documentation.Sections.ALL_TASK_MANAGER)
 	public static final ConfigOption<Long> TASK_CANCELLATION_TIMEOUT =
-			key("task.cancellation.timeout")
+		key("task.cancellation.timeout")
 			.longType()
 			.defaultValue(180000L)
 			.withDescription("Timeout in milliseconds after which a task cancellation times out and" +
@@ -519,12 +519,12 @@ public class TaskManagerOptions {
 	 */
 	@Documentation.Section(Documentation.Sections.ALL_TASK_MANAGER)
 	public static final ConfigOption<Long> TASK_CANCELLATION_TIMEOUT_TIMERS = ConfigOptions
-			.key("task.cancellation.timers.timeout")
-			.longType()
-			.defaultValue(7500L)
-			.withDeprecatedKeys("timerservice.exceptional.shutdown.timeout")
-			.withDescription("Time we wait for the timers in milliseconds to finish all pending timer threads" +
-				" when the stream task is cancelled.");
+		.key("task.cancellation.timers.timeout")
+		.longType()
+		.defaultValue(7500L)
+		.withDeprecatedKeys("timerservice.exceptional.shutdown.timeout")
+		.withDescription("Time we wait for the timers in milliseconds to finish all pending timer threads" +
+			" when the stream task is cancelled.");
 
 	/**
 	 * The maximum number of bytes that a checkpoint alignment may buffer.
@@ -535,7 +535,7 @@ public class TaskManagerOptions {
 	 */
 	@Documentation.ExcludeFromDocumentation("With flow control, there is no alignment spilling any more")
 	public static final ConfigOption<Long> TASK_CHECKPOINT_ALIGNMENT_BYTES_LIMIT =
-			key("task.checkpoint.alignment.max-size")
+		key("task.checkpoint.alignment.max-size")
 			.longType()
 			.defaultValue(-1L)
 			.withDescription("The maximum number of bytes that a checkpoint alignment may buffer. If the checkpoint" +
@@ -544,6 +544,9 @@ public class TaskManagerOptions {
 
 	// ------------------------------------------------------------------------
 
-	/** Not intended to be instantiated. */
-	private TaskManagerOptions() {}
+	/**
+	 * Not intended to be instantiated.
+	 */
+	private TaskManagerOptions() {
+	}
 }

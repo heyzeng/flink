@@ -31,10 +31,10 @@ import org.apache.flink.core.memory.DataOutputView;
  * A serializer for int arrays.
  */
 @Internal
-public class IntPrimitiveArraySerializer extends TypeSerializerSingleton<int[]>{
+public class IntPrimitiveArraySerializer extends TypeSerializerSingleton<int[]> {
 
 	private static final long serialVersionUID = 1L;
-	
+
 	private static final int[] EMPTY = new int[0];
 
 	public static final IntPrimitiveArraySerializer INSTANCE = new IntPrimitiveArraySerializer();
@@ -55,7 +55,7 @@ public class IntPrimitiveArraySerializer extends TypeSerializerSingleton<int[]>{
 		System.arraycopy(from, 0, copy, 0, from.length);
 		return copy;
 	}
-	
+
 	@Override
 	public int[] copy(int[] from, int[] reuse) {
 		return copy(from);
@@ -72,7 +72,7 @@ public class IntPrimitiveArraySerializer extends TypeSerializerSingleton<int[]>{
 		if (record == null) {
 			throw new IllegalArgumentException("The record must not be null.");
 		}
-		
+
 		final int len = record.length;
 		target.writeInt(len);
 		for (int i = 0; i < len; i++) {
@@ -84,14 +84,14 @@ public class IntPrimitiveArraySerializer extends TypeSerializerSingleton<int[]>{
 	public int[] deserialize(DataInputView source) throws IOException {
 		final int len = source.readInt();
 		int[] result = new int[len];
-		
+
 		for (int i = 0; i < len; i++) {
 			result[i] = source.readInt();
 		}
-		
+
 		return result;
 	}
-	
+
 	@Override
 	public int[] deserialize(int[] reuse, DataInputView source) throws IOException {
 		return deserialize(source);

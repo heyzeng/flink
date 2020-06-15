@@ -62,21 +62,31 @@ public class LocalFileSystem extends FileSystem {
 
 	private static final Logger LOG = LoggerFactory.getLogger(LocalFileSystem.class);
 
-	/** The URI representing the local file system. */
+	/**
+	 * The URI representing the local file system.
+	 */
 	private static final URI LOCAL_URI = OperatingSystem.isWindows() ? URI.create("file:/") : URI.create("file:///");
 
-	/** The shared instance of the local file system. */
+	/**
+	 * The shared instance of the local file system.
+	 */
 	private static final LocalFileSystem INSTANCE = new LocalFileSystem();
 
-	/** Path pointing to the current working directory.
-	 * Because Paths are not immutable, we cannot cache the proper path here */
+	/**
+	 * Path pointing to the current working directory.
+	 * Because Paths are not immutable, we cannot cache the proper path here
+	 */
 	private final URI workingDir;
 
-	/** Path pointing to the current user home directory.
-	 * Because Paths are not immutable, we cannot cache the proper path here. */
+	/**
+	 * Path pointing to the current user home directory.
+	 * Because Paths are not immutable, we cannot cache the proper path here.
+	 */
 	private final URI homeDir;
 
-	/** The host name of this machine. */
+	/**
+	 * The host name of this machine.
+	 */
 	private final String hostName;
 
 	/**
@@ -99,8 +109,8 @@ public class LocalFileSystem extends FileSystem {
 
 	@Override
 	public BlockLocation[] getFileBlockLocations(FileStatus file, long start, long len) throws IOException {
-		return new BlockLocation[] {
-				new LocalBlockLocation(hostName, file.getLen())
+		return new BlockLocation[]{
+			new LocalBlockLocation(hostName, file.getLen())
 		};
 	}
 
@@ -109,10 +119,9 @@ public class LocalFileSystem extends FileSystem {
 		final File path = pathToFile(f);
 		if (path.exists()) {
 			return new LocalFileStatus(path, this);
-		}
-		else {
+		} else {
 			throw new FileNotFoundException("File " + f + " does not exist or the user running "
-					+ "Flink ('" + System.getProperty("user.name") + "') has insufficient permissions to access it.");
+				+ "Flink ('" + System.getProperty("user.name") + "') has insufficient permissions to access it.");
 		}
 	}
 
@@ -163,7 +172,7 @@ public class LocalFileSystem extends FileSystem {
 			return null;
 		}
 		if (localf.isFile()) {
-			return new FileStatus[] { new LocalFileStatus(localf, this) };
+			return new FileStatus[]{new LocalFileStatus(localf, this)};
 		}
 
 		final String[] names = localf.list();
@@ -199,11 +208,9 @@ public class LocalFileSystem extends FileSystem {
 	/**
 	 * Deletes the given file or directory.
 	 *
-	 * @param f
-	 *        the file to be deleted
+	 * @param f the file to be deleted
 	 * @return <code>true</code> if all files were deleted successfully, <code>false</code> otherwise
-	 * @throws IOException
-	 *         thrown if an error occurred while deleting the files/directories
+	 * @throws IOException thrown if an error occurred while deleting the files/directories
 	 */
 	private boolean delete(final File f) throws IOException {
 
@@ -229,9 +236,8 @@ public class LocalFileSystem extends FileSystem {
 	 * Recursively creates the directory specified by the provided path.
 	 *
 	 * @return <code>true</code>if the directories either already existed or have been created successfully,
-	 *         <code>false</code> otherwise
-	 * @throws IOException
-	 *         thrown if an error occurred while creating the directory/directories
+	 * <code>false</code> otherwise
+	 * @throws IOException thrown if an error occurred while creating the directory/directories
 	 */
 	@Override
 	public boolean mkdirs(final Path f) throws IOException {
@@ -241,16 +247,14 @@ public class LocalFileSystem extends FileSystem {
 
 	private boolean mkdirsInternal(File file) throws IOException {
 		if (file.isDirectory()) {
-				return true;
-		}
-		else if (file.exists() && !file.isDirectory()) {
+			return true;
+		} else if (file.exists() && !file.isDirectory()) {
 			// Important: The 'exists()' check above must come before the 'isDirectory()' check to
 			//            be safe when multiple parallel instances try to create the directory
 
 			// exists and is not a directory -> is a regular file
 			throw new FileAlreadyExistsException(file.getAbsolutePath());
-		}
-		else {
+		} else {
 			File parent = file.getParentFile();
 			return (parent == null || mkdirsInternal(parent)) && (file.mkdir() || file.isDirectory());
 		}
@@ -287,8 +291,7 @@ public class LocalFileSystem extends FileSystem {
 		try {
 			Files.move(srcFile.toPath(), dstFile.toPath(), StandardCopyOption.REPLACE_EXISTING);
 			return true;
-		}
-		catch (NoSuchFileException | AccessDeniedException | DirectoryNotEmptyException | SecurityException ex) {
+		} catch (NoSuchFileException | AccessDeniedException | DirectoryNotEmptyException | SecurityException ex) {
 			// catch the errors that are regular "move failed" exceptions and return false
 			return false;
 		}

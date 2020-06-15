@@ -98,6 +98,7 @@ public class ConfigOptionsDocGenerator {
 	private static final Pattern CLASS_NAME_PATTERN = Pattern.compile("(?<" + CLASS_NAME_GROUP + ">(?<" + CLASS_PREFIX_GROUP + ">[a-zA-Z]*)(?:Options|Config|Parameters))(?:\\.java)?");
 
 	private static final Formatter formatter = new HtmlFormatter();
+
 	/**
 	 * This method generates html tables from set of classes containing {@link ConfigOption ConfigOptions}.
 	 *
@@ -108,9 +109,8 @@ public class ConfigOptionsDocGenerator {
 	 * <p>One additional table is generated containing all {@link ConfigOption ConfigOptions} that are annotated with
 	 * {@link Documentation.Section}.
 	 *
-	 * @param args
-	 *  [0] output directory for the generated files
-	 *  [1] project root directory
+	 * @param args [0] output directory for the generated files
+	 *             [1] project root directory
 	 */
 	public static void main(String[] args) throws IOException, ClassNotFoundException {
 		String outputDirectory = args[0];
@@ -324,14 +324,14 @@ public class ConfigOptionsDocGenerator {
 			Documentation.ExecMode execMode = tableOption.execMode();
 			if (Documentation.ExecMode.BATCH_STREAMING.equals(execMode)) {
 				execModeStringBuilder.append("<br> <span class=\"label label-primary\">")
-						.append(Documentation.ExecMode.BATCH.toString())
-						.append("</span> <span class=\"label label-primary\">")
-						.append(Documentation.ExecMode.STREAMING.toString())
-						.append("</span>");
+					.append(Documentation.ExecMode.BATCH.toString())
+					.append("</span> <span class=\"label label-primary\">")
+					.append(Documentation.ExecMode.STREAMING.toString())
+					.append("</span>");
 			} else {
 				execModeStringBuilder.append("<br> <span class=\"label label-primary\">")
-						.append(execMode.toString())
-						.append("</span>");
+					.append(execMode.toString())
+					.append("</span>");
 			}
 		}
 

@@ -31,19 +31,19 @@ import org.apache.flink.types.NullKeyFieldException;
 public final class TupleComparator<T extends Tuple> extends TupleComparatorBase<T> {
 
 	private static final long serialVersionUID = 1L;
-	
+
 	public TupleComparator(int[] keyPositions, TypeComparator<?>[] comparators, TypeSerializer<?>[] serializers) {
 		super(keyPositions, comparators, serializers);
 	}
-	
+
 	private TupleComparator(TupleComparator<T> toClone) {
 		super(toClone);
 	}
-	
+
 	// --------------------------------------------------------------------------------------------
 	//  Comparator Methods
 	// --------------------------------------------------------------------------------------------
-	
+
 	@SuppressWarnings("unchecked")
 	@Override
 	public int hash(T value) {
@@ -55,11 +55,9 @@ public final class TupleComparator<T extends Tuple> extends TupleComparatorBase<
 				code += this.comparators[i].hash(value.getFieldNotNull(keyPositions[i]));
 			}
 			return code;
-		}
-		catch (NullFieldException nfex) {
+		} catch (NullFieldException nfex) {
 			throw new NullKeyFieldException(nfex);
-		}
-		catch (IndexOutOfBoundsException iobex) {
+		} catch (IndexOutOfBoundsException iobex) {
 			throw new KeyFieldOutOfBoundsException(keyPositions[i]);
 		}
 	}
@@ -72,11 +70,9 @@ public final class TupleComparator<T extends Tuple> extends TupleComparatorBase<
 			for (; i < this.keyPositions.length; i++) {
 				this.comparators[i].setReference(toCompare.getFieldNotNull(this.keyPositions[i]));
 			}
-		}
-		catch (NullFieldException nfex) {
+		} catch (NullFieldException nfex) {
 			throw new NullKeyFieldException(nfex);
-		}
-		catch (IndexOutOfBoundsException iobex) {
+		} catch (IndexOutOfBoundsException iobex) {
 			throw new KeyFieldOutOfBoundsException(keyPositions[i]);
 		}
 	}
@@ -92,15 +88,13 @@ public final class TupleComparator<T extends Tuple> extends TupleComparatorBase<
 				}
 			}
 			return true;
-		}
-		catch (NullFieldException nfex) {
+		} catch (NullFieldException nfex) {
 			throw new NullKeyFieldException(nfex);
-		}
-		catch (IndexOutOfBoundsException iobex) {
+		} catch (IndexOutOfBoundsException iobex) {
 			throw new KeyFieldOutOfBoundsException(keyPositions[i]);
 		}
 	}
-	
+
 	@SuppressWarnings("unchecked")
 	@Override
 	public int compare(T first, T second) {
@@ -115,11 +109,9 @@ public final class TupleComparator<T extends Tuple> extends TupleComparatorBase<
 				}
 			}
 			return 0;
-		} 
-		catch (NullFieldException nfex) {
+		} catch (NullFieldException nfex) {
 			throw new NullKeyFieldException(nfex);
-		}
-		catch (IndexOutOfBoundsException iobex) {
+		} catch (IndexOutOfBoundsException iobex) {
 			throw new KeyFieldOutOfBoundsException(keyPositions[i]);
 		}
 	}
@@ -146,7 +138,7 @@ public final class TupleComparator<T extends Tuple> extends TupleComparatorBase<
 	@Override
 	public int extractKeys(Object record, Object[] target, int index) {
 		int localIndex = index;
-		for(int i = 0; i < comparators.length; i++) {
+		for (int i = 0; i < comparators.length; i++) {
 			localIndex += comparators[i].extractKeys(((Tuple) record).getField(keyPositions[i]), target, localIndex);
 		}
 		return localIndex - index;

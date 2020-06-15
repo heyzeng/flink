@@ -49,7 +49,7 @@ public class TypeExtractionException extends Exception {
 	 * Creates a new exception with the given message and cause.
 	 *
 	 * @param message The exception message.
-	 * @param e cause
+	 * @param e       cause
 	 */
 	public TypeExtractionException(String message, Throwable e) {
 		super(message, e);

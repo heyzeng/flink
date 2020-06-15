@@ -95,11 +95,11 @@ public class TextInputFormatTest extends TestLogger {
 
 	@Test
 	public void testNestedFileRead() throws IOException {
-		String[] dirs = new String[] {"first", "second"};
+		String[] dirs = new String[]{"first", "second"};
 		List<String> expectedFiles = new ArrayList<>();
 
 		File parentDir = temporaryFolder.getRoot();
-		for (String dir: dirs) {
+		for (String dir : dirs) {
 			// create input file
 			File tmpDir = temporaryFolder.newFolder(dir);
 
@@ -124,7 +124,7 @@ public class TextInputFormatTest extends TestLogger {
 		FileInputSplit[] splits = inputFormat.createInputSplits(expectedFiles.size());
 
 		List<String> paths = new ArrayList<>();
-		for (FileInputSplit split: splits) {
+		for (FileInputSplit split : splits) {
 			paths.add(split.getPath().toString());
 		}
 
@@ -175,7 +175,7 @@ public class TextInputFormatTest extends TestLogger {
 
 		String result;
 		if ((delimiter.equals("\n") && (lineBreaker.equals("\n") || lineBreaker.equals("\r\n")))
-				|| (lineBreaker.equals(delimiter))){
+			|| (lineBreaker.equals(delimiter))) {
 
 			result = inputFormat.nextRecord("");
 			assertNotNull("Expecting first record here", result);

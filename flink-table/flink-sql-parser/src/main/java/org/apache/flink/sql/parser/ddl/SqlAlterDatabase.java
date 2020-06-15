@@ -45,9 +45,9 @@ public class SqlAlterDatabase extends SqlCall {
 	private final SqlNodeList propertyList;
 
 	public SqlAlterDatabase(
-			SqlParserPos pos,
-			SqlIdentifier databaseName,
-			SqlNodeList propertyList) {
+		SqlParserPos pos,
+		SqlIdentifier databaseName,
+		SqlNodeList propertyList) {
 		super(pos);
 		this.databaseName = requireNonNull(databaseName, "tableName should not be null");
 		this.propertyList = requireNonNull(propertyList, "propertyList should not be null");

@@ -44,14 +44,15 @@ public final class GlobalConfiguration {
 	public static final String FLINK_CONF_FILENAME = "flink-conf.yaml";
 
 	// the keys whose values should be hidden
-	private static final String[] SENSITIVE_KEYS = new String[] {"password", "secret", "fs.azure.account.key"};
+	private static final String[] SENSITIVE_KEYS = new String[]{"password", "secret", "fs.azure.account.key"};
 
 	// the hidden content to be displayed
 	public static final String HIDDEN_CONTENT = "******";
 
 	// --------------------------------------------------------------------------------------------
 
-	private GlobalConfiguration() {}
+	private GlobalConfiguration() {
+	}
 
 	// --------------------------------------------------------------------------------------------
 
@@ -60,6 +61,7 @@ public final class GlobalConfiguration {
 	 * empty configuration object if the environment variable is not set. In production this variable is set but
 	 * tests and local execution/debugging don't have this environment variable set. That's why we should fail
 	 * if it is not set.
+	 *
 	 * @return Returns the Configuration
 	 */
 	public static Configuration loadConfiguration() {
@@ -87,8 +89,7 @@ public final class GlobalConfiguration {
 	 *
 	 * <p>YAML files are supported as configuration files.
 	 *
-	 * @param configDir
-	 *        the directory which contains the configuration files
+	 * @param configDir the directory which contains the configuration files
 	 */
 	public static Configuration loadConfiguration(final String configDir) {
 		return loadConfiguration(configDir, null);
@@ -98,7 +99,7 @@ public final class GlobalConfiguration {
 	 * Loads the configuration files from the specified directory. If the dynamic properties
 	 * configuration is not null, then it is added to the loaded configuration.
 	 *
-	 * @param configDir directory to load the configuration from
+	 * @param configDir         directory to load the configuration from
 	 * @param dynamicProperties configuration file containing the dynamic properties. Null if none.
 	 * @return The configuration loaded from the given configuration directory
 	 */
@@ -156,7 +157,7 @@ public final class GlobalConfiguration {
 	private static Configuration loadYAMLResource(File file) {
 		final Configuration config = new Configuration();
 
-		try (BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(file)))){
+		try (BufferedReader reader = new BufferedReader(new InputStreamReader(new FileInputStream(file)))) {
 
 			String line;
 			int lineNo = 0;

@@ -33,11 +33,11 @@ public class DataInputDeserializerTest {
 		byte[] bytes;
 		DataInputDeserializer dis;
 
-		bytes = new byte[] {};
+		bytes = new byte[]{};
 		dis = new DataInputDeserializer(bytes, 0, bytes.length);
 		Assert.assertEquals(bytes.length, dis.available());
 
-		bytes = new byte[] {1, 2, 3};
+		bytes = new byte[]{1, 2, 3};
 		dis = new DataInputDeserializer(bytes, 0, bytes.length);
 		Assert.assertEquals(bytes.length, dis.available());
 

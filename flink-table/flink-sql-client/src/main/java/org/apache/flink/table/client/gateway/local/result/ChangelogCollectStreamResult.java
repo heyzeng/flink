@@ -39,11 +39,11 @@ public class ChangelogCollectStreamResult<C> extends CollectStreamResult<C> impl
 	private static final int CHANGE_RECORD_BUFFER_SIZE = 5_000;
 
 	public ChangelogCollectStreamResult(
-			TableSchema tableSchema,
-			ExecutionConfig config,
-			InetAddress gatewayAddress,
-			int gatewayPort,
-			ClassLoader classLoader) {
+		TableSchema tableSchema,
+		ExecutionConfig config,
+		InetAddress gatewayAddress,
+		int gatewayPort,
+		ClassLoader classLoader) {
 		super(tableSchema, config, gatewayAddress, gatewayPort, classLoader);
 
 		// prepare for changelog

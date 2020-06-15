@@ -35,7 +35,9 @@ import java.nio.channels.FileChannel;
 @Internal
 public class LocalDataInputStream extends FSDataInputStream {
 
-	/** The file input stream used to read data from.*/
+	/**
+	 * The file input stream used to read data from.
+	 */
 	private final FileInputStream fis;
 	private final FileChannel fileChannel;
 
@@ -43,7 +45,6 @@ public class LocalDataInputStream extends FSDataInputStream {
 	 * Constructs a new <code>LocalDataInputStream</code> object from a given {@link File} object.
 	 *
 	 * @param file The File the data stream is read from
-	 *
 	 * @throws IOException Thrown if the data input stream cannot be created.
 	 */
 	public LocalDataInputStream(File file) throws IOException {

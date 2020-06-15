@@ -59,16 +59,14 @@ public final class LinkedOptionalMapSerializer {
 
 			if (key == null) {
 				out.writeBoolean(false);
-			}
-			else {
+			} else {
 				out.writeBoolean(true);
 				writeFramed(out, keyWriter, key);
 			}
 
 			if (value == null) {
 				out.writeBoolean(false);
-			}
-			else {
+			} else {
 				out.writeBoolean(true);
 				writeFramed(out, valueWriter, value);
 			}
@@ -91,16 +89,14 @@ public final class LinkedOptionalMapSerializer {
 			final K key;
 			if (in.readBoolean()) {
 				key = tryReadFrame(in, keyName, keyReader);
-			}
-			else {
+			} else {
 				key = null;
 			}
 
 			final V value;
 			if (in.readBoolean()) {
 				value = tryReadFrame(in, keyName, valueReader);
-			}
-			else {
+			} else {
 				value = null;
 			}
 

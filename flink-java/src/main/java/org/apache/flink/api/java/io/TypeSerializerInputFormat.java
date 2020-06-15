@@ -30,6 +30,7 @@ import java.io.IOException;
 
 /**
  * Reads elements by deserializing them with a given type serializer.
+ *
  * @param <T>
  */
 @PublicEvolving

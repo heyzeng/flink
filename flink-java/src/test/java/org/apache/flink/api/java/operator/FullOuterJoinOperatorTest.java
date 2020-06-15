@@ -74,8 +74,8 @@ public class FullOuterJoinOperatorTest {
 
 		// should work
 		ds1.fullOuterJoin(ds2)
-				.where("f1").equalTo("f3")
-				.with(new DummyJoin());
+			.where("f1").equalTo("f3")
+			.with(new DummyJoin());
 	}
 
 	@Test
@@ -87,8 +87,8 @@ public class FullOuterJoinOperatorTest {
 
 		// should work
 		ds1.fullOuterJoin(ds2)
-				.where(new IntKeySelector()).equalTo(new IntKeySelector())
-				.with(new DummyJoin());
+			.where(new IntKeySelector()).equalTo(new IntKeySelector())
+			.with(new DummyJoin());
 	}
 
 	@Test
@@ -99,8 +99,8 @@ public class FullOuterJoinOperatorTest {
 
 		// should work
 		ds1.fullOuterJoin(ds2)
-				.where(0).equalTo(new IntKeySelector())
-				.with(new DummyJoin());
+			.where(0).equalTo(new IntKeySelector())
+			.with(new DummyJoin());
 	}
 
 	@Test
@@ -111,8 +111,8 @@ public class FullOuterJoinOperatorTest {
 
 		// should work
 		ds1.fullOuterJoin(ds2)
-				.where(new IntKeySelector()).equalTo("f4")
-				.with(new DummyJoin());
+			.where(new IntKeySelector()).equalTo("f4")
+			.with(new DummyJoin());
 	}
 
 	@Test
@@ -123,8 +123,8 @@ public class FullOuterJoinOperatorTest {
 
 		// should work
 		ds1.fullOuterJoin(ds2)
-				.where("f0").equalTo(4)
-				.with(new DummyJoin());
+			.where("f0").equalTo(4)
+			.with(new DummyJoin());
 	}
 
 	@Test(expected = IndexOutOfBoundsException.class)
@@ -135,8 +135,8 @@ public class FullOuterJoinOperatorTest {
 
 		// invalid key position
 		ds1.fullOuterJoin(ds2)
-				.where(5).equalTo(0)
-				.with(new DummyJoin());
+			.where(5).equalTo(0)
+			.with(new DummyJoin());
 	}
 
 	@Test(expected = CompositeType.InvalidFieldReferenceException.class)
@@ -147,8 +147,8 @@ public class FullOuterJoinOperatorTest {
 
 		// invalid key reference
 		ds1.fullOuterJoin(ds2)
-				.where(1).equalTo("f5")
-				.with(new DummyJoin());
+			.where(1).equalTo("f5")
+			.with(new DummyJoin());
 	}
 
 	@Test(expected = InvalidProgramException.class)
@@ -159,8 +159,8 @@ public class FullOuterJoinOperatorTest {
 
 		// key types do not match
 		ds1.fullOuterJoin(ds2)
-				.where(0).equalTo(1)
-				.with(new DummyJoin());
+			.where(0).equalTo(1)
+			.with(new DummyJoin());
 	}
 
 	@Test(expected = InvalidProgramException.class)
@@ -171,8 +171,8 @@ public class FullOuterJoinOperatorTest {
 
 		// key types do not match
 		ds1.fullOuterJoin(ds2)
-				.where(new IntKeySelector()).equalTo(new LongKeySelector())
-				.with(new DummyJoin());
+			.where(new IntKeySelector()).equalTo(new LongKeySelector())
+			.with(new DummyJoin());
 	}
 
 	@Test
@@ -213,8 +213,8 @@ public class FullOuterJoinOperatorTest {
 
 		// should work
 		ds1.fullOuterJoin(ds2, hint)
-				.where(0).equalTo(4)
-				.with(new DummyJoin());
+			.where(0).equalTo(4)
+			.with(new DummyJoin());
 	}
 
 	/*
@@ -223,7 +223,7 @@ public class FullOuterJoinOperatorTest {
 
 	@SuppressWarnings("serial")
 	private static class DummyJoin implements
-			JoinFunction<Tuple5<Integer, Long, String, Long, Integer>, Tuple5<Integer, Long, String, Long, Integer>, Long> {
+		JoinFunction<Tuple5<Integer, Long, String, Long, Integer>, Tuple5<Integer, Long, String, Long, Integer>, Long> {
 
 		@Override
 		public Long join(Tuple5<Integer, Long, String, Long, Integer> v1, Tuple5<Integer, Long, String, Long, Integer> v2) throws Exception {

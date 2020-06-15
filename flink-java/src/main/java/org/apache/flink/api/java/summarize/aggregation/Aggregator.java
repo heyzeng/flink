@@ -29,7 +29,9 @@ import org.apache.flink.annotation.Internal;
 @Internal
 public interface Aggregator<T, R> extends java.io.Serializable {
 
-	/** Add a value to the current aggregation. */
+	/**
+	 * Add a value to the current aggregation.
+	 */
 	void aggregate(T value);
 
 	/**
@@ -39,6 +41,8 @@ public interface Aggregator<T, R> extends java.io.Serializable {
 	 */
 	void combine(Aggregator<T, R> otherSameType);
 
-	/** Provide the final result of the aggregation. */
+	/**
+	 * Provide the final result of the aggregation.
+	 */
 	R result();
 }

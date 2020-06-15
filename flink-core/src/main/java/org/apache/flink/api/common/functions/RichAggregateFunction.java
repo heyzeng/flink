@@ -26,16 +26,15 @@ import org.apache.flink.annotation.PublicEvolving;
  * {@link RichFunction#open(org.apache.flink.configuration.Configuration)} and
  * {@link RichFunction#close()}.
  *
- * @see AggregateFunction
- *
  * @param <IN>  The type of the values that are aggregated (input values)
  * @param <ACC> The type of the accumulator (intermediate aggregate state).
  * @param <OUT> The type of the aggregated result
+ * @see AggregateFunction
  */
 @PublicEvolving
 public abstract class RichAggregateFunction<IN, ACC, OUT>
-		extends AbstractRichFunction
-		implements AggregateFunction<IN, ACC, OUT> {
+	extends AbstractRichFunction
+	implements AggregateFunction<IN, ACC, OUT> {
 
 	private static final long serialVersionUID = 1L;
 

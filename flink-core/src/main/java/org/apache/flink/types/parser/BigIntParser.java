@@ -20,6 +20,7 @@
 package org.apache.flink.types.parser;
 
 import java.math.BigInteger;
+
 import org.apache.flink.annotation.PublicEvolving;
 import org.apache.flink.configuration.ConfigConstants;
 
@@ -41,7 +42,7 @@ public class BigIntParser extends FieldParser<BigInteger> {
 		}
 
 		if (endPos > startPos &&
-				(Character.isWhitespace(bytes[startPos]) || Character.isWhitespace(bytes[(endPos - 1)]))) {
+			(Character.isWhitespace(bytes[startPos]) || Character.isWhitespace(bytes[(endPos - 1)]))) {
 			setErrorState(ParseErrorState.NUMERIC_VALUE_ILLEGAL_CHARACTER);
 			return -1;
 		}
@@ -76,7 +77,7 @@ public class BigIntParser extends FieldParser<BigInteger> {
 	 * @param length   The length of the byte sequence (counting from the offset).
 	 * @return The parsed value.
 	 * @throws IllegalArgumentException Thrown when the value cannot be parsed because the text
-	 * represents not a correct number.
+	 *                                  represents not a correct number.
 	 */
 	public static final BigInteger parseField(byte[] bytes, int startPos, int length) {
 		return parseField(bytes, startPos, length, (char) 0xffff);
@@ -93,13 +94,13 @@ public class BigIntParser extends FieldParser<BigInteger> {
 	 * @param delimiter The delimiter that terminates the field.
 	 * @return The parsed value.
 	 * @throws IllegalArgumentException Thrown when the value cannot be parsed because the text
-	 * represents not a correct number.
+	 *                                  represents not a correct number.
 	 */
 	public static final BigInteger parseField(byte[] bytes, int startPos, int length, char delimiter) {
 		final int limitedLen = nextStringLength(bytes, startPos, length, delimiter);
 
 		if (limitedLen > 0 &&
-				(Character.isWhitespace(bytes[startPos]) || Character.isWhitespace(bytes[startPos + limitedLen - 1]))) {
+			(Character.isWhitespace(bytes[startPos]) || Character.isWhitespace(bytes[startPos + limitedLen - 1]))) {
 			throw new NumberFormatException("There is leading or trailing whitespace in the numeric field.");
 		}
 

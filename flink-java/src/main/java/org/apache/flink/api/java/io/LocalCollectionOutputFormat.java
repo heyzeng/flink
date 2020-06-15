@@ -33,7 +33,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- *  An output format that adds records to a collection.
+ * An output format that adds records to a collection.
  */
 @PublicEvolving
 public class LocalCollectionOutputFormat<T> extends RichOutputFormat<T> implements InputTypeConfigurable {
@@ -64,7 +64,8 @@ public class LocalCollectionOutputFormat<T> extends RichOutputFormat<T> implemen
 	}
 
 	@Override
-	public void configure(Configuration parameters) {}
+	public void configure(Configuration parameters) {
+	}
 
 	@Override
 	public void open(int taskNumber, int numTasks) throws IOException {

@@ -62,8 +62,7 @@ public final class MultisetTypeInfo<T> extends MapTypeInfo<T, Integer> {
 	public boolean equals(Object obj) {
 		if (obj == this) {
 			return true;
-		}
-		else if (obj instanceof MultisetTypeInfo) {
+		} else if (obj instanceof MultisetTypeInfo) {
 			final MultisetTypeInfo<?> other = (MultisetTypeInfo<?>) obj;
 			return other.canEqual(this) && getKeyTypeInfo().equals(other.getKeyTypeInfo());
 		} else {

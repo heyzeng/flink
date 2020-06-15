@@ -41,7 +41,7 @@ public class InstantComparatorTest extends ComparatorTestBase<Instant> {
 
 	@Override
 	protected Instant[] getSortedTestData() {
-		return new Instant[] {
+		return new Instant[]{
 			Instant.EPOCH,
 			Instant.parse("1970-01-01T00:00:00.001Z"),
 			Instant.parse("1990-10-14T02:42:25.123Z"),

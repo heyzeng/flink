@@ -33,7 +33,7 @@ import java.util.List;
 /**
  * Class for determining if a particular file should be included or excluded
  * based on a set of include and exclude glob filters.
- *
+ * <p>
  * Glob filter support the following expressions:
  * <ul>
  *     <li>* - matches any number of any characters including none</li>
@@ -98,8 +98,8 @@ public class GlobFilePathFilter extends FilePathFilter {
 
 		// compensate for the fact that Flink paths are slashed
 		final String path = filePath.hasWindowsDrive() ?
-				filePath.getPath().substring(1) :
-				filePath.getPath();
+			filePath.getPath().substring(1) :
+			filePath.getPath();
 
 		final java.nio.file.Path nioPath = Paths.get(path);
 

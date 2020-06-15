@@ -24,6 +24,7 @@ import java.util.Collections;
 
 import java.util.HashMap;
 import java.util.Map;
+
 import org.apache.flink.annotation.PublicEvolving;
 import org.apache.flink.annotation.Public;
 import org.apache.flink.api.common.ExecutionConfig;
@@ -51,7 +52,7 @@ import static org.apache.flink.util.Preconditions.checkState;
  */
 @Public
 public final class TupleTypeInfo<T extends Tuple> extends TupleTypeInfoBase<T> {
-	
+
 	private static final long serialVersionUID = 1L;
 
 	protected final String[] fieldNames;
@@ -106,9 +107,9 @@ public final class TupleTypeInfo<T extends Tuple> extends TupleTypeInfoBase<T> {
 		for (int i = 0; i < types.length; i++) {
 			fieldSerializers[i] = types[i].createSerializer(executionConfig);
 		}
-		
+
 		Class<T> tupleClass = getTypeClass();
-		
+
 		return new TupleSerializer<T>(tupleClass, fieldSerializers);
 	}
 
@@ -182,7 +183,7 @@ public final class TupleTypeInfo<T extends Tuple> extends TupleTypeInfoBase<T> {
 	}
 
 	// --------------------------------------------------------------------------------------------
-	
+
 	@Override
 	public boolean equals(Object obj) {
 		if (obj instanceof TupleTypeInfo) {
@@ -200,12 +201,12 @@ public final class TupleTypeInfo<T extends Tuple> extends TupleTypeInfoBase<T> {
 	public boolean canEqual(Object obj) {
 		return obj instanceof TupleTypeInfo;
 	}
-	
+
 	@Override
 	public int hashCode() {
 		return 31 * super.hashCode() + Arrays.hashCode(fieldNames);
 	}
-	
+
 	@Override
 	public String toString() {
 		return "Java " + super.toString();
@@ -218,14 +219,14 @@ public final class TupleTypeInfo<T extends Tuple> extends TupleTypeInfoBase<T> {
 		if (basicTypes == null || basicTypes.length == 0) {
 			throw new IllegalArgumentException();
 		}
-		
+
 		TypeInformation<?>[] infos = new TypeInformation<?>[basicTypes.length];
 		for (int i = 0; i < infos.length; i++) {
 			Class<?> type = basicTypes[i];
 			if (type == null) {
 				throw new IllegalArgumentException("Type at position " + i + " is null.");
 			}
-			
+
 			TypeInformation<?> info = BasicTypeInfo.getInfoFor(type);
 			if (info == null) {
 				throw new IllegalArgumentException("Type at position " + i + " is not a basic type.");
@@ -269,7 +270,7 @@ public final class TupleTypeInfo<T extends Tuple> extends TupleTypeInfoBase<T> {
 
 		return (TupleTypeInfo<X>) new TupleTypeInfo<>(infos);
 	}
-	
+
 	private static int[] listToPrimitives(ArrayList<Integer> ints) {
 		int[] result = new int[ints.size()];
 		for (int i = 0; i < result.length; i++) {

@@ -50,16 +50,24 @@ public class ZooKeeperMesosWorkerStore implements MesosWorkerStore {
 
 	private final Object startStopLock = new Object();
 
-	/** Flag indicating whether this instance is running. */
+	/**
+	 * Flag indicating whether this instance is running.
+	 */
 	private boolean isRunning;
 
-	/** A persistent value of the assigned framework ID. */
+	/**
+	 * A persistent value of the assigned framework ID.
+	 */
 	private final ZooKeeperSharedValue frameworkIdInZooKeeper;
 
-	/** A persistent count of all tasks created, for generating unique IDs. */
+	/**
+	 * A persistent count of all tasks created, for generating unique IDs.
+	 */
 	private final ZooKeeperSharedCount totalTaskCountInZooKeeper;
 
-	/** A persistent store of serialized workers. */
+	/**
+	 * A persistent store of serialized workers.
+	 */
 	private final ZooKeeperStateHandleStore<MesosWorkerStore.Worker> workersInZooKeeper;
 
 	@SuppressWarnings("unchecked")
@@ -107,6 +115,7 @@ public class ZooKeeperMesosWorkerStore implements MesosWorkerStore {
 
 	/**
 	 * Get the persisted framework ID.
+	 *
 	 * @return the current ID or empty if none is yet persisted.
 	 * @throws Exception on ZK failures, interruptions.
 	 */
@@ -130,6 +139,7 @@ public class ZooKeeperMesosWorkerStore implements MesosWorkerStore {
 
 	/**
 	 * Update the persisted framework ID.
+	 *
 	 * @param frameworkID the new ID or empty to remove the persisted ID.
 	 * @throws Exception on ZK failures, interruptions.
 	 */
@@ -175,8 +185,7 @@ public class ZooKeeperMesosWorkerStore implements MesosWorkerStore {
 
 			if (handles.isEmpty()) {
 				return Collections.emptyList();
-			}
-			else {
+			} else {
 				List<MesosWorkerStore.Worker> workers = new ArrayList<>(handles.size());
 
 				for (Tuple2<RetrievableStateHandle<Worker>, String> handle : handles) {

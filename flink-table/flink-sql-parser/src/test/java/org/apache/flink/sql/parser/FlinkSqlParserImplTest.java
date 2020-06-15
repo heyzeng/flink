@@ -42,7 +42,9 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
 
 
-/** FlinkSqlParserImpl tests. **/
+/**
+ * FlinkSqlParserImpl tests.
+ **/
 public class FlinkSqlParserImplTest extends SqlParserTest {
 	private SqlConformance conformance0;
 
@@ -128,14 +130,14 @@ public class FlinkSqlParserImplTest extends SqlParserTest {
 		check("create database catalog1.db1", "CREATE DATABASE `CATALOG1`.`DB1`");
 		check("create database db1 comment 'test create database'",
 			"CREATE DATABASE `DB1`\n" +
-			"COMMENT 'test create database'");
+				"COMMENT 'test create database'");
 		check("create database db1 comment 'test create database'" +
-			"with ( 'key1' = 'value1', 'key2.a' = 'value2.a')",
+				"with ( 'key1' = 'value1', 'key2.a' = 'value2.a')",
 			"CREATE DATABASE `DB1`\n" +
-			"COMMENT 'test create database' WITH (\n" +
-			"  'key1' = 'value1',\n" +
-			"  'key2.a' = 'value2.a'\n" +
-			")");
+				"COMMENT 'test create database' WITH (\n" +
+				"  'key1' = 'value1',\n" +
+				"  'key2.a' = 'value2.a'\n" +
+				")");
 	}
 
 	@Test
@@ -150,9 +152,9 @@ public class FlinkSqlParserImplTest extends SqlParserTest {
 	public void testAlterDatabase() {
 		check("alter database db1 set ('key1' = 'value1','key2.a' = 'value2.a')",
 			"ALTER DATABASE `DB1` SET (\n" +
-			"  'key1' = 'value1',\n" +
-			"  'key2.a' = 'value2.a'\n" +
-			")");
+				"  'key1' = 'value1',\n" +
+				"  'key2.a' = 'value2.a'\n" +
+				")");
 	}
 
 	@Test
@@ -173,7 +175,7 @@ public class FlinkSqlParserImplTest extends SqlParserTest {
 		check("alter temporary function function1 as 'org.apache.fink.function.function1' language scala",
 			"ALTER TEMPORARY FUNCTION `FUNCTION1` AS 'org.apache.fink.function.function1' LANGUAGE SCALA");
 
-		check ("alter temporary system function function1 as 'org.apache.fink.function.function1'",
+		check("alter temporary system function function1 as 'org.apache.fink.function.function1'",
 			"ALTER TEMPORARY SYSTEM FUNCTION `FUNCTION1` AS 'org.apache.fink.function.function1'");
 
 		check("alter temporary system function function1 as 'org.apache.fink.function.function1' language java",
@@ -212,8 +214,8 @@ public class FlinkSqlParserImplTest extends SqlParserTest {
 		check("alter table c1.d1.t1 rename to t2", "ALTER TABLE `C1`.`D1`.`T1` RENAME TO `T2`");
 		check("alter table t1 set ('key1'='value1')",
 			"ALTER TABLE `T1` SET (\n" +
-			"  'key1' = 'value1'\n" +
-			")");
+				"  'key1' = 'value1'\n" +
+				")");
 	}
 
 	@Test
@@ -568,9 +570,9 @@ public class FlinkSqlParserImplTest extends SqlParserTest {
 	public void testNotAllowedCreatePartition() {
 		conformance0 = FlinkSqlConformance.DEFAULT;
 		String sql = "create table sls_stream1(\n" +
-				"  a bigint,\n" +
-				"  b VARCHAR\n" +
-				") PARTITIONED BY (a^)^ with ( 'x' = 'y', 'asd' = 'dada')";
+			"  a bigint,\n" +
+			"  b VARCHAR\n" +
+			") PARTITIONED BY (a^)^ with ( 'x' = 'y', 'asd' = 'dada')";
 		sql(sql).fails("Creating partitioned table is only allowed for HIVE dialect.");
 	}
 
@@ -812,13 +814,15 @@ public class FlinkSqlParserImplTest extends SqlParserTest {
 			"DROP TEMPORARY SYSTEM FUNCTION IF EXISTS `CATALOG1`.`DB1`.`FUNCTION1`");
 	}
 
-	/** Matcher that invokes the #validate() of the {@link ExtendedSqlNode} instance. **/
+	/**
+	 * Matcher that invokes the #validate() of the {@link ExtendedSqlNode} instance.
+	 **/
 	private static class ValidationMatcher extends BaseMatcher<SqlNode> {
 		private String expectedColumnSql;
 		private String failMsg;
 
 		public ValidationMatcher expectColumnSql(String s) {
-			this.expectedColumnSql =  s;
+			this.expectedColumnSql = s;
 			return this;
 		}
 

@@ -42,7 +42,7 @@ public class PlanUnwrappingSortedReduceGroupOperator<IN, OUT, K1, K2> extends Gr
 		String name,
 		TypeInformation<OUT> outType,
 		TypeInformation<Tuple3<K1, K2, IN>>
-		typeInfoWithKey, boolean combinable) {
+			typeInfoWithKey, boolean combinable) {
 		super(
 			combinable ?
 				new TupleUnwrappingGroupCombinableGroupReducer<IN, OUT, K1, K2>(udf) :

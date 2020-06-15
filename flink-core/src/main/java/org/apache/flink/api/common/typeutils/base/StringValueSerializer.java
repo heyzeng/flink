@@ -31,9 +31,9 @@ import org.apache.flink.types.StringValue;
 public final class StringValueSerializer extends TypeSerializerSingleton<StringValue> {
 
 	private static final long serialVersionUID = 1L;
-	
+
 	private static final int HIGH_BIT = 0x1 << 7;
-	
+
 	public static final StringValueSerializer INSTANCE = new StringValueSerializer();
 
 	@Override
@@ -50,7 +50,7 @@ public final class StringValueSerializer extends TypeSerializerSingleton<StringV
 	public StringValue copy(StringValue from) {
 		return copy(from, new StringValue());
 	}
-	
+
 	@Override
 	public StringValue copy(StringValue from, StringValue reuse) {
 		reuse.setValue(from);
@@ -71,7 +71,7 @@ public final class StringValueSerializer extends TypeSerializerSingleton<StringV
 	public StringValue deserialize(DataInputView source) throws IOException {
 		return deserialize(new StringValue(), source);
 	}
-	
+
 	@Override
 	public StringValue deserialize(StringValue reuse, DataInputView source) throws IOException {
 		reuse.read(source);

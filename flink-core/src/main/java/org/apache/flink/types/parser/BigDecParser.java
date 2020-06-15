@@ -20,6 +20,7 @@
 package org.apache.flink.types.parser;
 
 import java.math.BigDecimal;
+
 import org.apache.flink.annotation.PublicEvolving;
 
 /**
@@ -82,7 +83,7 @@ public class BigDecParser extends FieldParser<BigDecimal> {
 	 * @param length   The length of the byte sequence (counting from the offset).
 	 * @return The parsed value.
 	 * @throws IllegalArgumentException Thrown when the value cannot be parsed because the text
-	 * represents not a correct number.
+	 *                                  represents not a correct number.
 	 */
 	public static final BigDecimal parseField(byte[] bytes, int startPos, int length) {
 		return parseField(bytes, startPos, length, (char) 0xffff);
@@ -99,7 +100,7 @@ public class BigDecParser extends FieldParser<BigDecimal> {
 	 * @param delimiter The delimiter that terminates the field.
 	 * @return The parsed value.
 	 * @throws IllegalArgumentException Thrown when the value cannot be parsed because the text
-	 * represents not a correct number.
+	 *                                  represents not a correct number.
 	 */
 	public static final BigDecimal parseField(byte[] bytes, int startPos, int length, char delimiter) {
 		if (length <= 0) {
@@ -113,7 +114,7 @@ public class BigDecParser extends FieldParser<BigDecimal> {
 		}
 
 		if (i > 0 &&
-				(Character.isWhitespace(bytes[startPos]) || Character.isWhitespace(bytes[startPos + i - 1]))) {
+			(Character.isWhitespace(bytes[startPos]) || Character.isWhitespace(bytes[startPos + i - 1]))) {
 			throw new NumberFormatException("There is leading or trailing whitespace in the numeric field.");
 		}
 

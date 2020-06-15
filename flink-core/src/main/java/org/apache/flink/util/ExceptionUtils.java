@@ -46,7 +46,9 @@ import static org.apache.flink.util.Preconditions.checkNotNull;
 @Internal
 public final class ExceptionUtils {
 
-	/** The stringified representation of a null exception reference. */
+	/**
+	 * The stringified representation of a null exception reference.
+	 */
 	public static final String STRINGIFIED_NULL_EXCEPTION = "(null)";
 
 	private static final String TM_DIRECT_OOM_ERROR_MESSAGE = String.format(
@@ -90,8 +92,7 @@ public final class ExceptionUtils {
 			e.printStackTrace(wrt);
 			wrt.close();
 			return stm.toString();
-		}
-		catch (Throwable t) {
+		} catch (Throwable t) {
 			return e.getClass().getName() + " (error while printing stack trace)";
 		}
 	}
@@ -243,9 +244,8 @@ public final class ExceptionUtils {
 	 *
 	 * @param newException The newly occurred exception
 	 * @param previous     The previously occurred exception, possibly null.
-	 *
 	 * @return The new exception, if no previous exception exists, or the previous exception with the
-	 *         new exception in the list of suppressed exceptions.
+	 * new exception in the list of suppressed exceptions.
 	 */
 	public static <T extends Throwable> T firstOrSuppressed(T newException, @Nullable T previous) {
 		checkNotNull(newException, "newException");
@@ -268,11 +268,9 @@ public final class ExceptionUtils {
 	public static void rethrow(Throwable t) {
 		if (t instanceof Error) {
 			throw (Error) t;
-		}
-		else if (t instanceof RuntimeException) {
+		} else if (t instanceof RuntimeException) {
 			throw (RuntimeException) t;
-		}
-		else {
+		} else {
 			throw new RuntimeException(t);
 		}
 	}
@@ -282,17 +280,15 @@ public final class ExceptionUtils {
 	 * throw an arbitrary Throwable. Errors and RuntimeExceptions are thrown directly, other exceptions
 	 * are packed into a parent RuntimeException.
 	 *
-	 * @param t The throwable to be thrown.
+	 * @param t             The throwable to be thrown.
 	 * @param parentMessage The message for the parent RuntimeException, if one is needed.
 	 */
 	public static void rethrow(Throwable t, String parentMessage) {
 		if (t instanceof Error) {
 			throw (Error) t;
-		}
-		else if (t instanceof RuntimeException) {
+		} else if (t instanceof RuntimeException) {
 			throw (RuntimeException) t;
-		}
-		else {
+		} else {
 			throw new RuntimeException(parentMessage, t);
 		}
 	}
@@ -302,17 +298,15 @@ public final class ExceptionUtils {
 	 * throw a Exception. Errors and Exceptions are thrown directly, other "exotic"
 	 * subclasses of Throwable are wrapped in an Exception.
 	 *
-	 * @param t The throwable to be thrown.
+	 * @param t             The throwable to be thrown.
 	 * @param parentMessage The message for the parent Exception, if one is needed.
 	 */
 	public static void rethrowException(Throwable t, String parentMessage) throws Exception {
 		if (t instanceof Error) {
 			throw (Error) t;
-		}
-		else if (t instanceof Exception) {
+		} else if (t instanceof Exception) {
 			throw (Exception) t;
-		}
-		else {
+		} else {
 			throw new Exception(parentMessage, t);
 		}
 	}
@@ -327,11 +321,9 @@ public final class ExceptionUtils {
 	public static void rethrowException(Throwable t) throws Exception {
 		if (t instanceof Error) {
 			throw (Error) t;
-		}
-		else if (t instanceof Exception) {
+		} else if (t instanceof Exception) {
 			throw (Exception) t;
-		}
-		else {
+		} else {
 			throw new Exception(t.getMessage(), t);
 		}
 	}
@@ -358,11 +350,9 @@ public final class ExceptionUtils {
 	public static void tryRethrowIOException(Throwable t) throws IOException {
 		if (t instanceof IOException) {
 			throw (IOException) t;
-		}
-		else if (t instanceof RuntimeException) {
+		} else if (t instanceof RuntimeException) {
 			throw (RuntimeException) t;
-		}
-		else if (t instanceof Error) {
+		} else if (t instanceof Error) {
 			throw (Error) t;
 		}
 	}
@@ -379,14 +369,11 @@ public final class ExceptionUtils {
 	public static void rethrowIOException(Throwable t) throws IOException {
 		if (t instanceof IOException) {
 			throw (IOException) t;
-		}
-		else if (t instanceof RuntimeException) {
+		} else if (t instanceof RuntimeException) {
 			throw (RuntimeException) t;
-		}
-		else if (t instanceof Error) {
+		} else if (t instanceof Error) {
 			throw (Error) t;
-		}
-		else {
+		} else {
 			throw new IOException(t.getMessage(), t);
 		}
 	}
@@ -395,8 +382,8 @@ public final class ExceptionUtils {
 	 * Checks whether a throwable chain contains a specific type of exception and returns it. It deserializes
 	 * any {@link SerializedThrowable} that are found using the provided {@link ClassLoader}.
 	 *
-	 * @param throwable the throwable chain to check.
-	 * @param searchType the type of exception to search for in the chain.
+	 * @param throwable   the throwable chain to check.
+	 * @param searchType  the type of exception to search for in the chain.
 	 * @param classLoader to use for deserialization.
 	 * @return Optional throwable of the requested type if available, otherwise empty
 	 */
@@ -426,7 +413,7 @@ public final class ExceptionUtils {
 	/**
 	 * Checks whether a throwable chain contains a specific type of exception and returns it.
 	 *
-	 * @param throwable the throwable chain to check.
+	 * @param throwable  the throwable chain to check.
 	 * @param searchType the type of exception to search for in the chain.
 	 * @return Optional throwable of the requested type if available, otherwise empty
 	 */
@@ -474,7 +461,7 @@ public final class ExceptionUtils {
 	/**
 	 * Checks whether a throwable chain contains a specific error message and returns the corresponding throwable.
 	 *
-	 * @param throwable the throwable chain to check.
+	 * @param throwable     the throwable chain to check.
 	 * @param searchMessage the error message to search for in the chain.
 	 * @return Optional throwable containing the search message if available, otherwise empty
 	 */
@@ -522,7 +509,7 @@ public final class ExceptionUtils {
 	 * {@link Throwable} is returned.
 	 *
 	 * @param throwableToStrip to strip
-	 * @param typeToStrip type to strip
+	 * @param typeToStrip      type to strip
 	 * @return Unpacked cause or given Throwable if not packed
 	 */
 	public static Throwable stripException(Throwable throwableToStrip, Class<? extends Throwable> typeToStrip) {
@@ -537,7 +524,7 @@ public final class ExceptionUtils {
 	 * Tries to find a {@link SerializedThrowable} as the cause of the given throwable and throws its
 	 * deserialized value. If there is no such throwable, then the original throwable is thrown.
 	 *
-	 * @param throwable to check for a SerializedThrowable
+	 * @param throwable   to check for a SerializedThrowable
 	 * @param classLoader to be used for the deserialization of the SerializedThrowable
 	 * @throws Throwable either the deserialized throwable or the given throwable
 	 */
@@ -574,12 +561,10 @@ public final class ExceptionUtils {
 	public static void suppressExceptions(RunnableWithException action) {
 		try {
 			action.run();
-		}
-		catch (InterruptedException e) {
+		} catch (InterruptedException e) {
 			// restore interrupted state
 			Thread.currentThread().interrupt();
-		}
-		catch (Throwable t) {
+		} catch (Throwable t) {
 			if (isJvmFatalError(t)) {
 				rethrow(t);
 			}
@@ -588,6 +573,9 @@ public final class ExceptionUtils {
 
 	// ------------------------------------------------------------------------
 
-	/** Private constructor to prevent instantiation. */
-	private ExceptionUtils() {}
+	/**
+	 * Private constructor to prevent instantiation.
+	 */
+	private ExceptionUtils() {
+	}
 }

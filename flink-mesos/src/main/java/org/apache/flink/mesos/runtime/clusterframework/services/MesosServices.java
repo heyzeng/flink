@@ -36,7 +36,7 @@ public interface MesosServices {
 	 * mode.
 	 *
 	 * @param configuration to be used
-	 * @param executor to run asynchronous tasks
+	 * @param executor      to run asynchronous tasks
 	 * @return a mesos worker store
 	 * @throws Exception if the mesos worker store could not be created
 	 */
@@ -54,6 +54,7 @@ public interface MesosServices {
 
 	/**
 	 * Gets the artifact server with which to serve essential resources to task managers.
+	 *
 	 * @return a reference to an artifact server.
 	 */
 	MesosArtifactServer getArtifactServer();

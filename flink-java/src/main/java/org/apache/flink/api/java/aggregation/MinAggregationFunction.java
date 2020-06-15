@@ -24,6 +24,7 @@ import org.apache.flink.types.ResettableValue;
 
 /**
  * Implementations of {@link AggregationFunction} for min operation.
+ *
  * @param <T> aggregating type
  */
 @Internal
@@ -101,7 +102,7 @@ public abstract class MinAggregationFunction<T extends Comparable<T>> extends Ag
 	public static final class MinAggregationFunctionFactory implements AggregationFunctionFactory {
 		private static final long serialVersionUID = 1L;
 
-		@SuppressWarnings({ "unchecked", "rawtypes" })
+		@SuppressWarnings({"unchecked", "rawtypes"})
 		@Override
 		public <T> AggregationFunction<T> createAggregationFunction(Class<T> type) {
 			if (Comparable.class.isAssignableFrom(type)) {

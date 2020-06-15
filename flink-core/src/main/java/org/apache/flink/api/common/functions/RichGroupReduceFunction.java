@@ -32,7 +32,7 @@ import org.apache.flink.util.Collector;
  * Implement the {@link GroupCombineFunction} interface to enable partial computation, i.e.,
  * a combiner for this {@link RichGroupReduceFunction}.
  *
- * @param <IN> Type of the elements that this function processes.
+ * @param <IN>  Type of the elements that this function processes.
  * @param <OUT> The type of the elements returned by the user-defined function.
  */
 @Public

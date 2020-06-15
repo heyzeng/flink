@@ -30,7 +30,7 @@ import java.io.Serializable;
  *
  * <p>The extractor takes an object and returns the deterministic key for that object.
  *
- * @param <IN> Type of objects to extract the key from.
+ * @param <IN>  Type of objects to extract the key from.
  * @param <KEY> Type of key.
  */
 @Public
@@ -45,7 +45,7 @@ public interface KeySelector<IN, KEY> extends Function, Serializable {
 	 * 	public class Word {
 	 * 		String word;
 	 * 		int count;
-	 * 	}
+	 *    }
 	 * </pre>
 	 * The key extractor could return the word as
 	 * a key to group all Word objects by the String they contain.
@@ -54,12 +54,11 @@ public interface KeySelector<IN, KEY> extends Function, Serializable {
 	 * <pre>
 	 * 	public String getKey(Word w) {
 	 * 		return w.word;
-	 * 	}
+	 *    }
 	 * </pre>
 	 *
 	 * @param value The object to get the key from.
 	 * @return The extracted key.
-	 *
 	 * @throws Exception Throwing an exception will cause the execution of the respective task to fail,
 	 *                   and trigger recovery or cancellation of the program.
 	 */

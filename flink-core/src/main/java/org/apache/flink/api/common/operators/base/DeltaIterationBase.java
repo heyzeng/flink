@@ -56,7 +56,7 @@ import org.apache.flink.util.Visitor;
  */
 @Internal
 public class DeltaIterationBase<ST, WT> extends DualInputOperator<ST, WT, ST, AbstractRichFunction> implements IterationOperator {
-	
+
 	private final Operator<ST> solutionSetPlaceholder;
 
 	private final Operator<WT> worksetPlaceholder;
@@ -76,13 +76,13 @@ public class DeltaIterationBase<ST, WT> extends DualInputOperator<ST, WT, ST, Ab
 	private int maxNumberOfIterations = -1;
 
 	private final AggregatorRegistry aggregators = new AggregatorRegistry();
-	
+
 	private boolean solutionSetUnManaged;
 
 	// --------------------------------------------------------------------------------------------
 
 	public DeltaIterationBase(BinaryOperatorInformation<ST, WT, ST> operatorInfo, int keyPosition) {
-		this(operatorInfo, new int[] {keyPosition});
+		this(operatorInfo, new int[]{keyPosition});
 	}
 
 	public DeltaIterationBase(BinaryOperatorInformation<ST, WT, ST> operatorInfo, int[] keyPositions) {
@@ -90,7 +90,7 @@ public class DeltaIterationBase<ST, WT> extends DualInputOperator<ST, WT, ST, Ab
 	}
 
 	public DeltaIterationBase(BinaryOperatorInformation<ST, WT, ST> operatorInfo, int keyPosition, String name) {
-		this(operatorInfo, new int[] {keyPosition}, name);
+		this(operatorInfo, new int[]{keyPosition}, name);
 	}
 
 	public DeltaIterationBase(BinaryOperatorInformation<ST, WT, ST> operatorInfo, int[] keyPositions, String name) {
@@ -99,33 +99,33 @@ public class DeltaIterationBase<ST, WT> extends DualInputOperator<ST, WT, ST, Ab
 		solutionSetPlaceholder = new SolutionSetPlaceHolder<ST>(this, new OperatorInformation<ST>(operatorInfo.getFirstInputType()));
 		worksetPlaceholder = new WorksetPlaceHolder<WT>(this, new OperatorInformation<WT>(operatorInfo.getSecondInputType()));
 	}
-	
+
 	// --------------------------------------------------------------------------------------------
-	
+
 	public int[] getSolutionSetKeyFields() {
 		return this.solutionSetKeyFields;
 	}
-	
+
 	public void setMaximumNumberOfIterations(int maxIterations) {
 		this.maxNumberOfIterations = maxIterations;
 	}
-	
+
 	public int getMaximumNumberOfIterations() {
 		return this.maxNumberOfIterations;
 	}
-	
+
 	@Override
 	public AggregatorRegistry getAggregators() {
 		return this.aggregators;
 	}
-	
+
 	// --------------------------------------------------------------------------------------------
 	// Getting / Setting of the step function input place-holders
 	// --------------------------------------------------------------------------------------------
 
 	/**
 	 * Gets the contract that represents the solution set for the step function.
-	 * 
+	 *
 	 * @return The solution set for the step function.
 	 */
 	public Operator<ST> getSolutionSet() {
@@ -134,7 +134,7 @@ public class DeltaIterationBase<ST, WT> extends DualInputOperator<ST, WT, ST, Ab
 
 	/**
 	 * Gets the contract that represents the workset for the step function.
-	 * 
+	 *
 	 * @return The workset for the step function.
 	 */
 	public Operator<WT> getWorkset() {
@@ -142,37 +142,37 @@ public class DeltaIterationBase<ST, WT> extends DualInputOperator<ST, WT, ST, Ab
 	}
 
 	/**
-	 * Sets the contract of the step function that represents the next workset. This contract is considered 
+	 * Sets the contract of the step function that represents the next workset. This contract is considered
 	 * one of the two sinks of the step function (the other one being the solution set delta).
-	 * 
+	 *
 	 * @param result The contract representing the next workset.
 	 */
 	public void setNextWorkset(Operator<WT> result) {
 		this.nextWorkset = result;
 	}
-	
+
 	/**
 	 * Gets the contract that has been set as the next workset.
-	 * 
+	 *
 	 * @return The contract that has been set as the next workset.
 	 */
 	public Operator<WT> getNextWorkset() {
 		return this.nextWorkset;
 	}
-	
+
 	/**
 	 * Sets the contract of the step function that represents the solution set delta. This contract is considered
 	 * one of the two sinks of the step function (the other one being the next workset).
-	 * 
+	 *
 	 * @param delta The contract representing the solution set delta.
 	 */
 	public void setSolutionSetDelta(Operator<ST> delta) {
 		this.solutionSetDelta = delta;
 	}
-	
+
 	/**
 	 * Gets the contract that has been set as the solution set delta.
-	 * 
+	 *
 	 * @return The contract that has been set as the solution set delta.
 	 */
 	public Operator<ST> getSolutionSetDelta() {
@@ -182,100 +182,98 @@ public class DeltaIterationBase<ST, WT> extends DualInputOperator<ST, WT, ST, Ab
 	// --------------------------------------------------------------------------------------------
 	// Getting / Setting the Inputs
 	// --------------------------------------------------------------------------------------------
-	
+
 	/**
 	 * Returns the initial solution set input, or null, if none is set.
-	 * 
+	 *
 	 * @return The iteration's initial solution set input.
 	 */
 	public Operator<ST> getInitialSolutionSet() {
 		return getFirstInput();
 	}
-	
+
 	/**
 	 * Returns the initial workset input, or null, if none is set.
-	 * 
+	 *
 	 * @return The iteration's workset input.
 	 */
 	public Operator<WT> getInitialWorkset() {
 		return getSecondInput();
 	}
-	
+
 	/**
 	 * Sets the given input as the initial solution set.
-	 * 
+	 *
 	 * @param input The contract to set the initial solution set.
 	 */
 	public void setInitialSolutionSet(Operator<ST> input) {
 		setFirstInput(input);
 	}
-	
+
 	/**
 	 * Sets the given input as the initial workset.
-	 * 
+	 *
 	 * @param input The contract to set as the initial workset.
 	 */
 	public void setInitialWorkset(Operator<WT> input) {
 		setSecondInput(input);
 	}
-	
+
 	/**
 	 * DeltaIteration meta operator cannot have broadcast inputs.
-	 * 
+	 *
 	 * @return An empty map.
 	 */
 	public Map<String, Operator<?>> getBroadcastInputs() {
 		return Collections.emptyMap();
 	}
-	
+
 	/**
 	 * The DeltaIteration meta operator cannot have broadcast inputs.
 	 * This method always throws an exception.
-	 * 
+	 *
 	 * @param name Ignored.
 	 * @param root Ignored.
 	 */
 	public void setBroadcastVariable(String name, Operator<?> root) {
 		throw new UnsupportedOperationException("The DeltaIteration meta operator cannot have broadcast inputs.");
 	}
-	
+
 	/**
 	 * The DeltaIteration meta operator cannot have broadcast inputs.
 	 * This method always throws an exception.
-	 * 
+	 *
 	 * @param inputs Ignored
 	 */
 	public <X> void setBroadcastVariables(Map<String, Operator<X>> inputs) {
 		throw new UnsupportedOperationException("The DeltaIteration meta operator cannot have broadcast inputs.");
 	}
-	
+
 	/**
 	 * Sets whether to keep the solution set in managed memory (safe against heap exhaustion) or unmanaged memory
 	 * (objects on heap).
-	 * 
+	 *
 	 * @param solutionSetUnManaged True to keep the solution set in unmanaged memory, false to keep it in managed memory.
-	 * 
 	 * @see #isSolutionSetUnManaged()
 	 */
 	public void setSolutionSetUnManaged(boolean solutionSetUnManaged) {
 		this.solutionSetUnManaged = solutionSetUnManaged;
 	}
-	
+
 	/**
 	 * gets whether the solution set is in managed or unmanaged memory.
-	 * 
+	 *
 	 * @return True, if the solution set is in unmanaged memory (object heap), false if in managed memory.
-	 * 
 	 * @see #setSolutionSetUnManaged(boolean)
 	 */
 	public boolean isSolutionSetUnManaged() {
 		return solutionSetUnManaged;
 	}
-	
+
 	// --------------------------------------------------------------------------------------------
 	// Place-holder Operators
 	// --------------------------------------------------------------------------------------------
-	
+
 	/**
 	 * Specialized operator to use as a recognizable place-holder for the working set input to the
 	 * step function.
@@ -304,7 +302,7 @@ public class DeltaIterationBase<ST, WT> extends DualInputOperator<ST, WT, ST, Ab
 			return null;
 		}
 	}
-	
+
 	/**
 	 * Specialized operator to use as a recognizable place-holder for the solution set input to the
 	 * step function.

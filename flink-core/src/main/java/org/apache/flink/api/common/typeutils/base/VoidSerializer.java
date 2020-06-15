@@ -34,7 +34,9 @@ public final class VoidSerializer extends TypeSerializerSingleton<Void> {
 
 	private static final long serialVersionUID = 1L;
 
-	/** Sharable instance of the VoidSerializer. */
+	/**
+	 * Sharable instance of the VoidSerializer.
+	 */
 	public static final VoidSerializer INSTANCE = new VoidSerializer();
 
 	@Override

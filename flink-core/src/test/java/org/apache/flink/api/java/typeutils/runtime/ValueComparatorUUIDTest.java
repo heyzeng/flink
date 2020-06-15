@@ -37,7 +37,7 @@ public class ValueComparatorUUIDTest extends ComparatorTestBase<ValueID> {
 
 	@Override
 	protected ValueID[] getSortedTestData() {
-		return new ValueID[] {
+		return new ValueID[]{
 			new ValueID(new UUID(0, 0)),
 			new ValueID(new UUID(1, 0)),
 			new ValueID(new UUID(1, 1))

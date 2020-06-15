@@ -30,10 +30,10 @@ public class SingleInputSemanticPropertiesTest {
 	public void testGetTargetFields() {
 
 		SingleInputSemanticProperties sp = new SingleInputSemanticProperties();
-		sp.addForwardedField(0,1);
-		sp.addForwardedField(1,4);
-		sp.addForwardedField(2,3);
-		sp.addForwardedField(3,2);
+		sp.addForwardedField(0, 1);
+		sp.addForwardedField(1, 4);
+		sp.addForwardedField(2, 3);
+		sp.addForwardedField(3, 2);
 
 		assertEquals(1, sp.getForwardingTargetFields(0, 0).size());
 		assertEquals(1, sp.getForwardingTargetFields(0, 1).size());
@@ -47,11 +47,11 @@ public class SingleInputSemanticPropertiesTest {
 		assertEquals(0, sp.getForwardingTargetFields(0, 4).size());
 
 		sp = new SingleInputSemanticProperties();
-		sp.addForwardedField(0,0);
-		sp.addForwardedField(0,4);
-		sp.addForwardedField(1,1);
-		sp.addForwardedField(1,2);
-		sp.addForwardedField(1,3);
+		sp.addForwardedField(0, 0);
+		sp.addForwardedField(0, 4);
+		sp.addForwardedField(1, 1);
+		sp.addForwardedField(1, 2);
+		sp.addForwardedField(1, 3);
 
 		assertEquals(2, sp.getForwardingTargetFields(0, 0).size());
 		assertEquals(3, sp.getForwardingTargetFields(0, 1).size());
@@ -69,10 +69,10 @@ public class SingleInputSemanticPropertiesTest {
 	public void testGetSourceField() {
 
 		SingleInputSemanticProperties sp = new SingleInputSemanticProperties();
-		sp.addForwardedField(0,1);
-		sp.addForwardedField(1,4);
-		sp.addForwardedField(2,3);
-		sp.addForwardedField(3,2);
+		sp.addForwardedField(0, 1);
+		sp.addForwardedField(1, 4);
+		sp.addForwardedField(2, 3);
+		sp.addForwardedField(3, 2);
 
 		assertEquals(0, sp.getForwardingSourceField(0, 1));
 		assertEquals(1, sp.getForwardingSourceField(0, 4));
@@ -82,11 +82,11 @@ public class SingleInputSemanticPropertiesTest {
 		assertTrue(sp.getForwardingSourceField(0, 5) < 0);
 
 		sp = new SingleInputSemanticProperties();
-		sp.addForwardedField(0,0);
-		sp.addForwardedField(0,4);
-		sp.addForwardedField(1,1);
-		sp.addForwardedField(1,2);
-		sp.addForwardedField(1,3);
+		sp.addForwardedField(0, 0);
+		sp.addForwardedField(0, 4);
+		sp.addForwardedField(1, 1);
+		sp.addForwardedField(1, 2);
+		sp.addForwardedField(1, 3);
 
 		assertEquals(0, sp.getForwardingSourceField(0, 0));
 		assertEquals(0, sp.getForwardingSourceField(0, 4));
@@ -127,7 +127,7 @@ public class SingleInputSemanticPropertiesTest {
 	public void testGetTargetFieldInvalidIndex() {
 
 		SingleInputSemanticProperties sp = new SingleInputSemanticProperties();
-		sp.addForwardedField(0,0);
+		sp.addForwardedField(0, 0);
 
 		sp.getForwardingTargetFields(1, 0);
 	}
@@ -136,7 +136,7 @@ public class SingleInputSemanticPropertiesTest {
 	public void testGetSourceFieldInvalidIndex() {
 
 		SingleInputSemanticProperties sp = new SingleInputSemanticProperties();
-		sp.addForwardedField(0,0);
+		sp.addForwardedField(0, 0);
 
 		sp.getForwardingSourceField(1, 0);
 	}

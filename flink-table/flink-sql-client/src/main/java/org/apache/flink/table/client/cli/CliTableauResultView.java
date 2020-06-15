@@ -71,10 +71,10 @@ public class CliTableauResultView implements AutoCloseable {
 	private final ExecutorService displayResultExecutorService;
 
 	public CliTableauResultView(
-			final Terminal terminal,
-			final Executor sqlExecutor,
-			final String sessionId,
-			final ResultDescriptor resultDescriptor) {
+		final Terminal terminal,
+		final Executor sqlExecutor,
+		final String sessionId,
+		final ResultDescriptor resultDescriptor) {
 		this.terminal = terminal;
 		this.sqlExecutor = sqlExecutor;
 		this.sessionId = sessionId;
@@ -167,9 +167,9 @@ public class CliTableauResultView implements AutoCloseable {
 				Thread.currentThread().interrupt();
 			}
 			TypedResult<Integer> result = sqlExecutor.snapshotResult(
-					sessionId,
-					resultDescriptor.getResultId(),
-					Integer.MAX_VALUE);
+				sessionId,
+				resultDescriptor.getResultId(),
+				Integer.MAX_VALUE);
 
 			if (result.getType() == TypedResult.ResultType.EOS) {
 				resultRows = Collections.emptyList();
@@ -188,10 +188,10 @@ public class CliTableauResultView implements AutoCloseable {
 	private void printStreamResults(AtomicInteger receivedRowCount) {
 		List<TableColumn> columns = resultDescriptor.getResultSchema().getTableColumns();
 		String[] fieldNames =
-				Stream.concat(
-						Stream.of("+/-"),
-						columns.stream().map(TableColumn::getName)
-				).toArray(String[]::new);
+			Stream.concat(
+				Stream.of("+/-"),
+				columns.stream().map(TableColumn::getName)
+			).toArray(String[]::new);
 
 		int[] colWidths = columnWidthsByType(columns, true);
 		String borderline = genBorderLine(colWidths);
@@ -204,7 +204,7 @@ public class CliTableauResultView implements AutoCloseable {
 
 		while (true) {
 			final TypedResult<List<Tuple2<Boolean, Row>>> result =
-					sqlExecutor.retrieveResultChanges(sessionId, resultDescriptor.getResultId());
+				sqlExecutor.retrieveResultChanges(sessionId, resultDescriptor.getResultId());
 
 			switch (result.getType()) {
 				case EMPTY:
@@ -299,8 +299,8 @@ public class CliTableauResultView implements AutoCloseable {
 	private int[] columnWidthsByType(List<TableColumn> columns, boolean includeChangeflag) {
 		// fill width with field names first
 		int[] colWidths = columns.stream()
-				.mapToInt(col -> col.getName().length())
-				.toArray();
+			.mapToInt(col -> col.getName().length())
+			.toArray();
 
 		// determine proper column width based on types
 		for (int i = 0; i < columns.size(); ++i) {
@@ -364,10 +364,10 @@ public class CliTableauResultView implements AutoCloseable {
 	 *
 	 * <p>According to LocalDateTime's comment, the string output will be one of the following
 	 * ISO-8601 formats:
-	 *  <li>{@code uuuu-MM-dd'T'HH:mm:ss}</li>
-	 *  <li>{@code uuuu-MM-dd'T'HH:mm:ss.SSS}</li>
-	 *  <li>{@code uuuu-MM-dd'T'HH:mm:ss.SSSSSS}</li>
-	 *  <li>{@code uuuu-MM-dd'T'HH:mm:ss.SSSSSSSSS}</li>
+	 * <li>{@code uuuu-MM-dd'T'HH:mm:ss}</li>
+	 * <li>{@code uuuu-MM-dd'T'HH:mm:ss.SSS}</li>
+	 * <li>{@code uuuu-MM-dd'T'HH:mm:ss.SSSSSS}</li>
+	 * <li>{@code uuuu-MM-dd'T'HH:mm:ss.SSSSSSSSS}</li>
 	 *
 	 * <p>And for java.sql.Timestamp, the number of digits after point will be precision except
 	 * when precision is 0. In that case, the format would be 'uuuu-MM-dd HH:mm:ss.0'
@@ -387,7 +387,7 @@ public class CliTableauResultView implements AutoCloseable {
 
 	private int[] columnWidthsByContent(List<TableColumn> columns, List<String[]> rows) {
 		// fill width with field names first
-		int[] colWidths  = columns.stream().mapToInt(col -> col.getName().length()).toArray();
+		int[] colWidths = columns.stream().mapToInt(col -> col.getName().length()).toArray();
 
 		// fill column width with real data
 		for (String[] row : rows) {
@@ -421,7 +421,7 @@ public class CliTableauResultView implements AutoCloseable {
 
 		// pad with ' ' before the column
 		int lackedWidth = targetWidth - getStringDisplayWidth(substring);
-		if (lackedWidth > 0){
+		if (lackedWidth > 0) {
 			substring = StringUtils.repeat(' ', lackedWidth) + substring;
 		}
 		return substring;

@@ -46,9 +46,9 @@ public class ReducingStateDescriptor<T> extends StateDescriptor<ReducingState<T>
 	 * <p>If this constructor fails (because it is not possible to describe the type via a class),
 	 * consider using the {@link #ReducingStateDescriptor(String, ReduceFunction, TypeInformation)} constructor.
 	 *
-	 * @param name The (unique) name for the state.
+	 * @param name           The (unique) name for the state.
 	 * @param reduceFunction The {@code ReduceFunction} used to aggregate the state.
-	 * @param typeClass The type of the values in the state.
+	 * @param typeClass      The type of the values in the state.
 	 */
 	public ReducingStateDescriptor(String name, ReduceFunction<T> reduceFunction, Class<T> typeClass) {
 		super(name, typeClass, null);
@@ -62,9 +62,9 @@ public class ReducingStateDescriptor<T> extends StateDescriptor<ReducingState<T>
 	/**
 	 * Creates a new {@code ReducingStateDescriptor} with the given name and default value.
 	 *
-	 * @param name The (unique) name for the state.
+	 * @param name           The (unique) name for the state.
 	 * @param reduceFunction The {@code ReduceFunction} used to aggregate the state.
-	 * @param typeInfo The type of the values in the state.
+	 * @param typeInfo       The type of the values in the state.
 	 */
 	public ReducingStateDescriptor(String name, ReduceFunction<T> reduceFunction, TypeInformation<T> typeInfo) {
 		super(name, typeInfo, null);
@@ -74,7 +74,7 @@ public class ReducingStateDescriptor<T> extends StateDescriptor<ReducingState<T>
 	/**
 	 * Creates a new {@code ValueStateDescriptor} with the given name and default value.
 	 *
-	 * @param name The (unique) name for the state.
+	 * @param name           The (unique) name for the state.
 	 * @param reduceFunction The {@code ReduceFunction} used to aggregate the state.
 	 * @param typeSerializer The type serializer of the values in the state.
 	 */

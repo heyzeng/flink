@@ -42,8 +42,8 @@ public class JobExecutionResult extends JobSubmissionResult {
 	/**
 	 * Creates a new JobExecutionResult.
 	 *
-	 * @param jobID The job's ID.
-	 * @param netRuntime The net runtime of the job (excluding pre-flight phase like the optimizer) in milliseconds
+	 * @param jobID        The job's ID.
+	 * @param netRuntime   The net runtime of the job (excluding pre-flight phase like the optimizer) in milliseconds
 	 * @param accumulators A map of all accumulators produced by the job.
 	 */
 	public JobExecutionResult(JobID jobID, long netRuntime, Map<String, OptionalFailure<Object>> accumulators) {
@@ -77,7 +77,7 @@ public class JobExecutionResult extends JobSubmissionResult {
 		return this.netRuntime;
 	}
 
-    /**
+	/**
 	 * Gets the net execution time of the job, i.e., the execution time in the parallel system,
 	 * without the pre-flight steps like the optimizer in a desired time unit.
 	 *
@@ -93,7 +93,7 @@ public class JobExecutionResult extends JobSubmissionResult {
 	 * that name was produced.
 	 *
 	 * @param accumulatorName The name of the accumulator.
-	 * @param <T> The generic type of the accumulator value.
+	 * @param <T>             The generic type of the accumulator value.
 	 * @return The value of the accumulator with the given name.
 	 */
 	@SuppressWarnings("unchecked")
@@ -146,13 +146,14 @@ public class JobExecutionResult extends JobSubmissionResult {
 		}
 		if (!(result instanceof Integer)) {
 			throw new ClassCastException("Requested result of the accumulator '" + accumulatorName
-							+ "' should be Integer but has type " + result.getClass());
+				+ "' should be Integer but has type " + result.getClass());
 		}
 		return (Integer) result;
 	}
 
 	/**
 	 * Returns a dummy object for wrapping a JobSubmissionResult.
+	 *
 	 * @param result The SubmissionResult
 	 * @return a JobExecutionResult
 	 * @deprecated Will be removed in future versions.

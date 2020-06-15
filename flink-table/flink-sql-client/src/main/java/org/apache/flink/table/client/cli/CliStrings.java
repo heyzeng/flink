@@ -67,6 +67,7 @@ public final class CliStrings {
 		.toAttributedString();
 
 	public static final String MESSAGE_WELCOME;
+
 	// make findbugs happy
 	static {
 		MESSAGE_WELCOME = "                                   \u2592\u2593\u2588\u2588\u2593\u2588\u2588\u2592\n" +

@@ -51,7 +51,6 @@ public interface ListState<T> extends MergingState<T, Iterable<T>> {
 	 * <p>If null or an empty list is passed in, the state value will be null.
 	 *
 	 * @param values The new values for the state.
-	 *
 	 * @throws Exception The method may forward exception thrown internally (by I/O or functions).
 	 */
 	void update(List<T> values) throws Exception;
@@ -64,7 +63,6 @@ public interface ListState<T> extends MergingState<T, Iterable<T>> {
 	 * <p>If null or an empty list is passed in, the state value remains unchanged.
 	 *
 	 * @param values The new values to be added to the state.
-	 *
 	 * @throws Exception The method may forward exception thrown internally (by I/O or functions).
 	 */
 	void addAll(List<T> values) throws Exception;

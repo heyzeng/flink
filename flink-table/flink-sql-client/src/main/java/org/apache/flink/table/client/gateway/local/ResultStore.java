@@ -57,10 +57,10 @@ public class ResultStore {
 	 * Creates a result. Might start threads or opens sockets so every created result must be closed.
 	 */
 	public <T> DynamicResult<T> createResult(
-			Environment env,
-			TableSchema schema,
-			ExecutionConfig config,
-			ClassLoader classLoader) {
+		Environment env,
+		TableSchema schema,
+		ExecutionConfig config,
+		ClassLoader classLoader) {
 
 		if (env.getExecution().inStreamingMode()) {
 			// determine gateway address (and port if possible)
@@ -69,19 +69,19 @@ public class ResultStore {
 
 			if (env.getExecution().isChangelogMode() || env.getExecution().isTableauMode()) {
 				return new ChangelogCollectStreamResult<>(
-						schema,
-						config,
-						gatewayAddress,
-						gatewayPort,
-						classLoader);
+					schema,
+					config,
+					gatewayAddress,
+					gatewayPort,
+					classLoader);
 			} else {
 				return new MaterializedCollectStreamResult<>(
-						schema,
-						config,
-						gatewayAddress,
-						gatewayPort,
-						env.getExecution().getMaxTableResultRows(),
-						classLoader);
+					schema,
+					config,
+					gatewayAddress,
+					gatewayPort,
+					env.getExecution().getMaxTableResultRows(),
+					classLoader);
 			}
 
 		} else {
@@ -90,7 +90,7 @@ public class ResultStore {
 				return new MaterializedCollectBatchResult<>(schema, config, classLoader);
 			} else {
 				throw new SqlExecutionException(
-						"Results of batch queries can only be served in table or tableau mode.");
+					"Results of batch queries can only be served in table or tableau mode.");
 			}
 		}
 	}
@@ -138,19 +138,19 @@ public class ResultStore {
 			if (jobManagerAddress != null && !jobManagerAddress.isEmpty()) {
 				try {
 					return ConnectionUtils.findConnectingAddress(
-							new InetSocketAddress(jobManagerAddress, jobManagerPort),
-							deploy.getResponseTimeout(),
-							400);
+						new InetSocketAddress(jobManagerAddress, jobManagerPort),
+						deploy.getResponseTimeout(),
+						400);
 				} catch (Exception e) {
 					throw new SqlClientException("Could not determine address of the gateway for result retrieval " +
-							"by connecting to the job manager. Please specify the gateway address manually.", e);
+						"by connecting to the job manager. Please specify the gateway address manually.", e);
 				}
 			} else {
 				try {
 					return InetAddress.getLocalHost();
 				} catch (UnknownHostException e) {
 					throw new SqlClientException("Could not determine address of the gateway for result retrieval. " +
-							"Please specify the gateway address manually.", e);
+						"Please specify the gateway address manually.", e);
 				}
 			}
 		}

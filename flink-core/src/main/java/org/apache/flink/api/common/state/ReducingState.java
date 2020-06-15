@@ -35,4 +35,5 @@ import org.apache.flink.annotation.PublicEvolving;
  * @param <T> Type of the value in the operator state
  */
 @PublicEvolving
-public interface ReducingState<T> extends MergingState<T, T> {}
+public interface ReducingState<T> extends MergingState<T, T> {
+}

@@ -178,11 +178,14 @@ public class WebOptions {
 	 */
 	public static final ConfigOption<Long> TIMEOUT =
 		key("web.timeout")
-		.defaultValue(10L * 1000L)
-		.withDescription("Timeout for asynchronous operations by the web monitor in milliseconds.");
+			.defaultValue(10L * 1000L)
+			.withDescription("Timeout for asynchronous operations by the web monitor in milliseconds.");
 
 	// ------------------------------------------------------------------------
 
-	/** Not meant to be instantiated. */
-	private WebOptions() {}
+	/**
+	 * Not meant to be instantiated.
+	 */
+	private WebOptions() {
+	}
 }

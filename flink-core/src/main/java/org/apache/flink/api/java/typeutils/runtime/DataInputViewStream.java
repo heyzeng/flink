@@ -30,14 +30,14 @@ import java.io.InputStream;
  */
 @Internal
 public class DataInputViewStream extends InputStream {
-	
+
 	protected DataInputView inputView;
 
 	public DataInputViewStream(DataInputView inputView) {
 		this.inputView = inputView;
 	}
 
-	public DataInputView getInputView(){
+	public DataInputView getInputView() {
 		return inputView;
 	}
 
@@ -45,7 +45,7 @@ public class DataInputViewStream extends InputStream {
 	public int read() throws IOException {
 		try {
 			return inputView.readUnsignedByte();
-		} catch(EOFException ex) {
+		} catch (EOFException ex) {
 			return -1;
 		}
 	}
@@ -53,7 +53,7 @@ public class DataInputViewStream extends InputStream {
 	@Override
 	public long skip(long n) throws IOException {
 		long toSkipRemaining = n;
-		while(toSkipRemaining > Integer.MAX_VALUE) {
+		while (toSkipRemaining > Integer.MAX_VALUE) {
 			int skippedBytes = inputView.skipBytes(Integer.MAX_VALUE);
 
 			if (skippedBytes == 0) {

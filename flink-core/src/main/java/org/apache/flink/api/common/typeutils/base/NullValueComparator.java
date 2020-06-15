@@ -36,7 +36,7 @@ public class NullValueComparator extends TypeComparator<NullValue> {
 
 	private static final long serialVersionUID = 1L;
 
-	private final TypeComparator<?>[] comparators = new TypeComparator[] {this};
+	private final TypeComparator<?>[] comparators = new TypeComparator[]{this};
 
 	private final static NullValueComparator INSTANCE = new NullValueComparator();
 
@@ -44,7 +44,8 @@ public class NullValueComparator extends TypeComparator<NullValue> {
 		return INSTANCE;
 	}
 
-	private NullValueComparator() {}
+	private NullValueComparator() {
+	}
 
 	@Override
 	public int hash(NullValue record) {
@@ -52,7 +53,8 @@ public class NullValueComparator extends TypeComparator<NullValue> {
 	}
 
 	@Override
-	public void setReference(NullValue toCompare) {}
+	public void setReference(NullValue toCompare) {
+	}
 
 	@Override
 	public boolean equalToReference(NullValue candidate) {

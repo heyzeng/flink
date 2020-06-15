@@ -181,21 +181,21 @@ public class YarnResourceManagerTest extends TestLogger {
 		NMClientAsync mockNMClient;
 
 		TestingYarnResourceManager(
-				RpcService rpcService,
-				String resourceManagerEndpointId,
-				ResourceID resourceId,
-				Configuration flinkConfig,
-				Map<String, String> env,
-				HighAvailabilityServices highAvailabilityServices,
-				HeartbeatServices heartbeatServices,
-				SlotManager slotManager,
-				JobLeaderIdService jobLeaderIdService,
-				ClusterInformation clusterInformation,
-				FatalErrorHandler fatalErrorHandler,
-				@Nullable String webInterfaceUrl,
-				AMRMClientAsync<AMRMClient.ContainerRequest> mockResourceManagerClient,
-				NMClientAsync mockNMClient,
-				ResourceManagerMetricGroup resourceManagerMetricGroup) {
+			RpcService rpcService,
+			String resourceManagerEndpointId,
+			ResourceID resourceId,
+			Configuration flinkConfig,
+			Map<String, String> env,
+			HighAvailabilityServices highAvailabilityServices,
+			HeartbeatServices heartbeatServices,
+			SlotManager slotManager,
+			JobLeaderIdService jobLeaderIdService,
+			ClusterInformation clusterInformation,
+			FatalErrorHandler fatalErrorHandler,
+			@Nullable String webInterfaceUrl,
+			AMRMClientAsync<AMRMClient.ContainerRequest> mockResourceManagerClient,
+			NMClientAsync mockNMClient,
+			ResourceManagerMetricGroup resourceManagerMetricGroup) {
 			super(
 				rpcService,
 				resourceManagerEndpointId,
@@ -224,9 +224,9 @@ public class YarnResourceManagerTest extends TestLogger {
 
 		@Override
 		protected AMRMClientAsync<AMRMClient.ContainerRequest> createAndStartResourceManagerClient(
-				YarnConfiguration yarnConfiguration,
-				int yarnHeartbeatIntervalMillis,
-				@Nullable String webInterfaceUrl) {
+			YarnConfiguration yarnConfiguration,
+			int yarnHeartbeatIntervalMillis,
+			@Nullable String webInterfaceUrl) {
 			return mockResourceManagerClient;
 		}
 
@@ -267,29 +267,29 @@ public class YarnResourceManagerTest extends TestLogger {
 			this(flinkConfig);
 		}
 
-		Context(Configuration configuration) throws  Exception {
+		Context(Configuration configuration) throws Exception {
 			rpcService = new TestingRpcService();
 			rmServices = new MockResourceManagerRuntimeServices(rpcService, TIMEOUT);
 
 			// resource manager
 			rmResourceID = ResourceID.generate();
 			resourceManager =
-					new TestingYarnResourceManager(
-							rpcService,
-							RM_ADDRESS,
-							rmResourceID,
-							configuration,
-							env,
-							rmServices.highAvailabilityServices,
-							rmServices.heartbeatServices,
-							rmServices.slotManager,
-							rmServices.jobLeaderIdService,
-							new ClusterInformation("localhost", 1234),
-							testingFatalErrorHandler,
-							null,
-							mockResourceManagerClient,
-							mockNMClient,
-							UnregisteredMetricGroups.createUnregisteredResourceManagerMetricGroup());
+				new TestingYarnResourceManager(
+					rpcService,
+					RM_ADDRESS,
+					rmResourceID,
+					configuration,
+					env,
+					rmServices.highAvailabilityServices,
+					rmServices.heartbeatServices,
+					rmServices.slotManager,
+					rmServices.jobLeaderIdService,
+					new ClusterInformation("localhost", 1234),
+					testingFatalErrorHandler,
+					null,
+					mockResourceManagerClient,
+					mockNMClient,
+					UnregisteredMetricGroups.createUnregisteredResourceManagerMetricGroup());
 		}
 
 		/**
@@ -310,6 +310,7 @@ public class YarnResourceManagerTest extends TestLogger {
 		/**
 		 * A wrapper function for running test. Deal with setup and teardown logic
 		 * in Context.
+		 *
 		 * @param testMethod the real test body.
 		 */
 		void runTest(RunnableWithException testMethod) throws Exception {
@@ -582,10 +583,10 @@ public class YarnResourceManagerTest extends TestLogger {
 	}
 
 	private void registerSlotRequest(
-			TestingYarnResourceManager resourceManager,
-			MockResourceManagerRuntimeServices rmServices,
-			ResourceProfile resourceProfile,
-			String taskHost) throws ExecutionException, InterruptedException {
+		TestingYarnResourceManager resourceManager,
+		MockResourceManagerRuntimeServices rmServices,
+		ResourceProfile resourceProfile,
+		String taskHost) throws ExecutionException, InterruptedException {
 
 		CompletableFuture<?> registerSlotRequestFuture = resourceManager.runInMainThread(() -> {
 			rmServices.slotManager.registerSlotRequest(

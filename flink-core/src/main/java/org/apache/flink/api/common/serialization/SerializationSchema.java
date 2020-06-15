@@ -34,8 +34,7 @@ public interface SerializationSchema<T> extends Serializable {
 	/**
 	 * Serializes the incoming element to a specified type.
 	 *
-	 * @param element
-	 *            The incoming element to be serialized
+	 * @param element The incoming element to be serialized
 	 * @return The serialized element.
 	 */
 	byte[] serialize(T element);

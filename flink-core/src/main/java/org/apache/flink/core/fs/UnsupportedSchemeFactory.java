@@ -56,8 +56,7 @@ class UnsupportedSchemeFactory implements FileSystemFactory {
 	public FileSystem create(URI fsUri) throws IOException {
 		if (exceptionCause == null) {
 			throw new UnsupportedFileSystemSchemeException(exceptionMessage);
-		}
-		else {
+		} else {
 			throw new UnsupportedFileSystemSchemeException(exceptionMessage, exceptionCause);
 		}
 	}

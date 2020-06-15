@@ -39,7 +39,7 @@ import static org.apache.flink.util.Preconditions.checkState;
  * for the default empty constructor.
  */
 public class TraversableSerializerSnapshot<T extends TraversableOnce<E>, E>
-		extends CompositeTypeSerializerSnapshot<T, TraversableSerializer<T, E>> {
+	extends CompositeTypeSerializerSnapshot<T, TraversableSerializer<T, E>> {
 
 	private static final int VERSION = 2;
 
@@ -69,16 +69,16 @@ public class TraversableSerializerSnapshot<T extends TraversableOnce<E>, E>
 
 	@Override
 	protected TypeSerializer<?>[] getNestedSerializers(
-			TraversableSerializer<T, E> outerSerializer) {
+		TraversableSerializer<T, E> outerSerializer) {
 		return new TypeSerializer[]{outerSerializer.elementSerializer()};
 	}
 
 	@Override
 	@SuppressWarnings({"unchecked"})
 	protected TraversableSerializer<T, E> createOuterSerializerWithNestedSerializers(
-			TypeSerializer<?>[] nestedSerializers) {
+		TypeSerializer<?>[] nestedSerializers) {
 		checkState(cbfCode != null,
-				"cbfCode cannot be null");
+			"cbfCode cannot be null");
 
 		TypeSerializer<E> nestedSerializer = (TypeSerializer<E>) nestedSerializers[0];
 		return new TraversableSerializer<>(nestedSerializer, cbfCode);
@@ -91,9 +91,9 @@ public class TraversableSerializerSnapshot<T extends TraversableOnce<E>, E>
 
 	@Override
 	protected void readOuterSnapshot(
-			int readOuterSnapshotVersion,
-			DataInputView in,
-			ClassLoader userCodeClassLoader) throws IOException {
+		int readOuterSnapshotVersion,
+		DataInputView in,
+		ClassLoader userCodeClassLoader) throws IOException {
 		cbfCode = in.readUTF();
 	}
 

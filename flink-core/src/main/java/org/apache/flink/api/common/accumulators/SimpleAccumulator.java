@@ -27,4 +27,5 @@ import java.io.Serializable;
  * must be the same.
  */
 @Public
-public interface SimpleAccumulator<T extends Serializable> extends Accumulator<T,T> {}
+public interface SimpleAccumulator<T extends Serializable> extends Accumulator<T, T> {
+}

@@ -153,7 +153,9 @@ public enum JavaGcCleanerWrapper {
 		}
 	}
 
-	/** New cleaner provider for Java 9+. */
+	/**
+	 * New cleaner provider for Java 9+.
+	 */
 	private enum Java9CleanerProvider implements CleanerProvider {
 		INSTANCE;
 

@@ -60,11 +60,11 @@ public abstract class CollectStreamResult<C> extends BasicResult<C> implements D
 	protected AtomicReference<SqlExecutionException> executionException = new AtomicReference<>();
 
 	public CollectStreamResult(
-			TableSchema tableSchema,
-			ExecutionConfig config,
-			InetAddress gatewayAddress,
-			int gatewayPort,
-			ClassLoader classLoader) {
+		TableSchema tableSchema,
+		ExecutionConfig config,
+		InetAddress gatewayAddress,
+		int gatewayPort,
+		ClassLoader classLoader) {
 		resultLock = new Object();
 
 		// create socket stream iterator
@@ -91,15 +91,15 @@ public abstract class CollectStreamResult<C> extends BasicResult<C> implements D
 		retrievalThread.start();
 
 		jobExecutionResultFuture = deployer
-				.deploy()
-				.thenCompose(jobClient -> jobClient.getJobExecutionResult(classLoader))
-				.whenComplete((unused, throwable) -> {
-					if (throwable != null) {
-						executionException.compareAndSet(
-								null,
-								new SqlExecutionException("Error while submitting job.", throwable));
-					}
-				});
+			.deploy()
+			.thenCompose(jobClient -> jobClient.getJobExecutionResult(classLoader))
+			.whenComplete((unused, throwable) -> {
+				if (throwable != null) {
+					executionException.compareAndSet(
+						null,
+						new SqlExecutionException("Error while submitting job.", throwable));
+				}
+			});
 	}
 
 	@Override

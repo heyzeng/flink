@@ -37,29 +37,28 @@ import org.junit.Before;
 import org.junit.Test;
 
 public class RecordTest {
-	
+
 	private static final long SEED = 354144423270432543L;
 	private final Random rand = new Random(RecordTest.SEED);
-	
+
 	private DataInputView in;
 	private DataOutputView out;
-	
+
 	// Couple of test values
 	private final StringValue origVal1 = new StringValue("Hello World!");
 	private final DoubleValue origVal2 = new DoubleValue(Math.PI);
 	private final IntValue origVal3 = new IntValue(1337);
-	
-	
+
 
 	@Before
 	public void setUp() throws Exception {
-		PipedInputStream pipeIn = new PipedInputStream(1024*1024);
+		PipedInputStream pipeIn = new PipedInputStream(1024 * 1024);
 		PipedOutputStream pipeOut = new PipedOutputStream(pipeIn);
-		
+
 		this.in = new DataInputViewStreamWrapper(pipeIn);
 		this.out = new DataOutputViewStreamWrapper(pipeOut);
 	}
-	
+
 	@Test
 	public void testEmptyRecordSerialization() {
 		try {
@@ -68,14 +67,14 @@ public class RecordTest {
 			empty.write(this.out);
 			empty.read(in);
 			Assert.assertTrue("Deserialized Empty record is not another empty record.", empty.getNumFields() == 0);
-			
+
 			// test deserialize into new
 			empty = new Record();
 			empty.write(this.out);
 			empty = new Record();
 			empty.read(this.in);
 			Assert.assertTrue("Deserialized Empty record is not another empty record.", empty.getNumFields() == 0);
-			
+
 		} catch (Throwable t) {
 			Assert.fail("Test failed due to an exception: " + t.getMessage());
 		}
@@ -90,28 +89,28 @@ public class RecordTest {
 			record.addField(this.origVal1);
 			assertTrue(record.getNumFields() == 1);
 			assertTrue(origVal1.getValue().equals(record.getField(0, StringValue.class).getValue()));
-			
+
 			// Add 100 random integers to the record
 			record = new Record();
 			for (int i = 0; i < 100; i++) {
 				IntValue orig = new IntValue(this.rand.nextInt());
 				record.addField(orig);
 				IntValue rec = record.getField(i, IntValue.class);
-				
+
 				assertTrue(record.getNumFields() == i + 1);
 				assertTrue(orig.getValue() == rec.getValue());
 			}
-			
+
 			// Add 3 values of different type to the record
 			record = new Record(this.origVal1, this.origVal2);
 			record.addField(this.origVal3);
-			
+
 			assertTrue(record.getNumFields() == 3);
-			
+
 			StringValue recVal1 = record.getField(0, StringValue.class);
 			DoubleValue recVal2 = record.getField(1, DoubleValue.class);
 			IntValue recVal3 = record.getField(2, IntValue.class);
-			
+
 			assertTrue("The value of the first field has changed", recVal1.equals(this.origVal1));
 			assertTrue("The value of the second field changed", recVal2.equals(this.origVal2));
 			assertTrue("The value of the third field has changed", recVal3.equals(this.origVal3));
@@ -204,7 +203,7 @@ public class RecordTest {
 	}
 
 //	@Test
-//	public void testProjectLong() {		
+//	public void testProjectLong() {
 //		Record record = new Record();
 //		long mask = 0;
 //
@@ -267,7 +266,7 @@ public class RecordTest {
 	public void testSetNullInt() {
 		try {
 			Record record = this.generateFilledDenseRecord(58);
-	
+
 			record.setNull(42);
 			assertTrue(record.getNumFields() == 58);
 			assertTrue(record.getField(42, IntValue.class) == null);
@@ -281,15 +280,15 @@ public class RecordTest {
 		try {
 			Record record = this.generateFilledDenseRecord(58);
 			long mask = generateRandomBitmask(58);
-	
+
 			record.setNull(mask);
-	
+
 			for (int i = 0; i < 58; i++) {
 				if (((1L << i) & mask) != 0) {
 					assertTrue(record.getField(i, IntValue.class) == null);
 				}
 			}
-	
+
 			assertTrue(record.getNumFields() == 58);
 		} catch (Throwable t) {
 			Assert.fail("Test failed due to an exception: " + t.getMessage());
@@ -297,25 +296,24 @@ public class RecordTest {
 	}
 
 	@Test
-	public void testSetNullLongArray()
-	{
+	public void testSetNullLongArray() {
 		try {
 			Record record = this.generateFilledDenseRecord(612);
 			long[] mask = {1L, 1L, 1L, 1L};
 			record.setNull(mask);
-	
+
 			assertTrue(record.getField(0, IntValue.class) == null);
 			assertTrue(record.getField(64, IntValue.class) == null);
 			assertTrue(record.getField(128, IntValue.class) == null);
 			assertTrue(record.getField(192, IntValue.class) == null);
-	
+
 			mask = new long[10];
 			for (int i = 0; i < mask.length; i++) {
 				int offset = i * Long.SIZE;
 				int numFields = ((offset + Long.SIZE) < record.getNumFields()) ? Long.SIZE : record.getNumFields() - offset;
 				mask[i] = this.generateRandomBitmask(numFields);
 			}
-	
+
 			record.setNull(mask);
 		} catch (Throwable t) {
 			Assert.fail("Test failed due to an exception: " + t.getMessage());
@@ -326,12 +324,12 @@ public class RecordTest {
 //	public void testAppend() {
 //		Record record1 = this.generateFilledDenseRecord(42);
 //		Record record2 = this.generateFilledDenseRecord(1337);
-//		
+//
 //		IntValue rec1val = record1.getField(12, IntValue.class);
 //		IntValue rec2val = record2.getField(23, IntValue.class);
-//		
+//
 //		record1.append(record2);
-//		
+//
 //		assertTrue(record1.getNumFields() == 42 + 1337);
 //		assertTrue(rec1val.getValue() == record1.getField(12, IntValue.class).getValue());
 //		assertTrue(rec2val.getValue() == record1.getField(42 + 23, IntValue.class).getValue());
@@ -340,35 +338,34 @@ public class RecordTest {
 //	@Test
 //	public void testUnion() {
 //	}
-	
+
 	@Test
-	public void testUpdateBinaryRepresentations()
-	{
+	public void testUpdateBinaryRepresentations() {
 		try {
 			// TODO: this is not an extensive test of updateBinaryRepresentation()
 			// and should be extended!
-	
+
 			Record r = new Record();
-	
+
 			IntValue i1 = new IntValue(1);
 			IntValue i2 = new IntValue(2);
-	
+
 			try {
 				r.setField(1, i1);
 				r.setField(3, i2);
-	
+
 				r.setNumFields(5);
-	
+
 				r.updateBinaryRepresenation();
-	
+
 				i1 = new IntValue(3);
 				i2 = new IntValue(4);
-	
+
 				r.setField(7, i1);
 				r.setField(8, i2);
-	
+
 				r.updateBinaryRepresenation();
-	
+
 				assertTrue(r.getField(1, IntValue.class).getValue() == 1);
 				assertTrue(r.getField(3, IntValue.class).getValue() == 2);
 				assertTrue(r.getField(7, IntValue.class).getValue() == 3);
@@ -376,29 +373,29 @@ public class RecordTest {
 			} catch (RuntimeException re) {
 				fail("Error updating binary representation: " + re.getMessage());
 			}
-	
+
 			// Tests an update where modified and unmodified fields are interleaved
 			r = new Record();
-	
+
 			for (int i = 0; i < 8; i++) {
 				r.setField(i, new IntValue(i));
 			}
-	
+
 			try {
 				// serialize and deserialize to remove all buffered info
 				r.write(this.out);
 				r = new Record();
 				r.read(this.in);
-	
+
 				r.setField(1, new IntValue(10));
 				r.setField(4, new StringValue("Some long value"));
 				r.setField(5, new StringValue("An even longer value"));
 				r.setField(10, new IntValue(10));
-	
+
 				r.write(this.out);
 				r = new Record();
 				r.read(this.in);
-	
+
 				assertTrue(r.getField(0, IntValue.class).getValue() == 0);
 				assertTrue(r.getField(1, IntValue.class).getValue() == 10);
 				assertTrue(r.getField(2, IntValue.class).getValue() == 2);
@@ -410,7 +407,7 @@ public class RecordTest {
 				assertTrue(r.getField(8, IntValue.class) == null);
 				assertTrue(r.getField(9, IntValue.class) == null);
 				assertTrue(r.getField(10, IntValue.class).getValue() == 10);
-	
+
 			} catch (RuntimeException | IOException re) {
 				fail("Error updating binary representation: " + re.getMessage());
 			}
@@ -418,10 +415,9 @@ public class RecordTest {
 			Assert.fail("Test failed due to an exception: " + t.getMessage());
 		}
 	}
-	
+
 	@Test
-	public void testDeSerialization()
-	{
+	public void testDeSerialization() {
 		try {
 			StringValue origValue1 = new StringValue("Hello World!");
 			IntValue origValue2 = new IntValue(1337);
@@ -431,14 +427,14 @@ public class RecordTest {
 				// De/Serialize the record
 				record1.write(this.out);
 				record2.read(this.in);
-	
+
 				assertTrue(record1.getNumFields() == record2.getNumFields());
-	
+
 				StringValue rec1Val1 = record1.getField(0, StringValue.class);
 				IntValue rec1Val2 = record1.getField(1, IntValue.class);
 				StringValue rec2Val1 = record2.getField(0, StringValue.class);
 				IntValue rec2Val2 = record2.getField(1, IntValue.class);
-	
+
 				assertTrue(origValue1.equals(rec1Val1));
 				assertTrue(origValue2.equals(rec1Val2));
 				assertTrue(origValue1.equals(rec2Val1));
@@ -451,23 +447,22 @@ public class RecordTest {
 			Assert.fail("Test failed due to an exception: " + t.getMessage());
 		}
 	}
-	
+
 	@Test
-	public void testClear() throws IOException
-	{
+	public void testClear() throws IOException {
 		try {
 			Record record = new Record(new IntValue(42));
-	
+
 			record.write(this.out);
 			Assert.assertEquals(42, record.getField(0, IntValue.class).getValue());
-	
+
 			record.setField(0, new IntValue(23));
 			record.write(this.out);
 			Assert.assertEquals(23, record.getField(0, IntValue.class).getValue());
-	
+
 			record.clear();
 			Assert.assertEquals(0, record.getNumFields());
-	
+
 			Record record2 = new Record(new IntValue(42));
 			record2.read(in);
 			Assert.assertEquals(42, record2.getField(0, IntValue.class).getValue());
@@ -499,12 +494,11 @@ public class RecordTest {
 
 		return bitmask;
 	}
-	
+
 	@Test
-	public void blackBoxTests()
-	{
+	public void blackBoxTests() {
 		try {
-			final Value[][] values = new Value[][] {
+			final Value[][] values = new Value[][]{
 				// empty
 				{},
 				// exactly 8 fields
@@ -526,13 +520,13 @@ public class RecordTest {
 			for (Value[] value : values) {
 				blackboxTestRecordWithValues(value, this.rand, this.in, this.out);
 			}
-			
+
 			// random test with records with a small number of fields
 			for (int i = 0; i < 10000; i++) {
 				final Value[] fields = createRandomValues(this.rand, 0, 32);
 				blackboxTestRecordWithValues(fields, this.rand, this.in, this.out);
 			}
-			
+
 			// random tests with records with a moderately large number of fields
 			for (int i = 0; i < 1000; i++) {
 				final Value[] fields = createRandomValues(this.rand, 20, 150);
@@ -542,14 +536,13 @@ public class RecordTest {
 			Assert.fail("Test failed due to an exception: " + t.getMessage());
 		}
 	}
-	
+
 	static void blackboxTestRecordWithValues(Value[] values, Random rnd, DataInputView reader,
-												   DataOutputView writer)
-	throws Exception
-	{
+											 DataOutputView writer)
+		throws Exception {
 		final int[] permutation1 = createPermutation(rnd, values.length);
 		final int[] permutation2 = createPermutation(rnd, values.length);
-		
+
 		// test adding and retrieving without intermediate binary updating
 		Record rec = new Record();
 		for (int i = 0; i < values.length; i++) {
@@ -557,7 +550,7 @@ public class RecordTest {
 			rec.setField(pos, values[pos]);
 		}
 		testAllRetrievalMethods(rec, permutation2, values);
-		
+
 		// test adding and retrieving with full binary updating
 		rec = new Record();
 		for (int i = 0; i < values.length; i++) {
@@ -566,7 +559,7 @@ public class RecordTest {
 		}
 		rec.updateBinaryRepresenation();
 		testAllRetrievalMethods(rec, permutation2, values);
-		
+
 		// test adding and retrieving with intermediate binary updating
 		rec = new Record();
 		int updatePos = rnd.nextInt(values.length + 1);
@@ -574,7 +567,7 @@ public class RecordTest {
 			if (i == updatePos) {
 				rec.updateBinaryRepresenation();
 			}
-			
+
 			final int pos = permutation1[i];
 			rec.setField(pos, values[pos]);
 		}
@@ -582,7 +575,7 @@ public class RecordTest {
 			rec.updateBinaryRepresenation();
 		}
 		testAllRetrievalMethods(rec, permutation2, values);
-		
+
 		// test adding and retrieving with full stream serialization and deserialization into a new record
 		rec = new Record();
 		for (int i = 0; i < values.length; i++) {
@@ -593,7 +586,7 @@ public class RecordTest {
 		rec = new Record();
 		rec.read(reader);
 		testAllRetrievalMethods(rec, permutation2, values);
-		
+
 		// test adding and retrieving with full stream serialization and deserialization into the same record
 		rec = new Record();
 		for (int i = 0; i < values.length; i++) {
@@ -603,7 +596,7 @@ public class RecordTest {
 		rec.write(writer);
 		rec.read(reader);
 		testAllRetrievalMethods(rec, permutation2, values);
-		
+
 		// test adding and retrieving with partial stream serialization and deserialization into a new record
 		rec = new Record();
 		updatePos = rnd.nextInt(values.length + 1);
@@ -613,7 +606,7 @@ public class RecordTest {
 				rec = new Record();
 				rec.read(reader);
 			}
-			
+
 			final int pos = permutation1[i];
 			rec.setField(pos, values[pos]);
 		}
@@ -623,7 +616,7 @@ public class RecordTest {
 			rec.read(reader);
 		}
 		testAllRetrievalMethods(rec, permutation2, values);
-		
+
 		// test adding and retrieving with partial stream serialization and deserialization into the same record
 		rec = new Record();
 		updatePos = rnd.nextInt(values.length + 1);
@@ -632,7 +625,7 @@ public class RecordTest {
 				rec.write(writer);
 				rec.read(reader);
 			}
-			
+
 			final int pos = permutation1[i];
 			rec.setField(pos, values[pos]);
 		}
@@ -651,7 +644,7 @@ public class RecordTest {
 				rec = new Record();
 				rec.read(reader);
 			}
-			
+
 			final int pos = permutation1[i];
 			rec.setField(pos, values[pos]);
 		}
@@ -659,7 +652,7 @@ public class RecordTest {
 		rec = new Record();
 		rec.read(reader);
 		testAllRetrievalMethods(rec, permutation2, values);
-		
+
 		// test adding and retrieving with partial stream serialization and deserialization into the same record
 		rec = new Record();
 		updatePos = rnd.nextInt(values.length + 1);
@@ -668,7 +661,7 @@ public class RecordTest {
 				rec.write(writer);
 				rec.read(reader);
 			}
-			
+
 			final int pos = permutation1[i];
 			rec.setField(pos, values[pos]);
 		}
@@ -676,7 +669,7 @@ public class RecordTest {
 		rec.read(reader);
 		testAllRetrievalMethods(rec, permutation2, values);
 	}
-	
+
 	public static void testAllRetrievalMethods(Record rec, int[] permutation, Value[] expected) throws Exception {
 		// test getField(int, Class)
 		for (int i = 0; i < expected.length; i++) {
@@ -695,7 +688,7 @@ public class RecordTest {
 				}
 			}
 		}
-		
+
 		// test getField(int, Value)
 		for (int i = 0; i < expected.length; i++) {
 			final int pos = permutation[i];
@@ -713,7 +706,7 @@ public class RecordTest {
 				}
 			}
 		}
-		
+
 		// test getFieldInto(Value)
 		for (int i = 0; i < expected.length; i++) {
 			final int pos = permutation[i];
@@ -728,7 +721,7 @@ public class RecordTest {
 				if (!rec.getFieldInto(pos, retrieved)) {
 					Assert.fail("Value at position " + pos + " expected to be not null in " + Arrays.toString(expected));
 				}
-				
+
 				if (!(e.equals(retrieved))) {
 					Assert.assertEquals("Wrong value at position " + pos + " in " + Arrays.toString(expected), e, retrieved);
 				}
@@ -739,29 +732,29 @@ public class RecordTest {
 	@Test
 	public void testUnionFields() {
 		try {
-			final Value[][] values = new Value[][] {
+			final Value[][] values = new Value[][]{
 				{new IntValue(56), null, new IntValue(-7628761)},
 				{null, new StringValue("Hellow Test!"), null},
-				
+
 				{null, null, null, null, null, null, null, null},
 				{null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null},
-				
+
 				{new IntValue(56), new IntValue(56), new IntValue(56), new IntValue(56), null, null, null},
 				{null, null, null, null, new IntValue(56), new IntValue(56), new IntValue(56)},
-				
+
 				{new IntValue(43), new IntValue(42), new IntValue(41)},
 				{new IntValue(-463), new IntValue(-464), new IntValue(-465)}
 			};
-			
+
 			for (int i = 0; i < values.length - 1; i += 2) {
-				testUnionFieldsForValues(values[i], values[i+1], this.rand);
-				testUnionFieldsForValues(values[i+1], values[i], this.rand);
+				testUnionFieldsForValues(values[i], values[i + 1], this.rand);
+				testUnionFieldsForValues(values[i + 1], values[i], this.rand);
 			}
 		} catch (Throwable t) {
 			Assert.fail("Test failed due to an exception: " + t.getMessage());
 		}
 	}
-	
+
 	private void testUnionFieldsForValues(Value[] rec1fields, Value[] rec2fields, Random rnd) {
 		// fully in binary sync
 		Record rec1 = createRecord(rec1fields);
@@ -770,63 +763,63 @@ public class RecordTest {
 		rec2.updateBinaryRepresenation();
 		rec1.unionFields(rec2);
 		checkUnionedRecord(rec1, rec1fields, rec2fields);
-		
+
 		// fully not in binary sync
 		rec1 = createRecord(rec1fields);
 		rec2 = createRecord(rec2fields);
 		rec1.unionFields(rec2);
 		checkUnionedRecord(rec1, rec1fields, rec2fields);
-		
+
 		// one in binary sync
 		rec1 = createRecord(rec1fields);
 		rec2 = createRecord(rec2fields);
 		rec1.updateBinaryRepresenation();
 		rec1.unionFields(rec2);
 		checkUnionedRecord(rec1, rec1fields, rec2fields);
-		
+
 		// other in binary sync
 		rec1 = createRecord(rec1fields);
 		rec2 = createRecord(rec2fields);
 		rec2.updateBinaryRepresenation();
 		rec1.unionFields(rec2);
 		checkUnionedRecord(rec1, rec1fields, rec2fields);
-		
+
 		// both partially in binary sync
 		rec1 = new Record();
-		
+
 		int[] permutation1 = createPermutation(rnd, rec1fields.length);
 		int[] permutation2 = createPermutation(rnd, rec2fields.length);
-		
+
 		int updatePos = rnd.nextInt(rec1fields.length + 1);
 		for (int i = 0; i < rec1fields.length; i++) {
 			if (i == updatePos) {
 				rec1.updateBinaryRepresenation();
 			}
-			
+
 			final int pos = permutation1[i];
 			rec1.setField(pos, rec1fields[pos]);
 		}
 		if (updatePos == rec1fields.length) {
 			rec1.updateBinaryRepresenation();
 		}
-		
+
 		updatePos = rnd.nextInt(rec2fields.length + 1);
 		for (int i = 0; i < rec2fields.length; i++) {
 			if (i == updatePos) {
 				rec2.updateBinaryRepresenation();
 			}
-			
+
 			final int pos = permutation2[i];
 			rec2.setField(pos, rec2fields[pos]);
 		}
 		if (updatePos == rec2fields.length) {
 			rec2.updateBinaryRepresenation();
 		}
-		
+
 		rec1.unionFields(rec2);
 		checkUnionedRecord(rec1, rec1fields, rec2fields);
 	}
-	
+
 	private static void checkUnionedRecord(Record union, Value[] rec1fields, Value[] rec2fields) {
 		for (int i = 0; i < Math.max(rec1fields.length, rec2fields.length); i++) {
 			// determine the expected value from the value arrays
@@ -840,15 +833,15 @@ public class RecordTest {
 			} else {
 				expected = rec2fields[i];
 			}
-			
+
 			// check value from record against expected value
 			if (expected == null) {
 				final Value retrieved = union.getField(i, IntValue.class);
-				Assert.assertNull("Value at position " + i + " expected to be null in " + 
-								Arrays.toString(rec1fields) + " U " + Arrays.toString(rec2fields), retrieved);
+				Assert.assertNull("Value at position " + i + " expected to be null in " +
+					Arrays.toString(rec1fields) + " U " + Arrays.toString(rec2fields), retrieved);
 			} else {
 				final Value retrieved = union.getField(i, expected.getClass());
-				Assert.assertEquals("Wrong value at position " + i + " in " + 
+				Assert.assertEquals("Wrong value at position " + i + " in " +
 					Arrays.toString(rec1fields) + " U " + Arrays.toString(rec2fields), expected, retrieved);
 			}
 		}
@@ -857,7 +850,7 @@ public class RecordTest {
 	// --------------------------------------------------------------------------------------------
 	//                                       Utilities
 	// --------------------------------------------------------------------------------------------
-	
+
 	public static Record createRecord(Value[] fields) {
 		final Record rec = new Record();
 		for (int i = 0; i < fields.length; i++) {
@@ -865,63 +858,62 @@ public class RecordTest {
 		}
 		return rec;
 	}
-	
+
 	public static Value[] createRandomValues(Random rnd, int minNum, int maxNum) {
 		final int numFields = rnd.nextInt(maxNum - minNum + 1) + minNum;
 		final Value[] values = new Value[numFields];
-		
-		for (int i = 0; i < numFields; i++)
-		{
+
+		for (int i = 0; i < numFields; i++) {
 			final int type = rnd.nextInt(7);
-			
+
 			switch (type) {
-			case 0:
-				values[i] = new IntValue(rnd.nextInt());
-				break;
-			case 1:
-				values[i] = new LongValue(rnd.nextLong());
-				break;
-			case 2:
-				values[i] = new DoubleValue(rnd.nextDouble());
-				break;
-			case 3:
-				values[i] = NullValue.getInstance();
-				break;
-			case 4:
-				values[i] = new StringValue(createRandomString(rnd));
-				break;
-			default:
-				values[i] = null;
+				case 0:
+					values[i] = new IntValue(rnd.nextInt());
+					break;
+				case 1:
+					values[i] = new LongValue(rnd.nextLong());
+					break;
+				case 2:
+					values[i] = new DoubleValue(rnd.nextDouble());
+					break;
+				case 3:
+					values[i] = NullValue.getInstance();
+					break;
+				case 4:
+					values[i] = new StringValue(createRandomString(rnd));
+					break;
+				default:
+					values[i] = null;
 			}
 		}
-		
+
 		return values;
 	}
 
 	public static String createRandomString(Random rnd) {
 		return createRandomString(rnd, rnd.nextInt(150));
 	}
-	
+
 	public static String createRandomString(Random rnd, int length) {
 		final StringBuilder sb = new StringBuilder();
 		sb.ensureCapacity(length);
-		
+
 		for (int i = 0; i < length; i++) {
 			sb.append((char) (rnd.nextInt(26) + 65));
 		}
 		return sb.toString();
 	}
-	
+
 	public static int[] createPermutation(Random rnd, int length) {
 		final int[] a = new int[length];
 		for (int i = 0; i < length; i++) {
 			a[i] = i;
 		}
-		
+
 		for (int i = 0; i < length; i++) {
 			final int pos1 = rnd.nextInt(length);
 			final int pos2 = rnd.nextInt(length);
-			
+
 			int temp = a[pos1];
 			a[pos1] = a[pos2];
 			a[pos2] = temp;

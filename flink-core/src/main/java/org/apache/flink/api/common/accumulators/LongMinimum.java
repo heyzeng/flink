@@ -30,7 +30,8 @@ public class LongMinimum implements SimpleAccumulator<Long> {
 
 	private long min = Long.MAX_VALUE;
 
-	public LongMinimum() {}
+	public LongMinimum() {
+	}
 
 	public LongMinimum(long value) {
 		this.min = value;

@@ -42,8 +42,7 @@ public interface CheckedSupplier<R> extends SupplierWithException<R, Exception> 
 		return () -> {
 			try {
 				return supplier.get();
-			}
-			catch (RuntimeException e) {
+			} catch (RuntimeException e) {
 				throw new FlinkException(e);
 			}
 		};

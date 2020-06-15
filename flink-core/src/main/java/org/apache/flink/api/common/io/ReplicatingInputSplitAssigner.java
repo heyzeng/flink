@@ -56,7 +56,7 @@ public class ReplicatingInputSplitAssigner implements InputSplitAssigner {
 
 		// get assignment count
 		Integer assignCnt;
-		if(taskId < this.assignCounts.length) {
+		if (taskId < this.assignCounts.length) {
 			assignCnt = this.assignCounts[taskId];
 		} else {
 			int newSize = this.assignCounts.length * 2;
@@ -69,13 +69,13 @@ public class ReplicatingInputSplitAssigner implements InputSplitAssigner {
 			assignCnt = 0;
 		}
 
-		if(assignCnt >= inputSplits.length) {
+		if (assignCnt >= inputSplits.length) {
 			// all splits for this task have been assigned
 			return null;
 		} else {
 			// return next splits
 			InputSplit is = inputSplits[assignCnt];
-			assignCounts[taskId] = assignCnt+1;
+			assignCounts[taskId] = assignCnt + 1;
 			return is;
 		}
 
@@ -83,7 +83,7 @@ public class ReplicatingInputSplitAssigner implements InputSplitAssigner {
 
 	@Override
 	public void returnInputSplit(List<InputSplit> splits, int taskId) {
-		Preconditions.checkArgument(taskId >=0 && taskId < assignCounts.length);
+		Preconditions.checkArgument(taskId >= 0 && taskId < assignCounts.length);
 		assignCounts[taskId] = 0;
 	}
 }

@@ -27,7 +27,7 @@ public class BasicArrayTypeInfoTest extends TypeInformationTestBase<BasicArrayTy
 
 	@Override
 	protected BasicArrayTypeInfo<?, ?>[] getTestData() {
-		return new BasicArrayTypeInfo<?, ?>[] {
+		return new BasicArrayTypeInfo<?, ?>[]{
 			BasicArrayTypeInfo.STRING_ARRAY_TYPE_INFO,
 			BasicArrayTypeInfo.BOOLEAN_ARRAY_TYPE_INFO,
 			BasicArrayTypeInfo.BYTE_ARRAY_TYPE_INFO,

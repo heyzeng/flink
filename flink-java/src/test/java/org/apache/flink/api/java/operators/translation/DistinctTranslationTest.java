@@ -74,14 +74,13 @@ public class DistinctTranslationTest {
 			assertEquals(initialData.getType(), reducer.getOperatorInfo().getOutputType());
 
 			// check keys
-			assertArrayEquals(new int[] {0, 1, 2}, reducer.getKeyColumns(0));
+			assertArrayEquals(new int[]{0, 1, 2}, reducer.getKeyColumns(0));
 
 			// parallelism was not configured on the operator
 			assertTrue(reducer.getParallelism() == 1 || reducer.getParallelism() == -1);
 
 			assertTrue(reducer.getInput() instanceof GenericDataSourceBase<?, ?>);
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			System.err.println(e.getMessage());
 			e.printStackTrace();
 			fail("Test caused an error: " + e.getMessage());
@@ -110,14 +109,13 @@ public class DistinctTranslationTest {
 			assertEquals(initialData.getType(), reducer.getOperatorInfo().getOutputType());
 
 			// check keys
-			assertArrayEquals(new int[] {0}, reducer.getKeyColumns(0));
+			assertArrayEquals(new int[]{0}, reducer.getKeyColumns(0));
 
 			// parallelism was not configured on the operator
 			assertTrue(reducer.getParallelism() == 1 || reducer.getParallelism() == -1);
 
 			assertTrue(reducer.getInput() instanceof GenericDataSourceBase<?, ?>);
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			System.err.println(e.getMessage());
 			e.printStackTrace();
 			fail("Test caused an error: " + e.getMessage());
@@ -146,14 +144,13 @@ public class DistinctTranslationTest {
 			assertEquals(initialData.getType(), reducer.getOperatorInfo().getOutputType());
 
 			// check keys
-			assertArrayEquals(new int[] {1, 2}, reducer.getKeyColumns(0));
+			assertArrayEquals(new int[]{1, 2}, reducer.getKeyColumns(0));
 
 			// parallelism was not configured on the operator
 			assertTrue(reducer.getParallelism() == 1 || reducer.getParallelism() == -1);
 
 			assertTrue(reducer.getInput() instanceof GenericDataSourceBase<?, ?>);
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			System.err.println(e.getMessage());
 			e.printStackTrace();
 			fail("Test caused an error: " + e.getMessage());
@@ -188,8 +185,8 @@ public class DistinctTranslationTest {
 
 			// check types
 			TypeInformation<?> keyValueInfo = new TupleTypeInfo<Tuple2<StringValue, Tuple3<Double, StringValue, LongValue>>>(
-					new ValueTypeInfo<StringValue>(StringValue.class),
-					initialData.getType());
+				new ValueTypeInfo<StringValue>(StringValue.class),
+				initialData.getType());
 
 			assertEquals(initialData.getType(), keyExtractor.getOperatorInfo().getInputType());
 			assertEquals(keyValueInfo, keyExtractor.getOperatorInfo().getOutputType());
@@ -204,8 +201,7 @@ public class DistinctTranslationTest {
 			assertEquals(KeyExtractingMapper.class, keyExtractor.getUserCodeWrapper().getUserCodeClass());
 
 			assertTrue(keyExtractor.getInput() instanceof GenericDataSourceBase<?, ?>);
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			System.err.println(e.getMessage());
 			e.printStackTrace();
 			fail("Test caused an error: " + e.getMessage());
@@ -234,14 +230,13 @@ public class DistinctTranslationTest {
 			assertEquals(initialData.getType(), reducer.getOperatorInfo().getOutputType());
 
 			// check keys
-			assertArrayEquals(new int[] {0}, reducer.getKeyColumns(0));
+			assertArrayEquals(new int[]{0}, reducer.getKeyColumns(0));
 
 			// parallelism was not configured on the operator
 			assertTrue(reducer.getParallelism() == 1 || reducer.getParallelism() == -1);
 
 			assertTrue(reducer.getInput() instanceof GenericDataSourceBase<?, ?>);
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			System.err.println(e.getMessage());
 			e.printStackTrace();
 			fail("Test caused an error: " + e.getMessage());
@@ -251,7 +246,7 @@ public class DistinctTranslationTest {
 	@SuppressWarnings("unchecked")
 	private static DataSet<Tuple3<Double, StringValue, LongValue>> getSourceDataSet(ExecutionEnvironment env) {
 		return env.fromElements(new Tuple3<Double, StringValue, LongValue>(3.141592, new StringValue("foobar"), new LongValue(77)))
-				.setParallelism(1);
+			.setParallelism(1);
 	}
 
 	private static DataSet<CustomType> getSourcePojoDataSet(ExecutionEnvironment env) {
@@ -268,7 +263,8 @@ public class DistinctTranslationTest {
 		private static final long serialVersionUID = 1L;
 		public int myInt;
 
-		public CustomType() {}
+		public CustomType() {
+		}
 
 		public CustomType(int i) {
 			myInt = i;

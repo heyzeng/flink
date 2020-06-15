@@ -52,7 +52,6 @@ public interface FilterFunction<T> extends Function, Serializable {
 	 *
 	 * @param value The value to be filtered.
 	 * @return True for values that should be retained, false for values to be filtered out.
-	 *
 	 * @throws Exception This method may throw exceptions. Throwing an exception will cause the operation
 	 *                   to fail and may trigger recovery.
 	 */

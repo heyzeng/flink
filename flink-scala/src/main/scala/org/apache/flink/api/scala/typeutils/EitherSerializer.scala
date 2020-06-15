@@ -28,12 +28,12 @@ import org.apache.flink.core.memory.{DataInputView, DataOutputView}
 @Internal
 @SerialVersionUID(9219995873023657525L)
 class EitherSerializer[A, B](
-    val leftSerializer: TypeSerializer[A],
-    val rightSerializer: TypeSerializer[B])
+                              val leftSerializer: TypeSerializer[A],
+                              val rightSerializer: TypeSerializer[B])
   extends TypeSerializer[Either[A, B]]
-  with LegacySerializerSnapshotTransformer[Either[A, B]] {
+    with LegacySerializerSnapshotTransformer[Either[A, B]] {
 
-  override def duplicate: EitherSerializer[A,B] = {
+  override def duplicate: EitherSerializer[A, B] = {
     val leftDup = leftSerializer.duplicate()
     val rightDup = rightSerializer.duplicate()
 
@@ -103,7 +103,7 @@ class EitherSerializer[A, B](
     obj match {
       case eitherSerializer: EitherSerializer[_, _] =>
         leftSerializer.equals(eitherSerializer.leftSerializer) &&
-        rightSerializer.equals(eitherSerializer.rightSerializer)
+          rightSerializer.equals(eitherSerializer.rightSerializer)
       case _ => false
     }
   }
@@ -125,8 +125,8 @@ class EitherSerializer[A, B](
   }
 
   override def transformLegacySerializerSnapshot[U](
-      legacySnapshot: TypeSerializerSnapshot[U]
-  ): TypeSerializerSnapshot[Either[A, B]] = {
+                                                     legacySnapshot: TypeSerializerSnapshot[U]
+                                                   ): TypeSerializerSnapshot[Either[A, B]] = {
 
     legacySnapshot match {
       case correctSnapshot: ScalaEitherSerializerSnapshot[A, B] =>

@@ -32,31 +32,31 @@ import org.apache.flink.util.Collector;
  */
 @Internal
 public class PlanBothUnwrappingCoGroupOperator<I1, I2, OUT, K>
-		extends CoGroupOperatorBase<Tuple2<K, I1>, Tuple2<K, I2>, OUT, CoGroupFunction<Tuple2<K, I1>, Tuple2<K, I2>, OUT>> {
+	extends CoGroupOperatorBase<Tuple2<K, I1>, Tuple2<K, I2>, OUT, CoGroupFunction<Tuple2<K, I1>, Tuple2<K, I2>, OUT>> {
 
 	public PlanBothUnwrappingCoGroupOperator(
-			CoGroupFunction<I1, I2, OUT> udf,
-			Keys.SelectorFunctionKeys<I1, K> key1,
-			Keys.SelectorFunctionKeys<I2, K> key2,
-			String name,
-			TypeInformation<OUT> type,
-			TypeInformation<Tuple2<K, I1>> typeInfoWithKey1,
-			TypeInformation<Tuple2<K, I2>> typeInfoWithKey2) {
+		CoGroupFunction<I1, I2, OUT> udf,
+		Keys.SelectorFunctionKeys<I1, K> key1,
+		Keys.SelectorFunctionKeys<I2, K> key2,
+		String name,
+		TypeInformation<OUT> type,
+		TypeInformation<Tuple2<K, I1>> typeInfoWithKey1,
+		TypeInformation<Tuple2<K, I2>> typeInfoWithKey2) {
 
 		super(
-				new TupleBothUnwrappingCoGrouper<I1, I2, OUT, K>(udf),
-				new BinaryOperatorInformation<Tuple2<K, I1>, Tuple2<K, I2>, OUT>(
-						typeInfoWithKey1,
-						typeInfoWithKey2,
-						type),
-				key1.computeLogicalKeyPositions(),
-				key2.computeLogicalKeyPositions(),
-				name);
+			new TupleBothUnwrappingCoGrouper<I1, I2, OUT, K>(udf),
+			new BinaryOperatorInformation<Tuple2<K, I1>, Tuple2<K, I2>, OUT>(
+				typeInfoWithKey1,
+				typeInfoWithKey2,
+				type),
+			key1.computeLogicalKeyPositions(),
+			key2.computeLogicalKeyPositions(),
+			name);
 	}
 
 	private static final class TupleBothUnwrappingCoGrouper<I1, I2, OUT, K>
-			extends WrappingFunction<CoGroupFunction<I1, I2, OUT>>
-			implements CoGroupFunction<Tuple2<K, I1>, Tuple2<K, I2>, OUT> {
+		extends WrappingFunction<CoGroupFunction<I1, I2, OUT>>
+		implements CoGroupFunction<Tuple2<K, I1>, Tuple2<K, I2>, OUT> {
 		private static final long serialVersionUID = 1L;
 
 		private final TupleUnwrappingIterator<I1, K> iter1;
@@ -71,9 +71,9 @@ public class PlanBothUnwrappingCoGroupOperator<I1, I2, OUT, K>
 
 		@Override
 		public void coGroup(
-				Iterable<Tuple2<K, I1>> records1,
-				Iterable<Tuple2<K, I2>> records2,
-				Collector<OUT> out) throws Exception {
+			Iterable<Tuple2<K, I1>> records1,
+			Iterable<Tuple2<K, I2>> records2,
+			Collector<OUT> out) throws Exception {
 
 			iter1.set(records1.iterator());
 			iter2.set(records2.iterator());

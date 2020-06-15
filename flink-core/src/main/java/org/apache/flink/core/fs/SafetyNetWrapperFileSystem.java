@@ -115,7 +115,7 @@ public class SafetyNetWrapperFileSystem extends FileSystem implements WrappingPr
 	@Override
 	@SuppressWarnings("deprecation")
 	public FSDataOutputStream create(Path f, boolean overwrite, int bufferSize, short replication, long blockSize)
-			throws IOException {
+		throws IOException {
 
 		FSDataOutputStream innerStream = unsafeFileSystem.create(f, overwrite, bufferSize, replication, blockSize);
 		return ClosingFSDataOutputStream.wrapSafe(innerStream, registry, String.valueOf(f));

@@ -61,7 +61,7 @@ public class UnmodifiableConfiguration extends Configuration {
 	}
 
 	@Override
-	final <T> void setValueInternal(String key, T value){
+	final <T> void setValueInternal(String key, T value) {
 		error();
 	}
 
@@ -71,7 +71,7 @@ public class UnmodifiableConfiguration extends Configuration {
 		return false;
 	}
 
-	private void error(){
+	private void error() {
 		throw new UnsupportedOperationException("The configuration is unmodifiable; its contents cannot be changed.");
 	}
 }

@@ -31,7 +31,7 @@ import org.apache.flink.api.common.typeutils.base.EnumSerializer;
 import static org.apache.flink.util.Preconditions.checkNotNull;
 
 /**
- * A {@link TypeInformation} for java enumeration types. 
+ * A {@link TypeInformation} for java enumeration types.
  *
  * @param <T> The type represented by this type information.
  */
@@ -39,14 +39,14 @@ import static org.apache.flink.util.Preconditions.checkNotNull;
 public class EnumTypeInfo<T extends Enum<T>> extends TypeInformation<T> implements AtomicType<T> {
 
 	private static final long serialVersionUID = 8936740290137178660L;
-	
+
 	private final Class<T> typeClass;
 
 	@PublicEvolving
 	public EnumTypeInfo(Class<T> typeClass) {
 		checkNotNull(typeClass, "Enum type class must not be null.");
 
-		if (!Enum.class.isAssignableFrom(typeClass) ) {
+		if (!Enum.class.isAssignableFrom(typeClass)) {
 			throw new IllegalArgumentException("EnumTypeInfo can only be used for subclasses of " + Enum.class.getName());
 		}
 
@@ -76,7 +76,7 @@ public class EnumTypeInfo<T extends Enum<T>> extends TypeInformation<T> implemen
 	public int getArity() {
 		return 1;
 	}
-	
+
 	@Override
 	@PublicEvolving
 	public int getTotalFields() {
@@ -100,16 +100,16 @@ public class EnumTypeInfo<T extends Enum<T>> extends TypeInformation<T> implemen
 	public TypeSerializer<T> createSerializer(ExecutionConfig executionConfig) {
 		return new EnumSerializer<T>(typeClass);
 	}
-	
+
 	// ------------------------------------------------------------------------
 	//  Standard utils
 	// ------------------------------------------------------------------------
-	
+
 	@Override
 	public String toString() {
 		return "EnumTypeInfo<" + typeClass.getName() + ">";
-	}	
-	
+	}
+
 	@Override
 	public int hashCode() {
 		return typeClass.hashCode();

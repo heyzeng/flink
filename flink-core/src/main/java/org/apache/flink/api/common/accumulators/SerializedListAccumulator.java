@@ -32,7 +32,7 @@ import java.util.List;
 /**
  * This accumulator stores a collection of objects in serialized form, so that the stored objects
  * are not affected by modifications to the original objects.
- *
+ * <p>
  * Objects may be deserialized on demand with a specific classloader.
  *
  * @param <T> The type of the accumulated objects
@@ -56,8 +56,7 @@ public class SerializedListAccumulator<T> implements Accumulator<T, ArrayList<by
 			DataOutputViewStreamWrapper out = new DataOutputViewStreamWrapper(outStream);
 			serializer.serialize(value, out);
 			localValue.add(outStream.toByteArray());
-		}
-		catch (IOException e) {
+		} catch (IOException e) {
 			throw new IOException("Failed to serialize value '" + value + '\'', e);
 		}
 	}
@@ -86,8 +85,7 @@ public class SerializedListAccumulator<T> implements Accumulator<T, ArrayList<by
 
 	@SuppressWarnings("unchecked")
 	public static <T> List<T> deserializeList(ArrayList<byte[]> data, TypeSerializer<T> serializer)
-			throws IOException, ClassNotFoundException
-	{
+		throws IOException, ClassNotFoundException {
 		List<T> result = new ArrayList<T>(data.size());
 		for (byte[] bytes : data) {
 			ByteArrayInputStream inStream = new ByteArrayInputStream(bytes);

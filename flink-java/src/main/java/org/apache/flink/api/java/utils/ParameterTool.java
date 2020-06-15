@@ -266,7 +266,7 @@ public class ParameterTool extends AbstractParameterTool {
 	 * Set the default value, if overwrite is true.
 	 *
 	 * @param pathToFile Location of the default properties file.
-	 * @param overwrite Boolean flag indicating whether or not to overwrite the file
+	 * @param overwrite  Boolean flag indicating whether or not to overwrite the file
 	 * @throws IOException If overwrite is not allowed and the file exists
 	 */
 	public void createPropertiesFile(String pathToFile, boolean overwrite) throws IOException {

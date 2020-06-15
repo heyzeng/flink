@@ -50,11 +50,11 @@ public class SqlDropFunction extends SqlDrop implements ExtendedSqlNode {
 	private final boolean isSystemFunction;
 
 	public SqlDropFunction(
-			SqlParserPos pos,
-			SqlIdentifier functionIdentifier,
-			boolean ifExists,
-			boolean isTemporary,
-			boolean isSystemFunction) {
+		SqlParserPos pos,
+		SqlIdentifier functionIdentifier,
+		boolean ifExists,
+		boolean isTemporary,
+		boolean isSystemFunction) {
 		super(OPERATOR, pos, ifExists);
 		this.functionIdentifier = requireNonNull(functionIdentifier);
 		this.isSystemFunction = requireNonNull(isSystemFunction);

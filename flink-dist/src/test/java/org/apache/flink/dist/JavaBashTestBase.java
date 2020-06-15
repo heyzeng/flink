@@ -40,8 +40,7 @@ public abstract class JavaBashTestBase extends TestLogger {
 	/**
 	 * Executes the given shell script wrapper and returns its output.
 	 *
-	 * @param command  command to run
-	 *
+	 * @param command command to run
 	 * @return raw script output
 	 */
 	protected String executeScript(final String[] command) throws IOException {

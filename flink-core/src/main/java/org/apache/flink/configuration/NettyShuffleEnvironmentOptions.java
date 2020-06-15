@@ -182,18 +182,18 @@ public class NettyShuffleEnvironmentOptions {
 		key("taskmanager.network.memory.exclusive-buffers-request-timeout-ms")
 			.defaultValue(30000L)
 			.withDescription("The timeout for requesting exclusive buffers for each channel. Since the number of maximum buffers and " +
-					"the number of required buffers is not the same for local buffer pools, there may be deadlock cases that the upstream" +
-					"tasks have occupied all the buffers and the downstream tasks are waiting for the exclusive buffers. The timeout breaks" +
-					"the tie by failing the request of exclusive buffers and ask users to increase the number of total buffers.");
+				"the number of required buffers is not the same for local buffer pools, there may be deadlock cases that the upstream" +
+				"tasks have occupied all the buffers and the downstream tasks are waiting for the exclusive buffers. The timeout breaks" +
+				"the tie by failing the request of exclusive buffers and ask users to increase the number of total buffers.");
 
 	@Documentation.Section(Documentation.Sections.ALL_TASK_MANAGER_NETWORK)
 	public static final ConfigOption<String> NETWORK_BLOCKING_SHUFFLE_TYPE =
 		key("taskmanager.network.blocking-shuffle.type")
 			.defaultValue("file")
 			.withDescription("The blocking shuffle type, either \"mmap\" or \"file\". The \"auto\" means selecting the property type automatically" +
-					" based on system memory architecture (64 bit for mmap and 32 bit for file). Note that the memory usage of mmap is not accounted" +
-					" by configured memory limits, but some resource frameworks like yarn would track this memory usage and kill the container once" +
-					" memory exceeding some threshold. Also note that this option is experimental and might be changed future.");
+				" based on system memory architecture (64 bit for mmap and 32 bit for file). Note that the memory usage of mmap is not accounted" +
+				" by configured memory limits, but some resource frameworks like yarn would track this memory usage and kill the container once" +
+				" memory exceeding some threshold. Also note that this option is experimental and might be changed future.");
 
 	// ------------------------------------------------------------------------
 	//  Netty Options
@@ -282,6 +282,9 @@ public class NettyShuffleEnvironmentOptions {
 		key("taskmanager.network.partition.force-release-on-consumption")
 			.defaultValue(false);
 
-	/** Not intended to be instantiated. */
-	private NettyShuffleEnvironmentOptions() {}
+	/**
+	 * Not intended to be instantiated.
+	 */
+	private NettyShuffleEnvironmentOptions() {
+	}
 }

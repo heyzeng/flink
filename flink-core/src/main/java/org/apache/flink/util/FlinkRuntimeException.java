@@ -50,7 +50,7 @@ public class FlinkRuntimeException extends RuntimeException {
 	 * Creates a new exception with the given message and cause.
 	 *
 	 * @param message The exception message
-	 * @param cause The exception that caused this exception
+	 * @param cause   The exception that caused this exception
 	 */
 	public FlinkRuntimeException(String message, Throwable cause) {
 		super(message, cause);

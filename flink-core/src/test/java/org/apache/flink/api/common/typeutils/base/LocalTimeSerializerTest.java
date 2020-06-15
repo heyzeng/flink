@@ -45,7 +45,7 @@ public class LocalTimeSerializerTest extends SerializerTestBase<LocalTime> {
 
 	@Override
 	protected LocalTime[] getTestData() {
-		return new LocalTime[] {
+		return new LocalTime[]{
 			LocalTime.of(0, 0, 0),
 			LocalTime.of(2, 42, 25),
 			LocalTime.of(14, 15, 59),

@@ -30,6 +30,7 @@ import java.io.IOException;
 
 /**
  * Stores elements by serializing them with their type serializer.
+ *
  * @param <T> type parameter
  */
 @PublicEvolving
@@ -41,15 +42,15 @@ public class TypeSerializerOutputFormat<T> extends BinaryOutputFormat<T> impleme
 
 	@Override
 	protected void serialize(T record, DataOutputView dataOutput) throws IOException {
-		if (serializer == null){
+		if (serializer == null) {
 			throw new RuntimeException("TypeSerializerOutputFormat requires a type serializer to " +
-					"be defined.");
+				"be defined.");
 		}
 
 		serializer.serialize(record, dataOutput);
 	}
 
-	public void setSerializer(TypeSerializer<T> serializer){
+	public void setSerializer(TypeSerializer<T> serializer) {
 		this.serializer = serializer;
 	}
 

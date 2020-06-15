@@ -42,7 +42,7 @@ import static org.apache.flink.util.Preconditions.checkState;
 
 /**
  * {@link TypeInformation} for {@link Row}.
- *
+ * <p>
  * Note: The implementations of {@link #hashCode()} and {@link #equals(Object)} do not check field
  * names because those don't matter during serialization and runtime. This might change in future
  * versions. See FLINK-14438 for more information.
@@ -57,8 +57,8 @@ public class RowTypeInfo extends TupleTypeInfoBase<Row> {
 	private static final String REGEX_FIELD = REGEX_STR_FIELD + "|" + REGEX_INT_FIELD;
 	private static final String REGEX_NESTED_FIELDS = "(" + REGEX_FIELD + ")(\\.(.+))?";
 	private static final String REGEX_NESTED_FIELDS_WILDCARD = REGEX_NESTED_FIELDS + "|\\"
-			+ ExpressionKeys.SELECT_ALL_CHAR + "|\\"
-			+ ExpressionKeys.SELECT_ALL_CHAR_SCALA;
+		+ ExpressionKeys.SELECT_ALL_CHAR + "|\\"
+		+ ExpressionKeys.SELECT_ALL_CHAR_SCALA;
 
 	private static final Pattern PATTERN_NESTED_FIELDS = Pattern.compile(REGEX_NESTED_FIELDS);
 	private static final Pattern PATTERN_NESTED_FIELDS_WILDCARD = Pattern.compile(REGEX_NESTED_FIELDS_WILDCARD);
@@ -67,7 +67,9 @@ public class RowTypeInfo extends TupleTypeInfoBase<Row> {
 	// --------------------------------------------------------------------------------------------
 
 	protected final String[] fieldNames;
-	/** Temporary variable for directly passing orders to comparators. */
+	/**
+	 * Temporary variable for directly passing orders to comparators.
+	 */
 	private boolean[] comparatorOrders = null;
 
 	public RowTypeInfo(TypeInformation<?>... types) {
@@ -165,7 +167,7 @@ public class RowTypeInfo extends TupleTypeInfoBase<Row> {
 				fieldExpression.equals(ExpressionKeys.SELECT_ALL_CHAR_SCALA)) {
 				throw new InvalidFieldReferenceException("Wildcard expressions are not allowed here.");
 			} else {
-				throw new InvalidFieldReferenceException("Invalid format of Row field expression \""+fieldExpression+"\".");
+				throw new InvalidFieldReferenceException("Invalid format of Row field expression \"" + fieldExpression + "\".");
 			}
 		}
 
@@ -191,7 +193,7 @@ public class RowTypeInfo extends TupleTypeInfoBase<Row> {
 				return ((CompositeType<?>) fieldType).getTypeAt(tail);
 			} else {
 				throw new InvalidFieldReferenceException(
-					"Nested field expression \""+ tail + "\" not possible on atomic type "+fieldType+".");
+					"Nested field expression \"" + tail + "\" not possible on atomic type " + fieldType + ".");
 			}
 		}
 	}
@@ -385,7 +387,7 @@ public class RowTypeInfo extends TupleTypeInfoBase<Row> {
 	/**
 	 * Creates a {@link RowTypeInfo} with projected fields.
 	 *
-	 * @param rowType The original RowTypeInfo whose fields are projected
+	 * @param rowType      The original RowTypeInfo whose fields are projected
 	 * @param fieldMapping The field mapping of the projection
 	 * @return A RowTypeInfo with projected fields.
 	 */

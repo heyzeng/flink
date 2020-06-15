@@ -19,6 +19,7 @@
 package org.apache.flink.api.common.typeutils.base;
 
 import java.sql.Timestamp;
+
 import org.apache.flink.api.common.typeutils.ComparatorTestBase;
 import org.apache.flink.api.common.typeutils.TypeComparator;
 import org.apache.flink.api.common.typeutils.TypeSerializer;
@@ -38,7 +39,7 @@ public class SqlTimestampComparatorTest extends ComparatorTestBase<Timestamp> {
 
 	@Override
 	protected Timestamp[] getSortedTestData() {
-		return new Timestamp[] {
+		return new Timestamp[]{
 			Timestamp.valueOf("1970-01-01 00:00:00.000"),
 			Timestamp.valueOf("1990-10-14 02:42:25.123"),
 			Timestamp.valueOf("1990-10-14 02:42:25.123000001"),

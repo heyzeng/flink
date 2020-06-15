@@ -40,7 +40,9 @@ public class SerializedValue<T> implements java.io.Serializable {
 
 	private static final long serialVersionUID = -3564011643393683761L;
 
-	/** The serialized data. */
+	/**
+	 * The serialized data.
+	 */
 	private final byte[] serializedData;
 
 	private SerializedValue(byte[] serializedData) {
@@ -83,9 +85,8 @@ public class SerializedValue<T> implements java.io.Serializable {
 		if (obj instanceof SerializedValue) {
 			SerializedValue<?> other = (SerializedValue<?>) obj;
 			return this.serializedData == null ? other.serializedData == null :
-					(other.serializedData != null && Arrays.equals(this.serializedData, other.serializedData));
-		}
-		else {
+				(other.serializedData != null && Arrays.equals(this.serializedData, other.serializedData));
+		} else {
 			return false;
 		}
 	}

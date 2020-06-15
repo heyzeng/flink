@@ -62,11 +62,8 @@ public interface KeyedStateStore {
 	 * }</pre>
 	 *
 	 * @param stateProperties The descriptor defining the properties of the stats.
-	 *
-	 * @param <T> The type of value stored in the state.
-	 *
+	 * @param <T>             The type of value stored in the state.
 	 * @return The partitioned state object.
-	 *
 	 * @throws UnsupportedOperationException Thrown, if no partitioned state is available for the
 	 *                                       function (function is not part of a KeyedStream).
 	 */
@@ -106,11 +103,8 @@ public interface KeyedStateStore {
 	 * }</pre>
 	 *
 	 * @param stateProperties The descriptor defining the properties of the stats.
-	 *
-	 * @param <T> The type of value stored in the state.
-	 *
+	 * @param <T>             The type of value stored in the state.
 	 * @return The partitioned state object.
-	 *
 	 * @throws UnsupportedOperationException Thrown, if no partitioned state is available for the
 	 *                                       function (function is not part os a KeyedStream).
 	 */
@@ -146,11 +140,8 @@ public interface KeyedStateStore {
 	 * }</pre>
 	 *
 	 * @param stateProperties The descriptor defining the properties of the stats.
-	 *
-	 * @param <T> The type of value stored in the state.
-	 *
+	 * @param <T>             The type of value stored in the state.
 	 * @return The partitioned state object.
-	 *
 	 * @throws UnsupportedOperationException Thrown, if no partitioned state is available for the
 	 *                                       function (function is not part of a KeyedStream).
 	 */
@@ -187,13 +178,10 @@ public interface KeyedStateStore {
 	 * }</pre>
 	 *
 	 * @param stateProperties The descriptor defining the properties of the stats.
-	 *
-	 * @param <IN> The type of the values that are added to the state.
-	 * @param <ACC> The type of the accumulator (intermediate aggregation state).
-	 * @param <OUT> The type of the values that are returned from the state.
-	 *
+	 * @param <IN>            The type of the values that are added to the state.
+	 * @param <ACC>           The type of the accumulator (intermediate aggregation state).
+	 * @param <OUT>           The type of the values that are returned from the state.
 	 * @return The partitioned state object.
-	 *
 	 * @throws UnsupportedOperationException Thrown, if no partitioned state is available for the
 	 *                                       function (function is not part of a KeyedStream).
 	 */
@@ -229,14 +217,10 @@ public interface KeyedStateStore {
 	 * }</pre>
 	 *
 	 * @param stateProperties The descriptor defining the properties of the stats.
-	 *
-	 * @param <T> The type of value stored in the state.
-	 *
+	 * @param <T>             The type of value stored in the state.
 	 * @return The partitioned state object.
-	 *
 	 * @throws UnsupportedOperationException Thrown, if no partitioned state is available for the
 	 *                                       function (function is not part of a KeyedStream).
-	 *
 	 * @deprecated will be removed in a future version in favor of {@link AggregatingState}
 	 */
 	@PublicEvolving
@@ -271,12 +255,9 @@ public interface KeyedStateStore {
 	 * }</pre>
 	 *
 	 * @param stateProperties The descriptor defining the properties of the stats.
-	 *
-	 * @param <UK> The type of the user keys stored in the state.
-	 * @param <UV> The type of the user values stored in the state.
-	 *
+	 * @param <UK>            The type of the user keys stored in the state.
+	 * @param <UV>            The type of the user values stored in the state.
 	 * @return The partitioned state object.
-	 *
 	 * @throws UnsupportedOperationException Thrown, if no partitioned state is available for the
 	 *                                       function (function is not part of a KeyedStream).
 	 */

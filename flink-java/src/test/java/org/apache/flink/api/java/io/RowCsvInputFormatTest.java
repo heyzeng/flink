@@ -363,18 +363,18 @@ public class RowCsvInputFormatTest {
 	@Test
 	public void testTailingEmptyFields() throws Exception {
 		String fileContent = "abc|-def|-ghijk\n" +
-				"abc|-def|-\n" +
-				"abc|-|-\n" +
-				"|-|-|-\n" +
-				"|-|-\n" +
-				"abc|-def\n";
+			"abc|-def|-\n" +
+			"abc|-|-\n" +
+			"|-|-|-\n" +
+			"|-|-\n" +
+			"abc|-def\n";
 
 		FileInputSplit split = createTempFile(fileContent);
 
 		TypeInformation[] fieldTypes = new TypeInformation[]{
-				BasicTypeInfo.STRING_TYPE_INFO,
-				BasicTypeInfo.STRING_TYPE_INFO,
-				BasicTypeInfo.STRING_TYPE_INFO};
+			BasicTypeInfo.STRING_TYPE_INFO,
+			BasicTypeInfo.STRING_TYPE_INFO,
+			BasicTypeInfo.STRING_TYPE_INFO};
 
 		RowCsvInputFormat format = new RowCsvInputFormat(PATH, fieldTypes, "\n", "|");
 		format.setFieldDelimiter("|-");
@@ -416,7 +416,8 @@ public class RowCsvInputFormatTest {
 		try {
 			format.nextRecord(result);
 			fail("Parse Exception was not thrown! (Row too short)");
-		} catch (ParseException e) {}
+		} catch (ParseException e) {
+		}
 	}
 
 	@Test
@@ -912,8 +913,8 @@ public class RowCsvInputFormatTest {
 		String fileContent =
 			// first row
 			"111|222|333|444|555|666|777|888|999|000|\n" +
-			// second row
-			"000|999|888|777|666|555|444|333|222|111|";
+				// second row
+				"000|999|888|777|666|555|444|333|222|111|";
 		FileInputSplit split = createTempFile(fileContent);
 
 		TypeInformation[] fieldTypes = new TypeInformation[]{
@@ -951,7 +952,7 @@ public class RowCsvInputFormatTest {
 	@Test
 	public void testEmptyProjection() throws Exception {
 		String fileContent =
-				"111|222|333\n" +
+			"111|222|333\n" +
 				"000|999|888";
 		FileInputSplit split = createTempFile(fileContent);
 

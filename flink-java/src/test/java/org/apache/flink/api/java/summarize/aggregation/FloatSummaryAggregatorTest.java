@@ -38,8 +38,8 @@ public class FloatSummaryAggregatorTest {
 	@Test
 	public void testAnscomesQuartetXValues() throws Exception {
 
-		final Float[] q1x = { 10.0f, 8.0f, 13.0f, 9.0f, 11.0f, 14.0f, 6.0f, 4.0f, 12.0f, 7.0f, 5.0f };
-		final Float[] q4x = { 8.0f, 8.0f, 8.0f, 8.0f, 8.0f, 8.0f, 8.0f, 19.0f, 8.0f, 8.0f, 8.0f };
+		final Float[] q1x = {10.0f, 8.0f, 13.0f, 9.0f, 11.0f, 14.0f, 6.0f, 4.0f, 12.0f, 7.0f, 5.0f};
+		final Float[] q4x = {8.0f, 8.0f, 8.0f, 8.0f, 8.0f, 8.0f, 8.0f, 19.0f, 8.0f, 8.0f, 8.0f};
 
 		NumericColumnSummary<Float> q1 = summarize(q1x);
 		NumericColumnSummary<Float> q4 = summarize(q4x);
@@ -64,10 +64,10 @@ public class FloatSummaryAggregatorTest {
 	 */
 	@Test
 	public void testAnscomesQuartetYValues() throws Exception {
-		final Float[] q1y = { 8.04f, 6.95f, 7.58f, 8.81f, 8.33f, 9.96f, 7.24f, 4.26f, 10.84f, 4.82f, 5.68f };
-		final Float[] q2y = { 9.14f, 8.14f, 8.74f, 8.77f, 9.26f, 8.1f, 6.13f, 3.1f, 9.13f, 7.26f, 4.74f };
-		final Float[] q3y = { 7.46f, 6.77f, 12.74f, 7.11f, 7.81f, 8.84f, 6.08f, 5.39f, 8.15f, 6.42f, 5.73f };
-		final Float[] q4y = { 6.58f, 5.76f, 7.71f, 8.84f, 8.47f, 7.04f, 5.25f, 12.5f, 5.56f, 7.91f, 6.89f };
+		final Float[] q1y = {8.04f, 6.95f, 7.58f, 8.81f, 8.33f, 9.96f, 7.24f, 4.26f, 10.84f, 4.82f, 5.68f};
+		final Float[] q2y = {9.14f, 8.14f, 8.74f, 8.77f, 9.26f, 8.1f, 6.13f, 3.1f, 9.13f, 7.26f, 4.74f};
+		final Float[] q3y = {7.46f, 6.77f, 12.74f, 7.11f, 7.81f, 8.84f, 6.08f, 5.39f, 8.15f, 6.42f, 5.73f};
+		final Float[] q4y = {6.58f, 5.76f, 7.71f, 8.84f, 8.47f, 7.04f, 5.25f, 12.5f, 5.56f, 7.91f, 6.89f};
 
 		NumericColumnSummary<Float> q1 = summarize(q1y);
 		NumericColumnSummary<Float> q2 = summarize(q2y);

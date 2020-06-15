@@ -35,7 +35,7 @@ public class SingleInputSemanticProperties implements SemanticProperties {
 	 * Mapping from fields in the source record(s) to fields in the destination
 	 * record(s).
 	 */
-	private Map<Integer,FieldSet> fieldMapping;
+	private Map<Integer, FieldSet> fieldMapping;
 
 	/**
 	 * Set of fields that are read in the source record(s).
@@ -87,8 +87,8 @@ public class SingleInputSemanticProperties implements SemanticProperties {
 	 * @param targetField the position in the destination record(s)
 	 */
 	public void addForwardedField(int sourceField, int targetField) {
-		if(isTargetFieldPresent(targetField)) {
-			throw new InvalidSemanticAnnotationException("Target field "+targetField+" was added twice.");
+		if (isTargetFieldPresent(targetField)) {
+			throw new InvalidSemanticAnnotationException("Target field " + targetField + " was added twice.");
 		}
 
 		FieldSet targetFields = fieldMapping.get(sourceField);
@@ -100,8 +100,8 @@ public class SingleInputSemanticProperties implements SemanticProperties {
 	}
 
 	private boolean isTargetFieldPresent(int targetField) {
-		for(FieldSet targetFields : fieldMapping.values()) {
-			if(targetFields.contains(targetField)) {
+		for (FieldSet targetFields : fieldMapping.values()) {
+			if (targetFields.contains(targetField)) {
 				return true;
 			}
 		}
@@ -136,7 +136,7 @@ public class SingleInputSemanticProperties implements SemanticProperties {
 
 		@Override
 		public FieldSet getForwardingTargetFields(int input, int sourceField) {
-			if(input != 0) {
+			if (input != 0) {
 				throw new IndexOutOfBoundsException();
 			}
 			return new FieldSet(sourceField);
@@ -144,7 +144,7 @@ public class SingleInputSemanticProperties implements SemanticProperties {
 
 		@Override
 		public int getForwardingSourceField(int input, int targetField) {
-			if(input != 0) {
+			if (input != 0) {
 				throw new IndexOutOfBoundsException();
 			}
 			return targetField;

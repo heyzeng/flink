@@ -36,7 +36,6 @@ import org.apache.flink.api.java.DataSet;
  * </ul>
  *
  * @param <T> The type of the elements of the grouped DataSet.
- *
  * @see DataSet
  */
 @Public
@@ -71,7 +70,7 @@ public abstract class Grouping<T> {
 	 * }</pre>
 	 * the {@code groupBy()} is as if it never happened, as the {@code notGrouped} DataSet corresponds
 	 * to the input of the {@code groupBy()} (because of the {@code getDataset()}).
-	 * */
+	 */
 	@Internal
 	public DataSet<T> getInputDataSet() {
 		return this.inputDataSet;

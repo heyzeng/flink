@@ -50,7 +50,6 @@ public interface ValueState<T> extends State {
 	 * this will return {@code null} when to value was previously set using {@link #update(Object)}.
 	 *
 	 * @return The state value corresponding to the current input.
-	 *
 	 * @throws IOException Thrown if the system cannot access the state.
 	 */
 	T value() throws IOException;
@@ -63,7 +62,6 @@ public interface ValueState<T> extends State {
 	 * will be removed and the default value is returned on the next access.
 	 *
 	 * @param value The new value for the state.
-	 *
 	 * @throws IOException Thrown if the system cannot access the state.
 	 */
 	void update(T value) throws IOException;

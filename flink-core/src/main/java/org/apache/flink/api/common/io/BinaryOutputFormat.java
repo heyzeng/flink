@@ -30,19 +30,23 @@ import org.apache.flink.core.memory.DataOutputViewStreamWrapper;
 
 @Public
 public abstract class BinaryOutputFormat<T> extends FileOutputFormat<T> {
-	
+
 	private static final long serialVersionUID = 1L;
-	
-	/** The config parameter which defines the fixed length of a record. */
+
+	/**
+	 * The config parameter which defines the fixed length of a record.
+	 */
 	public static final String BLOCK_SIZE_PARAMETER_KEY = "output.block_size";
 
 	public static final long NATIVE_BLOCK_SIZE = Long.MIN_VALUE;
 
-	/** The block size to use. */
+	/**
+	 * The block size to use.
+	 */
 	private long blockSize = NATIVE_BLOCK_SIZE;
 
 	private transient BlockBasedOutput blockBasedOutput;
-	
+
 	private transient DataOutputViewStreamWrapper outView;
 
 
@@ -53,13 +57,13 @@ public abstract class BinaryOutputFormat<T> extends FileOutputFormat<T> {
 			if (o != null) {
 				o.close();
 			}
-		}
-		finally {
+		} finally {
 			super.close();
 		}
 	}
-	
-	protected void complementBlockInfo(BlockInfo blockInfo) {}
+
+	protected void complementBlockInfo(BlockInfo blockInfo) {
+	}
 
 	@Override
 	public void configure(Configuration parameters) {
@@ -101,7 +105,6 @@ public abstract class BinaryOutputFormat<T> extends FileOutputFormat<T> {
 	/**
 	 * Writes a block info at the end of the blocks.<br>
 	 * Current implementation uses only int and not long.
-	 * 
 	 */
 	protected class BlockBasedOutput extends FilterOutputStream {
 
@@ -150,7 +153,7 @@ public abstract class BinaryOutputFormat<T> extends FileOutputFormat<T> {
 		@Override
 		public void write(byte[] b, int off, int len) throws IOException {
 
-			for (int remainingLength = len, offset = off; remainingLength > 0;) {
+			for (int remainingLength = len, offset = off; remainingLength > 0; ) {
 				int blockLen = Math.min(remainingLength, this.maxPayloadSize - this.blockPos);
 				this.out.write(b, offset, blockLen);
 

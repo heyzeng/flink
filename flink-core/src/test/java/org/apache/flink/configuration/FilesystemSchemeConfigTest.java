@@ -86,8 +86,7 @@ public class FilesystemSchemeConfigTest extends TestLogger {
 		try {
 			FileSystem.get(justPath);
 			fail("should have failed with an exception");
-		}
-		catch (UnsupportedFileSystemSchemeException e) {
+		} catch (UnsupportedFileSystemSchemeException e) {
 			assertTrue(e.getMessage().contains("otherFS"));
 		}
 	}

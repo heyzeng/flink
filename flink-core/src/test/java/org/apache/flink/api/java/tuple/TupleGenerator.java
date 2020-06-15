@@ -161,7 +161,7 @@ class TupleGenerator {
 
 		for (int i = FIRST; i <= LAST; i++) {
 			File tupleFile = new File(dir, "Tuple" + i + ".java");
-				PrintWriter writer = new PrintWriter(tupleFile);
+			PrintWriter writer = new PrintWriter(tupleFile);
 			writeTupleClass(writer, i);
 			writer.flush();
 			writer.close();
@@ -359,7 +359,7 @@ class TupleGenerator {
 		for (int i = 0; i < numFields; i++) {
 			String field = "f" + i;
 			w.println("\t\tif (" + field + " != null ? !" + field + ".equals(tuple." +
-					field + ") : tuple." + field + " != null) {");
+				field + ") : tuple." + field + " != null) {");
 			w.println("\t\t\treturn false;");
 			w.println("\t\t}");
 		}
@@ -448,7 +448,7 @@ class TupleGenerator {
 		}
 	}
 
-	private static void printGenericsString(PrintWriter w, int numFields){
+	private static void printGenericsString(PrintWriter w, int numFields) {
 		w.print("<");
 		for (int i = 0; i < numFields; i++) {
 			if (i > 0) {
@@ -534,26 +534,26 @@ class TupleGenerator {
 
 	private static final String HEADER =
 		"/*\n"
-		+ " * Licensed to the Apache Software Foundation (ASF) under one\n"
-		+ " * or more contributor license agreements.  See the NOTICE file\n"
-		+ " * distributed with this work for additional information\n"
-		+ " * regarding copyright ownership.  The ASF licenses this file\n"
-		+ " * to you under the Apache License, Version 2.0 (the\n"
-		+ " * \"License\"); you may not use this file except in compliance\n"
-		+ " * with the License.  You may obtain a copy of the License at\n"
-		+ " *\n"
-		+ " *     http://www.apache.org/licenses/LICENSE-2.0\n"
-		+ " *\n"
-		+ " * Unless required by applicable law or agreed to in writing, software\n"
-		+ " * distributed under the License is distributed on an \"AS IS\" BASIS,\n"
-		+ " * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.\n"
-		+ " * See the License for the specific language governing permissions and\n"
-		+ " * limitations under the License.\n"
-		+ " */" +
-		"\n" +
-		"\n" +
-		"// --------------------------------------------------------------\n" +
-		"//  THIS IS A GENERATED SOURCE FILE. DO NOT EDIT!\n" +
-		"//  GENERATED FROM " + TupleGenerator.class.getName() + ".\n" +
-		"// --------------------------------------------------------------\n\n";
+			+ " * Licensed to the Apache Software Foundation (ASF) under one\n"
+			+ " * or more contributor license agreements.  See the NOTICE file\n"
+			+ " * distributed with this work for additional information\n"
+			+ " * regarding copyright ownership.  The ASF licenses this file\n"
+			+ " * to you under the Apache License, Version 2.0 (the\n"
+			+ " * \"License\"); you may not use this file except in compliance\n"
+			+ " * with the License.  You may obtain a copy of the License at\n"
+			+ " *\n"
+			+ " *     http://www.apache.org/licenses/LICENSE-2.0\n"
+			+ " *\n"
+			+ " * Unless required by applicable law or agreed to in writing, software\n"
+			+ " * distributed under the License is distributed on an \"AS IS\" BASIS,\n"
+			+ " * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.\n"
+			+ " * See the License for the specific language governing permissions and\n"
+			+ " * limitations under the License.\n"
+			+ " */" +
+			"\n" +
+			"\n" +
+			"// --------------------------------------------------------------\n" +
+			"//  THIS IS A GENERATED SOURCE FILE. DO NOT EDIT!\n" +
+			"//  GENERATED FROM " + TupleGenerator.class.getName() + ".\n" +
+			"// --------------------------------------------------------------\n\n";
 }

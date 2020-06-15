@@ -58,6 +58,6 @@ public class ListSerializerSnapshot<T> extends CompositeTypeSerializerSnapshot<L
 
 	@Override
 	protected TypeSerializer<?>[] getNestedSerializers(ListSerializer<T> outerSerializer) {
-		return new TypeSerializer<?>[] { outerSerializer.getElementSerializer() };
+		return new TypeSerializer<?>[]{outerSerializer.getElementSerializer()};
 	}
 }

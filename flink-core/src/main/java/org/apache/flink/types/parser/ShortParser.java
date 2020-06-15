@@ -98,12 +98,10 @@ public class ShortParser extends FieldParser<Short> {
 	 * Static utility to parse a field of type short from a byte sequence that represents text characters
 	 * (such as when read from a file stream).
 	 *
-	 * @param bytes The bytes containing the text data that should be parsed.
+	 * @param bytes    The bytes containing the text data that should be parsed.
 	 * @param startPos The offset to start the parsing.
-	 * @param length The length of the byte sequence (counting from the offset).
-	 *
+	 * @param length   The length of the byte sequence (counting from the offset).
 	 * @return The parsed value.
-	 *
 	 * @throws NumberFormatException Thrown when the value cannot be parsed because the text represents not a correct number.
 	 */
 	public static final short parseField(byte[] bytes, int startPos, int length) {
@@ -114,13 +112,11 @@ public class ShortParser extends FieldParser<Short> {
 	 * Static utility to parse a field of type short from a byte sequence that represents text characters
 	 * (such as when read from a file stream).
 	 *
-	 * @param bytes The bytes containing the text data that should be parsed.
-	 * @param startPos The offset to start the parsing.
-	 * @param length The length of the byte sequence (counting from the offset).
+	 * @param bytes     The bytes containing the text data that should be parsed.
+	 * @param startPos  The offset to start the parsing.
+	 * @param length    The length of the byte sequence (counting from the offset).
 	 * @param delimiter The delimiter that terminates the field.
-	 *
 	 * @return The parsed value.
-	 *
 	 * @throws NumberFormatException Thrown when the value cannot be parsed because the text represents not a correct number.
 	 */
 	public static final short parseField(byte[] bytes, int startPos, int length, char delimiter) {

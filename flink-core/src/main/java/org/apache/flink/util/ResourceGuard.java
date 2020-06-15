@@ -112,7 +112,7 @@ public class ResourceGuard implements AutoCloseable, Serializable {
 	 * status will be set.
 	 */
 	@SuppressWarnings("WeakerAccess")
-	public void closeUninterruptibly()  {
+	public void closeUninterruptibly() {
 
 		boolean interrupted = false;
 		synchronized (lock) {
@@ -139,7 +139,7 @@ public class ResourceGuard implements AutoCloseable, Serializable {
 	 * matching call to {@link #releaseResource()}.
 	 */
 	@Override
-	public void close()  {
+	public void close() {
 		closeUninterruptibly();
 	}
 

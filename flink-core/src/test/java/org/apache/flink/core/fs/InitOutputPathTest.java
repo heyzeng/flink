@@ -69,11 +69,9 @@ public class InitOutputPathTest {
 			// the proper latch order to control the process of the concurrent threads
 			runTest(true);
 			fail("should fail with an exception");
-		}
-		catch (FileNotFoundException e) {
+		} catch (FileNotFoundException e) {
 			// expected
-		}
-		finally {
+		} finally {
 			// reset the proper value
 			lock.set(null, new ReentrantLock(true));
 		}
@@ -123,12 +121,12 @@ public class InitOutputPathTest {
 		});
 
 		final LocalFileSystem fs1 = new SyncedFileSystem(
-				deleteAwaitLatch1, mkdirsAwaitLatch1,
-				deleteTriggerLatch1, mkdirsTriggerLatch1);
+			deleteAwaitLatch1, mkdirsAwaitLatch1,
+			deleteTriggerLatch1, mkdirsTriggerLatch1);
 
 		final LocalFileSystem fs2 = new SyncedFileSystem(
-				deleteAwaitLatch2, mkdirsAwaitLatch2,
-				deletetriggerLatch2, mkdirsTriggerLatch2);
+			deleteAwaitLatch2, mkdirsAwaitLatch2,
+			deletetriggerLatch2, mkdirsTriggerLatch2);
 
 		// start the concurrent file creators
 		FileCreator thread1 = new FileCreator(fs1, path1);
@@ -210,10 +208,10 @@ public class InitOutputPathTest {
 		private final OneShotLatch mkdirsAwaitLatch;
 
 		SyncedFileSystem(
-				OneShotLatch deleteTriggerLatch,
-				OneShotLatch mkdirsTriggerLatch,
-				OneShotLatch deleteAwaitLatch,
-				OneShotLatch mkdirsAwaitLatch) {
+			OneShotLatch deleteTriggerLatch,
+			OneShotLatch mkdirsTriggerLatch,
+			OneShotLatch deleteAwaitLatch,
+			OneShotLatch mkdirsAwaitLatch) {
 
 			this.deleteTriggerLatch = deleteTriggerLatch;
 			this.mkdirsTriggerLatch = mkdirsTriggerLatch;
@@ -226,8 +224,7 @@ public class InitOutputPathTest {
 			deleteTriggerLatch.trigger();
 			try {
 				deleteAwaitLatch.await();
-			}
-			catch (InterruptedException e) {
+			} catch (InterruptedException e) {
 				Thread.currentThread().interrupt();
 				throw new IOException("interrupted");
 			}
@@ -240,8 +237,7 @@ public class InitOutputPathTest {
 			mkdirsTriggerLatch.trigger();
 			try {
 				mkdirsAwaitLatch.await();
-			}
-			catch (InterruptedException e) {
+			} catch (InterruptedException e) {
 				Thread.currentThread().interrupt();
 				throw new IOException("interrupted");
 			}
@@ -256,12 +252,15 @@ public class InitOutputPathTest {
 	private static final class NoOpLock extends ReentrantLock {
 
 		@Override
-		public void lock() {}
+		public void lock() {
+		}
 
 		@Override
-		public void lockInterruptibly() {}
+		public void lockInterruptibly() {
+		}
 
 		@Override
-		public void unlock() {}
+		public void unlock() {
+		}
 	}
 }

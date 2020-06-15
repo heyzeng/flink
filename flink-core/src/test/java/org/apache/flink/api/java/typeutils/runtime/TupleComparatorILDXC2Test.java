@@ -46,23 +46,23 @@ public class TupleComparatorILDXC2Test extends TupleComparatorTestBase<Tuple3<In
 	@Override
 	protected TupleComparator<Tuple3<Integer, Long, Double>> createComparator(boolean ascending) {
 		return new TupleComparator<Tuple3<Integer, Long, Double>>(
-				new int[]{2, 1},
-				new TypeComparator[]{
-					new DoubleComparator(ascending),
-					new LongComparator(ascending)
-				},
-		new TypeSerializer[]{ IntSerializer.INSTANCE, DoubleSerializer.INSTANCE, LongSerializer.INSTANCE });
+			new int[]{2, 1},
+			new TypeComparator[]{
+				new DoubleComparator(ascending),
+				new LongComparator(ascending)
+			},
+			new TypeSerializer[]{IntSerializer.INSTANCE, DoubleSerializer.INSTANCE, LongSerializer.INSTANCE});
 	}
 
 	@SuppressWarnings("unchecked")
 	@Override
 	protected TupleSerializer<Tuple3<Integer, Long, Double>> createSerializer() {
 		return new TupleSerializer<Tuple3<Integer, Long, Double>>(
-				(Class<Tuple3<Integer, Long, Double>>) (Class<?>) Tuple3.class,
-				new TypeSerializer[]{
-					new IntSerializer(),
-					new LongSerializer(),
-					new DoubleSerializer()});
+			(Class<Tuple3<Integer, Long, Double>>) (Class<?>) Tuple3.class,
+			new TypeSerializer[]{
+				new IntSerializer(),
+				new LongSerializer(),
+				new DoubleSerializer()});
 	}
 
 	@Override

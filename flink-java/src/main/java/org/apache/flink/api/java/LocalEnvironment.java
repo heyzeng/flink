@@ -59,8 +59,8 @@ public class LocalEnvironment extends ExecutionEnvironment {
 	private static Configuration validateAndGetConfiguration(final Configuration configuration) {
 		if (!ExecutionEnvironment.areExplicitEnvironmentsAllowed()) {
 			throw new InvalidProgramException(
-					"The LocalEnvironment cannot be instantiated when running in a pre-defined context " +
-							"(such as Command Line Client, Scala Shell, or TestEnvironment)");
+				"The LocalEnvironment cannot be instantiated when running in a pre-defined context " +
+					"(such as Command Line Client, Scala Shell, or TestEnvironment)");
 		}
 
 		final Configuration effectiveConfiguration = new Configuration(checkNotNull(configuration));

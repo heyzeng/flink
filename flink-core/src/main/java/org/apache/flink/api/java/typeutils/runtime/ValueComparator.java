@@ -37,27 +37,27 @@ import org.objenesis.strategy.StdInstantiatorStrategy;
  */
 @Internal
 public class ValueComparator<T extends Value & Comparable<T>> extends TypeComparator<T> {
-	
+
 	private static final long serialVersionUID = 1L;
-	
+
 	private final Class<T> type;
-	
+
 	private final boolean ascendingComparison;
-	
+
 	private transient T reference;
-	
+
 	private transient T tempReference;
-	
+
 	private transient Kryo kryo;
 
 	@SuppressWarnings("rawtypes")
-	private final TypeComparator[] comparators = new TypeComparator[] {this};
+	private final TypeComparator[] comparators = new TypeComparator[]{this};
 
 	public ValueComparator(boolean ascending, Class<T> type) {
 		this.type = type;
 		this.ascendingComparison = ascending;
 	}
-	
+
 	@Override
 	public int hash(T record) {
 		return record.hashCode();
@@ -81,13 +81,13 @@ public class ValueComparator<T extends Value & Comparable<T>> extends TypeCompar
 		int comp = otherRef.compareTo(reference);
 		return ascendingComparison ? comp : -comp;
 	}
-	
+
 	@Override
 	public int compare(T first, T second) {
 		int comp = first.compareTo(second);
 		return ascendingComparison ? comp : -comp;
 	}
-	
+
 	@Override
 	public int compareSerialized(DataInputView firstSource, DataInputView secondSource) throws IOException {
 		if (reference == null) {
@@ -96,7 +96,7 @@ public class ValueComparator<T extends Value & Comparable<T>> extends TypeCompar
 		if (tempReference == null) {
 			tempReference = InstantiationUtil.instantiate(type, Value.class);
 		}
-		
+
 		reference.read(firstSource);
 		tempReference.read(secondSource);
 		int comp = reference.compareTo(tempReference);
@@ -113,7 +113,7 @@ public class ValueComparator<T extends Value & Comparable<T>> extends TypeCompar
 		if (reference == null) {
 			reference = InstantiationUtil.instantiate(type, Value.class);
 		}
-		
+
 		NormalizableKey<?> key = (NormalizableKey<?>) reference;
 		return key.getMaxNormalizedKeyLen();
 	}
@@ -133,12 +133,12 @@ public class ValueComparator<T extends Value & Comparable<T>> extends TypeCompar
 	public boolean invertNormalizedKey() {
 		return !ascendingComparison;
 	}
-	
+
 	@Override
 	public TypeComparator<T> duplicate() {
 		return new ValueComparator<T>(ascendingComparison, type);
 	}
-	
+
 	private void checkKryoInitialized() {
 		if (this.kryo == null) {
 			this.kryo = new Kryo();
@@ -163,11 +163,11 @@ public class ValueComparator<T extends Value & Comparable<T>> extends TypeCompar
 	public TypeComparator[] getFlatComparators() {
 		return comparators;
 	}
-	
+
 	// --------------------------------------------------------------------------------------------
 	// unsupported normalization
 	// --------------------------------------------------------------------------------------------
-	
+
 	@Override
 	public boolean supportsSerializationWithKeyNormalization() {
 		return false;

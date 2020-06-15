@@ -61,8 +61,7 @@ public class UnionIteratorTest {
 			for (int i : iter) {
 				assertEquals(val++, i);
 			}
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 			fail(e.getMessage());
 		}
@@ -138,8 +137,7 @@ public class UnionIteratorTest {
 			// should succeed again
 			assertFalse(iter.iterator().hasNext());
 
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 			fail(e.getMessage());
 		}

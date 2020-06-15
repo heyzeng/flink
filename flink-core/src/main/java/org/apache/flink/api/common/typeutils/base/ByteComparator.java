@@ -29,7 +29,7 @@ public final class ByteComparator extends BasicTypeComparator<Byte> {
 
 	private static final long serialVersionUID = 1L;
 
-	
+
 	public ByteComparator(boolean ascending) {
 		super(ascending);
 	}
@@ -38,8 +38,8 @@ public final class ByteComparator extends BasicTypeComparator<Byte> {
 	public int compareSerialized(DataInputView firstSource, DataInputView secondSource) throws IOException {
 		byte b1 = firstSource.readByte();
 		byte b2 = secondSource.readByte();
-		int comp = (b1 < b2 ? -1 : (b1 == b2 ? 0 : 1)); 
-		return ascendingComparison ? comp : -comp; 
+		int comp = (b1 < b2 ? -1 : (b1 == b2 ? 0 : 1));
+		return ascendingComparison ? comp : -comp;
 	}
 
 

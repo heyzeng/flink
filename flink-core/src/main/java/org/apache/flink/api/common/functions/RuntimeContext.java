@@ -137,7 +137,7 @@ public interface RuntimeContext {
 	/**
 	 * Get an existing accumulator object. The accumulator must have been added
 	 * previously in this local runtime context.
-	 *
+	 * <p>
 	 * Throws an exception if the accumulator does not exist or if the
 	 * accumulator exists, but with different type.
 	 */
@@ -146,6 +146,7 @@ public interface RuntimeContext {
 	/**
 	 * Returns a map of all registered accumulators for this task.
 	 * The returned map must not be modified.
+	 *
 	 * @deprecated Use getAccumulator(..) to obtain the value of an accumulator.
 	 */
 	@Deprecated
@@ -193,8 +194,8 @@ public interface RuntimeContext {
 	 * given {@code name}.
 	 * <p>
 	 * IMPORTANT: The broadcast variable data structure is shared between the parallel
-	 *            tasks on one machine. Any access that modifies its internal state needs to
-	 *            be manually synchronized by the caller.
+	 * tasks on one machine. Any access that modifies its internal state needs to
+	 * be manually synchronized by the caller.
 	 *
 	 * @param name The name under which the broadcast variable is registered;
 	 * @return The broadcast variable, materialized as a list of elements.
@@ -207,10 +208,10 @@ public interface RuntimeContext {
 	 * that is initialized with the given {@link BroadcastVariableInitializer}.
 	 * <p>
 	 * IMPORTANT: The broadcast variable data structure is shared between the parallel
-	 *            tasks on one machine. Any access that modifies its internal state needs to
-	 *            be manually synchronized by the caller.
+	 * tasks on one machine. Any access that modifies its internal state needs to
+	 * be manually synchronized by the caller.
 	 *
-	 * @param name The name under which the broadcast variable is registered;
+	 * @param name        The name under which the broadcast variable is registered;
 	 * @param initializer The initializer that creates the shared data structure of the broadcast
 	 *                    variable from the sequence of elements.
 	 * @return The broadcast variable, materialized as a list of elements.
@@ -265,11 +266,8 @@ public interface RuntimeContext {
 	 * }</pre>
 	 *
 	 * @param stateProperties The descriptor defining the properties of the stats.
-	 *
-	 * @param <T> The type of value stored in the state.
-	 *
+	 * @param <T>             The type of value stored in the state.
 	 * @return The partitioned state object.
-	 *
 	 * @throws UnsupportedOperationException Thrown, if no partitioned state is available for the
 	 *                                       function (function is not part of a KeyedStream).
 	 */
@@ -309,11 +307,8 @@ public interface RuntimeContext {
 	 * }</pre>
 	 *
 	 * @param stateProperties The descriptor defining the properties of the stats.
-	 *
-	 * @param <T> The type of value stored in the state.
-	 *
+	 * @param <T>             The type of value stored in the state.
 	 * @return The partitioned state object.
-	 *
 	 * @throws UnsupportedOperationException Thrown, if no partitioned state is available for the
 	 *                                       function (function is not part os a KeyedStream).
 	 */
@@ -349,11 +344,8 @@ public interface RuntimeContext {
 	 * }</pre>
 	 *
 	 * @param stateProperties The descriptor defining the properties of the stats.
-	 *
-	 * @param <T> The type of value stored in the state.
-	 *
+	 * @param <T>             The type of value stored in the state.
 	 * @return The partitioned state object.
-	 *
 	 * @throws UnsupportedOperationException Thrown, if no partitioned state is available for the
 	 *                                       function (function is not part of a KeyedStream).
 	 */
@@ -390,13 +382,10 @@ public interface RuntimeContext {
 	 * }</pre>
 	 *
 	 * @param stateProperties The descriptor defining the properties of the stats.
-	 *
-	 * @param <IN> The type of the values that are added to the state.
-	 * @param <ACC> The type of the accumulator (intermediate aggregation state).
-	 * @param <OUT> The type of the values that are returned from the state.
-	 *
+	 * @param <IN>            The type of the values that are added to the state.
+	 * @param <ACC>           The type of the accumulator (intermediate aggregation state).
+	 * @param <OUT>           The type of the values that are returned from the state.
 	 * @return The partitioned state object.
-	 *
 	 * @throws UnsupportedOperationException Thrown, if no partitioned state is available for the
 	 *                                       function (function is not part of a KeyedStream).
 	 */
@@ -432,15 +421,11 @@ public interface RuntimeContext {
 	 * }</pre>
 	 *
 	 * @param stateProperties The descriptor defining the properties of the stats.
-	 *
-	 * @param <T> Type of the values folded in the other state
-	 * @param <ACC> Type of the value in the state
-	 *
+	 * @param <T>             Type of the values folded in the other state
+	 * @param <ACC>           Type of the value in the state
 	 * @return The partitioned state object.
-	 *
 	 * @throws UnsupportedOperationException Thrown, if no partitioned state is available for the
 	 *                                       function (function is not part of a KeyedStream).
-	 *
 	 * @deprecated will be removed in a future version in favor of {@link AggregatingState}
 	 */
 	@PublicEvolving
@@ -475,12 +460,9 @@ public interface RuntimeContext {
 	 * }</pre>
 	 *
 	 * @param stateProperties The descriptor defining the properties of the stats.
-	 *
-	 * @param <UK> The type of the user keys stored in the state.
-	 * @param <UV> The type of the user values stored in the state.
-	 *
+	 * @param <UK>            The type of the user keys stored in the state.
+	 * @param <UV>            The type of the user values stored in the state.
 	 * @return The partitioned state object.
-	 *
 	 * @throws UnsupportedOperationException Thrown, if no partitioned state is available for the
 	 *                                       function (function is not part of a KeyedStream).
 	 */

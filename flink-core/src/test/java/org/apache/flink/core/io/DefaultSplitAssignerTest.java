@@ -36,46 +36,45 @@ public class DefaultSplitAssignerTest {
 	public void testSerialSplitAssignment() {
 		try {
 			final int NUM_SPLITS = 50;
-			
+
 			Set<InputSplit> splits = new HashSet<InputSplit>();
 			for (int i = 0; i < NUM_SPLITS; i++) {
 				splits.add(new GenericInputSplit(i, NUM_SPLITS));
 			}
-			
+
 			DefaultInputSplitAssigner ia = new DefaultInputSplitAssigner(splits);
 			InputSplit is = null;
 			while ((is = ia.getNextInputSplit("", 0)) != null) {
 				assertTrue(splits.remove(is));
 			}
-			
+
 			assertTrue(splits.isEmpty());
 			assertNull(ia.getNextInputSplit("", 0));
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 			fail(e.getMessage());
 		}
 	}
-	
+
 	@Test
 	public void testConcurrentSplitAssignment() {
 		try {
 			final int NUM_THREADS = 10;
 			final int NUM_SPLITS = 500;
-			final int SUM_OF_IDS = (NUM_SPLITS-1) * (NUM_SPLITS) / 2;
-			
+			final int SUM_OF_IDS = (NUM_SPLITS - 1) * (NUM_SPLITS) / 2;
+
 			Set<InputSplit> splits = new HashSet<InputSplit>();
 			for (int i = 0; i < NUM_SPLITS; i++) {
 				splits.add(new GenericInputSplit(i, NUM_SPLITS));
 			}
-			
+
 			final DefaultInputSplitAssigner ia = new DefaultInputSplitAssigner(splits);
-			
+
 			final AtomicInteger splitsRetrieved = new AtomicInteger(0);
 			final AtomicInteger sumOfIds = new AtomicInteger(0);
-			
+
 			Runnable retriever = new Runnable() {
-				
+
 				@Override
 				public void run() {
 					String host = "";
@@ -86,38 +85,37 @@ public class DefaultSplitAssignerTest {
 					}
 				}
 			};
-			
+
 			// create the threads
 			Thread[] threads = new Thread[NUM_THREADS];
 			for (int i = 0; i < NUM_THREADS; i++) {
 				threads[i] = new Thread(retriever);
 				threads[i].setDaemon(true);
 			}
-			
+
 			// launch concurrently
 			for (int i = 0; i < NUM_THREADS; i++) {
 				threads[i].start();
 			}
-			
+
 			// sync
 			for (int i = 0; i < NUM_THREADS; i++) {
 				threads[i].join(5000);
 			}
-			
+
 			// verify
 			for (int i = 0; i < NUM_THREADS; i++) {
 				if (threads[i].isAlive()) {
 					fail("The concurrency test case is erroneous, the thread did not respond in time.");
 				}
 			}
-			
+
 			assertEquals(NUM_SPLITS, splitsRetrieved.get());
 			assertEquals(SUM_OF_IDS, sumOfIds.get());
-			
+
 			// nothing left
 			assertNull(ia.getNextInputSplit("", 0));
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 			fail(e.getMessage());
 		}

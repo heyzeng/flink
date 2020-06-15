@@ -72,11 +72,11 @@ public abstract class AbstractRuntimeUDFContext implements RuntimeContext {
 	private final MetricGroup metrics;
 
 	public AbstractRuntimeUDFContext(TaskInfo taskInfo,
-										ClassLoader userCodeClassLoader,
-										ExecutionConfig executionConfig,
-										Map<String, Accumulator<?, ?>> accumulators,
-										Map<String, Future<Path>> cpTasks,
-										MetricGroup metrics) {
+									 ClassLoader userCodeClassLoader,
+									 ExecutionConfig executionConfig,
+									 Map<String, Accumulator<?, ?>> accumulators,
+									 Map<String, Future<Path>> cpTasks,
+									 MetricGroup metrics) {
 		this.taskInfo = checkNotNull(taskInfo);
 		this.userCodeClassLoader = userCodeClassLoader;
 		this.executionConfig = executionConfig;
@@ -149,7 +149,7 @@ public abstract class AbstractRuntimeUDFContext implements RuntimeContext {
 	public <V, A extends Serializable> void addAccumulator(String name, Accumulator<V, A> accumulator) {
 		if (accumulators.containsKey(name)) {
 			throw new UnsupportedOperationException("The accumulator '" + name
-					+ "' already exists and cannot be added.");
+				+ "' already exists and cannot be added.");
 		}
 		accumulators.put(name, accumulator);
 	}
@@ -179,7 +179,7 @@ public abstract class AbstractRuntimeUDFContext implements RuntimeContext {
 
 	@SuppressWarnings("unchecked")
 	private <V, A extends Serializable> Accumulator<V, A> getAccumulator(String name,
-			Class<? extends Accumulator<V, A>> accumulatorClass) {
+																		 Class<? extends Accumulator<V, A>> accumulatorClass) {
 
 		Accumulator<?, ?> accumulator = accumulators.get(name);
 
@@ -189,8 +189,7 @@ public abstract class AbstractRuntimeUDFContext implements RuntimeContext {
 			// Create new accumulator
 			try {
 				accumulator = accumulatorClass.newInstance();
-			}
-			catch (Exception e) {
+			} catch (Exception e) {
 				throw new RuntimeException("Cannot create accumulator " + accumulatorClass.getName());
 			}
 			accumulators.put(name, accumulator);
@@ -202,28 +201,28 @@ public abstract class AbstractRuntimeUDFContext implements RuntimeContext {
 	@PublicEvolving
 	public <T> ValueState<T> getState(ValueStateDescriptor<T> stateProperties) {
 		throw new UnsupportedOperationException(
-				"This state is only accessible by functions executed on a KeyedStream");
+			"This state is only accessible by functions executed on a KeyedStream");
 	}
 
 	@Override
 	@PublicEvolving
 	public <T> ListState<T> getListState(ListStateDescriptor<T> stateProperties) {
 		throw new UnsupportedOperationException(
-				"This state is only accessible by functions executed on a KeyedStream");
+			"This state is only accessible by functions executed on a KeyedStream");
 	}
 
 	@Override
 	@PublicEvolving
 	public <T> ReducingState<T> getReducingState(ReducingStateDescriptor<T> stateProperties) {
 		throw new UnsupportedOperationException(
-				"This state is only accessible by functions executed on a KeyedStream");
+			"This state is only accessible by functions executed on a KeyedStream");
 	}
 
 	@Override
 	@PublicEvolving
 	public <IN, ACC, OUT> AggregatingState<IN, OUT> getAggregatingState(AggregatingStateDescriptor<IN, ACC, OUT> stateProperties) {
 		throw new UnsupportedOperationException(
-				"This state is only accessible by functions executed on a KeyedStream");
+			"This state is only accessible by functions executed on a KeyedStream");
 	}
 
 	@Override
@@ -231,14 +230,14 @@ public abstract class AbstractRuntimeUDFContext implements RuntimeContext {
 	@Deprecated
 	public <T, ACC> FoldingState<T, ACC> getFoldingState(FoldingStateDescriptor<T, ACC> stateProperties) {
 		throw new UnsupportedOperationException(
-				"This state is only accessible by functions executed on a KeyedStream");
+			"This state is only accessible by functions executed on a KeyedStream");
 	}
 
 	@Override
 	@PublicEvolving
 	public <UK, UV> MapState<UK, UV> getMapState(MapStateDescriptor<UK, UV> stateProperties) {
 		throw new UnsupportedOperationException(
-				"This state is only accessible by functions executed on a KeyedStream");
+			"This state is only accessible by functions executed on a KeyedStream");
 	}
 
 	@Internal

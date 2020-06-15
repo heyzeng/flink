@@ -152,7 +152,7 @@ public class SingleThreadAccessCheckingTypeSerializer<T> extends TypeSerializer<
 
 		@Override
 		protected TypeSerializer<?>[] getNestedSerializers(SingleThreadAccessCheckingTypeSerializer<T> outerSerializer) {
-			return new TypeSerializer[] { outerSerializer.originalSerializer };
+			return new TypeSerializer[]{outerSerializer.originalSerializer};
 		}
 
 		@SuppressWarnings("unchecked")
@@ -176,7 +176,7 @@ public class SingleThreadAccessCheckingTypeSerializer<T> extends TypeSerializer<
 		private transient AtomicReference<Thread> currentThreadRef = new AtomicReference<>();
 
 		SingleThreadAccessCheck startSingleThreadAccessCheck() {
-			assert(currentThreadRef.compareAndSet(null, Thread.currentThread())) :
+			assert (currentThreadRef.compareAndSet(null, Thread.currentThread())) :
 				"The checker has concurrent access from " + currentThreadRef.get();
 			return new SingleThreadAccessCheck(currentThreadRef);
 		}
@@ -196,7 +196,7 @@ public class SingleThreadAccessCheckingTypeSerializer<T> extends TypeSerializer<
 
 		@Override
 		public void close() {
-			assert(currentThreadRef.compareAndSet(Thread.currentThread(), null)) :
+			assert (currentThreadRef.compareAndSet(Thread.currentThread(), null)) :
 				"The checker has concurrent access from " + currentThreadRef.get();
 		}
 	}

@@ -36,33 +36,37 @@ import org.apache.flink.core.io.InputSplitAssigner;
 @Internal
 public class DefaultInputSplitAssigner implements InputSplitAssigner {
 
-	/** The logging object used to report information and errors. */
+	/**
+	 * The logging object used to report information and errors.
+	 */
 	private static final Logger LOG = LoggerFactory.getLogger(DefaultInputSplitAssigner.class);
 
-	/** The list of all splits */
+	/**
+	 * The list of all splits
+	 */
 	private final List<InputSplit> splits = new ArrayList<InputSplit>();
 
 
 	public DefaultInputSplitAssigner(InputSplit[] splits) {
 		Collections.addAll(this.splits, splits);
 	}
-	
+
 	public DefaultInputSplitAssigner(Collection<? extends InputSplit> splits) {
 		this.splits.addAll(splits);
 	}
-	
-	
+
+
 	@Override
 	public InputSplit getNextInputSplit(String host, int taskId) {
 		InputSplit next = null;
-		
+
 		// keep the synchronized part short
 		synchronized (this.splits) {
 			if (this.splits.size() > 0) {
 				next = this.splits.remove(this.splits.size() - 1);
 			}
 		}
-		
+
 		if (LOG.isDebugEnabled()) {
 			if (next == null) {
 				LOG.debug("No more input splits available");

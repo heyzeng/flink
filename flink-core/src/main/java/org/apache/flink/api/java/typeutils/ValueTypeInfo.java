@@ -98,7 +98,7 @@ public class ValueTypeInfo<T extends Value> extends TypeInformation<T> implement
 			Value.class.isAssignableFrom(type) || type.equals(Value.class),
 			"ValueTypeInfo can only be used for subclasses of %s", Value.class.getName());
 	}
-	
+
 	@Override
 	@PublicEvolving
 	public int getArity() {
@@ -110,7 +110,7 @@ public class ValueTypeInfo<T extends Value> extends TypeInformation<T> implement
 	public int getTotalFields() {
 		return 1;
 	}
-	
+
 	@Override
 	@PublicEvolving
 	public Class<T> getTypeClass() {
@@ -126,8 +126,8 @@ public class ValueTypeInfo<T extends Value> extends TypeInformation<T> implement
 	@PublicEvolving
 	public boolean isBasicValueType() {
 		return type.equals(StringValue.class) || type.equals(ByteValue.class) || type.equals(ShortValue.class) || type.equals(CharValue.class) ||
-				type.equals(DoubleValue.class) || type.equals(FloatValue.class) || type.equals(IntValue.class) || type.equals(LongValue.class) ||
-				type.equals(NullValue.class) || type.equals(BooleanValue.class);
+			type.equals(DoubleValue.class) || type.equals(FloatValue.class) || type.equals(IntValue.class) || type.equals(LongValue.class) ||
+			type.equals(NullValue.class) || type.equals(BooleanValue.class);
 	}
 
 	@Override
@@ -135,7 +135,7 @@ public class ValueTypeInfo<T extends Value> extends TypeInformation<T> implement
 	public boolean isTupleType() {
 		return false;
 	}
-	
+
 	@Override
 	@PublicEvolving
 	public boolean isKeyType() {
@@ -148,43 +148,32 @@ public class ValueTypeInfo<T extends Value> extends TypeInformation<T> implement
 	public TypeSerializer<T> createSerializer(ExecutionConfig executionConfig) {
 		if (BooleanValue.class.isAssignableFrom(type)) {
 			return (TypeSerializer<T>) BooleanValueSerializer.INSTANCE;
-		}
-		else if (ByteValue.class.isAssignableFrom(type)) {
+		} else if (ByteValue.class.isAssignableFrom(type)) {
 			return (TypeSerializer<T>) ByteValueSerializer.INSTANCE;
-		}
-		else if (CharValue.class.isAssignableFrom(type)) {
+		} else if (CharValue.class.isAssignableFrom(type)) {
 			return (TypeSerializer<T>) CharValueSerializer.INSTANCE;
-		}
-		else if (DoubleValue.class.isAssignableFrom(type)) {
+		} else if (DoubleValue.class.isAssignableFrom(type)) {
 			return (TypeSerializer<T>) DoubleValueSerializer.INSTANCE;
-		}
-		else if (FloatValue.class.isAssignableFrom(type)) {
+		} else if (FloatValue.class.isAssignableFrom(type)) {
 			return (TypeSerializer<T>) FloatValueSerializer.INSTANCE;
-		}
-		else if (IntValue.class.isAssignableFrom(type)) {
+		} else if (IntValue.class.isAssignableFrom(type)) {
 			return (TypeSerializer<T>) IntValueSerializer.INSTANCE;
-		}
-		else if (LongValue.class.isAssignableFrom(type)) {
+		} else if (LongValue.class.isAssignableFrom(type)) {
 			return (TypeSerializer<T>) LongValueSerializer.INSTANCE;
-		}
-		else if (NullValue.class.isAssignableFrom(type)) {
+		} else if (NullValue.class.isAssignableFrom(type)) {
 			return (TypeSerializer<T>) NullValueSerializer.INSTANCE;
-		}
-		else if (ShortValue.class.isAssignableFrom(type)) {
+		} else if (ShortValue.class.isAssignableFrom(type)) {
 			return (TypeSerializer<T>) ShortValueSerializer.INSTANCE;
-		}
-		else if (StringValue.class.isAssignableFrom(type)) {
+		} else if (StringValue.class.isAssignableFrom(type)) {
 			return (TypeSerializer<T>) StringValueSerializer.INSTANCE;
-		}
-		else if (CopyableValue.class.isAssignableFrom(type)) {
+		} else if (CopyableValue.class.isAssignableFrom(type)) {
 			return (TypeSerializer<T>) createCopyableValueSerializer(type.asSubclass(CopyableValue.class));
-		}
-		else {
+		} else {
 			return new ValueSerializer<T>(type);
 		}
 	}
-	
-	@SuppressWarnings({ "unchecked", "rawtypes" })
+
+	@SuppressWarnings({"unchecked", "rawtypes"})
 	@Override
 	@PublicEvolving
 	public TypeComparator<T> createComparator(boolean sortOrderAscending, ExecutionConfig executionConfig) {
@@ -194,54 +183,43 @@ public class ValueTypeInfo<T extends Value> extends TypeInformation<T> implement
 
 		if (BooleanValue.class.isAssignableFrom(type)) {
 			return (TypeComparator<T>) new BooleanValueComparator(sortOrderAscending);
-		}
-		else if (ByteValue.class.isAssignableFrom(type)) {
+		} else if (ByteValue.class.isAssignableFrom(type)) {
 			return (TypeComparator<T>) new ByteValueComparator(sortOrderAscending);
-		}
-		else if (CharValue.class.isAssignableFrom(type)) {
+		} else if (CharValue.class.isAssignableFrom(type)) {
 			return (TypeComparator<T>) new CharValueComparator(sortOrderAscending);
-		}
-		else if (DoubleValue.class.isAssignableFrom(type)) {
+		} else if (DoubleValue.class.isAssignableFrom(type)) {
 			return (TypeComparator<T>) new DoubleValueComparator(sortOrderAscending);
-		}
-		else if (FloatValue.class.isAssignableFrom(type)) {
+		} else if (FloatValue.class.isAssignableFrom(type)) {
 			return (TypeComparator<T>) new FloatValueComparator(sortOrderAscending);
-		}
-		else if (IntValue.class.isAssignableFrom(type)) {
+		} else if (IntValue.class.isAssignableFrom(type)) {
 			return (TypeComparator<T>) new IntValueComparator(sortOrderAscending);
-		}
-		else if (LongValue.class.isAssignableFrom(type)) {
+		} else if (LongValue.class.isAssignableFrom(type)) {
 			return (TypeComparator<T>) new LongValueComparator(sortOrderAscending);
-		}
-		else if (NullValue.class.isAssignableFrom(type)) {
+		} else if (NullValue.class.isAssignableFrom(type)) {
 			return (TypeComparator<T>) NullValueComparator.getInstance();
-		}
-		else if (ShortValue.class.isAssignableFrom(type)) {
+		} else if (ShortValue.class.isAssignableFrom(type)) {
 			return (TypeComparator<T>) new ShortValueComparator(sortOrderAscending);
-		}
-		else if (StringValue.class.isAssignableFrom(type)) {
+		} else if (StringValue.class.isAssignableFrom(type)) {
 			return (TypeComparator<T>) new StringValueComparator(sortOrderAscending);
-		}
-		else if (CopyableValue.class.isAssignableFrom(type)) {
+		} else if (CopyableValue.class.isAssignableFrom(type)) {
 			return (TypeComparator<T>) new CopyableValueComparator(sortOrderAscending, type);
-		}
-		else {
+		} else {
 			return (TypeComparator<T>) new ValueComparator(sortOrderAscending, type);
 		}
 	}
-	
+
 	// utility method to summon the necessary bound
 	private static <X extends CopyableValue<X>> CopyableValueSerializer<X> createCopyableValueSerializer(Class<X> clazz) {
 		return new CopyableValueSerializer<X>(clazz);
 	}
-	
+
 	// --------------------------------------------------------------------------------------------
-	
+
 	@Override
 	public int hashCode() {
 		return this.type.hashCode();
 	}
-	
+
 	@Override
 	public boolean equals(Object obj) {
 		if (obj instanceof ValueTypeInfo) {
@@ -259,20 +237,19 @@ public class ValueTypeInfo<T extends Value> extends TypeInformation<T> implement
 	public boolean canEqual(Object obj) {
 		return obj instanceof ValueTypeInfo;
 	}
-	
+
 	@Override
 	public String toString() {
 		return "ValueType<" + type.getSimpleName() + ">";
 	}
-	
+
 	// --------------------------------------------------------------------------------------------
 
 	@PublicEvolving
 	static <X extends Value> TypeInformation<X> getValueTypeInfo(Class<X> typeClass) {
 		if (Value.class.isAssignableFrom(typeClass) && !typeClass.equals(Value.class)) {
 			return new ValueTypeInfo<X>(typeClass);
-		}
-		else {
+		} else {
 			throw new InvalidTypesException("The given class is no subclass of " + Value.class.getName());
 		}
 	}

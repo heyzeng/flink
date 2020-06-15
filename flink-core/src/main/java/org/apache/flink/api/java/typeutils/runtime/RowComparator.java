@@ -42,15 +42,25 @@ import static org.apache.flink.util.Preconditions.checkArgument;
 public class RowComparator extends CompositeTypeComparator<Row> {
 
 	private static final long serialVersionUID = 1L;
-	/** The number of fields of the Row */
+	/**
+	 * The number of fields of the Row
+	 */
 	private final int arity;
-	/** key positions describe which fields are keys in what order */
+	/**
+	 * key positions describe which fields are keys in what order
+	 */
 	private final int[] keyPositions;
-	/** null-aware comparators for the key fields, in the same order as the key fields */
+	/**
+	 * null-aware comparators for the key fields, in the same order as the key fields
+	 */
 	private final NullAwareComparator<Object>[] comparators;
-	/** serializers to deserialize the first n fields for comparison */
+	/**
+	 * serializers to deserialize the first n fields for comparison
+	 */
 	private final TypeSerializer<Object>[] serializers;
-	/** auxiliary fields for normalized key support */
+	/**
+	 * auxiliary fields for normalized key support
+	 */
 	private final int[] normalizedKeyLengths;
 	private final int numLeadingNormalizableKeys;
 	private final int normalizableKeyPrefixLen;
@@ -333,8 +343,8 @@ public class RowComparator extends CompositeTypeComparator<Row> {
 	@Override
 	public boolean isNormalizedKeyPrefixOnly(int keyBytes) {
 		return numLeadingNormalizableKeys < keyPositions.length ||
-				normalizableKeyPrefixLen == Integer.MAX_VALUE ||
-				normalizableKeyPrefixLen > keyBytes;
+			normalizableKeyPrefixLen == Integer.MAX_VALUE ||
+			normalizableKeyPrefixLen > keyBytes;
 	}
 
 	@Override
@@ -449,7 +459,7 @@ public class RowComparator extends CompositeTypeComparator<Row> {
 				if (len < 0) {
 					throw new RuntimeException(
 						"Comparator " + k.getClass().getName() +
-						" specifies an invalid length for the normalized key: " + len);
+							" specifies an invalid length for the normalized key: " + len);
 				}
 				normalizedKeyLengths[i] = len;
 				normalizableKeyPrefixLen += len;

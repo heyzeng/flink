@@ -42,7 +42,7 @@ public class SubclassFromInterfaceSerializerTest extends SerializerTestBase<Subc
 		ExecutionConfig conf = new ExecutionConfig();
 		conf.registerPojoType(TestUserClass2.class);
 		TypeSerializer<TestUserInterface> serializer = type.createSerializer(conf);
-		assert(serializer instanceof KryoSerializer);
+		assert (serializer instanceof KryoSerializer);
 		return serializer;
 	}
 
@@ -61,8 +61,8 @@ public class SubclassFromInterfaceSerializerTest extends SerializerTestBase<Subc
 		Random rnd = new Random(874597969123412341L);
 
 		return new TestUserInterface[]{
-				new TestUserClass1(rnd.nextInt(), "foo", rnd.nextLong()),
-				new TestUserClass2(rnd.nextInt(), "bar", rnd.nextFloat())
+			new TestUserClass1(rnd.nextInt(), "foo", rnd.nextLong()),
+			new TestUserClass2(rnd.nextInt(), "bar", rnd.nextFloat())
 		};
 
 	}
@@ -73,7 +73,8 @@ public class SubclassFromInterfaceSerializerTest extends SerializerTestBase<Subc
 		// don't do anything, since the PojoSerializer with subclass will return null
 	}
 
-	public interface TestUserInterface {}
+	public interface TestUserInterface {
+	}
 
 	// User code class for testing the serializer
 	public static class TestUserClassBase implements TestUserInterface {

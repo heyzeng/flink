@@ -45,7 +45,8 @@ public class PojoSerializerSnapshotMigrationTest extends TypeSerializerSnapshotM
 		public String name;
 		public int age;
 
-		public TestPojo() {}
+		public TestPojo() {
+		}
 
 		public TestPojo(int id, String name, int age) {
 			this.id = id;
@@ -74,7 +75,8 @@ public class PojoSerializerSnapshotMigrationTest extends TypeSerializerSnapshotM
 		public Color favoriteColor;
 		public boolean married;
 
-		public TestPojoWithNewAndRemovedFields() {}
+		public TestPojoWithNewAndRemovedFields() {
+		}
 
 		public TestPojoWithNewAndRemovedFields(String name, int age, String githubId, Color favoriteColor, boolean married) {
 			this.name = name;
@@ -93,7 +95,8 @@ public class PojoSerializerSnapshotMigrationTest extends TypeSerializerSnapshotM
 	public static class TestPojoSubclass extends TestPojo {
 		public String githubId;
 
-		public TestPojoSubclass() {}
+		public TestPojoSubclass() {
+		}
 
 		public TestPojoSubclass(int id, String name, int age, String githubId) {
 			super(id, name, age);

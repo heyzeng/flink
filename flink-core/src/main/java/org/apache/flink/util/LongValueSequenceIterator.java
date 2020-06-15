@@ -33,13 +33,19 @@ public class LongValueSequenceIterator extends SplittableIterator<LongValue> {
 
 	private static final long serialVersionUID = 1L;
 
-	/** The last number returned by the iterator. */
+	/**
+	 * The last number returned by the iterator.
+	 */
 	private final long to;
 
-	/** The next number to be returned. */
+	/**
+	 * The next number to be returned.
+	 */
 	private long current;
 
-	/** The next value to be returned. */
+	/**
+	 * The next value to be returned.
+	 */
 	private LongValue currentValue = new LongValue();
 
 	/**
@@ -47,7 +53,7 @@ public class LongValueSequenceIterator extends SplittableIterator<LongValue> {
 	 * Both boundaries of the interval are inclusive.
 	 *
 	 * @param from The first number returned by the iterator.
-	 * @param to The last number returned by the iterator.
+	 * @param to   The last number returned by the iterator.
 	 */
 	public LongValueSequenceIterator(long from, long to) {
 		if (from > to) {
@@ -62,8 +68,8 @@ public class LongValueSequenceIterator extends SplittableIterator<LongValue> {
 	/**
 	 * Internal constructor to allow for empty iterators.
 	 *
-	 * @param from The first number returned by the iterator.
-	 * @param to The last number returned by the iterator.
+	 * @param from   The first number returned by the iterator.
+	 * @param to     The last number returned by the iterator.
 	 * @param unused A dummy parameter to disambiguate the constructor.
 	 */
 	private LongValueSequenceIterator(long from, long to, boolean unused) {
@@ -106,7 +112,7 @@ public class LongValueSequenceIterator extends SplittableIterator<LongValue> {
 		}
 
 		if (numPartitions == 1) {
-			return new LongValueSequenceIterator[] { new LongValueSequenceIterator(current, to) };
+			return new LongValueSequenceIterator[]{new LongValueSequenceIterator(current, to)};
 		}
 
 		// here, numPartitions >= 2 !!!
@@ -115,8 +121,7 @@ public class LongValueSequenceIterator extends SplittableIterator<LongValue> {
 
 		if (to - current + 1 >= 0) {
 			elementsPerSplit = (to - current + 1) / numPartitions;
-		}
-		else {
+		} else {
 			// long overflow of the range.
 			// we compute based on half the distance, to prevent the overflow.
 			// in most cases it holds that: current < 0 and to > 0, except for: to == 0 and current == Long.MIN_VALUE
@@ -166,14 +171,13 @@ public class LongValueSequenceIterator extends SplittableIterator<LongValue> {
 			}
 
 			return iters;
-		}
-		else {
+		} else {
 			// this can only be the case when there are two partitions
 			if (numPartitions != 2) {
 				throw new RuntimeException("Bug in splitting logic.");
 			}
 
-			return new LongValueSequenceIterator[] {
+			return new LongValueSequenceIterator[]{
 				new LongValueSequenceIterator(current, current + elementsPerSplit),
 				new LongValueSequenceIterator(current + elementsPerSplit, to)
 			};
@@ -184,8 +188,7 @@ public class LongValueSequenceIterator extends SplittableIterator<LongValue> {
 	public int getMaximumNumberOfSplits() {
 		if (to >= Integer.MAX_VALUE || current <= Integer.MIN_VALUE || to - current + 1 >= Integer.MAX_VALUE) {
 			return Integer.MAX_VALUE;
-		}
-		else {
+		} else {
 			return (int) (to - current + 1);
 		}
 	}

@@ -39,39 +39,53 @@ import java.util.Arrays;
 public abstract class CompositeSerializer<T> extends TypeSerializer<T> {
 	private static final long serialVersionUID = 1L;
 
-	/** Serializers for fields which constitute T. */
+	/**
+	 * Serializers for fields which constitute T.
+	 */
 	protected final TypeSerializer<Object>[] fieldSerializers;
 
 	final PrecomputedParameters precomputed;
 
-	/** Can be used for user facing constructor. */
+	/**
+	 * Can be used for user facing constructor.
+	 */
 	@SuppressWarnings("unchecked")
-	protected CompositeSerializer(boolean immutableTargetType, TypeSerializer<?> ... fieldSerializers) {
+	protected CompositeSerializer(boolean immutableTargetType, TypeSerializer<?>... fieldSerializers) {
 		this(
 			PrecomputedParameters.precompute(immutableTargetType, (TypeSerializer<Object>[]) fieldSerializers),
 			fieldSerializers);
 	}
 
-	/** Can be used in createSerializerInstance for internal operations. */
+	/**
+	 * Can be used in createSerializerInstance for internal operations.
+	 */
 	@SuppressWarnings("unchecked")
-	protected CompositeSerializer(PrecomputedParameters precomputed, TypeSerializer<?> ... fieldSerializers) {
+	protected CompositeSerializer(PrecomputedParameters precomputed, TypeSerializer<?>... fieldSerializers) {
 		this.fieldSerializers = (TypeSerializer<Object>[]) fieldSerializers;
 		this.precomputed = precomputed;
 	}
 
-	/** Create new instance from its fields.  */
-	public abstract T createInstance(@Nonnull Object ... values);
+	/**
+	 * Create new instance from its fields.
+	 */
+	public abstract T createInstance(@Nonnull Object... values);
 
-	/** Modify field of existing instance. Supported only by mutable types. */
+	/**
+	 * Modify field of existing instance. Supported only by mutable types.
+	 */
 	protected abstract void setField(@Nonnull T value, int index, Object fieldValue);
 
-	/** Get field of existing instance. */
+	/**
+	 * Get field of existing instance.
+	 */
 	protected abstract Object getField(@Nonnull T value, int index);
 
-	/** Factory for concrete serializer. */
+	/**
+	 * Factory for concrete serializer.
+	 */
 	protected abstract CompositeSerializer<T> createSerializerInstance(
 		PrecomputedParameters precomputed,
-		TypeSerializer<?> ... originalSerializers);
+		TypeSerializer<?>... originalSerializers);
 
 	@Override
 	public CompositeSerializer<T> duplicate() {
@@ -193,20 +207,30 @@ public abstract class CompositeSerializer<T> extends TypeSerializer<T> {
 			&& Arrays.equals(fieldSerializers, other.fieldSerializers);
 	}
 
-	/** This class holds composite serializer parameters which can be precomputed in advanced for better performance. */
+	/**
+	 * This class holds composite serializer parameters which can be precomputed in advanced for better performance.
+	 */
 	protected static class PrecomputedParameters implements Serializable {
 		private static final long serialVersionUID = 1L;
 
-		/** Whether target type is immutable. */
+		/**
+		 * Whether target type is immutable.
+		 */
 		final boolean immutableTargetType;
 
-		/** Whether target type and its fields are immutable. */
+		/**
+		 * Whether target type and its fields are immutable.
+		 */
 		final boolean immutable;
 
-		/** Byte length of target object in serialized form. */
+		/**
+		 * Byte length of target object in serialized form.
+		 */
 		private final int length;
 
-		/** Whether any field serializer is stateful. */
+		/**
+		 * Whether any field serializer is stateful.
+		 */
 		final boolean stateful;
 
 		private PrecomputedParameters(boolean immutableTargetType, boolean immutable, int length, boolean stateful) {
@@ -244,14 +268,16 @@ public abstract class CompositeSerializer<T> extends TypeSerializer<T> {
 	 * Snapshot field serializers of composite type.
 	 *
 	 * @deprecated this snapshot class is no longer in use by any serializers, and is only
-	 *             kept around for backwards compatibility. All subclass serializers should
-	 *             have their own serializer snapshot classes.
+	 * kept around for backwards compatibility. All subclass serializers should
+	 * have their own serializer snapshot classes.
 	 */
 	@Deprecated
 	public static class ConfigSnapshot extends CompositeTypeSerializerConfigSnapshot {
 		private static final int VERSION = 0;
 
-		/** This empty nullary constructor is required for deserializing the configuration. */
+		/**
+		 * This empty nullary constructor is required for deserializing the configuration.
+		 */
 		@SuppressWarnings("unused")
 		public ConfigSnapshot() {
 		}

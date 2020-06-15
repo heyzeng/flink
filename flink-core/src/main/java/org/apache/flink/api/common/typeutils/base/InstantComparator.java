@@ -30,7 +30,7 @@ import java.time.Instant;
  * Comparator for comparing Java Instant.
  */
 @Internal
-public final class InstantComparator extends BasicTypeComparator<Instant>{
+public final class InstantComparator extends BasicTypeComparator<Instant> {
 
 	private static final long serialVersionUID = 1L;
 	private static final long SECONDS_MIN_VALUE = Instant.MIN.getEpochSecond();
@@ -88,7 +88,7 @@ public final class InstantComparator extends BasicTypeComparator<Instant>{
 				}
 			} else {
 				final int nanos = record.getNano();
-				for (int i = 0; i < numBytes;  i++) {
+				for (int i = 0; i < numBytes; i++) {
 					target.put(offset + i, (byte) (nanos >>> ((3 - i) << 3)));
 				}
 			}

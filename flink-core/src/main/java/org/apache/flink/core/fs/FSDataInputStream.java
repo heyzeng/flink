@@ -37,8 +37,7 @@ public abstract class FSDataInputStream extends InputStream {
 	 * Seek to the given offset from the start of the file. The next read() will be from that location.
 	 * Can't seek past the end of the stream.
 	 *
-	 * @param desired
-	 *        the desired offset
+	 * @param desired the desired offset
 	 * @throws IOException Thrown if an error occurred while seeking inside the input stream.
 	 */
 	public abstract void seek(long desired) throws IOException;

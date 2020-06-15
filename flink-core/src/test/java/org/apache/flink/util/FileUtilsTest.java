@@ -147,8 +147,7 @@ public class FileUtilsTest extends TestLogger {
 			assumeTrue(cannotDeleteChild.setWritable(false));
 
 			FileUtils.deleteDirectoryQuietly(cannotDeleteParent);
-		}
-		finally {
+		} finally {
 			//noinspection ResultOfMethodCallIgnored
 			cannotDeleteParent.setWritable(true);
 			//noinspection ResultOfMethodCallIgnored
@@ -176,11 +175,9 @@ public class FileUtilsTest extends TestLogger {
 
 			FileUtils.deleteDirectory(cannotDeleteParent);
 			fail("this should fail with an exception");
-		}
-		catch (AccessDeniedException ignored) {
+		} catch (AccessDeniedException ignored) {
 			// this is expected
-		}
-		finally {
+		} finally {
 			//noinspection ResultOfMethodCallIgnored
 			cannotDeleteParent.setWritable(true);
 			//noinspection ResultOfMethodCallIgnored
@@ -197,8 +194,7 @@ public class FileUtilsTest extends TestLogger {
 		try {
 			FileUtils.deleteDirectory(file);
 			fail("this should fail with an exception");
-		}
-		catch (IOException ignored) {
+		} catch (IOException ignored) {
 			// this is what we expect
 		}
 	}
@@ -384,6 +380,7 @@ public class FileUtilsTest extends TestLogger {
 
 	/**
 	 * Generate some files in the directory {@code dir}.
+	 *
 	 * @param dir the directory where the files are generated
 	 * @return The list of generated files
 	 * @throws IOException if I/O error occurs while generating the files
@@ -409,6 +406,7 @@ public class FileUtilsTest extends TestLogger {
 
 	/**
 	 * Generate some directories in a original directory based on the {@code compressDir}.
+	 *
 	 * @param compressDir the path of the directory where the test directories are generated
 	 * @throws IOException if I/O error occurs while generating the directories
 	 */
@@ -459,10 +457,8 @@ public class FileUtilsTest extends TestLogger {
 	 * Generates a random content file.
 	 *
 	 * @param outputFile the path of the output file
-	 * @param length the size of content to generate
-	 *
+	 * @param length     the size of content to generate
 	 * @return MD5 of the output file
-	 *
 	 * @throws IOException
 	 * @throws NoSuchAlgorithmException
 	 */

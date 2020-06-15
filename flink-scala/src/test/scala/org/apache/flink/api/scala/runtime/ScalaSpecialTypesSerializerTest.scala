@@ -105,7 +105,7 @@ class ScalaSpecialTypesSerializerTest {
 
   @Test
   def testIntArray(): Unit = {
-    val testData = Array(Array(1,3,3,7), Array(4,7))
+    val testData = Array(Array(1, 3, 3, 7), Array(4, 7))
     runTests(testData)
   }
 
@@ -123,11 +123,11 @@ class ScalaSpecialTypesSerializerTest {
 
   @Test
   def testSortedSet(): Unit = {
-    val testData = Array(SortedSet(1,2,3), SortedSet(2,3))
+    val testData = Array(SortedSet(1, 2, 3), SortedSet(2, 3))
     runTests(testData)
   }
 
-  private final def runTests[T : TypeInformation](instances: Array[T]) {
+  private final def runTests[T: TypeInformation](instances: Array[T]) {
     try {
       val typeInfo = implicitly[TypeInformation[T]]
       val serializer = typeInfo.createSerializer(new ExecutionConfig)
@@ -165,9 +165,9 @@ object ScalaSpecialTypesSerializerTestInstance {
   val compareTraversable: CustomEqualityChecker =
     new CustomEqualityChecker {
       override def check(
-          o1: AnyRef,
-          o2: AnyRef,
-          checker: DeeplyEqualsChecker): Boolean = {
+                          o1: AnyRef,
+                          o2: AnyRef,
+                          checker: DeeplyEqualsChecker): Boolean = {
         val s1 = o1.asInstanceOf[TraversableOnce[_]].toIterator
         val s2 = o2.asInstanceOf[TraversableOnce[_]].toIterator
 
@@ -185,9 +185,9 @@ object ScalaSpecialTypesSerializerTestInstance {
   val compareFailure: CustomEqualityChecker =
     new CustomEqualityChecker {
       override def check(
-          o1: AnyRef,
-          o2: AnyRef,
-          checker: DeeplyEqualsChecker): Boolean = {
+                          o1: AnyRef,
+                          o2: AnyRef,
+                          checker: DeeplyEqualsChecker): Boolean = {
         o1.asInstanceOf[Failure[_]].exception.getMessage
           .equals(o2.asInstanceOf[Failure[_]].exception.getMessage)
       }
@@ -195,10 +195,10 @@ object ScalaSpecialTypesSerializerTestInstance {
 }
 
 class ScalaSpecialTypesSerializerTestInstance[T](
-    serializer: TypeSerializer[T],
-    typeClass: Class[T],
-    length: Int,
-    testData: Array[T])
+                                                  serializer: TypeSerializer[T],
+                                                  typeClass: Class[T],
+                                                  length: Int,
+                                                  testData: Array[T])
   extends SerializerTestInstance[T](
     new DeeplyEqualsChecker()
       .withCustomCheck(ScalaSpecialTypesSerializerTestInstance.isTraversable,

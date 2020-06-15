@@ -67,8 +67,7 @@ public final class ClassRelocator {
 		final ByteClassLoader renamingClassLoader = new ByteClassLoader(remapping.getRoot().getClassLoader(), newClasses);
 		try (ThreadContextClassLoader ignored = new ThreadContextClassLoader(renamingClassLoader)) {
 			return renamingClassLoader.loadClass(remapping.getRootNewName());
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			throw new RuntimeException(e);
 		}
 	}
@@ -168,8 +167,7 @@ public final class ClassRelocator {
 			InputStream in = providerClass.getClassLoader().getResourceAsStream(classAsPath);
 			try {
 				return new ClassReader(in);
-			}
-			catch (IOException e) {
+			} catch (IOException e) {
 				throw new RuntimeException(e);
 			}
 		}

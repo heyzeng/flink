@@ -27,7 +27,7 @@ public class NumericTypeInfoTest extends TypeInformationTestBase<NumericTypeInfo
 
 	@Override
 	protected NumericTypeInfo<?>[] getTestData() {
-		return new NumericTypeInfo<?>[] {
+		return new NumericTypeInfo<?>[]{
 			(NumericTypeInfo<?>) BasicTypeInfo.BYTE_TYPE_INFO,
 			(NumericTypeInfo<?>) BasicTypeInfo.SHORT_TYPE_INFO,
 			(NumericTypeInfo<?>) BasicTypeInfo.INT_TYPE_INFO,

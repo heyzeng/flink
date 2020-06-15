@@ -18,7 +18,8 @@ specific language governing permissions and limitations
 under the License.
 -->
 
-<svg width="1000px" height="350px" viewBox="0 0 1000 350" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" style="background: #FFFFFF;">
+<svg width="1000px" height="350px" viewBox="0 0 1000 350" version="1.1" xmlns="http://www.w3.org/2000/svg"
+     xmlns:xlink="http://www.w3.org/1999/xlink" style="background: #FFFFFF;">
     <!-- Generator: Sketch 48.2 (47327) - http://www.bohemiancoding.com/sketch -->
     <title>Session Window Join</title>
     <desc>Created with Sketch.</desc>
@@ -29,7 +30,8 @@ under the License.
     <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
         <g id="Session-Window-Join">
             <path d="M58.5,196.5 L941.5,196.5" id="Line" stroke="#979797" stroke-linecap="square"></path>
-            <path id="Line-decoration-1" d="M941.5,196.5 L930.7,193.5 L930.7,199.5 L941.5,196.5 Z" stroke="#979797" stroke-linecap="square"></path>
+            <path id="Line-decoration-1" d="M941.5,196.5 L930.7,193.5 L930.7,199.5 L941.5,196.5 Z" stroke="#979797"
+                  stroke-linecap="square"></path>
             <text id="time" font-family="Roboto-Regular, Roboto" font-size="16" font-weight="normal" fill="#34323B">
                 <tspan x="926" y="227">time</tspan>
             </text>
@@ -104,17 +106,22 @@ under the License.
                 <use fill="#D8D8D8" fill-rule="evenodd" xlink:href="#path-2"></use>
                 <rect stroke="#979797" stroke-width="1" x="701.5" y="52.5" width="36" height="112"></rect>
             </g>
-            <text id="GAP" transform="translate(406.000000, 108.500000) rotate(-90.000000) translate(-406.000000, -108.500000) " font-family="AndaleMono, Andale Mono" font-size="18" font-weight="normal" fill="#000000">
+            <text id="GAP"
+                  transform="translate(406.000000, 108.500000) rotate(-90.000000) translate(-406.000000, -108.500000) "
+                  font-family="AndaleMono, Andale Mono" font-size="18" font-weight="normal" fill="#000000">
                 <tspan x="389.5" y="114.5">GAP</tspan>
             </text>
-            <text id="GAP" transform="translate(719.000000, 108.500000) rotate(-90.000000) translate(-719.000000, -108.500000) " font-family="AndaleMono, Andale Mono" font-size="18" font-weight="normal" fill="#000000">
+            <text id="GAP"
+                  transform="translate(719.000000, 108.500000) rotate(-90.000000) translate(-719.000000, -108.500000) "
+                  font-family="AndaleMono, Andale Mono" font-size="18" font-weight="normal" fill="#000000">
                 <tspan x="702.5" y="114.5">GAP</tspan>
             </text>
             <text id="1,0-2,0" font-family="AndaleMono, Andale Mono" font-size="20" font-weight="normal" fill="#34323B">
                 <tspan x="227" y="234">1,0</tspan>
                 <tspan x="227" y="256">2,0</tspan>
             </text>
-            <text id="5,4-5,5-6,4-6,5" font-family="AndaleMono, Andale Mono" font-size="20" font-weight="normal" fill="#34323B">
+            <text id="5,4-5,5-6,4-6,5" font-family="AndaleMono, Andale Mono" font-size="20" font-weight="normal"
+                  fill="#34323B">
                 <tspan x="545" y="230">5,4</tspan>
                 <tspan x="545" y="252">5,5</tspan>
                 <tspan x="545" y="274">6,4</tspan>

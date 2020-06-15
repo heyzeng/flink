@@ -43,8 +43,8 @@ public class RuntimeUDFContext extends AbstractRuntimeUDFContext {
 	private final HashMap<String, List<?>> uninitializedBroadcastVars = new HashMap<>();
 
 	public RuntimeUDFContext(TaskInfo taskInfo, ClassLoader userCodeClassLoader, ExecutionConfig executionConfig,
-								Map<String, Future<Path>> cpTasks, Map<String, Accumulator<?, ?>> accumulators,
-								MetricGroup metrics) {
+							 Map<String, Future<Path>> cpTasks, Map<String, Accumulator<?, ?>> accumulators,
+							 MetricGroup metrics) {
 		super(taskInfo, userCodeClassLoader, executionConfig, accumulators, cpTasks, metrics);
 	}
 
@@ -62,19 +62,16 @@ public class RuntimeUDFContext extends AbstractRuntimeUDFContext {
 		if (o != null) {
 			if (o instanceof List) {
 				return (List<RT>) o;
-			}
-			else {
+			} else {
 				throw new IllegalStateException("The broadcast variable with name '" + name +
-						"' is not a List. A different call must have requested this variable with a BroadcastVariableInitializer.");
+					"' is not a List. A different call must have requested this variable with a BroadcastVariableInitializer.");
 			}
-		}
-		else {
+		} else {
 			List<?> uninitialized = this.uninitializedBroadcastVars.remove(name);
 			if (uninitialized != null) {
 				this.initializedBroadcastVars.put(name, uninitialized);
 				return (List<RT>) uninitialized;
-			}
-			else {
+			} else {
 				throw new IllegalArgumentException("The broadcast variable with name '" + name + "' has not been set.");
 			}
 		}
@@ -88,15 +85,13 @@ public class RuntimeUDFContext extends AbstractRuntimeUDFContext {
 		Object o = this.initializedBroadcastVars.get(name);
 		if (o != null) {
 			return (C) o;
-		}
-		else {
+		} else {
 			List<T> uninitialized = (List<T>) this.uninitializedBroadcastVars.remove(name);
 			if (uninitialized != null) {
 				C result = initializer.initializeBroadcastVariable(uninitialized);
 				this.initializedBroadcastVars.put(name, result);
 				return result;
-			}
-			else {
+			} else {
 				throw new IllegalArgumentException("The broadcast variable with name '" + name + "' has not been set.");
 			}
 		}

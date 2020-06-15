@@ -47,11 +47,11 @@ public class SerializerTestInstance<T> extends SerializerTestBase<T> {
 
 	@SafeVarargs
 	public SerializerTestInstance(
-			DeeplyEqualsChecker checker,
-			TypeSerializer<T> serializer,
-			Class<T> typeClass,
-			int length,
-			T... testData) {
+		DeeplyEqualsChecker checker,
+		TypeSerializer<T> serializer,
+		Class<T> typeClass,
+		int length,
+		T... testData) {
 		super(checker);
 		this.serializer = serializer;
 		this.typeClass = typeClass;

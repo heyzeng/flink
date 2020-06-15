@@ -44,9 +44,9 @@ class EnumValueSerializerUpgradeTest extends TestLogger with JUnitSuiteLike {
 
   val enumA =
     s"""
-      |object $enumName extends Enumeration {
-      |  val A, B, C = Value
-      |}
+       |object $enumName extends Enumeration {
+       |  val A, B, C = Value
+       |}
     """.stripMargin
 
   val enumB =
@@ -80,40 +80,40 @@ class EnumValueSerializerUpgradeTest extends TestLogger with JUnitSuiteLike {
     """.stripMargin
 
   /**
-    * Check that identical enums don't require migration
-    */
+   * Check that identical enums don't require migration
+   */
   @Test
   def checkIdenticalEnums(): Unit = {
     assertTrue(checkCompatibility(enumA, enumA).isCompatibleAsIs)
   }
 
   /**
-    * Check that appending fields to the enum does not require migration
-    */
+   * Check that appending fields to the enum does not require migration
+   */
   @Test
   def checkAppendedField(): Unit = {
     assertTrue(checkCompatibility(enumA, enumB).isCompatibleAsIs)
   }
 
   /**
-    * Check that removing enum fields makes the snapshot incompatible.
-    */
+   * Check that removing enum fields makes the snapshot incompatible.
+   */
   @Test
   def checkRemovedField(): Unit = {
     assertTrue(checkCompatibility(enumA, enumC).isIncompatible)
   }
 
   /**
-    * Check that changing the enum field order makes the snapshot incompatible.
-    */
+   * Check that changing the enum field order makes the snapshot incompatible.
+   */
   @Test
   def checkDifferentFieldOrder(): Unit = {
     assertTrue(checkCompatibility(enumA, enumD).isIncompatible)
   }
 
   /**
-    * Check that changing the enum ids causes a migration
-    */
+   * Check that changing the enum ids causes a migration
+   */
   @Test
   def checkDifferentIds(): Unit = {
     assertTrue(
@@ -122,7 +122,7 @@ class EnumValueSerializerUpgradeTest extends TestLogger with JUnitSuiteLike {
   }
 
   def checkCompatibility(enumSourceA: String, enumSourceB: String)
-    : TypeSerializerSchemaCompatibility[Enumeration#Value] = {
+  : TypeSerializerSchemaCompatibility[Enumeration#Value] = {
     import EnumValueSerializerUpgradeTest._
 
     val classLoader = compileAndLoadEnum(tempFolder.newFolder(), s"$enumName.scala", enumSourceA)
@@ -141,7 +141,7 @@ class EnumValueSerializerUpgradeTest extends TestLogger with JUnitSuiteLike {
     baos.close()
 
     val bais = new ByteArrayInputStream(baos.toByteArray)
-    val input=  new DataInputViewStreamWrapper(bais)
+    val input = new DataInputViewStreamWrapper(bais)
 
     val classLoader2 = compileAndLoadEnum(tempFolder.newFolder(), s"$enumName.scala", enumSourceB)
 

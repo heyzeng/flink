@@ -22,37 +22,37 @@ package org.apache.flink.types.parser;
 
 public class UnquotedStringParserTest extends ParserTestBase<String> {
 
-    @Override
-    public String[] getValidTestValues() {
-        return new String[] {
-                "abcdefgh", "i", "jklmno", "\"abc\"defgh\"", "\"i\"", "Hello9"
-        };
-    }
+	@Override
+	public String[] getValidTestValues() {
+		return new String[]{
+			"abcdefgh", "i", "jklmno", "\"abc\"defgh\"", "\"i\"", "Hello9"
+		};
+	}
 
-    @Override
-    public String[] getValidTestResults() {
-        return new String[] {
-                "abcdefgh", "i", "jklmno", "\"abc\"defgh\"", "\"i\"", "Hello9"
-        };
-    }
+	@Override
+	public String[] getValidTestResults() {
+		return new String[]{
+			"abcdefgh", "i", "jklmno", "\"abc\"defgh\"", "\"i\"", "Hello9"
+		};
+	}
 
 	@Override
 	public boolean allowsEmptyField() {
 		return true;
 	}
 
-    @Override
-    public String[] getInvalidTestValues() {
-        return new String[] { };
-    }
+	@Override
+	public String[] getInvalidTestValues() {
+		return new String[]{};
+	}
 
-    @Override
-    public FieldParser<String> getParser() {
-        return new StringParser();
-    }
+	@Override
+	public FieldParser<String> getParser() {
+		return new StringParser();
+	}
 
-    @Override
-    public Class<String> getTypeClass() {
-        return String.class;
-    }
+	@Override
+	public Class<String> getTypeClass() {
+		return String.class;
+	}
 }

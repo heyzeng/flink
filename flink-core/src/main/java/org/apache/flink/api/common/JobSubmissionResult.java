@@ -44,6 +44,7 @@ public class JobSubmissionResult {
 	/**
 	 * Checks if this JobSubmissionResult is also a JobExecutionResult.
 	 * See {@code getJobExecutionResult} to retrieve the JobExecutionResult.
+	 *
 	 * @return True if this is a JobExecutionResult, false otherwise
 	 */
 	public boolean isJobExecutionResult() {
@@ -52,6 +53,7 @@ public class JobSubmissionResult {
 
 	/**
 	 * Returns the JobExecutionResult if available.
+	 *
 	 * @return The JobExecutionResult
 	 * @throws ClassCastException if this is not a JobExecutionResult
 	 */

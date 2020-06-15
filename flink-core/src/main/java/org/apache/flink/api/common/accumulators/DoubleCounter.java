@@ -30,7 +30,8 @@ public class DoubleCounter implements SimpleAccumulator<Double> {
 
 	private double localValue = 0;
 
-	public DoubleCounter() {}
+	public DoubleCounter() {
+	}
 
 	public DoubleCounter(double value) {
 		this.localValue = value;
@@ -74,7 +75,7 @@ public class DoubleCounter implements SimpleAccumulator<Double> {
 	//  Primitive Specializations
 	// ------------------------------------------------------------------------
 
-	public void add(double value){
+	public void add(double value) {
 		localValue += value;
 	}
 

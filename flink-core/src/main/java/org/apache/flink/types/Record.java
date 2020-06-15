@@ -55,54 +55,55 @@ import java.nio.ByteOrder;
 @Public
 public final class Record implements Value, CopyableValue<Record> {
 	private static final long serialVersionUID = 1L;
-	
-	private static final int NULL_INDICATOR_OFFSET = Integer.MIN_VALUE;			// value marking a field as null
-	
-	private static final int MODIFIED_INDICATOR_OFFSET = Integer.MIN_VALUE + 1;	// value marking field as modified
-	
-	private static final int DEFAULT_FIELD_LEN_ESTIMATE = 8;					// length estimate for bin array
-	
+
+	private static final int NULL_INDICATOR_OFFSET = Integer.MIN_VALUE;            // value marking a field as null
+
+	private static final int MODIFIED_INDICATOR_OFFSET = Integer.MIN_VALUE + 1;    // value marking field as modified
+
+	private static final int DEFAULT_FIELD_LEN_ESTIMATE = 8;                    // length estimate for bin array
+
 	// --------------------------------------------------------------------------------------------
-	
-	private final InternalDeSerializer serializer = new InternalDeSerializer();	// DataInput and DataOutput abstraction
-	
-	private byte[] binaryData;			// the buffer containing the binary representation
-	
-	private byte[] switchBuffer;		// the buffer containing the binary representation
-	
-	private int[] offsets;				// the offsets to the binary representations of the fields
-	
-	private int[] lengths;				// the lengths of the fields
-	
-	private Value[] readFields;			// the cache for objects into which the binary representations are read
-	
-	private Value[] writeFields;		// the cache for objects into which the binary representations are read
-	
-	private int binaryLen;				// the length of the contents in the binary buffer that is valid
-	
-	private int numFields;				// the number of fields in the record
-	
-	private int firstModifiedPos;		// position of the first modification (since (de)serialization)
-	
+
+	private final InternalDeSerializer serializer = new InternalDeSerializer();    // DataInput and DataOutput abstraction
+
+	private byte[] binaryData;            // the buffer containing the binary representation
+
+	private byte[] switchBuffer;        // the buffer containing the binary representation
+
+	private int[] offsets;                // the offsets to the binary representations of the fields
+
+	private int[] lengths;                // the lengths of the fields
+
+	private Value[] readFields;            // the cache for objects into which the binary representations are read
+
+	private Value[] writeFields;        // the cache for objects into which the binary representations are read
+
+	private int binaryLen;                // the length of the contents in the binary buffer that is valid
+
+	private int numFields;                // the number of fields in the record
+
+	private int firstModifiedPos;        // position of the first modification (since (de)serialization)
+
 	// --------------------------------------------------------------------------------------------
-	
+
 	/**
 	 * Required nullary constructor for instantiation by serialization logic.
 	 */
-	public Record() {}
-	
+	public Record() {
+	}
+
 	/**
 	 * Creates a new record containing only a single field, which is the given value.
-	 * 
+	 *
 	 * @param value The value for the single field of the record.
 	 */
 	public Record(Value value) {
 		setField(0, value);
 	}
-	
+
 	/**
 	 * Creates a new record containing exactly two fields, which are the given values.
-	 * 
+	 *
 	 * @param val1 The value for the first field.
 	 * @param val2 The value for the second field.
 	 */
@@ -111,10 +112,10 @@ public final class Record implements Value, CopyableValue<Record> {
 		setField(0, val1);
 		setField(1, val2);
 	}
-	
+
 	/**
 	 * Creates a new record, containing the given number of fields. The fields are initially all nulls.
-	 *  
+	 *
 	 * @param numFields The number of fields for the record.
 	 */
 	public Record(int numFields) {
@@ -124,34 +125,33 @@ public final class Record implements Value, CopyableValue<Record> {
 	// --------------------------------------------------------------------------------------------
 	//                             Basic Accessors
 	// --------------------------------------------------------------------------------------------
-	
+
 	/**
 	 * Gets the number of fields currently in the record. This also includes null fields.
-	 *  
+	 *
 	 * @return The number of fields in the record.
 	 */
 	public int getNumFields() {
 		return this.numFields;
 	}
-	
+
 	/**
 	 * Sets the number of fields in the record. If the new number of fields is longer than the current number of
 	 * fields, then null fields are appended. If the new number of fields is smaller than the current number of
 	 * fields, then the last fields are truncated.
-	 * 
+	 *
 	 * @param numFields The new number of fields.
 	 */
 	public void setNumFields(final int numFields) {
 		final int oldNumFields = this.numFields;
-		// check whether we increase or decrease the fields 
+		// check whether we increase or decrease the fields
 		if (numFields > oldNumFields) {
 			makeSpace(numFields);
 			for (int i = oldNumFields; i < numFields; i++) {
 				this.offsets[i] = NULL_INDICATOR_OFFSET;
 			}
 			markModified(oldNumFields);
-		}
-		else {
+		} else {
 			// decrease the number of fields
 			// we do not remove the values from the cache, as the objects (if they are there) will most likely
 			// be reused when the record is re-filled
@@ -159,10 +159,10 @@ public final class Record implements Value, CopyableValue<Record> {
 		}
 		this.numFields = numFields;
 	}
-	
+
 	/**
 	 * Reserves space for at least the given number of fields in the internal arrays.
-	 * 
+	 *
 	 * @param numFields The number of fields to reserve space for.
 	 */
 	public void makeSpace(int numFields) {
@@ -170,51 +170,46 @@ public final class Record implements Value, CopyableValue<Record> {
 		// increase the number of fields in the arrays
 		if (this.offsets == null) {
 			this.offsets = new int[numFields];
-		}
-		else if (this.offsets.length < numFields) {
+		} else if (this.offsets.length < numFields) {
 			int[] newOffs = new int[Math.max(numFields + 1, oldNumFields << 1)];
 			System.arraycopy(this.offsets, 0, newOffs, 0, oldNumFields);
 			this.offsets = newOffs;
 		}
-		
+
 		if (this.lengths == null) {
 			this.lengths = new int[numFields];
-		}
-		else if (this.lengths.length < numFields) {
+		} else if (this.lengths.length < numFields) {
 			int[] newLens = new int[Math.max(numFields + 1, oldNumFields << 1)];
 			System.arraycopy(this.lengths, 0, newLens, 0, oldNumFields);
 			this.lengths = newLens;
 		}
-		
+
 		if (this.readFields == null) {
 			this.readFields = new Value[numFields];
-		}
-		else if (this.readFields.length < numFields) {
+		} else if (this.readFields.length < numFields) {
 			Value[] newFields = new Value[Math.max(numFields + 1, oldNumFields << 1)];
 			System.arraycopy(this.readFields, 0, newFields, 0, oldNumFields);
 			this.readFields = newFields;
 		}
-		
+
 		if (this.writeFields == null) {
 			this.writeFields = new Value[numFields];
-		}
-		else if (this.writeFields.length < numFields) {
+		} else if (this.writeFields.length < numFields) {
 			Value[] newFields = new Value[Math.max(numFields + 1, oldNumFields << 1)];
 			System.arraycopy(this.writeFields, 0, newFields, 0, oldNumFields);
 			this.writeFields = newFields;
 		}
 	}
-	
+
 	/**
 	 * Gets the field at the given position from the record. This method checks internally, if this instance of
 	 * the record has previously returned a value for this field. If so, it reuses the object, if not, it
 	 * creates one from the supplied class.
-	 *  
-	 * @param <T> The type of the field.
-	 * 
+	 *
+	 * @param <T>      The type of the field.
 	 * @param fieldNum The logical position of the field.
-	 * @param type The type of the field as a class. This class is used to instantiate a value object, if none had
-	 *             previously been instantiated. 
+	 * @param type     The type of the field as a class. This class is used to instantiate a value object, if none had
+	 *                 previously been instantiated.
 	 * @return The field at the given position, or null, if the field was null.
 	 * @throws IndexOutOfBoundsException Thrown, if the field number is negative or larger or equal to the number of
 	 *                                   fields in this record.
@@ -225,45 +220,42 @@ public final class Record implements Value, CopyableValue<Record> {
 		if (fieldNum < 0 || fieldNum >= this.numFields) {
 			throw new IndexOutOfBoundsException(fieldNum + " for range [0.." + (this.numFields - 1) + "]");
 		}
-		
+
 		// get offset and check for null
 		final int offset = this.offsets[fieldNum];
 		if (offset == NULL_INDICATOR_OFFSET) {
 			return null;
-		}		
-		else if (offset == MODIFIED_INDICATOR_OFFSET) {
+		} else if (offset == MODIFIED_INDICATOR_OFFSET) {
 			// value that has been set is new or modified
 			return (T) this.writeFields[fieldNum];
 		}
-		
+
 		final int limit = offset + this.lengths[fieldNum];
-		
+
 		// get an instance, either from the instance cache or create a new one
-		final Value oldField = this.readFields[fieldNum]; 
+		final Value oldField = this.readFields[fieldNum];
 		final T field;
 		if (oldField != null && oldField.getClass() == type) {
 			field = (T) oldField;
-		}
-		else {
+		} else {
 			field = InstantiationUtil.instantiate(type, Value.class);
 			this.readFields[fieldNum] = field;
 		}
-		
+
 		// deserialize
 		deserialize(field, offset, limit, fieldNum);
 		return field;
 	}
-	
+
 	/**
 	 * Gets the field at the given position. The method tries to deserialize the fields into the given target value.
 	 * If the fields has been changed since the last (de)serialization, or is null, them the target value is left
-	 * unchanged and the changed value (or null) is returned.   
+	 * unchanged and the changed value (or null) is returned.
 	 * <p>
 	 * In all cases, the returned value contains the correct data (or is correctly null).
-	 * 
+	 *
 	 * @param fieldNum The position of the field.
-	 * @param target The value to deserialize the field into.
-	 * 
+	 * @param target   The value to deserialize the field into.
 	 * @return The value with the contents of the requested field, or null, if the field is null.
 	 */
 	@SuppressWarnings("unchecked")
@@ -275,29 +267,28 @@ public final class Record implements Value, CopyableValue<Record> {
 		if (target == null) {
 			throw new NullPointerException("The target object may not be null");
 		}
-		
+
 		// get offset and check for null
 		final int offset = this.offsets[fieldNum];
 		if (offset == NULL_INDICATOR_OFFSET) {
 			return null;
-		}
-		else if (offset == MODIFIED_INDICATOR_OFFSET) {
+		} else if (offset == MODIFIED_INDICATOR_OFFSET) {
 			// value that has been set is new or modified
 			// bring the binary in sync so that the deserialization gives the correct result
 			return (T) this.writeFields[fieldNum];
 		}
-		
+
 		final int limit = offset + this.lengths[fieldNum];
 		deserialize(target, offset, limit, fieldNum);
 		return target;
 	}
-	
+
 	/**
 	 * Gets the field at the given position. If the field at that position is null, then this method leaves
 	 * the target field unchanged and returns false.
-	 * 
+	 *
 	 * @param fieldNum The position of the field.
-	 * @param target The value to deserialize the field into.
+	 * @param target   The value to deserialize the field into.
 	 * @return True, if the field was deserialized properly, false, if the field was null.
 	 */
 	public boolean getFieldInto(int fieldNum, Value target) {
@@ -305,33 +296,31 @@ public final class Record implements Value, CopyableValue<Record> {
 		if (fieldNum < 0 || fieldNum >= this.numFields) {
 			throw new IndexOutOfBoundsException();
 		}
-		
+
 		// get offset and check for null
 		int offset = this.offsets[fieldNum];
 		if (offset == NULL_INDICATOR_OFFSET) {
 			return false;
-		}
-		else if (offset == MODIFIED_INDICATOR_OFFSET) {
+		} else if (offset == MODIFIED_INDICATOR_OFFSET) {
 			// value that has been set is new or modified
 			// bring the binary in sync so that the deserialization gives the correct result
 			updateBinaryRepresenation();
 			offset = this.offsets[fieldNum];
 		}
-		
+
 		final int limit = offset + this.lengths[fieldNum];
 		deserialize(target, offset, limit, fieldNum);
 		return true;
 	}
-	
+
 	/**
-	 * Gets the fields at the given positions into an array. 
+	 * Gets the fields at the given positions into an array.
 	 * If at any position a field is null, then this method returns false.
 	 * All fields that have been successfully read until the failing read are correctly contained in the record.
 	 * All other fields are not set.
-	 * 
+	 *
 	 * @param positions The positions of the fields to get.
-	 * @param targets The values into which the content of the fields is put.
-	 * 
+	 * @param targets   The values into which the content of the fields is put.
 	 * @return True if all fields were successfully read, false if some read failed.
 	 */
 	public boolean getFieldsInto(int[] positions, Value[] targets) {
@@ -342,16 +331,15 @@ public final class Record implements Value, CopyableValue<Record> {
 		}
 		return true;
 	}
-	
+
 	/**
-	 * Gets the fields at the given positions into an array. 
+	 * Gets the fields at the given positions into an array.
 	 * If at any position a field is null, then this method throws a @link NullKeyFieldException.
 	 * All fields that have been successfully read until the failing read are correctly contained in the record.
 	 * All other fields are not set.
-	 * 
+	 *
 	 * @param positions The positions of the fields to get.
-	 * @param targets The values into which the content of the fields is put.
-	 * 
+	 * @param targets   The values into which the content of the fields is put.
 	 * @throws NullKeyFieldException in case of a failing field read.
 	 */
 	public void getFieldsIntoCheckingNull(int[] positions, Value[] targets) {
@@ -361,16 +349,16 @@ public final class Record implements Value, CopyableValue<Record> {
 			}
 		}
 	}
-	
+
 	/**
 	 * Deserializes the given object from the binary string, starting at the given position.
-	 * If the deserialization asks for more that <code>limit - offset</code> bytes, than 
+	 * If the deserialization asks for more that <code>limit - offset</code> bytes, than
 	 * an exception is thrown.
-	 * 
-	 * @param <T> The generic type of the value to be deserialized.
+	 *
+	 * @param <T>    The generic type of the value to be deserialized.
 	 * @param target The object to deserialize the data into.
 	 * @param offset The offset in the binary string.
-	 * @param limit The limit in the binary string.
+	 * @param limit  The limit in the binary string.
 	 */
 	private <T extends Value> void deserialize(T target, int offset, int limit, int fieldNumber) {
 		final InternalDeSerializer serializer = this.serializer;
@@ -379,39 +367,38 @@ public final class Record implements Value, CopyableValue<Record> {
 		serializer.end = limit;
 		try {
 			target.read(serializer);
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			throw new DeserializationException("Error reading field " + fieldNumber + " as " + target.getClass().getName(), e);
 		}
 	}
-	
+
 	/**
 	 * Sets the field at the given position to the given value. If the field position is larger or equal than
 	 * the current number of fields in the record, than the record is expanded to host as many columns.
 	 * <p>
 	 * The value is kept as a reference in the record until the binary representation is synchronized. Until that
-	 * point, all modifications to the value's object will change the value inside the record. 
+	 * point, all modifications to the value's object will change the value inside the record.
 	 * <p>
-	 * The binary representation is synchronized the latest when the record is emitted. It may be triggered 
+	 * The binary representation is synchronized the latest when the record is emitted. It may be triggered
 	 * manually at an earlier point, but it is generally not necessary and advisable. Because the synchronization
-	 * triggers the serialization on all modified values, it may be an expensive operation. 
-	 * 
+	 * triggers the serialization on all modified values, it may be an expensive operation.
+	 *
 	 * @param fieldNum The position of the field, starting at zero.
-	 * @param value The new value.
+	 * @param value    The new value.
 	 */
 	public void setField(int fieldNum, Value value) {
 		// range check
 		if (fieldNum < 0) {
 			throw new IndexOutOfBoundsException();
 		}
-		
+
 		// if the field number is beyond the size, the tuple is expanded
 		if (fieldNum >= this.numFields) {
 			setNumFields(fieldNum + 1);
 		}
 		internallySetField(fieldNum, value);
 	}
-	
+
 	/**
 	 * @param value
 	 */
@@ -420,42 +407,41 @@ public final class Record implements Value, CopyableValue<Record> {
 		setNumFields(num + 1);
 		internallySetField(num, value);
 	}
-	
+
 	private void internallySetField(int fieldNum, Value value) {
 		// check if we modify an existing field
 		this.offsets[fieldNum] = value != null ? MODIFIED_INDICATOR_OFFSET : NULL_INDICATOR_OFFSET;
 		this.writeFields[fieldNum] = value;
 		markModified(fieldNum);
 	}
-	
+
 	private void markModified(int field) {
 		if (this.firstModifiedPos > field) {
 			this.firstModifiedPos = field;
 		}
 	}
-	
+
 	private boolean isModified() {
 		return this.firstModifiedPos != Integer.MAX_VALUE;
 	}
-	
+
 	/**
-	 * Removes the field at the given position. 
+	 * Removes the field at the given position.
 	 * <p>
 	 * This method should be used carefully. Be aware that as the field is actually removed from the record, the
 	 * total number of fields is modified, and all fields to the right of the field removed shift one position to
 	 * the left.
-	 * 
+	 *
 	 * @param fieldNum The position of the field to be removed, starting at zero.
 	 * @throws IndexOutOfBoundsException Thrown, when the position is not between 0 (inclusive) and the
 	 *                                   number of fields (exclusive).
 	 */
-	public void removeField(int fieldNum)
-	{
+	public void removeField(int fieldNum) {
 		// range check
 		if (fieldNum < 0 || fieldNum >= this.numFields) {
 			throw new IndexOutOfBoundsException();
 		}
-		int lastIndex = this.numFields - 1;		
+		int lastIndex = this.numFields - 1;
 
 		if (fieldNum < lastIndex) {
 			int len = lastIndex - fieldNum;
@@ -471,21 +457,21 @@ public final class Record implements Value, CopyableValue<Record> {
 
 		setNumFields(lastIndex);
 	}
-	
+
 	public final boolean isNull(int fieldNum) {
 		// range check
 		if (fieldNum < 0 || fieldNum >= this.numFields) {
 			throw new IndexOutOfBoundsException();
 		}
-		
+
 		// get offset and check for null
 		final int offset = this.offsets[fieldNum];
 		return offset == NULL_INDICATOR_OFFSET;
 	}
-	
+
 	/**
 	 * Sets the field at the given position to <code>null</code>.
-	 * 
+	 *
 	 * @param field The field index.
 	 * @throws IndexOutOfBoundsException Thrown, when the position is not between 0 (inclusive) and the
 	 *                                   number of fields (exclusive).
@@ -498,11 +484,11 @@ public final class Record implements Value, CopyableValue<Record> {
 
 		internallySetField(field, null);
 	}
-	
+
 	/**
 	 * Sets the fields to <code>null</code> using the given bit mask.
 	 * The bits correspond to the individual columns: <code>(1 == nullify, 0 == keep)</code>.
-	 * 
+	 *
 	 * @param mask Bit mask, where the i-th least significant bit represents the i-th field in the record.
 	 */
 	public void setNull(long mask) {
@@ -516,12 +502,12 @@ public final class Record implements Value, CopyableValue<Record> {
 	/**
 	 * Sets the fields to <code>null</code> using the given bit mask.
 	 * The bits correspond to the individual columns: <code>(1 == nullify, 0 == keep)</code>.
-	 * 
+	 *
 	 * @param mask Bit mask, where the i-th least significant bit in the n-th bit mask represents the
 	 *             <code>(n*64) + i</code>-th field in the record.
 	 */
 	public void setNull(long[] mask) {
-		for (int maskPos = 0, i = 0; i < this.numFields;) {
+		for (int maskPos = 0, i = 0; i < this.numFields; ) {
 			long currMask = mask[maskPos];
 			for (int k = 64; i < this.numFields && k > 0; --k, i++, currMask >>>= 1) {
 				if ((currMask & 0x1) != 0) {
@@ -530,7 +516,7 @@ public final class Record implements Value, CopyableValue<Record> {
 			}
 		}
 	}
-	
+
 	/**
 	 * Clears the record. After this operation, the record will have zero fields.
 	 */
@@ -540,11 +526,11 @@ public final class Record implements Value, CopyableValue<Record> {
 			this.firstModifiedPos = 0;
 		}
 	}
-	
+
 	public void concatenate(Record record) {
 		throw new UnsupportedOperationException();
 	}
-	
+
 	/**
 	 * Unions the other record's fields with this records fields. After the method invocation with record
 	 * <code>B</code> as the parameter, this record <code>A</code> will contain at field <code>i</code>:
@@ -557,24 +543,24 @@ public final class Record implements Value, CopyableValue<Record> {
 	 * It is not necessary that both records have the same number of fields. This record will have the number of
 	 * fields of the larger of the two records. Naturally, if both <code>A</code> and <code>B</code> have field
 	 * <code>i</code> set to <i>null</i>, this record will have <i>null</i> at that position.
-	 * 
+	 *
 	 * @param other The records whose fields to union with this record's fields.
 	 */
 	public void unionFields(Record other) {
 		final int minFields = Math.min(this.numFields, other.numFields);
 		final int maxFields = Math.max(this.numFields, other.numFields);
-		
+
 		final int[] offsets = this.offsets.length >= maxFields ? this.offsets : new int[maxFields];
 		final int[] lengths = this.lengths.length >= maxFields ? this.lengths : new int[maxFields];
-		
+
 		if (!(this.isModified() || other.isModified())) {
 			// handle the special (but common) case where both records have a valid binary representation differently
 			// allocate space for the switchBuffer first
 			final int estimatedLength = this.binaryLen + other.binaryLen;
-			this.serializer.memory = (this.switchBuffer != null && this.switchBuffer.length >= estimatedLength) ? 
-										this.switchBuffer : new byte[estimatedLength];
+			this.serializer.memory = (this.switchBuffer != null && this.switchBuffer.length >= estimatedLength) ?
+				this.switchBuffer : new byte[estimatedLength];
 			this.serializer.position = 0;
-			
+
 			try {
 				// common loop for both records
 				for (int i = 0; i < minFields; i++) {
@@ -596,21 +582,21 @@ public final class Record implements Value, CopyableValue<Record> {
 						lengths[i] = this.lengths[i];
 					}
 				}
-				
+
 				// add the trailing fields from one record
 				if (minFields != maxFields) {
 					final Record sourceForRemainder = this.numFields > minFields ? this : other;
 					int begin = -1;
 					int end = -1;
 					int offsetDelta = 0;
-					
+
 					// go through the offsets, find the non-null fields to account for the remaining data
 					for (int k = minFields; k < maxFields; k++) {
 						final int off = sourceForRemainder.offsets[k];
 						if (off == NULL_INDICATOR_OFFSET) {
 							offsets[k] = NULL_INDICATOR_OFFSET;
 						} else {
-							end = sourceForRemainder.offsets[k]+sourceForRemainder.lengths[k];
+							end = sourceForRemainder.offsets[k] + sourceForRemainder.lengths[k];
 							if (begin == -1) {
 								// first non null column in the remainder
 								begin = sourceForRemainder.offsets[k];
@@ -619,31 +605,30 @@ public final class Record implements Value, CopyableValue<Record> {
 							offsets[k] = sourceForRemainder.offsets[k] + offsetDelta;
 						}
 					}
-					
+
 					// copy the remaining fields directly as binary
 					if (begin != -1) {
-						this.serializer.write(sourceForRemainder.binaryData, begin, 
-								end - begin);
+						this.serializer.write(sourceForRemainder.binaryData, begin,
+							end - begin);
 					}
-					
+
 					// the lengths can be copied directly
 					if (lengths != sourceForRemainder.lengths) {
 						System.arraycopy(sourceForRemainder.lengths, minFields, lengths, minFields, maxFields - minFields);
 					}
 				}
 			} catch (Exception ioex) {
-				throw new RuntimeException("Error creating field union of record data" + 
-							ioex.getMessage() == null ? "." : ": " + ioex.getMessage(), ioex);
+				throw new RuntimeException("Error creating field union of record data" +
+					ioex.getMessage() == null ? "." : ": " + ioex.getMessage(), ioex);
 			}
-		}
-		else {
+		} else {
 			// the general case, where at least one of the two records has a binary representation that is not in sync.
-			final int estimatedLength = (this.binaryLen > 0 ? this.binaryLen : this.numFields * DEFAULT_FIELD_LEN_ESTIMATE) + 
-										(other.binaryLen > 0 ? other.binaryLen : other.numFields * DEFAULT_FIELD_LEN_ESTIMATE);
-			this.serializer.memory = (this.switchBuffer != null && this.switchBuffer.length >= estimatedLength) ? 
-										this.switchBuffer : new byte[estimatedLength];
+			final int estimatedLength = (this.binaryLen > 0 ? this.binaryLen : this.numFields * DEFAULT_FIELD_LEN_ESTIMATE) +
+				(other.binaryLen > 0 ? other.binaryLen : other.numFields * DEFAULT_FIELD_LEN_ESTIMATE);
+			this.serializer.memory = (this.switchBuffer != null && this.switchBuffer.length >= estimatedLength) ?
+				this.switchBuffer : new byte[estimatedLength];
 			this.serializer.position = 0;
-			
+
 			try {
 				// common loop for both records
 				for (int i = 0; i < minFields; i++) {
@@ -675,11 +660,11 @@ public final class Record implements Value, CopyableValue<Record> {
 						lengths[i] = this.lengths[i];
 					}
 				}
-				
+
 				// add the trailing fields from one record
 				if (minFields != maxFields) {
 					final Record sourceForRemainder = this.numFields > minFields ? this : other;
-					
+
 					// go through the offsets, find the non-null fields
 					for (int k = minFields; k < maxFields; k++) {
 						final int off = sourceForRemainder.offsets[k];
@@ -700,40 +685,40 @@ public final class Record implements Value, CopyableValue<Record> {
 					}
 				}
 			} catch (Exception ioex) {
-				throw new RuntimeException("Error creating field union of record data" + 
-							ioex.getMessage() == null ? "." : ": " + ioex.getMessage(), ioex);
+				throw new RuntimeException("Error creating field union of record data" +
+					ioex.getMessage() == null ? "." : ": " + ioex.getMessage(), ioex);
 			}
 		}
-		
+
 		serializeHeader(this.serializer, offsets, maxFields);
-		
+
 		// set the fields
 		this.switchBuffer = this.binaryData;
 		this.binaryData = serializer.memory;
 		this.binaryLen = serializer.position;
-		
+
 		this.numFields = maxFields;
 		this.offsets = offsets;
 		this.lengths = lengths;
-		
+
 		this.firstModifiedPos = Integer.MAX_VALUE;
-		
+
 		// make sure that the object arrays reflect the size as well
 		if (this.readFields == null || this.readFields.length < maxFields) {
 			final Value[] na = new Value[maxFields];
 			System.arraycopy(this.readFields, 0, na, 0, this.readFields.length);
 			this.readFields = na;
 		}
-		this.writeFields = (this.writeFields == null || this.writeFields.length < maxFields) ? 
-																new Value[maxFields] : this.writeFields;
+		this.writeFields = (this.writeFields == null || this.writeFields.length < maxFields) ?
+			new Value[maxFields] : this.writeFields;
 	}
-	
+
 	/**
 	 * @param target
 	 */
 	public void copyTo(Record target) {
 		updateBinaryRepresenation();
-		
+
 		if (target.binaryData == null || target.binaryData.length < this.binaryLen) {
 			target.binaryData = new byte[this.binaryLen];
 		}
@@ -749,16 +734,16 @@ public final class Record implements Value, CopyableValue<Record> {
 		if (target.writeFields == null || target.writeFields.length < this.numFields) {
 			target.writeFields = new Value[this.numFields];
 		}
-		
+
 		System.arraycopy(this.binaryData, 0, target.binaryData, 0, this.binaryLen);
 		System.arraycopy(this.offsets, 0, target.offsets, 0, this.numFields);
 		System.arraycopy(this.lengths, 0, target.lengths, 0, this.numFields);
-		
+
 		target.binaryLen = this.binaryLen;
 		target.numFields = this.numFields;
 		target.firstModifiedPos = Integer.MAX_VALUE;
 	}
-	
+
 	@Override
 	public int getBinaryLength() {
 		return -1;
@@ -773,7 +758,7 @@ public final class Record implements Value, CopyableValue<Record> {
 	public void copy(DataInputView source, DataOutputView target) throws IOException {
 		int val = source.readUnsignedByte();
 		target.writeByte(val);
-		
+
 		if (val >= MAX_BIT) {
 			int shift = 7;
 			int curr;
@@ -786,45 +771,47 @@ public final class Record implements Value, CopyableValue<Record> {
 			target.writeByte(curr);
 			val |= curr << shift;
 		}
-		
+
 		target.write(source, val);
-	};
-	
+	}
+
+	;
+
 	/**
 	 * Creates an exact copy of this record.
-	 * 
-	 * @return An exact copy of this record. 
+	 *
+	 * @return An exact copy of this record.
 	 */
 	public Record createCopy() {
 		final Record rec = new Record();
 		copyTo(rec);
 		return rec;
 	}
-	
+
 	/**
 	 * Bin-copies fields from a source record to this record. The following caveats apply:
-	 * 
+	 * <p>
 	 * If the source field is in a modified state, no binary representation will exist yet.
 	 * In that case, this method is equivalent to {@code setField(..., source.getField(..., <class>))}.
-	 * In particular, if setValue is called on the source field Value instance, that change 
+	 * In particular, if setValue is called on the source field Value instance, that change
 	 * will propagate to this record.
-	 * 
-	 * If the source field has already been serialized, then the binary representation 
-	 * will be copied. Further modifications to the source field will not be observable 
-	 * via this record, but attempting to read the field from this record will cause it 
+	 * <p>
+	 * If the source field has already been serialized, then the binary representation
+	 * will be copied. Further modifications to the source field will not be observable
+	 * via this record, but attempting to read the field from this record will cause it
 	 * to be deserialized.
-	 * 
+	 * <p>
 	 * Finally, bin-copying a source field requires calling updateBinaryRepresentation
 	 * on this instance in order to reserve space in the binaryData array. If none
 	 * of the source fields are actually bin-copied, then updateBinaryRepresentation
-	 * won't be called. 
+	 * won't be called.
 	 *
 	 * @param source
 	 * @param sourcePositions
 	 * @param targetPositions
 	 */
 	public void copyFrom(final Record source, final int[] sourcePositions, final int[] targetPositions) {
-		
+
 		final int[] sourceOffsets = source.offsets;
 		final int[] sourceLengths = source.lengths;
 		final byte[] sourceBuffer = source.binaryData;
@@ -832,9 +819,9 @@ public final class Record implements Value, CopyableValue<Record> {
 
 		boolean anyFieldIsBinary = false;
 		int maxFieldNum = 0;
-		
+
 		for (int i = 0; i < sourcePositions.length; i++) {
-		
+
 			final int sourceFieldNum = sourcePositions[i];
 			final int sourceOffset = sourceOffsets[sourceFieldNum];
 			final int targetFieldNum = targetPositions[i];
@@ -850,31 +837,31 @@ public final class Record implements Value, CopyableValue<Record> {
 				anyFieldIsBinary = true;
 			}
 		}
-		
+
 		if (numFields < maxFieldNum + 1) {
 			setNumFields(maxFieldNum + 1);
 		}
-		
+
 		final int[] targetLengths = this.lengths;
 		final int[] targetOffsets = this.offsets;
-		
+
 		// reserve space in binaryData for the binary source fields
 		if (anyFieldIsBinary) {
-			
+
 			for (int i = 0; i < sourcePositions.length; i++) {
 				final int sourceFieldNum = sourcePositions[i];
 				final int sourceOffset = sourceOffsets[sourceFieldNum];
-				
+
 				if (sourceOffset != MODIFIED_INDICATOR_OFFSET && sourceOffset != NULL_INDICATOR_OFFSET) {
 					final int targetFieldNum = targetPositions[i];
 					targetLengths[targetFieldNum] = sourceLengths[sourceFieldNum];
 					internallySetField(targetFieldNum, RESERVE_SPACE);
 				}
 			}
-			
+
 			updateBinaryRepresenation();
 		}
-			
+
 		final byte[] targetBuffer = this.binaryData;
 
 		for (int i = 0; i < sourcePositions.length; i++) {
@@ -892,19 +879,18 @@ public final class Record implements Value, CopyableValue<Record> {
 			}
 		}
 	}
-	
+
 	// --------------------------------------------------------------------------------------------
-	
+
 	/**
 	 * Checks the values of this record and a given list of values at specified positions for equality.
 	 * The values of this record are deserialized and compared against the corresponding search value.
 	 * The position specify which values are compared.
-	 * The method returns true if the values on all positions are equal and false otherwise.  
-	 * 
-	 * @param positions The positions of the values to check for equality.
-	 * @param searchValues The values against which the values of this record are compared.
+	 * The method returns true if the values on all positions are equal and false otherwise.
+	 *
+	 * @param positions              The positions of the values to check for equality.
+	 * @param searchValues           The values against which the values of this record are compared.
 	 * @param deserializationHolders An array to hold the deserialized values of this record.
-	 * 
 	 * @return True if all the values on all positions are equal, false otherwise.
 	 */
 	public final boolean equalsFields(int[] positions, Value[] searchValues, Value[] deserializationHolders) {
@@ -916,9 +902,9 @@ public final class Record implements Value, CopyableValue<Record> {
 		}
 		return true;
 	}
-	
+
 	// --------------------------------------------------------------------------------------------
-	
+
 	/**
 	 * Updates the binary representation of the data, such that it reflects the state of the currently
 	 * stored fields. If the binary representation is already up to date, nothing happens. Otherwise,
@@ -931,18 +917,18 @@ public final class Record implements Value, CopyableValue<Record> {
 		if (firstModified == Integer.MAX_VALUE) {
 			return;
 		}
-		
+
 		final InternalDeSerializer serializer = this.serializer;
 		final int[] offsets = this.offsets;
 		final int numFields = this.numFields;
-		
-		serializer.memory = this.switchBuffer != null ? this.switchBuffer : 
-				(this.binaryLen > 0 ? new byte[this.binaryLen] : new byte[numFields * DEFAULT_FIELD_LEN_ESTIMATE + 1]);
+
+		serializer.memory = this.switchBuffer != null ? this.switchBuffer :
+			(this.binaryLen > 0 ? new byte[this.binaryLen] : new byte[numFields * DEFAULT_FIELD_LEN_ESTIMATE + 1]);
 		serializer.position = 0;
-		
+
 		if (numFields > 0) {
 			int offset = 0;
-			
+
 			// search backwards to find the latest preceding non-null field
 			if (firstModified > 0) {
 				for (int i = firstModified - 1; i >= 0; i--) {
@@ -952,7 +938,7 @@ public final class Record implements Value, CopyableValue<Record> {
 					}
 				}
 			}
-			
+
 			// we assume that changed and unchanged fields are interleaved and serialize into another array
 			try {
 				if (offset > 0) {
@@ -966,21 +952,21 @@ public final class Record implements Value, CopyableValue<Record> {
 					if (co == NULL_INDICATOR_OFFSET) {
 						continue;
 					}
-					
+
 					offsets[i] = offset;
 					if (co == MODIFIED_INDICATOR_OFFSET) {
-						
+
 						final Value writeField = this.writeFields[i];
-						
+
 						if (writeField == RESERVE_SPACE) {
 							// RESERVE_SPACE is a placeholder indicating lengths[i] bytes should be reserved
 							final int length = this.lengths[i];
-							
+
 							if (serializer.position >= serializer.memory.length - length - 1) {
 								serializer.resize(length);
 							}
 							serializer.position += length;
-							
+
 						} else {
 							// serialize modified fields
 							this.writeFields[i].write(serializer);
@@ -989,30 +975,29 @@ public final class Record implements Value, CopyableValue<Record> {
 						// bin-copy unmodified fields
 						serializer.write(this.binaryData, co, this.lengths[i]);
 					}
-					
+
 					this.lengths[i] = serializer.position - offset;
 					offset = serializer.position;
 				}
-			}
-			catch (Exception e) {
-				throw new RuntimeException("Error in data type serialization: " + e.getMessage(), e); 
+			} catch (Exception e) {
+				throw new RuntimeException("Error in data type serialization: " + e.getMessage(), e);
 			}
 		}
-		
+
 		serializeHeader(serializer, offsets, numFields);
-		
+
 		// set the fields
 		this.switchBuffer = this.binaryData;
 		this.binaryData = serializer.memory;
 		this.binaryLen = serializer.position;
 		this.firstModifiedPos = Integer.MAX_VALUE;
 	}
-	
+
 	private void serializeHeader(final InternalDeSerializer serializer, final int[] offsets, final int numFields) {
 		try {
 			if (numFields > 0) {
-				int slp = serializer.position;	// track the last position of the serializer
-				
+				int slp = serializer.position;    // track the last position of the serializer
+
 				// now, serialize the lengths, the sparsity mask and the number of fields
 				if (numFields <= 8) {
 					// efficient handling of common case with up to eight fields
@@ -1025,16 +1010,15 @@ public final class Record implements Value, CopyableValue<Record> {
 						}
 						mask <<= 1;
 					}
-	
+
 					if (offsets[0] != NULL_INDICATOR_OFFSET) {
-						mask |= 0x1;	// add the non-null bit to the mask
+						mask |= 0x1;    // add the non-null bit to the mask
 					} else {
 						// the first field is null, so some previous field was the first non-null field
 						serializer.position = slp;
 					}
 					serializer.writeByte(mask);
-				}
-				else {
+				} else {
 					// general case. offsets first (in backward order)
 					for (int i = numFields - 1; i > 0; i--) {
 						if (offsets[i] != NULL_INDICATOR_OFFSET) {
@@ -1045,13 +1029,13 @@ public final class Record implements Value, CopyableValue<Record> {
 					if (offsets[0] == NULL_INDICATOR_OFFSET) {
 						serializer.position = slp;
 					}
-					
+
 					// now the mask. we write it in chucks of 8 bit.
-					// the remainder %8 comes first 
+					// the remainder %8 comes first
 					int col = numFields - 1;
 					int mask = 0;
 					int i = numFields & 0x7;
-					
+
 					if (i > 0) {
 						for (; i > 0; i--, col--) {
 							mask <<= 1;
@@ -1059,7 +1043,7 @@ public final class Record implements Value, CopyableValue<Record> {
 						}
 						serializer.writeByte(mask);
 					}
-					
+
 					// now the eight-bit chunks
 					for (i = numFields >>> 3; i > 0; i--) {
 						mask = 0;
@@ -1072,21 +1056,20 @@ public final class Record implements Value, CopyableValue<Record> {
 				}
 			}
 			serializer.writeValLenIntBackwards(numFields);
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			throw new RuntimeException("Error serializing Record header: " + e.getMessage(), e);
 		}
 	}
-	
+
 	// --------------------------------------------------------------------------------------------
 	//                             Serialization
 	// --------------------------------------------------------------------------------------------
-	
+
 	@Override
 	public void write(DataOutputView out) throws IOException {
 		// make sure everything is in a valid binary representation
 		updateBinaryRepresenation();
-		
+
 		// write the length first, variably encoded, then the contents of the binary array
 		writeVarLengthInt(out, this.binaryLen);
 		out.write(this.binaryData, 0, this.binaryLen);
@@ -1096,19 +1079,19 @@ public final class Record implements Value, CopyableValue<Record> {
 	public void read(DataInputView in) throws IOException {
 		final int len = readVarLengthInt(in);
 		this.binaryLen = len;
-			
+
 		// ensure out byte array is large enough
 		byte[] data = this.binaryData;
 		if (data == null || data.length < len) {
 			data = new byte[len];
 			this.binaryData = data;
 		}
-		
+
 		// read the binary data
 		in.readFully(data, 0, len);
 		initFields(data, 0, len);
 	}
-	
+
 	private void initFields(final byte[] data, final int begin, final int len) {
 		try {
 			// read number of fields, variable length encoded reverse at the back
@@ -1125,7 +1108,7 @@ public final class Record implements Value, CopyableValue<Record> {
 				numFields |= curr << shift;
 			}
 			this.numFields = numFields;
-			
+
 			// ensure that all arrays are there and of sufficient size
 			if (this.offsets == null || this.offsets.length < numFields) {
 				this.offsets = new int[numFields];
@@ -1139,13 +1122,13 @@ public final class Record implements Value, CopyableValue<Record> {
 			if (this.writeFields == null || this.writeFields.length < numFields) {
 				this.writeFields = new Value[numFields];
 			}
-			
+
 			final int beginMasks = pos; // beginning of bitmap for null fields
 			final int fieldsBy8 = (numFields >>> 3) + ((numFields & 0x7) == 0 ? 0 : 1);
-			
-			pos = beginMasks - fieldsBy8; 
+
+			pos = beginMasks - fieldsBy8;
 			int lastNonNullField = -1;
-			
+
 			for (int field = 0, chunk = 0; chunk < fieldsBy8; chunk++) {
 				int mask = data[beginMasks - chunk];
 				for (int i = 0; i < 8 && field < numFields; i++, field++) {
@@ -1166,13 +1149,11 @@ public final class Record implements Value, CopyableValue<Record> {
 							}
 							this.offsets[field] = start + begin;
 							this.lengths[lastNonNullField] = start + begin - this.offsets[lastNonNullField];
-						}
-						else {
+						} else {
 							this.offsets[field] = begin;
 						}
 						lastNonNullField = field;
-					}
-					else {
+					} else {
 						// field is null
 						this.offsets[field] = NULL_INDICATOR_OFFSET;
 					}
@@ -1183,11 +1164,10 @@ public final class Record implements Value, CopyableValue<Record> {
 				this.lengths[lastNonNullField] = pos - this.offsets[lastNonNullField] + 1;
 			}
 			this.firstModifiedPos = Integer.MAX_VALUE;
-		}
-		catch (ArrayIndexOutOfBoundsException aioobex) {
+		} catch (ArrayIndexOutOfBoundsException aioobex) {
 			StringBuilder bld = new StringBuilder(len * 4 + 64);
 			bld.append("Record deserialization error: Record byte signature: ");
-			
+
 			for (int i = 0; i < len; i++) {
 				int num = data[i + begin] & 0xff;
 				bld.append(num);
@@ -1198,19 +1178,18 @@ public final class Record implements Value, CopyableValue<Record> {
 			throw new RuntimeException(bld.toString(), aioobex);
 		}
 	}
-	
+
 	/**
 	 * Writes this record to the given output view. This method is similar to {@link org.apache.flink.core.io.IOReadableWritable#write(org.apache.flink.core.memory.DataOutputView)}, but
 	 * it returns the number of bytes written.
-	 * 
+	 *
 	 * @param target The view to write the record to.
 	 * @return The number of bytes written.
-	 * 
 	 * @throws IOException Thrown, if an error occurred in the view during writing.
 	 */
 	public long serialize(DataOutputView target) throws IOException {
 		updateBinaryRepresenation();
-		
+
 		long bytesForLen = 1;
 		int len = this.binaryLen;
 		while (len >= MAX_BIT) {
@@ -1223,7 +1202,7 @@ public final class Record implements Value, CopyableValue<Record> {
 
 		return bytesForLen + this.binaryLen;
 	}
-	
+
 	/**
 	 * @param source
 	 * @throws IOException
@@ -1231,11 +1210,11 @@ public final class Record implements Value, CopyableValue<Record> {
 	public void deserialize(DataInputView source) throws IOException {
 		read(source);
 	}
-	
+
 	// --------------------------------------------------------------------------------------------
 	//                                     Utilities
 	// --------------------------------------------------------------------------------------------
-	
+
 	private static final void writeVarLengthInt(DataOutput out, int value) throws IOException {
 		while (value >= MAX_BIT) {
 			out.write(value | MAX_BIT);
@@ -1243,7 +1222,7 @@ public final class Record implements Value, CopyableValue<Record> {
 		}
 		out.write(value);
 	}
-	
+
 	private static final int readVarLengthInt(DataInput in) throws IOException {
 		// read first byte
 		int val = in.readUnsignedByte();
@@ -1259,14 +1238,14 @@ public final class Record implements Value, CopyableValue<Record> {
 		}
 		return val;
 	}
-	
+
 	private static final int MAX_BIT = 0x1 << 7;
-	
-	
+
+
 	// ------------------------------------------------------------------------
 	//                Utility class for internal (de)serialization
 	// ------------------------------------------------------------------------
-	
+
 	/**
 	 * A special Value instance that doesn't actually (de)serialize anything,
 	 * but instead indicates that space should be reserved in the buffer.
@@ -1282,24 +1261,24 @@ public final class Record implements Value, CopyableValue<Record> {
 		@Override
 		public void read(DataInputView in) throws IOException {
 			throw new UnsupportedOperationException();
-		}		
+		}
 	};
-	
+
 	/**
 	 * Internal interface class to provide serialization for the data types.
 	 */
 	private static final class InternalDeSerializer implements DataInputView, DataOutputView, Serializable {
-		
+
 		private static final long serialVersionUID = 1L;
-		
+
 		private byte[] memory;
 		private int position;
 		private int end;
-		
+
 		// ----------------------------------------------------------------------------------------
 		//                               Data Input
 		// ----------------------------------------------------------------------------------------
-		
+
 		@Override
 		public boolean readBoolean() throws IOException {
 			if (this.position < this.end) {
@@ -1368,7 +1347,7 @@ public final class Record implements Value, CopyableValue<Record> {
 				if (LITTLE_ENDIAN) {
 					value = Integer.reverseBytes(value);
 				}
-				
+
 				this.position += 4;
 				return value;
 			} else {
@@ -1447,47 +1426,47 @@ public final class Record implements Value, CopyableValue<Record> {
 			while (count < utflen) {
 				c = (int) bytearr[count] & 0xff;
 				switch (c >> 4) {
-				case 0:
-				case 1:
-				case 2:
-				case 3:
-				case 4:
-				case 5:
-				case 6:
-				case 7:
-					/* 0xxxxxxx */
-					count++;
-					chararr[chararr_count++] = (char) c;
-					break;
-				case 12:
-				case 13:
-					/* 110x xxxx 10xx xxxx */
-					count += 2;
-					if (count > utflen) {
-						throw new UTFDataFormatException("malformed input: partial character at end");
-					}
-					char2 = (int) bytearr[count - 1];
-					if ((char2 & 0xC0) != 0x80) {
+					case 0:
+					case 1:
+					case 2:
+					case 3:
+					case 4:
+					case 5:
+					case 6:
+					case 7:
+						/* 0xxxxxxx */
+						count++;
+						chararr[chararr_count++] = (char) c;
+						break;
+					case 12:
+					case 13:
+						/* 110x xxxx 10xx xxxx */
+						count += 2;
+						if (count > utflen) {
+							throw new UTFDataFormatException("malformed input: partial character at end");
+						}
+						char2 = (int) bytearr[count - 1];
+						if ((char2 & 0xC0) != 0x80) {
+							throw new UTFDataFormatException("malformed input around byte " + count);
+						}
+						chararr[chararr_count++] = (char) (((c & 0x1F) << 6) | (char2 & 0x3F));
+						break;
+					case 14:
+						/* 1110 xxxx 10xx xxxx 10xx xxxx */
+						count += 3;
+						if (count > utflen) {
+							throw new UTFDataFormatException("malformed input: partial character at end");
+						}
+						char2 = (int) bytearr[count - 2];
+						char3 = (int) bytearr[count - 1];
+						if (((char2 & 0xC0) != 0x80) || ((char3 & 0xC0) != 0x80)) {
+							throw new UTFDataFormatException("malformed input around byte " + (count - 1));
+						}
+						chararr[chararr_count++] = (char) (((c & 0x0F) << 12) | ((char2 & 0x3F) << 6) | ((char3 & 0x3F) << 0));
+						break;
+					default:
+						/* 10xx xxxx, 1111 xxxx */
 						throw new UTFDataFormatException("malformed input around byte " + count);
-					}
-					chararr[chararr_count++] = (char) (((c & 0x1F) << 6) | (char2 & 0x3F));
-					break;
-				case 14:
-					/* 1110 xxxx 10xx xxxx 10xx xxxx */
-					count += 3;
-					if (count > utflen) {
-						throw new UTFDataFormatException("malformed input: partial character at end");
-					}
-					char2 = (int) bytearr[count - 2];
-					char3 = (int) bytearr[count - 1];
-					if (((char2 & 0xC0) != 0x80) || ((char3 & 0xC0) != 0x80)) {
-						throw new UTFDataFormatException("malformed input around byte " + (count - 1));
-					}
-					chararr[chararr_count++] = (char) (((c & 0x0F) << 12) | ((char2 & 0x3F) << 6) | ((char3 & 0x3F) << 0));
-					break;
-				default:
-					/* 10xx xxxx, 1111 xxxx */
-					throw new UTFDataFormatException("malformed input around byte " + count);
 				}
 			}
 			// The number of chars produced may be less than utflen
@@ -1548,14 +1527,14 @@ public final class Record implements Value, CopyableValue<Record> {
 
 			if (b.length - off < len) {
 				throw new IndexOutOfBoundsException("Byte array does not provide enough space to store requested data" +
-						".");
+					".");
 			}
 
 			if (this.position >= this.end) {
 				return -1;
 			} else {
-				int toRead = Math.min(this.end-this.position, len);
-				System.arraycopy(this.memory,this.position,b,off,toRead);
+				int toRead = Math.min(this.end - this.position, len);
+				System.arraycopy(this.memory, this.position, b, off, toRead);
 				this.position += toRead;
 
 				return toRead;
@@ -1566,11 +1545,11 @@ public final class Record implements Value, CopyableValue<Record> {
 		public int read(byte[] b) throws IOException {
 			return read(b, 0, b.length);
 		}
-		
+
 		// ----------------------------------------------------------------------------------------
 		//                               Data Output
 		// ----------------------------------------------------------------------------------------
-		
+
 		@Override
 		public void write(int b) throws IOException {
 			if (this.position >= this.memory.length) {
@@ -1612,7 +1591,7 @@ public final class Record implements Value, CopyableValue<Record> {
 			if (this.position >= this.memory.length - sLen) {
 				resize(sLen);
 			}
-			
+
 			for (int i = 0; i < sLen; i++) {
 				writeByte(s.charAt(i));
 			}
@@ -1631,9 +1610,9 @@ public final class Record implements Value, CopyableValue<Record> {
 		@Override
 		public void writeChars(String s) throws IOException {
 			final int sLen = s.length();
-			if (this.position >= this.memory.length - 2*sLen) {
-				resize(2*sLen);
-			} 
+			if (this.position >= this.memory.length - 2 * sLen) {
+				resize(2 * sLen);
+			}
 			for (int i = 0; i < sLen; i++) {
 				writeChar(s.charAt(i));
 			}
@@ -1657,7 +1636,7 @@ public final class Record implements Value, CopyableValue<Record> {
 			}
 			if (LITTLE_ENDIAN) {
 				v = Integer.reverseBytes(v);
-			}			
+			}
 			UNSAFE.putInt(this.memory, BASE_OFFSET + this.position, v);
 			this.position += 4;
 		}
@@ -1707,7 +1686,7 @@ public final class Record implements Value, CopyableValue<Record> {
 			} else if (this.position > this.memory.length - utflen - 2) {
 				resize(utflen + 2);
 			}
-			
+
 			byte[] bytearr = this.memory;
 			int count = this.position;
 
@@ -1740,57 +1719,52 @@ public final class Record implements Value, CopyableValue<Record> {
 
 			this.position = count;
 		}
-		
+
 		private void writeValLenIntBackwards(int value) throws IOException {
 			if (this.position > this.memory.length - 4) {
 				resize(4);
 			}
-			
+
 			if (value <= 0x7f) {
 				this.memory[this.position++] = (byte) value;
-			}
-			else if (value <= 0x3fff) {
+			} else if (value <= 0x3fff) {
 				this.memory[this.position++] = (byte) (value >>> 7);
 				this.memory[this.position++] = (byte) (value | MAX_BIT);
-			}
-			else if (value <= 0x1fffff) {
+			} else if (value <= 0x1fffff) {
 				this.memory[this.position++] = (byte) (value >>> 14);
 				this.memory[this.position++] = (byte) ((value >>> 7) | MAX_BIT);
 				this.memory[this.position++] = (byte) (value | MAX_BIT);
-			}
-			else if (value <= 0xfffffff) {
-				this.memory[this.position++] = (byte) (  value >>> 21);
+			} else if (value <= 0xfffffff) {
+				this.memory[this.position++] = (byte) (value >>> 21);
 				this.memory[this.position++] = (byte) ((value >>> 14) | MAX_BIT);
-				this.memory[this.position++] = (byte) ((value >>>  7) | MAX_BIT);
-				this.memory[this.position++] = (byte) (value | MAX_BIT);				
-			}
-			else {
-				this.memory[this.position++] = (byte) ( value >>> 28);
+				this.memory[this.position++] = (byte) ((value >>> 7) | MAX_BIT);
+				this.memory[this.position++] = (byte) (value | MAX_BIT);
+			} else {
+				this.memory[this.position++] = (byte) (value >>> 28);
 				this.memory[this.position++] = (byte) ((value >>> 21) | MAX_BIT);
 				this.memory[this.position++] = (byte) ((value >>> 14) | MAX_BIT);
-				this.memory[this.position++] = (byte) ((value >>>  7) | MAX_BIT);
+				this.memory[this.position++] = (byte) ((value >>> 7) | MAX_BIT);
 				this.memory[this.position++] = (byte) (value | MAX_BIT);
 			}
 		}
-		
+
 		private void resize(int minCapacityAdd) throws IOException {
 			try {
 				final int newLen = Math.max(this.memory.length * 2, this.memory.length + minCapacityAdd);
 				final byte[] nb = new byte[newLen];
 				System.arraycopy(this.memory, 0, nb, 0, this.position);
 				this.memory = nb;
-			}
-			catch (NegativeArraySizeException nasex) {
+			} catch (NegativeArraySizeException nasex) {
 				throw new IOException("Serialization failed because the record length would exceed 2GB.");
 			}
 		}
-		
+
 		@SuppressWarnings("restriction")
 		private static final sun.misc.Unsafe UNSAFE = MemoryUtils.UNSAFE;
-		
+
 		@SuppressWarnings("restriction")
 		private static final long BASE_OFFSET = UNSAFE.arrayBaseOffset(byte[].class);
-		
+
 		private static final boolean LITTLE_ENDIAN = (MemoryUtils.NATIVE_BYTE_ORDER == ByteOrder.LITTLE_ENDIAN);
 
 		@Override
@@ -1808,7 +1782,7 @@ public final class Record implements Value, CopyableValue<Record> {
 				throw new IOException("Could not write " + numBytes + " bytes since the buffer is full.");
 			}
 
-			source.readFully(this.memory,this.position, numBytes);
+			source.readFully(this.memory, this.position, numBytes);
 			this.position += numBytes;
 		}
 	}

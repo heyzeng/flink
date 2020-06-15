@@ -31,38 +31,38 @@ import static org.apache.flink.util.Preconditions.checkNotNull;
  */
 @Internal
 public class FieldList extends FieldSet {
-	
+
 	public static final FieldList EMPTY_LIST = new FieldList();
-	
-	
+
+
 	public FieldList() {
 		super(Collections.<Integer>emptyList());
 	}
-	
+
 	public FieldList(int fieldId) {
 		super(Collections.singletonList(fieldId));
 	}
-	
+
 	public FieldList(Integer fieldId) {
 		super(Collections.singletonList(checkNotNull(fieldId, "The fields ID must not be null.")));
 	}
-	
+
 	public FieldList(int... columnIndexes) {
-		super (fromInts(columnIndexes));
+		super(fromInts(columnIndexes));
 	}
-	
+
 	private FieldList(List<Integer> fields) {
 		super(fields);
 	}
-	
+
 	// --------------------------------------------------------------------------------------------
-	
+
 	@Override
 	public FieldList addField(Integer fieldID) {
 		if (fieldID == null) {
 			throw new IllegalArgumentException("Field ID must not be null.");
 		}
-		
+
 		if (size() == 0) {
 			return new FieldList(fieldID);
 		} else {
@@ -86,42 +86,40 @@ public class FieldList extends FieldSet {
 			for (int i = 0; i < fieldIDs.length; i++) {
 				list.add(fieldIDs[i]);
 			}
-			
+
 			return new FieldList(Collections.unmodifiableList(list));
 		}
 	}
-	
+
 	@Override
 	public FieldList addFields(FieldSet set) {
 		if (set == null) {
 			throw new IllegalArgumentException("FieldSet to add must not be null.");
 		}
-		
+
 		if (set.size() == 0) {
 			return this;
-		}
-		else if (size() == 0 && set instanceof FieldList) {
+		} else if (size() == 0 && set instanceof FieldList) {
 			return (FieldList) set;
-		}
-		else {
+		} else {
 			ArrayList<Integer> list = new ArrayList<Integer>(size() + set.size());
 			list.addAll(this.collection);
 			list.addAll(set.collection);
 			return new FieldList(Collections.unmodifiableList(list));
 		}
 	}
-	
+
 	public Integer get(int pos) {
 		return get().get(pos);
 	}
-	
+
 	@Override
 	public FieldList toFieldList() {
 		return this;
 	}
 
 	// --------------------------------------------------------------------------------------------
-	
+
 	@Override
 	public boolean isValidSubset(FieldSet set) {
 		if (set instanceof FieldList) {
@@ -130,7 +128,7 @@ public class FieldList extends FieldSet {
 			return false;
 		}
 	}
-	
+
 	public boolean isValidSubset(FieldList list) {
 		if (list.size() > size()) {
 			return false;
@@ -146,12 +144,12 @@ public class FieldList extends FieldSet {
 		}
 		return true;
 	}
-	
+
 	public boolean isValidUnorderedPrefix(FieldSet set) {
 		if (set.size() > size()) {
 			return false;
 		}
-		
+
 		List<Integer> list = get();
 		for (int i = 0; i < set.size(); i++) {
 			if (!set.contains(list.get(i))) {
@@ -173,14 +171,14 @@ public class FieldList extends FieldSet {
 			return true;
 		}
 	}
-	
+
 	// --------------------------------------------------------------------------------------------
 
 	@Override
 	protected String getDescriptionPrefix() {
 		return "[";
 	}
-	
+
 	@Override
 	protected String getDescriptionSuffix() {
 		return "]";
@@ -189,7 +187,7 @@ public class FieldList extends FieldSet {
 	private List<Integer> get() {
 		return (List<Integer>) this.collection;
 	}
-	
+
 	private static final List<Integer> fromInts(int... ints) {
 		if (ints == null || ints.length == 0) {
 			return Collections.emptyList();

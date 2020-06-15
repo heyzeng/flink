@@ -50,7 +50,8 @@ public class MathUtilTest {
 		try {
 			MathUtils.log2floor(0);
 			fail();
-		} catch (ArithmeticException ignored) {}
+		} catch (ArithmeticException ignored) {
+		}
 	}
 
 	@Test

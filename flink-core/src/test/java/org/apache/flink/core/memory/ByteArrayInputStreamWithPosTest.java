@@ -33,7 +33,7 @@ public class ByteArrayInputStreamWithPosTest {
 	@Rule
 	public ExpectedException thrown = ExpectedException.none();
 
-	private final byte[] data = new byte[] {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9'};
+	private final byte[] data = new byte[]{'0', '1', '2', '3', '4', '5', '6', '7', '8', '9'};
 
 	private final ByteArrayInputStreamWithPos stream = new ByteArrayInputStreamWithPos(data);
 

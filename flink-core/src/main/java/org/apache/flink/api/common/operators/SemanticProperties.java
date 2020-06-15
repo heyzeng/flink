@@ -35,10 +35,9 @@ public interface SemanticProperties extends Serializable {
 	 * Returns the indexes of all target fields to which a source field has been
 	 * unmodified copied by a function.
 	 *
-	 * @param input The input id for the requested source field (0 for first input, 1 for second input)
+	 * @param input       The input id for the requested source field (0 for first input, 1 for second input)
 	 * @param sourceField The index of the field for which the target position index is requested.
 	 * @return A set containing the indexes of all target fields to which the source field has been unmodified copied.
-	 *
 	 */
 	public FieldSet getForwardingTargetFields(int input, int sourceField);
 
@@ -46,10 +45,10 @@ public interface SemanticProperties extends Serializable {
 	 * Returns the index of the source field on the given input from which the target field
 	 * has been unmodified copied by a function.
 	 *
-	 * @param input The input id for the requested source field (0 for first input, 1 for second input)
+	 * @param input       The input id for the requested source field (0 for first input, 1 for second input)
 	 * @param targetField The index of the target field to which the source field has been copied.
 	 * @return The index of the source field on the given index that was copied to the given target field.
-	 * 			-1 if the target field was not copied from any source field of the given input.
+	 * -1 if the target field was not copied from any source field of the given input.
 	 */
 	public int getForwardingSourceField(int input, int targetField);
 
@@ -72,7 +71,7 @@ public interface SemanticProperties extends Serializable {
 		}
 
 		public InvalidSemanticAnnotationException(String s, Throwable e) {
-			super(s,e);
+			super(s, e);
 		}
 	}
 

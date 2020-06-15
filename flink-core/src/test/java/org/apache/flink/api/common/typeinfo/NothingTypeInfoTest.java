@@ -27,7 +27,7 @@ public class NothingTypeInfoTest extends TypeInformationTestBase<NothingTypeInfo
 
 	@Override
 	protected NothingTypeInfo[] getTestData() {
-		return new NothingTypeInfo[] {
+		return new NothingTypeInfo[]{
 			new NothingTypeInfo()
 		};
 	}

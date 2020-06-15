@@ -23,7 +23,7 @@ import org.apache.flink.annotation.Internal;
 import org.apache.flink.api.common.typeinfo.TypeInformation;
 
 /**
- *  A class for holding information about a single input operator, such as input/output TypeInformation.
+ * A class for holding information about a single input operator, such as input/output TypeInformation.
  *
  * @param <IN1> Output type of first input operator
  * @param <IN2> Output type of second input operator

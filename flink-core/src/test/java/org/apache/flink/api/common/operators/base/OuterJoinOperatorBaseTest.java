@@ -124,32 +124,32 @@ public class OuterJoinOperatorBaseTest implements Serializable {
 
 	@Test
 	public void testFullOuterJoinBuildingCorrectCrossProducts() throws Exception {
-		final List<String> leftInput = Arrays.asList("foo", "foo", "foo", "bar","bar", "foobar", "foobar");
+		final List<String> leftInput = Arrays.asList("foo", "foo", "foo", "bar", "bar", "foobar", "foobar");
 		final List<String> rightInput = Arrays.asList("foo", "foo", "bar", "bar", "bar", "barfoo", "barfoo");
 		baseOperator.setOuterJoinType(OuterJoinOperatorBase.OuterJoinType.FULL);
 		List<String> expected = Arrays.asList("bar,bar", "bar,bar", "bar,bar", "bar,bar", "bar,bar", "bar,bar",
-				"null,barfoo", "null,barfoo", "foo,foo", "foo,foo", "foo,foo", "foo,foo", "foo,foo", "foo,foo",
-				"foobar,null", "foobar,null");
+			"null,barfoo", "null,barfoo", "foo,foo", "foo,foo", "foo,foo", "foo,foo", "foo,foo", "foo,foo",
+			"foobar,null", "foobar,null");
 		testOuterJoin(leftInput, rightInput, expected);
 	}
 
 	@Test
 	public void testLeftOuterJoin() throws Exception {
-		final List<String> leftInput = Arrays.asList("foo", "foo", "foo", "bar","bar", "foobar", "foobar");
+		final List<String> leftInput = Arrays.asList("foo", "foo", "foo", "bar", "bar", "foobar", "foobar");
 		final List<String> rightInput = Arrays.asList("foo", "foo", "bar", "bar", "bar", "barfoo", "barfoo");
 		baseOperator.setOuterJoinType(OuterJoinOperatorBase.OuterJoinType.LEFT);
 		List<String> expected = Arrays.asList("bar,bar", "bar,bar", "bar,bar", "bar,bar", "bar,bar", "bar,bar",
-				"foo,foo", "foo,foo", "foo,foo", "foo,foo", "foo,foo", "foo,foo", "foobar,null", "foobar,null");
+			"foo,foo", "foo,foo", "foo,foo", "foo,foo", "foo,foo", "foo,foo", "foobar,null", "foobar,null");
 		testOuterJoin(leftInput, rightInput, expected);
 	}
 
 	@Test
 	public void testRightOuterJoin() throws Exception {
-		final List<String> leftInput = Arrays.asList("foo", "foo", "foo", "bar","bar", "foobar", "foobar");
+		final List<String> leftInput = Arrays.asList("foo", "foo", "foo", "bar", "bar", "foobar", "foobar");
 		final List<String> rightInput = Arrays.asList("foo", "foo", "bar", "bar", "bar", "barfoo", "barfoo");
 		baseOperator.setOuterJoinType(OuterJoinOperatorBase.OuterJoinType.RIGHT);
 		List<String> expected = Arrays.asList("bar,bar", "bar,bar", "bar,bar", "bar,bar", "bar,bar", "bar,bar",
-				"null,barfoo", "null,barfoo", "foo,foo", "foo,foo", "foo,foo", "foo,foo", "foo,foo", "foo,foo");
+			"null,barfoo", "null,barfoo", "foo,foo", "foo,foo", "foo,foo", "foo,foo", "foo,foo", "foo,foo");
 		testOuterJoin(leftInput, rightInput, expected);
 	}
 
@@ -189,7 +189,7 @@ public class OuterJoinOperatorBaseTest implements Serializable {
 		}
 
 		@Override
-		public void close() throws Exception{
+		public void close() throws Exception {
 			closed.compareAndSet(false, true);
 		}
 

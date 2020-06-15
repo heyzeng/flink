@@ -100,7 +100,7 @@ public abstract class MaxAggregationFunction<T extends Comparable<T>> extends Ag
 	public static final class MaxAggregationFunctionFactory implements AggregationFunctionFactory {
 		private static final long serialVersionUID = 1L;
 
-		@SuppressWarnings({ "unchecked", "rawtypes" })
+		@SuppressWarnings({"unchecked", "rawtypes"})
 		@Override
 		public <T> AggregationFunction<T> createAggregationFunction(Class<T> type) {
 			if (Comparable.class.isAssignableFrom(type)) {

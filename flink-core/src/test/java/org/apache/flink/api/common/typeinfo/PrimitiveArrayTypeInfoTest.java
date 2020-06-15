@@ -27,7 +27,7 @@ public class PrimitiveArrayTypeInfoTest extends TypeInformationTestBase<Primitiv
 
 	@Override
 	protected PrimitiveArrayTypeInfo<?>[] getTestData() {
-		return new PrimitiveArrayTypeInfo<?>[] {
+		return new PrimitiveArrayTypeInfo<?>[]{
 			PrimitiveArrayTypeInfo.BOOLEAN_PRIMITIVE_ARRAY_TYPE_INFO,
 			PrimitiveArrayTypeInfo.BYTE_PRIMITIVE_ARRAY_TYPE_INFO,
 			PrimitiveArrayTypeInfo.SHORT_PRIMITIVE_ARRAY_TYPE_INFO,

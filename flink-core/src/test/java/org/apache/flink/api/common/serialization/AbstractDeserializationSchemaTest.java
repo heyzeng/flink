@@ -42,7 +42,8 @@ public class AbstractDeserializationSchemaTest {
 	@Test
 	public void testTypeExtractionTuple() {
 		TypeInformation<Tuple2<byte[], byte[]>> type = new TupleSchema().getProducedType();
-		TypeInformation<Tuple2<byte[], byte[]>> expected = TypeInformation.of(new TypeHint<Tuple2<byte[], byte[]>>(){});
+		TypeInformation<Tuple2<byte[], byte[]>> expected = TypeInformation.of(new TypeHint<Tuple2<byte[], byte[]>>() {
+		});
 		assertEquals(expected, type);
 	}
 
@@ -55,14 +56,16 @@ public class AbstractDeserializationSchemaTest {
 			}
 		}.getProducedType();
 
-		TypeInformation<Tuple2<byte[], byte[]>> expected = TypeInformation.of(new TypeHint<Tuple2<byte[], byte[]>>(){});
+		TypeInformation<Tuple2<byte[], byte[]>> expected = TypeInformation.of(new TypeHint<Tuple2<byte[], byte[]>>() {
+		});
 		assertEquals(expected, type);
 	}
 
 	@Test
 	public void testTypeExtractionGeneric() {
 		TypeInformation<JSONPObject> type = new JsonSchema().getProducedType();
-		TypeInformation<JSONPObject> expected = TypeInformation.of(new TypeHint<JSONPObject>(){});
+		TypeInformation<JSONPObject> expected = TypeInformation.of(new TypeHint<JSONPObject>() {
+		});
 		assertEquals(expected, type);
 	}
 
@@ -75,7 +78,8 @@ public class AbstractDeserializationSchemaTest {
 			}
 		}.getProducedType();
 
-		TypeInformation<JSONPObject> expected = TypeInformation.of(new TypeHint<JSONPObject>(){});
+		TypeInformation<JSONPObject> expected = TypeInformation.of(new TypeHint<JSONPObject>() {
+		});
 		assertEquals(expected, type);
 	}
 

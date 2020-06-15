@@ -48,7 +48,8 @@ public class DelegatingConfigurationTest {
 			boolean hasMethod = false;
 
 			// Find matching method in wrapper class and call it
-			lookForWrapper: for (Method wrapperMethod : delegateMethods) {
+			lookForWrapper:
+			for (Method wrapperMethod : delegateMethods) {
 				if (configurationMethod.getName().equals(wrapperMethod.getName())) {
 
 					// Get parameters for method
@@ -69,7 +70,7 @@ public class DelegatingConfigurationTest {
 			}
 
 			assertTrue("Configuration method '" + configurationMethod.getName() +
-					"' has not been wrapped correctly in DelegatingConfiguration wrapper", hasMethod);
+				"' has not been wrapped correctly in DelegatingConfiguration wrapper", hasMethod);
 		}
 	}
 
@@ -79,7 +80,7 @@ public class DelegatingConfigurationTest {
 		backingConf.setValueInternal("test-key", "value");
 
 		DelegatingConfiguration configuration = new DelegatingConfiguration(
-				backingConf, null);
+			backingConf, null);
 		Set<String> keySet = configuration.keySet();
 
 		assertEquals(keySet, backingConf.keySet());

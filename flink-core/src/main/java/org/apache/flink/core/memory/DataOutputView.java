@@ -36,7 +36,6 @@ public interface DataOutputView extends DataOutput {
 	 * results are undefined.
 	 *
 	 * @param numBytes The number of bytes to skip.
-	 *
 	 * @throws IOException Thrown, if any I/O related problem occurred such that the view could not
 	 *                     be advanced to the desired position.
 	 */
@@ -45,9 +44,8 @@ public interface DataOutputView extends DataOutput {
 	/**
 	 * Copies {@code numBytes} bytes from the source to this view.
 	 *
-	 * @param source The source to copy the bytes from.
+	 * @param source   The source to copy the bytes from.
 	 * @param numBytes The number of bytes to copy.
-	 *
 	 * @throws IOException Thrown, if any I/O related problem occurred, such that either the input view
 	 *                     could not be read, or the output could not be written.
 	 */

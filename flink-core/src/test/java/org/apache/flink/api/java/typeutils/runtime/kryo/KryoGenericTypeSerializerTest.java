@@ -40,9 +40,9 @@ import static org.junit.Assert.*;
 public class KryoGenericTypeSerializerTest extends AbstractGenericTypeSerializerTest {
 
 	ExecutionConfig ec = new ExecutionConfig();
-	
+
 	@Test
-	public void testJavaList(){
+	public void testJavaList() {
 		Collection<Integer> a = new ArrayList<>();
 
 		fillCollection(a);
@@ -51,7 +51,7 @@ public class KryoGenericTypeSerializerTest extends AbstractGenericTypeSerializer
 	}
 
 	@Test
-	public void testJavaSet(){
+	public void testJavaSet() {
 		Collection<Integer> b = new HashSet<>();
 
 		fillCollection(b);
@@ -60,9 +60,8 @@ public class KryoGenericTypeSerializerTest extends AbstractGenericTypeSerializer
 	}
 
 
-
 	@Test
-	public void testJavaDequeue(){
+	public void testJavaDequeue() {
 		Collection<Integer> c = new LinkedList<>();
 		fillCollection(c);
 		runTests(c);
@@ -79,7 +78,7 @@ public class KryoGenericTypeSerializerTest extends AbstractGenericTypeSerializer
 	protected <T> TypeSerializer<T> createSerializer(Class<T> type) {
 		return new KryoSerializer<T>(type, ec);
 	}
-	
+
 	/**
 	 * Make sure that the kryo serializer forwards EOF exceptions properly when serializing
 	 */
@@ -91,30 +90,27 @@ public class KryoGenericTypeSerializerTest extends AbstractGenericTypeSerializer
 			{
 				char[] charData = new char[40000];
 				Random rnd = new Random();
-				
+
 				for (int i = 0; i < charData.length; i++) {
 					charData[i] = (char) rnd.nextInt(10000);
 				}
-				
+
 				str = new String(charData);
 			}
-			
+
 			// construct a memory target that is too small for the string
 			TestDataOutputSerializer target = new TestDataOutputSerializer(10000, 30000);
 			KryoSerializer<String> serializer = new KryoSerializer<String>(String.class, new ExecutionConfig());
-			
+
 			try {
 				serializer.serialize(str, target);
 				fail("should throw a java.io.EOFException");
-			}
-			catch (java.io.EOFException e) {
+			} catch (java.io.EOFException e) {
 				// that is how we like it
-			}
-			catch (Exception e) {
+			} catch (Exception e) {
 				fail("throws wrong exception: should throw a java.io.EOFException, has thrown a " + e.getClass().getName());
 			}
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 			fail(e.getMessage());
 		}
@@ -128,16 +124,16 @@ public class KryoGenericTypeSerializerTest extends AbstractGenericTypeSerializer
 		try {
 			int numElements = 100;
 			// construct a memory target that is too small for the string
-			TestDataOutputSerializer target = new TestDataOutputSerializer(5*numElements, 5*numElements);
+			TestDataOutputSerializer target = new TestDataOutputSerializer(5 * numElements, 5 * numElements);
 			KryoSerializer<Integer> serializer = new KryoSerializer<>(Integer.class, new ExecutionConfig());
 
-			for(int i = 0; i < numElements; i++){
+			for (int i = 0; i < numElements; i++) {
 				serializer.serialize(i, target);
 			}
 
 			ComparatorTestBase.TestInputView source = new ComparatorTestBase.TestInputView(target.copyByteBuffer());
 
-			for(int i = 0; i < numElements; i++){
+			for (int i = 0; i < numElements; i++) {
 				int value = serializer.deserialize(source);
 				assertEquals(i, value);
 			}
@@ -145,15 +141,12 @@ public class KryoGenericTypeSerializerTest extends AbstractGenericTypeSerializer
 			try {
 				serializer.deserialize(source);
 				fail("should throw a java.io.EOFException");
-			}
-			catch (java.io.EOFException e) {
+			} catch (java.io.EOFException e) {
 				// that is how we like it :-)
-			}
-			catch (Exception e) {
+			} catch (Exception e) {
 				fail("throws wrong exception: should throw a java.io.EOFException, has thrown a " + e.getClass().getName());
 			}
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 			fail(e.getMessage());
 		}

@@ -28,7 +28,7 @@ import java.util.Set;
  * Internal representation of a parameter passed to a user defined function.
  *
  * @deprecated These classes will be dropped in the next version. Use {@link ParameterTool} or a third-party
- *             command line parsing library instead.
+ * command line parsing library instead.
  */
 @Deprecated
 public class Option {
@@ -86,7 +86,7 @@ public class Option {
 				return this.setDefaultValue(defaultValue);
 			} else {
 				throw new RequiredParametersException("Default value " + defaultValue +
-						" is not in the list of valid values for option " + this.longName);
+					" is not in the list of valid values for option " + this.longName);
 			}
 		}
 	}
@@ -103,7 +103,7 @@ public class Option {
 				Collections.addAll(this.choices, choices);
 			} else {
 				throw new RequiredParametersException("Valid values for option " + this.longName +
-						" do not contain defined default value " + defaultValue);
+					" do not contain defined default value " + defaultValue);
 			}
 		} else {
 			Collections.addAll(this.choices, choices);

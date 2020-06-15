@@ -42,8 +42,11 @@ public abstract class CompositeTypeSerializerConfigSnapshot<T> extends TypeSeria
 
 	private List<Tuple2<TypeSerializer<?>, TypeSerializerSnapshot<?>>> nestedSerializersAndConfigs;
 
-	/** This empty nullary constructor is required for deserializing the configuration. */
-	public CompositeTypeSerializerConfigSnapshot() {}
+	/**
+	 * This empty nullary constructor is required for deserializing the configuration.
+	 */
+	public CompositeTypeSerializerConfigSnapshot() {
+	}
 
 	public CompositeTypeSerializerConfigSnapshot(TypeSerializer<?>... nestedSerializers) {
 		Preconditions.checkNotNull(nestedSerializers);
@@ -95,7 +98,7 @@ public abstract class CompositeTypeSerializerConfigSnapshot<T> extends TypeSeria
 		}
 
 		return (obj.getClass().equals(getClass()))
-				&& nestedSerializersAndConfigs.equals(((CompositeTypeSerializerConfigSnapshot) obj).getNestedSerializersAndConfigs());
+			&& nestedSerializersAndConfigs.equals(((CompositeTypeSerializerConfigSnapshot) obj).getNestedSerializersAndConfigs());
 	}
 
 	@Override

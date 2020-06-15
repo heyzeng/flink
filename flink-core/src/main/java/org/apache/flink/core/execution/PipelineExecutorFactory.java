@@ -41,6 +41,7 @@ public interface PipelineExecutorFactory {
 
 	/**
 	 * Instantiates an {@link PipelineExecutor} compatible with the provided configuration.
+	 *
 	 * @return the executor instance.
 	 */
 	PipelineExecutor getExecutor(final Configuration configuration);

@@ -56,16 +56,14 @@ public class ClosureCleaner {
 	 * Tries to clean the closure of the given object, if the object is a non-static inner
 	 * class.
 	 *
-	 * @param func The object whose closure should be cleaned.
-	 * @param level the clean up level.
+	 * @param func              The object whose closure should be cleaned.
+	 * @param level             the clean up level.
 	 * @param checkSerializable Flag to indicate whether serializability should be checked after
 	 *                          the closure cleaning attempt.
-	 *
 	 * @throws InvalidProgramException Thrown, if 'checkSerializable' is true, and the object was
 	 *                                 not serializable after the closure cleaning.
-	 *
-	 * @throws RuntimeException A RuntimeException may be thrown, if the code of the class could not
-	 *                          be loaded, in order to process during the closure cleaning.
+	 * @throws RuntimeException        A RuntimeException may be thrown, if the code of the class could not
+	 *                                 be loaded, in order to process during the closure cleaning.
 	 */
 	public static void clean(Object func, ExecutionConfig.ClosureCleanerLevel level, boolean checkSerializable) {
 		clean(func, level, checkSerializable, Collections.newSetFromMap(new IdentityHashMap<>()));
@@ -94,7 +92,7 @@ public class ClosureCleaner {
 		// be "this$x" depending on the nesting
 		boolean closureAccessed = false;
 
-		for (Field f: cls.getDeclaredFields()) {
+		for (Field f : cls.getDeclaredFields()) {
 			if (f.getName().startsWith("this$")) {
 				// found a closure referencing field - now try to clean
 				closureAccessed |= cleanThis0(func, cls, f.getName());
@@ -131,19 +129,18 @@ public class ClosureCleaner {
 		if (checkSerializable) {
 			try {
 				InstantiationUtil.serializeObject(func);
-			}
-			catch (Exception e) {
+			} catch (Exception e) {
 				String functionType = getSuperClassOrInterfaceName(func.getClass());
 
 				String msg = functionType == null ?
-						(func + " is not serializable.") :
-						("The implementation of the " + functionType + " is not serializable.");
+					(func + " is not serializable.") :
+					("The implementation of the " + functionType + " is not serializable.");
 
 				if (closureAccessed) {
 					msg += " The implementation accesses fields of its enclosing class, which is " +
-							"a common reason for non-serializability. " +
-							"A common solution is to make the function a proper (non-inner) class, or " +
-							"a static inner class.";
+						"a common reason for non-serializability. " +
+						"A common solution is to make the function a proper (non-inner) class, or " +
+						"a static inner class.";
 				} else {
 					msg += " The object probably contains or references non serializable fields.";
 				}
@@ -155,20 +152,22 @@ public class ClosureCleaner {
 
 	private static boolean needsRecursion(Field f, Object fo) {
 		return (fo != null &&
-				!Modifier.isStatic(f.getModifiers()) &&
-				!Modifier.isTransient(f.getModifiers()));
+			!Modifier.isStatic(f.getModifiers()) &&
+			!Modifier.isTransient(f.getModifiers()));
 	}
 
 	private static boolean usesCustomSerialization(Class<?> cls) {
 		try {
 			cls.getDeclaredMethod("writeObject", ObjectOutputStream.class);
 			return true;
-		} catch (NoSuchMethodException ignored) {}
+		} catch (NoSuchMethodException ignored) {
+		}
 
 		try {
 			cls.getDeclaredMethod("writeReplace");
 			return true;
-		} catch (NoSuchMethodException ignored) {}
+		} catch (NoSuchMethodException ignored) {
+		}
 
 		return Externalizable.class.isAssignableFrom(cls);
 	}
@@ -204,8 +203,7 @@ public class ClosureCleaner {
 			try {
 				this0.setAccessible(true);
 				this0.set(func, null);
-			}
-			catch (Exception e) {
+			} catch (Exception e) {
 				// should not happen, since we use setAccessible
 				throw new RuntimeException("Could not set " + this0Name + " to null. " + e.getMessage(), e);
 			}

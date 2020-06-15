@@ -35,8 +35,9 @@ public interface Encoder<IN> extends Serializable {
 
 	/**
 	 * Writes one element to the bucket file.
+	 *
 	 * @param element the element to be written.
-	 * @param stream the stream to write the element to.
+	 * @param stream  the stream to write the element to.
 	 */
 	void encode(IN element, OutputStream stream) throws IOException;
 

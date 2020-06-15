@@ -44,13 +44,13 @@ public class TypeInformationSerializationSchemaTest {
 			TypeInformation<MyPOJO> info = TypeExtractor.getForClass(MyPOJO.class);
 
 			TypeInformationSerializationSchema<MyPOJO> schema =
-					new TypeInformationSerializationSchema<MyPOJO>(info, new ExecutionConfig());
+				new TypeInformationSerializationSchema<MyPOJO>(info, new ExecutionConfig());
 
 			MyPOJO[] types = {
-					new MyPOJO(72, new Date(763784523L), new Date(88234L)),
-					new MyPOJO(-1, new Date(11111111111111L)),
-					new MyPOJO(42),
-					new MyPOJO(17, new Date(222763784523L))
+				new MyPOJO(72, new Date(763784523L), new Date(88234L)),
+				new MyPOJO(-1, new Date(11111111111111L)),
+				new MyPOJO(42),
+				new MyPOJO(17, new Date(222763784523L))
 			};
 
 			for (MyPOJO val : types) {
@@ -58,8 +58,7 @@ public class TypeInformationSerializationSchemaTest {
 				MyPOJO deser = schema.deserialize(serialized);
 				assertEquals(val, deser);
 			}
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 			fail(e.getMessage());
 		}
@@ -70,12 +69,11 @@ public class TypeInformationSerializationSchemaTest {
 		try {
 			TypeInformation<MyPOJO> info = TypeExtractor.getForClass(MyPOJO.class);
 			TypeInformationSerializationSchema<MyPOJO> schema =
-					new TypeInformationSerializationSchema<MyPOJO>(info, new ExecutionConfig());
+				new TypeInformationSerializationSchema<MyPOJO>(info, new ExecutionConfig());
 
 			// this needs to succeed
 			CommonTestUtils.createCopySerializable(schema);
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 			fail(e.getMessage());
 		}
@@ -90,7 +88,8 @@ public class TypeInformationSerializationSchemaTest {
 		public int aField;
 		public List<Date> aList;
 
-		public MyPOJO() {}
+		public MyPOJO() {
+		}
 
 		public MyPOJO(int iVal, Date... dates) {
 			this.aField = iVal;
@@ -107,8 +106,8 @@ public class TypeInformationSerializationSchemaTest {
 			if (obj instanceof MyPOJO) {
 				MyPOJO that = (MyPOJO) obj;
 				return this.aField == that.aField && (this.aList == null ?
-						that.aList == null :
-						that.aList != null && this.aList.equals(that.aList));
+					that.aList == null :
+					that.aList != null && this.aList.equals(that.aList));
 			}
 			return super.equals(obj);
 		}

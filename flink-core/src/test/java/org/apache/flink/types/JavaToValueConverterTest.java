@@ -32,7 +32,7 @@ public class JavaToValueConverterTest {
 	public void testJavaToValueConversion() {
 		try {
 			assertNull(JavaToValueConverter.convertBoxedJavaType(null));
-			
+
 			assertEquals(new StringValue("123Test"), JavaToValueConverter.convertBoxedJavaType("123Test"));
 			assertEquals(new ByteValue((byte) 44), JavaToValueConverter.convertBoxedJavaType((byte) 44));
 			assertEquals(new ShortValue((short) 10000), JavaToValueConverter.convertBoxedJavaType((short) 10000));
@@ -42,25 +42,24 @@ public class JavaToValueConverterTest {
 			assertEquals(new DoubleValue(3.1415926), JavaToValueConverter.convertBoxedJavaType(3.1415926));
 			assertEquals(new BooleanValue(true), JavaToValueConverter.convertBoxedJavaType(true));
 			assertEquals(new CharValue('@'), JavaToValueConverter.convertBoxedJavaType('@'));
-			
+
 			try {
 				JavaToValueConverter.convertBoxedJavaType(new ArrayList<Object>());
 				fail("Accepted invalid type.");
 			} catch (IllegalArgumentException e) {
 				// expected
 			}
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 			fail(e.getMessage());
 		}
 	}
-	
+
 	@Test
 	public void testValueToJavaConversion() {
 		try {
 			assertNull(JavaToValueConverter.convertValueType(null));
-			
+
 			assertEquals("123Test", JavaToValueConverter.convertValueType(new StringValue("123Test")));
 			assertEquals((byte) 44, JavaToValueConverter.convertValueType(new ByteValue((byte) 44)));
 			assertEquals((short) 10000, JavaToValueConverter.convertValueType(new ShortValue((short) 10000)));
@@ -70,27 +69,28 @@ public class JavaToValueConverterTest {
 			assertEquals(3.1415926, JavaToValueConverter.convertValueType(new DoubleValue(3.1415926)));
 			assertEquals(true, JavaToValueConverter.convertValueType(new BooleanValue(true)));
 			assertEquals('@', JavaToValueConverter.convertValueType(new CharValue('@')));
-			
+
 			try {
 				JavaToValueConverter.convertValueType(new MyValue());
 				fail("Accepted invalid type.");
 			} catch (IllegalArgumentException e) {
 				// expected
 			}
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 			fail(e.getMessage());
 		}
 	}
-	
+
 	private static final class MyValue implements Value {
 		private static final long serialVersionUID = 1L;
 
 		@Override
-		public void write(DataOutputView out) {}
+		public void write(DataOutputView out) {
+		}
 
 		@Override
-		public void read(DataInputView in) {}
+		public void read(DataInputView in) {
+		}
 	}
 }

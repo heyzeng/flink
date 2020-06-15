@@ -41,7 +41,7 @@ public interface SplitEnumerator<SplitT extends SourceSplit, CheckpointT> extend
 	/**
 	 * Handles the source event from the source reader.
 	 *
-	 * @param subtaskId the subtask id of the source reader who sent the source event.
+	 * @param subtaskId   the subtask id of the source reader who sent the source event.
 	 * @param sourceEvent the source event from the source reader.
 	 */
 	void handleSourceEvent(int subtaskId, SourceEvent sourceEvent);
@@ -50,7 +50,7 @@ public interface SplitEnumerator<SplitT extends SourceSplit, CheckpointT> extend
 	 * Add a split back to the split enumerator. It will only happen when a {@link SourceReader} fails
 	 * and there are splits assigned to it after the last successful checkpoint.
 	 *
-	 * @param splits The split to add back to the enumerator for reassignment.
+	 * @param splits    The split to add back to the enumerator for reassignment.
 	 * @param subtaskId The id of the subtask to which the returned splits belong.
 	 */
 	void addSplitsBack(List<SplitT> splits, int subtaskId);

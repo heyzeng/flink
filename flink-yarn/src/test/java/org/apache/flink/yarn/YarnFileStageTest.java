@@ -148,23 +148,18 @@ public class YarnFileStageTest extends TestLogger {
 	/**
 	 * Verifies that nested directories are properly copied with the given filesystem and paths.
 	 *
-	 * @param targetFileSystem
-	 * 		file system of the target path
-	 * @param targetDir
-	 * 		target path (URI like <tt>hdfs://...</tt>)
-	 * @param localResourceDirectory
-	 * 		the directory that localResource are uploaded to
-	 * @param tempFolder
-	 * 		JUnit temporary folder rule to create the source directory with
-	 * @param addSchemeToLocalPath
-	 * 		whether add the <tt>file://</tt> scheme to the local path to copy from
+	 * @param targetFileSystem       file system of the target path
+	 * @param targetDir              target path (URI like <tt>hdfs://...</tt>)
+	 * @param localResourceDirectory the directory that localResource are uploaded to
+	 * @param tempFolder             JUnit temporary folder rule to create the source directory with
+	 * @param addSchemeToLocalPath   whether add the <tt>file://</tt> scheme to the local path to copy from
 	 */
 	static void testCopyFromLocalRecursive(
-			FileSystem targetFileSystem,
-			Path targetDir,
-			String localResourceDirectory,
-			TemporaryFolder tempFolder,
-			boolean addSchemeToLocalPath) throws Exception {
+		FileSystem targetFileSystem,
+		Path targetDir,
+		String localResourceDirectory,
+		TemporaryFolder tempFolder,
+		boolean addSchemeToLocalPath) throws Exception {
 
 		// directory must not yet exist
 		assertFalse(targetFileSystem.exists(targetDir));
@@ -230,11 +225,12 @@ public class YarnFileStageTest extends TestLogger {
 
 	/**
 	 * Verifies a single file is properly uploaded.
-	 * @param targetFileSystem file system of the target path
-	 * @param targetDir target path (URI like <tt>hdfs://...</tt>)
+	 *
+	 * @param targetFileSystem       file system of the target path
+	 * @param targetDir              target path (URI like <tt>hdfs://...</tt>)
 	 * @param localResourceDirectory the directory that localResource are uploaded to
-	 * @param temporaryFolder JUnit temporary folder rule to create the source directory with
-	 * @throws IOException if error occurs when accessing the file system
+	 * @param temporaryFolder        JUnit temporary folder rule to create the source directory with
+	 * @throws IOException        if error occurs when accessing the file system
 	 * @throws URISyntaxException if the format of url has errors when converting a given url to hadoop path
 	 */
 	private static void testCopySingleFileFromLocal(
@@ -293,10 +289,11 @@ public class YarnFileStageTest extends TestLogger {
 
 	/**
 	 * Verifies the content and name of file in the directory {@code worDir} are same with {@code expectedFiles}.
+	 *
 	 * @param targetFileSystem the filesystem type of {@code workDir}
-	 * @param workDir the directory verified
-	 * @param expectedFiles the expected name and content of the files
-	 * @throws IOException if error occurs when visiting the {@code workDir}
+	 * @param workDir          the directory verified
+	 * @param expectedFiles    the expected name and content of the files
+	 * @throws IOException          if error occurs when visiting the {@code workDir}
 	 * @throws InterruptedException if the sleep is interrupted.
 	 */
 	private static void verifyDirectoryRecursive(

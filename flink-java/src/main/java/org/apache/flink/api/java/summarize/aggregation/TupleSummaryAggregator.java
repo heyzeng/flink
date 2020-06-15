@@ -63,8 +63,7 @@ public class TupleSummaryAggregator<R extends Tuple> implements Aggregator<Tuple
 				tuple.setField(columnAggregators[i].result(), i);
 			}
 			return tuple;
-		}
-		catch (InstantiationException | IllegalAccessException e) {
+		} catch (InstantiationException | IllegalAccessException e) {
 			throw new RuntimeException("Unexpected error instantiating Tuple class for aggregation results", e);
 
 		}

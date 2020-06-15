@@ -23,8 +23,8 @@ import org.apache.flink.api.common.typeinfo.BasicTypeInfo
 import org.apache.flink.api.common.typeutils.{TypeInformationTestBase, TypeSerializer}
 
 /**
-  * Test for [[CaseClassTypeInfo]].
-  */
+ * Test for [[CaseClassTypeInfo]].
+ */
 class CaseClassTypeInfoTest extends TypeInformationTestBase[CaseClassTypeInfo[_]] {
 
   override protected def getTestData: Array[CaseClassTypeInfo[_]] = Array(

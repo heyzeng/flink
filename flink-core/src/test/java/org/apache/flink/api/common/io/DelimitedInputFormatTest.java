@@ -52,9 +52,9 @@ import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
 public class DelimitedInputFormatTest {
-	
+
 	private DelimitedInputFormat<String> format;
-	
+
 	// --------------------------------------------------------------------------------------------
 
 	@Before
@@ -62,7 +62,7 @@ public class DelimitedInputFormatTest {
 		format = new MyTextInputFormat();
 		this.format.setFilePath(new Path("file:///some/file/that/will/not/be/read"));
 	}
-	
+
 	@After
 	public void shutdown() throws Exception {
 		if (this.format != null) {
@@ -76,7 +76,7 @@ public class DelimitedInputFormatTest {
 	public void testConfigure() {
 		Configuration cfg = new Configuration();
 		cfg.setString("delimited-format.delimiter", "\n");
-		
+
 		format.configure(cfg);
 		assertEquals("\n", new String(format.getDelimiter(), format.getCharset()));
 
@@ -84,30 +84,30 @@ public class DelimitedInputFormatTest {
 		format.configure(cfg);
 		assertEquals("&-&", new String(format.getDelimiter(), format.getCharset()));
 	}
-	
+
 	@Test
 	public void testSerialization() throws Exception {
-		final byte[] DELIMITER = new byte[] {1, 2, 3, 4};
+		final byte[] DELIMITER = new byte[]{1, 2, 3, 4};
 		final int NUM_LINE_SAMPLES = 7;
 		final int LINE_LENGTH_LIMIT = 12345;
 		final int BUFFER_SIZE = 178;
-		
+
 		DelimitedInputFormat<String> format = new MyTextInputFormat();
 		format.setDelimiter(DELIMITER);
 		format.setNumLineSamples(NUM_LINE_SAMPLES);
 		format.setLineLengthLimit(LINE_LENGTH_LIMIT);
 		format.setBufferSize(BUFFER_SIZE);
-		
+
 		ByteArrayOutputStream baos = new ByteArrayOutputStream(4096);
 		ObjectOutputStream oos = new ObjectOutputStream(baos);
 		oos.writeObject(format);
 		oos.flush();
 		oos.close();
-		
+
 		ObjectInputStream ois = new ObjectInputStream(new ByteArrayInputStream(baos.toByteArray()));
 		@SuppressWarnings("unchecked")
 		DelimitedInputFormat<String> deserialized = (DelimitedInputFormat<String>) ois.readObject();
-		
+
 		assertEquals(NUM_LINE_SAMPLES, deserialized.getNumLineSamples());
 		assertEquals(LINE_LENGTH_LIMIT, deserialized.getLineLengthLimit());
 		assertEquals(BUFFER_SIZE, deserialized.getBufferSize());
@@ -118,7 +118,7 @@ public class DelimitedInputFormatTest {
 	public void testOpen() throws IOException {
 		final String myString = "my mocked line 1\nmy mocked line 2\n";
 		final FileInputSplit split = createTempFile(myString);
-		
+
 		int bufferSize = 5;
 		format.setBufferSize(bufferSize);
 		format.open(split);
@@ -151,7 +151,7 @@ public class DelimitedInputFormatTest {
 		assertNull(format.nextRecord(null));
 		assertTrue(format.reachedEnd());
 	}
-	
+
 	@Test
 	public void testReadWithTrailingDelimiter() throws IOException {
 		// 2. test case
@@ -176,7 +176,7 @@ public class DelimitedInputFormatTest {
 		assertNull(format.nextRecord(null));
 		assertTrue(format.reachedEnd());
 	}
-	
+
 	@Test
 	public void testReadCustomDelimiter() throws IOException {
 		final String myString = "my key|my val$$$my key2\n$$ctd.$$|my value2";
@@ -237,7 +237,7 @@ public class DelimitedInputFormatTest {
 
 		String fileContent = StringUtils.join(records, delimiter);
 
-		for (final String charset : new String[]{ "UTF-8", "UTF-16BE", "UTF-16LE" }) {
+		for (final String charset : new String[]{"UTF-8", "UTF-16BE", "UTF-16LE"}) {
 			// use charset when instantiating the record String
 			DelimitedInputFormat<String> format = new DelimitedInputFormat<String>() {
 				@Override
@@ -369,9 +369,9 @@ public class DelimitedInputFormatTest {
 	@Test
 	public void testReadRecordsLargerThanBuffer() throws IOException {
 		final String myString = "aaaaaaaaaaaaaaaaaaaaa\n" +
-								"bbbbbbbbbbbbbbbbbbbbbbbbb\n" +
-								"ccccccccccccccccccc\n" +
-								"ddddddddddddddddddddddddddddddddddd\n";
+			"bbbbbbbbbbbbbbbbbbbbbbbbb\n" +
+			"ccccccccccccccccccc\n" +
+			"ddddddddddddddddddddddddddddddddddd\n";
 
 		final FileInputSplit split = createTempFile(myString);
 		FileInputSplit split1 = new FileInputSplit(0, split.getPath(), 0, split.getLength() / 2, split.getHostnames());
@@ -467,7 +467,7 @@ public class DelimitedInputFormatTest {
 		assertNotNull(stats);
 		assertEquals("The file size from the statistics is wrong.", totalSize, stats.getTotalInputSize());
 	}
-	
+
 	@Test
 	public void testGetStatisticsFileDoesNotExist() throws IOException {
 		DelimitedInputFormat<String> format = new MyTextInputFormat();
@@ -491,33 +491,33 @@ public class DelimitedInputFormatTest {
 		FileBaseStatistics stats = format.getStatistics(null);
 		assertNotNull(stats);
 		assertEquals("The file size from the statistics is wrong.", size, stats.getTotalInputSize());
-		
+
 		format = new MyTextInputFormat();
 		format.setFilePath(tempFile);
 		format.configure(new Configuration());
-		
+
 		FileBaseStatistics newStats = format.getStatistics(stats);
 		assertEquals("Statistics object was changed.", newStats, stats);
-		
+
 		// insert fake stats with the correct modification time. the call should return the fake stats
 		format = new MyTextInputFormat();
 		format.setFilePath(tempFile);
 		format.configure(new Configuration());
-		
+
 		FileBaseStatistics fakeStats = new FileBaseStatistics(stats.getLastModificationTime(), fakeSize, BaseStatistics.AVG_RECORD_BYTES_UNKNOWN);
 		BaseStatistics latest = format.getStatistics(fakeStats);
 		assertEquals("The file size from the statistics is wrong.", fakeSize, latest.getTotalInputSize());
-		
+
 		// insert fake stats with the expired modification time. the call should return new accurate stats
 		format = new MyTextInputFormat();
 		format.setFilePath(tempFile);
 		format.configure(new Configuration());
-		
+
 		FileBaseStatistics outDatedFakeStats = new FileBaseStatistics(stats.getLastModificationTime() - 1, fakeSize, BaseStatistics.AVG_RECORD_BYTES_UNKNOWN);
 		BaseStatistics reGathered = format.getStatistics(outDatedFakeStats);
 		assertEquals("The file size from the statistics is wrong.", size, reGathered.getTotalInputSize());
 	}
-	
+
 	static FileInputSplit createTempFile(String contents) throws IOException {
 		File tempFile = File.createTempFile("test_contents", "tmp");
 		tempFile.deleteOnExit();
@@ -526,7 +526,7 @@ public class DelimitedInputFormatTest {
 			out.write(contents);
 		}
 
-		return new FileInputSplit(0, new Path(tempFile.toURI().toString()), 0, tempFile.length(), new String[] {"localhost"});
+		return new FileInputSplit(0, new Path(tempFile.toURI().toString()), 0, tempFile.length(), new String[]{"localhost"});
 	}
 
 	static FileInputSplit createTempFile(String contents, String charset) throws IOException {
@@ -537,12 +537,12 @@ public class DelimitedInputFormatTest {
 			out.write(contents);
 		}
 
-		return new FileInputSplit(0, new Path(tempFile.toURI().toString()), 0, tempFile.length(), new String[] {"localhost"});
+		return new FileInputSplit(0, new Path(tempFile.toURI().toString()), 0, tempFile.length(), new String[]{"localhost"});
 	}
 
 	protected static final class MyTextInputFormat extends DelimitedInputFormat<String> {
 		private static final long serialVersionUID = 1L;
-		
+
 		@Override
 		public String readRecord(String reuse, byte[] bytes, int offset, int numBytes) {
 			return new String(bytes, offset, numBytes, ConfigConstants.DEFAULT_CHARSET);
@@ -553,7 +553,7 @@ public class DelimitedInputFormatTest {
 			return true;
 		}
 	}
-	
+
 	private static Path createTempFilePath(String contents) throws IOException {
 		File tempFile = File.createTempFile("test_contents", "tmp");
 		tempFile.deleteOnExit();

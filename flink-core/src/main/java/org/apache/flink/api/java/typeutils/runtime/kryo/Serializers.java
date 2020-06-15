@@ -46,9 +46,9 @@ import java.util.Set;
 
 /**
  * Class containing utilities for the serializers of the Flink Runtime.
- *
+ * <p>
  * Most of the serializers are automatically added to the system.
- *
+ * <p>
  * Note that users can also implement the {@link com.esotericsoftware.kryo.KryoSerializable} interface
  * to provide custom serialization for their classes.
  * Also, there is a Java Annotation for adding a default serializer (@DefaultSerializer) to classes.
@@ -60,35 +60,32 @@ public class Serializers {
 		if (typeInfo instanceof GenericTypeInfo) {
 			GenericTypeInfo<?> genericTypeInfo = (GenericTypeInfo<?>) typeInfo;
 			Serializers.recursivelyRegisterType(genericTypeInfo.getTypeClass(), config, alreadySeen);
-		}
-		else if (typeInfo instanceof CompositeType) {
+		} else if (typeInfo instanceof CompositeType) {
 			List<GenericTypeInfo<?>> genericTypesInComposite = new ArrayList<>();
-			getContainedGenericTypes((CompositeType<?>)typeInfo, genericTypesInComposite);
+			getContainedGenericTypes((CompositeType<?>) typeInfo, genericTypesInComposite);
 			for (GenericTypeInfo<?> gt : genericTypesInComposite) {
 				Serializers.recursivelyRegisterType(gt.getTypeClass(), config, alreadySeen);
 			}
-		}
-		else if (typeInfo instanceof ObjectArrayTypeInfo) {
+		} else if (typeInfo instanceof ObjectArrayTypeInfo) {
 			ObjectArrayTypeInfo<?, ?> objectArrayTypeInfo = (ObjectArrayTypeInfo<?, ?>) typeInfo;
 			recursivelyRegisterType(objectArrayTypeInfo.getComponentInfo(), config, alreadySeen);
 		}
 	}
-	
+
 	public static void recursivelyRegisterType(Class<?> type, ExecutionConfig config, Set<Class<?>> alreadySeen) {
 		// don't register or remember primitives
 		if (type == null || type.isPrimitive() || type == Object.class) {
 			return;
 		}
-		
+
 		// prevent infinite recursion for recursive types
 		if (!alreadySeen.add(type)) {
 			return;
 		}
-		
+
 		if (type.isArray()) {
 			recursivelyRegisterType(type.getComponentType(), config, alreadySeen);
-		}
-		else {
+		} else {
 			config.registerKryoType(type);
 			// add serializers for Avro type if necessary
 			AvroUtils.getAvroUtils().addAvroSerializersIfRequired(config, type);
@@ -103,25 +100,23 @@ public class Serializers {
 			}
 		}
 	}
-	
+
 	private static void recursivelyRegisterGenericType(Type fieldType, ExecutionConfig config, Set<Class<?>> alreadySeen) {
 		if (fieldType instanceof ParameterizedType) {
 			// field has generics
 			ParameterizedType parameterizedFieldType = (ParameterizedType) fieldType;
-			
-			for (Type t: parameterizedFieldType.getActualTypeArguments()) {
-				if (TypeExtractionUtils.isClassType(t) ) {
+
+			for (Type t : parameterizedFieldType.getActualTypeArguments()) {
+				if (TypeExtractionUtils.isClassType(t)) {
 					recursivelyRegisterType(TypeExtractionUtils.typeToClass(t), config, alreadySeen);
 				}
 			}
 
 			recursivelyRegisterGenericType(parameterizedFieldType.getRawType(), config, alreadySeen);
-		}
-		else if (fieldType instanceof GenericArrayType) {
+		} else if (fieldType instanceof GenericArrayType) {
 			GenericArrayType genericArrayType = (GenericArrayType) fieldType;
 			recursivelyRegisterGenericType(genericArrayType.getGenericComponentType(), config, alreadySeen);
-		}
-		else if (fieldType instanceof Class) {
+		} else if (fieldType instanceof Class) {
 			Class<?> clazz = (Class<?>) fieldType;
 			recursivelyRegisterType(clazz, config, alreadySeen);
 		}
@@ -151,7 +146,8 @@ public class Serializers {
 	 * Avro on the classpath by default anymore. We still have to retain the same registered
 	 * Serializers for backwards compatibility of savepoints.
 	 */
-	public static class DummyAvroRegisteredClass {}
+	public static class DummyAvroRegisteredClass {
+	}
 
 	/**
 	 * This is used in case we don't have Avro on the classpath. Flink versions before 1.4
@@ -194,7 +190,7 @@ public class Serializers {
 	 */
 	@SuppressWarnings("rawtypes")
 	public static class SpecificInstanceCollectionSerializer<T extends Collection>
-			extends CollectionSerializer implements Serializable {
+		extends CollectionSerializer implements Serializable {
 		private static final long serialVersionUID = 1L;
 
 		private Class<T> type;

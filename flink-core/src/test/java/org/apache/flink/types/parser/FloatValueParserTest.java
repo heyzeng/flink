@@ -26,20 +26,20 @@ public class FloatValueParserTest extends ParserTestBase<FloatValue> {
 
 	@Override
 	public String[] getValidTestValues() {
-		return new String[] {
-			"0", "0.0", "123.4", "0.124", ".623", "1234", "-12.34", 
+		return new String[]{
+			"0", "0.0", "123.4", "0.124", ".623", "1234", "-12.34",
 			String.valueOf(Float.MAX_VALUE), String.valueOf(Float.MIN_VALUE),
 			String.valueOf(Float.NEGATIVE_INFINITY), String.valueOf(Float.POSITIVE_INFINITY),
 			String.valueOf(Float.NaN),
 			"1.234E2", "1.234e3", "1.234E-2", "1239"
 		};
 	}
-	
+
 	@Override
 	public FloatValue[] getValidTestResults() {
-		return new FloatValue[] {
+		return new FloatValue[]{
 			new FloatValue(0f), new FloatValue(0.0f), new FloatValue(123.4f),
-			new FloatValue(0.124f), new FloatValue(.623f), new FloatValue(1234f), new FloatValue(-12.34f), 
+			new FloatValue(0.124f), new FloatValue(.623f), new FloatValue(1234f), new FloatValue(-12.34f),
 			new FloatValue(Float.MAX_VALUE), new FloatValue(Float.MIN_VALUE),
 			new FloatValue(Float.NEGATIVE_INFINITY), new FloatValue(Float.POSITIVE_INFINITY),
 			new FloatValue(Float.NaN),
@@ -49,7 +49,7 @@ public class FloatValueParserTest extends ParserTestBase<FloatValue> {
 
 	@Override
 	public String[] getInvalidTestValues() {
-		return new String[] {
+		return new String[]{
 			"a", "123abc4", "-57-6", "7-877678", " 1", "2 ", " ", "\t"
 		};
 	}

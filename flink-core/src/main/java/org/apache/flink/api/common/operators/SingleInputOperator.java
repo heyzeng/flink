@@ -31,40 +31,46 @@ import org.apache.flink.util.Visitor;
 /**
  * Abstract superclass for for all operators that have one input like "map" or "reduce".
  *
- * @param <IN> Input type of the user function
+ * @param <IN>  Input type of the user function
  * @param <OUT> Output type of the user function
- * @param <FT> Type of the user function
+ * @param <FT>  Type of the user function
  */
 @Internal
 public abstract class SingleInputOperator<IN, OUT, FT extends Function> extends AbstractUdfOperator<OUT, FT> {
-	
-	/** The input which produces the data consumed by this operator. */
+
+	/**
+	 * The input which produces the data consumed by this operator.
+	 */
 	protected Operator<IN> input;
-	
-	/** The positions of the keys in the tuple. */
+
+	/**
+	 * The positions of the keys in the tuple.
+	 */
 	private final int[] keyFields;
-	
-	/** Semantic properties of the associated function. */
+
+	/**
+	 * Semantic properties of the associated function.
+	 */
 	private SingleInputSemanticProperties semanticProperties = new SingleInputSemanticProperties();
-	
+
 	// --------------------------------------------------------------------------------------------
 
 	/**
 	 * Creates a new abstract single-input operator with the given name wrapping the given user function.
-	 * 
-	 * @param stub The object containing the user function.
+	 *
+	 * @param stub         The object containing the user function.
 	 * @param keyPositions The field positions of the input records that act as keys.
-	 * @param name The given name for the operator, used in plans, logs and progress messages.
+	 * @param name         The given name for the operator, used in plans, logs and progress messages.
 	 */
 	protected SingleInputOperator(UserCodeWrapper<FT> stub, UnaryOperatorInformation<IN, OUT> operatorInfo, int[] keyPositions, String name) {
 		super(stub, operatorInfo, name);
 		this.keyFields = keyPositions;
 	}
-	
+
 	/**
 	 * Creates a new abstract single-input operator with the given name wrapping the given user function.
 	 * This constructor is specialized only for operators that require no keys for their processing.
-	 * 
+	 *
 	 * @param stub The object containing the user function.
 	 * @param name The given name for the operator, used in plans, logs and progress messages.
 	 */
@@ -86,32 +92,32 @@ public abstract class SingleInputOperator<IN, OUT, FT extends Function> extends 
 
 	/**
 	 * Returns the input operator or data source, or null, if none is set.
-	 * 
+	 *
 	 * @return This operator's input.
 	 */
 	public Operator<IN> getInput() {
 		return this.input;
 	}
-	
+
 	/**
 	 * Removes all inputs.
 	 */
 	public void clearInputs() {
 		this.input = null;
 	}
-	
+
 	/**
 	 * Sets the given operator as the input to this operator.
-	 * 
+	 *
 	 * @param input The operator to use as the input.
 	 */
 	public void setInput(Operator<IN> input) {
 		this.input = input;
 	}
-	
+
 	/**
 	 * Sets the input to the union of the given operators.
-	 * 
+	 *
 	 * @param input The operator(s) that form the input.
 	 * @deprecated This method will be removed in future versions. Use the {@link Union} operator instead.
 	 */
@@ -119,10 +125,10 @@ public abstract class SingleInputOperator<IN, OUT, FT extends Function> extends 
 	public void setInput(Operator<IN>... input) {
 		this.input = Operator.createUnionCascade(null, input);
 	}
-	
+
 	/**
 	 * Sets the input to the union of the given operators.
-	 * 
+	 *
 	 * @param inputs The operator(s) that form the input.
 	 * @deprecated This method will be removed in future versions. Use the {@link Union} operator instead.
 	 */
@@ -134,7 +140,7 @@ public abstract class SingleInputOperator<IN, OUT, FT extends Function> extends 
 
 	/**
 	 * Adds to the input the union of the given operators.
-	 * 
+	 *
 	 * @param input The operator(s) that form the input.
 	 * @deprecated This method will be removed in future versions. Use the {@link Union} operator instead.
 	 */
@@ -142,10 +148,10 @@ public abstract class SingleInputOperator<IN, OUT, FT extends Function> extends 
 	public void addInput(Operator<IN>... input) {
 		this.input = Operator.createUnionCascade(this.input, input);
 	}
-	
+
 	/**
 	 * Adds to the input the union of the given operators.
-	 * 
+	 *
 	 * @param inputs The operator(s) that form the input.
 	 * @deprecated This method will be removed in future versions. Use the {@link Union} operator instead.
 	 */
@@ -160,14 +166,14 @@ public abstract class SingleInputOperator<IN, OUT, FT extends Function> extends 
 	public SingleInputSemanticProperties getSemanticProperties() {
 		return this.semanticProperties;
 	}
-	
+
 	public void setSemanticProperties(SingleInputSemanticProperties semanticProperties) {
 		this.semanticProperties = semanticProperties;
 	}
-	
+
 	// --------------------------------------------------------------------------------------------
 
-	
+
 	@Override
 	public final int getNumberOfInputs() {
 		return 1;
@@ -181,16 +187,15 @@ public abstract class SingleInputOperator<IN, OUT, FT extends Function> extends 
 			throw new IndexOutOfBoundsException();
 		}
 	}
-	
+
 	// --------------------------------------------------------------------------------------------
-	
+
 	/**
-	 * Accepts the visitor and applies it this instance. The visitors pre-visit method is called and, if returning 
+	 * Accepts the visitor and applies it this instance. The visitors pre-visit method is called and, if returning
 	 * <tt>true</tt>, the visitor is recursively applied on the single input. After the recursion returned,
 	 * the post-visit method is called.
-	 * 
+	 *
 	 * @param visitor The visitor.
-	 *  
 	 * @see org.apache.flink.util.Visitable#accept(org.apache.flink.util.Visitor)
 	 */
 	@Override
@@ -203,8 +208,8 @@ public abstract class SingleInputOperator<IN, OUT, FT extends Function> extends 
 			visitor.postVisit(this);
 		}
 	}
-	
+
 	// --------------------------------------------------------------------------------------------
-	
+
 	protected abstract List<OUT> executeOnCollections(List<IN> inputData, RuntimeContext runtimeContext, ExecutionConfig executionConfig) throws Exception;
 }

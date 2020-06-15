@@ -20,6 +20,7 @@ package org.apache.flink.api.common.typeutils.base;
 
 import java.io.IOException;
 import java.math.BigInteger;
+
 import org.apache.flink.annotation.Internal;
 import org.apache.flink.core.memory.DataInputView;
 import org.apache.flink.core.memory.MemorySegment;

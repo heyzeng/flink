@@ -53,10 +53,14 @@ public class YarnTaskExecutorRunner {
 
 	protected static final Logger LOG = LoggerFactory.getLogger(YarnTaskExecutorRunner.class);
 
-	/** The process environment variables. */
+	/**
+	 * The process environment variables.
+	 */
 	private static final Map<String, String> ENV = System.getenv();
 
-	/** The exit code returned if the initialization of the yarn task executor runner failed. */
+	/**
+	 * The exit code returned if the initialization of the yarn task executor runner failed.
+	 */
 	private static final int INIT_ERROR_EXIT_CODE = 31;
 
 	// ------------------------------------------------------------------------
@@ -104,8 +108,7 @@ public class YarnTaskExecutorRunner {
 				TaskManagerRunner.runTaskManager(configuration, new ResourceID(containerId));
 				return null;
 			});
-		}
-		catch (Throwable t) {
+		} catch (Throwable t) {
 			final Throwable strippedThrowable = ExceptionUtils.stripException(t, UndeclaredThrowableException.class);
 			// make sure that everything whatever ends up in the log
 			LOG.error("YARN TaskManager initialization failed.", strippedThrowable);
@@ -142,7 +145,7 @@ public class YarnTaskExecutorRunner {
 		UserGroupInformation currentUser = UserGroupInformation.getCurrentUser();
 
 		LOG.info("YARN daemon is running as: {} Yarn client user obtainer: {}",
-				currentUser.getShortUserName(), yarnClientUsername);
+			currentUser.getShortUserName(), yarnClientUsername);
 
 		if (keytabPath != null && keytabPrincipal != null) {
 			configuration.setString(SecurityOptions.KERBEROS_LOGIN_KEYTAB, keytabPath);

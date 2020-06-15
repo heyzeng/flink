@@ -47,13 +47,19 @@ import static org.apache.flink.util.Preconditions.checkNotNull;
 @Internal
 public class NestedSerializersSnapshotDelegate {
 
-	/** Magic number for integrity checks during deserialization. */
+	/**
+	 * Magic number for integrity checks during deserialization.
+	 */
 	private static final int MAGIC_NUMBER = 1333245;
 
-	/** Current version of the new serialization format. */
+	/**
+	 * Current version of the new serialization format.
+	 */
 	private static final int VERSION = 1;
 
-	/** The snapshots from the serializer that make up this composition. */
+	/**
+	 * The snapshots from the serializer that make up this composition.
+	 */
 	private final TypeSerializerSnapshot<?>[] nestedSnapshots;
 
 	/**
@@ -109,15 +115,15 @@ public class NestedSerializersSnapshotDelegate {
 	 * serializers of the new outer serializer.
 	 *
 	 * @deprecated this no method will be removed in the future. Resolving compatibility for nested
-	 *             serializers is now handled by {@link CompositeTypeSerializerSnapshot}.
+	 * serializers is now handled by {@link CompositeTypeSerializerSnapshot}.
 	 */
 	@Deprecated
 	public <T> TypeSerializerSchemaCompatibility<T> resolveCompatibilityWithNested(
-			TypeSerializerSchemaCompatibility<?> outerCompatibility,
-			TypeSerializer<?>... newNestedSerializers) {
+		TypeSerializerSchemaCompatibility<?> outerCompatibility,
+		TypeSerializer<?>... newNestedSerializers) {
 
 		checkArgument(newNestedSerializers.length == nestedSnapshots.length,
-				"Different number of new serializers and existing serializer configuration snapshots");
+			"Different number of new serializers and existing serializer configuration snapshots");
 
 		// compatibility of the outer serializer's format
 		if (outerCompatibility.isIncompatible()) {
@@ -128,7 +134,7 @@ public class NestedSerializersSnapshotDelegate {
 		boolean nestedSerializerRequiresMigration = false;
 		for (int i = 0; i < nestedSnapshots.length; i++) {
 			TypeSerializerSchemaCompatibility<?> compatibility =
-					resolveCompatibility(newNestedSerializers[i], nestedSnapshots[i]);
+				resolveCompatibility(newNestedSerializers[i], nestedSnapshots[i]);
 
 			if (compatibility.isIncompatible()) {
 				return TypeSerializerSchemaCompatibility.incompatible();
@@ -139,8 +145,8 @@ public class NestedSerializersSnapshotDelegate {
 		}
 
 		return (nestedSerializerRequiresMigration || !outerCompatibility.isCompatibleAsIs()) ?
-				TypeSerializerSchemaCompatibility.compatibleAfterMigration() :
-				TypeSerializerSchemaCompatibility.compatibleAsIs();
+			TypeSerializerSchemaCompatibility.compatibleAfterMigration() :
+			TypeSerializerSchemaCompatibility.compatibleAsIs();
 	}
 
 	// ------------------------------------------------------------------------
@@ -167,7 +173,7 @@ public class NestedSerializersSnapshotDelegate {
 		final int magicNumber = in.readInt();
 		if (magicNumber != MAGIC_NUMBER) {
 			throw new IOException(String.format("Corrupt data, magic number mismatch. Expected %8x, found %8x",
-					MAGIC_NUMBER, magicNumber));
+				MAGIC_NUMBER, magicNumber));
 		}
 
 		final int version = in.readInt();
@@ -190,13 +196,12 @@ public class NestedSerializersSnapshotDelegate {
 	 * with Version 1 of the deprecated {@link CompositeTypeSerializerConfigSnapshot}.
 	 */
 	public static NestedSerializersSnapshotDelegate legacyReadNestedSerializerSnapshots(DataInputView in, ClassLoader cl) throws IOException {
-		@SuppressWarnings("deprecation")
-		final List<Tuple2<TypeSerializer<?>, TypeSerializerSnapshot<?>>> serializersAndSnapshots =
-				TypeSerializerSerializationUtil.readSerializersAndConfigsWithResilience(in, cl);
+		@SuppressWarnings("deprecation") final List<Tuple2<TypeSerializer<?>, TypeSerializerSnapshot<?>>> serializersAndSnapshots =
+			TypeSerializerSerializationUtil.readSerializersAndConfigsWithResilience(in, cl);
 
 		final TypeSerializerSnapshot<?>[] nestedSnapshots = serializersAndSnapshots.stream()
-				.map(t -> t.f1)
-				.toArray(TypeSerializerSnapshot<?>[]::new);
+			.map(t -> t.f1)
+			.toArray(TypeSerializerSnapshot<?>[]::new);
 
 		return new NestedSerializersSnapshotDelegate(nestedSnapshots);
 	}
@@ -210,8 +215,8 @@ public class NestedSerializersSnapshotDelegate {
 	 */
 	@SuppressWarnings("unchecked")
 	private static <E> TypeSerializerSchemaCompatibility<E> resolveCompatibility(
-			TypeSerializer<?> serializer,
-			TypeSerializerSnapshot<?> snapshot) {
+		TypeSerializer<?> serializer,
+		TypeSerializerSnapshot<?> snapshot) {
 
 		TypeSerializer<E> typedSerializer = (TypeSerializer<E>) serializer;
 		TypeSerializerSnapshot<E> typedSnapshot = (TypeSerializerSnapshot<E>) snapshot;
@@ -221,7 +226,7 @@ public class NestedSerializersSnapshotDelegate {
 
 	private static TypeSerializer<?>[] snapshotsToRestoreSerializers(TypeSerializerSnapshot<?>... snapshots) {
 		return Arrays.stream(snapshots)
-				.map(TypeSerializerSnapshot::restoreSerializer)
-				.toArray(TypeSerializer[]::new);
+			.map(TypeSerializerSnapshot::restoreSerializer)
+			.toArray(TypeSerializer[]::new);
 	}
 }

@@ -30,9 +30,8 @@ import static java.util.Objects.requireNonNull;
  * {@link StateDescriptor} for {@link FoldingState}. This can be used to create partitioned
  * folding state.
  *
- * @param <T> Type of the values folded in the other state
+ * @param <T>   Type of the values folded in the other state
  * @param <ACC> Type of the value in the state
- *
  * @deprecated will be removed in a future version in favor of {@link AggregatingStateDescriptor}
  */
 @PublicEvolving
@@ -49,10 +48,10 @@ public class FoldingStateDescriptor<T, ACC> extends StateDescriptor<FoldingState
 	 * <p>If this constructor fails (because it is not possible to describe the type via a class),
 	 * consider using the {@link #FoldingStateDescriptor(String, ACC, FoldFunction, TypeInformation)} constructor.
 	 *
-	 * @param name The (unique) name for the state.
+	 * @param name         The (unique) name for the state.
 	 * @param initialValue The initial value of the fold.
 	 * @param foldFunction The {@code FoldFunction} used to aggregate the state.
-	 * @param typeClass The type of the values in the state.
+	 * @param typeClass    The type of the values in the state.
 	 */
 	public FoldingStateDescriptor(String name, ACC initialValue, FoldFunction<T, ACC> foldFunction, Class<ACC> typeClass) {
 		super(name, typeClass, initialValue);
@@ -66,10 +65,10 @@ public class FoldingStateDescriptor<T, ACC> extends StateDescriptor<FoldingState
 	/**
 	 * Creates a new {@code FoldingStateDescriptor} with the given name and default value.
 	 *
-	 * @param name The (unique) name for the state.
+	 * @param name         The (unique) name for the state.
 	 * @param initialValue The initial value of the fold.
 	 * @param foldFunction The {@code FoldFunction} used to aggregate the state.
-	 * @param typeInfo The type of the values in the state.
+	 * @param typeInfo     The type of the values in the state.
 	 */
 	public FoldingStateDescriptor(String name, ACC initialValue, FoldFunction<T, ACC> foldFunction, TypeInformation<ACC> typeInfo) {
 		super(name, typeInfo, initialValue);
@@ -83,9 +82,9 @@ public class FoldingStateDescriptor<T, ACC> extends StateDescriptor<FoldingState
 	/**
 	 * Creates a new {@code ValueStateDescriptor} with the given name and default value.
 	 *
-	 * @param name The (unique) name for the state.
-	 * @param initialValue The initial value of the fold.
-	 * @param foldFunction The {@code FoldFunction} used to aggregate the state.
+	 * @param name           The (unique) name for the state.
+	 * @param initialValue   The initial value of the fold.
+	 * @param foldFunction   The {@code FoldFunction} used to aggregate the state.
 	 * @param typeSerializer The type serializer of the values in the state.
 	 */
 	public FoldingStateDescriptor(String name, ACC initialValue, FoldFunction<T, ACC> foldFunction, TypeSerializer<ACC> typeSerializer) {

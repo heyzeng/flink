@@ -32,20 +32,23 @@ public class TestNonRichOutputFormat implements OutputFormat<String> {
 	public List<String> output = new LinkedList<String>();
 
 	@Override
-	public void configure(Configuration parameters){}
+	public void configure(Configuration parameters) {
+	}
 
 	@Override
-	public void open(int a, int b){}
+	public void open(int a, int b) {
+	}
 
 	@Override
-	public void close(){}
+	public void close() {
+	}
 
 	@Override
-	public void writeRecord(String record){
+	public void writeRecord(String record) {
 		output.add(record);
 	}
 
-	public void clear(){
+	public void clear() {
 		output.clear();
 	}
 }

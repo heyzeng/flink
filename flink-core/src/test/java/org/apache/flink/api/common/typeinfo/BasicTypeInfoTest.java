@@ -27,7 +27,7 @@ public class BasicTypeInfoTest extends TypeInformationTestBase<BasicTypeInfo<?>>
 
 	@Override
 	protected BasicTypeInfo<?>[] getTestData() {
-		return new BasicTypeInfo<?>[] {
+		return new BasicTypeInfo<?>[]{
 			BasicTypeInfo.STRING_TYPE_INFO,
 			BasicTypeInfo.BOOLEAN_TYPE_INFO,
 			BasicTypeInfo.BYTE_TYPE_INFO,

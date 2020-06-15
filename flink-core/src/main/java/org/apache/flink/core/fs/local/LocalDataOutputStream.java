@@ -32,16 +32,16 @@ import java.io.IOException;
 @Internal
 public class LocalDataOutputStream extends FSDataOutputStream {
 
-	/** The file output stream used to write data.*/
+	/**
+	 * The file output stream used to write data.
+	 */
 	private final FileOutputStream fos;
 
 	/**
 	 * Constructs a new <code>LocalDataOutputStream</code> object from a given {@link File} object.
 	 *
-	 * @param file
-	 *        the {@link File} object the data stream is read from
-	 * @throws IOException
-	 *         thrown if the data output stream cannot be created
+	 * @param file the {@link File} object the data stream is read from
+	 * @throws IOException thrown if the data output stream cannot be created
 	 */
 	public LocalDataOutputStream(final File file) throws IOException {
 		this.fos = new FileOutputStream(file);

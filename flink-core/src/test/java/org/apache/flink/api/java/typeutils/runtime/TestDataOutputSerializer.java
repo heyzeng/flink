@@ -29,20 +29,20 @@ import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 
 public final class TestDataOutputSerializer implements DataOutputView {
-	
+
 	private byte[] buffer;
-	
+
 	private int position;
 
 	private ByteBuffer wrapper;
-	
+
 	private final int maxSize;
-	
+
 
 	public TestDataOutputSerializer(int startSize) {
 		this(startSize, Integer.MAX_VALUE);
 	}
-	
+
 	public TestDataOutputSerializer(int startSize, int maxSize) {
 		if (startSize < 1 || startSize > maxSize) {
 			throw new IllegalArgumentException();
@@ -52,7 +52,7 @@ public final class TestDataOutputSerializer implements DataOutputView {
 		this.wrapper = ByteBuffer.wrap(buffer);
 		this.maxSize = maxSize;
 	}
-	
+
 	public ByteBuffer wrapAsByteBuffer() {
 		this.wrapper.position(0);
 		this.wrapper.limit(this.position);
@@ -82,7 +82,7 @@ public final class TestDataOutputSerializer implements DataOutputView {
 	// ----------------------------------------------------------------------------------------
 	//                               Data Output
 	// ----------------------------------------------------------------------------------------
-	
+
 	@Override
 	public void write(int b) throws IOException {
 		if (this.position >= this.buffer.length) {
@@ -124,7 +124,7 @@ public final class TestDataOutputSerializer implements DataOutputView {
 		if (this.position >= this.buffer.length - sLen) {
 			resize(sLen);
 		}
-		
+
 		for (int i = 0; i < sLen; i++) {
 			writeByte(s.charAt(i));
 		}
@@ -143,9 +143,9 @@ public final class TestDataOutputSerializer implements DataOutputView {
 	@Override
 	public void writeChars(String s) throws IOException {
 		final int sLen = s.length();
-		if (this.position >= this.buffer.length - 2*sLen) {
-			resize(2*sLen);
-		} 
+		if (this.position >= this.buffer.length - 2 * sLen) {
+			resize(2 * sLen);
+		}
 		for (int i = 0; i < sLen; i++) {
 			writeChar(s.charAt(i));
 		}
@@ -169,7 +169,7 @@ public final class TestDataOutputSerializer implements DataOutputView {
 		}
 		if (LITTLE_ENDIAN) {
 			v = Integer.reverseBytes(v);
-		}			
+		}
 		UNSAFE.putInt(this.buffer, BASE_OFFSET + this.position, v);
 		this.position += 4;
 	}
@@ -216,11 +216,10 @@ public final class TestDataOutputSerializer implements DataOutputView {
 
 		if (utflen > 65535) {
 			throw new UTFDataFormatException("Encoded string is too long: " + utflen);
-		}
-		else if (this.position > this.buffer.length - utflen - 2) {
+		} else if (this.position > this.buffer.length - utflen - 2) {
 			resize(utflen + 2);
 		}
-		
+
 		byte[] bytearr = this.buffer;
 		int count = this.position;
 
@@ -253,42 +252,41 @@ public final class TestDataOutputSerializer implements DataOutputView {
 
 		this.position = count;
 	}
-	
-	
+
+
 	private void resize(int minCapacityAdd) throws IOException {
 		try {
 			int newLen = Math.max(this.buffer.length * 2, this.buffer.length + minCapacityAdd);
-			
+
 			if (newLen > maxSize) {
-				
+
 				if (this.buffer.length + minCapacityAdd > maxSize) {
 					throw new EOFException("Exceeded maximum capacity");
 				}
-				
+
 				newLen = maxSize;
 			}
-			
+
 			final byte[] nb = new byte[newLen];
 			System.arraycopy(this.buffer, 0, nb, 0, this.position);
 			this.buffer = nb;
 			this.wrapper = ByteBuffer.wrap(this.buffer);
-		}
-		catch (NegativeArraySizeException nasex) {
+		} catch (NegativeArraySizeException nasex) {
 			throw new IOException("Serialization failed because the record length would exceed 2GB (max addressable array size in Java).");
 		}
 	}
-	
+
 	@SuppressWarnings("restriction")
 	private static final sun.misc.Unsafe UNSAFE = MemoryUtils.UNSAFE;
-	
+
 	@SuppressWarnings("restriction")
 	private static final long BASE_OFFSET = UNSAFE.arrayBaseOffset(byte[].class);
-	
+
 	private static final boolean LITTLE_ENDIAN = (MemoryUtils.NATIVE_BYTE_ORDER == ByteOrder.LITTLE_ENDIAN);
 
 	@Override
 	public void skipBytesToWrite(int numBytes) throws IOException {
-		if(buffer.length - this.position < numBytes){
+		if (buffer.length - this.position < numBytes) {
 			throw new EOFException("Could not skip " + numBytes + " bytes.");
 		}
 
@@ -297,12 +295,12 @@ public final class TestDataOutputSerializer implements DataOutputView {
 
 	@Override
 	public void write(DataInputView source, int numBytes) throws IOException {
-		if(buffer.length - this.position < numBytes){
+		if (buffer.length - this.position < numBytes) {
 			throw new EOFException("Could not write " + numBytes + " bytes. Buffer overflow.");
 		}
 
 		source.readFully(this.buffer, this.position, numBytes);
 		this.position += numBytes;
 	}
-	
+
 }

@@ -42,7 +42,7 @@ public interface FileStatus {
 	long getLen();
 
 	/**
-	 *Get the block size of the file.
+	 * Get the block size of the file.
 	 *
 	 * @return the number of bytes
 	 */

@@ -20,6 +20,7 @@ package org.apache.flink.api.common.typeutils.base;
 
 import java.io.IOException;
 import java.sql.Timestamp;
+
 import org.apache.flink.annotation.Internal;
 import org.apache.flink.core.memory.DataInputView;
 import org.apache.flink.core.memory.MemorySegment;
@@ -78,7 +79,7 @@ public final class SqlTimestampComparator extends BasicTypeComparator<java.util.
 		else if (numBytes < 4) {
 			final int nanos = ((Timestamp) record).getNanos();
 			for (int i = 0; numBytes > 0; numBytes--, i++) {
-				target.put(offset + i, (byte) (nanos >>> ((3-i)<<3)));
+				target.put(offset + i, (byte) (nanos >>> ((3 - i) << 3)));
 			}
 		}
 		// put nanos with padding

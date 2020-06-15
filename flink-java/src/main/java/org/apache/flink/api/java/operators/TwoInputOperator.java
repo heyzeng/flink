@@ -90,5 +90,5 @@ public abstract class TwoInputOperator<IN1, IN2, OUT, O extends TwoInputOperator
 	 * @return The created common API operator.
 	 */
 	protected abstract org.apache.flink.api.common.operators.Operator<OUT> translateToDataFlow(
-			org.apache.flink.api.common.operators.Operator<IN1> input1, org.apache.flink.api.common.operators.Operator<IN2> input2);
+		org.apache.flink.api.common.operators.Operator<IN1> input1, org.apache.flink.api.common.operators.Operator<IN2> input2);
 }

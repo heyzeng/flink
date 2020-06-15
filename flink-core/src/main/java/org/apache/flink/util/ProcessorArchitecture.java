@@ -147,10 +147,14 @@ public enum ProcessorArchitecture {
 	 */
 	public enum MemoryAddressSize {
 
-		/** 32 bit memory address size. */
+		/**
+		 * 32 bit memory address size.
+		 */
 		_32_BIT,
 
-		/** 64 bit memory address size. */
+		/**
+		 * 64 bit memory address size.
+		 */
 		_64_BIT,
 	}
 }

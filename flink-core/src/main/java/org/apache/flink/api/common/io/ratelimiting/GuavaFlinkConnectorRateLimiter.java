@@ -29,20 +29,29 @@ public class GuavaFlinkConnectorRateLimiter implements FlinkConnectorRateLimiter
 
 	private static final long serialVersionUID = -3680641524643737192L;
 
-	/** Rate in bytes per second for the consumer on a whole. */
+	/**
+	 * Rate in bytes per second for the consumer on a whole.
+	 */
 	private long globalRateBytesPerSecond;
 
-	/** Rate in bytes per second per subtask of the consumer. */
+	/**
+	 * Rate in bytes per second per subtask of the consumer.
+	 */
 	private long localRateBytesPerSecond;
 
-	/** Runtime context. **/
+	/**
+	 * Runtime context.
+	 **/
 	private RuntimeContext runtimeContext;
 
-	/** RateLimiter. **/
+	/**
+	 * RateLimiter.
+	 **/
 	private RateLimiter rateLimiter;
 
 	/**
 	 * Creates a rate limiter with the runtime context provided.
+	 *
 	 * @param runtimeContext
 	 */
 	@Override
@@ -54,6 +63,7 @@ public class GuavaFlinkConnectorRateLimiter implements FlinkConnectorRateLimiter
 
 	/**
 	 * Set the global per consumer and per sub-task rates.
+	 *
 	 * @param globalRate Value of rate in bytes per second.
 	 */
 	@Override

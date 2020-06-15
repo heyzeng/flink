@@ -101,7 +101,8 @@ public class MesosConfiguration {
 
 	/**
 	 * Create the Mesos scheduler driver based on this configuration.
-	 * @param scheduler the scheduler to use.
+	 *
+	 * @param scheduler                the scheduler to use.
 	 * @param implicitAcknowledgements whether to configure the driver for implicit acknowledgements.
 	 * @return a scheduler driver.
 	 */
@@ -111,8 +112,7 @@ public class MesosConfiguration {
 			schedulerDriver =
 				new MesosSchedulerDriver(scheduler, frameworkInfo.build(), this.masterUrl(),
 					implicitAcknowledgements, this.credential().get().build());
-		}
-		else {
+		} else {
 			schedulerDriver =
 				new MesosSchedulerDriver(scheduler, frameworkInfo.build(), this.masterUrl(),
 					implicitAcknowledgements);

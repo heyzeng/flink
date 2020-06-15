@@ -26,7 +26,7 @@ import java.util.List;
 @SuppressWarnings("rawtypes")
 @PublicEvolving
 public abstract class CompositeTypeComparator<T> extends TypeComparator<T> {
-	
+
 	private static final long serialVersionUID = 1L;
 
 	@Override
@@ -35,6 +35,6 @@ public abstract class CompositeTypeComparator<T> extends TypeComparator<T> {
 		this.getFlatComparator(flatComparators);
 		return flatComparators.toArray(new TypeComparator[flatComparators.size()]);
 	}
-	
+
 	public abstract void getFlatComparator(List<TypeComparator> flatComparators);
 }

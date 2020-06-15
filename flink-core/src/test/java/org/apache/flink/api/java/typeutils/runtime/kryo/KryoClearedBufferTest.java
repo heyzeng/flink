@@ -66,13 +66,13 @@ public class KryoClearedBufferTest {
 		try {
 			kryoSerializer.serialize(testRecord, target);
 			Assert.fail("Expected an EOFException.");
-		} catch(EOFException eofException) {
+		} catch (EOFException eofException) {
 			// expected exception
 			// now the Kryo Output should have been cleared
 		}
 
 		TestRecord actualRecord = kryoSerializer.deserialize(
-				new DataInputViewStreamWrapper(new ByteArrayInputStream(target.getBuffer())));
+			new DataInputViewStreamWrapper(new ByteArrayInputStream(target.getBuffer())));
 
 		Assert.assertEquals(testRecord, actualRecord);
 
@@ -86,7 +86,7 @@ public class KryoClearedBufferTest {
 		int counter = 0;
 
 		for (int i = 0; i < buffer.length; i++) {
-			if(buffer[i] == 42) {
+			if (buffer[i] == 42) {
 				counter++;
 			}
 		}
@@ -100,10 +100,10 @@ public class KryoClearedBufferTest {
 		public TestRecord(int size) {
 			buffer = new byte[size];
 
-			Arrays.fill(buffer, (byte)42);
+			Arrays.fill(buffer, (byte) 42);
 		}
 
-		public TestRecord(byte[] buffer){
+		public TestRecord(byte[] buffer) {
 			this.buffer = buffer;
 		}
 
@@ -216,7 +216,7 @@ public class KryoClearedBufferTest {
 		public void writeByte(int v) throws IOException {
 			checkSize(1);
 
-			buffer[position] = (byte)v;
+			buffer[position] = (byte) v;
 
 			position++;
 		}

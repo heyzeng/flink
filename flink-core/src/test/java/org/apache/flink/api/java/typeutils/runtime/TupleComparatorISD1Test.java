@@ -45,20 +45,20 @@ public class TupleComparatorISD1Test extends TupleComparatorTestBase<Tuple3<Inte
 	@Override
 	protected TupleComparator<Tuple3<Integer, String, Double>> createComparator(boolean ascending) {
 		return new TupleComparator<Tuple3<Integer, String, Double>>(
-				new int[]{0},
-				new TypeComparator[]{ new IntComparator(ascending) },
-				new TypeSerializer[]{ IntSerializer.INSTANCE });
+			new int[]{0},
+			new TypeComparator[]{new IntComparator(ascending)},
+			new TypeSerializer[]{IntSerializer.INSTANCE});
 	}
 
 	@SuppressWarnings("unchecked")
 	@Override
 	protected TupleSerializer<Tuple3<Integer, String, Double>> createSerializer() {
 		return new TupleSerializer<Tuple3<Integer, String, Double>>(
-				(Class<Tuple3<Integer, String, Double>>) (Class<?>) Tuple3.class,
-				new TypeSerializer[]{
-					new IntSerializer(),
-					new StringSerializer(),
-					new DoubleSerializer()});
+			(Class<Tuple3<Integer, String, Double>>) (Class<?>) Tuple3.class,
+			new TypeSerializer[]{
+				new IntSerializer(),
+				new StringSerializer(),
+				new DoubleSerializer()});
 	}
 
 	@Override

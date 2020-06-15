@@ -52,29 +52,30 @@ import static org.junit.Assert.fail;
  * Tests for {@link ReduceOperator}.
  */
 @SuppressWarnings({"serial", "unchecked"})
-public class ReduceOperatorTest extends TestLogger implements Serializable{
+public class ReduceOperatorTest extends TestLogger implements Serializable {
 
 	private static final TypeInformation<Tuple2<String, Integer>> STRING_INT_TUPLE =
-			TypeInformation.of(new TypeHint<Tuple2<String, Integer>>(){});
+		TypeInformation.of(new TypeHint<Tuple2<String, Integer>>() {
+		});
 
 	@Test
 	public void testReduceCollection() {
 		try {
 			final ReduceFunction<Tuple2<String, Integer>> reducer =
-					(value1, value2) -> new Tuple2<>(value1.f0, value1.f1 + value2.f1);
+				(value1, value2) -> new Tuple2<>(value1.f0, value1.f1 + value2.f1);
 
 			ReduceOperatorBase<Tuple2<String, Integer>, ReduceFunction<Tuple2<String, Integer>>> op =
-					new ReduceOperatorBase<>(
-							reducer,
-							new UnaryOperatorInformation<>(STRING_INT_TUPLE, STRING_INT_TUPLE),
-							new int[]{0},
-							"TestReducer");
+				new ReduceOperatorBase<>(
+					reducer,
+					new UnaryOperatorInformation<>(STRING_INT_TUPLE, STRING_INT_TUPLE),
+					new int[]{0},
+					"TestReducer");
 
 			List<Tuple2<String, Integer>> input = new ArrayList<>(asList(
-					new Tuple2<>("foo", 1),
-					new Tuple2<>("foo", 3),
-					new Tuple2<>("bar", 2),
-					new Tuple2<>("bar", 4)));
+				new Tuple2<>("foo", 1),
+				new Tuple2<>("foo", 3),
+				new Tuple2<>("bar", 2),
+				new Tuple2<>("bar", 4)));
 
 			ExecutionConfig executionConfig = new ExecutionConfig();
 			executionConfig.disableObjectReuse();
@@ -86,13 +87,12 @@ public class ReduceOperatorTest extends TestLogger implements Serializable{
 			Set<Tuple2<String, Integer>> resultSetRegular = new HashSet<>(resultRegular);
 
 			Set<Tuple2<String, Integer>> expectedResult = new HashSet<>(asList(
-					new Tuple2<>("foo", 4),
-					new Tuple2<>("bar", 6)));
+				new Tuple2<>("foo", 4),
+				new Tuple2<>("bar", 6)));
 
 			assertEquals(expectedResult, resultSetMutableSafe);
 			assertEquals(expectedResult, resultSetRegular);
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 			fail(e.getMessage());
 		}
@@ -109,8 +109,8 @@ public class ReduceOperatorTest extends TestLogger implements Serializable{
 
 				@Override
 				public Tuple2<String, Integer> reduce(
-						Tuple2<String, Integer> value1,
-						Tuple2<String, Integer> value2) throws Exception {
+					Tuple2<String, Integer> value1,
+					Tuple2<String, Integer> value2) throws Exception {
 
 					return new Tuple2<>(value1.f0, value1.f1 + value2.f1);
 				}
@@ -131,17 +131,17 @@ public class ReduceOperatorTest extends TestLogger implements Serializable{
 			};
 
 			ReduceOperatorBase<Tuple2<String, Integer>, ReduceFunction<Tuple2<String, Integer>>> op =
-					new ReduceOperatorBase<>(
-							reducer,
-							new UnaryOperatorInformation<>(STRING_INT_TUPLE, STRING_INT_TUPLE),
-							new int[]{0},
-							"TestReducer");
+				new ReduceOperatorBase<>(
+					reducer,
+					new UnaryOperatorInformation<>(STRING_INT_TUPLE, STRING_INT_TUPLE),
+					new int[]{0},
+					"TestReducer");
 
 			List<Tuple2<String, Integer>> input = new ArrayList<>(asList(
-					new Tuple2<>("foo", 1),
-					new Tuple2<>("foo", 3),
-					new Tuple2<>("bar", 2),
-					new Tuple2<>("bar", 4)));
+				new Tuple2<>("foo", 1),
+				new Tuple2<>("foo", 3),
+				new Tuple2<>("bar", 2),
+				new Tuple2<>("bar", 4)));
 
 			final TaskInfo taskInfo = new TaskInfo(taskName, 1, 0, 1, 0);
 
@@ -149,34 +149,33 @@ public class ReduceOperatorTest extends TestLogger implements Serializable{
 
 			executionConfig.disableObjectReuse();
 			List<Tuple2<String, Integer>> resultMutableSafe = op.executeOnCollections(input,
-					new RuntimeUDFContext(taskInfo, null, executionConfig,
-							new HashMap<>(),
-							new HashMap<>(),
-							new UnregisteredMetricsGroup()),
-					executionConfig);
+				new RuntimeUDFContext(taskInfo, null, executionConfig,
+					new HashMap<>(),
+					new HashMap<>(),
+					new UnregisteredMetricsGroup()),
+				executionConfig);
 
 			executionConfig.enableObjectReuse();
 			List<Tuple2<String, Integer>> resultRegular = op.executeOnCollections(input,
-					new RuntimeUDFContext(taskInfo, null, executionConfig,
-							new HashMap<>(),
-							new HashMap<>(),
-							new UnregisteredMetricsGroup()),
-					executionConfig);
+				new RuntimeUDFContext(taskInfo, null, executionConfig,
+					new HashMap<>(),
+					new HashMap<>(),
+					new UnregisteredMetricsGroup()),
+				executionConfig);
 
 			Set<Tuple2<String, Integer>> resultSetMutableSafe = new HashSet<>(resultMutableSafe);
 			Set<Tuple2<String, Integer>> resultSetRegular = new HashSet<>(resultRegular);
 
 			Set<Tuple2<String, Integer>> expectedResult = new HashSet<>(asList(
-					new Tuple2<>("foo", 4),
-					new Tuple2<>("bar", 6)));
+				new Tuple2<>("foo", 4),
+				new Tuple2<>("bar", 6)));
 
 			assertEquals(expectedResult, resultSetMutableSafe);
 			assertEquals(expectedResult, resultSetRegular);
 
 			assertTrue(opened.get());
 			assertTrue(closed.get());
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 			fail(e.getMessage());
 		}

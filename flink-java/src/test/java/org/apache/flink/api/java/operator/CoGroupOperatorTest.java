@@ -50,16 +50,16 @@ public class CoGroupOperatorTest {
 
 	// TUPLE DATA
 	private static final List<Tuple5<Integer, Long, String, Long, Integer>> emptyTupleData =
-			new ArrayList<Tuple5<Integer, Long, String, Long, Integer>>();
+		new ArrayList<Tuple5<Integer, Long, String, Long, Integer>>();
 
 	private final TupleTypeInfo<Tuple5<Integer, Long, String, Long, Integer>> tupleTypeInfo = new
-			TupleTypeInfo<Tuple5<Integer, Long, String, Long, Integer>>(
-					BasicTypeInfo.INT_TYPE_INFO,
-					BasicTypeInfo.LONG_TYPE_INFO,
-					BasicTypeInfo.STRING_TYPE_INFO,
-					BasicTypeInfo.LONG_TYPE_INFO,
-					BasicTypeInfo.INT_TYPE_INFO
-			);
+		TupleTypeInfo<Tuple5<Integer, Long, String, Long, Integer>>(
+		BasicTypeInfo.INT_TYPE_INFO,
+		BasicTypeInfo.LONG_TYPE_INFO,
+		BasicTypeInfo.STRING_TYPE_INFO,
+		BasicTypeInfo.LONG_TYPE_INFO,
+		BasicTypeInfo.INT_TYPE_INFO
+	);
 
 	private static List<CustomType> customTypeData = new ArrayList<CustomType>();
 
@@ -317,24 +317,24 @@ public class CoGroupOperatorTest {
 		// should work
 		try {
 			ds1.coGroup(ds2)
-			.where(
+				.where(
 					new KeySelector<CustomType, Long>() {
 
-							@Override
-							public Long getKey(CustomType value) {
-								return value.myLong;
-							}
+						@Override
+						public Long getKey(CustomType value) {
+							return value.myLong;
 						}
-					)
-			.equalTo(
+					}
+				)
+				.equalTo(
 					new KeySelector<CustomType, Long>() {
 
-							@Override
-							public Long getKey(CustomType value) {
-								return value.myLong;
-							}
+						@Override
+						public Long getKey(CustomType value) {
+							return value.myLong;
 						}
-					);
+					}
+				);
 		} catch (Exception e) {
 			Assert.fail();
 		}
@@ -350,16 +350,16 @@ public class CoGroupOperatorTest {
 		// should work
 		try {
 			ds1.coGroup(ds2)
-			.where(
+				.where(
 					new KeySelector<CustomType, Long>() {
 
-							@Override
-							public Long getKey(CustomType value) {
-								return value.myLong;
-							}
+						@Override
+						public Long getKey(CustomType value) {
+							return value.myLong;
 						}
-					)
-			.equalTo(3);
+					}
+				)
+				.equalTo(3);
 		} catch (Exception e) {
 			Assert.fail();
 		}
@@ -375,16 +375,16 @@ public class CoGroupOperatorTest {
 		// should work
 		try {
 			ds1.coGroup(ds2)
-			.where(3)
-			.equalTo(
+				.where(3)
+				.equalTo(
 					new KeySelector<CustomType, Long>() {
 
-							@Override
-							public Long getKey(CustomType value) {
-								return value.myLong;
-							}
+						@Override
+						public Long getKey(CustomType value) {
+							return value.myLong;
 						}
-					);
+					}
+				);
 		} catch (Exception e) {
 			Assert.fail();
 		}
@@ -399,16 +399,16 @@ public class CoGroupOperatorTest {
 
 		// should not work, incompatible types
 		ds1.coGroup(ds2)
-		.where(2)
-		.equalTo(
+			.where(2)
+			.equalTo(
 				new KeySelector<CustomType, Long>() {
 
-						@Override
-						public Long getKey(CustomType value) {
-							return value.myLong;
-						}
+					@Override
+					public Long getKey(CustomType value) {
+						return value.myLong;
 					}
-				);
+				}
+			);
 	}
 
 	@Test(expected = InvalidProgramException.class)
@@ -420,16 +420,16 @@ public class CoGroupOperatorTest {
 
 		// should not work, more than one key field position
 		ds1.coGroup(ds2)
-		.where(1, 3)
-		.equalTo(
+			.where(1, 3)
+			.equalTo(
 				new KeySelector<CustomType, Long>() {
 
-						@Override
-						public Long getKey(CustomType value) {
-							return value.myLong;
-						}
+					@Override
+					public Long getKey(CustomType value) {
+						return value.myLong;
 					}
-				);
+				}
+			);
 	}
 
 	@Test
@@ -440,8 +440,8 @@ public class CoGroupOperatorTest {
 		DataSet<Tuple5<Integer, Long, String, Long, Integer>> tupleDs2 = env.fromCollection(emptyTupleData, tupleTypeInfo);
 
 		CoGroupOperator<?, ?, ?> coGroupOp = tupleDs1.coGroup(tupleDs2)
-				.where(new DummyTestKeySelector()).equalTo(new DummyTestKeySelector())
-				.with(new DummyTestCoGroupFunction1());
+			.where(new DummyTestKeySelector()).equalTo(new DummyTestKeySelector())
+			.with(new DummyTestCoGroupFunction1());
 
 		SemanticProperties semProps = coGroupOp.getSemanticProperties();
 
@@ -484,10 +484,10 @@ public class CoGroupOperatorTest {
 		DataSet<Tuple5<Integer, Long, String, Long, Integer>> tupleDs2 = env.fromCollection(emptyTupleData, tupleTypeInfo);
 
 		CoGroupOperator<?, ?, ?> coGroupOp = tupleDs1.coGroup(tupleDs2)
-				.where(new DummyTestKeySelector()).equalTo(new DummyTestKeySelector())
-				.with(new DummyTestCoGroupFunction2())
-				.withForwardedFieldsFirst("2;4->0")
-				.withForwardedFieldsSecond("0->4;1;1->3");
+			.where(new DummyTestKeySelector()).equalTo(new DummyTestKeySelector())
+			.with(new DummyTestCoGroupFunction2())
+			.withForwardedFieldsFirst("2;4->0")
+			.withForwardedFieldsSecond("0->4;1;1->3");
 
 		SemanticProperties semProps = coGroupOp.getSemanticProperties();
 
@@ -532,9 +532,9 @@ public class CoGroupOperatorTest {
 	@FunctionAnnotation.ReadFieldsFirst("0;2;4")
 	@FunctionAnnotation.ReadFieldsSecond("1;3")
 	private static class DummyTestCoGroupFunction1
-			implements CoGroupFunction<Tuple5<Integer, Long, String, Long, Integer>,
-						Tuple5<Integer, Long, String, Long, Integer>,
-						Tuple5<Integer, Long, String, Long, Integer>> {
+		implements CoGroupFunction<Tuple5<Integer, Long, String, Long, Integer>,
+		Tuple5<Integer, Long, String, Long, Integer>,
+		Tuple5<Integer, Long, String, Long, Integer>> {
 
 		@Override
 		public void coGroup(Iterable<Tuple5<Integer, Long, String, Long, Integer>> first,
@@ -545,9 +545,9 @@ public class CoGroupOperatorTest {
 
 	@FunctionAnnotation.ReadFieldsFirst("0;1;2")
 	private static class DummyTestCoGroupFunction2
-			implements CoGroupFunction<Tuple5<Integer, Long, String, Long, Integer>,
-			Tuple5<Integer, Long, String, Long, Integer>,
-			Tuple5<Integer, Long, String, Long, Integer>> {
+		implements CoGroupFunction<Tuple5<Integer, Long, String, Long, Integer>,
+		Tuple5<Integer, Long, String, Long, Integer>,
+		Tuple5<Integer, Long, String, Long, Integer>> {
 
 		@Override
 		public void coGroup(Iterable<Tuple5<Integer, Long, String, Long, Integer>> first,

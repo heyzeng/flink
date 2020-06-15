@@ -56,7 +56,7 @@ public final class StringValueUtils {
 	 *
 	 * <p>This operation is intended to simplify strings for counting distinct words.
 	 *
-	 * @param string The string value to have the non-word characters replaced.
+	 * @param string      The string value to have the non-word characters replaced.
 	 * @param replacement The character to use as the replacement.
 	 */
 	public static void replaceNonWordChars(StringValue string, char replacement) {
@@ -81,14 +81,15 @@ public final class StringValueUtils {
 	public static final class WhitespaceTokenizer implements Serializable {
 		private static final long serialVersionUID = 1L;
 
-		private StringValue toTokenize;		// the string to tokenize
-		private int pos;					// the current position in the string
-		private int limit;					// the limit in the string's character data
+		private StringValue toTokenize;        // the string to tokenize
+		private int pos;                    // the current position in the string
+		private int limit;                    // the limit in the string's character data
 
 		/**
 		 * Creates a new tokenizer with an undefined internal state.
 		 */
-		public WhitespaceTokenizer() {}
+		public WhitespaceTokenizer() {
+		}
 
 		/**
 		 * Sets the string to be tokenized and resets the state of the tokenizer.
@@ -137,5 +138,6 @@ public final class StringValueUtils {
 	/**
 	 * Private constructor to prevent instantiation, as this is a utility method encapsulating class.
 	 */
-	private StringValueUtils() {}
+	private StringValueUtils() {
+	}
 }

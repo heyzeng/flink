@@ -59,11 +59,11 @@ public class EnumSerializerSnapshotMigrationTest extends TypeSerializerSnapshotM
 		final TestSpecifications testSpecifications = new TestSpecifications(MigrationVersion.v1_6, MigrationVersion.v1_7);
 
 		testSpecifications.addWithCompatibilityMatcher(
-				SPEC_NAME,
-				EnumSerializer.class,
-				EnumSerializer.EnumSerializerSnapshot.class,
-				() -> new EnumSerializer(TestEnum.class),
-				isCompatibleWithReconfiguredSerializer(enumSerializerWith(previousEnumValues))
+			SPEC_NAME,
+			EnumSerializer.class,
+			EnumSerializer.EnumSerializerSnapshot.class,
+			() -> new EnumSerializer(TestEnum.class),
+			isCompatibleWithReconfiguredSerializer(enumSerializerWith(previousEnumValues))
 		);
 
 		return testSpecifications.get();

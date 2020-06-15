@@ -29,23 +29,29 @@ import scala.collection.JavaConverters._
  */
 @Public
 class EitherTypeInfo[A, B, T <: Either[A, B]](
-    val clazz: Class[T],
-    val leftTypeInfo: TypeInformation[A],
-    val rightTypeInfo: TypeInformation[B])
+                                               val clazz: Class[T],
+                                               val leftTypeInfo: TypeInformation[A],
+                                               val rightTypeInfo: TypeInformation[B])
   extends TypeInformation[T] {
 
   @PublicEvolving
   override def isBasicType: Boolean = false
+
   @PublicEvolving
   override def isTupleType: Boolean = false
+
   @PublicEvolving
   override def isKeyType: Boolean = false
+
   @PublicEvolving
   override def getTotalFields: Int = 1
+
   @PublicEvolving
   override def getArity: Int = 1
+
   @PublicEvolving
   override def getTypeClass = clazz
+
   @PublicEvolving
   override def getGenericParameters =
     Map[String, TypeInformation[_]]("A" -> leftTypeInfo, "B" -> rightTypeInfo).asJava
@@ -70,9 +76,9 @@ class EitherTypeInfo[A, B, T <: Either[A, B]](
     obj match {
       case eitherTypeInfo: EitherTypeInfo[_, _, _] =>
         eitherTypeInfo.canEqual(this) &&
-        clazz.equals(eitherTypeInfo.clazz) &&
-        leftTypeInfo.equals(eitherTypeInfo.leftTypeInfo) &&
-        rightTypeInfo.equals(eitherTypeInfo.rightTypeInfo)
+          clazz.equals(eitherTypeInfo.clazz) &&
+          leftTypeInfo.equals(eitherTypeInfo.leftTypeInfo) &&
+          rightTypeInfo.equals(eitherTypeInfo.rightTypeInfo)
       case _ => false
     }
   }

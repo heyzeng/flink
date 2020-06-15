@@ -82,7 +82,9 @@ import static org.apache.flink.util.Preconditions.checkNotNull;
 @PublicEvolving
 public abstract class CompositeTypeSerializerSnapshot<T, S extends TypeSerializer<T>> implements TypeSerializerSnapshot<T> {
 
-	/** Magic number for integrity checks during deserialization. */
+	/**
+	 * Magic number for integrity checks during deserialization.
+	 */
 	private static final int MAGIC_NUMBER = 911108;
 
 	/**
@@ -160,8 +162,8 @@ public abstract class CompositeTypeSerializerSnapshot<T, S extends TypeSerialize
 
 	@Internal
 	TypeSerializerSchemaCompatibility<T> internalResolveSchemaCompatibility(
-			TypeSerializer<T> newSerializer,
-			TypeSerializerSnapshot<?>[] snapshots) {
+		TypeSerializer<T> newSerializer,
+		TypeSerializerSnapshot<?>[] snapshots) {
 		if (newSerializer.getClass() != correspondingSerializerClass) {
 			return TypeSerializerSchemaCompatibility.incompatible();
 		}
@@ -211,7 +213,6 @@ public abstract class CompositeTypeSerializerSnapshot<T, S extends TypeSerialize
 	 * Gets the nested serializers from the outer serializer.
 	 *
 	 * @param outerSerializer the outer serializer.
-	 *
 	 * @return the nested serializers.
 	 */
 	protected abstract TypeSerializer<?>[] getNestedSerializers(S outerSerializer);
@@ -220,7 +221,6 @@ public abstract class CompositeTypeSerializerSnapshot<T, S extends TypeSerialize
 	 * Creates an instance of the outer serializer with a given array of its nested serializers.
 	 *
 	 * @param nestedSerializers array of nested serializers to create the outer serializer with.
-	 *
 	 * @return an instance of the outer serializer.
 	 */
 	protected abstract S createOuterSerializerWithNestedSerializers(TypeSerializer<?>[] nestedSerializers);
@@ -242,7 +242,8 @@ public abstract class CompositeTypeSerializerSnapshot<T, S extends TypeSerialize
 	 *
 	 * @param out the {@link DataOutputView} to write the outer snapshot to.
 	 */
-	protected void writeOuterSnapshot(DataOutputView out) throws IOException {}
+	protected void writeOuterSnapshot(DataOutputView out) throws IOException {
+	}
 
 	/**
 	 * Reads the outer snapshot, i.e. any information beyond the nested serializers of the outer serializer.
@@ -255,10 +256,11 @@ public abstract class CompositeTypeSerializerSnapshot<T, S extends TypeSerialize
 	 * needs to be implemented.
 	 *
 	 * @param readOuterSnapshotVersion the read version of the outer snapshot.
-	 * @param in the {@link DataInputView} to read the outer snapshot from.
-	 * @param userCodeClassLoader the user code class loader.
+	 * @param in                       the {@link DataInputView} to read the outer snapshot from.
+	 * @param userCodeClassLoader      the user code class loader.
 	 */
-	protected void readOuterSnapshot(int readOuterSnapshotVersion, DataInputView in, ClassLoader userCodeClassLoader) throws IOException {}
+	protected void readOuterSnapshot(int readOuterSnapshotVersion, DataInputView in, ClassLoader userCodeClassLoader) throws IOException {
+	}
 
 	/**
 	 * Checks whether the outer snapshot is compatible with a given new serializer.
@@ -272,9 +274,8 @@ public abstract class CompositeTypeSerializerSnapshot<T, S extends TypeSerialize
 	 * needs to be implemented.
 	 *
 	 * @param newSerializer the new serializer, which contains the new outer information to check against.
-	 *
 	 * @return a flag indicating whether or not the new serializer's outer information is compatible with the one
-	 *         written in this snapshot.
+	 * written in this snapshot.
 	 */
 	protected boolean isOuterSnapshotCompatible(S newSerializer) {
 		return true;
@@ -303,15 +304,15 @@ public abstract class CompositeTypeSerializerSnapshot<T, S extends TypeSerialize
 	}
 
 	private void legacyInternalReadOuterSnapshot(
-			int legacyReadVersion, DataInputView in, ClassLoader userCodeClassLoader) throws IOException {
+		int legacyReadVersion, DataInputView in, ClassLoader userCodeClassLoader) throws IOException {
 
 		// legacy versions did not contain the pre-fixed magic numbers; just read the outer snapshot
 		readOuterSnapshot(legacyReadVersion, in, userCodeClassLoader);
 	}
 
 	private TypeSerializerSchemaCompatibility<T> constructFinalSchemaCompatibilityResult(
-			TypeSerializer<?>[] newNestedSerializers,
-			TypeSerializerSnapshot<?>[] nestedSerializerSnapshots) {
+		TypeSerializer<?>[] newNestedSerializers,
+		TypeSerializerSnapshot<?>[] nestedSerializerSnapshots) {
 
 		IntermediateCompatibilityResult<T> intermediateResult =
 			CompositeTypeSerializerUtil.constructIntermediateCompatibilityResult(newNestedSerializers, nestedSerializerSnapshots);

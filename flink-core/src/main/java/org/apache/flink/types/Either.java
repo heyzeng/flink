@@ -29,10 +29,8 @@ import org.apache.flink.api.java.typeutils.runtime.EitherSerializer;
  * This type represents a value of one two possible types, Left or Right (a
  * disjoint union), inspired by Scala's Either type.
  *
- * @param <L>
- *            the type of Left
- * @param <R>
- *            the type of Right
+ * @param <L> the type of Left
+ * @param <R> the type of Right
  */
 @Public
 @TypeInfo(EitherTypeInfoFactory.class)
@@ -54,24 +52,21 @@ public abstract class Either<L, R> {
 
 	/**
 	 * Retrieve the Left value of Either.
-	 * 
+	 *
 	 * @return the Left value
-	 * @throws IllegalStateException
-	 *             if called on a Right
+	 * @throws IllegalStateException if called on a Right
 	 */
 	public abstract L left() throws IllegalStateException;
 
 	/**
 	 * Retrieve the Right value of Either.
-	 * 
+	 *
 	 * @return the Right value
-	 * @throws IllegalStateException
-	 *             if called on a Left
+	 * @throws IllegalStateException if called on a Left
 	 */
 	public abstract R right() throws IllegalStateException;
 
 	/**
-	 * 
 	 * @return true if this is a Left value, false if this is a Right value
 	 */
 	public final boolean isLeft() {
@@ -79,7 +74,6 @@ public abstract class Either<L, R> {
 	}
 
 	/**
-	 * 
 	 * @return true if this is a Right value, false if this is a Left value
 	 */
 	public final boolean isRight() {
@@ -89,10 +83,8 @@ public abstract class Either<L, R> {
 	/**
 	 * A left value of {@link Either}
 	 *
-	 * @param <L>
-	 *            the type of Left
-	 * @param <R>
-	 *            the type of Right
+	 * @param <L> the type of Left
+	 * @param <R> the type of Right
 	 */
 	public static class Left<L, R> extends Either<L, R> {
 		private L value;
@@ -143,7 +135,6 @@ public abstract class Either<L, R> {
 
 		/**
 		 * Creates a left value of {@link Either}
-		 * 
 		 */
 		public static <L, R> Left<L, R> of(L left) {
 			return new Left<L, R>(left);
@@ -153,10 +144,8 @@ public abstract class Either<L, R> {
 	/**
 	 * A right value of {@link Either}
 	 *
-	 * @param <L>
-	 *            the type of Left
-	 * @param <R>
-	 *            the type of Right
+	 * @param <L> the type of Left
+	 * @param <R> the type of Right
 	 */
 	public static class Right<L, R> extends Either<L, R> {
 		private R value;
@@ -207,7 +196,6 @@ public abstract class Either<L, R> {
 
 		/**
 		 * Creates a right value of {@link Either}
-		 * 
 		 */
 		public static <L, R> Right<L, R> of(R right) {
 			return new Right<L, R>(right);
@@ -216,17 +204,15 @@ public abstract class Either<L, R> {
 
 	/**
 	 * Utility function for {@link EitherSerializer} to support object reuse.
-	 *
+	 * <p>
 	 * To support object reuse both subclasses of Either contain a reference to
 	 * an instance of the other type. This method provides access to and
 	 * initializes the cross-reference.
 	 *
-	 * @param input container for Left or Right value
+	 * @param input          container for Left or Right value
 	 * @param leftSerializer for creating an instance of the left type
-	 * @param <L>
-	 *            the type of Left
-	 * @param <R>
-	 *            the type of Right
+	 * @param <L>            the type of Left
+	 * @param <R>            the type of Right
 	 * @return input if Left type else input's Left reference
 	 */
 	@Internal
@@ -245,17 +231,15 @@ public abstract class Either<L, R> {
 
 	/**
 	 * Utility function for {@link EitherSerializer} to support object reuse.
-	 *
+	 * <p>
 	 * To support object reuse both subclasses of Either contain a reference to
 	 * an instance of the other type. This method provides access to and
 	 * initializes the cross-reference.
 	 *
-	 * @param input container for Left or Right value
+	 * @param input           container for Left or Right value
 	 * @param rightSerializer for creating an instance of the right type
-	 * @param <L>
-	 *            the type of Left
-	 * @param <R>
-	 *            the type of Right
+	 * @param <L>             the type of Left
+	 * @param <R>             the type of Right
 	 * @return input if Right type else input's Right reference
 	 */
 	@Internal

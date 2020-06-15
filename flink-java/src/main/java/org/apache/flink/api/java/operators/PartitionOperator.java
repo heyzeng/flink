@@ -70,12 +70,12 @@ public class PartitionOperator<T> extends SingleInputOperator<T, T, PartitionOpe
 	}
 
 	public <P> PartitionOperator(DataSet<T> input, Keys<T> pKeys, Partitioner<P> customPartitioner,
-			TypeInformation<P> partitionerTypeInfo, String partitionLocationName) {
+								 TypeInformation<P> partitionerTypeInfo, String partitionLocationName) {
 		this(input, PartitionMethod.CUSTOM, pKeys, customPartitioner, partitionerTypeInfo, null, partitionLocationName);
 	}
 
 	private <P> PartitionOperator(DataSet<T> input, PartitionMethod pMethod, Keys<T> pKeys, Partitioner<P> customPartitioner,
-			TypeInformation<P> partitionerTypeInfo, DataDistribution distribution, String partitionLocationName) {
+								  TypeInformation<P> partitionerTypeInfo, DataDistribution distribution, String partitionLocationName) {
 		super(input, input.getType());
 
 		Preconditions.checkNotNull(pMethod);
@@ -86,7 +86,7 @@ public class PartitionOperator<T> extends SingleInputOperator<T, T, PartitionOpe
 		if (distribution != null) {
 			Preconditions.checkArgument(pKeys.getNumberOfKeyFields() <= distribution.getNumberOfFields(), "The distribution must provide at least as many fields as flat key fields are specified.");
 			Preconditions.checkArgument(Arrays.equals(pKeys.getKeyFieldTypes(), Arrays.copyOfRange(distribution.getKeyTypes(), 0, pKeys.getNumberOfKeyFields())),
-					"The types of the flat key fields must be equal to the types of the fields of the distribution.");
+				"The types of the flat key fields must be equal to the types of the fields of the distribution.");
 		}
 
 		if (customPartitioner != null) {
@@ -106,13 +106,13 @@ public class PartitionOperator<T> extends SingleInputOperator<T, T, PartitionOpe
 	 *
 	 * @param orders array of orders for each specified partition key
 	 * @return The partitioneOperator with properly set orders for given keys
-     */
+	 */
 	@PublicEvolving
 	public PartitionOperator<T> withOrders(Order... orders) {
 		Preconditions.checkState(pMethod == PartitionMethod.RANGE, "Orders cannot be applied for %s partition " +
-				"method", pMethod);
+			"method", pMethod);
 		Preconditions.checkArgument(pKeys.getOriginalKeyFieldTypes().length == orders.length, "The number of key " +
-				"fields and orders should be the same.");
+			"fields and orders should be the same.");
 		this.orders = orders;
 
 		return this;
@@ -149,8 +149,7 @@ public class PartitionOperator<T> extends SingleInputOperator<T, T, PartitionOpe
 			rebalancedInput.setParallelism(getParallelism());
 
 			return rebalancedInput;
-		}
-		else if (pMethod == PartitionMethod.HASH || pMethod == PartitionMethod.CUSTOM || pMethod == PartitionMethod.RANGE) {
+		} else if (pMethod == PartitionMethod.HASH || pMethod == PartitionMethod.CUSTOM || pMethod == PartitionMethod.RANGE) {
 
 			if (pKeys instanceof Keys.ExpressionKeys) {
 
@@ -164,20 +163,17 @@ public class PartitionOperator<T> extends SingleInputOperator<T, T, PartitionOpe
 				partitionedInput.setOrdering(computeOrdering(pKeys, orders));
 
 				return partitionedInput;
-			}
-			else if (pKeys instanceof Keys.SelectorFunctionKeys) {
+			} else if (pKeys instanceof Keys.SelectorFunctionKeys) {
 
 				@SuppressWarnings("unchecked")
 				Keys.SelectorFunctionKeys<T, ?> selectorKeys = (Keys.SelectorFunctionKeys<T, ?>) pKeys;
 				return translateSelectorFunctionPartitioner(selectorKeys, pMethod, name, input, getParallelism(),
-						customPartitioner, orders);
-			}
-			else {
+					customPartitioner, orders);
+			} else {
 				throw new UnsupportedOperationException("Unrecognized key type.");
 			}
 
-		}
-		else {
+		} else {
 			throw new UnsupportedOperationException("Unsupported partitioning method: " + pMethod.name());
 		}
 	}

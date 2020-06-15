@@ -44,9 +44,9 @@ public class CoreOptionsTest {
 	}
 
 	private void testParentFirst(
-			Function<Configuration, String[]> patternGetter,
-			ConfigOption<String> patternOption,
-			ConfigOption<String> additionalOption) {
+		Function<Configuration, String[]> patternGetter,
+		ConfigOption<String> patternOption,
+		ConfigOption<String> additionalOption) {
 		Configuration config = new Configuration();
 		Assert.assertArrayEquals(patternOption.defaultValue().split(";"),
 			patternGetter.apply(config));

@@ -78,6 +78,7 @@ public interface BulkWriter<T> {
 
 	/**
 	 * A factory that creates a {@link BulkWriter}.
+	 *
 	 * @param <T> The type of record to write.
 	 */
 	@FunctionalInterface

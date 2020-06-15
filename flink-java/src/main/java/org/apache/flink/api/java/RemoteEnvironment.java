@@ -49,8 +49,8 @@ public class RemoteEnvironment extends ExecutionEnvironment {
 	 *
 	 * <p>Each program execution will have all the given JAR files in its classpath.
 	 *
-	 * @param host The host name or address of the master (JobManager), where the program should be executed.
-	 * @param port The port of the master (JobManager), where the program should be executed.
+	 * @param host     The host name or address of the master (JobManager), where the program should be executed.
+	 * @param port     The port of the master (JobManager), where the program should be executed.
 	 * @param jarFiles The JAR files with code that needs to be shipped to the cluster. If the program uses
 	 *                 user-defined functions, user-defined input formats, or any libraries, those must be
 	 *                 provided in the JAR files.
@@ -65,12 +65,12 @@ public class RemoteEnvironment extends ExecutionEnvironment {
 	 *
 	 * <p>Each program execution will have all the given JAR files in its classpath.
 	 *
-	 * @param host The host name or address of the master (JobManager), where the program should be executed.
-	 * @param port The port of the master (JobManager), where the program should be executed.
+	 * @param host         The host name or address of the master (JobManager), where the program should be executed.
+	 * @param port         The port of the master (JobManager), where the program should be executed.
 	 * @param clientConfig The configuration used by the client that connects to the cluster.
-	 * @param jarFiles The JAR files with code that needs to be shipped to the cluster. If the program uses
-	 *                 user-defined functions, user-defined input formats, or any libraries, those must be
-	 *                 provided in the JAR files.
+	 * @param jarFiles     The JAR files with code that needs to be shipped to the cluster. If the program uses
+	 *                     user-defined functions, user-defined input formats, or any libraries, those must be
+	 *                     provided in the JAR files.
 	 */
 	public RemoteEnvironment(String host, int port, Configuration clientConfig, String[] jarFiles) {
 		this(host, port, clientConfig, jarFiles, null);
@@ -82,34 +82,34 @@ public class RemoteEnvironment extends ExecutionEnvironment {
 	 *
 	 * <p>Each program execution will have all the given JAR files in its classpath.
 	 *
-	 * @param host The host name or address of the master (JobManager), where the program should be executed.
-	 * @param port The port of the master (JobManager), where the program should be executed.
-	 * @param clientConfig The configuration used by the client that connects to the cluster.
-	 * @param jarFiles The JAR files with code that needs to be shipped to the cluster. If the program uses
-	 *                 user-defined functions, user-defined input formats, or any libraries, those must be
-	 *                 provided in the JAR files.
+	 * @param host             The host name or address of the master (JobManager), where the program should be executed.
+	 * @param port             The port of the master (JobManager), where the program should be executed.
+	 * @param clientConfig     The configuration used by the client that connects to the cluster.
+	 * @param jarFiles         The JAR files with code that needs to be shipped to the cluster. If the program uses
+	 *                         user-defined functions, user-defined input formats, or any libraries, those must be
+	 *                         provided in the JAR files.
 	 * @param globalClasspaths The paths of directories and JAR files that are added to each user code
-	 *                 classloader on all nodes in the cluster. Note that the paths must specify a
-	 *                 protocol (e.g. file://) and be accessible on all nodes (e.g. by means of a NFS share).
-	 *                 The protocol must be supported by the {@link java.net.URLClassLoader}.
+	 *                         classloader on all nodes in the cluster. Note that the paths must specify a
+	 *                         protocol (e.g. file://) and be accessible on all nodes (e.g. by means of a NFS share).
+	 *                         The protocol must be supported by the {@link java.net.URLClassLoader}.
 	 */
 	public RemoteEnvironment(String host, int port, Configuration clientConfig, String[] jarFiles, URL[] globalClasspaths) {
 		super(validateAndGetEffectiveConfiguration(clientConfig, host, port, jarFiles, globalClasspaths));
 	}
 
 	private static Configuration validateAndGetEffectiveConfiguration(
-			final Configuration configuration,
-			final String host,
-			final int port,
-			final String[] jarFiles,
-			final URL[] globalClasspaths) {
+		final Configuration configuration,
+		final String host,
+		final int port,
+		final String[] jarFiles,
+		final URL[] globalClasspaths) {
 		RemoteEnvironmentConfigUtils.validate(host, port);
 		return getEffectiveConfiguration(
-				getClientConfiguration(configuration),
-				host,
-				port,
-				jarFiles,
-				getClasspathURLs(globalClasspaths));
+			getClientConfiguration(configuration),
+			host,
+			port,
+			jarFiles,
+			getClasspathURLs(globalClasspaths));
 	}
 
 	private static Configuration getClientConfiguration(final Configuration configuration) {
@@ -121,11 +121,11 @@ public class RemoteEnvironment extends ExecutionEnvironment {
 	}
 
 	private static Configuration getEffectiveConfiguration(
-			final Configuration baseConfiguration,
-			final String host,
-			final int port,
-			final String[] jars,
-			final List<URL> classpaths) {
+		final Configuration baseConfiguration,
+		final String host,
+		final int port,
+		final String[] jars,
+		final List<URL> classpaths) {
 
 		final Configuration effectiveConfiguration = new Configuration(baseConfiguration);
 

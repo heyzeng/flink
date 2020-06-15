@@ -42,10 +42,10 @@ public class TypeSerializerSnapshotSerializationUtil {
 	 * <p>It is written with a format that can be later read again using
 	 * {@link #readSerializerSnapshot(DataInputView, ClassLoader, TypeSerializer)}.
 	 *
-	 * @param out the data output view
+	 * @param out                the data output view
 	 * @param serializerSnapshot the serializer configuration snapshot to write
-	 * @param serializer the prior serializer. This needs to be written of the serializer snapshot
-	 *                   if the serializer snapshot is still the legacy {@link TypeSerializerConfigSnapshot}.
+	 * @param serializer         the prior serializer. This needs to be written of the serializer snapshot
+	 *                           if the serializer snapshot is still the legacy {@link TypeSerializerConfigSnapshot}.
 	 */
 	public static <T> void writeSerializerSnapshot(
 		DataOutputView out,
@@ -59,17 +59,16 @@ public class TypeSerializerSnapshotSerializationUtil {
 	 * Reads from a data input view a {@link TypeSerializerSnapshot} that was previously
 	 * written using {@link TypeSerializerSnapshotSerializationUtil#writeSerializerSnapshot(DataOutputView, TypeSerializerSnapshot, TypeSerializer)}.
 	 *
-	 * @param in the data input view
-	 * @param userCodeClassLoader the user code class loader to use
+	 * @param in                      the data input view
+	 * @param userCodeClassLoader     the user code class loader to use
 	 * @param existingPriorSerializer the prior serializer. This would only be non-null if we are
 	 *                                restoring from a snapshot taken with Flink version <= 1.6.
-	 *
 	 * @return the read serializer configuration snapshot
 	 */
 	public static <T> TypeSerializerSnapshot<T> readSerializerSnapshot(
-			DataInputView in,
-			ClassLoader userCodeClassLoader,
-			@Nullable TypeSerializer<T> existingPriorSerializer) throws IOException {
+		DataInputView in,
+		ClassLoader userCodeClassLoader,
+		@Nullable TypeSerializer<T> existingPriorSerializer) throws IOException {
 
 		final TypeSerializerSnapshotSerializationProxy<T> proxy =
 			new TypeSerializerSnapshotSerializationProxy<>(userCodeClassLoader, existingPriorSerializer);
@@ -81,7 +80,7 @@ public class TypeSerializerSnapshotSerializationUtil {
 
 	public static <T> TypeSerializerSnapshot<T> readAndInstantiateSnapshotClass(DataInputView in, ClassLoader cl) throws IOException {
 		Class<TypeSerializerSnapshot<T>> clazz =
-				InstantiationUtil.resolveClassByName(in, cl, TypeSerializerSnapshot.class);
+			InstantiationUtil.resolveClassByName(in, cl, TypeSerializerSnapshot.class);
 
 		return InstantiationUtil.instantiate(clazz);
 	}
@@ -95,7 +94,8 @@ public class TypeSerializerSnapshotSerializationUtil {
 
 		private ClassLoader userCodeClassLoader;
 		private TypeSerializerSnapshot<T> serializerSnapshot;
-		@Nullable private TypeSerializer<T> serializer;
+		@Nullable
+		private TypeSerializer<T> serializer;
 
 		/**
 		 * Constructor for reading serializers.
@@ -185,9 +185,9 @@ public class TypeSerializerSnapshotSerializationUtil {
 		@VisibleForTesting
 		@SuppressWarnings("deprecation")
 		static <T> TypeSerializerSnapshot<T> deserializeV1(
-				DataInputView in,
-				ClassLoader cl,
-				@Nullable TypeSerializer<T> serializer) throws IOException {
+			DataInputView in,
+			ClassLoader cl,
+			@Nullable TypeSerializer<T> serializer) throws IOException {
 
 			TypeSerializerSnapshot<T> snapshot = readAndInstantiateSnapshotClass(in, cl);
 
@@ -199,8 +199,7 @@ public class TypeSerializerSnapshotSerializationUtil {
 				oldTypeSnapshot.setPriorSerializer(serializer);
 				oldTypeSnapshot.setUserCodeClassLoader(cl);
 				oldTypeSnapshot.read(in);
-			}
-			else {
+			} else {
 				// new type, simple case
 				int readVersion = in.readInt();
 				snapshot.readSnapshot(readVersion, in, cl);
@@ -211,8 +210,8 @@ public class TypeSerializerSnapshotSerializationUtil {
 
 		@SuppressWarnings("deprecation")
 		private static <T> void setSerializerForWriteIfOldPath(
-				TypeSerializerSnapshot<T> serializerSnapshot,
-				TypeSerializer<T> serializer) {
+			TypeSerializerSnapshot<T> serializerSnapshot,
+			TypeSerializer<T> serializer) {
 
 			// for compatibility with non-upgraded serializers, put the serializer into the
 			// config snapshot if it of the old version

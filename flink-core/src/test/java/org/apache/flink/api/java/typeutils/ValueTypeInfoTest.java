@@ -35,7 +35,7 @@ public class ValueTypeInfoTest extends TypeInformationTestBase<ValueTypeInfo<?>>
 
 	@Override
 	protected ValueTypeInfo<?>[] getTestData() {
-		return new ValueTypeInfo<?>[] {
+		return new ValueTypeInfo<?>[]{
 			new ValueTypeInfo<>(TestClass.class),
 			new ValueTypeInfo<>(AlternativeClass.class),
 			new ValueTypeInfo<>(Record.class),

@@ -51,10 +51,10 @@ public interface TriFunctionWithException<S, T, U, R, E extends Throwable> {
 	 * Convert at {@link TriFunctionWithException} into a {@link TriFunction}.
 	 *
 	 * @param triFunctionWithException function with exception to convert into a function
-	 * @param <A> first input type
-	 * @param <B> second input type
-	 * @param <C> third input type
-	 * @param <D> output type
+	 * @param <A>                      first input type
+	 * @param <B>                      second input type
+	 * @param <C>                      third input type
+	 * @param <D>                      output type
 	 * @return {@link BiFunction} which throws all checked exception as an unchecked exception.
 	 */
 	static <A, B, C, D> TriFunction<A, B, C, D> unchecked(TriFunctionWithException<A, B, C, D, ?> triFunctionWithException) {

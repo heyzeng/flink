@@ -20,14 +20,20 @@ package org.apache.flink.sql.parser.validate;
 
 import org.apache.calcite.sql.validate.SqlConformance;
 
-/** Sql conformance used for flink to set specific sql dialect parser. **/
+/**
+ * Sql conformance used for flink to set specific sql dialect parser.
+ **/
 public enum FlinkSqlConformance implements SqlConformance {
-	/** Calcite's default SQL behavior. */
+	/**
+	 * Calcite's default SQL behavior.
+	 */
 	DEFAULT,
 
-	/** Conformance value that instructs Calcite to use SQL semantics
+	/**
+	 * Conformance value that instructs Calcite to use SQL semantics
 	 * consistent with the Apache HIVE, but ignoring its more
-	 * inconvenient or controversial dicta. */
+	 * inconvenient or controversial dicta.
+	 */
 	HIVE;
 
 	@Override
@@ -115,8 +121,8 @@ public enum FlinkSqlConformance implements SqlConformance {
 	@Override
 	public boolean allowExplicitRowValueConstructor() {
 		switch (this) {
-		case DEFAULT:
-			return true;
+			case DEFAULT:
+				return true;
 		}
 		return false;
 	}

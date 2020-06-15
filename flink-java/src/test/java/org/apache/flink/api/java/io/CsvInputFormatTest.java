@@ -78,9 +78,9 @@ public class CsvInputFormatTest {
 	private void testSplitCsvInputStream(int bufferSize, boolean failAtStart) throws Exception {
 		final String fileContent =
 			"this is|1|2.0|\n" +
-			"a test|3|4.0|\n" +
-			"#next|5|6.0|\n" +
-			"asdadas|5|30.0|\n";
+				"a test|3|4.0|\n" +
+				"#next|5|6.0|\n" +
+				"asdadas|5|30.0|\n";
 
 		// create temporary file with 3 blocks
 		final File tempFile = File.createTempFile("input-stream-decoration-test", "tmp");
@@ -101,8 +101,8 @@ public class CsvInputFormatTest {
 		final Configuration config = new Configuration();
 		format.configure(config);
 
-		long[] offsetsAfterRecord = new long[]{ 15, 29, 42, 58};
-		long[] offsetAtEndOfSplit = new long[]{ 20, 40, 58};
+		long[] offsetsAfterRecord = new long[]{15, 29, 42, 58};
+		long[] offsetAtEndOfSplit = new long[]{20, 40, 58};
 		int recordCounter = 0;
 		int splitCounter = 0;
 
@@ -180,13 +180,13 @@ public class CsvInputFormatTest {
 
 	private void ignoreInvalidLines(int bufferSize) {
 		try {
-			final String fileContent =  "#description of the data\n" +
-										"header1|header2|header3|\n" +
-										"this is|1|2.0|\n" +
-										"//a comment\n" +
-										"a test|3|4.0|\n" +
-										"#next|5|6.0|\n" +
-										"asdasdas";
+			final String fileContent = "#description of the data\n" +
+				"header1|header2|header3|\n" +
+				"this is|1|2.0|\n" +
+				"//a comment\n" +
+				"a test|3|4.0|\n" +
+				"#next|5|6.0|\n" +
+				"asdasdas";
 
 			final FileInputSplit split = createTempFile(fileContent);
 
@@ -224,8 +224,7 @@ public class CsvInputFormatTest {
 			result = format.nextRecord(result);
 			assertNull(result);
 			assertEquals(fileContent.length(), (long) format.getCurrentState());
-		}
-		catch (Exception ex) {
+		} catch (Exception ex) {
 			ex.printStackTrace();
 			fail("Test failed due to a " + ex.getClass().getName() + ": " + ex.getMessage());
 		}
@@ -266,8 +265,7 @@ public class CsvInputFormatTest {
 
 			result = format.nextRecord(result);
 			assertNull(result);
-		}
-		catch (Exception ex) {
+		} catch (Exception ex) {
 			ex.printStackTrace();
 			fail("Test failed due to a " + ex.getClass().getName() + ": " + ex.getMessage());
 		}
@@ -309,8 +307,7 @@ public class CsvInputFormatTest {
 
 			result = format.nextRecord(result);
 			assertNull(result);
-		}
-		catch (Exception ex) {
+		} catch (Exception ex) {
 			ex.printStackTrace();
 			fail("Test failed due to a " + ex.getClass().getName() + ": " + ex.getMessage());
 		}
@@ -352,8 +349,7 @@ public class CsvInputFormatTest {
 			result = format.nextRecord(result);
 			assertNull(result);
 			assertTrue(format.reachedEnd());
-		}
-		catch (Exception ex) {
+		} catch (Exception ex) {
 			ex.printStackTrace();
 			fail("Test failed due to a " + ex.getClass().getName() + ": " + ex.getMessage());
 		}
@@ -396,8 +392,7 @@ public class CsvInputFormatTest {
 			result = format.nextRecord(result);
 			assertNull(result);
 			assertTrue(format.reachedEnd());
-		}
-		catch (Exception ex) {
+		} catch (Exception ex) {
 			ex.printStackTrace();
 			fail("Test failed due to a " + ex.getClass().getName() + ": " + ex.getMessage());
 		}
@@ -440,8 +435,7 @@ public class CsvInputFormatTest {
 			result = format.nextRecord(result);
 			assertNull(result);
 			assertTrue(format.reachedEnd());
-		}
-		catch (Exception ex) {
+		} catch (Exception ex) {
 			fail("Test failed due to a " + ex.getClass().getName() + ": " + ex.getMessage());
 		}
 	}
@@ -449,16 +443,16 @@ public class CsvInputFormatTest {
 	@Test
 	public void testTailingEmptyFields() throws Exception {
 		final String fileContent = "aa,bb,cc\n" + // ok
-				"aa,bb,\n" +  // the last field is empty
-				"aa,,\n" +    // the last two fields are empty
-				",,\n" +      // all fields are empty
-				"aa,bb";      // row too short
+			"aa,bb,\n" +  // the last field is empty
+			"aa,,\n" +    // the last two fields are empty
+			",,\n" +      // all fields are empty
+			"aa,bb";      // row too short
 		final FileInputSplit split = createTempFile(fileContent);
 
 		final TupleTypeInfo<Tuple3<String, String, String>> typeInfo =
-				TupleTypeInfo.getBasicTupleTypeInfo(String.class, String.class, String.class);
+			TupleTypeInfo.getBasicTupleTypeInfo(String.class, String.class, String.class);
 		final CsvInputFormat<Tuple3<String, String, String>> format =
-				new TupleCsvInputFormat<Tuple3<String, String, String>>(PATH, typeInfo);
+			new TupleCsvInputFormat<Tuple3<String, String, String>>(PATH, typeInfo);
 
 		format.setFieldDelimiter(",");
 
@@ -494,7 +488,8 @@ public class CsvInputFormatTest {
 		try {
 			format.nextRecord(result);
 			fail("Parse Exception was not thrown! (Row too short)");
-		} catch (ParseException e) {}
+		} catch (ParseException e) {
+		}
 	}
 
 	@Test
@@ -533,8 +528,7 @@ public class CsvInputFormatTest {
 			result = format.nextRecord(result);
 			assertNull(result);
 			assertTrue(format.reachedEnd());
-		}
-		catch (Exception ex) {
+		} catch (Exception ex) {
 			fail("Test failed due to a " + ex.getClass().getName() + ": " + ex.getMessage());
 		}
 	}
@@ -564,33 +558,38 @@ public class CsvInputFormatTest {
 			try {
 				result = format.nextRecord(result);
 				fail("Empty String Parse Exception was not thrown! (ShortParser)");
-			} catch (ParseException e) {}
+			} catch (ParseException e) {
+			}
 			try {
 				result = format.nextRecord(result);
 				fail("Empty String Parse Exception was not thrown! (IntegerParser)");
-			} catch (ParseException e) {}
+			} catch (ParseException e) {
+			}
 			try {
 				result = format.nextRecord(result);
 				fail("Empty String Parse Exception was not thrown! (LongParser)");
-			} catch (ParseException e) {}
+			} catch (ParseException e) {
+			}
 			try {
 				result = format.nextRecord(result);
 				fail("Empty String Parse Exception was not thrown! (FloatParser)");
-			} catch (ParseException e) {}
+			} catch (ParseException e) {
+			}
 			try {
 				result = format.nextRecord(result);
 				fail("Empty String Parse Exception was not thrown! (DoubleParser)");
-			} catch (ParseException e) {}
+			} catch (ParseException e) {
+			}
 			try {
 				result = format.nextRecord(result);
 				fail("Empty String Parse Exception was not thrown! (ByteParser)");
-			} catch (ParseException e) {}
+			} catch (ParseException e) {
+			}
 
 			result = format.nextRecord(result);
 			assertNull(result);
 			assertTrue(format.reachedEnd());
-		}
-		catch (Exception ex) {
+		} catch (Exception ex) {
 			fail("Test failed due to a " + ex.getClass().getName() + ": " + ex.getMessage());
 		}
 	}
@@ -602,7 +601,7 @@ public class CsvInputFormatTest {
 			final FileInputSplit split = createTempFile(fileContent);
 
 			final TupleTypeInfo<Tuple5<Double, Double, Double, Double, Double>> typeInfo =
-					TupleTypeInfo.getBasicTupleTypeInfo(Double.class, Double.class, Double.class, Double.class, Double.class);
+				TupleTypeInfo.getBasicTupleTypeInfo(Double.class, Double.class, Double.class, Double.class, Double.class);
 			final CsvInputFormat<Tuple5<Double, Double, Double, Double, Double>> format = new TupleCsvInputFormat<Tuple5<Double, Double, Double, Double, Double>>(PATH, typeInfo);
 
 			format.setFieldDelimiter("|");
@@ -631,8 +630,7 @@ public class CsvInputFormatTest {
 			result = format.nextRecord(result);
 			assertNull(result);
 			assertTrue(format.reachedEnd());
-		}
-		catch (Exception ex) {
+		} catch (Exception ex) {
 			fail("Test failed due to a " + ex.getClass().getName() + ": " + ex.getMessage());
 		}
 	}
@@ -666,8 +664,7 @@ public class CsvInputFormatTest {
 			result = format.nextRecord(result);
 			assertNull(result);
 			assertTrue(format.reachedEnd());
-		}
-		catch (Exception ex) {
+		} catch (Exception ex) {
 			fail("Test failed due to a " + ex.getClass().getName() + ": " + ex.getMessage());
 		}
 
@@ -677,7 +674,7 @@ public class CsvInputFormatTest {
 	public void testReadSparseWithNullFieldsForTypes() throws IOException {
 		try {
 			final String fileContent = "111|x|222|x|333|x|444|x|555|x|666|x|777|x|888|x|999|x|000|x|\n" +
-					"000|x|999|x|888|x|777|x|666|x|555|x|444|x|333|x|222|x|111|x|";
+				"000|x|999|x|888|x|777|x|666|x|555|x|444|x|333|x|222|x|111|x|";
 			final FileInputSplit split = createTempFile(fileContent);
 
 			final TupleTypeInfo<Tuple3<Integer, Integer, Integer>> typeInfo = TupleTypeInfo.getBasicTupleTypeInfo(Integer.class, Integer.class, Integer.class);
@@ -705,8 +702,7 @@ public class CsvInputFormatTest {
 			result = format.nextRecord(result);
 			assertNull(result);
 			assertTrue(format.reachedEnd());
-		}
-		catch (Exception ex) {
+		} catch (Exception ex) {
 			fail("Test failed due to a " + ex.getClass().getName() + ": " + ex.getMessage());
 		}
 	}
@@ -742,8 +738,7 @@ public class CsvInputFormatTest {
 			result = format.nextRecord(result);
 			assertNull(result);
 			assertTrue(format.reachedEnd());
-		}
-		catch (Exception ex) {
+		} catch (Exception ex) {
 			fail("Test failed due to a " + ex.getClass().getName() + ": " + ex.getMessage());
 		}
 	}
@@ -752,7 +747,7 @@ public class CsvInputFormatTest {
 	public void testReadSparseWithMask() throws IOException {
 		try {
 			final String fileContent = "111&&222&&333&&444&&555&&666&&777&&888&&999&&000&&\n" +
-					"000&&999&&888&&777&&666&&555&&444&&333&&222&&111&&";
+				"000&&999&&888&&777&&666&&555&&444&&333&&222&&111&&";
 			final FileInputSplit split = createTempFile(fileContent);
 
 			final TupleTypeInfo<Tuple3<Integer, Integer, Integer>> typeInfo = TupleTypeInfo.getBasicTupleTypeInfo(Integer.class, Integer.class, Integer.class);
@@ -780,8 +775,7 @@ public class CsvInputFormatTest {
 			result = format.nextRecord(result);
 			assertNull(result);
 			assertTrue(format.reachedEnd());
-		}
-		catch (Exception ex) {
+		} catch (Exception ex) {
 			fail("Test failed due to a " + ex.getClass().getName() + ": " + ex.getMessage());
 		}
 	}
@@ -792,8 +786,8 @@ public class CsvInputFormatTest {
 		stringParser.enableQuotedStringParsing((byte) '"');
 
 		Object[][] failures = {
-				{"\"string\" trailing", FieldParser.ParseErrorState.UNQUOTED_CHARS_AFTER_QUOTED_STRING},
-				{"\"unterminated ", FieldParser.ParseErrorState.UNTERMINATED_QUOTED_STRING}
+			{"\"string\" trailing", FieldParser.ParseErrorState.UNQUOTED_CHARS_AFTER_QUOTED_STRING},
+			{"\"unterminated ", FieldParser.ParseErrorState.UNTERMINATED_QUOTED_STRING}
 		};
 
 		for (Object[] failure : failures) {
@@ -814,7 +808,7 @@ public class CsvInputFormatTest {
 		// RFC 4180 Compliance Test content
 		// Taken from http://en.wikipedia.org/wiki/Comma-separated_values#Example
 		final String fileContent =
-				"Year,Make,Model,Description,Price\n" +
+			"Year,Make,Model,Description,Price\n" +
 				"1997,Ford,E350,\"ac, abs, moon\",3000.00\n" +
 				"1999,Chevy,\"Venture \"\"Extended Edition\"\"\",\"\",4900.00\n" +
 				"1996,Jeep,Grand Cherokee,\"MUST SELL! air, moon roof, loaded\",4799.00\n" +
@@ -824,7 +818,7 @@ public class CsvInputFormatTest {
 		final FileInputSplit split = createTempFile(fileContent);
 
 		final TupleTypeInfo<Tuple5<Integer, String, String, String, Double>> typeInfo =
-				TupleTypeInfo.getBasicTupleTypeInfo(Integer.class, String.class, String.class, String.class, Double.class);
+			TupleTypeInfo.getBasicTupleTypeInfo(Integer.class, String.class, String.class, String.class, Double.class);
 		final CsvInputFormat<Tuple5<Integer, String, String, String, Double>> format = new TupleCsvInputFormat<Tuple5<Integer, String, String, String, Double>>(PATH, typeInfo);
 
 		format.setSkipFirstLineAsHeader(true);
@@ -836,12 +830,12 @@ public class CsvInputFormatTest {
 		Tuple5<Integer, String, String, String, Double> result = new Tuple5<Integer, String, String, String, Double>();
 
 		@SuppressWarnings("unchecked")
-		Tuple5<Integer, String, String, String, Double>[] expectedLines = new Tuple5[] {
-				new Tuple5<Integer, String, String, String, Double>(1997, "Ford", "E350", "ac, abs, moon", 3000.0),
-				new Tuple5<Integer, String, String, String, Double>(1999, "Chevy", "Venture \"Extended Edition\"", "", 4900.0),
-				new Tuple5<Integer, String, String, String, Double>(1996, "Jeep", "Grand Cherokee", "MUST SELL! air, moon roof, loaded", 4799.00),
-				new Tuple5<Integer, String, String, String, Double>(1999, "Chevy", "Venture \"Extended Edition, Very Large\"", "", 5000.00),
-				new Tuple5<Integer, String, String, String, Double>(0, "", "Venture \"Extended Edition\"", "", 4900.0)
+		Tuple5<Integer, String, String, String, Double>[] expectedLines = new Tuple5[]{
+			new Tuple5<Integer, String, String, String, Double>(1997, "Ford", "E350", "ac, abs, moon", 3000.0),
+			new Tuple5<Integer, String, String, String, Double>(1999, "Chevy", "Venture \"Extended Edition\"", "", 4900.0),
+			new Tuple5<Integer, String, String, String, Double>(1996, "Jeep", "Grand Cherokee", "MUST SELL! air, moon roof, loaded", 4799.00),
+			new Tuple5<Integer, String, String, String, Double>(1999, "Chevy", "Venture \"Extended Edition, Very Large\"", "", 5000.00),
+			new Tuple5<Integer, String, String, String, Double>(0, "", "Venture \"Extended Edition\"", "", 4900.0)
 		};
 
 		try {
@@ -864,12 +858,12 @@ public class CsvInputFormatTest {
 		tempFile.deleteOnExit();
 
 		OutputStreamWriter wrt = new OutputStreamWriter(
-				new FileOutputStream(tempFile), StandardCharsets.UTF_8
+			new FileOutputStream(tempFile), StandardCharsets.UTF_8
 		);
 		wrt.write(content);
 		wrt.close();
 
-		return new FileInputSplit(0, new Path(tempFile.toURI().toString()), 0, tempFile.length(), new String[] {"localhost"});
+		return new FileInputSplit(0, new Path(tempFile.toURI().toString()), 0, tempFile.length(), new String[]{"localhost"});
 	}
 
 	@Test
@@ -926,8 +920,7 @@ public class CsvInputFormatTest {
 			assertNotNull("Expecting to not return null", result);
 			assertEquals(SECOND_PART, result.f0);
 
-		}
-		catch (Throwable t) {
+		} catch (Throwable t) {
 			System.err.println("test failed with exception: " + t.getMessage());
 			t.printStackTrace(System.err);
 			fail("Test erroneous");
@@ -1146,7 +1139,7 @@ public class CsvInputFormatTest {
 	@Test
 	public void testQuotedStringParsingWithIncludeFields() throws Exception {
 		final String fileContent = "\"20:41:52-1-3-2015\"|\"Re: Taskmanager memory error in Eclipse\"|" +
-				"\"Blahblah <blah@blahblah.org>\"|\"blaaa|\"blubb\"";
+			"\"Blahblah <blah@blahblah.org>\"|\"blaaa|\"blubb\"";
 
 		final File tempFile = File.createTempFile("CsvReaderQuotedString", "tmp");
 		tempFile.deleteOnExit();
@@ -1231,7 +1224,7 @@ public class CsvInputFormatTest {
 
 		List<TwitterPOJO> expected = new ArrayList<>();
 
-		for (String line: fileContent.split("\n")) {
+		for (String line : fileContent.split("\n")) {
 			String[] elements = line.split(",");
 			expected.add(new TwitterPOJO(elements[0], elements[1], elements[2]));
 		}

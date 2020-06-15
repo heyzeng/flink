@@ -20,7 +20,9 @@ package org.apache.flink.sql.parser.utils;
 
 import org.apache.calcite.sql.SqlWriter;
 
-/** SqlTimeUnit used for Flink DDL sql. **/
+/**
+ * SqlTimeUnit used for Flink DDL sql.
+ **/
 public enum SqlTimeUnit {
 	DAY("DAY", 24 * 3600 * 1000),
 	HOUR("HOUR", 3600 * 1000),
@@ -28,9 +30,13 @@ public enum SqlTimeUnit {
 	SECOND("SECOND", 1000),
 	MILLISECOND("MILLISECOND", 1);
 
-	/** Unparsing keyword. */
+	/**
+	 * Unparsing keyword.
+	 */
 	private String keyword;
-	/** Times used to transform this time unit to millisecond. **/
+	/**
+	 * Times used to transform this time unit to millisecond.
+	 **/
 	private long timeToMillisecond;
 
 	SqlTimeUnit(String keyword, long timeToMillisecond) {

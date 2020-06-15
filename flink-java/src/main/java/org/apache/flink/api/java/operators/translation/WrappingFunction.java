@@ -27,6 +27,7 @@ import org.apache.flink.configuration.Configuration;
 
 /**
  * Wrapper around {@link Function}.
+ *
  * @param <T>
  */
 @Internal
@@ -57,7 +58,7 @@ public abstract class WrappingFunction<T extends Function> extends AbstractRichF
 		FunctionUtils.setFunctionRuntimeContext(this.wrappedFunction, t);
 	}
 
-	public T getWrappedFunction () {
+	public T getWrappedFunction() {
 		return this.wrappedFunction;
 	}
 }

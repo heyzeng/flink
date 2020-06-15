@@ -24,7 +24,7 @@ import org.apache.flink.api.common.typeutils.TypeSerializer;
 import org.apache.flink.api.java.typeutils.TypeExtractor;
 
 public class PojoGenericTypeSerializerTest extends AbstractGenericTypeSerializerTest {
-	
+
 	@Override
 	protected <T> TypeSerializer<T> createSerializer(Class<T> type) {
 		TypeInformation<T> typeInfo = TypeExtractor.getForClass(type);

@@ -36,7 +36,7 @@ public class LongPrimitiveArraySerializerTest extends SerializerTestBase<long[]>
 	protected Class<long[]> getTypeClass() {
 		return long[].class;
 	}
-	
+
 	@Override
 	protected int getLength() {
 		return -1;
@@ -44,10 +44,10 @@ public class LongPrimitiveArraySerializerTest extends SerializerTestBase<long[]>
 
 	@Override
 	protected long[][] getTestData() {
-		return new long[][] {
-			new long[] {0, 1, 2, 3, -1, -2, -3, Long.MAX_VALUE, Long.MIN_VALUE},
-			new long[] {},
-			new long[] {-1, -2, 96769243, 26782, 0, 0, 0}
+		return new long[][]{
+			new long[]{0, 1, 2, 3, -1, -2, -3, Long.MAX_VALUE, Long.MIN_VALUE},
+			new long[]{},
+			new long[]{-1, -2, 96769243, 26782, 0, 0, 0}
 		};
 	}
 }

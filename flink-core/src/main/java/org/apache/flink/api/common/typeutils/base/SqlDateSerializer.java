@@ -19,6 +19,7 @@
 package org.apache.flink.api.common.typeutils.base;
 
 import java.sql.Date;
+
 import org.apache.flink.annotation.Internal;
 import org.apache.flink.api.common.typeutils.SimpleTypeSerializerSnapshot;
 import org.apache.flink.api.common.typeutils.TypeSerializerSnapshot;

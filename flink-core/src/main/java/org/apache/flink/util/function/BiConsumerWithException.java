@@ -45,8 +45,8 @@ public interface BiConsumerWithException<T, U, E extends Throwable> {
 	 * Convert a {@link BiConsumerWithException} into a {@link BiConsumer}.
 	 *
 	 * @param biConsumerWithException BiConsumer with exception to convert into a {@link BiConsumer}.
-	 * @param <A> first input type
-	 * @param <B> second input type
+	 * @param <A>                     first input type
+	 * @param <B>                     second input type
 	 * @return {@link BiConsumer} which rethrows all checked exceptions as unchecked.
 	 */
 	static <A, B> BiConsumer<A, B> unchecked(BiConsumerWithException<A, B, ?> biConsumerWithException) {

@@ -71,7 +71,7 @@ public final class MemorySegmentFactory {
 	 * <p>This method is similar to {@link #allocateUnpooledSegment(int)}, but additionally sets
 	 * the owner of the memory segment.
 	 *
-	 * @param size The size of the memory segment to allocate.
+	 * @param size  The size of the memory segment to allocate.
 	 * @param owner The owner to associate with the memory segment.
 	 * @return A new memory segment, backed by unpooled heap memory.
 	 */
@@ -94,7 +94,7 @@ public final class MemorySegmentFactory {
 	 * Allocates some unpooled off-heap memory and creates a new memory segment that
 	 * represents that memory.
 	 *
-	 * @param size The size of the off-heap memory segment to allocate.
+	 * @param size  The size of the off-heap memory segment to allocate.
 	 * @param owner The owner to associate with the off-heap memory segment.
 	 * @return A new memory segment, backed by unpooled off-heap memory.
 	 */
@@ -128,7 +128,7 @@ public final class MemorySegmentFactory {
 	 * to be garbage collected, similar to {@link java.nio.DirectByteBuffer#DirectByteBuffer(int)}.
 	 * The difference is that this memory allocation is out of option -XX:MaxDirectMemorySize limitation.
 	 *
-	 * @param size The size of the off-heap unsafe memory segment to allocate.
+	 * @param size  The size of the off-heap unsafe memory segment to allocate.
 	 * @param owner The owner to associate with the off-heap unsafe memory segment.
 	 * @return A new memory segment, backed by off-heap unsafe memory.
 	 */

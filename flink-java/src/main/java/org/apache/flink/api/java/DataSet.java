@@ -131,7 +131,6 @@ public abstract class DataSet<T> {
 	 * Returns the {@link ExecutionEnvironment} in which this DataSet is registered.
 	 *
 	 * @return The ExecutionEnvironment in which this DataSet is registered.
-	 *
 	 * @see ExecutionEnvironment
 	 */
 	public ExecutionEnvironment getExecutionEnvironment() {
@@ -149,14 +148,13 @@ public abstract class DataSet<T> {
 	 * parts of the operation do not assume different type information.
 	 *
 	 * @param typeInfo The type information to fill in.
-	 *
 	 * @throws IllegalStateException Thrown, if the type information has been accessed before.
 	 */
 	protected void fillInType(TypeInformation<T> typeInfo) {
 		if (typeUsed) {
 			throw new IllegalStateException("TypeInformation cannot be filled in for the type after it has been used. "
-					+ "Please make sure that the type info hints are the first call after the transformation function, "
-					+ "before any access to types or semantic properties, etc.");
+				+ "Please make sure that the type info hints are the first call after the transformation function, "
+				+ "before any access to types or semantic properties, etc.");
 		}
 		this.type = typeInfo;
 	}
@@ -165,17 +163,16 @@ public abstract class DataSet<T> {
 	 * Returns the {@link TypeInformation} for the type of this DataSet.
 	 *
 	 * @return The TypeInformation for the type of this DataSet.
-	 *
 	 * @see TypeInformation
 	 */
 	public TypeInformation<T> getType() {
 		if (type instanceof MissingTypeInfo) {
 			MissingTypeInfo typeInfo = (MissingTypeInfo) type;
 			throw new InvalidTypesException("The return type of function '" + typeInfo.getFunctionName()
-					+ "' could not be determined automatically, due to type erasure. "
-					+ "You can give type information hints by using the returns(...) method on the result of "
-					+ "the transformation call, or by letting your function implement the 'ResultTypeQueryable' "
-					+ "interface.", typeInfo.getTypeException());
+				+ "' could not be determined automatically, due to type erasure. "
+				+ "You can give type information hints by using the returns(...) method on the result of "
+				+ "the transformation call, or by letting your function implement the 'ResultTypeQueryable' "
+				+ "interface.", typeInfo.getTypeException());
 		}
 		typeUsed = true;
 		return this.type;
@@ -202,7 +199,6 @@ public abstract class DataSet<T> {
 	 *
 	 * @param mapper The MapFunction that is called for each element of the DataSet.
 	 * @return A MapOperator that represents the transformed DataSet.
-	 *
 	 * @see org.apache.flink.api.common.functions.MapFunction
 	 * @see org.apache.flink.api.common.functions.RichMapFunction
 	 * @see MapOperator
@@ -230,7 +226,6 @@ public abstract class DataSet<T> {
 	 *
 	 * @param mapPartition The MapPartitionFunction that is called for the full DataSet.
 	 * @return A MapPartitionOperator that represents the transformed DataSet.
-	 *
 	 * @see MapPartitionFunction
 	 * @see MapPartitionOperator
 	 */
@@ -252,7 +247,6 @@ public abstract class DataSet<T> {
 	 *
 	 * @param flatMapper The FlatMapFunction that is called for each element of the DataSet.
 	 * @return A FlatMapOperator that represents the transformed DataSet.
-	 *
 	 * @see org.apache.flink.api.common.functions.RichFlatMapFunction
 	 * @see FlatMapOperator
 	 * @see DataSet
@@ -276,7 +270,6 @@ public abstract class DataSet<T> {
 	 *
 	 * @param filter The FilterFunction that is called for each element of the DataSet.
 	 * @return A FilterOperator that represents the filtered DataSet.
-	 *
 	 * @see org.apache.flink.api.common.functions.RichFilterFunction
 	 * @see FilterOperator
 	 * @see DataSet
@@ -304,9 +297,8 @@ public abstract class DataSet<T> {
 	 * <b>Note: With the current implementation, the Project transformation looses type information.</b>
 	 *
 	 * @param fieldIndexes The field indexes of the input tuple that are retained.
-	 * 					   The order of fields in the output tuple corresponds to the order of field indexes.
+	 *                     The order of fields in the output tuple corresponds to the order of field indexes.
 	 * @return A ProjectOperator that represents the projected DataSet.
-	 *
 	 * @see Tuple
 	 * @see DataSet
 	 * @see ProjectOperator
@@ -324,13 +316,12 @@ public abstract class DataSet<T> {
 	 *
 	 * <p><b>Note: Only Tuple DataSets can be aggregated.</b>
 	 * The transformation applies a built-in {@link Aggregations Aggregation} on a specified field
-	 *   of a Tuple DataSet. Additional aggregation functions can be added to the resulting
-	 *   {@link AggregateOperator} by calling {@link AggregateOperator#and(Aggregations, int)}.
+	 * of a Tuple DataSet. Additional aggregation functions can be added to the resulting
+	 * {@link AggregateOperator} by calling {@link AggregateOperator#and(Aggregations, int)}.
 	 *
-	 * @param agg The built-in aggregation function that is computed.
+	 * @param agg   The built-in aggregation function that is computed.
 	 * @param field The index of the Tuple field on which the aggregation function is applied.
 	 * @return An AggregateOperator that represents the aggregated DataSet.
-	 *
 	 * @see Tuple
 	 * @see Aggregations
 	 * @see AggregateOperator
@@ -342,9 +333,9 @@ public abstract class DataSet<T> {
 
 	/**
 	 * Syntactic sugar for aggregate (SUM, field).
+	 *
 	 * @param field The index of the Tuple field on which the aggregation function is applied.
 	 * @return An AggregateOperator that represents the summed DataSet.
-	 *
 	 * @see org.apache.flink.api.java.operators.AggregateOperator
 	 */
 	public AggregateOperator<T> sum(int field) {
@@ -360,7 +351,6 @@ public abstract class DataSet<T> {
 	 *
 	 * @param field The index of the Tuple field on which the aggregation function is applied.
 	 * @return An AggregateOperator that represents the max'ed DataSet.
-	 *
 	 * @see #aggregate(Aggregations, int)
 	 * @see #maxBy(int...)
 	 */
@@ -377,7 +367,6 @@ public abstract class DataSet<T> {
 	 *
 	 * @param field The index of the Tuple field on which the aggregation function is applied.
 	 * @return An AggregateOperator that represents the min'ed DataSet.
-	 *
 	 * @see #aggregate(Aggregations, int)
 	 * @see #minBy(int...)
 	 */
@@ -396,7 +385,7 @@ public abstract class DataSet<T> {
 		output(new Utils.CountHelper<T>(id)).name("count()");
 
 		JobExecutionResult res = getExecutionEnvironment().execute();
-		return res.<Long> getAccumulatorResult(id);
+		return res.<Long>getAccumulatorResult(id);
 	}
 
 	/**
@@ -430,12 +419,11 @@ public abstract class DataSet<T> {
 	 * Applies a Reduce transformation on a non-grouped {@link DataSet}.
 	 *
 	 * <p>The transformation consecutively calls a {@link org.apache.flink.api.common.functions.RichReduceFunction}
-	 *   until only a single element remains which is the result of the transformation.
+	 * until only a single element remains which is the result of the transformation.
 	 * A ReduceFunction combines two elements into one new element of the same type.
 	 *
 	 * @param reducer The ReduceFunction that is applied on the DataSet.
 	 * @return A ReduceOperator that represents the reduced DataSet.
-	 *
 	 * @see org.apache.flink.api.common.functions.RichReduceFunction
 	 * @see ReduceOperator
 	 * @see DataSet
@@ -452,11 +440,10 @@ public abstract class DataSet<T> {
 	 *
 	 * <p>The transformation calls a {@link org.apache.flink.api.common.functions.RichGroupReduceFunction} once with the full DataSet.
 	 * The GroupReduceFunction can iterate over all elements of the DataSet and emit any
-	 *   number of output elements including none.
+	 * number of output elements including none.
 	 *
 	 * @param reducer The GroupReduceFunction that is applied on the DataSet.
 	 * @return A GroupReduceOperator that represents the reduced DataSet.
-	 *
 	 * @see org.apache.flink.api.common.functions.RichGroupReduceFunction
 	 * @see org.apache.flink.api.java.operators.GroupReduceOperator
 	 * @see DataSet
@@ -480,6 +467,7 @@ public abstract class DataSet<T> {
 	 * a combiner by implementing the RichGroupReduce function. The combine method of the RichGroupReduce function
 	 * demands input and output type to be the same. The CombineFunction, on the other side, can have an arbitrary
 	 * output type.
+	 *
 	 * @param combiner The GroupCombineFunction that is applied on the DataSet.
 	 * @return A GroupCombineOperator which represents the combined DataSet.
 	 */
@@ -519,8 +507,8 @@ public abstract class DataSet<T> {
 	 * @param fields Field positions to compute the minimum over
 	 * @return A {@link ReduceOperator} representing the minimum
 	 */
-	@SuppressWarnings({ "unchecked", "rawtypes" })
-	public ReduceOperator<T> minBy(int... fields)  {
+	@SuppressWarnings({"unchecked", "rawtypes"})
+	public ReduceOperator<T> minBy(int... fields) {
 		if (!getType().isTupleType() || !(getType() instanceof TupleTypeInfo)) {
 			throw new InvalidProgramException("DataSet#minBy(int...) only works on Tuple types.");
 		}
@@ -555,7 +543,7 @@ public abstract class DataSet<T> {
 	 * @param fields Field positions to compute the maximum over
 	 * @return A {@link ReduceOperator} representing the maximum
 	 */
-	@SuppressWarnings({ "unchecked", "rawtypes" })
+	@SuppressWarnings({"unchecked", "rawtypes"})
 	public ReduceOperator<T> maxBy(int... fields) {
 		if (!getType().isTupleType() || !(getType() instanceof TupleTypeInfo)) {
 			throw new InvalidProgramException("DataSet#maxBy(int...) only works on Tuple types.");
@@ -646,10 +634,10 @@ public abstract class DataSet<T> {
 	/**
 	 * Groups a {@link DataSet} using a {@link KeySelector} function.
 	 * The KeySelector function is called for each element of the DataSet and extracts a single
-	 *   key value on which the DataSet is grouped.
+	 * key value on which the DataSet is grouped.
 	 *
 	 * <p>This method returns an {@link UnsortedGrouping} on which one of the following grouping transformation
-	 *   can be applied.
+	 * can be applied.
 	 * <ul>
 	 *   <li>{@link UnsortedGrouping#sortGroup(int, org.apache.flink.api.common.operators.Order)} to get a {@link SortedGrouping}.
 	 *   <li>{@link UnsortedGrouping#aggregate(Aggregations, int)} to apply an Aggregate transformation.
@@ -659,7 +647,6 @@ public abstract class DataSet<T> {
 	 *
 	 * @param keyExtractor The KeySelector function which extracts the key values from the DataSet on which it is grouped.
 	 * @return An UnsortedGrouping on which a transformation needs to be applied to obtain a transformed DataSet.
-	 *
 	 * @see KeySelector
 	 * @see UnsortedGrouping
 	 * @see AggregateOperator
@@ -679,7 +666,7 @@ public abstract class DataSet<T> {
 	 *
 	 * <p>The field position keys specify the fields of Tuples on which the DataSet is grouped.
 	 * This method returns an {@link UnsortedGrouping} on which one of the following grouping transformation
-	 *   can be applied.
+	 * can be applied.
 	 * <ul>
 	 *   <li>{@link UnsortedGrouping#sortGroup(int, org.apache.flink.api.common.operators.Order)} to get a {@link SortedGrouping}.
 	 *   <li>{@link UnsortedGrouping#aggregate(Aggregations, int)} to apply an Aggregate transformation.
@@ -689,7 +676,6 @@ public abstract class DataSet<T> {
 	 *
 	 * @param fields One or more field positions on which the DataSet will be grouped.
 	 * @return A Grouping on which a transformation needs to be applied to obtain a transformed DataSet.
-	 *
 	 * @see Tuple
 	 * @see UnsortedGrouping
 	 * @see AggregateOperator
@@ -706,7 +692,7 @@ public abstract class DataSet<T> {
 	 * or a getter method with parentheses of the {@link DataSet}S underlying type. A dot can be used to drill down
 	 * into objects, as in {@code "field1.getInnerField2()" }.
 	 * This method returns an {@link UnsortedGrouping} on which one of the following grouping transformation
-	 *   can be applied.
+	 * can be applied.
 	 * <ul>
 	 *   <li>{@link UnsortedGrouping#sortGroup(int, org.apache.flink.api.common.operators.Order)} to get a {@link SortedGrouping}.
 	 *   <li>{@link UnsortedGrouping#aggregate(Aggregations, int)} to apply an Aggregate transformation.
@@ -716,7 +702,6 @@ public abstract class DataSet<T> {
 	 *
 	 * @param fields One or more field expressions on which the DataSet will be grouped.
 	 * @return A Grouping on which a transformation needs to be applied to obtain a transformed DataSet.
-	 *
 	 * @see Tuple
 	 * @see UnsortedGrouping
 	 * @see AggregateOperator
@@ -736,15 +721,14 @@ public abstract class DataSet<T> {
 	 * Initiates a Join transformation.
 	 *
 	 * <p>A Join transformation joins the elements of two
-	 *   {@link DataSet DataSets} on key equality and provides multiple ways to combine
-	 *   joining elements into one DataSet.
+	 * {@link DataSet DataSets} on key equality and provides multiple ways to combine
+	 * joining elements into one DataSet.
 	 *
 	 * <p>This method returns a {@link JoinOperatorSets} on which one of the {@code where} methods
 	 * can be called to define the join key of the first joining (i.e., this) DataSet.
 	 *
 	 * @param other The other DataSet with which this DataSet is joined.
 	 * @return A JoinOperatorSets to continue the definition of the Join transformation.
-	 *
 	 * @see JoinOperatorSets
 	 * @see DataSet
 	 */
@@ -756,17 +740,16 @@ public abstract class DataSet<T> {
 	 * Initiates a Join transformation.
 	 *
 	 * <p>A Join transformation joins the elements of two
-	 *   {@link DataSet DataSets} on key equality and provides multiple ways to combine
-	 *   joining elements into one DataSet.
+	 * {@link DataSet DataSets} on key equality and provides multiple ways to combine
+	 * joining elements into one DataSet.
 	 *
 	 * <p>This method returns a {@link JoinOperatorSets} on which one of the {@code where} methods
 	 * can be called to define the join key of the first joining (i.e., this) DataSet.
 	 *
-	 * @param other The other DataSet with which this DataSet is joined.
+	 * @param other    The other DataSet with which this DataSet is joined.
 	 * @param strategy The strategy that should be used execute the join. If {@code null} is given, then the
 	 *                 optimizer will pick the join strategy.
 	 * @return A JoinOperatorSets to continue the definition of the Join transformation.
-	 *
 	 * @see JoinOperatorSets
 	 * @see DataSet
 	 */
@@ -778,19 +761,18 @@ public abstract class DataSet<T> {
 	 * Initiates a Join transformation.
 	 *
 	 * <p>A Join transformation joins the elements of two
-	 *   {@link DataSet DataSets} on key equality and provides multiple ways to combine
-	 *   joining elements into one DataSet.
+	 * {@link DataSet DataSets} on key equality and provides multiple ways to combine
+	 * joining elements into one DataSet.
 	 *
 	 * <p>This method also gives the hint to the optimizer that the second DataSet to join is much
-	 *   smaller than the first one.
+	 * smaller than the first one.
 	 *
 	 * <p>This method returns a {@link JoinOperatorSets} on which
-	 *   {@link JoinOperatorSets#where(String...)} needs to be called to define the join key of the first
-	 *   joining (i.e., this) DataSet.
+	 * {@link JoinOperatorSets#where(String...)} needs to be called to define the join key of the first
+	 * joining (i.e., this) DataSet.
 	 *
 	 * @param other The other DataSet with which this DataSet is joined.
 	 * @return A JoinOperatorSets to continue the definition of the Join transformation.
-	 *
 	 * @see JoinOperatorSets
 	 * @see DataSet
 	 */
@@ -802,18 +784,17 @@ public abstract class DataSet<T> {
 	 * Initiates a Join transformation.
 	 *
 	 * <p>A Join transformation joins the elements of two
-	 *   {@link DataSet DataSets} on key equality and provides multiple ways to combine
-	 *   joining elements into one DataSet.
+	 * {@link DataSet DataSets} on key equality and provides multiple ways to combine
+	 * joining elements into one DataSet.
 	 *
 	 * <p>This method also gives the hint to the optimizer that the second DataSet to join is much
-	 *   larger than the first one.
+	 * larger than the first one.
 	 *
 	 * <p>This method returns a {@link JoinOperatorSets} on which one of the {@code where} methods
 	 * can be called to define the join key of the first joining (i.e., this) DataSet.
 	 *
 	 * @param other The other DataSet with which this DataSet is joined.
 	 * @return A JoinOperatorSet to continue the definition of the Join transformation.
-	 *
 	 * @see JoinOperatorSets
 	 * @see DataSet
 	 */
@@ -825,16 +806,15 @@ public abstract class DataSet<T> {
 	 * Initiates a Left Outer Join transformation.
 	 *
 	 * <p>An Outer Join transformation joins two elements of two
-	 *   {@link DataSet DataSets} on key equality and provides multiple ways to combine
-	 *   joining elements into one DataSet.
+	 * {@link DataSet DataSets} on key equality and provides multiple ways to combine
+	 * joining elements into one DataSet.
 	 *
 	 * <p>Elements of the <b>left</b> DataSet (i.e. {@code this}) that do not have a matching
-	 *   element on the other side are joined with {@code null} and emitted to the
-	 *   resulting DataSet.
+	 * element on the other side are joined with {@code null} and emitted to the
+	 * resulting DataSet.
 	 *
 	 * @param other The other DataSet with which this DataSet is joined.
 	 * @return A JoinOperatorSet to continue the definition of the Join transformation.
-	 *
 	 * @see org.apache.flink.api.java.operators.join.JoinOperatorSetsBase
 	 * @see DataSet
 	 */
@@ -846,23 +826,22 @@ public abstract class DataSet<T> {
 	 * Initiates a Left Outer Join transformation.
 	 *
 	 * <p>An Outer Join transformation joins two elements of two
-	 *   {@link DataSet DataSets} on key equality and provides multiple ways to combine
-	 *   joining elements into one DataSet.
+	 * {@link DataSet DataSets} on key equality and provides multiple ways to combine
+	 * joining elements into one DataSet.
 	 *
 	 * <p>Elements of the <b>left</b> DataSet (i.e. {@code this}) that do not have a matching
-	 *   element on the other side are joined with {@code null} and emitted to the
-	 *   resulting DataSet.
+	 * element on the other side are joined with {@code null} and emitted to the
+	 * resulting DataSet.
 	 *
-	 * @param other The other DataSet with which this DataSet is joined.
+	 * @param other    The other DataSet with which this DataSet is joined.
 	 * @param strategy The strategy that should be used execute the join. If {@code null} is given, then the
 	 *                 optimizer will pick the join strategy.
 	 * @return A JoinOperatorSet to continue the definition of the Join transformation.
-	 *
 	 * @see org.apache.flink.api.java.operators.join.JoinOperatorSetsBase
 	 * @see DataSet
 	 */
 	public <R> JoinOperatorSetsBase<T, R> leftOuterJoin(DataSet<R> other, JoinHint strategy) {
-		switch(strategy) {
+		switch (strategy) {
 			case OPTIMIZER_CHOOSES:
 			case REPARTITION_SORT_MERGE:
 			case REPARTITION_HASH_FIRST:
@@ -879,16 +858,15 @@ public abstract class DataSet<T> {
 	 * Initiates a Right Outer Join transformation.
 	 *
 	 * <p>An Outer Join transformation joins two elements of two
-	 *   {@link DataSet DataSets} on key equality and provides multiple ways to combine
-	 *   joining elements into one DataSet.
+	 * {@link DataSet DataSets} on key equality and provides multiple ways to combine
+	 * joining elements into one DataSet.
 	 *
 	 * <p>Elements of the <b>right</b> DataSet (i.e. {@code other}) that do not have a matching
-	 *   element on {@code this} side are joined with {@code null} and emitted to the
-	 *   resulting DataSet.
+	 * element on {@code this} side are joined with {@code null} and emitted to the
+	 * resulting DataSet.
 	 *
 	 * @param other The other DataSet with which this DataSet is joined.
 	 * @return A JoinOperatorSet to continue the definition of the Join transformation.
-	 *
 	 * @see org.apache.flink.api.java.operators.join.JoinOperatorSetsBase
 	 * @see DataSet
 	 */
@@ -900,23 +878,22 @@ public abstract class DataSet<T> {
 	 * Initiates a Right Outer Join transformation.
 	 *
 	 * <p>An Outer Join transformation joins two elements of two
-	 *   {@link DataSet DataSets} on key equality and provides multiple ways to combine
-	 *   joining elements into one DataSet.
+	 * {@link DataSet DataSets} on key equality and provides multiple ways to combine
+	 * joining elements into one DataSet.
 	 *
 	 * <p>Elements of the <b>right</b> DataSet (i.e. {@code other}) that do not have a matching
-	 *   element on {@code this} side are joined with {@code null} and emitted to the
-	 *   resulting DataSet.
+	 * element on {@code this} side are joined with {@code null} and emitted to the
+	 * resulting DataSet.
 	 *
-	 * @param other The other DataSet with which this DataSet is joined.
+	 * @param other    The other DataSet with which this DataSet is joined.
 	 * @param strategy The strategy that should be used execute the join. If {@code null} is given, then the
 	 *                 optimizer will pick the join strategy.
 	 * @return A JoinOperatorSet to continue the definition of the Join transformation.
-	 *
 	 * @see org.apache.flink.api.java.operators.join.JoinOperatorSetsBase
 	 * @see DataSet
 	 */
 	public <R> JoinOperatorSetsBase<T, R> rightOuterJoin(DataSet<R> other, JoinHint strategy) {
-		switch(strategy) {
+		switch (strategy) {
 			case OPTIMIZER_CHOOSES:
 			case REPARTITION_SORT_MERGE:
 			case REPARTITION_HASH_FIRST:
@@ -932,16 +909,15 @@ public abstract class DataSet<T> {
 	 * Initiates a Full Outer Join transformation.
 	 *
 	 * <p>An Outer Join transformation joins two elements of two
-	 *   {@link DataSet DataSets} on key equality and provides multiple ways to combine
-	 *   joining elements into one DataSet.
+	 * {@link DataSet DataSets} on key equality and provides multiple ways to combine
+	 * joining elements into one DataSet.
 	 *
 	 * <p>Elements of <b>both</b> DataSets that do not have a matching
-	 *   element on the opposing side are joined with {@code null} and emitted to the
-	 *   resulting DataSet.
+	 * element on the opposing side are joined with {@code null} and emitted to the
+	 * resulting DataSet.
 	 *
 	 * @param other The other DataSet with which this DataSet is joined.
 	 * @return A JoinOperatorSet to continue the definition of the Join transformation.
-	 *
 	 * @see org.apache.flink.api.java.operators.join.JoinOperatorSetsBase
 	 * @see DataSet
 	 */
@@ -953,23 +929,22 @@ public abstract class DataSet<T> {
 	 * Initiates a Full Outer Join transformation.
 	 *
 	 * <p>An Outer Join transformation joins two elements of two
-	 *   {@link DataSet DataSets} on key equality and provides multiple ways to combine
-	 *   joining elements into one DataSet.
+	 * {@link DataSet DataSets} on key equality and provides multiple ways to combine
+	 * joining elements into one DataSet.
 	 *
 	 * <p>Elements of <b>both</b> DataSets that do not have a matching
-	 *   element on the opposing side are joined with {@code null} and emitted to the
-	 *   resulting DataSet.
+	 * element on the opposing side are joined with {@code null} and emitted to the
+	 * resulting DataSet.
 	 *
-	 * @param other The other DataSet with which this DataSet is joined.
+	 * @param other    The other DataSet with which this DataSet is joined.
 	 * @param strategy The strategy that should be used execute the join. If {@code null} is given, then the
 	 *                 optimizer will pick the join strategy.
 	 * @return A JoinOperatorSet to continue the definition of the Join transformation.
-	 *
 	 * @see org.apache.flink.api.java.operators.join.JoinOperatorSetsBase
 	 * @see DataSet
 	 */
 	public <R> JoinOperatorSetsBase<T, R> fullOuterJoin(DataSet<R> other, JoinHint strategy) {
-		switch(strategy) {
+		switch (strategy) {
 			case OPTIMIZER_CHOOSES:
 			case REPARTITION_SORT_MERGE:
 			case REPARTITION_HASH_FIRST:
@@ -988,20 +963,19 @@ public abstract class DataSet<T> {
 	 * Initiates a CoGroup transformation.
 	 *
 	 * <p>A CoGroup transformation combines the elements of
-	 *   two {@link DataSet DataSets} into one DataSet. It groups each DataSet individually on a key and
-	 *   gives groups of both DataSets with equal keys together into a {@link org.apache.flink.api.common.functions.RichCoGroupFunction}.
-	 *   If a DataSet has a group with no matching key in the other DataSet, the CoGroupFunction
-	 *   is called with an empty group for the non-existing group.
+	 * two {@link DataSet DataSets} into one DataSet. It groups each DataSet individually on a key and
+	 * gives groups of both DataSets with equal keys together into a {@link org.apache.flink.api.common.functions.RichCoGroupFunction}.
+	 * If a DataSet has a group with no matching key in the other DataSet, the CoGroupFunction
+	 * is called with an empty group for the non-existing group.
 	 *
 	 * <p>The CoGroupFunction can iterate over the elements of both groups and return any number
-	 *   of elements including none.
+	 * of elements including none.
 	 *
 	 * <p>This method returns a {@link CoGroupOperatorSets} on which one of the {@code where} methods
 	 * can be called to define the join key of the first joining (i.e., this) DataSet.
 	 *
 	 * @param other The other DataSet of the CoGroup transformation.
 	 * @return A CoGroupOperatorSets to continue the definition of the CoGroup transformation.
-	 *
 	 * @see CoGroupOperatorSets
 	 * @see CoGroupOperator
 	 * @see DataSet
@@ -1032,8 +1006,8 @@ public abstract class DataSet<T> {
 	 * Initiates a Cross transformation.
 	 *
 	 * <p>A Cross transformation combines the elements of two
-	 *   {@link DataSet DataSets} into one DataSet. It builds all pair combinations of elements of
-	 *   both DataSets, i.e., it builds a Cartesian product.
+	 * {@link DataSet DataSets} into one DataSet. It builds all pair combinations of elements of
+	 * both DataSets, i.e., it builds a Cartesian product.
 	 *
 	 *
 	 * <p>The resulting {@link org.apache.flink.api.java.operators.CrossOperator.DefaultCross} wraps each pair of crossed elements into a {@link Tuple2}, with
@@ -1047,7 +1021,6 @@ public abstract class DataSet<T> {
 	 *
 	 * @param other The other DataSet with which this DataSet is crossed.
 	 * @return A DefaultCross that returns a Tuple2 for each pair of crossed elements.
-	 *
 	 * @see org.apache.flink.api.java.operators.CrossOperator.DefaultCross
 	 * @see org.apache.flink.api.common.functions.CrossFunction
 	 * @see DataSet
@@ -1061,10 +1034,10 @@ public abstract class DataSet<T> {
 	 * Initiates a Cross transformation.
 	 *
 	 * <p>A Cross transformation combines the elements of two
-	 *   {@link DataSet DataSets} into one DataSet. It builds all pair combinations of elements of
-	 *   both DataSets, i.e., it builds a Cartesian product.
+	 * {@link DataSet DataSets} into one DataSet. It builds all pair combinations of elements of
+	 * both DataSets, i.e., it builds a Cartesian product.
 	 * This method also gives the hint to the optimizer that the second DataSet to cross is much
-	 *   smaller than the first one.
+	 * smaller than the first one.
 	 *
 	 *
 	 * <p>The resulting {@link org.apache.flink.api.java.operators.CrossOperator.DefaultCross} wraps each pair of crossed elements into a {@link Tuple2}, with
@@ -1078,7 +1051,6 @@ public abstract class DataSet<T> {
 	 *
 	 * @param other The other DataSet with which this DataSet is crossed.
 	 * @return A DefaultCross that returns a Tuple2 for each pair of crossed elements.
-	 *
 	 * @see org.apache.flink.api.java.operators.CrossOperator.DefaultCross
 	 * @see org.apache.flink.api.common.functions.CrossFunction
 	 * @see DataSet
@@ -1092,10 +1064,10 @@ public abstract class DataSet<T> {
 	 * Initiates a Cross transformation.
 	 *
 	 * <p>A Cross transformation combines the elements of two
-	 *   {@link DataSet DataSets} into one DataSet. It builds all pair combinations of elements of
-	 *   both DataSets, i.e., it builds a Cartesian product.
+	 * {@link DataSet DataSets} into one DataSet. It builds all pair combinations of elements of
+	 * both DataSets, i.e., it builds a Cartesian product.
 	 * This method also gives the hint to the optimizer that the second DataSet to cross is much
-	 *   larger than the first one.
+	 * larger than the first one.
 	 *
 	 *
 	 * <p>The resulting {@link org.apache.flink.api.java.operators.CrossOperator.DefaultCross} wraps each pair of crossed elements into a {@link Tuple2}, with
@@ -1109,7 +1081,6 @@ public abstract class DataSet<T> {
 	 *
 	 * @param other The other DataSet with which this DataSet is crossed.
 	 * @return A DefaultCross that returns a Tuple2 for each pair of crossed elements.
-	 *
 	 * @see org.apache.flink.api.java.operators.CrossOperator.DefaultCross
 	 * @see org.apache.flink.api.common.functions.CrossFunction
 	 * @see DataSet
@@ -1149,8 +1120,7 @@ public abstract class DataSet<T> {
 	 *
 	 * @param maxIterations The maximum number of times that the iteration is executed.
 	 * @return An IterativeDataSet that marks the start of the iterative part and needs to be closed by
-	 *         {@link org.apache.flink.api.java.operators.IterativeDataSet#closeWith(DataSet)}.
-	 *
+	 * {@link org.apache.flink.api.java.operators.IterativeDataSet#closeWith(DataSet)}.
 	 * @see org.apache.flink.api.java.operators.IterativeDataSet
 	 */
 	public IterativeDataSet<T> iterate(int maxIterations) {
@@ -1195,12 +1165,10 @@ public abstract class DataSet<T> {
 	 * }
 	 * </pre>
 	 *
-	 * @param workset The initial version of the data set that is fed back to the next iteration step (the workset).
+	 * @param workset       The initial version of the data set that is fed back to the next iteration step (the workset).
 	 * @param maxIterations The maximum number of iteration steps, as a fall back safeguard.
-	 * @param keyPositions The position of the tuple fields that is used as the key of the solution set.
-	 *
+	 * @param keyPositions  The position of the tuple fields that is used as the key of the solution set.
 	 * @return The DeltaIteration that marks the start of a delta iteration.
-	 *
 	 * @see org.apache.flink.api.java.operators.DeltaIteration
 	 */
 	public <R> DeltaIteration<T, R> iterateDelta(DataSet<R> workset, int maxIterations, int... keyPositions) {
@@ -1238,7 +1206,7 @@ public abstract class DataSet<T> {
 	 * @param other The other DataSet which is unioned with the current DataSet.
 	 * @return The resulting DataSet.
 	 */
-	public UnionOperator<T> union(DataSet<T> other){
+	public UnionOperator<T> union(DataSet<T> other) {
 		return new UnionOperator<>(this, other, Utils.getCallLocationName());
 	}
 
@@ -1277,7 +1245,6 @@ public abstract class DataSet<T> {
 	 *
 	 * @param keyExtractor The KeyExtractor with which the DataSet is hash-partitioned.
 	 * @return The partitioned DataSet.
-	 *
 	 * @see KeySelector
 	 */
 	public <K extends Comparable<K>> PartitionOperator<T> partitionByHash(KeySelector<T, K> keyExtractor) {
@@ -1319,7 +1286,6 @@ public abstract class DataSet<T> {
 	 *
 	 * @param keyExtractor The KeyExtractor with which the DataSet is range-partitioned.
 	 * @return The partitioned DataSet.
-	 *
 	 * @see KeySelector
 	 */
 	public <K extends Comparable<K>> PartitionOperator<T> partitionByRange(KeySelector<T, K> keyExtractor) {
@@ -1334,11 +1300,11 @@ public abstract class DataSet<T> {
 	 * <p>Note: This method works only on single field keys.
 	 *
 	 * @param partitioner The partitioner to assign partitions to keys.
-	 * @param field The field index on which the DataSet is to partitioned.
+	 * @param field       The field index on which the DataSet is to partitioned.
 	 * @return The partitioned DataSet.
 	 */
 	public <K> PartitionOperator<T> partitionCustom(Partitioner<K> partitioner, int field) {
-		return new PartitionOperator<>(this, new Keys.ExpressionKeys<>(new int[] {field}, getType()), clean(partitioner), Utils.getCallLocationName());
+		return new PartitionOperator<>(this, new Keys.ExpressionKeys<>(new int[]{field}, getType()), clean(partitioner), Utils.getCallLocationName());
 	}
 
 	/**
@@ -1348,11 +1314,11 @@ public abstract class DataSet<T> {
 	 * <p>Note: This method works only on single field keys.
 	 *
 	 * @param partitioner The partitioner to assign partitions to keys.
-	 * @param field The field index on which the DataSet is to partitioned.
+	 * @param field       The field index on which the DataSet is to partitioned.
 	 * @return The partitioned DataSet.
 	 */
 	public <K> PartitionOperator<T> partitionCustom(Partitioner<K> partitioner, String field) {
-		return new PartitionOperator<>(this, new Keys.ExpressionKeys<>(new String[] {field}, getType()), clean(partitioner), Utils.getCallLocationName());
+		return new PartitionOperator<>(this, new Keys.ExpressionKeys<>(new String[]{field}, getType()), clean(partitioner), Utils.getCallLocationName());
 	}
 
 	/**
@@ -1363,10 +1329,9 @@ public abstract class DataSet<T> {
 	 * <p>Note: This method works only on single field keys, i.e. the selector cannot return tuples
 	 * of fields.
 	 *
-	 * @param partitioner The partitioner to assign partitions to keys.
+	 * @param partitioner  The partitioner to assign partitions to keys.
 	 * @param keyExtractor The KeyExtractor with which the DataSet is partitioned.
 	 * @return The partitioned DataSet.
-	 *
 	 * @see KeySelector
 	 */
 	public <K extends Comparable<K>> PartitionOperator<T> partitionCustom(Partitioner<K> partitioner, KeySelector<T, K> keyExtractor) {
@@ -1424,7 +1389,7 @@ public abstract class DataSet<T> {
 	 *
 	 * @param keyExtractor The KeySelector function which extracts the key values from the DataSet
 	 *                     on which the DataSet is sorted.
-	 * @param order The order in which the DataSet is sorted.
+	 * @param order        The order in which the DataSet is sorted.
 	 * @return The DataSet with sorted local partitions.
 	 */
 	public <K> SortPartitionOperator<T> sortPartition(KeySelector<T, K> keyExtractor, Order order) {
@@ -1465,12 +1430,12 @@ public abstract class DataSet<T> {
 	 * └── path1 }</pre>
 	 * Code Example
 	 * <pre>{@code // Parallelism is set to only this particular operation
-	 *dataset.writeAsText("file:///path1").setParallelism(1);
+	 * dataset.writeAsText("file:///path1").setParallelism(1);
 	 *
 	 * // This will creates the same effect but note all operators' parallelism are set to one
-	 *env.setParallelism(1);
-	 *...
-	 *dataset.writeAsText("file:///path1"); }</pre>
+	 * env.setParallelism(1);
+	 * ...
+	 * dataset.writeAsText("file:///path1"); }</pre>
 	 *   </li>
 	 *   <li>
 	 * A directory is always created when <a href="https://ci.apache.org/projects/flink/flink-docs-master/setup/config.html#file-systems">fs.output.always-create-directory</a>
@@ -1480,13 +1445,12 @@ public abstract class DataSet<T> {
 	 *     └── 1 }</pre>
 	 * Code Example
 	 * <pre>{@code // fs.output.always-create-directory = true
-	 *dataset.writeAsText("file:///path1").setParallelism(1); }</pre>
+	 * dataset.writeAsText("file:///path1").setParallelism(1); }</pre>
 	 *   </li>
 	 * </ul>
 	 *
 	 * @param filePath The path pointing to the location the text file or files under the directory is written to.
 	 * @return The DataSink that writes the DataSet.
-	 *
 	 * @see TextOutputFormat
 	 */
 	public DataSink<T> writeAsText(String filePath) {
@@ -1498,10 +1462,9 @@ public abstract class DataSet<T> {
 	 *
 	 * <p>For each element of the DataSet the result of {@link Object#toString()} is written.
 	 *
-	 * @param filePath The path pointing to the location the text file is written to.
+	 * @param filePath  The path pointing to the location the text file is written to.
 	 * @param writeMode Control the behavior for existing files. Options are NO_OVERWRITE and OVERWRITE.
 	 * @return The DataSink that writes the DataSet.
-	 *
 	 * @see TextOutputFormat
 	 * @see DataSet#writeAsText(String) Output files and directories
 	 */
@@ -1516,10 +1479,9 @@ public abstract class DataSet<T> {
 	 *
 	 * <p>For each element of the DataSet the result of {@link TextFormatter#format(Object)} is written.
 	 *
-	 * @param filePath The path pointing to the location the text file is written to.
+	 * @param filePath  The path pointing to the location the text file is written to.
 	 * @param formatter formatter that is applied on every element of the DataSet.
 	 * @return The DataSink that writes the DataSet.
-	 *
 	 * @see TextOutputFormat
 	 * @see DataSet#writeAsText(String) Output files and directories
 	 */
@@ -1532,11 +1494,10 @@ public abstract class DataSet<T> {
 	 *
 	 * <p>For each element of the DataSet the result of {@link TextFormatter#format(Object)} is written.
 	 *
-	 * @param filePath The path pointing to the location the text file is written to.
+	 * @param filePath  The path pointing to the location the text file is written to.
 	 * @param writeMode Control the behavior for existing files. Options are NO_OVERWRITE and OVERWRITE.
 	 * @param formatter formatter that is applied on every element of the DataSet.
 	 * @return The DataSink that writes the DataSet.
-	 *
 	 * @see TextOutputFormat
 	 * @see DataSet#writeAsText(String) Output files and directories
 	 */
@@ -1556,7 +1517,6 @@ public abstract class DataSet<T> {
 	 *
 	 * @param filePath The path pointing to the location the CSV file is written to.
 	 * @return The DataSink that writes the DataSet.
-	 *
 	 * @see Tuple
 	 * @see CsvOutputFormat
 	 * @see DataSet#writeAsText(String) Output files and directories
@@ -1575,10 +1535,9 @@ public abstract class DataSet<T> {
 	 *
 	 * <p>Tuples are are separated by the newline character ({@code \n}).
 	 *
-	 * @param filePath The path pointing to the location the CSV file is written to.
+	 * @param filePath  The path pointing to the location the CSV file is written to.
 	 * @param writeMode The behavior regarding existing files. Options are NO_OVERWRITE and OVERWRITE.
 	 * @return The DataSink that writes the DataSet.
-	 *
 	 * @see Tuple
 	 * @see CsvOutputFormat
 	 * @see DataSet#writeAsText(String) Output files and directories
@@ -1594,10 +1553,9 @@ public abstract class DataSet<T> {
 	 *
 	 * <p>For each Tuple field the result of {@link Object#toString()} is written.
 	 *
-	 * @param filePath The path pointing to the location the CSV file is written to.
-	 * @param rowDelimiter The row delimiter to separate Tuples.
+	 * @param filePath       The path pointing to the location the CSV file is written to.
+	 * @param rowDelimiter   The row delimiter to separate Tuples.
 	 * @param fieldDelimiter The field delimiter to separate Tuple fields.
-	 *
 	 * @see Tuple
 	 * @see CsvOutputFormat
 	 * @see DataSet#writeAsText(String) Output files and directories
@@ -1610,13 +1568,12 @@ public abstract class DataSet<T> {
 	 * Writes a {@link Tuple} DataSet as CSV file(s) to the specified location with the specified field and line delimiters.
 	 *
 	 * <p><b>Note: Only a Tuple DataSet can written as a CSV file.</b>
- 	 * For each Tuple field the result of {@link Object#toString()} is written.
+	 * For each Tuple field the result of {@link Object#toString()} is written.
 	 *
-	 * @param filePath The path pointing to the location the CSV file is written to.
-	 * @param rowDelimiter The row delimiter to separate Tuples.
+	 * @param filePath       The path pointing to the location the CSV file is written to.
+	 * @param rowDelimiter   The row delimiter to separate Tuples.
 	 * @param fieldDelimiter The field delimiter to separate Tuple fields.
-	 * @param writeMode The behavior regarding existing files. Options are NO_OVERWRITE and OVERWRITE.
-	 *
+	 * @param writeMode      The behavior regarding existing files. Options are NO_OVERWRITE and OVERWRITE.
 	 * @see Tuple
 	 * @see CsvOutputFormat
 	 * @see DataSet#writeAsText(String) Output files and directories
@@ -1650,7 +1607,7 @@ public abstract class DataSet<T> {
 	 */
 	public void print() throws Exception {
 		List<T> elements = collect();
-		for (T e: elements) {
+		for (T e : elements) {
 			System.out.println(e);
 		}
 	}
@@ -1670,7 +1627,7 @@ public abstract class DataSet<T> {
 	 */
 	public void printToErr() throws Exception {
 		List<T> elements = collect();
-		for (T e: elements) {
+		for (T e : elements) {
 			System.err.println(e);
 		}
 	}
@@ -1688,7 +1645,6 @@ public abstract class DataSet<T> {
 	 * @param prefix The string to prefix each line of the output with. This helps identifying outputs
 	 *               from different printing sinks.
 	 * @return The DataSink operator that writes the DataSet.
-	 *
 	 * @see #print()
 	 */
 	public DataSink<T> printOnTaskManager(String prefix) {
@@ -1702,7 +1658,6 @@ public abstract class DataSet<T> {
 	 *
 	 * @param sinkIdentifier The string to prefix the output with.
 	 * @return The DataSink that writes the DataSet.
-	 *
 	 * @deprecated Use {@link #printOnTaskManager(String)} instead.
 	 */
 	@Deprecated
@@ -1718,7 +1673,6 @@ public abstract class DataSet<T> {
 	 *
 	 * @param sinkIdentifier The string to prefix the output with.
 	 * @return The DataSink that writes the DataSet.
-	 *
 	 * @deprecated Use {@link #printOnTaskManager(String)} instead, or the {@link PrintingOutputFormat}.
 	 */
 	@Deprecated
@@ -1732,9 +1686,8 @@ public abstract class DataSet<T> {
 	 * This method adds a data sink to the program.
 	 *
 	 * @param outputFormat The FileOutputFormat to write the DataSet.
-	 * @param filePath The path to the location where the DataSet is written.
+	 * @param filePath     The path to the location where the DataSet is written.
 	 * @return The DataSink that writes the DataSet.
-	 *
 	 * @see FileOutputFormat
 	 */
 	public DataSink<T> write(FileOutputFormat<T> outputFormat, String filePath) {
@@ -1750,10 +1703,9 @@ public abstract class DataSet<T> {
 	 * This method adds a data sink to the program.
 	 *
 	 * @param outputFormat The FileOutputFormat to write the DataSet.
-	 * @param filePath The path to the location where the DataSet is written.
-	 * @param writeMode The mode of writing, indicating whether to overwrite existing files.
+	 * @param filePath     The path to the location where the DataSet is written.
+	 * @param writeMode    The mode of writing, indicating whether to overwrite existing files.
 	 * @return The DataSink that writes the DataSet.
-	 *
 	 * @see FileOutputFormat
 	 */
 	public DataSink<T> write(FileOutputFormat<T> outputFormat, String filePath, WriteMode writeMode) {
@@ -1773,7 +1725,6 @@ public abstract class DataSet<T> {
 	 *
 	 * @param outputFormat The OutputFormat to process the DataSet.
 	 * @return The DataSink that processes the DataSet.
-	 *
 	 * @see OutputFormat
 	 * @see DataSink
 	 */

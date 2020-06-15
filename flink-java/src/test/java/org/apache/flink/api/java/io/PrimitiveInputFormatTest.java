@@ -66,8 +66,7 @@ public class PrimitiveInputFormatTest {
 			result = format.nextRecord(result);
 			assertNull(result);
 			assertTrue(format.reachedEnd());
-		}
-		catch (Exception ex) {
+		} catch (Exception ex) {
 			ex.printStackTrace();
 			fail("Test failed due to a " + ex.getClass().getName() + ": " + ex.getMessage());
 		}
@@ -94,8 +93,7 @@ public class PrimitiveInputFormatTest {
 			result = format.nextRecord(result);
 			assertNull(result);
 			assertTrue(format.reachedEnd());
-		}
-		catch (Exception ex) {
+		} catch (Exception ex) {
 			fail("Test failed due to a " + ex.getClass().getName() + ": " + ex.getMessage());
 		}
 	}
@@ -121,8 +119,7 @@ public class PrimitiveInputFormatTest {
 			result = format.nextRecord(result);
 			assertNull(result);
 			assertTrue(format.reachedEnd());
-		}
-		catch (Exception ex) {
+		} catch (Exception ex) {
 			fail("Test failed due to a " + ex.getClass().getName() + ": " + ex.getMessage());
 		}
 	}
@@ -147,8 +144,7 @@ public class PrimitiveInputFormatTest {
 
 			result = format.nextRecord(result);
 			assertEquals(second, result);
-		}
-		catch (Exception ex) {
+		} catch (Exception ex) {
 			fail("Test failed due to a " + ex.getClass().getName() + ": " + ex.getMessage());
 		}
 	}
@@ -182,7 +178,7 @@ public class PrimitiveInputFormatTest {
 			wrt.write(content);
 		}
 
-		return new FileInputSplit(0, new Path(tempFile.toURI().toString()), 0, tempFile.length(), new String[] {"localhost"});
+		return new FileInputSplit(0, new Path(tempFile.toURI().toString()), 0, tempFile.length(), new String[]{"localhost"});
 	}
 
 }

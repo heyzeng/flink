@@ -113,11 +113,9 @@ public class KryoSerializerConcurrencyTest {
 		try {
 			serializer.serialize("value", regularOut);
 			fail("should have failed with an exception");
-		}
-		catch (IllegalStateException e) {
+		} catch (IllegalStateException e) {
 			// expected
-		}
-		finally {
+		} finally {
 			// release the thread that serializes
 			sync.releaseBlocker();
 		}

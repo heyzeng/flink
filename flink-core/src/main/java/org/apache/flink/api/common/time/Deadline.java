@@ -29,7 +29,9 @@ import java.util.concurrent.TimeoutException;
 @Internal
 public class Deadline {
 
-	/** The deadline, relative to {@link System#nanoTime()}. */
+	/**
+	 * The deadline, relative to {@link System#nanoTime()}.
+	 */
 	private final long timeNanos;
 
 	private Deadline(long deadline) {

@@ -31,10 +31,10 @@ import org.apache.flink.core.memory.DataOutputView;
  * A serializer for double arrays.
  */
 @Internal
-public final class DoublePrimitiveArraySerializer extends TypeSerializerSingleton<double[]>{
+public final class DoublePrimitiveArraySerializer extends TypeSerializerSingleton<double[]> {
 
 	private static final long serialVersionUID = 1L;
-	
+
 	private static final double[] EMPTY = new double[0];
 
 	public static final DoublePrimitiveArraySerializer INSTANCE = new DoublePrimitiveArraySerializer();
@@ -48,7 +48,7 @@ public final class DoublePrimitiveArraySerializer extends TypeSerializerSingleto
 	public double[] createInstance() {
 		return EMPTY;
 	}
-	
+
 	@Override
 	public double[] copy(double[] from) {
 		double[] copy = new double[from.length];
@@ -72,7 +72,7 @@ public final class DoublePrimitiveArraySerializer extends TypeSerializerSingleto
 		if (record == null) {
 			throw new IllegalArgumentException("The record must not be null.");
 		}
-		
+
 		final int len = record.length;
 		target.writeInt(len);
 		for (int i = 0; i < len; i++) {
@@ -84,14 +84,14 @@ public final class DoublePrimitiveArraySerializer extends TypeSerializerSingleto
 	public double[] deserialize(DataInputView source) throws IOException {
 		final int len = source.readInt();
 		double[] result = new double[len];
-		
+
 		for (int i = 0; i < len; i++) {
 			result[i] = source.readDouble();
 		}
-		
+
 		return result;
 	}
-	
+
 	@Override
 	public double[] deserialize(double[] reuse, DataInputView source) throws IOException {
 		return deserialize(source);

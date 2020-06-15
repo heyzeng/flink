@@ -69,43 +69,57 @@ public class MetricOptions {
 			.withDescription("Configures the parameter <parameter> for the reporter named <name>.");
 
 
-	/** The delimiter used to assemble the metric identifier. */
+	/**
+	 * The delimiter used to assemble the metric identifier.
+	 */
 	public static final ConfigOption<String> SCOPE_DELIMITER =
 		key("metrics.scope.delimiter")
 			.defaultValue(".")
 			.withDescription("Delimiter used to assemble the metric identifier.");
 
-	/** The scope format string that is applied to all metrics scoped to a JobManager. */
+	/**
+	 * The scope format string that is applied to all metrics scoped to a JobManager.
+	 */
 	public static final ConfigOption<String> SCOPE_NAMING_JM =
 		key("metrics.scope.jm")
 			.defaultValue("<host>.jobmanager")
 			.withDescription("Defines the scope format string that is applied to all metrics scoped to a JobManager.");
 
-	/** The scope format string that is applied to all metrics scoped to a TaskManager. */
+	/**
+	 * The scope format string that is applied to all metrics scoped to a TaskManager.
+	 */
 	public static final ConfigOption<String> SCOPE_NAMING_TM =
 		key("metrics.scope.tm")
 			.defaultValue("<host>.taskmanager.<tm_id>")
 			.withDescription("Defines the scope format string that is applied to all metrics scoped to a TaskManager.");
 
-	/** The scope format string that is applied to all metrics scoped to a job on a JobManager. */
+	/**
+	 * The scope format string that is applied to all metrics scoped to a job on a JobManager.
+	 */
 	public static final ConfigOption<String> SCOPE_NAMING_JM_JOB =
 		key("metrics.scope.jm.job")
 			.defaultValue("<host>.jobmanager.<job_name>")
 			.withDescription("Defines the scope format string that is applied to all metrics scoped to a job on a JobManager.");
 
-	/** The scope format string that is applied to all metrics scoped to a job on a TaskManager. */
+	/**
+	 * The scope format string that is applied to all metrics scoped to a job on a TaskManager.
+	 */
 	public static final ConfigOption<String> SCOPE_NAMING_TM_JOB =
 		key("metrics.scope.tm.job")
 			.defaultValue("<host>.taskmanager.<tm_id>.<job_name>")
 			.withDescription("Defines the scope format string that is applied to all metrics scoped to a job on a TaskManager.");
 
-	/** The scope format string that is applied to all metrics scoped to a task. */
+	/**
+	 * The scope format string that is applied to all metrics scoped to a task.
+	 */
 	public static final ConfigOption<String> SCOPE_NAMING_TASK =
 		key("metrics.scope.task")
 			.defaultValue("<host>.taskmanager.<tm_id>.<job_name>.<task_name>.<subtask_index>")
 			.withDescription("Defines the scope format string that is applied to all metrics scoped to a task.");
 
-	/** The scope format string that is applied to all metrics scoped to an operator. */
+	/**
+	 * The scope format string that is applied to all metrics scoped to an operator.
+	 */
 	public static final ConfigOption<String> SCOPE_NAMING_OPERATOR =
 		key("metrics.scope.operator")
 			.defaultValue("<host>.taskmanager.<tm_id>.<job_name>.<operator_name>.<subtask_index>")
@@ -129,7 +143,9 @@ public class MetricOptions {
 					text("subtask - Track latency while differentiating between sources and subtasks."))
 				.build());
 
-	/** The number of measured latencies to maintain at each operator. */
+	/**
+	 * The number of measured latencies to maintain at each operator.
+	 */
 	public static final ConfigOption<Integer> LATENCY_HISTORY_SIZE =
 		key("metrics.latency.history-size")
 			.defaultValue(128)
@@ -160,11 +176,11 @@ public class MetricOptions {
 	@Documentation.Section(Documentation.Sections.COMMON_HOST_PORT)
 	public static final ConfigOption<String> QUERY_SERVICE_PORT =
 		key("metrics.internal.query-service.port")
-		.defaultValue("0")
-		.withDescription("The port range used for Flink's internal metric query service. Accepts a list of ports " +
-			"(“50100,50101”), ranges(“50100-50200”) or a combination of both. It is recommended to set a range of " +
-			"ports to avoid collisions when multiple Flink components are running on the same machine. Per default " +
-			"Flink will pick a random port.");
+			.defaultValue("0")
+			.withDescription("The port range used for Flink's internal metric query service. Accepts a list of ports " +
+				"(“50100,50101”), ranges(“50100-50200”) or a combination of both. It is recommended to set a range of " +
+				"ports to avoid collisions when multiple Flink components are running on the same machine. Per default " +
+				"Flink will pick a random port.");
 
 	/**
 	 * The thread priority for Flink's internal metric query service. The {@code 1} means the min priority and the
@@ -172,11 +188,11 @@ public class MetricOptions {
 	 */
 	public static final ConfigOption<Integer> QUERY_SERVICE_THREAD_PRIORITY =
 		key("metrics.internal.query-service.thread-priority")
-		.defaultValue(1)
-		.withDescription("The thread priority used for Flink's internal metric query service. The thread is created" +
-			" by Akka's thread pool executor. " +
-			"The range of the priority is from 1 (MIN_PRIORITY) to 10 (MAX_PRIORITY). " +
-			"Warning, increasing this value may bring the main Flink components down.");
+			.defaultValue(1)
+			.withDescription("The thread priority used for Flink's internal metric query service. The thread is created" +
+				" by Akka's thread pool executor. " +
+				"The range of the priority is from 1 (MIN_PRIORITY) to 10 (MAX_PRIORITY). " +
+				"Warning, increasing this value may bring the main Flink components down.");
 	/**
 	 * The config parameter defining the update interval for the metric fetcher used by the web UI in milliseconds.
 	 */

@@ -217,7 +217,8 @@ under the License.
 								<configuration>
 									<target>
 										<mkdir dir="${rootDir}/${generated.docs.dir}"/>
-										<java classname="org.apache.flink.docs.rest.RestAPIDocGenerator" fork="true" failonerror="true">
+										<java classname="org.apache.flink.docs.rest.RestAPIDocGenerator" fork="true"
+											  failonerror="true">
 											<classpath refid="maven.compile.classpath"/>
 											<arg value="${rootDir}/${generated.docs.dir}/"/>
 										</java>
@@ -250,10 +251,11 @@ under the License.
 								<configuration>
 									<target>
 										<mkdir dir="${rootDir}/${generated.docs.dir}"/>
-										<java classname="org.apache.flink.docs.configuration.ConfigOptionsDocGenerator" fork="true" failonerror="true">
-											<classpath refid="maven.compile.classpath" />
-											<arg value="${rootDir}/${generated.docs.dir}/" />
-											<arg value="${rootDir}" />
+										<java classname="org.apache.flink.docs.configuration.ConfigOptionsDocGenerator"
+											  fork="true" failonerror="true">
+											<classpath refid="maven.compile.classpath"/>
+											<arg value="${rootDir}/${generated.docs.dir}/"/>
+											<arg value="${rootDir}"/>
 										</java>
 									</target>
 								</configuration>

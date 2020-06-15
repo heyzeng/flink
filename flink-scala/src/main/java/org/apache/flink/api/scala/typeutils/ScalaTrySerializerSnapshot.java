@@ -35,7 +35,9 @@ public class ScalaTrySerializerSnapshot<E> extends CompositeTypeSerializerSnapsh
 
 	private static final int VERSION = 2;
 
-	/** This empty nullary constructor is required for deserializing the configuration. */
+	/**
+	 * This empty nullary constructor is required for deserializing the configuration.
+	 */
 	@SuppressWarnings("unused")
 	public ScalaTrySerializerSnapshot() {
 		super(TrySerializer.class);

@@ -75,7 +75,6 @@ import java.util.Set;
  * However, incorrect semantic annotations can cause the optimizer to generate incorrect execution plans which compute wrong results!
  * So be careful when adding semantic annotations.
  * </b>
- *
  */
 @Public
 public class FunctionAnnotation {
@@ -106,7 +105,6 @@ public class FunctionAnnotation {
 	 *
 	 * <p>Please refer to the JavaDoc of {@link org.apache.flink.api.common.functions.Function} or Flink's documentation for
 	 * details on field expressions such as nested fields and wildcard.
-	 *
 	 */
 	@Target(ElementType.TYPE)
 	@Retention(RetentionPolicy.RUNTIME)
@@ -144,7 +142,6 @@ public class FunctionAnnotation {
 	 *
 	 * <p>Forwarded fields from the second input can be specified using the
 	 * {@link org.apache.flink.api.java.functions.FunctionAnnotation.ForwardedFieldsSecond} annotation.
-	 *
 	 */
 	@Target(ElementType.TYPE)
 	@Retention(RetentionPolicy.RUNTIME)
@@ -182,7 +179,6 @@ public class FunctionAnnotation {
 	 *
 	 * <p>Forwarded fields from the first input can be specified using the
 	 * {@link org.apache.flink.api.java.functions.FunctionAnnotation.ForwardedFieldsFirst} annotation.
-	 *
 	 */
 	@Target(ElementType.TYPE)
 	@Retention(RetentionPolicy.RUNTIME)
@@ -304,7 +300,6 @@ public class FunctionAnnotation {
 	 *
 	 * <p>Please refer to the JavaDoc of {@link org.apache.flink.api.common.functions.Function} or Flink's documentation for
 	 * details on field expressions such as nested fields and wildcard.
-	 *
 	 */
 	@Target(ElementType.TYPE)
 	@Retention(RetentionPolicy.RUNTIME)
@@ -335,7 +330,6 @@ public class FunctionAnnotation {
 	 *
 	 * <p>Please refer to the JavaDoc of {@link org.apache.flink.api.common.functions.Function} or Flink's documentation for
 	 * details on field expressions such as nested fields and wildcard.
-	 *
 	 */
 	@Target(ElementType.TYPE)
 	@Retention(RetentionPolicy.RUNTIME)
@@ -366,7 +360,6 @@ public class FunctionAnnotation {
 	 *
 	 * <p>Please refer to the JavaDoc of {@link org.apache.flink.api.common.functions.Function} or Flink's documentation for
 	 * details on field expressions such as nested fields and wildcard.
-	 *
 	 */
 	@Target(ElementType.TYPE)
 	@Retention(RetentionPolicy.RUNTIME)
@@ -396,7 +389,8 @@ public class FunctionAnnotation {
 	/**
 	 * Private constructor to prevent instantiation. This class is intended only as a container.
 	 */
-	private FunctionAnnotation() {}
+	private FunctionAnnotation() {
+	}
 
 	// --------------------------------------------------------------------------------------------
 	//                                   Function Annotation Handling
@@ -406,7 +400,7 @@ public class FunctionAnnotation {
 	 * Reads the annotations of a user defined function with one input and returns semantic properties according to the forwarded fields annotated.
 	 *
 	 * @param udfClass The user defined function, represented by its class.
-	 * @return	The DualInputSemanticProperties containing the forwarded fields.
+	 * @return The DualInputSemanticProperties containing the forwarded fields.
 	 */
 	@Internal
 	public static Set<Annotation> readSingleForwardAnnotations(Class<?> udfClass) {
@@ -421,7 +415,7 @@ public class FunctionAnnotation {
 		if (nonForwardedFields != null) {
 			if (!annotations.isEmpty()) {
 				throw new InvalidProgramException("Either " + ForwardedFields.class.getSimpleName() + " or " +
-						NonForwardedFields.class.getSimpleName() + " can be annotated to a function, not both.");
+					NonForwardedFields.class.getSimpleName() + " can be annotated to a function, not both.");
 			}
 			annotations.add(nonForwardedFields);
 		}
@@ -433,10 +427,12 @@ public class FunctionAnnotation {
 	}
 
 	// --------------------------------------------------------------------------------------------
+
 	/**
 	 * Reads the annotations of a user defined function with two inputs and returns semantic properties according to the forwarded fields annotated.
+	 *
 	 * @param udfClass The user defined function, represented by its class.
-	 * @return	The DualInputSemanticProperties containing the forwarded fields.
+	 * @return The DualInputSemanticProperties containing the forwarded fields.
 	 */
 	@Internal
 	public static Set<Annotation> readDualForwardAnnotations(Class<?> udfClass) {
@@ -456,7 +452,7 @@ public class FunctionAnnotation {
 
 		if (nonForwardedFields1 != null && forwardedFields1 != null) {
 			throw new InvalidProgramException("Either " + ForwardedFieldsFirst.class.getSimpleName() + " or " +
-					NonForwardedFieldsFirst.class.getSimpleName() + " can be annotated to a function, not both.");
+				NonForwardedFieldsFirst.class.getSimpleName() + " can be annotated to a function, not both.");
 		} else if (forwardedFields1 != null) {
 			annotations.add(forwardedFields1);
 		} else if (nonForwardedFields1 != null) {
@@ -465,7 +461,7 @@ public class FunctionAnnotation {
 
 		if (forwardedFields2 != null && nonForwardedFields2 != null) {
 			throw new InvalidProgramException("Either " + ForwardedFieldsSecond.class.getSimpleName() + " or " +
-					NonForwardedFieldsSecond.class.getSimpleName() + " can be annotated to a function, not both.");
+				NonForwardedFieldsSecond.class.getSimpleName() + " can be annotated to a function, not both.");
 		} else if (forwardedFields2 != null) {
 			annotations.add(forwardedFields2);
 		} else if (nonForwardedFields2 != null) {

@@ -55,16 +55,15 @@ public class FlatMapOperatorCollectionTest implements Serializable {
 			udf = new IdRichFlatMap<String>();
 			testExecuteOnCollection(udf, Arrays.asList("f", "l", "i", "n", "k"), false);
 			Assert.assertTrue(udf.isClosed);
-			
+
 			udf = new IdRichFlatMap<String>();
 			testExecuteOnCollection(udf, Collections.<String>emptyList(), true);
 			Assert.assertTrue(udf.isClosed);
-			
+
 			udf = new IdRichFlatMap<String>();
 			testExecuteOnCollection(udf, Collections.<String>emptyList(), false);
 			Assert.assertTrue(udf.isClosed);
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 			Assert.fail(e.getMessage());
 		}
@@ -80,11 +79,11 @@ public class FlatMapOperatorCollectionTest implements Serializable {
 		final TaskInfo taskInfo = new TaskInfo("Test UDF", 4, 0, 4, 0);
 		// run on collections
 		final List<String> result = getTestFlatMapOperator(udf)
-				.executeOnCollections(input,
-						new RuntimeUDFContext(
-							taskInfo,  null, executionConfig, new HashMap<String, Future<Path>>(),
-							new HashMap<String, Accumulator<?, ?>>(), new UnregisteredMetricsGroup()),
-						executionConfig);
+			.executeOnCollections(input,
+				new RuntimeUDFContext(
+					taskInfo, null, executionConfig, new HashMap<String, Future<Path>>(),
+					new HashMap<String, Accumulator<?, ?>>(), new UnregisteredMetricsGroup()),
+				executionConfig);
 
 		Assert.assertEquals(input.size(), result.size());
 		Assert.assertEquals(input, result);
@@ -121,12 +120,12 @@ public class FlatMapOperatorCollectionTest implements Serializable {
 	}
 
 	private FlatMapOperatorBase<String, String, FlatMapFunction<String, String>> getTestFlatMapOperator(
-			FlatMapFunction<String, String> udf) {
+		FlatMapFunction<String, String> udf) {
 
 		UnaryOperatorInformation<String, String> typeInfo = new UnaryOperatorInformation<String, String>(
-				BasicTypeInfo.STRING_TYPE_INFO, BasicTypeInfo.STRING_TYPE_INFO);
+			BasicTypeInfo.STRING_TYPE_INFO, BasicTypeInfo.STRING_TYPE_INFO);
 
 		return new FlatMapOperatorBase<String, String, FlatMapFunction<String, String>>(
-				udf, typeInfo, "flatMap on Collections");
+			udf, typeInfo, "flatMap on Collections");
 	}
 }

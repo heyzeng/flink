@@ -33,7 +33,7 @@ import java.util.Arrays;
 
 public class PojoSubclassComparatorTest extends ComparatorTestBase<PojoContainingTuple> {
 	TypeInformation<PojoContainingTuple> type = TypeExtractor.getForClass(PojoContainingTuple.class);
-	
+
 	PojoContainingTuple[] data = new PojoContainingTuple[]{
 		new Subclass(1, 1L, 1L, 17L),
 		new Subclass(2, 2L, 2L, 42L),
@@ -45,7 +45,7 @@ public class PojoSubclassComparatorTest extends ComparatorTestBase<PojoContainin
 	protected TypeComparator<PojoContainingTuple> createComparator(boolean ascending) {
 		Assert.assertTrue(type instanceof CompositeType);
 		CompositeType<PojoContainingTuple> cType = (CompositeType<PojoContainingTuple>) type;
-		ExpressionKeys<PojoContainingTuple> keys = new ExpressionKeys<PojoContainingTuple>(new String[] {"theTuple.*"}, cType);
+		ExpressionKeys<PojoContainingTuple> keys = new ExpressionKeys<PojoContainingTuple>(new String[]{"theTuple.*"}, cType);
 		boolean[] orders = new boolean[keys.getNumberOfKeyFields()];
 		Arrays.fill(orders, ascending);
 		return cType.createComparator(keys.computeLogicalKeyPositions(), orders, 0, new ExecutionConfig());

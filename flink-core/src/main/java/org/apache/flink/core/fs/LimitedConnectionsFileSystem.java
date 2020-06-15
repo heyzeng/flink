@@ -64,43 +64,67 @@ public class LimitedConnectionsFileSystem extends FileSystem {
 
 	private static final Logger LOG = LoggerFactory.getLogger(LimitedConnectionsFileSystem.class);
 
-	/** The original file system to which connections are limited. */
+	/**
+	 * The original file system to which connections are limited.
+	 */
 	private final FileSystem originalFs;
 
-	/** The lock that synchronizes connection bookkeeping. */
+	/**
+	 * The lock that synchronizes connection bookkeeping.
+	 */
 	private final ReentrantLock lock;
 
-	/** Condition for threads that are blocking on the availability of new connections. */
+	/**
+	 * Condition for threads that are blocking on the availability of new connections.
+	 */
 	private final Condition available;
 
-	/** The maximum number of concurrently open output streams. */
+	/**
+	 * The maximum number of concurrently open output streams.
+	 */
 	private final int maxNumOpenOutputStreams;
 
-	/** The maximum number of concurrently open input streams. */
+	/**
+	 * The maximum number of concurrently open input streams.
+	 */
 	private final int maxNumOpenInputStreams;
 
-	/** The maximum number of concurrently open streams (input + output). */
+	/**
+	 * The maximum number of concurrently open streams (input + output).
+	 */
 	private final int maxNumOpenStreamsTotal;
 
-	/** The nanoseconds that a opening a stream may wait for availability. */
+	/**
+	 * The nanoseconds that a opening a stream may wait for availability.
+	 */
 	private final long streamOpenTimeoutNanos;
 
-	/** The nanoseconds that a stream may spend not writing any bytes before it is closed as inactive. */
+	/**
+	 * The nanoseconds that a stream may spend not writing any bytes before it is closed as inactive.
+	 */
 	private final long streamInactivityTimeoutNanos;
 
-	/** The set of currently open output streams. */
+	/**
+	 * The set of currently open output streams.
+	 */
 	@GuardedBy("lock")
 	private final HashSet<OutStream> openOutputStreams;
 
-	/** The set of currently open input streams. */
+	/**
+	 * The set of currently open input streams.
+	 */
 	@GuardedBy("lock")
 	private final HashSet<InStream> openInputStreams;
 
-	/** The number of output streams reserved to be opened. */
+	/**
+	 * The number of output streams reserved to be opened.
+	 */
 	@GuardedBy("lock")
 	private int numReservedOutputStreams;
 
-	/** The number of input streams reserved to be opened. */
+	/**
+	 * The number of input streams reserved to be opened.
+	 */
 	@GuardedBy("lock")
 	private int numReservedInputStreams;
 
@@ -113,8 +137,8 @@ public class LimitedConnectionsFileSystem extends FileSystem {
 	 * then they are terminated as "inactive", to prevent that the limited number of connections gets
 	 * stuck on only blocked threads.
 	 *
-	 * @param originalFs              The original file system to which connections are limited.
-	 * @param maxNumOpenStreamsTotal  The maximum number of concurrent open streams (0 means no limit).
+	 * @param originalFs             The original file system to which connections are limited.
+	 * @param maxNumOpenStreamsTotal The maximum number of concurrent open streams (0 means no limit).
 	 */
 	public LimitedConnectionsFileSystem(FileSystem originalFs, int maxNumOpenStreamsTotal) {
 		this(originalFs, maxNumOpenStreamsTotal, 0, 0);
@@ -135,10 +159,10 @@ public class LimitedConnectionsFileSystem extends FileSystem {
 	 *                                bytes before it is closed as inactive.
 	 */
 	public LimitedConnectionsFileSystem(
-			FileSystem originalFs,
-			int maxNumOpenStreamsTotal,
-			long streamOpenTimeout,
-			long streamInactivityTimeout) {
+		FileSystem originalFs,
+		int maxNumOpenStreamsTotal,
+		long streamOpenTimeout,
+		long streamInactivityTimeout) {
 		this(originalFs, maxNumOpenStreamsTotal, 0, 0, streamOpenTimeout, streamInactivityTimeout);
 	}
 
@@ -160,12 +184,12 @@ public class LimitedConnectionsFileSystem extends FileSystem {
 	 *                                bytes before it is closed as inactive.
 	 */
 	public LimitedConnectionsFileSystem(
-			FileSystem originalFs,
-			int maxNumOpenStreamsTotal,
-			int maxNumOpenOutputStreams,
-			int maxNumOpenInputStreams,
-			long streamOpenTimeout,
-			long streamInactivityTimeout) {
+		FileSystem originalFs,
+		int maxNumOpenStreamsTotal,
+		int maxNumOpenOutputStreams,
+		int maxNumOpenInputStreams,
+		long streamOpenTimeout,
+		long streamInactivityTimeout) {
 
 		checkArgument(maxNumOpenStreamsTotal >= 0, "maxNumOpenStreamsTotal must be >= 0");
 		checkArgument(maxNumOpenOutputStreams >= 0, "maxNumOpenOutputStreams must be >= 0");
@@ -187,10 +211,10 @@ public class LimitedConnectionsFileSystem extends FileSystem {
 		final long inactivityTimeoutNanos = streamInactivityTimeout * 1_000_000;
 
 		this.streamOpenTimeoutNanos =
-				openTimeoutNanos >= streamOpenTimeout ? openTimeoutNanos : Long.MAX_VALUE;
+			openTimeoutNanos >= streamOpenTimeout ? openTimeoutNanos : Long.MAX_VALUE;
 
 		this.streamInactivityTimeoutNanos =
-				inactivityTimeoutNanos >= streamInactivityTimeout ? inactivityTimeoutNanos : Long.MAX_VALUE;
+			inactivityTimeoutNanos >= streamInactivityTimeout ? inactivityTimeoutNanos : Long.MAX_VALUE;
 	}
 
 	// ------------------------------------------------------------------------
@@ -250,8 +274,7 @@ public class LimitedConnectionsFileSystem extends FileSystem {
 		lock.lock();
 		try {
 			return numReservedOutputStreams;
-		}
-		finally {
+		} finally {
 			lock.unlock();
 		}
 	}
@@ -276,11 +299,11 @@ public class LimitedConnectionsFileSystem extends FileSystem {
 	@Deprecated
 	@SuppressWarnings("deprecation")
 	public FSDataOutputStream create(
-			Path f,
-			boolean overwrite,
-			int bufferSize,
-			short replication,
-			long blockSize) throws IOException {
+		Path f,
+		boolean overwrite,
+		int bufferSize,
+		short replication,
+		long blockSize) throws IOException {
 
 		return createOutputStream(() -> originalFs.create(f, overwrite, bufferSize, replication, blockSize));
 	}
@@ -296,19 +319,19 @@ public class LimitedConnectionsFileSystem extends FileSystem {
 	}
 
 	private FSDataOutputStream createOutputStream(
-			final SupplierWithException<FSDataOutputStream, IOException> streamOpener) throws IOException {
+		final SupplierWithException<FSDataOutputStream, IOException> streamOpener) throws IOException {
 
 		final SupplierWithException<OutStream, IOException> wrappedStreamOpener =
-				() -> new OutStream(streamOpener.get(), this);
+			() -> new OutStream(streamOpener.get(), this);
 
 		return createStream(wrappedStreamOpener, openOutputStreams, true);
 	}
 
 	private FSDataInputStream createInputStream(
-			final SupplierWithException<FSDataInputStream, IOException> streamOpener) throws IOException {
+		final SupplierWithException<FSDataInputStream, IOException> streamOpener) throws IOException {
 
 		final SupplierWithException<InStream, IOException> wrappedStreamOpener =
-				() -> new InStream(streamOpener.get(), this);
+			() -> new InStream(streamOpener.get(), this);
 
 		return createStream(wrappedStreamOpener, openInputStreams, false);
 	}
@@ -387,9 +410,9 @@ public class LimitedConnectionsFileSystem extends FileSystem {
 	// ------------------------------------------------------------------------
 
 	private <T extends StreamWithTimeout> T createStream(
-			final SupplierWithException<T, IOException> streamOpener,
-			final HashSet<T> openStreams,
-			final boolean output) throws IOException {
+		final SupplierWithException<T, IOException> streamOpener,
+		final HashSet<T> openStreams,
+		final boolean output) throws IOException {
 
 		final int outputLimit = output && maxNumOpenOutputStreams > 0 ? maxNumOpenOutputStreams : Integer.MAX_VALUE;
 		final int inputLimit = !output && maxNumOpenInputStreams > 0 ? maxNumOpenInputStreams : Integer.MAX_VALUE;
@@ -417,12 +440,10 @@ public class LimitedConnectionsFileSystem extends FileSystem {
 				// attempts to try and open a stream, effectively serializing all calls to open the streams.
 				numReservedOutputStreams += outputCredit;
 				numReservedInputStreams += inputCredit;
-			}
-			finally {
+			} finally {
 				lock.unlock();
 			}
-		}
-		catch (InterruptedException e) {
+		} catch (InterruptedException e) {
 			// restore interruption flag
 			Thread.currentThread().interrupt();
 			throw new IOException("interrupted before opening stream");
@@ -444,8 +465,7 @@ public class LimitedConnectionsFileSystem extends FileSystem {
 			// good, can now return cleanly
 			success = true;
 			return out;
-		}
-		finally {
+		} finally {
 			if (!success) {
 				// remove the reserved credit
 				// we must open this non-interruptibly, because this must succeed!
@@ -463,9 +483,9 @@ public class LimitedConnectionsFileSystem extends FileSystem {
 
 	@GuardedBy("lock")
 	private void waitForAvailability(
-			int totalLimit,
-			int outputLimit,
-			int inputLimit) throws InterruptedException, IOException {
+		int totalLimit,
+		int outputLimit,
+		int inputLimit) throws InterruptedException, IOException {
 
 		checkState(lock.isHeldByCurrentThread());
 
@@ -485,18 +505,17 @@ public class LimitedConnectionsFileSystem extends FileSystem {
 		if (streamInactivityTimeoutNanos == 0) {
 			// simple case: just wait
 			while ((timeLeft = (deadline - System.nanoTime())) > 0 &&
-					!hasAvailability(totalLimit, outputLimit, inputLimit)) {
+				!hasAvailability(totalLimit, outputLimit, inputLimit)) {
 
 				available.await(timeLeft, TimeUnit.NANOSECONDS);
 			}
-		}
-		else {
+		} else {
 			// complex case: chase down inactive streams
 			final long checkIntervalNanos = (streamInactivityTimeoutNanos >>> 1) + 1;
 
 			long now;
 			while ((timeLeft = (deadline - (now = System.nanoTime()))) > 0 && // while still within timeout
-					!hasAvailability(totalLimit, outputLimit, inputLimit)) {
+				!hasAvailability(totalLimit, outputLimit, inputLimit)) {
 
 				// check all streams whether there in one that has been inactive for too long
 				if (!(closeInactiveStream(openOutputStreams, now) || closeInactiveStream(openInputStreams, now))) {
@@ -513,18 +532,18 @@ public class LimitedConnectionsFileSystem extends FileSystem {
 		// to re-acquire the lock
 		if (timeLeft <= 0 && !hasAvailability(totalLimit, outputLimit, inputLimit)) {
 			throw new IOException(String.format(
-					"Timeout while waiting for an available stream/connection. " +
+				"Timeout while waiting for an available stream/connection. " +
 					"limits: total=%d, input=%d, output=%d ; Open: input=%d, output=%d ; timeout: %d ms",
-					maxNumOpenStreamsTotal, maxNumOpenInputStreams, maxNumOpenOutputStreams,
-					numReservedInputStreams, numReservedOutputStreams, getStreamOpenTimeout()));
+				maxNumOpenStreamsTotal, maxNumOpenInputStreams, maxNumOpenOutputStreams,
+				numReservedInputStreams, numReservedOutputStreams, getStreamOpenTimeout()));
 		}
 	}
 
 	@GuardedBy("lock")
 	private boolean hasAvailability(int totalLimit, int outputLimit, int inputLimit) {
 		return numReservedOutputStreams < outputLimit &&
-				numReservedInputStreams < inputLimit &&
-				numReservedOutputStreams + numReservedInputStreams < totalLimit;
+			numReservedInputStreams < inputLimit &&
+			numReservedOutputStreams + numReservedInputStreams < totalLimit;
 	}
 
 	@GuardedBy("lock")
@@ -538,16 +557,13 @@ public class LimitedConnectionsFileSystem extends FileSystem {
 				if (stream.isClosed() || nowNanos < tracker.getLastCheckTimestampNanos() + streamInactivityTimeoutNanos) {
 					// interval since last check not yet over
 					return false;
-				}
-				else if (!tracker.checkNewBytesAndMark(nowNanos)) {
+				} else if (!tracker.checkNewBytesAndMark(nowNanos)) {
 					stream.closeDueToTimeout();
 					return true;
 				}
-			}
-			catch (StreamTimeoutException ignored) {
+			} catch (StreamTimeoutException ignored) {
 				// may happen due to races
-			}
-			catch (IOException e) {
+			} catch (IOException e) {
 				// only log on debug level here, to avoid log spamming
 				LOG.debug("Could not check for stream progress to determine inactivity", e);
 			}
@@ -570,8 +586,7 @@ public class LimitedConnectionsFileSystem extends FileSystem {
 				numReservedOutputStreams--;
 				available.signalAll();
 			}
-		}
-		finally {
+		} finally {
 			lock.unlock();
 		}
 	}
@@ -588,8 +603,7 @@ public class LimitedConnectionsFileSystem extends FileSystem {
 				numReservedInputStreams--;
 				available.signalAll();
 			}
-		}
-		finally {
+		} finally {
 			lock.unlock();
 		}
 	}
@@ -605,8 +619,8 @@ public class LimitedConnectionsFileSystem extends FileSystem {
 
 		public StreamTimeoutException() {
 			super("Stream closed due to inactivity timeout. " +
-					"This is done to prevent inactive streams from blocking the full " +
-					"pool of limited connections");
+				"This is done to prevent inactive streams from blocking the full " +
+				"pool of limited connections");
 		}
 
 		public StreamTimeoutException(StreamTimeoutException other) {
@@ -651,15 +665,21 @@ public class LimitedConnectionsFileSystem extends FileSystem {
 	 */
 	private static final class StreamProgressTracker {
 
-		/** The tracked stream. */
+		/**
+		 * The tracked stream.
+		 */
 		private final StreamWithTimeout stream;
 
-		/** The number of bytes written the last time that the {@link #checkNewBytesAndMark(long)}
+		/**
+		 * The number of bytes written the last time that the {@link #checkNewBytesAndMark(long)}
 		 * method was called. It is important to initialize this with {@code -1} so that the
-		 * first check (0 bytes) always appears to have made progress. */
+		 * first check (0 bytes) always appears to have made progress.
+		 */
 		private volatile long lastCheckBytes = -1;
 
-		/** The timestamp when the last inactivity evaluation was made. */
+		/**
+		 * The timestamp when the last inactivity evaluation was made.
+		 */
 		private volatile long lastCheckTimestampNanos;
 
 		StreamProgressTracker(StreamWithTimeout stream) {
@@ -687,8 +707,7 @@ public class LimitedConnectionsFileSystem extends FileSystem {
 			if (bytesNow > lastCheckBytes) {
 				lastCheckBytes = bytesNow;
 				return true;
-			}
-			else {
+			} else {
 				return false;
 			}
 		}
@@ -704,19 +723,29 @@ public class LimitedConnectionsFileSystem extends FileSystem {
 	 */
 	private static final class OutStream extends FSDataOutputStream implements StreamWithTimeout {
 
-		/** The original data output stream to write to. */
+		/**
+		 * The original data output stream to write to.
+		 */
 		private final FSDataOutputStream originalStream;
 
-		/** The connection-limiting file system to un-register from. */
+		/**
+		 * The connection-limiting file system to un-register from.
+		 */
 		private final LimitedConnectionsFileSystem fs;
 
-		/** The progress tracker for this stream. */
+		/**
+		 * The progress tracker for this stream.
+		 */
 		private final StreamProgressTracker progressTracker;
 
-		/** An exception with which the stream has been externally closed. */
+		/**
+		 * An exception with which the stream has been externally closed.
+		 */
 		private volatile StreamTimeoutException timeoutException;
 
-		/** Flag tracking whether the stream was already closed, for proper inactivity tracking. */
+		/**
+		 * Flag tracking whether the stream was already closed, for proper inactivity tracking.
+		 */
 		private final AtomicBoolean closed = new AtomicBoolean();
 
 		OutStream(FSDataOutputStream originalStream, LimitedConnectionsFileSystem fs) {
@@ -731,8 +760,7 @@ public class LimitedConnectionsFileSystem extends FileSystem {
 		public void write(int b) throws IOException {
 			try {
 				originalStream.write(b);
-			}
-			catch (IOException e) {
+			} catch (IOException e) {
 				handleIOException(e);
 			}
 		}
@@ -741,8 +769,7 @@ public class LimitedConnectionsFileSystem extends FileSystem {
 		public void write(byte[] b, int off, int len) throws IOException {
 			try {
 				originalStream.write(b, off, len);
-			}
-			catch (IOException e) {
+			} catch (IOException e) {
 				handleIOException(e);
 			}
 		}
@@ -751,8 +778,7 @@ public class LimitedConnectionsFileSystem extends FileSystem {
 		public long getPos() throws IOException {
 			try {
 				return originalStream.getPos();
-			}
-			catch (IOException e) {
+			} catch (IOException e) {
 				handleIOException(e);
 				return -1; // silence the compiler
 			}
@@ -762,8 +788,7 @@ public class LimitedConnectionsFileSystem extends FileSystem {
 		public void flush() throws IOException {
 			try {
 				originalStream.flush();
-			}
-			catch (IOException e) {
+			} catch (IOException e) {
 				handleIOException(e);
 			}
 		}
@@ -772,8 +797,7 @@ public class LimitedConnectionsFileSystem extends FileSystem {
 		public void sync() throws IOException {
 			try {
 				originalStream.sync();
-			}
-			catch (IOException e) {
+			} catch (IOException e) {
 				handleIOException(e);
 			}
 		}
@@ -783,11 +807,9 @@ public class LimitedConnectionsFileSystem extends FileSystem {
 			if (closed.compareAndSet(false, true)) {
 				try {
 					originalStream.close();
-				}
-				catch (IOException e) {
+				} catch (IOException e) {
 					handleIOException(e);
-				}
-				finally {
+				} finally {
 					fs.unregisterOutputStream(this);
 				}
 			}
@@ -830,19 +852,29 @@ public class LimitedConnectionsFileSystem extends FileSystem {
 	 */
 	private static final class InStream extends FSDataInputStream implements StreamWithTimeout {
 
-		/** The original data input stream to read from. */
+		/**
+		 * The original data input stream to read from.
+		 */
 		private final FSDataInputStream originalStream;
 
-		/** The connection-limiting file system to un-register from. */
+		/**
+		 * The connection-limiting file system to un-register from.
+		 */
 		private final LimitedConnectionsFileSystem fs;
 
-		/** An exception with which the stream has been externally closed. */
+		/**
+		 * An exception with which the stream has been externally closed.
+		 */
 		private volatile StreamTimeoutException timeoutException;
 
-		/** The progress tracker for this stream. */
+		/**
+		 * The progress tracker for this stream.
+		 */
 		private final StreamProgressTracker progressTracker;
 
-		/** Flag tracking whether the stream was already closed, for proper inactivity tracking. */
+		/**
+		 * Flag tracking whether the stream was already closed, for proper inactivity tracking.
+		 */
 		private final AtomicBoolean closed = new AtomicBoolean();
 
 		InStream(FSDataInputStream originalStream, LimitedConnectionsFileSystem fs) {
@@ -857,8 +889,7 @@ public class LimitedConnectionsFileSystem extends FileSystem {
 		public int read() throws IOException {
 			try {
 				return originalStream.read();
-			}
-			catch (IOException e) {
+			} catch (IOException e) {
 				handleIOException(e);
 				return 0; // silence the compiler
 			}
@@ -868,8 +899,7 @@ public class LimitedConnectionsFileSystem extends FileSystem {
 		public int read(byte[] b) throws IOException {
 			try {
 				return originalStream.read(b);
-			}
-			catch (IOException e) {
+			} catch (IOException e) {
 				handleIOException(e);
 				return 0; // silence the compiler
 			}
@@ -879,8 +909,7 @@ public class LimitedConnectionsFileSystem extends FileSystem {
 		public int read(byte[] b, int off, int len) throws IOException {
 			try {
 				return originalStream.read(b, off, len);
-			}
-			catch (IOException e) {
+			} catch (IOException e) {
 				handleIOException(e);
 				return 0; // silence the compiler
 			}
@@ -890,8 +919,7 @@ public class LimitedConnectionsFileSystem extends FileSystem {
 		public long skip(long n) throws IOException {
 			try {
 				return originalStream.skip(n);
-			}
-			catch (IOException e) {
+			} catch (IOException e) {
 				handleIOException(e);
 				return 0L; // silence the compiler
 			}
@@ -901,8 +929,7 @@ public class LimitedConnectionsFileSystem extends FileSystem {
 		public int available() throws IOException {
 			try {
 				return originalStream.available();
-			}
-			catch (IOException e) {
+			} catch (IOException e) {
 				handleIOException(e);
 				return 0; // silence the compiler
 			}
@@ -917,8 +944,7 @@ public class LimitedConnectionsFileSystem extends FileSystem {
 		public void reset() throws IOException {
 			try {
 				originalStream.reset();
-			}
-			catch (IOException e) {
+			} catch (IOException e) {
 				handleIOException(e);
 			}
 		}
@@ -932,8 +958,7 @@ public class LimitedConnectionsFileSystem extends FileSystem {
 		public void seek(long desired) throws IOException {
 			try {
 				originalStream.seek(desired);
-			}
-			catch (IOException e) {
+			} catch (IOException e) {
 				handleIOException(e);
 			}
 		}
@@ -942,8 +967,7 @@ public class LimitedConnectionsFileSystem extends FileSystem {
 		public long getPos() throws IOException {
 			try {
 				return originalStream.getPos();
-			}
-			catch (IOException e) {
+			} catch (IOException e) {
 				handleIOException(e);
 				return 0; // silence the compiler
 			}
@@ -954,11 +978,9 @@ public class LimitedConnectionsFileSystem extends FileSystem {
 			if (closed.compareAndSet(false, true)) {
 				try {
 					originalStream.close();
-				}
-				catch (IOException e) {
+				} catch (IOException e) {
 					handleIOException(e);
-				}
-				finally {
+				} finally {
 					fs.unregisterInputStream(this);
 				}
 			}
@@ -1000,38 +1022,48 @@ public class LimitedConnectionsFileSystem extends FileSystem {
 	 */
 	public static class ConnectionLimitingSettings {
 
-		/** The limit for the total number of connections, or 0, if no limit. */
+		/**
+		 * The limit for the total number of connections, or 0, if no limit.
+		 */
 		public final int limitTotal;
 
-		/** The limit for the number of input stream connections, or 0, if no limit. */
+		/**
+		 * The limit for the number of input stream connections, or 0, if no limit.
+		 */
 		public final int limitInput;
 
-		/** The limit for the number of output stream connections, or 0, if no limit. */
+		/**
+		 * The limit for the number of output stream connections, or 0, if no limit.
+		 */
 		public final int limitOutput;
 
-		/** The stream opening timeout for a stream, in milliseconds. */
+		/**
+		 * The stream opening timeout for a stream, in milliseconds.
+		 */
 		public final long streamOpenTimeout;
 
-		/** The inactivity timeout for a stream, in milliseconds. */
+		/**
+		 * The inactivity timeout for a stream, in milliseconds.
+		 */
 		public final long streamInactivityTimeout;
 
 		/**
 		 * Creates a new ConnectionLimitingSettings with the given parameters.
 		 *
-		 * @param limitTotal The limit for the total number of connections, or 0, if no limit.
-		 * @param limitInput The limit for the number of input stream connections, or 0, if no limit.
-		 * @param limitOutput The limit for the number of output stream connections, or 0, if no limit.
+		 * @param limitTotal              The limit for the total number of connections, or 0, if no limit.
+		 * @param limitInput              The limit for the number of input stream connections, or 0, if no limit.
+		 * @param limitOutput             The limit for the number of output stream connections, or 0, if no limit.
 		 * @param streamOpenTimeout       The maximum number of milliseconds that the file system will wait when
 		 *                                no more connections are currently permitted.
 		 * @param streamInactivityTimeout The milliseconds that a stream may spend not writing any
 		 *                                bytes before it is closed as inactive.
 		 */
 		public ConnectionLimitingSettings(
-				int limitTotal,
-				int limitInput,
-				int limitOutput,
-				long streamOpenTimeout,
-				long streamInactivityTimeout) {
+			int limitTotal,
+			int limitInput,
+			int limitOutput,
+			long streamOpenTimeout,
+			long streamInactivityTimeout) {
 			checkArgument(limitTotal >= 0);
 			checkArgument(limitInput >= 0);
 			checkArgument(limitOutput >= 0);
@@ -1051,9 +1083,8 @@ public class LimitedConnectionsFileSystem extends FileSystem {
 		 * Parses and returns the settings for connection limiting, for the file system with
 		 * the given file system scheme.
 		 *
-		 * @param config The configuration to check.
+		 * @param config   The configuration to check.
 		 * @param fsScheme The file system scheme.
-		 *
 		 * @return The parsed configuration, or null, if no connection limiting is configured.
 		 */
 		@Nullable
@@ -1077,12 +1108,11 @@ public class LimitedConnectionsFileSystem extends FileSystem {
 			if (totalLimit <= 0 && limitIn <= 0 && limitOut <= 0) {
 				// no limit configured
 				return null;
-			}
-			else {
+			} else {
 				final ConfigOption<Long> openTimeoutOption =
-						CoreOptions.fileSystemConnectionLimitTimeout(fsScheme);
+					CoreOptions.fileSystemConnectionLimitTimeout(fsScheme);
 				final ConfigOption<Long> inactivityTimeoutOption =
-						CoreOptions.fileSystemConnectionLimitStreamInactivityTimeout(fsScheme);
+					CoreOptions.fileSystemConnectionLimitStreamInactivityTimeout(fsScheme);
 
 				final long openTimeout = config.getLong(openTimeoutOption);
 				final long inactivityTimeout = config.getLong(inactivityTimeoutOption);
@@ -1091,11 +1121,11 @@ public class LimitedConnectionsFileSystem extends FileSystem {
 				checkTimeout(inactivityTimeout, inactivityTimeoutOption);
 
 				return new ConnectionLimitingSettings(
-						totalLimit == -1 ? 0 : totalLimit,
-						limitIn == -1 ? 0 : limitIn,
-						limitOut == -1 ? 0 : limitOut,
-						openTimeout,
-						inactivityTimeout);
+					totalLimit == -1 ? 0 : totalLimit,
+					limitIn == -1 ? 0 : limitIn,
+					limitOut == -1 ? 0 : limitOut,
+					openTimeout,
+					inactivityTimeout);
 			}
 		}
 

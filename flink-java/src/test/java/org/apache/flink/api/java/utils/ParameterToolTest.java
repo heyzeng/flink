@@ -52,7 +52,7 @@ public class ParameterToolTest extends AbstractParameterToolTest {
 	@Test
 	public void testFromCliArgs() {
 		ParameterTool parameter = (ParameterTool) createParameterToolFromArgs(new String[]{"--input", "myInput", "-expectedCount", "15", "--withoutValues",
-				"--negativeFloat", "-0.58", "-isWorking", "true", "--maxByte", "127", "-negativeShort", "-1024"});
+			"--negativeFloat", "-0.58", "-isWorking", "true", "--maxByte", "127", "-negativeShort", "-1024"});
 		Assert.assertEquals(7, parameter.getNumberOfParameters());
 		validate(parameter);
 		Assert.assertTrue(parameter.has("withoutValues"));
@@ -117,7 +117,6 @@ public class ParameterToolTest extends AbstractParameterToolTest {
 	}
 
 
-
 	/**
 	 * Tests that we can concurrently serialize and access the ParameterTool. See FLINK-7943
 	 */
@@ -168,6 +167,7 @@ public class ParameterToolTest extends AbstractParameterToolTest {
 
 	/**
 	 * Accesses parameter tool parameters and then serializes the given parameter tool and deserializes again.
+	 *
 	 * @param parameterTool to serialize/deserialize
 	 */
 	private void serializeDeserialize(ParameterTool parameterTool) throws IOException, ClassNotFoundException {

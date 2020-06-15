@@ -39,7 +39,7 @@ public class SqlDateComparatorTest extends ComparatorTestBase<Date> {
 
 	@Override
 	protected Date[] getSortedTestData() {
-		return new Date[] {
+		return new Date[]{
 			Date.valueOf("1970-01-01"),
 			Date.valueOf("1990-10-14"),
 			Date.valueOf("2013-08-12"),

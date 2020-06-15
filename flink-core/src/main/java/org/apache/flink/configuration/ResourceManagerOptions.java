@@ -78,6 +78,7 @@ public class ResourceManagerOptions {
 
 	/**
 	 * The timeout for a slot request to be discarded, in milliseconds.
+	 *
 	 * @deprecated Use {@link JobManagerOptions#SLOT_REQUEST_TIMEOUT}.
 	 */
 	@Deprecated
@@ -105,6 +106,7 @@ public class ResourceManagerOptions {
 
 	/**
 	 * The timeout for an idle task manager to be released, in milliseconds.
+	 *
 	 * @deprecated Use {@link #TASK_MANAGER_TIMEOUT}.
 	 */
 	@Deprecated
@@ -162,6 +164,9 @@ public class ResourceManagerOptions {
 
 	// ---------------------------------------------------------------------------------------------
 
-	/** Not intended to be instantiated. */
-	private ResourceManagerOptions() {}
+	/**
+	 * Not intended to be instantiated.
+	 */
+	private ResourceManagerOptions() {
+	}
 }

@@ -34,7 +34,9 @@ public final class LongSerializer extends TypeSerializerSingleton<Long> {
 
 	private static final long serialVersionUID = 1L;
 
-	/** Sharable instance of the LongSerializer. */
+	/**
+	 * Sharable instance of the LongSerializer.
+	 */
 	public static final LongSerializer INSTANCE = new LongSerializer();
 
 	private static final Long ZERO = 0L;

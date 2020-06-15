@@ -53,7 +53,6 @@ public interface CrossFunction<IN1, IN2, OUT> extends Function, Serializable {
 	 * @param val1 Element from first input.
 	 * @param val2 Element from the second input.
 	 * @return The result element.
-	 *
 	 * @throws Exception The function may throw Exceptions, which will cause the program to cancel,
 	 *                   and may trigger the recovery logic.
 	 */

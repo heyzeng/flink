@@ -27,13 +27,16 @@ public class GenericTypeInfoTest extends TypeInformationTestBase<GenericTypeInfo
 
 	@Override
 	protected GenericTypeInfo<?>[] getTestData() {
-		return new GenericTypeInfo<?>[] {
+		return new GenericTypeInfo<?>[]{
 			new GenericTypeInfo<>(TestClass.class),
 			new GenericTypeInfo<>(AlternativeClass.class)
 		};
 	}
 
-	static class TestClass {}
-	static class AlternativeClass {}
+	static class TestClass {
+	}
+
+	static class AlternativeClass {
+	}
 
 }

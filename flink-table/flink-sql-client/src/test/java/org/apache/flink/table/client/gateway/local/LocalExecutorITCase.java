@@ -149,13 +149,13 @@ public class LocalExecutorITCase extends TestLogger {
 
 		List<String> actualTables = executor.listTables(sessionId);
 		List<String> expectedTables = Arrays.asList(
-				"AdditionalView1",
-				"AdditionalView2",
-				"TableNumber1",
-				"TableNumber2",
-				"TableSourceSink",
-				"TestView1",
-				"TestView2");
+			"AdditionalView1",
+			"AdditionalView2",
+			"TableNumber1",
+			"TableNumber2",
+			"TableSourceSink",
+			"TestView1",
+			"TestView2");
 		assertEquals(expectedTables, actualTables);
 
 		try {
@@ -171,11 +171,11 @@ public class LocalExecutorITCase extends TestLogger {
 
 		actualTables = executor.listTables(sessionId);
 		expectedTables = Arrays.asList(
-				"TableNumber1",
-				"TableNumber2",
-				"TableSourceSink",
-				"TestView1",
-				"TestView2");
+			"TableNumber1",
+			"TableNumber2",
+			"TableSourceSink",
+			"TestView1",
+			"TestView2");
 		assertEquals(expectedTables, actualTables);
 
 		executor.closeSession(sessionId);
@@ -479,13 +479,13 @@ public class LocalExecutorITCase extends TestLogger {
 			for (int i = 0; i < 3; i++) {
 				// start job and retrieval
 				final ResultDescriptor desc = executor.executeQuery(
-						sessionId,
-						"SELECT scalarUDF(IntegerField1), StringField1 FROM TableNumber1");
+					sessionId,
+					"SELECT scalarUDF(IntegerField1), StringField1 FROM TableNumber1");
 
 				assertFalse(desc.isMaterialized());
 
 				final List<String> actualResults =
-						retrieveChangelogResult(executor, sessionId, desc.getResultId());
+					retrieveChangelogResult(executor, sessionId, desc.getResultId());
 
 				TestBaseUtils.compareResultCollections(expectedResults, actualResults, Comparator.naturalOrder());
 			}
@@ -751,12 +751,12 @@ public class LocalExecutorITCase extends TestLogger {
 
 		// for "batch" sources
 		throwableWithMessage = ExceptionUtils.findThrowableWithMessage(
-				e, "File " + filename + " does not exist or the user running Flink");
+			e, "File " + filename + " does not exist or the user running Flink");
 
 		if (!throwableWithMessage.isPresent()) {
 			// for "streaming" sources (the Blink runner always uses a streaming source
 			throwableWithMessage = ExceptionUtils.findThrowableWithMessage(
-					e, "The provided file path " + filename + " does not exist");
+				e, "The provided file path " + filename + " does not exist");
 		}
 		return throwableWithMessage;
 	}
@@ -783,12 +783,12 @@ public class LocalExecutorITCase extends TestLogger {
 			// Case 1: Registered sink
 			// Case 1.1: Registered sink with uppercase insert into keyword.
 			final String statement1 = "INSERT INTO TableSourceSink SELECT IntegerField1 = 42," +
-					" StringField1, TimestampField1 FROM TableNumber1";
+				" StringField1, TimestampField1 FROM TableNumber1";
 			executeAndVerifySinkResult(executor, sessionId, statement1, csvOutputPath);
 			// Case 1.2: Registered sink with lowercase insert into keyword.
 			final String statement2 = "insert Into TableSourceSink \n "
-					+ "SELECT IntegerField1 = 42, StringField1, TimestampField1 "
-					+ "FROM TableNumber1";
+				+ "SELECT IntegerField1 = 42, StringField1, TimestampField1 "
+				+ "FROM TableNumber1";
 			executeAndVerifySinkResult(executor, sessionId, statement2, csvOutputPath);
 			// Case 1.3: Execute the same statement again, the results should expect to be the same.
 			executeAndVerifySinkResult(executor, sessionId, statement2, csvOutputPath);
@@ -917,14 +917,14 @@ public class LocalExecutorITCase extends TestLogger {
 		final SessionContext session = new SessionContext("test-session", new Environment());
 		String sessionId = executor.openSession(session);
 		final String ddlTemplate = "create table %s(\n" +
-				"  a int,\n" +
-				"  b bigint,\n" +
-				"  c varchar\n" +
-				") with (\n" +
-				"  'connector.type'='filesystem',\n" +
-				"  'format.type'='csv',\n" +
-				"  'connector.path'='xxx'\n" +
-				")\n";
+			"  a int,\n" +
+			"  b bigint,\n" +
+			"  c varchar\n" +
+			") with (\n" +
+			"  'connector.type'='filesystem',\n" +
+			"  'format.type'='csv',\n" +
+			"  'connector.path'='xxx'\n" +
+			")\n";
 		try {
 			// Test create table with simple name.
 			executor.useCatalog(sessionId, "catalog1");
@@ -951,7 +951,8 @@ public class LocalExecutorITCase extends TestLogger {
 		}
 	}
 
-	@Test @Ignore // TODO: reopen when FLINK-15075 was fixed.
+	@Test
+	@Ignore // TODO: reopen when FLINK-15075 was fixed.
 	public void testCreateTableWithComputedColumn() throws Exception {
 		Assume.assumeTrue(planner.equals("blink"));
 		final Map<String, String> replaceVars = new HashMap<>();
@@ -964,14 +965,14 @@ public class LocalExecutorITCase extends TestLogger {
 		replaceVars.put("$VAR_RESULT_MODE", "table");
 		final Executor executor = createModifiedExecutor(clusterClient, replaceVars);
 		final String ddlTemplate = "create table %s(\n" +
-				"  a int,\n" +
-				"  b bigint,\n" +
-				"  c as a + 1\n" +
-				") with (\n" +
-				"  'connector.type'='filesystem',\n" +
-				"  'format.type'='csv',\n" +
-				"  'connector.path'='xxx'\n" +
-				")\n";
+			"  a int,\n" +
+			"  b bigint,\n" +
+			"  c as a + 1\n" +
+			") with (\n" +
+			"  'connector.type'='filesystem',\n" +
+			"  'format.type'='csv',\n" +
+			"  'connector.path'='xxx'\n" +
+			")\n";
 		final SessionContext session = new SessionContext("test-session", new Environment());
 		String sessionId = executor.openSession(session);
 		try {
@@ -985,7 +986,8 @@ public class LocalExecutorITCase extends TestLogger {
 		}
 	}
 
-	@Test @Ignore // TODO: reopen when FLINK-15075 was fixed.
+	@Test
+	@Ignore // TODO: reopen when FLINK-15075 was fixed.
 	public void testCreateTableWithWatermark() throws Exception {
 		final Map<String, String> replaceVars = new HashMap<>();
 		replaceVars.put("$VAR_PLANNER", planner);
@@ -997,14 +999,14 @@ public class LocalExecutorITCase extends TestLogger {
 		replaceVars.put("$VAR_RESULT_MODE", "table");
 		final Executor executor = createModifiedExecutor(clusterClient, replaceVars);
 		final String ddlTemplate = "create table %s(\n" +
-				"  a int,\n" +
-				"  b timestamp(3),\n" +
-				"  watermark for b as b - INTERVAL '5' second\n" +
-				") with (\n" +
-				"  'connector.type'='filesystem',\n" +
-				"  'format.type'='csv',\n" +
-				"  'connector.path'='xxx'\n" +
-				")\n";
+			"  a int,\n" +
+			"  b timestamp(3),\n" +
+			"  watermark for b as b - INTERVAL '5' second\n" +
+			") with (\n" +
+			"  'connector.type'='filesystem',\n" +
+			"  'format.type'='csv',\n" +
+			"  'connector.path'='xxx'\n" +
+			")\n";
 		final SessionContext session = new SessionContext("test-session", new Environment());
 		String sessionId = executor.openSession(session);
 		try {
@@ -1027,15 +1029,15 @@ public class LocalExecutorITCase extends TestLogger {
 			executor.useCatalog(sessionId, "catalog1");
 			executor.setSessionProperty(sessionId, "execution.type", "batch");
 			final String ddlTemplate = "create table %s(\n" +
-					"  a int,\n" +
-					"  b bigint,\n" +
-					"  c varchar\n" +
-					") with (\n" +
-					"  'connector.type'='filesystem',\n" +
-					"  'format.type'='csv',\n" +
-					"  'connector.path'='xxx',\n" +
-					"  'update-mode'='append'\n" +
-					")\n";
+				"  a int,\n" +
+				"  b bigint,\n" +
+				"  c varchar\n" +
+				") with (\n" +
+				"  'connector.type'='filesystem',\n" +
+				"  'format.type'='csv',\n" +
+				"  'connector.path'='xxx',\n" +
+				"  'update-mode'='append'\n" +
+				")\n";
 			executor.createTable(sessionId, String.format(ddlTemplate, "MyTable1"));
 			// Change the session property to trigger `new ExecutionContext`.
 			executor.setSessionProperty(sessionId, "execution.restart-strategy.failure-rate-interval", "12345");
@@ -1060,15 +1062,15 @@ public class LocalExecutorITCase extends TestLogger {
 			executor.useCatalog(sessionId, "catalog1");
 			executor.setSessionProperty(sessionId, "execution.type", "batch");
 			final String ddlTemplate = "create table %s(\n" +
-					"  a int,\n" +
-					"  b bigint,\n" +
-					"  c varchar\n" +
-					") with (\n" +
-					"  'connector.type'='filesystem',\n" +
-					"  'format.type'='csv',\n" +
-					"  'connector.path'='xxx',\n" +
-					"  'update-mode'='append'\n" +
-					")\n";
+				"  a int,\n" +
+				"  b bigint,\n" +
+				"  c varchar\n" +
+				") with (\n" +
+				"  'connector.type'='filesystem',\n" +
+				"  'format.type'='csv',\n" +
+				"  'connector.path'='xxx',\n" +
+				"  'update-mode'='append'\n" +
+				")\n";
 			// Test drop table.
 			executor.createTable(sessionId, String.format(ddlTemplate, "MyTable1"));
 			assertEquals(Collections.singletonList("MyTable1"), executor.listTables(sessionId));
@@ -1127,9 +1129,9 @@ public class LocalExecutorITCase extends TestLogger {
 	}
 
 	private void executeStreamQueryTable(
-			Map<String, String> replaceVars,
-			String query,
-			List<String> expectedResults) throws Exception {
+		Map<String, String> replaceVars,
+		String query,
+		List<String> expectedResults) throws Exception {
 
 		final Executor executor = createModifiedExecutor(clusterClient, replaceVars);
 		final SessionContext session = new SessionContext("test-session", new Environment());
@@ -1164,13 +1166,13 @@ public class LocalExecutorITCase extends TestLogger {
 	}
 
 	private void executeAndVerifySinkResult(
-			Executor executor,
-			String sessionId,
-			String statement,
-			String resultPath) throws Exception {
+		Executor executor,
+		String sessionId,
+		String statement,
+		String resultPath) throws Exception {
 		final ProgramTargetDescriptor targetDescriptor = executor.executeUpdate(
-				sessionId,
-				statement);
+			sessionId,
+			statement);
 
 		// wait for job completion and verify result
 		boolean isRunning = true;
@@ -1178,15 +1180,15 @@ public class LocalExecutorITCase extends TestLogger {
 			Thread.sleep(50); // slow the processing down
 			final JobStatus jobStatus = clusterClient.getJobStatus(targetDescriptor.getJobId()).get();
 			switch (jobStatus) {
-			case CREATED:
-			case RUNNING:
-				continue;
-			case FINISHED:
-				isRunning = false;
-				verifySinkResult(resultPath);
-				break;
-			default:
-				fail("Unexpected job status.");
+				case CREATED:
+				case RUNNING:
+					continue;
+				case FINISHED:
+					isRunning = false;
+					verifySinkResult(resultPath);
+					break;
+				default:
+					fail("Unexpected job status.");
 			}
 		}
 	}
@@ -1199,38 +1201,38 @@ public class LocalExecutorITCase extends TestLogger {
 		replaceVars.put("$VAR_MAX_ROWS", "100");
 		replaceVars.put("$VAR_RESTART_STRATEGY_TYPE", "failure-rate");
 		return new LocalExecutor(
-				EnvironmentFileUtil.parseModified(DEFAULTS_ENVIRONMENT_FILE, replaceVars),
-				Collections.emptyList(),
-				clusterClient.getFlinkConfiguration(),
-				new DefaultCLI(clusterClient.getFlinkConfiguration()),
-				new DefaultClusterClientServiceLoader());
+			EnvironmentFileUtil.parseModified(DEFAULTS_ENVIRONMENT_FILE, replaceVars),
+			Collections.emptyList(),
+			clusterClient.getFlinkConfiguration(),
+			new DefaultCLI(clusterClient.getFlinkConfiguration()),
+			new DefaultClusterClientServiceLoader());
 	}
 
 	private <T> LocalExecutor createModifiedExecutor(ClusterClient<T> clusterClient, Map<String, String> replaceVars) throws Exception {
 		replaceVars.putIfAbsent("$VAR_RESTART_STRATEGY_TYPE", "failure-rate");
 		return new LocalExecutor(
-				EnvironmentFileUtil.parseModified(DEFAULTS_ENVIRONMENT_FILE, replaceVars),
-				Collections.emptyList(),
-				clusterClient.getFlinkConfiguration(),
-				new DefaultCLI(clusterClient.getFlinkConfiguration()),
-				new DefaultClusterClientServiceLoader());
+			EnvironmentFileUtil.parseModified(DEFAULTS_ENVIRONMENT_FILE, replaceVars),
+			Collections.emptyList(),
+			clusterClient.getFlinkConfiguration(),
+			new DefaultCLI(clusterClient.getFlinkConfiguration()),
+			new DefaultClusterClientServiceLoader());
 	}
 
 	private <T> LocalExecutor createModifiedExecutor(
-			String yamlFile, ClusterClient<T> clusterClient, Map<String, String> replaceVars) throws Exception {
+		String yamlFile, ClusterClient<T> clusterClient, Map<String, String> replaceVars) throws Exception {
 		replaceVars.putIfAbsent("$VAR_RESTART_STRATEGY_TYPE", "failure-rate");
 		return new LocalExecutor(
-				EnvironmentFileUtil.parseModified(yamlFile, replaceVars),
-				Collections.emptyList(),
-				clusterClient.getFlinkConfiguration(),
-				new DefaultCLI(clusterClient.getFlinkConfiguration()),
-				new DefaultClusterClientServiceLoader());
+			EnvironmentFileUtil.parseModified(yamlFile, replaceVars),
+			Collections.emptyList(),
+			clusterClient.getFlinkConfiguration(),
+			new DefaultCLI(clusterClient.getFlinkConfiguration()),
+			new DefaultClusterClientServiceLoader());
 	}
 
 	private List<String> retrieveTableResult(
-			Executor executor,
-			String sessionId,
-			String resultID) throws InterruptedException {
+		Executor executor,
+		String sessionId,
+		String resultID) throws InterruptedException {
 
 		final List<String> actualResults = new ArrayList<>();
 		while (true) {
@@ -1252,9 +1254,9 @@ public class LocalExecutorITCase extends TestLogger {
 	}
 
 	private List<String> retrieveChangelogResult(
-			Executor executor,
-			String sessionId,
-			String resultID) throws InterruptedException {
+		Executor executor,
+		String sessionId,
+		String resultID) throws InterruptedException {
 
 		final List<String> actualResults = new ArrayList<>();
 		while (true) {

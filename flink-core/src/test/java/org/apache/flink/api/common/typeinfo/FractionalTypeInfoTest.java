@@ -27,7 +27,7 @@ public class FractionalTypeInfoTest extends TypeInformationTestBase<FractionalTy
 
 	@Override
 	protected FractionalTypeInfo<?>[] getTestData() {
-		return new FractionalTypeInfo<?>[] {
+		return new FractionalTypeInfo<?>[]{
 			(FractionalTypeInfo<?>) BasicTypeInfo.FLOAT_TYPE_INFO,
 			(FractionalTypeInfo<?>) BasicTypeInfo.DOUBLE_TYPE_INFO
 		};

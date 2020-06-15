@@ -62,24 +62,25 @@ public class PojoSerializerSnapshot<T> implements TypeSerializerSnapshot<T> {
 	/**
 	 * Constructor for reading the snapshot.
 	 */
-	public PojoSerializerSnapshot() {}
+	public PojoSerializerSnapshot() {
+	}
 
 	/**
 	 * Constructor for writing the snapshot.
 	 *
-	 * @param pojoClass the Pojo type class.
-	 * @param fields array of fields. Fields may be {@code null} if the originating {@link PojoSerializer} is a
-	 *               restored one with already missing fields, and was never replaced by a new {@link PojoSerializer}.
-	 * @param fieldSerializers array of field serializers.
-	 * @param registeredSubclassSerializers map of registered subclasses to their corresponding serializers.
+	 * @param pojoClass                        the Pojo type class.
+	 * @param fields                           array of fields. Fields may be {@code null} if the originating {@link PojoSerializer} is a
+	 *                                         restored one with already missing fields, and was never replaced by a new {@link PojoSerializer}.
+	 * @param fieldSerializers                 array of field serializers.
+	 * @param registeredSubclassSerializers    map of registered subclasses to their corresponding serializers.
 	 * @param nonRegisteredSubclassSerializers map of non-registered subclasses to their corresponding serializers.
 	 */
 	PojoSerializerSnapshot(
-			Class<T> pojoClass,
-			Field[] fields,
-			TypeSerializer<?>[] fieldSerializers,
-			LinkedHashMap<Class<?>, TypeSerializer<?>> registeredSubclassSerializers,
-			Map<Class<?>, TypeSerializer<?>> nonRegisteredSubclassSerializers) {
+		Class<T> pojoClass,
+		Field[] fields,
+		TypeSerializer<?>[] fieldSerializers,
+		LinkedHashMap<Class<?>, TypeSerializer<?>> registeredSubclassSerializers,
+		Map<Class<?>, TypeSerializer<?>> nonRegisteredSubclassSerializers) {
 
 		this.snapshotData = PojoSerializerSnapshotData.createFrom(
 			pojoClass,
@@ -95,11 +96,11 @@ public class PojoSerializerSnapshot<T> implements TypeSerializerSnapshot<T> {
 	 * to delegate the compatibility check to this snapshot class.
 	 */
 	PojoSerializerSnapshot(
-			Class<T> pojoClass,
-			Field[] fields,
-			TypeSerializerSnapshot<?>[] existingFieldSerializerSnapshots,
-			LinkedHashMap<Class<?>, TypeSerializerSnapshot<?>> existingRegisteredSubclassSerializerSnapshots,
-			Map<Class<?>, TypeSerializerSnapshot<?>> existingNonRegisteredSubclassSerializerSnapshots) {
+		Class<T> pojoClass,
+		Field[] fields,
+		TypeSerializerSnapshot<?>[] existingFieldSerializerSnapshots,
+		LinkedHashMap<Class<?>, TypeSerializerSnapshot<?>> existingRegisteredSubclassSerializerSnapshots,
+		Map<Class<?>, TypeSerializerSnapshot<?>> existingNonRegisteredSubclassSerializerSnapshots) {
 
 		this.snapshotData = PojoSerializerSnapshotData.createFrom(
 			pojoClass,
@@ -196,20 +197,20 @@ public class PojoSerializerSnapshot<T> implements TypeSerializerSnapshot<T> {
 		}
 
 		if (newPojoSerializerIsCompatibleAfterMigration(
-				newPojoSerializer,
-				preExistingFieldSerializersCompatibility,
-				preExistingRegistrationsCompatibility,
-				fieldSerializerSnapshots)) {
+			newPojoSerializer,
+			preExistingFieldSerializersCompatibility,
+			preExistingRegistrationsCompatibility,
+			fieldSerializerSnapshots)) {
 
 			return TypeSerializerSchemaCompatibility.compatibleAfterMigration();
 		}
 
 		if (newPojoSerializerIsCompatibleWithReconfiguredSerializer(
-				newPojoSerializer,
-				preExistingFieldSerializersCompatibility,
-				preExistingRegistrationsCompatibility,
-				registeredSubclassSerializerSnapshots,
-				nonRegisteredSubclassSerializerSnapshots)) {
+			newPojoSerializer,
+			preExistingFieldSerializersCompatibility,
+			preExistingRegistrationsCompatibility,
+			registeredSubclassSerializerSnapshots,
+			nonRegisteredSubclassSerializerSnapshots)) {
 
 			return TypeSerializerSchemaCompatibility.compatibleWithReconfiguredSerializer(
 				constructReconfiguredPojoSerializer(
@@ -264,8 +265,8 @@ public class PojoSerializerSnapshot<T> implements TypeSerializerSnapshot<T> {
 	 * of the serializers of those preexisting fields.
 	 */
 	private static <T> IntermediateCompatibilityResult<T> getCompatibilityOfPreExistingFields(
-			PojoSerializer<T> newPojoSerializer,
-			LinkedOptionalMap<Field, TypeSerializerSnapshot<?>> fieldSerializerSnapshots) {
+		PojoSerializer<T> newPojoSerializer,
+		LinkedOptionalMap<Field, TypeSerializerSnapshot<?>> fieldSerializerSnapshots) {
 
 		// the present entries dictates the preexisting fields, because removed fields would be
 		// represented as absent keys in the optional map.
@@ -316,8 +317,8 @@ public class PojoSerializerSnapshot<T> implements TypeSerializerSnapshot<T> {
 	 * of the serializers of this preexisting registered subclasses.
 	 */
 	private static <T> IntermediateCompatibilityResult<T> getCompatibilityOfPreExistingRegisteredSubclasses(
-			PojoSerializer<T> newPojoSerializer,
-			LinkedOptionalMap<Class<?>, TypeSerializerSnapshot<?>> registeredSubclassSerializerSnapshots) {
+		PojoSerializer<T> newPojoSerializer,
+		LinkedOptionalMap<Class<?>, TypeSerializerSnapshot<?>> registeredSubclassSerializerSnapshots) {
 
 		final LinkedHashMap<Class<?>, TypeSerializerSnapshot<?>> unwrappedSerializerSnapshots = registeredSubclassSerializerSnapshots.unwrapOptionals();
 
@@ -343,10 +344,10 @@ public class PojoSerializerSnapshot<T> implements TypeSerializerSnapshot<T> {
 	 * Checks if the new {@link PojoSerializer} is compatible after migration.
 	 */
 	private static <T> boolean newPojoSerializerIsCompatibleAfterMigration(
-			PojoSerializer<T> newPojoSerializer,
-			IntermediateCompatibilityResult<T> fieldSerializerCompatibility,
-			IntermediateCompatibilityResult<T> preExistingRegistrationsCompatibility,
-			LinkedOptionalMap<Field, TypeSerializerSnapshot<?>> fieldSerializerSnapshots) {
+		PojoSerializer<T> newPojoSerializer,
+		IntermediateCompatibilityResult<T> fieldSerializerCompatibility,
+		IntermediateCompatibilityResult<T> preExistingRegistrationsCompatibility,
+		LinkedOptionalMap<Field, TypeSerializerSnapshot<?>> fieldSerializerSnapshots) {
 		return newPojoHasNewOrRemovedFields(fieldSerializerSnapshots, newPojoSerializer)
 			|| fieldSerializerCompatibility.isCompatibleAfterMigration()
 			|| preExistingRegistrationsCompatibility.isCompatibleAfterMigration();
@@ -356,11 +357,11 @@ public class PojoSerializerSnapshot<T> implements TypeSerializerSnapshot<T> {
 	 * Checks if the new {@link PojoSerializer} is compatible with a reconfigured instance.
 	 */
 	private static <T> boolean newPojoSerializerIsCompatibleWithReconfiguredSerializer(
-			PojoSerializer<T> newPojoSerializer,
-			IntermediateCompatibilityResult<T> fieldSerializerCompatibility,
-			IntermediateCompatibilityResult<T> preExistingRegistrationsCompatibility,
-			LinkedOptionalMap<Class<?>, TypeSerializerSnapshot<?>> registeredSubclassSerializerSnapshots,
-			LinkedOptionalMap<Class<?>, TypeSerializerSnapshot<?>> nonRegisteredSubclassSerializerSnapshots) {
+		PojoSerializer<T> newPojoSerializer,
+		IntermediateCompatibilityResult<T> fieldSerializerCompatibility,
+		IntermediateCompatibilityResult<T> preExistingRegistrationsCompatibility,
+		LinkedOptionalMap<Class<?>, TypeSerializerSnapshot<?>> registeredSubclassSerializerSnapshots,
+		LinkedOptionalMap<Class<?>, TypeSerializerSnapshot<?>> nonRegisteredSubclassSerializerSnapshots) {
 		return newPojoHasDifferentSubclassRegistrationOrder(registeredSubclassSerializerSnapshots, newPojoSerializer)
 			|| previousSerializerHasNonRegisteredSubclasses(nonRegisteredSubclassSerializerSnapshots)
 			|| fieldSerializerCompatibility.isCompatibleWithReconfiguredSerializer()
@@ -371,8 +372,8 @@ public class PojoSerializerSnapshot<T> implements TypeSerializerSnapshot<T> {
 	 * Checks whether the new {@link PojoSerializer} has new or removed fields compared to the previous one.
 	 */
 	private static boolean newPojoHasNewOrRemovedFields(
-			LinkedOptionalMap<Field, TypeSerializerSnapshot<?>> fieldSerializerSnapshots,
-			PojoSerializer<?> newPojoSerializer) {
+		LinkedOptionalMap<Field, TypeSerializerSnapshot<?>> fieldSerializerSnapshots,
+		PojoSerializer<?> newPojoSerializer) {
 		int numRemovedFields = fieldSerializerSnapshots.absentKeysOrValues().size();
 		int numPreexistingFields = fieldSerializerSnapshots.size() - numRemovedFields;
 
@@ -386,8 +387,8 @@ public class PojoSerializerSnapshot<T> implements TypeSerializerSnapshot<T> {
 	 * compared to the previous one.
 	 */
 	private static boolean newPojoHasDifferentSubclassRegistrationOrder(
-			LinkedOptionalMap<Class<?>, TypeSerializerSnapshot<?>> registeredSubclassSerializerSnapshots,
-			PojoSerializer<?> newPojoSerializer) {
+		LinkedOptionalMap<Class<?>, TypeSerializerSnapshot<?>> registeredSubclassSerializerSnapshots,
+		PojoSerializer<?> newPojoSerializer) {
 		Set<Class<?>> previousRegistrationOrder = registeredSubclassSerializerSnapshots.unwrapOptionals().keySet();
 		Set<Class<?>> newRegistrationOrder = newPojoSerializer.getRegisteredClasses().keySet();
 		return !isPreviousRegistrationPrefixOfNewRegistration(previousRegistrationOrder, newRegistrationOrder);
@@ -415,30 +416,28 @@ public class PojoSerializerSnapshot<T> implements TypeSerializerSnapshot<T> {
 	 * non-registered subclasses.
 	 */
 	private static boolean previousSerializerHasNonRegisteredSubclasses(
-			LinkedOptionalMap<Class<?>, TypeSerializerSnapshot<?>> nonRegisteredSubclassSerializerSnapshots) {
+		LinkedOptionalMap<Class<?>, TypeSerializerSnapshot<?>> nonRegisteredSubclassSerializerSnapshots) {
 		return nonRegisteredSubclassSerializerSnapshots.size() > 0;
 	}
 
 	/**
 	 * Creates a reconfigured version of the {@link PojoSerializer}.
 	 *
-	 * @param originalNewPojoSerializer the original new {@link PojoSerializer} to create a reconfigured version of.
-	 * @param fieldSerializerCompatibility compatibility of preexisting fields' serializers.
-	 * @param registeredSerializerSnapshots snapshot of previous registered subclasses' serializers.
-	 * @param preExistingRegistrationsCompatibility compatibility of preexisting subclasses' serializers.
+	 * @param originalNewPojoSerializer                the original new {@link PojoSerializer} to create a reconfigured version of.
+	 * @param fieldSerializerCompatibility             compatibility of preexisting fields' serializers.
+	 * @param registeredSerializerSnapshots            snapshot of previous registered subclasses' serializers.
+	 * @param preExistingRegistrationsCompatibility    compatibility of preexisting subclasses' serializers.
 	 * @param nonRegisteredSubclassSerializerSnapshots snapshot of previous non-registered subclasses' serializers.
-	 *
 	 * @return a reconfigured version of the original new {@link PojoSerializer}.
 	 */
 	private static <T> PojoSerializer<T> constructReconfiguredPojoSerializer(
-			PojoSerializer<T> originalNewPojoSerializer,
-			IntermediateCompatibilityResult<T> fieldSerializerCompatibility,
-			LinkedOptionalMap<Class<?>, TypeSerializerSnapshot<?>> registeredSerializerSnapshots,
-			IntermediateCompatibilityResult<T> preExistingRegistrationsCompatibility,
-			LinkedOptionalMap<Class<?>, TypeSerializerSnapshot<?>> nonRegisteredSubclassSerializerSnapshots) {
+		PojoSerializer<T> originalNewPojoSerializer,
+		IntermediateCompatibilityResult<T> fieldSerializerCompatibility,
+		LinkedOptionalMap<Class<?>, TypeSerializerSnapshot<?>> registeredSerializerSnapshots,
+		IntermediateCompatibilityResult<T> preExistingRegistrationsCompatibility,
+		LinkedOptionalMap<Class<?>, TypeSerializerSnapshot<?>> nonRegisteredSubclassSerializerSnapshots) {
 
-		@SuppressWarnings("unchecked")
-		final TypeSerializer<Object>[] reconfiguredFieldSerializers = constructReconfiguredFieldSerializers(fieldSerializerCompatibility);
+		@SuppressWarnings("unchecked") final TypeSerializer<Object>[] reconfiguredFieldSerializers = constructReconfiguredFieldSerializers(fieldSerializerCompatibility);
 
 		Tuple2<LinkedHashMap<Class<?>, Integer>, TypeSerializer<Object>[]> reconfiguredSubclassRegistry = constructReconfiguredSubclassRegistry(
 			originalNewPojoSerializer.getBundledSubclassSerializerRegistry(),
@@ -456,15 +455,15 @@ public class PojoSerializerSnapshot<T> implements TypeSerializerSnapshot<T> {
 	}
 
 	private static TypeSerializer[] constructReconfiguredFieldSerializers(
-			IntermediateCompatibilityResult<?> fieldSerializerCompatibility) {
+		IntermediateCompatibilityResult<?> fieldSerializerCompatibility) {
 		checkArgument(!fieldSerializerCompatibility.isIncompatible() && !fieldSerializerCompatibility.isCompatibleAfterMigration());
 		return fieldSerializerCompatibility.getNestedSerializers();
 	}
 
 	private static Tuple2<LinkedHashMap<Class<?>, Integer>, TypeSerializer<Object>[]> constructReconfiguredSubclassRegistry(
-			LinkedHashMap<Class<?>, TypeSerializer<?>> newSubclassRegistrations,
-			LinkedOptionalMap<Class<?>, TypeSerializerSnapshot<?>> registeredSerializerSnapshots,
-			IntermediateCompatibilityResult<?> preExistingRegistrationsCompatibility) {
+		LinkedHashMap<Class<?>, TypeSerializer<?>> newSubclassRegistrations,
+		LinkedOptionalMap<Class<?>, TypeSerializerSnapshot<?>> registeredSerializerSnapshots,
+		IntermediateCompatibilityResult<?> preExistingRegistrationsCompatibility) {
 
 		checkArgument(!preExistingRegistrationsCompatibility.isIncompatible() && !preExistingRegistrationsCompatibility.isCompatibleAfterMigration());
 

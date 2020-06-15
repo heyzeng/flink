@@ -26,7 +26,7 @@ public class BigIntParserTest extends ParserTestBase<BigInteger> {
 
 	@Override
 	public String[] getValidTestValues() {
-		return new String[] {
+		return new String[]{
 			"-8745979691234123413478523984729447", "-10000", "-1", "0",
 			"0000000", "8745979691234123413478523984729447"
 		};
@@ -34,7 +34,7 @@ public class BigIntParserTest extends ParserTestBase<BigInteger> {
 
 	@Override
 	public BigInteger[] getValidTestResults() {
-		return new BigInteger[] {
+		return new BigInteger[]{
 			new BigInteger("-8745979691234123413478523984729447"),
 			new BigInteger("-10000"),
 			new BigInteger("-1"),
@@ -46,8 +46,8 @@ public class BigIntParserTest extends ParserTestBase<BigInteger> {
 
 	@Override
 	public String[] getInvalidTestValues() {
-		return new String[] {
-			"1.1" ,"a", "123abc4", "-57-6", "7-877678", " 1", "2 ", " ", "\t"
+		return new String[]{
+			"1.1", "a", "123abc4", "-57-6", "7-877678", " 1", "2 ", " ", "\t"
 		};
 	}
 

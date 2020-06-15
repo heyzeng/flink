@@ -32,13 +32,13 @@ public class FileSystemTestUtils {
 	 * <tt>deadline</tt> nanoseconds.
 	 */
 	public static void checkPathEventualExistence(
-			FileSystem fs,
-			Path path,
-			boolean expectedExists,
-			long deadline) throws IOException, InterruptedException {
+		FileSystem fs,
+		Path path,
+		boolean expectedExists,
+		long deadline) throws IOException, InterruptedException {
 		boolean dirExists;
 		while ((dirExists = fs.exists(path)) != expectedExists &&
-				System.nanoTime() < deadline) {
+			System.nanoTime() < deadline) {
 			Thread.sleep(10);
 		}
 		assertEquals(expectedExists, dirExists);

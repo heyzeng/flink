@@ -28,24 +28,21 @@ import java.io.Serializable;
  * and the different parallel instances of the accumulator are later merged.
  * merged by the system at the end of the job. The result can be obtained from the
  * result of a job execution, or from the web runtime monitor.
- *
+ * <p>
  * The accumulators are inspired by the Hadoop/MapReduce counters.
- * 
+ * <p>
  * The type added to the accumulator might differ from the type returned. This
  * is the case e.g. for a set-accumulator: We add single objects, but the result
  * is a set of objects.
- * 
- * @param <V>
- *            Type of values that are added to the accumulator
- * @param <R>
- *            Type of the accumulator result as it will be reported to the
+ *
+ * @param <V> Type of values that are added to the accumulator
+ * @param <R> Type of the accumulator result as it will be reported to the
  *            client
  */
 @Public
 public interface Accumulator<V, R extends Serializable> extends Serializable, Cloneable {
 	/**
-	 * @param value
-	 *            The value to add to the accumulator object
+	 * @param value The value to add to the accumulator object
 	 */
 	void add(V value);
 
@@ -62,7 +59,7 @@ public interface Accumulator<V, R extends Serializable> extends Serializable, Cl
 	/**
 	 * Used by system internally to merge the collected parts of an accumulator
 	 * at the end of the job.
-	 * 
+	 *
 	 * @param other Reference to accumulator to merge in.
 	 */
 	void merge(Accumulator<V, R> other);

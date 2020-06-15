@@ -46,7 +46,7 @@ public class RowTypeInfoTest extends TypeInformationTestBase<RowTypeInfo> {
 
 	@Override
 	protected RowTypeInfo[] getTestData() {
-		return new RowTypeInfo[] {
+		return new RowTypeInfo[]{
 			new RowTypeInfo(BasicTypeInfo.INT_TYPE_INFO, BasicTypeInfo.STRING_TYPE_INFO),
 			new RowTypeInfo(BasicTypeInfo.INT_TYPE_INFO, BasicTypeInfo.BOOLEAN_TYPE_INFO),
 			new RowTypeInfo(typeList),
@@ -132,18 +132,18 @@ public class RowTypeInfoTest extends TypeInformationTestBase<RowTypeInfo> {
 	public void testSchemaEquals() {
 		final RowTypeInfo row1 = new RowTypeInfo(
 			new TypeInformation[]{BasicTypeInfo.INT_TYPE_INFO, BasicTypeInfo.STRING_TYPE_INFO},
-			new String[] {"field1", "field2"});
+			new String[]{"field1", "field2"});
 		final RowTypeInfo row2 = new RowTypeInfo(
 			new TypeInformation[]{BasicTypeInfo.INT_TYPE_INFO, BasicTypeInfo.STRING_TYPE_INFO},
-			new String[] {"field1", "field2"});
+			new String[]{"field1", "field2"});
 		assertTrue(row1.schemaEquals(row2));
 
 		final RowTypeInfo other1 = new RowTypeInfo(
 			new TypeInformation[]{BasicTypeInfo.INT_TYPE_INFO, BasicTypeInfo.STRING_TYPE_INFO},
-			new String[] {"otherField", "field2"});
+			new String[]{"otherField", "field2"});
 		final RowTypeInfo other2 = new RowTypeInfo(
 			new TypeInformation[]{BasicTypeInfo.LONG_TYPE_INFO, BasicTypeInfo.STRING_TYPE_INFO},
-			new String[] {"field1", "field2"});
+			new String[]{"field1", "field2"});
 		assertFalse(row1.schemaEquals(other1));
 		assertFalse(row1.schemaEquals(other2));
 	}

@@ -44,17 +44,21 @@ import java.util.HashMap;
 public final class MapSerializer<K, V> extends TypeSerializer<Map<K, V>> {
 
 	private static final long serialVersionUID = -6885593032367050078L;
-	
-	/** The serializer for the keys in the map */
+
+	/**
+	 * The serializer for the keys in the map
+	 */
 	private final TypeSerializer<K> keySerializer;
 
-	/** The serializer for the values in the map */
+	/**
+	 * The serializer for the values in the map
+	 */
 	private final TypeSerializer<V> valueSerializer;
 
 	/**
 	 * Creates a map serializer that uses the given serializers to serialize the key-value pairs in the map.
 	 *
-	 * @param keySerializer The serializer for the keys in the map
+	 * @param keySerializer   The serializer for the keys in the map
 	 * @param valueSerializer The serializer for the values in the map
 	 */
 	public MapSerializer(TypeSerializer<K> keySerializer, TypeSerializer<V> valueSerializer) {
@@ -89,8 +93,8 @@ public final class MapSerializer<K, V> extends TypeSerializer<Map<K, V>> {
 		TypeSerializer<V> duplicateValueSerializer = valueSerializer.duplicate();
 
 		return (duplicateKeySerializer == keySerializer) && (duplicateValueSerializer == valueSerializer)
-				? this
-				: new MapSerializer<>(duplicateKeySerializer, duplicateValueSerializer);
+			? this
+			: new MapSerializer<>(duplicateKeySerializer, duplicateValueSerializer);
 	}
 
 	@Override
@@ -168,10 +172,10 @@ public final class MapSerializer<K, V> extends TypeSerializer<Map<K, V>> {
 
 		for (int i = 0; i < size; ++i) {
 			keySerializer.copy(source, target);
-			
+
 			boolean isNull = source.readBoolean();
 			target.writeBoolean(isNull);
-			
+
 			if (!isNull) {
 				valueSerializer.copy(source, target);
 			}
@@ -181,9 +185,9 @@ public final class MapSerializer<K, V> extends TypeSerializer<Map<K, V>> {
 	@Override
 	public boolean equals(Object obj) {
 		return obj == this ||
-				(obj != null && obj.getClass() == getClass() &&
-						keySerializer.equals(((MapSerializer<?, ?>) obj).getKeySerializer()) &&
-						valueSerializer.equals(((MapSerializer<?, ?>) obj).getValueSerializer()));
+			(obj != null && obj.getClass() == getClass() &&
+				keySerializer.equals(((MapSerializer<?, ?>) obj).getKeySerializer()) &&
+				valueSerializer.equals(((MapSerializer<?, ?>) obj).getValueSerializer()));
 	}
 
 	@Override

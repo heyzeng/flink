@@ -32,7 +32,7 @@ public interface Partitioner<K> extends java.io.Serializable, Function {
 	/**
 	 * Computes the partition for the given key.
 	 *
-	 * @param key The key.
+	 * @param key           The key.
 	 * @param numPartitions The number of partitions to partition into.
 	 * @return The partition index.
 	 */

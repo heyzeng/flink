@@ -33,14 +33,18 @@ public class DiscardingOutputFormat<T> implements OutputFormat<T> {
 	private static final long serialVersionUID = 1L;
 
 	@Override
-	public void configure(Configuration parameters) {}
+	public void configure(Configuration parameters) {
+	}
 
 	@Override
-	public void open(int taskNumber, int numTasks) {}
+	public void open(int taskNumber, int numTasks) {
+	}
 
 	@Override
-	public void writeRecord(T record) {}
+	public void writeRecord(T record) {
+	}
 
 	@Override
-	public void close() {}
+	public void close() {
+	}
 }

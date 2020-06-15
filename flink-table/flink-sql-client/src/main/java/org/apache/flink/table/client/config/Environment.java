@@ -274,9 +274,9 @@ public class Environment {
 	 * Enriches an environment with new/modified properties or views and returns the new instance.
 	 */
 	public static Environment enrich(
-			Environment env,
-			Map<String, String> properties,
-			Map<String, ViewEntry> views) {
+		Environment env,
+		Map<String, String> properties,
+		Map<String, ViewEntry> views) {
 		final Environment enrichedEnv = new Environment();
 
 		enrichedEnv.modules = new LinkedHashMap<>(env.getModules());

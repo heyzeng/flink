@@ -40,7 +40,6 @@ import org.apache.flink.api.java.tuple.Tuple2;
  * result data set produced by the function.
  *
  * @param <IN> The type of the data set reduced by the operator.
- *
  * @see org.apache.flink.api.common.functions.ReduceFunction
  */
 @Public
@@ -92,8 +91,8 @@ public class ReduceOperator<IN> extends SingleInputUdfOperator<IN, IN, ReduceOpe
 
 		// offset semantic information by extracted key fields
 		if (props != null &&
-				this.grouper != null &&
-				this.grouper.keys instanceof SelectorFunctionKeys) {
+			this.grouper != null &&
+			this.grouper.keys instanceof SelectorFunctionKeys) {
 
 			int offset = ((SelectorFunctionKeys<?, ?>) this.grouper.keys).getKeyType().getTotalFields();
 			if (this.grouper instanceof SortedGrouping) {
@@ -115,7 +114,7 @@ public class ReduceOperator<IN> extends SingleInputUdfOperator<IN, IN, ReduceOpe
 			// non grouped reduce
 			UnaryOperatorInformation<IN, IN> operatorInfo = new UnaryOperatorInformation<>(getInputType(), getInputType());
 			ReduceOperatorBase<IN, ReduceFunction<IN>> po =
-					new ReduceOperatorBase<>(function, operatorInfo, new int[0], name);
+				new ReduceOperatorBase<>(function, operatorInfo, new int[0], name);
 
 			po.setInput(input);
 			// the parallelism for a non grouped reduce can only be 1
@@ -135,14 +134,13 @@ public class ReduceOperator<IN> extends SingleInputUdfOperator<IN, IN, ReduceOpe
 			((PlanUnwrappingReduceOperator<?, ?>) po.getInput()).setCustomPartitioner(grouper.getCustomPartitioner());
 
 			return po;
-		}
-		else if (grouper.getKeys() instanceof Keys.ExpressionKeys) {
+		} else if (grouper.getKeys() instanceof Keys.ExpressionKeys) {
 
 			// reduce with field positions
 			int[] logicalKeyPositions = grouper.getKeys().computeLogicalKeyPositions();
 			UnaryOperatorInformation<IN, IN> operatorInfo = new UnaryOperatorInformation<>(getInputType(), getInputType());
 			ReduceOperatorBase<IN, ReduceFunction<IN>> po =
-					new ReduceOperatorBase<>(function, operatorInfo, logicalKeyPositions, name);
+				new ReduceOperatorBase<>(function, operatorInfo, logicalKeyPositions, name);
 
 			po.setCustomPartitioner(grouper.getCustomPartitioner());
 
@@ -151,8 +149,7 @@ public class ReduceOperator<IN> extends SingleInputUdfOperator<IN, IN, ReduceOpe
 			po.setCombineHint(hint);
 
 			return po;
-		}
-		else {
+		} else {
 			throw new UnsupportedOperationException("Unrecognized key type.");
 		}
 	}
@@ -182,8 +179,7 @@ public class ReduceOperator<IN> extends SingleInputUdfOperator<IN, IN, ReduceOpe
 		Operator<T> input,
 		int parallelism,
 		CombineHint hint) {
-		@SuppressWarnings("unchecked")
-		final SelectorFunctionKeys<T, K> keys = (SelectorFunctionKeys<T, K>) rawKeys;
+		@SuppressWarnings("unchecked") final SelectorFunctionKeys<T, K> keys = (SelectorFunctionKeys<T, K>) rawKeys;
 
 		TypeInformation<Tuple2<K, T>> typeInfoWithKey = KeyFunctions.createTypeWithKey(keys);
 		Operator<Tuple2<K, T>> keyedInput = KeyFunctions.appendKeyExtractor(input, keys);

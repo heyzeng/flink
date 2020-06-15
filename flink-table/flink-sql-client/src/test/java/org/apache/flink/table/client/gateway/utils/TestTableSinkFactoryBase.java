@@ -85,9 +85,9 @@ public abstract class TestTableSinkFactoryBase implements StreamTableSinkFactory
 		properties.add(SCHEMA + ".#." + ROWTIME_TIMESTAMPS_FROM);
 		properties.add(SCHEMA + ".#." + ROWTIME_WATERMARKS_TYPE);
 		// watermark
-		properties.add(SCHEMA + "." + WATERMARK + ".#."  + WATERMARK_ROWTIME);
-		properties.add(SCHEMA + "." + WATERMARK + ".#."  + WATERMARK_STRATEGY_EXPR);
-		properties.add(SCHEMA + "." + WATERMARK + ".#."  + WATERMARK_STRATEGY_DATA_TYPE);
+		properties.add(SCHEMA + "." + WATERMARK + ".#." + WATERMARK_ROWTIME);
+		properties.add(SCHEMA + "." + WATERMARK + ".#." + WATERMARK_STRATEGY_EXPR);
+		properties.add(SCHEMA + "." + WATERMARK + ".#." + WATERMARK_STRATEGY_DATA_TYPE);
 
 		return properties;
 	}
@@ -95,8 +95,8 @@ public abstract class TestTableSinkFactoryBase implements StreamTableSinkFactory
 	@Override
 	public StreamTableSink<Row> createTableSink(TableSinkFactory.Context context) {
 		return new TestTableSink(
-				context.getTable().getSchema(),
-				context.getTable().getProperties().get(testProperty));
+			context.getTable().getSchema(),
+			context.getTable().getProperties().get(testProperty));
 	}
 
 	// --------------------------------------------------------------------------------------------

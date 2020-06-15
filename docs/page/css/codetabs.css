@@ -6,9 +6,9 @@
  * to you under the Apache License, Version 2.0 (the
  * "License"); you may not use this file except in compliance
  * with the License.  You may obtain a copy of the License at
- * 
+ *
  * http://www.apache.org/licenses/LICENSE-2.0
- * 
+ *
  * Unless required by applicable law or agreed to in writing,
  * software distributed under the License is distributed on an
  * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
@@ -22,22 +22,22 @@
  * using solution at http://stackoverflow.com/questions/8878033/how-
  * to-make-twitter-bootstrap-menu-dropdown-on-hover-rather-than-click
  **/
-ul.nav li.dropdown:hover ul.dropdown-menu{
-  display: block;
+ul.nav li.dropdown:hover ul.dropdown-menu {
+    display: block;
 }
 
 a.menu:after, .dropdown-toggle:after {
-  content: none;
+    content: none;
 }
 
 /** Make the submenus open on hover on the parent menu item */
 ul.nav li.dropdown ul.dropdown-menu li.dropdown-submenu:hover ul.dropdown-menu {
-  display: block;
+    display: block;
 }
 
 /** Make the submenus be invisible until the parent menu item is hovered upon */
 ul.nav li.dropdown ul.dropdown-menu li.dropdown-submenu ul.dropdown-menu {
-  display: none;
+    display: none;
 }
 
 /**
@@ -45,7 +45,7 @@ ul.nav li.dropdown ul.dropdown-menu li.dropdown-submenu ul.dropdown-menu {
  * Essentially making nav bar buttons not react to clicks, only hover events.
  */
 .navbar .nav li.dropdown.open > .dropdown-toggle {
-  background-color: transparent;
+    background-color: transparent;
 }
 
 /**
@@ -54,11 +54,11 @@ ul.nav li.dropdown ul.dropdown-menu li.dropdown-submenu ul.dropdown-menu {
  * no color change on hover.
  */
 .nav-tabs > li.active > a, .nav-tabs > li.active > a:hover {
-  color: #08c !important;
+    color: #08c !important;
 }
 
 .nav-tabs > li > a, .nav-tabs > li > a:hover {
-  color: #333;
+    color: #333;
 }
 
 .nav.nav-tabs {
